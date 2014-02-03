@@ -5,7 +5,7 @@ inx.ns("inx.mod.board").attachments = inx.list.extend({
     constructor:function(p) {
     
         p.loader = {
-            cmd:"board/controller/attachment/listFiles",
+            cmd:"infuso/board/controller/attachment/listFiles",
             sessionHash:p.sessionHash || null,
             taskID:p.taskID
         }
@@ -22,7 +22,7 @@ inx.ns("inx.mod.board").attachments = inx.list.extend({
             region:"top",
             dropArea:p.dropArea,
             loader:{
-                cmd:"board/controller/attachment/uploadFile",
+                cmd:"infuso/board/controller/attachment/uploadFile",
                 "sessionHash":p.sessionHash || null,
                 taskID:p.taskID,
             }, oncomplete:function() {

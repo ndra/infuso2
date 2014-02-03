@@ -5,7 +5,6 @@ namespace Infuso\Board\Controller;
 use Infuso\Board\TaskStatus;
 use Infuso\Board\Task;
 use Infuso\Board;
-use \user;
 use \Infuso\ActiveRecord\Record;
 
 /**
@@ -65,7 +64,7 @@ class Project extends \Infuso\Core\Controller {
         $ret = array();
         
 		$priority = Task::all()
-            ->eq("creator",user::active()->id())
+            ->eq("creator",\user::active()->id())
             ->groupBy("projectID")
             ->orderByExpr("max(created) desc")
 			->select("projectID");
@@ -110,7 +109,7 @@ class Project extends \Infuso\Core\Controller {
     
         $project = Board\Project::get($p["projectID"]);
 	    $subscriptionKey = "board/project-{$project->id()}/taskCompleted";
-	    $subscriptions = user::active()->subscriptions()->eq("key",$subscriptionKey);
+	    $subscriptions = \user::active()->subscriptions()->eq("key",$subscriptionKey);
 	    
 	    if($subscriptions->void()) {
 	        $subscriptions->create();
@@ -152,8 +151,8 @@ class Project extends \Infuso\Core\Controller {
 
         if($p["projectID"]=="new") {
 
-            if(!user::active()->checkAccess("board/createProject")) {
-                mod::msg(user::active()->errorText(),1);
+            if(!\user::active()->checkAccess("board/createProject")) {
+                mod::msg(\user::active()->errorText(),1);
                 return;
             }
 
@@ -163,8 +162,8 @@ class Project extends \Infuso\Core\Controller {
 
             $project = Board\Project::get($p["projectID"]);
 
-            if(!user::active()->checkAccess("board/updateProject")) {
-                mod::msg(user::active()->errorText(),1);
+            if(!\user::active()->checkAccess("board/updateProject")) {
+                mod::msg(\user::active()->errorText(),1);
                 return;
             }
         }

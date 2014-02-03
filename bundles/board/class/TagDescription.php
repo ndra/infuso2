@@ -1,10 +1,12 @@
 <?
 
-class board_task_tag_description extends reflex {
+namespace Infuso\Board;
+
+class TagDescription extends \Infuso\ActiveRecord\Record {
 
     public function reflex_table() {
 
-        return array(
+        return array (
             'name' => 'board_task_tag_description',
             'fields' => array (
                 array (
@@ -21,11 +23,11 @@ class board_task_tag_description extends reflex {
     }
 
     public static function all() {
-        return reflex::get(get_class())->asc("title");
+        return \Infuso\ActiveRecord\Record::get(get_class())->asc("title");
     }
 
     public static function get($id) {
-        return reflex::get(get_class(),$id);
+        return \Infuso\ActiveRecord\Record::get(get_class(),$id);
     }
 
 }

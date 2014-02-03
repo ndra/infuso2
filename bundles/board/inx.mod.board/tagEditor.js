@@ -10,7 +10,7 @@ inx.ns("inx.mod.board").tagEditor = inx.dialog.extend({
     
     cmd_requestData:function() {
         this.call({
-            cmd:"board/controller/tag/getTaskTags",
+            cmd:"infuso/board/controller/tag/getTaskTags",
             taskID:this.taskID
         },[this.id(),"handleData"]);
     },
@@ -27,7 +27,7 @@ inx.ns("inx.mod.board").tagEditor = inx.dialog.extend({
                 value:data.tags[i].value,
                 onchange:function() {
                     this.call({
-                        cmd:"board_controller_tag/updateTag",
+                        cmd:"infuso/board/controller/tag/updateTag",
                         taskID:this.taskID,
                         tagID:this.tagID,
                         value:this.info("value")

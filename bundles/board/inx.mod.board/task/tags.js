@@ -20,7 +20,7 @@ inx.mod.board.task.tags = inx.panel.extend({
     cmd_requestData:function() {
     
         this.call({
-            cmd:"board_controller_tag/getTaskTags",
+            cmd:"infuso/board/controller/tag/getTaskTags",
             taskID:this.taskID
         },[this.id(),"handleData"]);
     

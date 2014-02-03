@@ -2,7 +2,7 @@
 
 namespace Infuso\Board;
 
-class Tag extends reflex {
+class Tag extends \Infuso\ActiveRecord\Record {
 
     public function reflex_table() {
 
@@ -21,18 +21,18 @@ class Tag extends reflex {
                     'name' => 'tagID',
                     'type' => 'link',
                     'label' => 'Тэг',
-					'class' => "board_task_tag_description",
+					'class' => TagDescription::inspector()->className(),
                 ),
             ),
         );
     }
 
     public static function all() {
-        return reflex::get(get_class())->asc("id");
+        return \reflex::get(get_class())->asc("id");
     }
 
     public static function get($id) {
-        return reflex::get(get_class(),$id);
+        return \reflex::get(get_class(),$id);
     }
     
     public function descr() {

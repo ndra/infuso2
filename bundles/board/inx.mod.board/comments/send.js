@@ -31,7 +31,7 @@ inx.mod.board.comments.send = inx.textarea.extend({
     cmd_save:function() {
    
         this.call({
-            cmd:"board/controller/log/sendMessage",
+            cmd:"infuso/board/controller/log/sendMessage",
             taskID:this.taskID,
             text:this.info("value")
         },[this.id(),"handleSave"]);

@@ -742,7 +742,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Возвращает список тэгов задачи
      **/
     public function tags() {
-        return board_task_tag::all()->eq("taskID",$this->id());
+        return Tag::all()->eq("taskID",$this->id());
     }
     
 	/**

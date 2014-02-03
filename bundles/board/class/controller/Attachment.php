@@ -2,8 +2,7 @@
 
 namespace Infuso\Board\Controller;
 
-use Infuso\Board\TaskStatus;
-use \user;
+use Infuso\Board;
 
 /**
  * Контроллер для операций с вложениями в задачи
@@ -11,7 +10,7 @@ use \user;
 class Attachment extends \Infuso\Core\Controller {
 
     public function postTest() {
-        return user::active()->exists();
+        return \user::active()->exists();
     }
 
     /**
@@ -19,10 +18,10 @@ class Attachment extends \Infuso\Core\Controller {
      **/
     public function post_listFiles($p) {
 
-        $task = Task::get($p["taskID"]);
+        $task = Board\Task::get($p["taskID"]);
 
         // Параметры задачи
-        user::active()->checkAccessThrowException("board/listTaskAttachments",array(
+        \user::active()->checkAccessThrowException("board/listTaskAttachments",array(
             "task" => $task
         ));
 
@@ -47,13 +46,13 @@ class Attachment extends \Infuso\Core\Controller {
 	 **/
     public function post_uploadFile($p) {
 
-        $task = Task::get($p["taskID"]);
+        $task = Board\Task::get($p["taskID"]);
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/uploadFile",array(
+        if(!\user::active()->checkAccess("board/uploadFile",array(
             "task" => $task
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            mod::msg(\user::active()->errorText(),1);
             return;
         }
 

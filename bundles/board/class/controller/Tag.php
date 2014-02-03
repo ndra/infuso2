@@ -2,10 +2,12 @@
 
 namespace Infuso\Board\Controller;
 
+use Infuso\Board;
+
 class Tag extends \Infuso\Core\Controller {
 
     public function postTest() {
-        return user::active()->exists();
+        return \user::active()->exists();
     }
 
     /**
@@ -13,13 +15,13 @@ class Tag extends \Infuso\Core\Controller {
      **/
     public function post_getTaskTags($p) {
     
-		$task = board_task::get($p["taskID"]);
+		$task = Board\Task::get($p["taskID"]);
 
         $ret = array(
             "tags" => array(),
 		);
         
-        foreach(board_task_tag_description::all() as $tag) {
+        foreach(Board\TagDescription::all() as $tag) {
             $ret["tags"][] = array(
                 "tagID" => $tag->id(),
                 "value" => $task->tagExists($tag->id()),
@@ -35,7 +37,7 @@ class Tag extends \Infuso\Core\Controller {
      **/
     public function post_updateTag($p) {
 
-        $task = board_task::get($p["taskID"]);
+        $task = Board\Task::get($p["taskID"]);
         user::active()->checkAccessThrowException("board/updateTaskTag",array(
             "task" => $task,
         ));
@@ -47,7 +49,7 @@ class Tag extends \Infuso\Core\Controller {
     
     public function post_getWidgetContent($p) {
     
-        $task = board_task::get($p["taskID"]);
+        $task = Board\Task::get($p["taskID"]);
         $content = tmp::get("/board/widget/tags/ajax",array(
             "task" => $task,
 		))->getContentForAjax();
@@ -67,7 +69,7 @@ class Tag extends \Infuso\Core\Controller {
             "text" => "Все",
 		);
         
-        foreach(board_task_tag_description::all() as $tag) {
+        foreach(Board\tagDescription::all() as $tag) {
             $ret[] = array(
                 "id" => $tag->id(),
                 "text" => $tag->title(),

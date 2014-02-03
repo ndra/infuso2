@@ -1,13 +1,15 @@
 <?
 
+
+
 /**
  * Модель записи в логе
  **/
-class board_task_time extends reflex {
+class TaskTime extends reflex {
 
     public function reflex_table() {
         return array (
-            'name' => get_class(),
+            'name' => "board_task_time",
             'fields' => array (
                 array (
                     'name' => 'id',

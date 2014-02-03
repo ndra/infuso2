@@ -3,6 +3,7 @@
 namespace Infuso\Board\Controller;
 
 use \user, \util;
+use Infuso\Board;
 
 class Report extends \Infuso\Core\Controller {
 
@@ -20,7 +21,7 @@ class Report extends \Infuso\Core\Controller {
     public static function index_workers($p) {
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showReportUsers",array(
+        if(!\user::active()->checkAccess("board/showReportUsers",array(
             "task" => $task
         ))) {
             mod::msg(user::active()->errorText(),1);
@@ -35,13 +36,13 @@ class Report extends \Infuso\Core\Controller {
 
     public function index_worker($p) {
 
-        $user = user::get($p["id"]);
+        $user = \user::get($p["id"]);
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showUserReport",array(
+        if(!\user::active()->checkAccess("board/showUserReport",array(
             "task" => $task
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            mod::msg(\user::active()->errorText(),1);
             tmp::header();
             tmp::footer();
             return;
@@ -55,8 +56,8 @@ class Report extends \Infuso\Core\Controller {
     public function index_projects($p) {
     
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showProjectsReport")) {
-            mod::msg(user::active()->errorText(),1);
+        if(!\user::active()->checkAccess("board/showProjectsReport")) {
+            mod::msg(\user::active()->errorText(),1);
             tmp::header();
             tmp::footer();
             return;
@@ -70,11 +71,11 @@ class Report extends \Infuso\Core\Controller {
     
     public function index_projectDetailed($p) {
 
-        $project = board_project::get($p["projectID"]);
+        $project = Board\Project::get($p["projectID"]);
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showProjectsReport")) {
-            mod::msg(user::active()->errorText(),1);
+        if(!\user::active()->checkAccess("board/showProjectsReport")) {
+            mod::msg(\user::active()->errorText(),1);
             tmp::header();
             tmp::footer();
             return;
@@ -90,8 +91,8 @@ class Report extends \Infuso\Core\Controller {
     public function index_done($p) {
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showReportDone")) {
-            mod::msg(user::active()->errorText(),1);
+        if(!\user::active()->checkAccess("board/showReportDone")) {
+            mod::msg(\user::active()->errorText(),1);
             tmp::header();
             tmp::footer();
             return;
@@ -109,11 +110,11 @@ class Report extends \Infuso\Core\Controller {
     public function post_getMyDayActivity($p) {
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showAllUsersDailyActivity")) {
+        if(!\user::active()->checkAccess("board/showAllUsersDailyActivity")) {
             return false;
         }
 
-        $user = $p["userID"] ? user::get($p["userID"]) : user::active();
+        $user = $p["userID"] ? \user::get($p["userID"]) : \user::active();
         $ret = array(
             "tasks" => array(),
             "user" => array(
@@ -121,17 +122,17 @@ class Report extends \Infuso\Core\Controller {
             )
         );
 
-        $tasks = \board_task_time::all()
+        $tasks = \TaskTime::all()
             ->eq("userID",$user->id())
             ->limit(0)
-            ->eq("date(begin)",util::now()->date());
+            ->eq("date(begin)", \util::now()->date());
 
         foreach($tasks as $log) {
             $start = $log->pdata("begin")->stamp();
-            $end = $log->data("end") ? $log->pdata("end")->stamp() : util::now()->stamp();
+            $end = $log->data("end") ? $log->pdata("end")->stamp() : \util::now()->stamp();
             $duration = $end - $start;
             $ret["tasks"][] = array(
-                "start" => $start - util::now()->date()->stamp(),
+                "start" => $start - \util::now()->date()->stamp(),
                 "duration" => $duration,
                 "title" => $log->task()->title(),
                 "taskID" => $log->task()->id(),
@@ -144,7 +145,7 @@ class Report extends \Infuso\Core\Controller {
     public function index_gallery($p) {
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showReportVote")) {
+        if(!\user::active()->checkAccess("board/showReportVote")) {
             mod::msg(user::active()->errorText(),1);
             tmp::header();
             tmp::footer();
@@ -160,12 +161,12 @@ class Report extends \Infuso\Core\Controller {
     public function post_getUsers() {
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showAllUsersDailyActivity")) {
+        if(!\user::active()->checkAccess("board/showAllUsersDailyActivity")) {
             return array();
         }
 
         $ret = array();
-        $users = user::all()->like("roles","boardUser")->neq("id",user::active()->id());
+        $users = \user::all()->like("roles","boardUser")->neq("id",user::active()->id());
         foreach($users as $user) {
             $ret[] = array(
                 "userID" => $user->id(),
@@ -180,8 +181,8 @@ class Report extends \Infuso\Core\Controller {
     public function index_vote() {
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showReportVote")) {
-            mod::msg(user::active()->errorText(),1);
+        if(!\user::active()->checkAccess("board/showReportVote")) {
+            mod::msg(\user::active()->errorText(),1);
             tmp::header();
             tmp::footer();
             return;
@@ -196,13 +197,13 @@ class Report extends \Infuso\Core\Controller {
      **/
     public function index_projectChart($p) {
 
-        $project = board_project::get($p["id"]);
+        $project = Board\Project::get($p["id"]);
 
         // Параметры задачи
-        if(!user::active()->checkAccess("board/showReportProjectActivity",array(
+        if(!\user::active()->checkAccess("board/showReportProjectActivity",array(
             "project" => $project,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            mod::msg(\user::active()->errorText(),1);
             tmp::header();
             tmp::footer();
             return;
