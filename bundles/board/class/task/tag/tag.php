@@ -1,6 +1,8 @@
 <?
 
-class board_task_tag extends reflex {
+namespace Infuso\Board;
+
+class Tag extends reflex {
 
     public function reflex_table() {
 
@@ -14,7 +16,7 @@ class board_task_tag extends reflex {
                     'name' => 'taskID',
                     'type' => 'link',
                     'label' => 'Задача',
-					'class' => "board_task",
+					'class' => Task::inspector()->className(),
                 ), array (
                     'name' => 'tagID',
                     'type' => 'link',

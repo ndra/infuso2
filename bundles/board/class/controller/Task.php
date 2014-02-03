@@ -30,7 +30,7 @@ class Task extends \Infuso\Core\Controller {
 
             $tasks = $tasks->eq("epicParentTask",$p["parentTaskID"])->orderByExpr("`status` != 1")->asc("priority",true);
             $tasks->eq("status",array(Board\TaskStatus::STATUS_NEW,Board\TaskStatus::STATUS_IN_PROGRESS))
-                ->orr()->gt("changed",util::now()->shift(-60));
+                ->orr()->gt("changed",\util::now()->shift(-60));
 
         } else {
         
@@ -45,7 +45,7 @@ class Task extends \Infuso\Core\Controller {
         // Учитываем поиск
         if($search = trim($p["search"])) {
         
-            $search2 = util::str($search)->switchLayout();
+            $search2 = \util::str($search)->switchLayout();
 
             $tasks->joinByField("projectID");
             $tasks->like("text",$search)
@@ -146,7 +146,7 @@ class Task extends \Infuso\Core\Controller {
     public static function post_saveTask($p) {
 
         $task = \Infuso\Board\Task::get($p["taskID"]);
-        $data = util::a($p["data"])->filter("text","timeScheduled","projectID","color","deadline","deadlineDate")->asArray();
+        $data = \util::a($p["data"])->filter("text","timeScheduled","projectID","color","deadline","deadlineDate")->asArray();
 
         // Параметры задачи
         user::active()->checkAccessThrowException("board/updateTaskParams",array(
@@ -234,7 +234,7 @@ class Task extends \Infuso\Core\Controller {
         $ret = array();
 
         $tasks = $task->subtasks()->orderByExpr("`status` != 1")->asc("priority",true);
-        $tasks->eq("status",array(Board\TaskStatus::STATUS_NEW,Board\TaskStatus::STATUS_IN_PROGRESS))->orr()->gt("changed",util::now()->shift(-60));
+        $tasks->eq("status",array(Board\TaskStatus::STATUS_NEW,Board\TaskStatus::STATUS_IN_PROGRESS))->orr()->gt("changed",\util::now()->shift(-60));
         foreach($tasks as $subtask) {
             $ret[] = $subtask->stickerData();
         }
