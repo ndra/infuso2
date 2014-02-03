@@ -44,7 +44,7 @@ inx.mod.board.task.tags = inx.panel.extend({
                 value:data.tags[i].value,
                 onchange:function() {
                     this.call({
-                        cmd:"board_controller_tag/updateTag",
+                        cmd:"infuso/board/controller/tag/updateTag",
                         taskID:this.taskID,
                         tagID:this.tagID,
                         value:this.info("value")

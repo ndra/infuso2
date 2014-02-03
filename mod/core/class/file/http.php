@@ -1,14 +1,16 @@
 <?
 
+namespace Infuso\Core\File;
+use Infuso\Core;
+
 /**
  * Класс для работы с внешними файлами
  **/
-class mod_file_http extends mod_file {
+class Http extends Core\File {
 
     private $lastCurl = null;
 
     public function initialParams() {
-
         return array(
             "curlOptions" => array(),
         );
@@ -25,6 +27,7 @@ class mod_file_http extends mod_file {
 	 * или когда задано open_basedir. Эта функция полвзояет обойти данное ограничение
 	 **/
     private function curlExecFollow(/*resource*/ $ch, /*int*/ $maxredirect = null) {
+    
         $mr = $maxredirect === null ? 5 : intval($maxredirect);
         if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) {
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $mr > 0);
@@ -112,6 +115,10 @@ class mod_file_http extends mod_file {
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        
+        echo "<pre>";
+        var_export(core\conf::general());
+        return;
 
         foreach($this->param("curlOptions") as $key => $val) {
             curl_setopt($ch, constant($key),$val);
@@ -124,19 +131,21 @@ class mod_file_http extends mod_file {
 
     /**
      * Возвращает содержимое внешнего файла
+     * Если попытка скачивания не удалась, выбрасывает исключение
      **/
     public function contents() {
 
-        mod_profiler::beginOperation("file","http-contents",$this->path());
+        Core\Profiler::beginOperation("file","http-contents",$this->path());
 
         $ch = $this->getCurl();
-
         $ret = self::curlExecFollow($ch,10);
-
         curl_close($ch);
-
-        mod_profiler::endOperation();
-
+        
+        if($error = $this->errorText()) {
+            throw new \Exception($error);
+        }
+        
+        Core\Profiler::endOperation();
         return $ret;
     }
 
@@ -151,7 +160,6 @@ class mod_file_http extends mod_file {
      * Проверяет наличие внешнего файла
      **/
     public function exists() {
-
         $ch = $this->getCurl();
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_FAILONERROR, true);  // this works

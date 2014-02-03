@@ -11,15 +11,45 @@ class manager extends \infuso\core\service {
 		return "bundle";
 	}
 	
+	private static $bundles = array();
+	
+	public function all() {
+	    if(!self::$bundles) {
+			self::$bundles = self::allWithoutCache();
+	    }
+	    return self::$bundles;
+	}
+	
 	/**
 	 * Возвращает список всех бандлов
+	 * @todo ускорить работу
 	 **/
-	public function all() {
+	public function allWithoutCache() {
 	
 	    $bundles = array();
 	    $manager = $this;
+	    
+		$exclude = array(
+			(string) \mod::app()->varPath(),
+			(string) \mod::app()->publicPath(),
+			(string) \mod::app()->confPath(),
+		);
 
-	    $scan = function($path) use (&$scan, &$bundles, $manager) {
+	    $scan = function($path) use (&$scan, &$bundles, $manager, $exclude) {
+	    
+	        if($path=="/.git") {
+	            return;
+	        }
+	        
+	        if(in_array($path,$exclude)) {
+	            return;
+	        }
+	        
+	        // Максимальная глубина, на которой искать модули
+	        $path2 = explode("/",$path);
+	        if(sizeof($path2) > 3) {
+	            return;
+	        }
 
             $bundle = $manager->bundle($path);
 			$leave = array();

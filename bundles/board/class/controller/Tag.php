@@ -38,12 +38,12 @@ class Tag extends \Infuso\Core\Controller {
     public function post_updateTag($p) {
 
         $task = Board\Task::get($p["taskID"]);
-        user::active()->checkAccessThrowException("board/updateTaskTag",array(
+        \user::active()->checkAccessThrowException("board/updateTaskTag",array(
             "task" => $task,
         ));
 
 		$task->updateTag($p["tagID"],$p["value"]);
-		mod::msg("Тэг изменен");
+		\mod::msg("Тэг изменен");
         return $ret;
     }
     

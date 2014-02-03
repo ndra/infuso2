@@ -1,8 +1,8 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
-class mod extends controller {
+class Mod extends controller {
 
 	private static $debug = null;
 	

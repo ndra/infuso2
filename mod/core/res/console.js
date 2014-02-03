@@ -41,8 +41,9 @@ cs = {
     handleUpdateStep:function(data,mod) {
         if(data && data.next==true) {
 	        var messages = data.messages;
-	        for(var i in messages)
+	        for(var i in messages) {
 	            cs.log(messages[i].text,messages[i].error);
+	        }
             cs.updateStep(mod+1);
 		} else {
 			cs.handleUpdateDone();

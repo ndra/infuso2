@@ -1,8 +1,8 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
-abstract class file extends component {
+abstract class File extends Component {
 
     public static $fileClass = "mod_file";
     
@@ -36,14 +36,14 @@ abstract class file extends component {
      * Уведомляет о начале операции с файлом (для профайлера)
      **/
     public static function beginOperation($operation,$name) {
-        \infuso\core\profiler::beginOperation("file",$operation,$name);
+        Profiler::beginOperation("file",$operation,$name);
     }
 
     /**
      * Уведомляет об окончании операции с файлом
      **/
     public static function endOperation() {
-        \infuso\core\profiler::endOperation();
+        Profiler::endOperation();
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class file extends component {
         // В режиме отладки ведем лог
         self::beginOperation("get",$path);
 
-        $ret = new mod_file_http($path);
+        $ret = new File\Http($path);
 
         // В режиме отладки ведем лог
         self::endOperation();
@@ -134,8 +134,9 @@ abstract class file extends component {
     }
     
     public static function clearTemporaryFolders() {
-        foreach(self::$foldersToDelete as $folder)
-            file::get($folder)->delete(1);
+        foreach(self::$foldersToDelete as $folder) {
+			file::get($folder)->delete(1);
+		}
     }
     
     /**
@@ -143,7 +144,7 @@ abstract class file extends component {
      **/
     public static function mkdir($name) {
 
-        \infuso\core\profiler::beginOperation("file","mkdir",$name);
+        Profiler::beginOperation("file","mkdir",$name);
 
         $name = self::get($name)->path();
         $n2 = trim($name,"/");
@@ -155,7 +156,7 @@ abstract class file extends component {
         }
         @mkdir(self::get($name)->native());
 
-        \infuso\core\profiler::endOperation();
+        Profiler::endOperation();
 
         return self::get($name);
 
@@ -188,7 +189,7 @@ abstract class file extends component {
         $res = $zip->open($this->native());
         
         if ($res === TRUE) {
-            $zip->extractTo(mod_file::get($dest)->native());
+            $zip->extractTo(File::get($dest)->native());
             $zip->close();
         }
     }

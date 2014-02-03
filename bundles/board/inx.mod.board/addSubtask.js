@@ -55,7 +55,7 @@ inx.ns("inx.mod.board").addSubtask = inx.dialog.extend({
     
     cmd_addSubtask:function() {
         this.call({
-            cmd:"board/controller/task/addEpicSubtask",
+            cmd:"infuso/board/controller/task/addEpicSubtask",
             taskID:this.taskID,
             data:this.info("data")
         },[this.id(),"handleAddSubtask"])
@@ -63,7 +63,7 @@ inx.ns("inx.mod.board").addSubtask = inx.dialog.extend({
     
     cmd_doSubtask:function() {
         this.call({
-            cmd:"board/controller/task/addEpicSubtask",
+            cmd:"infuso/board/controller/task/addEpicSubtask",
             taskID:this.taskID,
             take:true,
             data:this.info("data")

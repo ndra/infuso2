@@ -16,7 +16,7 @@ inx.ns("inx.mod.board").access = inx.list.extend({
         }]
     
         p.loader = {
-            cmd:"board/controller/access/accessList"
+            cmd:"infuso/board/controller/access/accessList"
         }
         this.base(p); 
         

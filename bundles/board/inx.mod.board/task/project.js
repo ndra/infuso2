@@ -37,7 +37,7 @@ inx.mod.board.task.project = inx.panel.extend({
     
     cmd_changeProject:function(projectID) {
         this.call({
-            cmd:"board/controller/task/changeProject",
+            cmd:"infuso/board/controller/task/changeProject",
             taskID:this.taskID,
             projectID:projectID
         });

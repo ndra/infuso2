@@ -95,17 +95,30 @@ class console extends controller {
 	            break;
 
 	        case "update":
-	            $mods = mod::all();
+	        
+	            $mods = array();
+	            foreach(mod::service("bundle")->all() as $bundle) {
+	                $mods[] = $bundle->path();
+	            }
+	            
 	            $ret = array();
 	            if($mod = $mods[$_POST["mod"]]) {
-					mod_update::update($mod);
+	            
+					\Infuso\Update\Updater::update($mod);
 		            $messages = array();
-		            foreach(mod_log::messages() as $msg)
-		            	$messages[] = array("text"=>$msg->text(),"error"=>$msg->error());
+		            
+		            foreach(log::messages() as $msg) {
+		            	$messages[] = array(
+							"text" => $msg->text(),
+							"error" => $msg->error()
+						);
+		            }
+		            
 		            $ret = array(
-						"messages"=>$messages,
+						"messages" => $messages,
 						"next" => true,
 					);
+					
 	            } else {
 	            	mod::app()->generateHtaccess();
 	            }
