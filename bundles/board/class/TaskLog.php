@@ -37,7 +37,7 @@ class TaskLog extends Record {
                   'type' => 'pg03-cv07-y16t-kli7-fe6x',
                   'editable' => '2',
                   'label' => 'Пользователь',
-                  'class' => User::inspector()->className(),
+                  'class' => \User::inspector()->className(),
                 ), array (
                   'name' => 'taskID',
                   'type' => 'pg03-cv07-y16t-kli7-fe6x',
@@ -114,8 +114,8 @@ class TaskLog extends Record {
     }
 
     public function reflex_beforeCreate() {
-        $this->data("created",util::now());
-        $this->data("userID",user::active()->id());
+        $this->data("created",\util::now());
+        $this->data("userID",\user::active()->id());
     }
 
     public function reflex_afterCreate() {
@@ -129,7 +129,7 @@ class TaskLog extends Record {
             // Рассылаем комментарий ответственному лицу и автору
             foreach($users as $userID) {
                 if($userID != $this->user()->id()) {
-                    $user = user::get($userID);
+                    $user = \user::get($userID);
                     $taskText = util::str($this->task()->text())->ellipsis(100);
                     $taskURL = $this->task()->url();
                     $comment = $this->text();

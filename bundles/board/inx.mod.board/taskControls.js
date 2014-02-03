@@ -230,7 +230,7 @@ inx.ns("inx.mod.board").taskControls = inx.panel.extend({
         this.fire("action");
     
         this.call({
-            cmd:"board/controller/task/pauseTask",
+            cmd:"infuso/board/controller/task/pauseTask",
             taskID:this.taskID
         });
     },
@@ -240,7 +240,7 @@ inx.ns("inx.mod.board").taskControls = inx.panel.extend({
         this.fire("action");
     
         this.call({
-            cmd:"board/controller/task/takeTask",
+            cmd:"infuso/board/controller/task/takeTask",
             taskID:this.taskID
         });
     },
@@ -252,7 +252,7 @@ inx.ns("inx.mod.board").taskControls = inx.panel.extend({
         inx({
             type:"inx.mod.board.timeInput",
             taskID:this.taskID,
-            loader:"board/controller/task/doneTask",
+            loader:"infuso/board/controller/task/doneTask",
             listeners:{
                 save:[this.id(),"handleTimeInput"]
             }
@@ -267,7 +267,7 @@ inx.ns("inx.mod.board").taskControls = inx.panel.extend({
         this.fire("action");
     
         this.call({
-            cmd:"board/controller/task/completeTask",
+            cmd:"infuso/board/controller/task/completeTask",
             taskID:this.taskID
         });
     },
@@ -282,7 +282,7 @@ inx.ns("inx.mod.board").taskControls = inx.panel.extend({
         inx({
             type:"inx.mod.board.timeInput",
             taskID:this.taskID,
-            loader:"board/controller/task/stopTask",
+            loader:"infuso/board/controller/task/stopTask",
             listeners:{
                 save:[this.id(),"handleTimeInput"]
             }
@@ -297,7 +297,7 @@ inx.ns("inx.mod.board").taskControls = inx.panel.extend({
         this.fire("action");
     
         this.call({
-            cmd:"board/controller/task/moveToBacklog",
+            cmd:"infuso/board/controller/task/moveToBacklog",
             taskID:this.taskID
         });
     },
@@ -312,7 +312,7 @@ inx.ns("inx.mod.board").taskControls = inx.panel.extend({
         }
     
         this.call({
-            cmd:"board/controller/task/cancelTask",
+            cmd:"infuso/board/controller/task/cancelTask",
             taskID:this.taskID
         });
     },
@@ -324,7 +324,7 @@ inx.ns("inx.mod.board").taskControls = inx.panel.extend({
         inx({
             type: 'inx.mod.board.returnTask', 
             taskID:this.taskID,
-            cmd:"board/controller/task/revisionTask"
+            cmd:"infuso/board/controller/task/revisionTask"
         }).cmd('render');    
     },
     

@@ -167,8 +167,8 @@ class Task extends \Infuso\Core\Controller {
 
 
         if ($task->fields()->changed()->count() > 0) {
-            $task->logCustom("Изменение данных",0,board_task_log::TYPE_TASK_MODIFIED);
-            mod::msg("Задача сохранена");
+            $task->logCustom("Изменение данных",0,Board\TaskLog::TYPE_TASK_MODIFIED);
+            \mod::msg("Задача сохранена");
         }
 
         return true;
@@ -184,13 +184,13 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/changeTaskProject", array (
             "task" => $task,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
         $task->data("projectID",$p["projectID"]);
 
-        mod::msg("Проект изменен");
+        \mod::msg("Проект изменен");
 
     }
 
@@ -204,7 +204,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/newTask",array(
             "project" => $project,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -227,7 +227,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/getEpicSubtasks",array(
             "task" => $task
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -251,7 +251,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/addEpicSubtask",array(
             "task" => $task
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -277,7 +277,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/takeTask",array(
             "task" => $task,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -298,7 +298,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/stopTask",array(
             "task" => $task,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -330,7 +330,7 @@ class Task extends \Infuso\Core\Controller {
             if(!user::active()->checkAccess("board/revisionTaskToDemand",array(
                 "task" => $task,
             ))) {
-                mod::msg(user::active()->errorText(),1);
+                \mod::msg(user::active()->errorText(),1);
                 return;
             }
         }
@@ -355,7 +355,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/doneTask",array(
             "task" => $task,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -380,7 +380,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/completeTask",array(
             "task" => $task,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -403,7 +403,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/cancelTask",array(
             "task" => $task,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -426,7 +426,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/getTaskTime",array(
             "task" => $task
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -453,7 +453,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/task/moveToBacklog",array(
             "task" => $task
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -480,13 +480,13 @@ class Task extends \Infuso\Core\Controller {
                 $task->store();
                 $task->unsuspendTaskEvents();
             } else {
-                mod::msg(user::active()->errorText(),1);
+                \mod::msg(user::active()->errorText(),1);
                 continue;
             }
 
         }
 
-        mod::msg("Сортировка сохранена");
+        \mod::msg("Сортировка сохранена");
 
     }
 
@@ -498,7 +498,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/pauseTask",array(
             "task" => $task,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 
@@ -514,7 +514,7 @@ class Task extends \Infuso\Core\Controller {
         if(!user::active()->checkAccess("board/updateTaskNotice",array(
             "task" => $task,
         ))) {
-            mod::msg(user::active()->errorText(),1);
+            \mod::msg(user::active()->errorText(),1);
             return;
         }
 

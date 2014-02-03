@@ -149,7 +149,7 @@ inx.ns("inx.mod.board").task = inx.dialog.extend({
         var data = this.info("data");
     
         this.call({
-            cmd:"board:controller:task:saveTask",
+            cmd:"infuso/board/controller/task/saveTask",
             data:data,
             taskID:this.taskID
         });
