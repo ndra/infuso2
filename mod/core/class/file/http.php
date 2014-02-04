@@ -19,6 +19,19 @@ class Http extends Core\File {
     public function __construct($path) {
         $this->path = $path;
     }
+    
+    public function userAgent($ua) {
+        $options = $this->param("curlOptions");
+        $options["CURLOPT_USERAGENT"] = $ua;
+        $this->param("curlOptions",$options);
+    }
+    
+    public function curlParam($key,$val) {
+        $options = $this->param("curlOptions");
+        $options[$key] = $val;
+        $this->param("curlOptions",$options);
+        return $this;
+    }
 
 	/**
 	 * Служебная функция.
@@ -116,10 +129,6 @@ class Http extends Core\File {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         
-        echo "<pre>";
-        var_export(core\conf::general());
-        return;
-
         foreach($this->param("curlOptions") as $key => $val) {
             curl_setopt($ch, constant($key),$val);
         }

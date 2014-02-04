@@ -332,7 +332,7 @@ class Component {
      **/
     public function componentConf() {
         $args = func_get_args();
-        array_unshift($args,get_class($this));
+        array_unshift($args,strtolower(get_class($this)));
         array_unshift($args,"components");
         return call_user_func_array(array("\infuso\core\conf","general"),$args);
     }

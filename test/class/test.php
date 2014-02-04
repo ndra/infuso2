@@ -17,8 +17,8 @@ class tester extends \infuso\core\controller {
             "repo" => "infuso2",
             "branch" => "dev",
 		));
-		$git->tree();
-
+		$git->tree("/");
+		
 		\tmp::footer();
         
     }
