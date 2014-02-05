@@ -36,8 +36,10 @@ class connection extends \infuso\core\service {
 	
 	public function quote($str) {
 	    Core\Profiler::beginOperation("dao","quote",$str);
-	    return $this->dbh()->quote($str);
+	    $ret = $this->dbh()->quote($str);
 	    Core\Profiler::endOperation();
+	    return $ret;
+	    
 	}
 	
 	public function tablePrefix() {

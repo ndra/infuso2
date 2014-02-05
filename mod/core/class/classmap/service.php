@@ -202,12 +202,15 @@ class classmapService extends service {
 	
 	public function includeClass($class) {
 	
+	    \Infuso\Core\Profiler::beginOperation("core","includeClass",$class);
+	
 	    $class = strtolower($class);
 	
 		// Если класс является алиасом, то подключаем сам класс, а не алиас
 	    $alias = self::$aliases[$class];
 	    if($alias) {
 	        self::includeClass($alias);
+	        \Infuso\Core\Profiler::endOperation();
 	        return;
 	    }
 	    
@@ -241,6 +244,8 @@ class classmapService extends service {
 				class_alias($class,$key);
 	        }
 	    }
+	    
+	    \Infuso\Core\Profiler::endOperation();
 		
 	}
 

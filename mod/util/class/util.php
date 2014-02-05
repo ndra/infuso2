@@ -1,7 +1,7 @@
 <?
 
-namespace infuso\util;
-use \infuso\core\file;
+namespace Infuso\Util;
+use \Infuso\Core\File;
 
 /**
  * Класс с набором статических методов, облегчающий рутинные действия
@@ -12,7 +12,7 @@ class util {
      * Выводит профайлер
      **/
     public static function profiler() {
-        \util_profiler::profiler();
+        \Infuso\Profiler\Widget::profiler();
     }
 
     /**

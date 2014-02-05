@@ -1,6 +1,6 @@
 <?
 
-tmp::jq();
+\Infuso\Core\Profiler::pause();
 
 <div class='nw5bny9hxyu6' >
 
@@ -9,7 +9,7 @@ tmp::jq();
         tmp::exec("main");
         tmp::exec("milestones");
 
-        <table>    
+        <table class='t1' >    
             foreach(mod_profiler::log() as $group=>$items) {
                 <tr>
         
@@ -51,3 +51,5 @@ tmp::jq();
     
     </div>
 </div>
+
+\Infuso\Core\Profiler::resume();

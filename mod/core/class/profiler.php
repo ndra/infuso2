@@ -14,6 +14,8 @@ class Profiler {
     
     public static $operations = array();
     
+    private static $paused = false;
+    
     /**
      * Открывает новую операцию
      **/
@@ -65,18 +67,22 @@ class Profiler {
         if(!mod::debug()) {
             return;
         }
-
-        $item = array_pop(self::$stack);
-        $time = microtime(true) - $item[3];
-        self::$log[$item[0]][$item[1]]["time"] += $time;
-        self::$log[$item[0]][$item[1]]["keys"][$item[2]]["count"] ++;
-        self::$log[$item[0]][$item[1]]["keys"][$item[2]]["time"] += $time;
         
-        self::$operations[] = array(
-            "s" => $item[3] - $GLOBALS["infusoStarted"],
-            "d" => $time,
-            "n" => $item[0]."/".$item[1]."/".$item[2],
-		);
+        if(!self::$paused) {
+
+	        $item = array_pop(self::$stack);
+	        $time = microtime(true) - $item[3];
+	        self::$log[$item[0]][$item[1]]["time"] += $time;
+	        self::$log[$item[0]][$item[1]]["keys"][$item[2]]["count"] ++;
+	        self::$log[$item[0]][$item[1]]["keys"][$item[2]]["time"] += $time;
+
+	        self::$operations[] = array(
+	            "s" => $item[3] - $GLOBALS["infusoStarted"],
+	            "d" => $time,
+	            "n" => $item[0]."/".$item[1]."/".$item[2],
+			);
+		
+		}
 
     }
 
@@ -102,6 +108,14 @@ class Profiler {
 	public function stop() {
 	    self::setVariable("stop",microtime(1));
 	    self::addMilestone("done");
+    }
+    
+    public function pause() {
+        self::$paused = true;
+    }
+    
+	public function resume() {
+	    self::$paused = false;
     }
 
     public function setVariable($key,$val) {

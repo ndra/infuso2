@@ -1,15 +1,12 @@
 .mgh1nqv4qw {
 
-    @height = 40px;
-
     position:relative;
-    height: @height + 60;
+    height:200px;
     
     .segment {
         position:absolute;
-        border:1px solid #ededed;
-        height:@height;    
-        background:rgba(0,0,0,.1);
+        height:40px;    
+        background:rgba(0,0,0,.3);
         
         &:hover {
             outline:1px solid black;

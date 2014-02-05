@@ -1,8 +1,8 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
-class action extends component {
+class Action extends component {
 
     private $className = "";
     private $action = "";
@@ -135,12 +135,10 @@ class action extends component {
         if(!$this->test()) {
 			call_user_func($this->failCallback(),$this->params());
         } else {
-            // Если события не заблокированы - вызываем событие
-            if(!$suspendEvent) {
-                mod::fire("mod_beforeAction",array(
-                    "action" => $this,
-                ));
-            }
+            mod::fire("mod_beforeAction",array(
+                "action" => $this,
+            ));
+            Profiler::addMilestone("before action");
             call_user_func($this->callback(),$this->params());
         }
 

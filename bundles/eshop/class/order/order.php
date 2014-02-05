@@ -127,6 +127,8 @@ class eshop_order extends reflex implements mod_handler {
 		}
 		
         setcookie(self::$cookieMyOrders,false,-1,"/");
+        
+        
     }
 
     private static $cookie = "orderID";

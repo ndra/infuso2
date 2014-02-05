@@ -226,12 +226,12 @@ class app {
         // Если события не заблокированы - вызываем событие
         if($this->eventsEnabled()) {
         	mod::fire("mod_beforeActionSYS");
-        	Profiler::addMilestone("before action");
+        	Profiler::addMilestone("before action sys");
         }
 
 	    if($action) {
 			$action->exec();
-			Profiler::addMilestone("action exec");
+			Profiler::addMilestone("exec");
 	    } else {
 			$this->httpError(404);
 	    }

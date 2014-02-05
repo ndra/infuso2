@@ -331,11 +331,13 @@ class localFile extends file {
 
 			foreach($up->dir() as $item) {
 
-			    if(!$item->folder())
+			    if(!$item->folder()) {
 			        continue;
+			    }
 
-				if(strcmp($item->path()."",$src)>0)
+				if(strcmp($item->path()."",$src) > 0) {
 		    		return $item;
+		    	}
 			}
 
 			if($up=="/")

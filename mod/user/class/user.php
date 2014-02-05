@@ -211,6 +211,8 @@ class user extends reflex {
      * Если пользователь не залогинен, возвращается несуществующий объект
      **/
     public static final function active() {
+    
+        \Infuso\Core\Profiler::beginOperation("user","active",null);
 
         if(!self::$activeUser) {
 
@@ -235,6 +237,8 @@ class user extends reflex {
             self::$activeUser = $user;
             $user->thisIsActiveUser = true;
         }
+        
+        \Infuso\Core\Profiler::endOperation();
 
         return self::$activeUser;
 
