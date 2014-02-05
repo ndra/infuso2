@@ -12,13 +12,15 @@ class tester extends \infuso\core\controller {
 
 		\tmp::header();
 		
-        $git = new \Infuso\Update\Github(array(
+        /*$git = new \Infuso\Update\Github(array(
             "owner" => "ndra",
             "repo" => "infuso2",
             "branch" => "dev",
 		));
-		$git->tree("/");
-		
+		//$git->zip();
+		$git->zip(); */
+		\util::profiler();
+
 		\tmp::footer();
         
     }

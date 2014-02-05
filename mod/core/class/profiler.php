@@ -1,8 +1,8 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
-class profiler {
+class Profiler {
 
     public static $stack = array();
 
@@ -11,17 +11,17 @@ class profiler {
     private static $variables = array();
 
     private static $milestones = array();
-
+    
+    public static $operations = array();
+    
     /**
      * Открывает новую операцию
      **/
     public static function beginOperation($group,$operation,$key) {
 
-        if(!superadmin::check())
+        if(!mod::debug()) {
             return;
-
-        if(!mod::debug())
-            return;
+        }
 
         $key.="";
 
@@ -39,11 +39,9 @@ class profiler {
      **/
     public static function updateOperation($group,$operation,$key) {
 
-        if(!mod_superadmin::check())
+        if(!mod::debug()) {
             return;
-
-        if(!mod::debug())
-            return;
+        }
 
         $key.="";
 
@@ -64,20 +62,27 @@ class profiler {
      **/
     public static function endOperation() {
 
-        if(!superadmin::check())
+        if(!mod::debug()) {
             return;
-
-        if(!mod::debug())
-            return;
+        }
 
         $item = array_pop(self::$stack);
         $time = microtime(true) - $item[3];
         self::$log[$item[0]][$item[1]]["time"] += $time;
         self::$log[$item[0]][$item[1]]["keys"][$item[2]]["count"] ++;
         self::$log[$item[0]][$item[1]]["keys"][$item[2]]["time"] += $time;
+        
+        self::$operations[] = array(
+            "s" => $item[3] - $GLOBALS["infusoStarted"],
+            "d" => $time,
+            "n" => $item[0]."/".$item[1]."/".$item[2],
+		);
 
     }
 
+	/**
+	 * Добавляет майлстоун (контрольную точку)
+	 **/
     public function addMilestone($name) {
 
         if(!mod::debug()) {
@@ -88,6 +93,15 @@ class profiler {
             $name,
             microtime(true),
         );
+    }
+    
+    public function start() {
+        self::setVariable("start",microtime(1));
+    }
+    
+	public function stop() {
+	    self::setVariable("stop",microtime(1));
+	    self::addMilestone("done");
     }
 
     public function setVariable($key,$val) {

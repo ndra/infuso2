@@ -2,6 +2,8 @@
 
 namespace infuso\dao;
 
+use Infuso\Core;
+
 class connection extends \infuso\core\service {
 
 	/**
@@ -33,7 +35,9 @@ class connection extends \infuso\core\service {
 	}
 	
 	public function quote($str) {
+	    Core\Profiler::beginOperation("dao","quote",$str);
 	    return $this->dbh()->quote($str);
+	    Core\Profiler::endOperation();
 	}
 	
 	public function tablePrefix() {

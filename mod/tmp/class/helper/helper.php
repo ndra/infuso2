@@ -1,6 +1,8 @@
 <?
 
-class tmp_helper extends \mod\template\widget {
+namespace Infuso\Tmp;
+
+class Helper extends \tmp_widget {
 
     private $style = array();
 
@@ -10,8 +12,8 @@ class tmp_helper extends \mod\template\widget {
     }
 
     public static function fromHTML($html) {
-        $xml = end(util::str($html)->html()->body->children());
-        $h = new tmp_helper();
+        $xml = end(\util::str($html)->html()->body->children());
+        $h = new self();
         $h->tag($xml->getName());
         foreach($xml->attributes() as $key=>$val) {
             $h->attr($key,$val);
@@ -122,7 +124,7 @@ class tmp_helper extends \mod\template\widget {
     }
 
     public function addClass($class) {
-        $classes = util::splitAndTrim($this->attr("class")," ");
+        $classes = \util::splitAndTrim($this->attr("class")," ");
         $classes[] = $class;
         $classes = array_unique($classes);
         $classes = implode(" ",$classes);
@@ -147,10 +149,11 @@ class tmp_helper extends \mod\template\widget {
             $this->attr("style",$style,false);
         }
 
-        if(!$this->param("attributes"))
+        if(!$this->param("attributes")) {
             $this->param("attributes",array());
+        }
 
-        tmp::exec("/tmp/helper/html",$this->params());
+        \tmp::exec("/tmp/helper/html",$this->params());
     }
 
 }

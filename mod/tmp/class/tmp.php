@@ -190,7 +190,7 @@ class tmp implements \mod_handler {
     }
 
     public static function helper($html) {
-        return tmp_helper::fromHTML($html);
+        return \Infuso\Tmp\Helper::fromHTML($html);
     }
 
     public static function widget($name) {

@@ -42,8 +42,9 @@ class conveyor extends core\component {
         $this->hashes[$hash] = true;
         
         $params["n"] = sizeof($this->items);
-        if(!$params["p"])
+        if(!$params["p"]) {
             unset($params["p"]);
+        }
             
         $this->items[] = $params;
     }
@@ -188,8 +189,9 @@ class conveyor extends core\component {
      **/
     private static function sortItems($a,$b) {
         // Сравниваем по приоритету
-        if($d = $a["p"] - $b["p"])
+        if($d = $a["p"] - $b["p"]) {
             return $d;
+        }
         // Если приоритеты равны, сравниваем по порядковому номеру
         return $a["n"] - $b["n"];
     }

@@ -409,7 +409,7 @@ class template extends generic {
      * Рекурсивно подключает все стили и скрипты шаблона и шаблонов внутри него
      **/
     public function incr() {
-        tmp_theme::loadDefaults();
+        \tmp_theme::loadDefaults();
         foreach(tmp::templateMap() as $key=>$tmp) {
             if(strpos($key,$this->template())===0) {
                 if($tmp["css"]) {

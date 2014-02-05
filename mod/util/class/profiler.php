@@ -11,16 +11,18 @@ class util_profiler {
         ));
         echo $fn;
         
-        tmp::get("util:profiler")->includeScriptsAndStyles();
+        tmp::get("util:profiler")->incr();
         tmp::jq();
 
     }
 
     public static function showProfiler() {
     
-        if(!mod_superadmin::check())
+        if(!mod_superadmin::check()) {
             return;
+        }
             
+		\Infuso\Core\Profiler::stop();
         tmp::exec("/util/profiler");
         
     }

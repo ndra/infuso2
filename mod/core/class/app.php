@@ -33,6 +33,7 @@ class app {
 	}
 	
 	public function __construct($params) {
+     	$GLOBALS["infusoStarted"] = microtime(1);
 	    $this->url = $params["url"];
 	    $this->post = $params["post"];
 	    $this->files = $params["files"];
@@ -204,18 +205,20 @@ class app {
 	
 	}
      
-     
 	public function execWithoutExceptionHandling() {
 
 	    self::$current = $this;
 	    $this->init();
+	    Profiler::addMilestone("init completed");
 
 	    Header("HTTP/1.0 200 OK");
 
 		// Выполняем post-команду
 	    post::process($this->post(),$this->files());
+	    Profiler::addMilestone("post completed");
 
 	    component::callDeferedFunctions();
+	    Profiler::addMilestone("defered functions");
 
 		// Выполняем экшн
 	    $action = $this->action();
@@ -223,16 +226,18 @@ class app {
         // Если события не заблокированы - вызываем событие
         if($this->eventsEnabled()) {
         	mod::fire("mod_beforeActionSYS");
+        	Profiler::addMilestone("before action");
         }
 
 	    if($action) {
 			$action->exec();
+			Profiler::addMilestone("action exec");
 	    } else {
 			$this->httpError(404);
 	    }
 
 	    component::callDeferedFunctions();
-	
+
 	}
 	
 	public function httpError() {
