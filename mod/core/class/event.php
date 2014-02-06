@@ -1,11 +1,11 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
 /**
  * Класс, описывающий событие
  **/
-class event extends component {
+class Event extends component {
 
     private static $firedEvents = array();
 

@@ -24,12 +24,12 @@ class init extends \mod_init {
 	    mod::msg("mysql version {$v} ok");
 
 		// Собираем имена таблиц
-	    self::collectNames();
+	    //self::collectNames();
 
 		// Проходимся по классам и создаем таблицы для них
 		foreach(Record::classes() as $class) {
-		    $table = Record::virtual($class)->table();
-		    $table->migrateUp();
+		    //$table = Record::virtual($class)->table();
+		    //$table->migrateUp();
 		}
 
 	}

@@ -131,13 +131,15 @@ class Action extends component {
      * Предварительно проверяет возможность его выполнения, вызывая метод test
      **/
     public function exec() {
-
+        
         if(!$this->test()) {
 			call_user_func($this->failCallback(),$this->params());
         } else {
-            mod::fire("mod_beforeAction",array(
-                "action" => $this,
-            ));
+            if(mod::app()->eventsEnabled()) {
+	            mod::fire("mod_beforeAction",array(
+	                "action" => $this,
+	            ));
+			}
             Profiler::addMilestone("before action");
             call_user_func($this->callback(),$this->params());
         }

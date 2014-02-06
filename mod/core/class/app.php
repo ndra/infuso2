@@ -94,6 +94,7 @@ class app {
 		$this->registerService("bundle","\\infuso\\core\\bundle\\manager");
 		$this->registerService("yaml","mod_confLoader_yaml");
 		$this->registerService("cache","\\infuso\\core\\cache\\service");
+
 	}
 
 	/**
@@ -216,7 +217,7 @@ class app {
 		// Выполняем post-команду
 	    post::process($this->post(),$this->files());
 	    Profiler::addMilestone("post completed");
-
+	    
 	    component::callDeferedFunctions();
 	    Profiler::addMilestone("defered functions");
 

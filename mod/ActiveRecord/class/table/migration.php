@@ -1,9 +1,9 @@
 <?
 
-namespace infuso\ActiveRecord;
+namespace Infuso\ActiveRecord;
 
-use infuso\core\mod;
-use infuso\core\file;
+use Infuso\core\mod;
+use Infuso\core\file;
 
 /**
  * Класс миграции mysql

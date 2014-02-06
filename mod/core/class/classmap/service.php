@@ -121,7 +121,7 @@ class classmapService extends service {
 	 * Возвращает массив карты классов
 	 * @todo не делать лишних проверок существования /var/classmap.php
 	 **/
- 	public static function classmap($key=null) {
+ 	public static function &classmap($key=null) {
  	
 		// Загружаем карту класса по требованию
 		if(self::$classmap === null) {
@@ -229,7 +229,7 @@ class classmapService extends service {
 			$a = explode("_",$class2);
 			$p1 = mod::root()."/".$this->scanFolder()."/".implode("/",$a).".php";
 			$p2 = mod::root()."/".$this->scanFolder()."/".implode("/",$a)."/".$a[sizeof($a)-1].".php";
-			
+
 			if(file_exists($p1)) {
 			    include_once($p1);
 			} elseif(file_exists($p2)) {

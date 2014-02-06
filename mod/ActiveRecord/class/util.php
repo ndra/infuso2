@@ -9,6 +9,11 @@ use \infuso\core\file;
  **/
 class util {
 
+    /**
+     * Буфер для фабрики таблиц forReclexClass()
+     **/
+    private static $bufferReflex = array();
+
 	/**
 	 * Возврашает имя класса reflex для данного класса
 	 * Использовалось раньше для переопределения классов
@@ -25,25 +30,43 @@ class util {
 		return $class;
 	}
 
-	/*public static function getListClass($class) {
-	    return "reflex_collection";
-	}*/
+    /*public function factoryTableForReflexClass($class) {
 
-	public static function itemFromURL($url) {
-	
-	    $action = mod_action::forwardTest(mod_url::get($url));
+        if(!self::$bufferReflex[$class]) {
 
-	    if(!$action) {
-	        return reflex::get("reflex_none",0);
-	    }
+            $iClass = util::getItemClass($class);
 
-	    if($action->action()!="item") {
-	        return reflex::get("reflex_none",0);
-	    }
+            $obj = new $iClass(0);
+            $ret = $obj->reflex_table();
 
+            // Если не указаны таблицы, используем имя класса в качестве таблицы.
+            if($ret=="@")
+                $ret = $class;
 
-	    $params = $action->params();
-	    return reflex::get($action->className(),$params["id"]);
-	}
+            if(is_string($ret)) {
+                $table = table::factoryByName($ret);
+            } elseif (is_array($ret)) {
+                $table = new self(\infuso\util\util::id(),$ret);
+            } else {
+                $table = new self(null);
+            }
+
+            // Добавляем к таблице поля из поведений
+            foreach($obj->callBehaviours("fields") as $field) {
+                $table->addField($field);
+            }
+
+            // Добавляем к таблице индексы из поведений
+            foreach($obj->callBehaviours("indexes") as $index) {
+                $table->addIndex($index);
+            }
+
+            self::$bufferReflex[$class] = $table;
+
+        }
+
+        return self::$bufferReflex[$class];
+
+    }*/
 	
 }

@@ -11,7 +11,7 @@ class tester extends \infuso\core\controller {
     public function index($p) {
 
 		\tmp::header();
-		
+
         /*$git = new \Infuso\Update\Github(array(
             "owner" => "ndra",
             "repo" => "infuso2",
@@ -19,6 +19,16 @@ class tester extends \infuso\core\controller {
 		));
 		//$git->zip();
 		$git->zip(); */
+
+		/*foreach(\Infuso\Board\Task::all()->limit(200) as $task) {
+		    $task->data("id");
+		    echo "* ";
+		} */
+		
+		$user = \user::active();
+		$v = $user->field("email")->value();
+		var_export($v);
+
 		\util::profiler();
 
 		\tmp::footer();

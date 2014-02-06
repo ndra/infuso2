@@ -12,7 +12,7 @@ class mod_init_events extends mod_init {
 	public function init() {
 	
 		// Собираем типы полей
-	    \infuso\core\field::collect();
+	    \Infuso\Core\Model\Field::collect();
 	    
 	    mod::msg("Firing init events");
 	    mod::fire("mod_beforeInit");

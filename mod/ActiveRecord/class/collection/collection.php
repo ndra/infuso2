@@ -7,7 +7,7 @@ use \reflex;
 /**
  * Модель коллекции элементов
  **/
-class Collection extends \infuso\core\component implements \Iterator {
+class Collection extends \Infuso\Core\Component implements \Iterator {
 
     private $itemsLoaded = false;
     
@@ -22,6 +22,30 @@ class Collection extends \infuso\core\component implements \Iterator {
 
     // @todo это временная переменная, для доступа из класса reflex_filter
     public $queryParams = array();
+    
+    public final function __construct($class=null) {
+        $this->itemClass = $class;
+        if($class) {
+            $obj = new $class;
+            $obj->reflex_beforeCollection($this);
+        }
+    }
+    
+    // Итераторская шняга
+    protected $items = array();
+    public function rewind() { $this->load(); reset($this->items); }
+    public function current() { $this->load(); return current($this->items); }
+    public function key() { $this->load(); return key($this->items); }
+    public function next() { $this->load(); return next($this->items); }
+    public function valid() { $this->load(); return $this->current() !== false; }
+    
+    public function prefixedTableName() {
+        return $this->virtual()->prefixedTableName();
+	}
+	
+	public function tableExists() {
+	    return $this->virtual()->tableExists();
+	}
 
     public function _beforeQuery() {
     }
@@ -37,23 +61,7 @@ class Collection extends \infuso\core\component implements \Iterator {
             $this->beforeQuery();
         }
     }
-
-    // Итераторская шняга
-    protected $items = array();
-    public function rewind() { $this->load(); reset($this->items); }
-    public function current() { $this->load(); return current($this->items); }
-    public function key() { $this->load(); return key($this->items); }
-    public function next() { $this->load(); return next($this->items); }
-    public function valid() { $this->load(); return $this->current() !== false; }
-
-    public final function __construct($class=null) {
-        $this->itemClass = $class;
-        if($class) {
-            $obj = new $class;
-            $obj->reflex_beforeCollection($this);
-        }
-    }
-
+    
     /**
      * Возвращает коллекцию элементов заданного класса
      **/
@@ -286,12 +294,12 @@ class Collection extends \infuso\core\component implements \Iterator {
      **/
     public final function from() {
 
-        if(!$this->table()->exists()) {
+        if(!$this->tableExists()) {
             return null;
         }
 
         $alias = $this->itemClass();
-        $ptable = $this->table()->prefixedName();
+        $ptable = $this->prefixedTableName();
         $from = "`$ptable` as `$alias` ";
 
         // Присоединяем коллекции-джойны
@@ -299,11 +307,11 @@ class Collection extends \infuso\core\component implements \Iterator {
         foreach($this->listJoins as $join) {
 
             $joinClassName = $join["class"];
-            $joinTable = reflex::get($joinClassName)->virtual()->table();
+            $joinTable = reflex::get($joinClassName)->virtual()->prefixedTableName();
             $on = $join["on"];
             $joinType = $join["type"];
 
-            $from.=" $joinType `{$joinTable->prefixedName()}` ";
+            $from.=" $joinType `{$joinTable}` ";
             $from.= " as `{$joinClassName}` ";
             $from.=" on {$on} ";
 
@@ -321,10 +329,10 @@ class Collection extends \infuso\core\component implements \Iterator {
      * Возвращает FROM-часть mysql-запроса без учета джойнов
      **/
     public final function fromWithoutJoins() {
-        $table = $this->table();
-        if(!$table->exists())
+        if(!$this->tableExists()) {
             return;
-        return "`{$table->prefixedName()}` as `{$this->itemClass()}` ";
+        }
+        return "`{$this->prefixedTableName()}` as `{$this->itemClass()}` ";
     }
 
     /**
@@ -411,13 +419,6 @@ class Collection extends \infuso\core\component implements \Iterator {
     }
 
     /**
-     * @return Возвращает объект таблицы
-     **/
-    public function table() {
-        return table::factoryTableForReflexClass($this->itemClass());
-    }
-
-    /**
      * Возвращает true/false в зависимости от того пуста ли коллекция
      **/
     public function void() {
@@ -433,8 +434,7 @@ class Collection extends \infuso\core\component implements \Iterator {
         $this->callBeforeQuery();
 
         // Если у коллекции нет таблицы, возвращаем 0 не выполняя запрос
-        // @todo - это проверка временная. Переписать более аккуратно
-        if(!$this->table()->id()) {
+        if(!$this->tableExists()) {
             return 0;
         }
 

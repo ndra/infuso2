@@ -1,6 +1,6 @@
 <?
 
-class lang_type_textarea extends lang_type_textfield {
+class lang_type_textarea extends Infuso\Core\Model\Field {
 
 	public function typeID() {
 		return "fl2n-mvbo-yvs7-wern-y5bt";

@@ -1,6 +1,6 @@
 <?
 
-class lang_type_textfield extends mod_field {
+class lang_type_textfield extends Infuso\Core\Model\Field {
 
 	public function typeID() {
 		return "lhxc-e0jk-uhjw-a27c-g0o8";

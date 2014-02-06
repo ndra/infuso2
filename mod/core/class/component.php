@@ -99,11 +99,12 @@ class Component {
      * С помощью данного метода реализуется механизм поведений
      **/
     public final function __call($fn,$params) {
-
+    
         // Сначала пытаемся вызвать метод у поведений
         foreach($this->behaviours() as $b) {
-            if($fn2 = $b->routeBehaviourMethod($fn))
+            if($fn2 = $b->routeBehaviourMethod($fn)) {
                 return call_user_func_array(array($b,$fn2),$params);
+            }
         }
 
         // Пытаемся вызвать метод _fn
@@ -201,7 +202,6 @@ class Component {
     }
 
     private final function normalizeBehaviours() {
-
 
         $this->addDefaultBehaviours();
         if(!$this->behavioursSorted) {
@@ -359,8 +359,9 @@ class Component {
         if(func_num_args()==1) {
 
             if(is_array($key)) {
-                foreach($key as $a=>$b)
+                foreach($key as $a=>$b) {
                     $this->param($a,$b);
+                }
                 return $this;
             }
 
@@ -377,7 +378,6 @@ class Component {
         }
 
         if(func_num_args()==2) {
-
             if(!in_array($key,$this->lockedParams)) {
                 $this->param[$key] = $val;
             }
@@ -400,11 +400,12 @@ class Component {
         if(func_num_args()==1) {
 
             if(!is_array($params)) {
-                throw new Exception("mod_component::params() called with single argument of type ".gettype($params).": '$string', expecting array" );
+                throw new \Exception("mod_component::params() called with single argument of type ".gettype($params).": '$string', expecting array" );
             }
 
-            foreach($params as $key=>$val)
+            foreach($params as $key => $val) {
                 $this->param($key,$val);
+            }
             return $this;
         }
 
@@ -453,6 +454,9 @@ class Component {
         }
     }
 
+	/**
+	 * Возвращает id компонента, чтобы как-то отличить уникальные инстансы
+	 **/
     public function getComponentID() {
         if(!$this->componentID) {
             $this->componentID = util::id();
@@ -502,5 +506,3 @@ class Component {
 	}
 
 }
-
-register_shutdown_function(array("\infuso\core\component","callDeferedFunctions"));

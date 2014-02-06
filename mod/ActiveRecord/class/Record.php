@@ -9,7 +9,7 @@ use \infuso\core\profiler;
 /**
  * @todo вернуть register_shutdown_function или аналог
  **/
-class Record extends \mod_model {
+class Record extends \Infuso\Core\Model\Model {
 
 	/**
 	 * первичный ключ элемента
@@ -61,6 +61,35 @@ class Record extends \mod_model {
         return array(
             "id",
         );
+    }
+    
+    public final function prefixedTableName() {
+        $ret = $this->reflex_table();
+        if($ret=="@") {
+            return "infuso_".get_class($this);
+        }
+        return "infuso_".$ret["name"];
+    }
+    
+	public final function tableExists() {
+	    return true;
+    }
+    
+    public function modelFields() {
+
+        $ret = $this->reflex_table();
+
+        // Если не указаны таблицы, используем имя класса в качестве таблицы.
+        if($ret=="@") {
+            throw new \Exception("model fields @ ".get_class($this));
+        }
+
+		$r = array();
+		foreach($ret["fields"] as $fieldDescr) {
+		    $r[] = \Infuso\Core\Model\Field::get($fieldDescr);
+		}
+		return $r;
+
     }
 
     /**
@@ -286,10 +315,6 @@ class Record extends \mod_model {
         return $item;
     }
 
-    public function modelFields() {
-        return $this->table()->fields();
-    }
-
     /**
      * @return true/false Существует ли объект
      **/
@@ -349,20 +374,6 @@ class Record extends \mod_model {
             return $matches[1]."(`".$matches[2]."`.`".$matches[3]."`)";
 
         return "";
-    }
-
-    /**
-     * Возвращает объект таблицы модели
-     **/
-    public final function table() {
-
-        profiler::beginOperation("reflex","table",get_class($this));
-
-        $ret = table::factoryTableForReflexClass(get_class($this));
-
-        profiler::endOperation();
-
-        return $ret;
     }
 
     /**
@@ -888,18 +899,6 @@ class Record extends \mod_model {
         $ret = $this->reflex_children();
         $ret2 = $this->callBehaviours("reflex_children");
         return array_merge($ret,$ret2);
-    }
-
-    // Возвращает все параметры конфигурации
-    public static function configuration() {
-        return array(
-            array("id"=>"reflex:mysql_host","title"=>"mysql host"),
-            array("id"=>"reflex:mysql_user","title"=>"mysql user"),
-            array("id"=>"reflex:mysql_password","title"=>"Пароль к БД"),
-            array("id"=>"reflex:mysql_db","title"=>"База даных"),
-            array("id"=>"reflex:mysql_table_prefix","title"=>"Префикc таблиц"),
-            array("id"=>"reflex:content_processor","title"=>"Класс процессора контента"),
-        );
     }
 
 }
