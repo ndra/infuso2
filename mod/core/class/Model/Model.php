@@ -19,15 +19,9 @@ abstract class Model extends Core\Controller {
     private $fields = null;
     
     /**
-     * Набор полей (объект)
+     * Набор полей (объект класса Model\Fieldset)
      **/
     private $fieldset = array();
-
-    /**
-     * Статический кэш для полей модели
-     * Поля кэшируются для каждого класса
-     **/
-    private static $modelFields = array();
 
     /**
      * Возвращает коллекцию полей модели
@@ -49,24 +43,6 @@ abstract class Model extends Core\Controller {
         Core\Profiler::endOperation();
 
         return $this->fields;
-    }
-
-	/**
-	 * Возвращает массив полей модели
-	 * Результат кэшируется
-	 **/
-    private function modelFieldBuffered() {
-
-        $class = get_class($this);
-
-        if(!array_key_exists($class, self::$modelFields)) {
-            self::$modelFields[$class] = array();
-            foreach($this->modelFields() as $field) {
-                self::$modelFields[$class][$field->name()] = $field;
-            }
-        }
-        
-        return self::$modelFields[$class];
     }
 
     /**
@@ -99,10 +75,17 @@ abstract class Model extends Core\Controller {
 		
     }
 
-    /**
-     * Метод, который должен вернуть коллекцию полей модели
-     **/
-     abstract function modelFields();
+     /**
+      * Фабрика полей
+      * Метод должен быть определен в дочернем классе
+      **/
+     abstract protected function fieldFactory($name);
+     
+     /**
+      * Возвращает массив с именами полей
+      * Метод должен быть определен в дочернем классе
+      **/
+     abstract protected function fieldNames();
 
     /**
      * Устанавливает начальные данные модели
