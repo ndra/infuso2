@@ -26,8 +26,10 @@ class tester extends \infuso\core\controller {
 		} */
 		
 		$user = \user::active();
-		$v = $user->field("email")->value();
-		var_export($v);
+		foreach($user->fields() as $field) {
+		    echo $field->name()." - ".$field->value();
+		    echo "<br/>";
+		}
 
 		\util::profiler();
 

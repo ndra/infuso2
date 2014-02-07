@@ -10,10 +10,6 @@ class mod_init_events extends mod_init {
 	 * @todo убрать отсюда \infuso\core\field::collect()
 	 **/
 	public function init() {
-	
-		// Собираем типы полей
-	    \Infuso\Core\Model\Field::collect();
-	    
 	    mod::msg("Firing init events");
 	    mod::fire("mod_beforeInit");
 		mod::fire("mod_init");

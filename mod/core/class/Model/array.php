@@ -8,6 +8,10 @@ class ArrayField extends Field {
     public function typeID() {
         return "puhj-w9sn-c10t-85bt-8e67";
     }
+    
+    public function typeAlias() {
+        return "array";
+    }
 
     public function typeName() {
         return "Массив";

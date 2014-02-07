@@ -42,12 +42,27 @@ abstract class Field extends Core\Component {
     }
     
     /**
-     * Возвращает путь к файлу с типами полей
+     * Преобразует алиас в класс поля
      **/
-	private static function path() {
-		return \mod::app()->varPath()."/field.php";
-	}
+    public static function aliasToClassName($alias) {
+    
+        if(!is_string($alias)) {
+			Throw new \Exception("Bad field alias");
+        }
 
+        if(\mod::service("classmap")->testClass($alias,"\\Infuso\\Core\\Model\\Field")) {
+            return $alias;
+        }
+        
+        $aliases = \mod::service("classmap")->classmap("fields");
+        if(!$class = $aliases[$alias]) {
+            Throw new \Exception("Field alias {$alias} not found");
+        }
+        
+        return $class;
+        
+    }
+    
     /**
      * Фабрика-конструктор полей
      * Если передана строка, то она трактуется как имя класса или тип поля
@@ -55,29 +70,17 @@ abstract class Field extends Core\Component {
      **/
     public static function get($conf) {
     
-		if(is_object($conf)) {
-		    return $conf;
-		}
+		if (is_string($conf)) {
 
-        self::loadDescription();
-
-        if(is_string($conf)) {
-
-            $class = $conf;
-
-            if(!mod::service("classmap")->testClass($class,"\\Infuso\\Core\\Model\\Field")) {
-                $class = self::$descr[$conf];
-            }
-
+			$class = self::aliasToClassName($conf);
             $conf = array(
                 "editable" => 1,
             );
 
+        } elseif(is_array($conf)) {
+            $class = self::aliasToClassName($conf["type"]);
         } else {
-            $class = self::$descr[$conf["type"]];
-            if(!$class) {
-                $class = "\\Infuso\\Core\\Model\\Textarea";
-            }
+            throw new \Exception("Bad argument for Field::get()");
         }
 
         return new $class($conf);
@@ -128,36 +131,6 @@ abstract class Field extends Core\Component {
     }
 
     /**
-     * Загружает описание типов полей
-     **/
-    private function loadDescription() {
-        if(!self::$descr) {
-            self::$descr = Core\File::get(self::path())->inc();
-        }
-    }
-
-    /**
-     * Собирает описание типов полей
-     **/
-    public static function collect() {
-        \file::mkdir(file::get(self::path())->up());
-        $ret = array();
-        foreach(\mod::service("classmap")->classes("infuso\\core\\field") as $class) {
-
-            $obj = new $class;
-
-            $ret[call_user_func(array($class,"typeID"))] = $class;
-
-            $a = $obj->typeAlias();
-            if($a) {
-                $ret[$a] = $class;
-            }
-        }
-        \util::save_for_inclusion(self::path(),$ret);
-        \mod::msg("Описания типов собраны");
-    }
-
-    /**
      * @return Должна вернуть уникальный тип поля
      **/
     public abstract function typeID();
@@ -167,9 +140,9 @@ abstract class Field extends Core\Component {
      * Алиас используется при создании поля, чтобы не запоминвать громоздкий ID или имя класса
      **/
     public function typeAlias() {
-        $class = get_class($this);
-        if(preg_match("/^mod_field_(.*)/",$class,$matches)) {
-            return $matches[1];
+        $class = get_called_class();
+        if(preg_match("/^infuso\\\\core\\\\model\\\\(.*)/i",$class,$matches)) {
+            return strtolower($matches[1]);
 		}
     }
 

@@ -34,7 +34,7 @@ abstract class Model extends Core\Controller {
      **/
     public final function fields() {
 
-        mod_profiler::beginOperation("reflex","fields",get_class($this));
+        Core\Profiler::beginOperation("reflex","fields",get_class($this));
 
         if(!$this->fieldset) {
 
@@ -43,10 +43,10 @@ abstract class Model extends Core\Controller {
                 $this->field($name);
             }
 
-            $this->fields = new mod_fieldset($this->fields);
+            $this->fields = new Fieldset($this->fields);
         }
         
-        mod_profiler::endOperation();
+        Core\Profiler::endOperation();
 
         return $this->fields;
     }

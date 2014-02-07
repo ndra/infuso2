@@ -7,6 +7,8 @@ use infuso\core\mod as mod;
 
 class builder {
 
+	private static $building = false;
+
 	public function excludePath() {
 	    return mod::app()->varPath()."/exclude/";
 	}
@@ -250,8 +252,24 @@ class builder {
 		return $ret;
 	}
 	
-	private static $building = false;
+	/**
+	 * Вовзарает описание полей
+	 **/
+	public static function buildFields() {
+	
+		$ret = array();
 
+		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
+		foreach(mod::service("classmap")->classes("Infuso\\Core\\Model\\Field") as $class) {
+			$ret[$class::typeId()] = $class;
+			if($alias = $class::typeAlias()) {
+				$ret[$alias] = $class;
+			}
+		}
+
+		return $ret;
+	}
+	
 	/**
 	 * Строит карту классов
 	 **/
@@ -278,6 +296,7 @@ class builder {
 		$map["handlers"] = self::handlers();
 		$map["routes"] = self::getRoutes();
 		$map["services"] = self::services();
+		$map["fields"] = self::buildFields();
 
 		// Сохраняем карту классов в памяти, чтобы использовать ее уже в этом запуске скрипта
 		mod::service("classmap")->storeClassMap($map);

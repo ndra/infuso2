@@ -519,7 +519,7 @@ class Record extends \Infuso\Core\Model\Model {
             return false;
 		}
 		
-        $table = $this->table()->prefixedName();
+        $table = $this->prefixedTableName();
 
         // Вставляем в таблицу
         $data = array();
