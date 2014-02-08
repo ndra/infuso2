@@ -1,5 +1,8 @@
 <?
 
+/**
+ * todo тотально рефакторить класс
+ **/
 class reflex_defaultBehaviour extends mod_behaviour {
 
     public function behaviourPriority() {

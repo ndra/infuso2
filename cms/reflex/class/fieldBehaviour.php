@@ -6,23 +6,8 @@
 class reflex_table_fieldBehaviour extends mod_behaviour {
 
     /**
-     * Сообщаем рефлексу об изменении поля
-     **/
-    public function afterFieldChange() {
-        if($r = $this->reflexItem()) {
-            $r->markAsDirty();
-        }
-    }
-
-    public function conf() {
-        $conf = array(
-            "indexEnabled" => $this->component()->conf["indexEnabled"] ? 1 : 0,
-        );
-        return $conf;
-    }
-
-    /**
      * Возвращает имя поля в формате tableName.fieldName
+     * @todo исправить ошибку
      **/
     public function fullName() {
         return get_class($this->component()->model()).".".$this->name();
@@ -41,54 +26,6 @@ class reflex_table_fieldBehaviour extends mod_behaviour {
             $ret = true;
 
         return $ret*1;
-    }
-
-
-    /**
-     * inx.конструктор дополнительных настроек поля
-     **/
-    public function inxConf() {
-
-        $ret = array(
-            "type" => "inx.form",
-            "items" => array(),
-            "style" => array(
-                "padding" => 0,
-                "border" => 0,
-            ),
-        );
-
-        foreach($this->component()->extraConf() as $conf)
-            $ret["items"][] = array(
-                "name" => $conf["name"],
-                "width" => "auto",
-                "label" => $conf["label"],
-                "value" => $this->component()->conf($conf["name"]),
-            );
-
-        return $ret;
-    }
-
-    /**
-     * Устанавливает таблицу поля
-     **/
-    public final function setTable($table) {
-        $this->param("table",$table);
-    }
-
-    /**
-     * Возвращает таблицу поля
-     **/
-    public final function table() {
-        return $this->param("table");
-    }
-
-     /**
-     * Возвращает объект reflex, связанный с данным полем
-     **/
-    public function reflexItem() {
-        $model = $this->model();
-        return $model;
     }
 
     /**

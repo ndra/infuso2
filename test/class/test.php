@@ -25,11 +25,8 @@ class tester extends \infuso\core\controller {
 		    echo "* ";
 		} */
 		
-		$user = \user::active();
-		foreach($user->fields() as $field) {
-		    echo $field->name()." - ".$field->value();
-		    echo "<br/>";
-		}
+		$task = \Infuso\ActiveRecord\Record::create("Infuso\\Board\\Task");
+		var_export($task->data());
 
 		\util::profiler();
 

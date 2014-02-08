@@ -5,39 +5,57 @@ use \infuso\core\event;
 use \infuso\core\mod;
 use \reflex;
 use \infuso\core\profiler;
+use \Infuso\Core\Model;
+use \Infuso\Core;
 
 /**
  * @todo вернуть register_shutdown_function или аналог
  **/
 class Record extends \Infuso\Core\Model\Model {
 
+	const STATUS_NEW = 100;
+	const STATUS_VIRTUAL = 0;
+	const STATUS_CHANGED = 300;
+	const STATUS_SAVED = 400;
+	const STATUS_DELETED = 500;
+	const STATUS_NON_EXISTENT = 600;
+
 	/**
 	 * первичный ключ элемента
 	 **/
     protected $id = null;
-    
-	/**
-	 * Коллекция полей
-	 **/
-    private $fields = null;
-    
-    private $justCreated;
-    
-    private static $created = 0;
-    private static $deleted = 0;
-    private static $stored = 0;
-    
-    private static $buffer = array();
-    
-	/**
-     * Массив с объектами, которые нуждаются в сохранении
+
+
+	protected $recordStatus = 0;
+
+    /**
+     * Фабрика полей
+     * Возвращает поле по его имени
+     * @todo сделать кэширвоанеи работы
      **/
-    public static $dirtyItems = array();
+    public function fieldFactory($name) {
+		$model = $this->reflex_table();
+		$ret = null;
+		foreach($model["fields"] as $fieldDescr) {
+		    if($fieldDescr["name"] == $name) {
+		        $ret = Model\Field::get($fieldDescr);
+		    }
+		}
+		return $ret;
+    }
     
     /**
-     * Признак того что объект виртуальный
+     * Возвращает массив имен полей модели
+     * @todo сделать кэширвоанеи работы
      **/
-    protected $isVirtual = false;
+    public function fieldNames() {
+        $names = array();
+        $model = $this->reflex_table();
+		foreach($model["fields"] as $fieldDescr) {
+		    $names[] = $fieldDescr["name"];
+		}
+		return $names;
+    }
     
     // Триггеры
     public function reflex_beforeCreate() {
@@ -75,23 +93,6 @@ class Record extends \Infuso\Core\Model\Model {
 	    return true;
     }
     
-    public function modelFields() {
-
-        $ret = $this->reflex_table();
-
-        // Если не указаны таблицы, используем имя класса в качестве таблицы.
-        if($ret=="@") {
-            throw new \Exception("model fields @ ".get_class($this));
-        }
-
-		$r = array();
-		foreach($ret["fields"] as $fieldDescr) {
-		    $r[] = \Infuso\Core\Model\Field::get($fieldDescr);
-		}
-		return $r;
-
-    }
-
     /**
      * @return Функция вызывается при создании коллекции
      * @param $items class reflex_list
@@ -103,16 +104,8 @@ class Record extends \Infuso\Core\Model\Model {
     public function defaultBehaviours() {
         $ret = parent::defaultBehaviours();
         $ret[] = "reflex_defaultBehaviour";
+        $ret[] = "reflex_reflexBehaviour";
         return $ret;
-    }
-
-    /**
-     * @return bool
-     * true - объект опубликован
-     * false - не опубликован
-     **/
-    public final function published() {
-        return $this->reflex_published();
     }
 
     public static function classes() {
@@ -125,115 +118,7 @@ class Record extends \Infuso\Core\Model\Model {
         return $ret;
     }
 
-    /**
-     * Возвращает объект домена, связанного с элементом
-     **/
-    public final function domain() {
-        $ret = $this->reflex_domain();
-        if(!is_object($ret)) {
-            $ret = reflex_domain::get($ret);
-        }
-        return $ret;
-    }
 
-    private $metaObject = null;
-
-    /**
-     * Возвращает объект метаданных данного объекта.
-     * На практике рекомендуется пользоваться ф-цией reflex::meta()
-    **/
-    public final function metaObject($lang=null) {
-
-        if(!$this->metaObject) {
-
-            if(!$lang) {
-                $lang = \lang::active()->id();
-            }
-
-            if(get_class($this)=="reflex_meta_item") {
-                return $this;
-            }
-
-            if(!$this->reflex_meta()) {
-                return reflex::virtual("reflex_meta_item");
-            }
-
-            $this->metaObject = \reflex_meta_item::get(get_class($this).":".$this->id(),$lang);
-        }
-
-        return $this->metaObject;
-    }
-
-    /**
-     * reflex::meta($key,$val)
-     * При вызове с одним параметром вернет значение метаданных с этим ключем.
-     * При вызове с двумя параметрами - изменит.
-     **/
-    public final function meta($key,$val=null) {
-
-        if(func_num_args()==1) {
-
-            $ret = $this->metaObject()->data($key);
-            return $ret;
-
-        } elseif (func_num_args()==2) {
-
-            $obj = $this->metaObject();
-            if(!$obj->exists()) {
-                $hash = get_class($this).":".$this->id();
-                $obj = reflex::create("reflex_meta_item",array(
-					"hash" => $hash,
-				));
-				$this->metaObject = $obj;
-            }
-            $obj->data($key,$val);
-        }
-    }
-
-    /**
-     * Изменяет url-адрес объекта
-     **/
-    public final function setUrl($url) {
-    
-        if(!$this->reflex_route()) {
-            return;
-        }
-        
-        $hash = get_class($this).":".$this->id();
-        $route = reflex_route_item::get($hash);
-        
-        if(!$route->exists()) {
-            $route = reflex::create("reflex_route_item",array(
-				"hash" => $hash,
-			));
-        }
-        
-        $route->data("url",$url);
-
-        // Сохраняем мету. Это вызовет исправление url (русский в транслит, проблемы в тире и т.п.)
-        $route->store();
-    }
-
-    public final function reflex_updateSearch() {
-    
-        if(!$this->reflex_meta()) {
-            return;
-		}
-
-        $search = $this->reflex_search();
-
-        // Если объект не опубликован или запрещен для поиска, передаем пустую строку в данные для поиска
-        if(!$this->published() || $search=="skip") {
-            if($this->metaObject()->exists()) {
-                $this->meta("search","");
-            }
-            return;
-        }
-
-        $this->meta("search",$search);
-        $this->meta("searchWeight",$this->reflex_searchWeight());
-
-    }
 
     /**
      * Возвращает название объекта.
@@ -284,35 +169,16 @@ class Record extends \Infuso\Core\Model\Model {
         $this->id = $id;
     }
 
-    public static function get($class,$id=null,$data=null) {
-
-        // Определяем класс элементов / последовательности
-        $class = util::getItemClass($class);
-
-        // Вызов функции с одним аргументом возвращает коллекцию
+    public static function get($class,$id=null) {
+    
         if(func_num_args()==1) {
-            return Collection::get($class);
+            return Core\Mod::service("ar")->collection($class);
+        } elseif(func_num_args()==2) {
+            return Core\Mod::service("ar")->get($class,$id);
         }
+        
+        throw new \Exception("ActiveRecord::get() wrong number of arguments");
 
-        // Если id <= 0, возвращаем несуществующий объект без запроса в базу
-        if($id <= 0) {
-            $ret = new $class(0);
-            $ret->setInitialData();
-            return $ret;
-        }
-
-        $item = self::$buffer[$class][$id];
-        if(!$item) {
-            if($data) {
-                $item = new $class($id);
-                $item->setInitialData($data);
-                self::$buffer[$class][$id] = $item;
-            } else {
-                $item = reflex::get($class)->eq("id",$id)->one();
-            }
-        }
-
-        return $item;
     }
 
     /**
@@ -323,27 +189,18 @@ class Record extends \Infuso\Core\Model\Model {
     }
 
     /**
-     * Создает виртуальный объект
-     * Если вызвана из контекста объекта, создает виртуальный объект - копию текущего
-     **/
-    public function virtual($class=null,$data=array()) {
-
-        if(!$class && $this) {
-            return reflex::virtual(get_class($this),$this->data());
-        }
-
-        $class = util::getItemClass($class);
-        $item = new $class($data["id"]);
-        $item->isVirtual = true;
-        $item->setInitialData($data);
-        return $item;
-    }
-
-    /**
      * @return true/false в зависимости от того виртуальный ли объект
      **/
     public function isVirtual() {
-        return $this->isVirtual;
+        return $this->recordStatus() == self::STATUS_VIRTUAL;
+    }
+    
+    public function setRecordStatus($status) {
+        $this->recordStatus = $status;
+    }
+    
+	public function recordStatus() {
+	    return $this->recordStatus;
     }
 
     /**
@@ -366,12 +223,14 @@ class Record extends \Infuso\Core\Model\Model {
         }
 
         // Функции
-        if(preg_match("/^([a-z0-9\_]+)\(({$symbols})\)$/i",$name,$matches))
+        if(preg_match("/^([a-z0-9\_]+)\(({$symbols})\)$/i",$name,$matches)) {
             return $matches[1]."(`$table`.`".$matches[2]."`)";
+        }
 
         // Функции
-        if(preg_match("/^([a-z0-9\_]+)\(({$symbols})\.({$symbols})\)$/i",$name,$matches))
+        if(preg_match("/^([a-z0-9\_]+)\(({$symbols})\.({$symbols})\)$/i",$name,$matches)) {
             return $matches[1]."(`".$matches[2]."`.`".$matches[3]."`)";
+        }
 
         return "";
     }
@@ -462,51 +321,39 @@ class Record extends \Infuso\Core\Model\Model {
     /**
      * Добавляет новую запись в базу
      **/
-    public static function create($class,$insert=array(),$keepID=false) {
-    
-        if(!is_string($class)) {
-            throw new Exception ("reflex::create() first argument must be string, have ".gettype($class));
-        }
-    
-        $class = util::getItemClass($class);
-        $item = new $class(null);
-        $item->setInitialData($insert);
-        $item->createThis($keepID);
-        return $item;
+    public static function create($class, $data = array(), $keepID = false) {
+		return mod::service("ar")->create($class,$data,$keepID);
     }
 
     /**
      * Создает для данного объекта запись в базе
      **/
-    private function createThis($keepID = false) {
+    public function createThis($keepID = false) {
 
-        $this->justCreated = true;
-        
-		$event = new \infuso\core\event("reflex_beforeCreate",array(
+		/*$event = new \Infuso\Core\Event("reflex_beforeCreate",array(
 		    "item" => $this,
 		));
 
         if(!$this->callReflexTrigger("reflex_beforeCreate",$event)) {
             return false;
-        }
+        } */
 
 		$this->storeCreated($keepID);
             
-		$event = new \infuso\core\event("reflex_afterCreate",array(
+		/*$event = new \Infuso\Core\Event("reflex_afterCreate",array(
 		    "item" => $this,
 		));
         
         $this->callReflexTrigger("reflex_afterCreate",$event);
-        self::$created++;
-        
-        $this->justCreated = false;
+        */
+
     }
 
     /**
      * Сохраняет созданный объект в базу
      **/
     private final function storeCreated($keepID = false) {
-
+    
         if(!$this->writeEnabled()) {
             return false;
 		}
@@ -575,66 +422,10 @@ class Record extends \Infuso\Core\Model\Model {
     }
 
     /**
-     * Помечает данные объект как изменный
-     * Все измененные объекты сохраняются при вызове reflex::storeAll();
-     **/
-    public final function markAsDirty() {
-        if(!$this->exists())
-            return false;
-        self::$dirtyItems[get_class($this).":".$this->id()] = true;
-    }
-
-    /**
-     * Убирает объект из списка измененных
-     * Убирает у полей объекта отметку о том что они изменились
-     **/
-    public final function markAsClean() {
-
-        // Убираем объект из списка измененных
-        $key = get_class($this).":".$this->id();
-        unset(self::$dirtyItems[$key]);
-
-        // Убираем у полей отметку об изменении
-        foreach($this->fields()->changed() as $field) {
-            $field->applyChanges();
-        }
-
-    }
-
-    /**
      * Сохраняет в базу все изменения
-     * Вызывается автоматически в конце работы скрипта
      **/
     public static function storeAll() {
-
-        profiler::addMilestone("reflex before store");
-
-        $items = array_keys(self::$dirtyItems);
-
-        $b = 0;
-        
-        while(sizeof($items)) {
-
-            self::$dirtyItems = array();
-
-            foreach($items as $key) {
-
-                list($class,$id) = explode(":",$key);
-                $item = self::get($class,$id);
-                $item->store();
-
-            }
-
-            $items = array_keys(self::$dirtyItems);
-            $n++;
-
-            if($n>100) {
-				throw new Exception("reflex_storeAll() - recursion");
-			}
-
-        }
-
-        profiler::addMilestone("reflex stored");
+		mod::service("ar")->storeAll();
     }
 
     private final function from() {
@@ -643,8 +434,9 @@ class Record extends \Infuso\Core\Model\Model {
 
     private final function writeEnabled() {
 
-        if($this->isVirtual())
+        if($this->isVirtual()) {
             return false;
+         }
 
         return true;
     }
@@ -716,8 +508,9 @@ class Record extends \Infuso\Core\Model\Model {
      * Отменяя все изменения, сделанные после загрузки
      **/
     public function revert() {
-        foreach($this->fields() as $field)
+        foreach($this->fields() as $field) {
             $field->revert();
+        }
         $this->markAsClean();
     }
 
@@ -733,11 +526,7 @@ class Record extends \Infuso\Core\Model\Model {
      * Записывает все объекты и очищает буффер
      **/
     public static function freeAll() {
-        foreach(self::$buffer as $class)
-            foreach($class as $item)
-                $item->free();
-        self::$buffer = array();
-        self::$dirtyItems = array();
+        mod::service("ar")->freeAll();
     }
 
     /**
@@ -788,117 +577,7 @@ class Record extends \Infuso\Core\Model\Model {
         return $this->reflex_parent();
     }
 
-    /**
-     * Возвращает объект файлового хранилища, связанного с данным объектом
-     **/
-    public final function storage() {
-        $source = $this->reflex_storageSource();
-        return new storage(get_class($source),$source->id());
-    }
 
-    public function log($text,$params=array()) {
     
-        if(!$this->editor()->log()) {
-			return;
-		}
-        
-        if(get_class($this)=="reflex_log") {
-			return;
-		}
-		
-		$source = $this->reflex_logSource();
-
-        $log = reflex::create("reflex_log",array(
-            "user" => \user::active()->id(),
-            "index" => get_class($source).":".$source->id(),
-            "text" => $text,
-            "comment" => $params["comment"],
-        ));
-    }
-    
-    public function reflex_logSource() {
-        return $this;
-    }
-
-    public function getLog() {
-        $index = get_class($this).":".$this->id();
-        return reflex_log::all()->eq("index",$index);
-    }
-
-    /**
-     * Возвращает количество удаленных объектов
-     **/
-    public static function deleted() {
-        return self::$deleted;
-    }
-
-    /**
-     * Возвращает количество сохраненных объектов
-     **/
-    public static function stored() {
-        return self::$stored;
-    }
-
-    /**
-     * Возвращает количество созданных объектов
-     **/
-    public static function created() {
-        return self::$created;
-    }
-
-    /**
-     * Сбрасывает счетчики статистики
-     **/
-    public static function clearStatistics() {
-        self::$created = 0;
-        self::$deleted = 0;
-        self::$stored = 0;
-    }
-
-    /**
-     * Возвращает редактор элемента
-     **/
-    public final function editor() {
-
-        $map = \infuso\core\file::get(mod::app()->varPath()."/reflex/editors.php")->inc();
-
-        $class = $this->reflex_editor();
-
-        if(!$class) {
-
-            $classes = $map[get_class($this)];
-            if(!$classes) {
-                $classes = array();
-            }
-
-            $class = end($classes);
-
-        }
-
-        if(!$class) {
-            return reflex::get(0,0)->editor();
-        }
-
-        return new $class($this->id());
-
-    }
-
-    public function reflex_editor() {
-        return null;
-    }
-
-    /**
-     * Метод должен вернуть Массив коллекций потомков
-     * Переопределите его в своем классе для реализации иерархии
-     **/
-    public function reflex_children() {
-        return array();
-    }
-
-    public final function childrenWithBehaviours() {
-        $ret = $this->reflex_children();
-        $ret2 = $this->callBehaviours("reflex_children");
-        return array_merge($ret,$ret2);
-    }
 
 }

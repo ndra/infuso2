@@ -27,53 +27,21 @@ abstract class Model extends Core\Controller {
      * Возвращает коллекцию полей модели
      **/
     public final function fields() {
-
-        Core\Profiler::beginOperation("reflex","fields",get_class($this));
-
-        if(!$this->fieldset) {
-
-            $modelFields = $this->modelFieldBuffered();
-            foreach($modelFields as $name => $field) {
-                $this->field($name);
-            }
-
-            $this->fields = new Fieldset($this->fields);
-        }
-        
-        Core\Profiler::endOperation();
-
-        return $this->fields;
+		$fieldset = new Fieldset($this,$this->fieldNames());
+		return $fieldset;
     }
 
     /**
-     * @return Возвращает поле по id
+     * @return Возвращает поле по имени
      **/
     public final function field($name) {
-    
-        if(!$this->fields[$name]) {
-
-            $fields = $this->modelFieldBuffered();
-            $field = $fields[$name];
-            
-			if($field) {
-			
-	            $field = clone $field;
-	            $field->setModel($this);
-	            $this->fields[$name] = $field;
-	            
-            } else {
-            
-                $field = Field::getNonExistent();
-                $field->setModel($this);
-                return $field;
-            
-            }
-
+        $ret = $this->fieldFactory($name);
+        if(!$ret) {
+            $ret = Field::getNonExistent();
         }
-        
-        return $this->fields[$name];
-		
-    }
+        $ret->setModel($this);
+        return $ret;
+	}
 
      /**
       * Фабрика полей
@@ -119,13 +87,15 @@ abstract class Model extends Core\Controller {
 
         // Если два параметра - меняем значение
         elseif(func_num_args()==2) {
-            $this->field($key)->value($val);
+            $field = $this->field($key);
+            $preparedValue = $field->prepareValue($val);
+            $this->data[$key] = $val;
         }
     }
 
     /**
      * Передает в модель массив данных
-     * Аргументом может быть какже экземпляр класса mod_fieldset
+     * @todo сделать чтобы в качестве данных можно было передавать модель или филдсет
      **/
     public function setData($data) {
 
@@ -135,13 +105,11 @@ abstract class Model extends Core\Controller {
             }
         }
 
-        if(is_object($data) && get_class($data)=="mod_fieldset") {
-            foreach($data as $field) {
-                $this->data($field->name(),$field->value());
-            }
-        }
-
     }
+    
+    public function isFieldChanged() {
+		return false;
+	}
 
     /**
      * Возвращает данные в формате, зависящем от типа поля.

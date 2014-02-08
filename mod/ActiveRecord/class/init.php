@@ -23,9 +23,6 @@ class init extends \mod_init {
 	    
 	    mod::msg("mysql version {$v} ok");
 
-		// Собираем имена таблиц
-	    //self::collectNames();
-
 		// Проходимся по классам и создаем таблицы для них
 		foreach(Record::classes() as $class) {
 		    //$table = Record::virtual($class)->table();
@@ -33,23 +30,4 @@ class init extends \mod_init {
 		}
 
 	}
-	
-	/**
-	 * Собирает имена таблиц в файл
-	 * @todo со временем мы откажемся от хранения таблиц в отдельных файлах
-	 **/
-	public static function collectNames() {
-	
-		$ret = array();
-		foreach(mod::service("bundle")->all() as $mod) {
-		    foreach(table::factoryModuleTables($mod->path()) as $table) {
-		    	$ret[$table->name()] = $table->id();
-		    }
-		}
-		
-		$dir = mod::app()->varPath()."/reflex";
-		file::mkdir($dir);
-		\infuso\util\util::save_for_inclusion("{$dir}/names.php",$ret);
-	}
-
 }

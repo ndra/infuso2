@@ -9,12 +9,20 @@ use Infuso\Core;
 class Fieldset implements \Iterator {
 
 	private $fields;
+	private $model;
 
-	public function __construct($fields) {
-		if(!is_array($fields)) {
-		    throw new \Exception("Model\Fields bad argument");
+	public function __construct($model,$fields) {
+	
+		if(!is_subclass_of($model,"Infuso\\Core\\Model\\Model")) {
+		    throw new \Exception("Model\Fields bad first argument");
 		}
+
+		if(!is_array($fields)) {
+		    throw new \Exception("Model\Fields bad second argument");
+		}
+		
 		$this->fields = $fields;
+		$this->model = $model;
 	}
 
     public function rewind() {
@@ -22,7 +30,11 @@ class Fieldset implements \Iterator {
 	}
 
     public function current() {
-        return current($this->fields);
+        $name = current($this->fields);
+        if($name !== false) {
+        	return $this->model->field($name);
+        }
+        return false;
     }
     
     public function key() {

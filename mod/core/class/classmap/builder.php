@@ -1,11 +1,11 @@
 <?
 
-namespace infuso\core\classmap;
+namespace Infuso\Core\Classmap;
 
 use infuso\core\file as file;
 use infuso\core\mod as mod;
 
-class builder {
+class Builder {
 
 	private static $building = false;
 
@@ -263,7 +263,12 @@ class builder {
 		foreach(mod::service("classmap")->classes("Infuso\\Core\\Model\\Field") as $class) {
 			$ret[$class::typeId()] = $class;
 			if($alias = $class::typeAlias()) {
-				$ret[$alias] = $class;
+			    if(!is_array($alias)) {
+			        $alias = array($alias);
+			    }
+			    foreach($alias as $a) {
+			        $ret[$a] = $class;
+			    }
 			}
 		}
 

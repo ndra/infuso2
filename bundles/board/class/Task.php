@@ -78,9 +78,9 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'label' => 'Эпик',
                 ),array (
                     'name' => 'epicParentTask',
-                    'type' => Task::inspector()->className(),
+                    'type' => 'link',
                     'label' => 'reflex_task',
-                    'class' => 'board_task',
+                    'class' => Task::inspector()->className(),
                 ),array (
                     'name' => 'hindrance',
                     'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',

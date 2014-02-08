@@ -15,7 +15,16 @@ class connection extends \infuso\core\service {
 	 * Флаг того, что соединение с БД установлено
 	 **/
 	private $connected = false;
-
+	
+	private static $connection;
+	
+	public static function serviceFactory() {
+	    if(!self::$connection) {
+	        self::$connection = new self;
+	    }
+	    return self::$connection;
+	}
+	
 	public function defaultService() {
 	    return "db";
 	}
@@ -28,6 +37,12 @@ class connection extends \infuso\core\service {
 	 * Устанавливает соединение с базой данных
 	 **/
 	public function connect() {
+	
+	    if($this->connected) {
+	        return;
+	    }
+	    $this->connected = true;
+	    
 		$dsn = $this->param("dsn");
 		$user = $this->param("user");
 		$password = $this->param("password");
@@ -51,11 +66,8 @@ class connection extends \infuso\core\service {
 	 * Возвращает объект класса PDO, создающийся при соедниении
 	 **/
 	public function dbh() {
-	
-	    if(!$this->connected) {
-		    $this->connect();
-		    return $this->dbh;
-	    }
+	    $this->connect();
+	    return $this->dbh;
 	}
 
 }

@@ -13,6 +13,13 @@ class Textfield extends Field {
 		return "Строка";
 	}
 
+	public function typeAlias() {
+	    return array(
+	        "string",
+	        "textfield"
+		);
+	}
+
 	public function mysqlType() {
 		return "varchar(".$this->length().")";
 	}
@@ -26,19 +33,11 @@ class Textfield extends Field {
 	}
 
 	public function length() {
-		$l = $this->conf("length");
-		if(!$l)
+		$l = $this->param("length");
+		if(!$l) {
 		    $l = 255;
+		}
 		return $l;
-	}
-
-	public function extraConf() {
-		return array(
-		    array(
-				"name" => "length",
-				"label" => "Длина (символов)",
-			)
-		);
 	}
 
 }

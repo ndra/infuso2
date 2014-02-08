@@ -92,8 +92,9 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $ret = array();
 
         // Сериализуем данные из массива "безопасных" ключей
-        foreach(self::$serializeKeys as $key)
+        foreach(self::$serializeKeys as $key) {
             $ret[$key] = $this->$key;
+        }
 
         // Сериализуем поведения
         $bb = array();
@@ -234,12 +235,15 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function joinedFields() {
         $ret = array();
 
-        foreach($this->virtual()->fields() as $field)
+        foreach($this->virtual()->fields() as $field) {
             $ret[] = $field;
+        }
 
-        foreach($this->listJoins as $join)
-            foreach(reflex::virtual($join["class"])->fields() as $field)
+        foreach($this->listJoins as $join) {
+            foreach(reflex::virtual($join["class"])->fields() as $field) {
                 $ret[] = $field;
+            }
+		}
 
         return $ret;
     }
@@ -346,17 +350,22 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * Выполняет запрос в БД и загружает элементы коллекции
      **/
     public function load() {
-        if($this->itemsLoaded)
+    
+        if($this->itemsLoaded) {
             return;
+        }
         $this->itemsLoaded = true;
 
         $items = $this->select($this->what());
 
-        foreach($items as $data)
-            $this->items[] = reflex::get($this->itemClass(),$data["id"],$data);
+        foreach($items as $data) {
+            $this->items[] = mod::service("ar")->get($this->itemClass(),$data["id"],$data);
+        }
 
-        if($this->priorityArray)
+        if($this->priorityArray) {
             usort($this->items,array($this,"sortItemsUsingArray"));
+        }
+        
     }
 
     public function select($select) {
@@ -470,8 +479,9 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * @return Возвращает количество страниц в коллекции
      **/
     public function pages() {
-        if(!$this->perPage)
+        if(!$this->perPage) {
             return 1;
+        }
         return ceil($this->count()/$this->perPage);
     }
 
@@ -1084,12 +1094,15 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      **/
     public function create($p=null) {
         $this->callBeforeQuery();
-        foreach($this->eqs as $key=>$val)
+        foreach($this->eqs as $key => $val) {
             $new[$key] = $val;
-        if(is_array($p))
-        foreach($p as $key=>$val)
-            $new[$key] = $val;
-        return reflex::create($this->itemClass(),$new);
+        }
+        if(is_array($p)) {
+	        foreach($p as $key=>$val) {
+	            $new[$key] = $val;
+	        }
+        }
+        return mod::service("ar")->create($this->itemClass(),$new);
     }
 
     /**
@@ -1110,7 +1123,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             }
         }
 
-        return reflex::virtual($this->itemClass(),$new);
+        return mod::service("ar")->virtual($this->itemClass(),$new);
     }
 
     public final function useFilter($n) {

@@ -2,6 +2,8 @@
 
 namespace Infuso\Core\Model;
 use infuso\util\util;
+use Infuso\ActiveRecord\Record as Record;
+use Infuso\Core;
 
 class Link extends Field {
 
@@ -23,18 +25,18 @@ class Link extends Field {
     }
 
     public function pvalue() {
-        if(trim($this->conf("foreignKey"))) {
-            return reflex::get($this->itemClass())->eq(trim($this->conf("foreignKey")),$this->value())->one();    
+        if(trim($this->param("foreignKey"))) {
+            return Core\Mod::service("ar")->get($this->itemClass())->eq(trim($this->param("foreignKey")),$this->value())->one();
         } else {
-            return reflex::get($this->itemClass(),$this->value());
+            return Core\Mod::service("ar")->get($this->itemClass(),$this->value());
         }
     }
 
     // возвращает имя поля внешнего ключа для связи, если оно не задано используется id
     public function foreignKey() {
-        if( trim($this->conf("foreignKey")) ){
-            return trim($this->conf("foreignKey"));
-        }else{
+        if(trim($this->param("foreignKey"))){
+            return trim($this->param("foreignKey"));
+        } else {
             return "id";
         }
     }
@@ -59,12 +61,14 @@ class Link extends Field {
 
     public function items() {
 
-        $fn = trim($this->conf("collection"));
+        $fn = trim($this->param("collection"));
 
-        if($fn)
+        if($fn) {
             return $this->reflexItem()->$fn();
+		}
 
         $items = reflex::get($this->itemClass())->limit(100);
+        
         return $items;
     }
 
@@ -115,11 +119,11 @@ class Link extends Field {
     public function itemClass($class=null) {
 
         if(func_num_args()==0) {
-            return $this->conf("class");
+            return $this->param("class");
         }
 
         if(func_num_args()==1) {
-            $this->conf("class",$class);
+            $this->param("class",$class);
             return $this;
         }
     }
@@ -134,32 +138,13 @@ class Link extends Field {
     public function itemTitleMethod($method=null) {
 
         if(func_num_args()==0) {
-            return $this->conf("titleMethod");
+            return $this->param("titleMethod");
         }
 
         if(func_num_args()==1) {
-            $this->conf("titleMethod",$method);
+            $this->param("titleMethod",$method);
             return $this;
         }
-    }
-
-    public function extraConf() {
-        return array(
-            array(
-                "name" => "class",
-                "label" => "Класс объектов",
-                "itWasParam" => true,
-            ),array(
-                "name" => "foreignKey",
-                "label"=> "Имя внешнего ключа для связи"
-            ),array(
-                "name" => "collection",
-                "label" => "Метод обьекта, возвращающий коллекцию",
-            ),array(
-                "name" => "titleMethod",
-                "label" => "Метод редактора элемента, возвращающий название",
-            ),
-        );
     }
 
 }

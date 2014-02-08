@@ -6,36 +6,22 @@ use Infuso\Core;
 
 abstract class Field extends Core\Component {
 
+	const HIDDEN = 0;
+	const EDITABLE = 0;
+	const READ_ONLY = 0;
+
 	/**
 	 * Здесь содержится значение поля
 	 **/
-    private $value = null;
-    
-    private $changedValue = null;
-    
+
     protected $model = null;
 
     protected $exists = true;
 
-	/**
-	 * Здесь будут сложены описания типов полей
-	 **/
-    private static $descr = array();
-    
-    /**
-     * Пометка о том что поле изменилось
-     **/
-    private $changed = false;
-    
     /**
      * Конструктор поля
      **/
     public function __construct($params = array()) {
-
-        if(!$conf["id"]) {
-            $conf["id"] = util::id();
-        }
-
 		if(is_array($params)) {
         	$this->params($params);
         }
@@ -80,7 +66,7 @@ abstract class Field extends Core\Component {
         } elseif(is_array($conf)) {
             $class = self::aliasToClassName($conf["type"]);
         } else {
-            throw new \Exception("Bad argument for Field::get()");
+            throw new \Exception("Bad argument for Field::get() (".gettype($conf).")");
         }
 
         return new $class($conf);
@@ -91,7 +77,7 @@ abstract class Field extends Core\Component {
      * Используется в mod_fieldset::field() если запрашиваемого поля не существует
      **/
     public function getNonExistent() {
-        $field = self::get(null);
+        $field = new Textfield;
         $field->exists = false;
         return $field;
     }
@@ -161,20 +147,6 @@ abstract class Field extends Core\Component {
     }
 
     /**
-     * Возвращает / устанавливает начальное значение поля
-     **/
-    public final function initialValue($val=null) {
-
-        if(func_num_args()==0) {
-            return $this->value;
-        }
-        
-        if(func_num_args()==1) {
-            $this->value = $this->prepareValue($val);
-        }
-    }
-
-    /**
      * Возвращает / изменяет значение этого поля
      **/
     public final function value($value=null) {
@@ -188,49 +160,17 @@ abstract class Field extends Core\Component {
 
         if(func_num_args()==1) {
 
-            $this->changedValue = $this->prepareValue($value);
-            $this->changed = true;
-
-            // Вызываем триггер
-            // Он будет определен в поведении
-            $this->afterFieldChange();
+            return $this->model()->data($this->name(),$value);
 
             return $this;
         }
     }
 
     /**
-     * Триггер, вызывающийся при изменении поля
-     **/
-    public function _afterFieldChange() {
-	}
-
-    /**
-     * Откатывает изменения значения поля
-     **/
-    public final function revert() {
-        $this->changed = false;
-    }
-    
-    public function applyChanges() {
-        $this->changed = false;
-        $this->value = $this->changedValue;
-    }
-
-    /**
      * @return Возвращает true, если поле было изменено
      **/
     public final function changed() {
-
-        if($this->name()=="id") {
-            return false;
-        }
-
-        if(!$this->changed) {
-            return false;
-        }
-            
-        return $this->prepareValue($this->value) !== $this->prepareValue($this->changedValue);
+		return $this->model()->isFieldChanged($this->name());
     }
 
     /**
@@ -269,39 +209,6 @@ abstract class Field extends Core\Component {
 
     public function mysqlValue() {
         return mod::service("db")->quote($this->value());
-    }
-
-    /**
-     * Возвращает id поля
-     * id поля уникально среди всех полей, в отличие от name
-     **/
-    public final function id() {
-        return $this->param("id");
-    }
-
-    /**
-     * Возвращает описание поля (для редактора таблиц)
-     **/
-    public function descr() {
-        return "Описание поля";
-    }
-
-    /**
-     * Дополнительные параметры конфигурации
-     **/
-    public function extraConf() {
-        return array();
-    }
-
-    /**
-     * Возвращает ключи дополнительных параметров конфигурации
-     **/
-    public function extraConfKeys() {
-        $ret = array();
-        foreach($this->extraConf() as $conf) {
-            $ret[] = $conf["name"];
-        }
-        return $ret;
     }
 
     public function mysqlType() {
@@ -352,21 +259,21 @@ abstract class Field extends Core\Component {
         if($this->name()=="id") {
             return false;
 		}
-        return $this->param("editable")==1;
+        return $this->param("editable") == self::EDITABLE;
     }
 
     /**
      * @return Поле только для чтения?
      **/
     public final function readonly() {
-        return $this->param("editable")==2;
+        return $this->param("editable") == self::READ_ONLY;
     }
 
     /**
      * Делает поле видимым
      **/
     public function show() {
-        $this->param("editable",1);
+        $this->param("editable",self::EDITABLE);
         return $this;
     }
 
@@ -374,7 +281,7 @@ abstract class Field extends Core\Component {
      * Скрывает поле
      **/
     public function hide() {
-        $this->param("editable",0);
+        $this->param("editable",self::HIDDEN);
         return $this;
     }
 
@@ -382,7 +289,7 @@ abstract class Field extends Core\Component {
      * Делает поле «Только для чтения»
      **/
     public function disable() {
-        $this->param("editable",2);
+        $this->param("editable",self::READ_ONLY);
         return $this;
     }
 

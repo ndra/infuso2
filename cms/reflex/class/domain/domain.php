@@ -17,14 +17,17 @@ class reflex_domain extends reflex{
 
 	public function reflex_title() {
 	
-	    if(!$this->exists())
+	    if(!$this->exists()) {
 	        return "";
+	    }
 	
 		$ret = trim($this->data("title"));
-		if(!$ret)
+		if(!$ret) {
 		    $ret = $this->firstDomain();
-		if(!$ret)
+		}
+		if(!$ret) {
 		    $ret = "Домен:".$this->id();
+		}
 		return $ret;
 	}
 
@@ -33,11 +36,12 @@ class reflex_domain extends reflex{
 		    self::$active = self::get(0);
 			$url = mod_url::current()->domain();
 			foreach(self::all() as $domain) {
-			    foreach($domain->domainList() as $d)
+			    foreach($domain->domainList() as $d) {
 			    	if(trim($d)==$url) {
 						self::$active = $domain;
 						break;
 					}
+				}
 			}
 		}
 		return self::$active;
