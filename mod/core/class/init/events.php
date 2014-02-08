@@ -7,7 +7,6 @@ class mod_init_events extends mod_init {
 
 	/**
 	 * Метод, в котором реализуется бизнес-логика инициализации
-	 * @todo убрать отсюда \infuso\core\field::collect()
 	 **/
 	public function init() {
 	    mod::msg("Firing init events");

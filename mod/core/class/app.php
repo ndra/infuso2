@@ -218,7 +218,7 @@ class app {
 	    post::process($this->post(),$this->files());
 	    Profiler::addMilestone("post completed");
 	    
-	    component::callDeferedFunctions();
+	    Defer::callDeferedFunctions();
 	    Profiler::addMilestone("defered functions");
 
 		// Выполняем экшн
@@ -237,7 +237,7 @@ class app {
 			$this->httpError(404);
 	    }
 
-	    component::callDeferedFunctions();
+	    Defer::callDeferedFunctions();
 
 	}
 	

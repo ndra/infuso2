@@ -9,26 +9,9 @@ class Component {
      *
      * @var array
     **/
-    private $param = array();
+    private $params = array();
     private $paramsLoaded = false;
-
     private $lockedParams = array();
-
-    private static $conf = null;
-
-    private $___behaviours = array();
-    private $nextBehaviourPriority = 0;
-    private $defaultBehavioursAdded = false;
-    private $behavioursSorted = false;
-
-    private $behavioursAdded = array();
-
-    private static $reflections = array();
-
-    /**
-     * Статический массив для хранения списка отложенных функций
-     **/
-    private static $defer = array();
 
     private $componentID = null;
 
@@ -38,25 +21,9 @@ class Component {
      * @return $this
      **/
     public final function addBehaviour($behaviour) {
-
-        profiler::beginOperation("mod","addbehaviour",$behaviour);
-
-        if(!is_string($behaviour)) {
-            throw new Exception("mod_component::addBehaviour() - аргумент должен быть строкой, содержащей имя класса");
-        }
-
-        if(!$this->defaultBehavioursAdded) {
-            $this->addDefaultBehaviours();
-        }
-
-        // Добавляем поведение только если оно еще не было добавлено
-        if(!$this->behavioursAdded[$behaviour]) {
-            $this->behavioursAdded[$behaviour] = true;
-            array_unshift($this->___behaviours,$behaviour);
-            $this->behavioursSorted = false;
-        }
-
-        profiler::endOperation("mod","addbehaviour",$behaviour);
+    
+        echo $behaviour;
+    
 
         return $this;
     }
@@ -65,9 +32,11 @@ class Component {
      * @return array Возврвщает массив поведений объекта
      **/
     public final function behaviours() {
+        return array();
         $this->normalizeBehaviours();
         return $this->___behaviours;
     }
+    
 
     /**
      * Вызывает метод $fn всех прикрепленных к объекту поведений (метод самого объекта не вызывается)
@@ -75,7 +44,7 @@ class Component {
      * @return array с объединением результатов вызванных методов (array_merge)
      **/
     public function callBehaviours($fn) {
-
+    
         $args = func_get_args();
         array_shift($args);
 
@@ -100,13 +69,13 @@ class Component {
      **/
     public final function __call($fn,$params) {
     
-        // Сначала пытаемся вызвать метод у поведений
-        foreach($this->behaviours() as $b) {
-            if($fn2 = $b->routeBehaviourMethod($fn)) {
-                return call_user_func_array(array($b,$fn2),$params);
-            }
+        $behaviourClass = BehaviourMap::routeMethod(get_class($this),$fn);
+        if($behaviourClass) {
+            $behaviour = new $behaviourClass;
+            $behaviour->registerComponent($this);
+            return call_user_func_array(array($behaviour,$fn),$params);
         }
-
+    
         // Пытаемся вызвать метод _fn
         $fn3 = "_".$fn;
         if(method_exists($this,$fn3)) {
@@ -117,7 +86,6 @@ class Component {
         $wrappers = $this->dataWrappers();
 
         if(array_key_exists($fn,$wrappers)) {
-        
         
 			$split = function($str) {
 		        $ret = array();
@@ -201,81 +169,7 @@ class Component {
 		}
     }
 
-    private final function normalizeBehaviours() {
 
-        $this->addDefaultBehaviours();
-        if(!$this->behavioursSorted) {
-
-            profiler::beginOperation("mod","normalizeBehaviours",get_class($this));
-
-            foreach($this->___behaviours as $key => $behaviour) {
-                if(is_string($behaviour)) {
-                    $behaviour = new $behaviour;
-                    $behaviour->registerComponent($this,$this->nextBehaviourPriority);
-                    $this->___behaviours[$key] = $behaviour;
-                    $this->nextBehaviourPriority--;
-                }
-            }
-
-            $this->sortBehaviours();
-
-            profiler::endOperation();
-        }
-
-    }
-
-    private final function sortBehaviours() {
-
-        profiler::beginOperation("mod","sortBehaviours",get_class($this));
-
-        $this->behavioursSorted = true;
-        usort($this->___behaviours,array("self","sortBehavioursCallback"));
-
-        profiler::endOperation();
-    }
-
-    private static function sortBehavioursCallback($a,$b) {
-
-        $d = $b->behaviourPriority() - $a->behaviourPriority();
-        if($d!=0) {
-            return $d;
-        }
-
-        $d = $b->behaviourSequenceNumber() - $a->behaviourSequenceNumber();
-        return $d;
-    }
-
-    /**
-     * Добавляет в объект поведения по умолчанию
-     * Вызывается автоматически при вызове метода behaviours()
-     * Если вызывать второй раз - ничего не сделает
-     **/
-    private final function addDefaultBehaviours() {
-
-        // Второй раз поведения по умолчанию не добавляем
-        if($this->defaultBehavioursAdded) {
-            return;
-		}
-
-        profiler::beginOperation("mod","addDefaultBehaviours",get_class($this));
-
-        $this->defaultBehavioursAdded = true;
-
-        foreach($this->defaultBehaviours() as $b) {
-            $this->addBehaviour($b);
-		}
-
-        $bb = mod::service("classmap")->classmap("behaviours");
-        $bb = $bb[get_class($this)];
-        if($bb) {
-            foreach($bb as $b) {
-                $this->addBehaviour($b);
-			}
-		}
-
-        profiler::endOperation("mod","addDefaultBehaviours",get_class($this));
-
-    }
     
     /**
      * @return Массив поведений, который дорбавляются объекту по умолчанию
@@ -288,7 +182,7 @@ class Component {
      * Магическая функция __clone клонирует поведения
      **/
     public final function __clone() {
-        foreach($this->behaviours() as $key=>$b) {
+        foreach($this->behaviours() as $key => $b) {
             $b = clone $b;
             $b->registerComponent($this,$this->nextBehaviourPriority);
             $this->nextBehaviourPriority++;
@@ -353,7 +247,7 @@ class Component {
         $this->loadParams();
 
         if(func_num_args()==0) {
-            return $this->param;
+            return $this->params;
         }
 
         if(func_num_args()==1) {
@@ -369,8 +263,8 @@ class Component {
             // Если возвращать по ссылке несуществующие элементы массива, php создает их на лету
             // и записывает в них нули
             // Чтобы этого не произошло - проверяем наличие ключа у массива
-            if(array_key_exists($key,$this->param)) {
-                return $this->param[$key];
+            if(array_key_exists($key,$this->params)) {
+                return $this->params[$key];
             } else {
                 return null;
             }
@@ -379,7 +273,7 @@ class Component {
 
         if(func_num_args()==2) {
             if(!in_array($key,$this->lockedParams)) {
-                $this->param[$key] = $val;
+                $this->params[$key] = $val;
             }
             return $this;
         }
@@ -394,7 +288,7 @@ class Component {
         $this->loadParams();
 
         if(func_num_args()==0) {
-            return $this->param;
+            return $this->params;
         }
 
         if(func_num_args()==1) {
@@ -415,43 +309,7 @@ class Component {
      * Ставит задачу отложенного вызова метода $method
      **/
     public function defer($method) {
-
-        if(!self::$defer[$this->getComponentID()]) {
-            self::$defer[$this->getComponentID()] = array(
-                "component" => $this,
-                "methods" => array(),
-            );
-        }
-
-        self::$defer[$this->getComponentID()]["methods"][$method] = true;
-
-    }
-
-    /**
-     * Выполняет все отложенные функции
-     * Вы не должны вызывать этот метод напрямую, его вызывает система
-     **/
-    public static function callDeferedFunctions() {
-
-        $n = 0;
-
-        while(sizeof(self::$defer)) {
-
-            $defer = self::$defer;
-            self::$defer = array();
-
-            foreach($defer as $component) {
-                foreach($component["methods"] as $method => $none) {
-                    $component["component"]->$method();
-                }
-            }
-
-            $n++;
-
-            if($n>500) {
-                throw new Exception("Defered function recursion");
-            }
-        }
+        Defer::add($this,$method);
     }
 
 	/**
@@ -476,16 +334,6 @@ class Component {
         return array();
     }
 
-    public function factoryReflectionMethod($class,$method) {
-
-        if(!self::$reflections[$class.":".$method]) {
-            self::$reflections[$class.":".$method] = new \ReflectionMethod($class,$method);
-        }
-        return self::$reflections[$class.":".$method];
-
-        return $r;
-    }
-    
     public static final function inspector() {
         return new \infuso\core\inspector(get_called_class());
     }

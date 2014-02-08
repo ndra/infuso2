@@ -24,13 +24,18 @@ class filesystem extends driver {
      * Возвращает значение переменной
      **/
     public function get($key) {
-        return \infuso\core\file::get(self::filename($key))->data();
+        $ret = \infuso\core\file::get(self::filename($key))->data();
+        if($ret !== null) {
+        	$ret = json_decode($ret,1);
+        }
+        return $ret;
     }
 
     /**
      * Устанавливает значение переменной
      **/
     public function set($key,$val) {
+        $val = json_encode($val);
         \infuso\core\file::mkdir(\infuso\core\file::get(self::filename($key))->up());
         \infuso\core\file::get(self::filename($key))->put($val);
     }

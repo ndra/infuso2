@@ -20,16 +20,8 @@ class tester extends \infuso\core\controller {
 		//$git->zip();
 		$git->zip(); */
 
-		/*foreach(\Infuso\Board\Task::all()->limit(200) as $task) {
-		    $task->data("id");
-		    echo "* ";
-		} */
-		
-		//$task = \Infuso\ActiveRecord\Record::create("Infuso\\Board\\Task");
-		$task = \Infuso\Core\Mod::service("ar")->get("Infuso\\Board\\Task",3905);
-		//$task->data("text",rand());
-		var_export($task->data());
-		
+		$user = \user::active();
+		echo $user->city();
 
 		\util::profiler();
 

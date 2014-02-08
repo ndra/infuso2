@@ -74,7 +74,6 @@ class classmapService extends service {
         }
         
 	    if($class=="infuso\\board\\collectionbehaviour") {
-	        //var_export(array_key_exists($class."",$classes));
 	        echo "<pre>";
 	        var_export($classes);
 	    }
@@ -123,6 +122,8 @@ class classmapService extends service {
 	 **/
  	public static function &classmap($key=null) {
  	
+ 	    profiler::beginOperation("mod","classmap load",null);
+ 	
 		// Загружаем карту класса по требованию
 		if(self::$classmap === null) {
 		    if(file::get(self::classMapPath())->exists()) {
@@ -138,6 +139,8 @@ class classmapService extends service {
 		if($key) {
 		    $ret = $ret[$key];
 		}
+		
+		profiler::endOperation();
 
 		return $ret;
 	}
