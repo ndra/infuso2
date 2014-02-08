@@ -25,8 +25,11 @@ class tester extends \infuso\core\controller {
 		    echo "* ";
 		} */
 		
-		$task = \Infuso\ActiveRecord\Record::create("Infuso\\Board\\Task");
+		//$task = \Infuso\ActiveRecord\Record::create("Infuso\\Board\\Task");
+		$task = \Infuso\Core\Mod::service("ar")->get("Infuso\\Board\\Task",3905);
+		//$task->data("text",rand());
 		var_export($task->data());
+		
 
 		\util::profiler();
 

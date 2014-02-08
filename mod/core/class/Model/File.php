@@ -2,6 +2,7 @@
 
 namespace Infuso\Core\Model;
 use infuso\util\util;
+use Infuso\Core;
 
 class File extends Field {
 
@@ -37,7 +38,7 @@ class File extends Field {
     }
 
     public function pvalue() {
-        return file::get($this->value());
+        return Core\File::get($this->value());
     }
     
     public function editorInxDisabled() {

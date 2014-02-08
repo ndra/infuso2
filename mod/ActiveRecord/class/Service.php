@@ -48,7 +48,6 @@ class Service extends Core\Service {
                 
             } else {
                 $item = self::collection($class)->eq("id",$id)->one();
-                
             }
         }
         
@@ -88,7 +87,8 @@ class Service extends Core\Service {
 	
 	}
 	
-	public function registerChanges() {
+	public function registerChanges($class,$id) {
+	    self::$changedItems[$class][$id] = true;
 	}
 	
 	public function storeAll() {

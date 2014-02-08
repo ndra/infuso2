@@ -22,7 +22,7 @@ class user_operation extends reflex {
     public static function get($code) {
         $ret = self::all()->eq("code",$code)->one();
         if(!$ret->exists()) {
-            $ret = reflex::virtual(get_class(),array(
+            $ret = mod::service("ar")->virtual(get_class(),array(
                 "code" => $code,
             ));
         }

@@ -2,7 +2,7 @@
 
 namespace infuso\core;
 
-class flist implements \Iterator{
+class FList implements \Iterator{
 
     // Итераторская шняга
     private $items = array();

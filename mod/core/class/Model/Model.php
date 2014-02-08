@@ -90,8 +90,11 @@ abstract class Model extends Core\Controller {
             $field = $this->field($key);
             $preparedValue = $field->prepareValue($val);
             $this->data[$key] = $val;
+            $this->handleRecordDataChanged();
         }
     }
+    
+    abstract function handleRecordDataChanged();
 
     /**
      * Передает в модель массив данных

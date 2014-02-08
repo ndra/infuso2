@@ -25,7 +25,9 @@ class Record extends \Infuso\Core\Model\Model {
 	 **/
     protected $id = null;
 
-
+	/**
+	 * Статус записи
+	 **/
 	protected $recordStatus = 0;
 
     /**
@@ -55,6 +57,10 @@ class Record extends \Infuso\Core\Model\Model {
 		    $names[] = $fieldDescr["name"];
 		}
 		return $names;
+    }
+    
+    public function handleRecordDataChanged() {
+		Core\Mod::service("ar")->registerChanges(get_class($this),$this->id()	);
     }
     
     // Триггеры
@@ -385,7 +391,6 @@ class Record extends \Infuso\Core\Model\Model {
         $this->field("id")->initialValue($id);
 
         $this->id = $id;
-        self::$buffer[get_class($this)][$id] = $this;
 
         $this->reflex_updateSearch();
         
@@ -481,7 +486,6 @@ class Record extends \Infuso\Core\Model\Model {
         $set = "set ".implode(",",$set)." ";
 
         $id = $this->id();
-        self::$stored++;
 
         $from = $this->from();
         mod::service("db")->query("update $from $set where `id`='$id' ")->exec();
@@ -497,8 +501,6 @@ class Record extends \Infuso\Core\Model\Model {
 		));
 
         $this->callReflexTrigger("reflex_afterStore",$event);
-
-        $this->reflex_updateSearch();
 
         return true;
     }

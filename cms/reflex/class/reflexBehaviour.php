@@ -69,7 +69,7 @@ class reflex_reflexBehaviour extends mod_behaviour {
      **/
     public final function storage() {
         $source = $this->reflex_storageSource();
-        return new storage(get_class($source),$source->id());
+        return new \Infuso\Cms\Reflex\Storage(get_class($source),$source->id());
     }
 
     public function log($text,$params=array()) {

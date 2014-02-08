@@ -206,9 +206,13 @@ abstract class Field extends Core\Component {
     public function prepareValue($val) {
         return $val;
     }
+    
+    public function initialValue() {
+        return null;
+    }
 
     public function mysqlValue() {
-        return mod::service("db")->quote($this->value());
+        return Core\Mod::service("db")->quote($this->value());
     }
 
     public function mysqlType() {

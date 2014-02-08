@@ -1,8 +1,8 @@
 <?
 
-namespace infuso\ActiveRecord;
-
+namespace Infuso\Cms\Reflex;
 use \Infuso\Core\File;
+use \Infuso\ActiveRecord\Record;
 
 /**
  * Класс-файловое хранилище для ActiveRecord
@@ -86,7 +86,7 @@ class Storage extends \Infuso\Core\Controller {
 	}
 
 	public function files() {
-	    if(!$this->exists()) return file_list::void();
+	    if(!$this->exists()) return \Infuso\Core\FList::void();
 	    return file::get($this->path())->dir()->exclude("storage.descr");
 	}
 
