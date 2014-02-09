@@ -21,6 +21,9 @@ class tester extends \infuso\core\controller {
 		$git->zip(); */
 
 		$user = \user::active();
+		//$user->data("email",12121);
+		echo "<pre>";
+		var_export($user->data());
 
 		\util::profiler();
 

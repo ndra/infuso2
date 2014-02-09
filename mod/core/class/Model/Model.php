@@ -11,7 +11,9 @@ abstract class Model extends Core\Controller {
 	/**
 	 * Данные модели
 	 **/
-    private $data = array();
+    private $initialData = array();
+    
+    private $changedData = array();
     
     /**
      * Поля модели (массив)
@@ -22,6 +24,10 @@ abstract class Model extends Core\Controller {
      * Набор полей (объект класса Model\Fieldset)
      **/
     private $fieldset = array();
+    
+    public function __construct($initialData) {
+        $this->initialData = $initialData;
+    }
 
     /**
      * Возвращает коллекцию полей модели
@@ -56,40 +62,32 @@ abstract class Model extends Core\Controller {
      abstract protected function fieldNames();
 
     /**
-     * Устанавливает начальные данные модели
-     * Вызывается при создании модели
-     * @todo рефакторинг скорости
-     **/
-    public final function setInitialData($initialData=array()) {
-
-        if(!is_array($initialData)) {
-            $initialData = array();
-        }
-
-        $this->data = $initialData;
-
-    }
-
-    /**
      * Враппер для доступа к даным
      **/
     public final function data($key=null,$val=null) {
 
         // Если параметров 0 - возвращаем массив с данными
         if(func_num_args()==0) {
-            return $this->data;
+            return $this->changedData + $this->initialData;
         }
 
         // Если параметров 1 - возвращаем значение поля
         if(func_num_args()==1) {
-            return $this->data[$key];
+        
+            if(array_key_exists($key,$this->changedData)) {
+                return $this->changedData[$key];
+            }
+            
+            return $this->initialData[$key];
         }
 
         // Если два параметра - меняем значение
         elseif(func_num_args()==2) {
+        
             $field = $this->field($key);
             $preparedValue = $field->prepareValue($val);
-            $this->data[$key] = $val;
+            
+            $this->changedData[$key] = $val;
             $this->handleRecordDataChanged();
         }
     }
@@ -100,7 +98,7 @@ abstract class Model extends Core\Controller {
      * Передает в модель массив данных
      * @todo сделать чтобы в качестве данных можно было передавать модель или филдсет
      **/
-    public function setData($data) {
+    public final function setData($data) {
 
         if(is_array($data)) {
             foreach($data as $key=>$val) {
@@ -110,8 +108,17 @@ abstract class Model extends Core\Controller {
 
     }
     
-    public function isFieldChanged() {
-		return false;
+    public final function setInitialData($data) {
+        $this->changedData = array();
+        $this->initialData = $data;
+    }
+    
+    public function revertInitialData() {
+        $this->changedData = array();
+    }
+    
+    public final function isFieldChanged($key) {
+        return array_key_exists($key, $this->changedData);
 	}
 
     /**

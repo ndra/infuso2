@@ -34,7 +34,6 @@ class Service extends Core\Service {
         // Если id <= 0, возвращаем несуществующий объект без запроса в базу
         if($id <= 0) {
             $ret = new $class(0);
-            $ret->setInitialData();
             return $ret;
         }
 
@@ -44,6 +43,7 @@ class Service extends Core\Service {
             if($data) {
                 $item = new $class($id);
                 $item->setInitialData($data);
+				$item->setRecordStatus(Record::STATUS_SAVED);
                 self::$buffer[$class][$id] = $item;
                 
             } else {
@@ -88,7 +88,7 @@ class Service extends Core\Service {
 	}
 	
 	public function registerChanges($class,$id) {
-	    self::$changedItems[$class][$id] = true;
+	    self::$changedItems[$class.":".$id] = true;
 	}
 	
 	public function storeAll() {
@@ -97,18 +97,14 @@ class Service extends Core\Service {
 
         $items = array_keys(self::$changedItems);
 
-        $b = 0;
-
         while(sizeof($items)) {
 
             self::$changedItems = array();
 
             foreach($items as $key) {
-
                 list($class,$id) = explode(":",$key);
                 $item = self::get($class,$id);
                 $item->store();
-
             }
 
             $items = array_keys(self::$changedItems);

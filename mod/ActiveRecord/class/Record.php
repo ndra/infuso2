@@ -60,7 +60,7 @@ class Record extends \Infuso\Core\Model\Model {
     }
     
     public function handleRecordDataChanged() {
-		Core\Mod::service("ar")->registerChanges(get_class($this),$this->id()	);
+		Core\Mod::service("ar")->registerChanges(get_class($this),$this->id());
     }
     
     // Триггеры
@@ -434,16 +434,20 @@ class Record extends \Infuso\Core\Model\Model {
     }
 
     private final function from() {
-        return "`".$this->table()->prefixedName()."`";
+        return "`".$this->prefixedTableName()."`";
     }
 
     private final function writeEnabled() {
-
+    
         if($this->isVirtual()) {
             return false;
          }
 
         return true;
+    }
+    
+    public function markAsClean() {
+        $this->setInitialData($this->data());
     }
 
     /**
@@ -455,7 +459,7 @@ class Record extends \Infuso\Core\Model\Model {
             $this->markAsClean();
             return false;
         }
-
+        
         if(!$this->fields()->changed()->count()) {
             $this->markAsClean();
             return false;

@@ -48,4 +48,23 @@ class Fieldset implements \Iterator {
     public function valid() {
 		return $this->current() !== false;
 	}
+	
+	public function changed() {
+	
+	    $fields = array();
+	    $model = $this->model;
+	    
+	    foreach($this->fields as $name) {
+		    if($model->isFieldChanged($name)) {
+		        $fields[] = $name;
+		    }
+	    }
+	    
+	    return new self($model,$fields);
+	}
+	
+	public function count() {
+	    return sizeof($this->fields);
+	}
+	
 }
