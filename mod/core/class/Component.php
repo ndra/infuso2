@@ -33,6 +33,8 @@ class Component {
      **/
     public final function behaviours() {
     
+		echo 1;
+    
         \util::backtrace();
     
         $ret = array();
@@ -66,23 +68,6 @@ class Component {
         }
         
         return $ret;
-    
-        /*return;
-    
-        $args = func_get_args();
-        array_shift($args);
-
-        $ret = array();
-        foreach(array_reverse($this->behaviours()) as $b)
-            if(method_exists($b,$fn)) {
-                $items = call_user_func_array(array($b,$fn),$args);
-                if(is_array($items)) {
-                    foreach($items as $item) {
-                        $ret[] = $item;
-                    }
-                }
-            }
-        return $ret; */
     }
 
     /**
