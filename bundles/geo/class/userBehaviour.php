@@ -8,7 +8,7 @@ class geo_userBehaviour extends mod_behaviour {
     public function behaviourPriority() {
         return -10;
     }
-
+    
     /**
      * Добавляем к пользователю еще один метод определения города:
      * Если пользователь активен - определяем город по его ip

@@ -21,7 +21,6 @@ class tester extends \infuso\core\controller {
 		$git->zip(); */
 
 		$user = \user::active();
-		echo $user->city();
 
 		\util::profiler();
 

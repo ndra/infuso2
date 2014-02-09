@@ -32,9 +32,14 @@ class Component {
      * @return array Возврвщает массив поведений объекта
      **/
     public final function behaviours() {
-        return array();
-        $this->normalizeBehaviours();
-        return $this->___behaviours;
+    
+        \util::backtrace();
+    
+        $ret = array();
+        foreach(BehaviourMap::getList(get_class($this)) as $bclass) {
+            $ret[] = new $bclass;
+        }
+        return $ret;
     }
     
 
@@ -44,6 +49,25 @@ class Component {
      * @return array с объединением результатов вызванных методов (array_merge)
      **/
     public function callBehaviours($fn) {
+    
+        $args = func_get_args();
+        array_shift($args);
+    
+        $ret = array();
+
+        foreach(BehaviourMap::getBehavioursForMethod(get_class($this),$fn) as $bclass) {
+            $behaviour = new $bclass;
+            $items = call_user_func_array(array($behaviour,$fn),$args);
+			if(is_array($items)) {
+                foreach($items as $item) {
+                    $ret[] = $item;
+                }
+            }
+        }
+        
+        return $ret;
+    
+        /*return;
     
         $args = func_get_args();
         array_shift($args);
@@ -58,10 +82,8 @@ class Component {
                     }
                 }
             }
-        return $ret;
+        return $ret; */
     }
-
-
 
     /**
      * Магический метод, который вызывается при обращении к несуществующему методу класса.
