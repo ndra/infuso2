@@ -11,12 +11,8 @@ class tester extends \infuso\core\controller {
     public function index($p) {
 
 		\tmp::header();
-
-        $user = \user::active();
-        foreach($user->behaviourMethods("xxx") as $fn) {
-            
-        }
-		//$user->callBehaviours("xxx");
+	
+	    echo "hallo";
 
 		\util::profiler();
 

@@ -20,5 +20,9 @@ class inspector {
 	public function className() {
 	    return $this->className;
 	}
+	
+	public function path() {
+	    return mod::service("classmap")->classPath($this->className);
+	}
 
 }
