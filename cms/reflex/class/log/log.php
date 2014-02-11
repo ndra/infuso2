@@ -5,7 +5,7 @@
  **/ 
 class reflex_log extends reflex {
 
-	public function reflex_table() {
+	public static function reflex_table() {
 		return array (
 			'name' => 'reflex_log',
 			'fields' =>	array (

@@ -4,7 +4,7 @@ namespace Infuso\Board;
 
 class Tag extends \Infuso\ActiveRecord\Record {
 
-    public function reflex_table() {
+    public static function reflex_table() {
 
         return array(
             'name' => 'board_task_tag',

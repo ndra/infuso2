@@ -13,7 +13,7 @@ class rootTab extends Record {
 	/**
 	 * Описание таблицы
 	 **/
-	public function reflex_table() {
+	public static function reflex_table() {
 
 		return array (
 			'name' => 'reflex_editor_rootTab',

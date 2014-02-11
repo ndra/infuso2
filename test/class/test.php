@@ -12,18 +12,11 @@ class tester extends \infuso\core\controller {
 
 		\tmp::header();
 
-        /*$git = new \Infuso\Update\Github(array(
-            "owner" => "ndra",
-            "repo" => "infuso2",
-            "branch" => "dev",
-		));
-		//$git->zip();
-		$git->zip(); */
-
-		$user = \user::active();
-		//$user->data("email",12121);
-		echo "<pre>";
-		var_export($user->data());
+        $user = \user::active();
+        foreach($user->behaviourMethods("xxx") as $fn) {
+            
+        }
+		//$user->callBehaviours("xxx");
 
 		\util::profiler();
 

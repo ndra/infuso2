@@ -21,50 +21,38 @@ class Component {
      * @return $this
      **/
     public final function addBehaviour($behaviour) {
-    
         echo $behaviour;
-    
-
         return $this;
     }
-
+    
     /**
-     * @return array Возврвщает массив поведений объекта
+     * Возвращает замыкание метода $method класса $behaviour
+     * При этом контекст замыкания - $this - этот объект
+     * todo Оптимизация скорости
      **/
-    public final function behaviours() {
+    public function behaviourMethodFactory($behaviour,$method) {
     
-		echo 1;
+		Profiler::beginOperation("core","create closure",$behaviour.":".$fn);
     
-        \util::backtrace();
-    
-        $ret = array();
-        foreach(BehaviourMap::getList(get_class($this)) as $bclass) {
-            $ret[] = new $bclass;
-        }
-        return $ret;
+		$reflectionClass = new \ReflectionClass($behaviour);
+		$reflectionMethod = $reflectionClass->getMethod($method);
+		$closure = $reflectionMethod->getClosure(new $behaviour);
+		$ret = $closure->bindTo($this);
+		
+		Profiler::endOperation("");
+		
+		return $ret;
     }
-    
 
     /**
-     * Вызывает метод $fn всех прикрепленных к объекту поведений (метод самого объекта не вызывается)
-     * Поведения вызываются в порядке добавления: первым вызовется поведение, добавленное первым
-     * @return array с объединением результатов вызванных методов (array_merge)
-     **/
-    public function callBehaviours($fn) {
-    
-        $args = func_get_args();
-        array_shift($args);
+      * Возвращает массив замыканий методов $method из поведений, прикрепленных к объекту
+      **/
+    public function behaviourMethods($method) {
     
         $ret = array();
 
-        foreach(BehaviourMap::getBehavioursForMethod(get_class($this),$fn) as $bclass) {
-            $behaviour = new $bclass;
-            $items = call_user_func_array(array($behaviour,$fn),$args);
-			if(is_array($items)) {
-                foreach($items as $item) {
-                    $ret[] = $item;
-                }
-            }
+        foreach(BehaviourMap::getBehavioursForMethod(get_class($this),$method) as $bclass) {
+			$ret[] = $this->behaviourMethodFactory($bclass,$method);
         }
         
         return $ret;
@@ -78,9 +66,8 @@ class Component {
     
         $behaviourClass = BehaviourMap::routeMethod(get_class($this),$fn);
         if($behaviourClass) {
-            $behaviour = new $behaviourClass;
-            $behaviour->registerComponent($this);
-            return call_user_func_array(array($behaviour,$fn),$params);
+            $fn = $this->behaviourMethodFactory($behaviourClass,$fn);
+            return call_user_func_array(array($fn,"__invoke"),$params);
         }
     
         // Пытаемся вызвать метод _fn
@@ -135,16 +122,6 @@ class Component {
 
     }
 
-    public function __get($key) {
-        $class = get_class($this);
-        throw new \Exception("access to undefined property $class::$key");
-    }
-
-    public function __set($key,$val) {
-        $class = get_class($this);
-        throw new \Exception("access to undefined property $class::$key");
-    }
-
     public function componentCall($fn) {
         $class = get_class($this);
 
@@ -158,6 +135,7 @@ class Component {
     /**
      * Проверяет наличие метода у компонента
      * Поиск производится в самом компоненте и в прикрепленных поведениях
+     * @todo когда дело доходит до поведений, не сработает
      **/
     public final function methodExists($fn) {
 
@@ -187,14 +165,9 @@ class Component {
 
     /**
      * Магическая функция __clone клонирует поведения
+     * сделать чтобы поведения клонировались
      **/
     public final function __clone() {
-        foreach($this->behaviours() as $key => $b) {
-            $b = clone $b;
-            $b->registerComponent($this,$this->nextBehaviourPriority);
-            $this->nextBehaviourPriority++;
-            $this->___behaviours[$key] = $b;
-        }
     }
 
     /**
@@ -341,6 +314,9 @@ class Component {
         return array();
     }
 
+	/**
+	 * @todo сделать кэширование
+	 **/
     public static final function inspector() {
         return new \infuso\core\inspector(get_called_class());
     }

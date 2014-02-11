@@ -11,7 +11,7 @@ use \Infuso\Core;
 /**
  * @todo вернуть register_shutdown_function или аналог
  **/
-class Record extends \Infuso\Core\Model\Model {
+abstract class Record extends \Infuso\Core\Model\Model {
 
 	const STATUS_NEW = 100;
 	const STATUS_VIRTUAL = 0;
@@ -29,6 +29,12 @@ class Record extends \Infuso\Core\Model\Model {
 	 * Статус записи
 	 **/
 	protected $recordStatus = 0;
+
+	/**
+	 * @return Функция должна вернуть таблицу mysql, связанную с классом
+	 * Если функция возвращает символ @, то в качестве таблицы используется имя класса
+	 **/
+	abstract public static function reflex_table();
 
     /**
      * Фабрика полей
@@ -104,7 +110,10 @@ class Record extends \Infuso\Core\Model\Model {
      * @param $items class reflex_list
      **/
     public function reflex_beforeCollection($items) {
-        $this->callBehaviours("reflex_beforeCollection",$items);
+		foreach($this->behaviourMethods("reflex_beforeCollection") as $method) {
+		    $method();
+		}
+
     }
 
     public function defaultBehaviours() {
@@ -253,13 +262,11 @@ class Record extends \Infuso\Core\Model\Model {
             return;
 		}
             
-        foreach($this->behaviours() as $b) {
-            if(method_exists($b,$fn)) {
-                if($b->$fn($event)===false) {
-                    return false;
-				}
+        foreach($this->behaviourMethods($fn) as $closure) {
+            if($closure($event)===false) {
+                return false;
 			}
-		}
+        }
 
         if(in_array($fn,array(
             "reflex_beforeCreate",

@@ -9,13 +9,13 @@ class user_behaviour extends mod_behaviour {
 	    return -1;
 	}
 	
+	public function test() {
+		echo "* ";
+	}
+	
 	public function addToClass() {
 	    return "user";
 	}
-
-    public function reflex_table() {
-        return "user_list";
-    }
 
     public function reflex_classTitle() {
         return "Пользователь";

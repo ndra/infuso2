@@ -5,7 +5,7 @@
  **/
 class user_auth extends reflex {
 
-	public function reflex_table() {
+	public static function reflex_table() {
 	
 		return array (
 		  'name' => 'user_auth',

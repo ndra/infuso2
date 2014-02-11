@@ -5,7 +5,7 @@
  **/
 class doc_page extends reflex {
 
-    public function reflex_table() {
+    public static function reflex_table() {
         return array (
             'name' => get_class(),
             'fields' => array (

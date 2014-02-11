@@ -8,11 +8,6 @@ namespace Infuso\Core;
 class Behaviour {
 
 	/**
-	 * Ссылка на компонент
-	 **/
-	protected $component;
-	
-	/**
 	 * При помощи этой функции вы можете прикрепить это поведение как стандартное к любому классу.
 	 * @return string Класс, к которому вы хотите приеркпить поведение
 	 **/
@@ -27,29 +22,12 @@ class Behaviour {
 	public function behaviourPriority() {
 		return 0;
 	}
-	/**
-	 * При добавлении поведения к классу, вызывается этот метод
-	 * Метод сообщает поведению что оно прикреплено к классу
-	 * Также поведению передается его порядковый номер, который будет использоваться
-	 * при сортировке поведений с совпадающими приоритетами
-	 **/
-	public final function registerComponent($component) {
-		$this->component = $component;
-	}
 
 	/**
 	 * Возвращает объект компонента - объект, к которму прикреплено данное поведение.
 	 **/
 	public final function component() {
-		return $this->component;
-	}
-
-	/**
-	 * Магический метод
-	 * Перенаправляет вызов несуществующего метода поведения в компонент
-	 **/
-	public final function __call($fn,$params) {
-		return call_user_func_array(array($this->component(),$fn),$params);
+		return $this;
 	}
 
 }

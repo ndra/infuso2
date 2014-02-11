@@ -20,7 +20,7 @@ class TaskLog extends Record {
     const TYPE_TASK_CANCELLED = 11;
     const TYPE_TASK_MOVED_TO_BACKLOG = 12;
 
-    public function reflex_table() {
+    public static function reflex_table() {
         return array (
             'name' => 'board_task_log',
             'fields' => array (
