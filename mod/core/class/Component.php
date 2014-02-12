@@ -10,38 +10,60 @@ class Component {
      * @var array
     **/
     private $params = array();
+    
     private $paramsLoaded = false;
+    
     private $lockedParams = array();
 
     private $componentID = null;
+    
+    private $behaviours = array();
 
     /**
      * Добавляет поведение в класс
-     * Аргументом - имя класса
+     * Аргумент - имя класса
      * @return $this
      **/
     public final function addBehaviour($behaviour) {
-        echo $behaviour;
+        if(!array_key_exists($behaviour,$this->behaviours)) {
+            $this->behaviours[] = $behaviour;
+        }
         return $this;
     }
+    
+	/**
+	 * Возвращает хэш добавленных поведений
+	 * Одинаковый хэш - одинаковый массив поведений
+	 **/
+	public final function behaviourHash() {
+	    return implode("|",$this->behaviours);
+	}
+	
+	private static $behaviourClosures = array();
     
     /**
      * Возвращает замыкание метода $method класса $behaviour
      * При этом контекст замыкания - $this - этот объект
-     * todo Оптимизация скорости
+     * todo Оптимизация скорости, кэширование
      **/
     public function behaviourMethodFactory($behaviour,$method) {
     
-		Profiler::beginOperation("core","create closure",$behaviour.":".$fn);
+    	$key = $behaviour.":".$method;
     
-		$reflectionClass = new \ReflectionClass($behaviour);
-		$reflectionMethod = $reflectionClass->getMethod($method);
-		$closure = $reflectionMethod->getClosure(new $behaviour);
-		$ret = $closure->bindTo($this);
+		Profiler::beginOperation("core","create closure",get_class($this)." - ".$key);
+		
+		if(!$this->behaviourClosures[$key]) {
+    
+			$reflectionClass = new \ReflectionClass($behaviour);
+			$reflectionMethod = $reflectionClass->getMethod($method);
+			$closure = $reflectionMethod->getClosure(new $behaviour);
+			$this->behaviourClosures[$key] = $closure->bindTo($this);
+		
+		}
 		
 		Profiler::endOperation("");
 		
-		return $ret;
+		return $this->behaviourClosures[$key];
     }
 
     /**
@@ -51,8 +73,8 @@ class Component {
     
         $ret = array();
 
-        foreach(BehaviourMap::getBehavioursForMethod(get_class($this),$method) as $bclass) {
-			$ret[] = $this->behaviourMethodFactory($bclass,$method);
+        foreach(BehaviourMap::getBehavioursForMethod(get_class($this),$method,$this->behaviours,$this->behaviourHash()) as $bclass) {
+			$ret[] = $this->behaviourMethodFactory($bclass);
         }
         
         return $ret;
@@ -64,7 +86,7 @@ class Component {
      **/
     public final function __call($fn,$params) {
     
-        $behaviourClass = BehaviourMap::routeMethod(get_class($this),$fn);
+        $behaviourClass = BehaviourMap::routeMethod(get_class($this),$fn,$this->behaviours,$this->behaviourHash());
         if($behaviourClass) {
             $fn = $this->behaviourMethodFactory($behaviourClass,$fn);
             return call_user_func_array(array($fn,"__invoke"),$params);

@@ -25,8 +25,8 @@ class init extends \mod_init {
 
 		// Проходимся по классам и создаем таблицы для них
 		foreach(Record::classes() as $class) {
-		    //$table = Record::virtual($class)->table();
-		    //$table->migrateUp();
+			$record = mod::service("ar")->virtual($class);
+			$migration = new tableMigration($record->reflex_table());
 		}
 
 	}

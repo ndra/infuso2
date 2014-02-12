@@ -2,6 +2,9 @@
 
 namespace Infuso\Core;
 
+/**
+ * @todo убрать из класса контроллер
+ **/
 class Mod extends controller {
 
 	private static $debug = null;
@@ -158,7 +161,7 @@ class Mod extends controller {
 	 * Вместо класса может использоваться короткий алиас, например "checkbox"
 	 **/
 	public function field($class) {
-		return \mod_field::get($class);
+		return Model\Field::get($class);
 	}
 	
 	/**

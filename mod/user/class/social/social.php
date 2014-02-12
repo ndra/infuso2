@@ -56,9 +56,6 @@ public static function reflex_table() {return array (
       'indexEnabled' => 0,
     ),
   ),
-  'indexes' => 
-  array (
-  ),
 );}
 
 private static $sessionKey = "user:social";

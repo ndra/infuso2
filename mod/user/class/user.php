@@ -197,9 +197,6 @@ class user extends reflex {
       'group' => 'Личные данные',
     ),
   ),
-  'indexes' =>
-  array (
-  ),
   'fieldGroups' =>
   array (
     array (
@@ -213,6 +210,10 @@ class user extends reflex {
   ),
 );
     
+    }
+    
+    public function _xxx() {
+        echo "Превед";
     }
 
     /**
@@ -268,7 +269,7 @@ class user extends reflex {
      * Создает виртуального пользователя (без занесения в базу)
      **/
     public final function virtual($data=null) {
-        return reflex::virtual("user",$data);
+        return mod::service("ar")->virtual("user",$data);
     }
 
     /**

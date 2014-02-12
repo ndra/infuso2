@@ -114,6 +114,7 @@ class reflex_task extends reflex implements mod_handler {
      *    "priority" => ..,
      *    "params" => ..,
      * )
+     * @todo $params["params"] = mod::field("array")->prepareValue($params["params"])->value(); - какая-то хер, я не понимаю [Голиков]
      **/
     public static function add($params) {
     
@@ -160,7 +161,7 @@ class reflex_task extends reflex implements mod_handler {
         }
 
         $params["completed"] = 0;
-        $params["params"] = mod::field("array")->value($params["params"])->value();
+        $params["params"] = mod::field("array")->prepareValue($params["params"]);
 
         $item = self::all()
             ->eq($params)

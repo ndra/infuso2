@@ -7,7 +7,10 @@ namespace Infuso\Core;
  **/
 class BehaviourMap {
 
-	public function getList($class) {
+	/**
+	 * Возвращает список поведений, прикрепленных к данному классу
+	 **/
+	private function getList($class,$addBehaviours) {
 	
         $behaviours = array();
 
@@ -24,6 +27,12 @@ class BehaviourMap {
                 $behaviours[] = $b;
 			}
 		}
+		
+		foreach($addBehaviours as $b) {
+		    $behaviours[] = $b;
+		}
+		
+		$behaviours = array_unique($behaviours);
 
 		usort($behaviours, function($a,$b) {
 		    return $a::behaviourPriority() - $b::behaviourPriority();
@@ -33,23 +42,27 @@ class BehaviourMap {
 	
 	}
 
-	public function getMap($class) {
+	private function getMap($class,$addBehaviours,$behavioursHash) {
+		
+		Profiler::beginOperation("core","behaviour map",$class);
 	
-	    $key = "behaviours-map-".$class;
+	    $key = "behaviours-map-".$class."-".$behavioursHash;
 	    $data = Mod::service("cache")->get($key);
 
 	    if($data === null) {
-	        $data = self::getMapNocache($class);
+	        $data = self::getMapNocache($class,$addBehaviours);
 	        Mod::service("cache")->set($key,$data);
 	    }
+	    
+	    Profiler::endOperation();
 	    
 	    return $data;
 	
 	}
 
-    public static function getMapNocache($class) {
+    private static function getMapNocache($class,$addBehaviours) {
     
-        $behaviours = self::getList($class);
+        $behaviours = self::getList($class,$addBehaviours);
     
         $ret = array();
         foreach($behaviours as $b) {
@@ -65,8 +78,8 @@ class BehaviourMap {
         return $ret;
     }
     
-    public static function routeMethod($class,$method) {
-        $map = self::getMap($class);
+    public static function routeMethod($class,$method,$addBehaviours,$behavioursHash) {
+        $map = self::getMap($class,$addBehaviours,$behavioursHash);
         $behaviours = $map[$method];
         if(!$behaviours) {
             return;
@@ -74,8 +87,8 @@ class BehaviourMap {
         return end($behaviours);
     }
     
-    public function getBehavioursForMethod($class,$method) {
-        $map = self::getMap($class);
+    public function getBehavioursForMethod($class,$method,$addBehaviours,$behavioursHash) {
+        $map = self::getMap($class,$addBehaviours,$behavioursHash);
         $behaviours = $map[$method];
         if(!$behaviours) {
             $behaviours = array();

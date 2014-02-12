@@ -82,17 +82,6 @@ public static function reflex_table() {return array (
       'indexEnabled' => 0,
     ),
   ),
-  'indexes' => 
-  array (
-  ),
-  'fieldGroups' => 
-  array (
-    0 => 
-    array (
-      'name' => NULL,
-      'title' => NULL,
-    ),
-  ),
 );}
 
 public function initialParams() {

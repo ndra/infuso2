@@ -8,26 +8,43 @@ use Infuso\core\file;
 /**
  * Класс миграции mysql
  **/
-class tableMigration {
-
-    private $table = null;
+class TableMigration {
 
     /**
      * сюда будут складываться кусочки запросов по изменению таблицы
      **/
     private $q = array();
+    
+    private $model = null;
 
-    public function __construct(table $table) {
-        $this->table = $table;
+    public function __construct($model) {
+        $this->model = $model;
+    }
+    
+    public function tableName() {
+        return $this->model["name"];
+    }
+    
+    public function prefixedTableName() {
+        return "infuso_".$this->model["name"];
+    }
+    
+    public function fields() {
+        $ret = array();
+        foreach($this->model["fields"] as $field) {
+            $ret[] = \Infuso\Core\Model\Field::get($field);
+        }
+        return $ret;
     }
 
     /**
      * Миграция таблицы до актуального состояния
      **/
     public function migrateUp() {
-
-        if(!$this->table()->name())
-            return;
+    
+        if(!$this->tableName()) {
+            throw \Exception("Migration: table name missing");
+		}
 
         $this->createTable();
 
@@ -35,38 +52,40 @@ class tableMigration {
 
         // Проверяем таблицу на наличие дублирующихся полей
         $names = array();
-        foreach($this->table()->fields() as $field) {
+        foreach($this->fields() as $field) {
             if(in_array($field->name(),$names)) {
-                mod::msg("Duplicate field name <b>{$field->name()}</b> in table <b>{$this->table()->name()}</b>",1);
+                throw new Exception("Duplicate field name <b>{$field->name()}</b> in table <b>{$this->table()->name()}</b>",1);
             }
             $names[] = $field->name();
         }
 
         // Добавляем / восстанавливаем нужные поля
-        foreach($this->table()->fields() as $field)
+        foreach($this->fields() as $field) {
             $this->updateField($field);
-
+        }
+        
+		/*
         // Удаляем лишние поля
         foreach($this->realFields() as $field) {
             if(!$this->table()->field($field)->exists()) {
                 mod::msg("Field ".$this->table()->name().".".$field." not exists in model. You need to remove it manually. ");
                 //$this->deleteField($field);
             }
-        }
+        }*/
 
         $this->updateIndex();
+        
 
         if(sizeof($this->q)) {
             $q = implode(", ",$this->q);
-            $q = "alter table `{$this->table()->prefixedName()}` $q";
-            mod::trace($q);
+            $q = "alter table `{$this->prefixedTableName()}` $q";
             return mod::service("db")->query($q)->exec();
         }
 
     }
 
     public function updateEngine() {
-		$query = "SHOW TABLE STATUS like '{$this->table()->prefixedName()}' ";
+		$query = "SHOW TABLE STATUS like '{$this->prefixedTableName()}' ";
         $status = mod::service("db")->query($query)->exec()->fetch();
         $engine = $status["Engine"];
         if($engine!="MyISAM") {
@@ -95,30 +114,39 @@ class tableMigration {
 
         $type = $field->mysqlType()." ";
 
-        if(preg_match("/(varchar)|(longtext)/i",$type))
+        if(preg_match("/(varchar)|(longtext)/i",$type)) {
             $type.= "COLLATE utf8_general_ci ";
+        }
 
-        if(!$field->mysqlNull())
+        if(!$field->mysqlNull()) {
             $type.="NOT NULL ";
+        }
 
-        if($field->mysqlAutoIncrement())
+        if($field->mysqlAutoIncrement()) {
             $type.= "auto_increment ";
+        }
 
         return strtolower($type);
 
     }
 
     public function existsType($field) {
+    
         $descr = $this->describeField($field);
         $ret = $descr["Type"]." ";
 
-        if($c = $descr["Collation"])
+        if($c = $descr["Collation"]) {
             $ret.= "collate ".$c." ";
+        }
 
-        if($descr["Null"]=="NO")
+        if($descr["Null"]=="NO") {
             $ret.= "NOT NULL ";
-        if($descr["Extra"]=="auto_increment")
+        }
+            
+        if($descr["Extra"]=="auto_increment") {
             $ret.= "auto_increment ";
+        }
+            
         return strtolower($ret);
     }
 
@@ -127,7 +155,7 @@ class tableMigration {
         $a = $this->needType($field);
         $b = $this->existsType($field);
         $descr = $this->describeField($field);
-
+        
         if(!$descr) {
             $this->createField($field,$a);
         } else {
@@ -135,10 +163,8 @@ class tableMigration {
             $alter = trim($a)!=trim($b);
             $type = $a;
 
-            // Если да, меняем поле
             if($alter) {
                 $this->q[] = "MODIFY `{$field->name()}` $type ";
-                mod::msg("alter {$this->table()->name()}.{$field->name()}");
             }
         }
     }
@@ -148,7 +174,7 @@ class tableMigration {
      * Вызывается в начале миграции
      **/
     public function createTable() {
-        $table = $this->table()->prefixedName();
+        $table = $this->prefixedTableName();
         $query = "create table if not exists `$table` (`id` bigint(20) primary key) ";
         mod::service("db")->query($query)->exec();
     }
@@ -157,7 +183,7 @@ class tableMigration {
      * Возвращает описание поля
      **/
     public function describeField($field) {
-        $query = "show full columns from `{$this->table()->prefixedName()}` like '{$field->name()}' ";
+        $query = "show full columns from `{$this->prefixedTableName()}` like '{$field->name()}' ";
         return mod::service("db")->query($query)->exec()->fetch();
     }
 
@@ -180,7 +206,6 @@ class tableMigration {
      * Удаляет поле из таблицы
      **/
     public function deleteField($field) {
-        mod::msg("delete {$this->table()->name()}.{$field}");
         $this->q[] = "drop `{$field}`";
     }
 
@@ -193,7 +218,7 @@ class tableMigration {
 
         // Индексы, которые должны быть
         $a = array();
-        foreach($this->table()->indexes() as $index) {
+        foreach($this->indexes() as $index) {
             $fields = \infuso\util\util::splitAndTrim($index->fields(),",");
             sort($fields);
             $a[$index->name()]["fields"] = $fields;
@@ -206,27 +231,28 @@ class tableMigration {
 
         // Индексы, которые реально есть
         $b = array();
-        $query = "show index from `{$this->table()->prefixedName()}` ";
+        $query = "show index from `{$this->prefixedTableName()}` ";
         $items = mod::service("db")->query($query)->exec()->fetchAll();
         
         foreach($items as $index) {
             $name = $index["Key_name"];
             $indexDescr = $index["Column_name"];
-            if($n=$index["Sub_part"])
+            if($n=$index["Sub_part"]) {
                 $indexDescr.= "(".$n.")";
+            }
             $b[$name]["fields"][] = $indexDescr;
             $b[$name]["type"] = $index["Index_type"]=="BTREE" ? "index" : "fulltext";
         }
 
         // Сортируем поля
-        foreach($b as $key=>$val) {
+        foreach($b as $key => $val) {
             $fields = $val["fields"];
             sort($fields);
             $b[$key]["fields"] = $fields;
         }
 
         // Добавляем/изменяем индексы
-        foreach($a as $name=>$index) {
+        foreach($a as $name => $index) {
 
             $hash1 = serialize($index);
             $hash2 = serialize($b[$name]);
@@ -243,21 +269,23 @@ class tableMigration {
 
                 mod::msg("alter index {$this->table()->name()}.$name ");
 
-                if(array_key_exists($name,$b))
+                if(array_key_exists($name,$b)) {
                     $this->q[] = "drop index `$name`";
+                }
 
                 $type = $index["type"];
 
-                if($name=="PRIMARY")
+                if($name=="PRIMARY") {
                     $this->q[] = "add primary key($fields)";
-                else
+                } else {
                     $this->q[] = "add $type `$name` ($fields) ";
+                }
             }
 
         }
 
         // Убираем ненужные индексы
-        foreach($b as $name=>$fuck) {
+        foreach($b as $name => $fuck) {
             if(!array_key_exists($name,$a)) {
                 $this->q[] = "drop index `$name`";
 			}

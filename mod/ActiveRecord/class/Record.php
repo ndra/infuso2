@@ -95,9 +95,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
     
     public final function prefixedTableName() {
         $ret = $this->reflex_table();
-        if($ret=="@") {
-            return "infuso_".get_class($this);
-        }
         return "infuso_".$ret["name"];
     }
     
