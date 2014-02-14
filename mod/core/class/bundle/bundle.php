@@ -1,13 +1,13 @@
 <?
 
-namespace infuso\core\bundle;
+namespace Infuso\Core\Bundle;
 use infuso\core\file as file;
 use infuso\core\mod as mod;
 
 /**
  * Класс, реализующий бандл
  **/
-class bundle extends \infuso\core\component {
+class Bundle extends \Infuso\Core\Component {
 
 	private $path = null;
 	
@@ -93,6 +93,14 @@ class bundle extends \infuso\core\component {
 	 **/
 	public function classPath() {
 	    return file::get($this->path()."/class/");
+	}
+	
+	/**
+	 * Пакует классы бандла
+	 * @todo реализовать
+	 **/
+	public function packClasses() {
+	
 	}
 
 }

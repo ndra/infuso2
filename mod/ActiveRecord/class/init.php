@@ -1,10 +1,10 @@
 <?
 
-namespace infuso\ActiveRecord;
+namespace Infuso\ActiveRecord;
 use \infuso\core\mod;
 use \infuso\core\file;
 
-class init extends \mod_init {
+class Init extends \mod_init {
 
 	public function priority() {
 	    return 9999;
@@ -26,7 +26,7 @@ class init extends \mod_init {
 		// Проходимся по классам и создаем таблицы для них
 		foreach(Record::classes() as $class) {
 			$record = mod::service("ar")->virtual($class);
-			$migration = new tableMigration($record->reflex_table());
+			$migration = new Migration\Table($record->reflex_table());
 		}
 
 	}

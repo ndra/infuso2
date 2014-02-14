@@ -48,13 +48,15 @@ class BehaviourMap {
 	
 	    $key = "behaviours-map-".$class."-".$behavioursHash;
 	    $data = Mod::service("cache")->get($key);
+	    
+	    Profiler::endOperation();
 
 	    if($data === null) {
 	        $data = self::getMapNocache($class,$addBehaviours);
 	        Mod::service("cache")->set($key,$data);
 	    }
 	    
-	    Profiler::endOperation();
+	    
 	    
 	    return $data;
 	

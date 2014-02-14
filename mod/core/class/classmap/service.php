@@ -7,10 +7,21 @@ class classmapService extends service {
 	private static $extends = array();
 	
 	private static $classmap = null;
+	
+	private static $serviceInstance;
 
 	public function defaultService() {
 	    return "classmap";
 	}
+	
+    public static function serviceFactory() {
+
+        if(!self::$serviceInstance) {
+			self::$serviceInstance = new self;
+		}
+        return self::$serviceInstance;
+  
+    }
 	
 	public function classes($extends = null) {
 	    return $this->getClassesExtends($extends);

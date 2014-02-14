@@ -28,9 +28,11 @@ class Files extends Field {
 		);
 	}
 
-	public function tableCol() { return array(
-	    "type"=>"image",
-	);}
+	public function tableCol() {
+		return array(
+	    	"type" => "image",
+		);
+	}
 
 	public function tableRender() {
 	    return $this->pvalue()->first()->preview(16,16)."";
@@ -40,8 +42,9 @@ class Files extends Field {
 	    $files = @json_decode($this->value(),1);
 	    if(!is_array($files)) $files = array();
 	    $ret = array();
-	    foreach($files as $file)
+	    foreach($files as $file) {
 	        $ret[] = file::get($file["f"]);
+	    }
 	    $ret = new \infuso\core\flist($ret);
 	    return $ret;
 	}

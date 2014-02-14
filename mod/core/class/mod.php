@@ -168,7 +168,11 @@ class Mod extends controller {
 	 * Возвращает службу по ее имени
 	 **/
 	public function service($serviceName) {
-	    return mod::app()->service($serviceName);
+
+     	Profiler::beginOperation("core","service",$serviceName);
+	    $ret = mod::app()->service($serviceName);
+		Profiler::endOperation("core","service",$serviceName);
+	    return $ret;
 	}
 	
 	/**

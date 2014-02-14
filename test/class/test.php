@@ -12,15 +12,12 @@ class tester extends \infuso\core\controller {
 
 		\tmp::header();
 	
-	   /* $record = \mod::service("ar")->virtual("reflex_task");
-        $migration = new \Infuso\ActiveRecord\tableMigration($record->reflex_table());
-        $migration->migrateUp(); */
-        
-        $user = \user::active();
-        $user->addBehaviour("infuso\\test\\behaviour");
-        
-        for($i=0;$i<1000;$i++) {
-        	$user->xxx();
+	    $record = \mod::service("ar")->virtual("reflex_task");
+        $migration = new \Infuso\ActiveRecord\Migration\Table($record->reflex_table());
+        //$migration->migrateUp();
+
+        foreach($migration->indexes() as $index) {
+			echo "* ";
         }
         
 		\util::profiler();

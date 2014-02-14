@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\ActiveRecord;
+namespace Infuso\ActiveRecord\Migration;
 
 use Infuso\core\mod;
 use Infuso\core\file;
@@ -8,7 +8,7 @@ use Infuso\core\file;
 /**
  * Класс миграции mysql
  **/
-class TableMigration {
+class Table {
 
     /**
      * сюда будут складываться кусочки запросов по изменению таблицы
@@ -20,21 +20,46 @@ class TableMigration {
     public function __construct($model) {
         $this->model = $model;
     }
-    
+
+    /**
+     * Возвращает имя таблицы
+     **/
     public function tableName() {
         return $this->model["name"];
     }
     
+    /**
+     * Возвращает имя таблицы с префиксом
+     * @todo использовать реальный префикс
+     **/
     public function prefixedTableName() {
         return "infuso_".$this->model["name"];
     }
     
+	/**
+	 * Возвращает массив полей таблицы
+	 * Элемнты массива - объекты
+	 **/
     public function fields() {
         $ret = array();
         foreach($this->model["fields"] as $field) {
             $ret[] = \Infuso\Core\Model\Field::get($field);
         }
         return $ret;
+    }
+
+	/**
+	 * Возвращает массив индексов таблицы
+	 * Элемнты массива - объекты
+	 **/
+    public function indexes() {
+        $ret = array();
+        foreach($this->fields() as $field) {
+            echo $field->name();
+            echo $field->index();
+            echo "<br/>";
+        }
+		return $ret;
     }
 
     /**

@@ -12,6 +12,10 @@ class service extends \infuso\core\service {
         return "cache";
     }
     
+    public static function isSingletonService() {
+        return true;
+    }
+    
     /**
      * Возвращает драйвер кэширущей системы
      * @todo вернуть возможность выбора драйвера

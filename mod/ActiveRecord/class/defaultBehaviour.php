@@ -10,34 +10,6 @@ class reflex_defaultBehaviour extends mod_behaviour {
     }
 
 	/**
-	 * @return Функция должна вернуть коллекцию или массив коллекций, которые будут
-	 * выводиться на верхнем уровне каталога (в левом меню)
-	 **/
-	public function reflex_root() {
-		return array();
-	}
-
-	/**
-	 * @return Функция должна строку группы в левом меню каталога
-	 **/
-	public function reflex_rootGroup() {
-		$class = get_class($this->component());
-	    $mod = end(array_reverse(explode("_",$class)));
-        $path = mod::service("bundle")->bundle($mod)->conf("title");
-	    if(!$title) {
-			$title = $mod;
-		}
-	    return $title;
-	}
-
-	/**
-	 * @return Функция должна вернуть массив коллекций дочерних элементов данного объекта
-	 **/
-	public function reflex_children() {
-		return array();
-	}
-
-	/**
 	 * @return Функция должна вернуть url объекта
 	 * По умолчанию, url объекта имеет вид /my_class_name/item/id/123
 	 * Переопределите функцию, если у элемента должен быть другой url
@@ -79,18 +51,6 @@ class reflex_defaultBehaviour extends mod_behaviour {
         
         return false;
     }
-
-	public function reflex_cleanup() {
-	}
-
-	public function reflex_repair() {
-	}
-
-	public function reflex_repairClass() { return true; }
-
-	// Быстрый подсчет элементов (считает приблизительно) для больших таблиц
-	// По умолчанию — выключен
-	public function reflex_fastCount() { return false; }
 
 	/**
 	 * Триггер, вызывающийся перед каждой поперацией создания, изменения или удаления

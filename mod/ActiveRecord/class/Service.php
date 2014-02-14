@@ -17,6 +17,17 @@ class Service extends Core\Service {
 	    return "ar";
 	}
 	
+	private static $serviceInstance;
+
+    public static function serviceFactory() {
+
+        if(!self::$serviceInstance) {
+			self::$serviceInstance = new self;
+		}
+        return self::$serviceInstance;
+
+    }
+	
 	public static function getItemClass($class) {
 
 	    if(!Core\Mod::app()->service("classmap")->testClass($class,"reflex") && !Core\Mod::app()->service("classmap")->testClass($class,"infuso\\ActiveRecord\Record")) {

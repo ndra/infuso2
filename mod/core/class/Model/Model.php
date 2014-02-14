@@ -109,6 +109,15 @@ abstract class Model extends Core\Controller {
     }
     
     public final function setInitialData($data) {
+    
+        if($data === null) {
+            $data = array();
+		}
+    
+        if(!is_array($data)) {
+            throw new \Exception("Model::setInitialData() first argument must be array, ".gettype($data)." given");
+        }
+    
         $this->changedData = array();
         $this->initialData = $data;
     }

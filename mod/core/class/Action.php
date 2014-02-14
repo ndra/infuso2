@@ -2,7 +2,7 @@
 
 namespace Infuso\Core;
 
-class Action extends component {
+class Action extends Component {
 
     private $className = "";
     private $action = "";

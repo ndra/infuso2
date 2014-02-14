@@ -27,7 +27,8 @@ $width = 1000;
             $top = ($index%4) * 10 + 50;
             <div class='label' style='padding-top:{$top}px;top:45px;' >
                 <span style='background:rgba(255,255,255,.5);z-index:1;position:relative;' >
-                    echo $s[0];
+                    $rtime = round($s[1] - $start,4);
+                    echo $s[0]." {$rtime} s.";
                 </span>
             </div>
         

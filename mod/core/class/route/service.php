@@ -48,7 +48,7 @@ class service extends \infuso\core\service {
     public function urlToAction($url) {
 
         $key = "action-to-url/".$url;
-       // $serializedAction = mod_cache::get($key);
+        $serializedAction = Core\Mod::Service("cache")->get($key);
 
         if(!$serializedAction) {
         
@@ -59,14 +59,14 @@ class service extends \infuso\core\service {
 					$action->action(),
 					$action->params()
 				));
-                core\mod::service("cache")->set($key,$serializedAction);
+                Core\Mod::Service("cache")->set($key,$serializedAction);
             }
             return $action;
 
         } else {
 
             list($class,$method,$params) = json_decode($serializedAction,true);
-            $action = mod::action($class,$method,$params);
+            $action = Core\Mod::action($class,$method,$params);
 
             return $action;
 

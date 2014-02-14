@@ -368,6 +368,8 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 
     }
     
+    private static $xservices = array();
+    
     /**
      * Возвращает службу (объект) по имени службы
      * @todo вернуть назначение класса службам через конфиг
@@ -377,8 +379,12 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
         $class = $this->registredServices[$name];
         
         if(!$class) {
-            $services = $this->service("classmap")->classmap("services");
-            $class = $services[$name];
+        
+            if(!self::$xservices) {
+                self::$xservices = $this->service("classmap")->classmap("services");
+            }
+            
+            $class = self::$xservices[$name];
         }
         
         if(!$class) {

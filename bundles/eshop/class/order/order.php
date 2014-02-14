@@ -1,5 +1,7 @@
 <?
 
+use Infuso\Core;
+
 /**
  * Модель заказа (он же модель корзины)
  **/
@@ -441,11 +443,11 @@ public static function reflex_table() {return array (
      **/
     public static function cart() {
         $id = $_COOKIE[self::$cookie];
-        $order = reflex::virtual(get_class());
+        $order = Core\Mod::service("ar")->virtual(get_class());
         if($id)
             $order = eshop_order::drafts()->eq("id",$id)->one();
         if(!$order->my())
-            $order = reflex::virtual(get_class());
+            $order = Core\Mod::service("ar")->virtual(get_class());
         return $order;
     }
 
