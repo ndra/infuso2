@@ -1,6 +1,6 @@
 <?
 
-class reflex_editor_widget extends \mod\template\widget {
+class reflex_editor_widget extends \Infuso\Template\widget {
 
 	public function name() {
 	    return "Редактор";

@@ -4,7 +4,7 @@
  * Стандартная тема для модуля mod
  **/
 
-class mod_theme extends tmp_theme {
+class mod_theme extends \Infuso\Template\Theme {
 
 	public function path() {
 		return self::bundle()->path()."/theme";

@@ -106,9 +106,9 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * @return Функция вызывается при создании коллекции
      * @param $items class reflex_list
      **/
-    public function reflex_beforeCollection($items) {
+    public function reflex_beforeCollection($collection) {
 		foreach($this->behaviourMethods("reflex_beforeCollection") as $method) {
-		    $method();
+		    $method($collection);
 		}
 
     }

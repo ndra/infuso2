@@ -8,7 +8,7 @@
  * Пользователь же работает с фасадом и вызывает все методы у одного единственного объекта
  **/
 
-class form_facade extends \mod\template\generic {
+class form_facade extends \Infuso\Template\Generic {
 
 	private $field = null;
 	private $template = null;

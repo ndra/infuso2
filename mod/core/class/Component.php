@@ -357,5 +357,12 @@ class Component {
 	public function confDescription() {
 		return array();
 	}
+	
+	/**
+	 * Возвращает текущее приложение
+	 **/
+	public function app() {
+	    return \Mod::app();
+	}
 
 }

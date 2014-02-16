@@ -1,7 +1,9 @@
 <?
 
+namespace Infuso\Core;
+
 /**
  * Самый крутой класс
  **/
-interface mod_handler {
+interface Handler {
 }

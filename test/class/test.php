@@ -12,11 +12,7 @@ class tester extends \infuso\core\controller {
 
 		\tmp::header();
 	
-	    $record = \mod::service("ar")->virtual("reflex_task");
-        $migration = new \Infuso\ActiveRecord\Migration\Table($record->reflex_table());
-        $migration->migrateUp();
-
-       \util::profiler();
+        \util::profiler();
 
 		\tmp::footer();
         

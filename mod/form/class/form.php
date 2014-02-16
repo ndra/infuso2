@@ -3,7 +3,7 @@
 /**
  * Класс-билдер формы
  **/
-class form extends \Infuso\Tmp\Helper {
+class form extends \Infuso\Template\Helper {
 
 	private $blocks = array();
 	private $fields = array();

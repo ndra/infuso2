@@ -3,7 +3,7 @@
 /**
  * Виджет меню личного кабинета пользователя
  **/
-class user_menu extends tmp_menu {
+class user_menu extends \Infuso\Template\Menu {
 
 	public function execWidget() {
 	    $params = $this->params();

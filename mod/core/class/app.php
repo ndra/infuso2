@@ -2,43 +2,43 @@
 
 namespace infuso\core;
 
-class app {
+class App {
 
 	private $post;
 	private $get;
 	private $files;
 
 	private static $initiated = false;
-	
+
 	/**
 	 * Список зарегистрирвоанных служб
 	 **/
 	private $registerdServices = array();
-	
+
 	/**
 	 * Процессор шаблонов приложения
 	 **/
 	private $templateProcessor = null;
-	
+
 	/**
 	 * Текущий экземпляр объекта приложения
 	 **/
 	private static $current;
-	
+
 	/**
 	 * Возвращает текущий экземпляр объекта приложерия
 	 **/
 	public function current() {
 	    return self::$current;
 	}
-	
+
 	public function __construct($params) {
      	$GLOBALS["infusoStarted"] = microtime(1);
 	    $this->url = $params["url"];
 	    $this->post = $params["post"];
 	    $this->files = $params["files"];
 	}
-	
+
 	/**
 	 * Подключает жизненно важные классы
 	 **/
@@ -55,28 +55,28 @@ class app {
 	    include("file/flist.php");
 	    include("bundle/bundle.php");
 	}
-	
+
 	public function setErrorLevel() {
 		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT);
 		ini_set("display_errors",1);
 	}
-	
+
 	public function configureIni() {
 		ini_set('register_globals', 'off');
 		ini_set('magic_quotes_gpc', 'off');
 		ini_set('magic_quotes_runtime', 'off');
 		ini_set('default_charset', "utf-8");
 	}
-	
+
 	/**
 	 * Коллбэк для загрузки несуществующего класса
 	 **/
 	public function loadClass($class) {
 		$this->service("classmap")->includeClass($class);
 	}
-	
+
 	public function init() {
-	
+
 	    if(!self::$initiated) {
 
 		    self::$initiated = true;
@@ -88,7 +88,7 @@ class app {
 			// Регистрируем загрузчик классов
 			spl_autoload_register(array($this,"loadClass"));
 		}
-		
+
 		$this->registerService("classmap","infuso\\core\\classmapService");
 		$this->registerService("route","\\infuso\\core\\route\\service");
 		$this->registerService("bundle","\\infuso\\core\\bundle\\manager");
@@ -103,43 +103,43 @@ class app {
 	public function url() {
 	    return url::get($this->url);
 	}
-	
+
 	/**
 	 * Возвращаем массив $_POST
 	 **/
 	public function post() {
 	    return $this->post;
 	}
-	
+
 	public function files() {
 		return $this->files;
 	}
-	
+
 	public function action() {
 	    if(!$this->action) {
 	        $this->action = $this->url()->action();
 	    }
 	    return $this->action;
 	}
-	
+
 	/**
 	 * Возвращает текущую запись active record (reflex)
 	 **/
 	public function ar() {
 	    return $this->ar;
 	}
-	
+
 	public function tmp() {
 	    if(!$this->templateProcessor) {
-	        $this->templateProcessor = new \mod\template\processor();
+	        $this->templateProcessor = new \Infuso\Template\Processor();
 	    }
 	    return $this->templateProcessor;
 	}
-	
+
 	public function clearTmp() {
 	    $this->templateProcessor = null;
 	}
-	
+
 	/**
 	 * Возвращает флаг того активны ли события приложения
 	 * Например, mod_beforeActionSYS или mod_afterActionSys
@@ -152,24 +152,24 @@ class app {
 	    }
 	    return true;
 	}
-	
+
     /**
      * Запускает приложение
      **/
 	public function exec() {
-	
+
 	    ob_start();
-	    
+
 	    try {
-	    
+
 	        $this->execWithoutExceptionHandling();
 
 	    } catch(\Exception $exception) {
-	    
+
 			while(ob_get_level()) {
 		        ob_end_clean();
 		    }
-		    
+
 		    ob_start();
 
 		    // Трейсим ошибки
@@ -180,16 +180,16 @@ class app {
 				// Сбрасываем процессор шаблонов
 		        $this->clearTmp();
 
-				\tmp::exec("/mod/exception", array(
+			    \tmp::exec("/mod/exception", array(
 				    "exception" => $exception,
 				));
 
-		    } catch(Exception $ex2) {
+		    } catch(\Exception $ex2) {
 		        throw $exception;
 		    }
-	    
+
 	    }
-	    
+
         $content = ob_get_clean();
 
         // Пост-обработка (отложенные функции)
@@ -201,11 +201,11 @@ class app {
         }
 
         echo $content;
-        
+
         mod::fire("mod_appShutdown");
-	
+
 	}
-     
+
 	public function execWithoutExceptionHandling() {
 
 	    self::$current = $this;
@@ -217,7 +217,7 @@ class app {
 		// Выполняем post-команду
 	    post::process($this->post(),$this->files());
 	    Profiler::addMilestone("post completed");
-	    
+
 	    Defer::callDeferedFunctions();
 	    Profiler::addMilestone("defered functions");
 
@@ -240,13 +240,13 @@ class app {
 	    Defer::callDeferedFunctions();
 
 	}
-	
+
 	public function httpError() {
 		\tmp::exec("/mod/404");
 	}
 
 	public function generateHtaccess() {
-	
+
 		$gatePath = mod::service("classmap")->getClassBundle(get_class())->path()."/pub/gate.php";
 		$gatePath = file::get($gatePath);
 
@@ -286,30 +286,30 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 		$str.= "RewriteCond %{REQUEST_URI} !{$gatePath2}\n";
 		$str.= "RewriteCond %{REQUEST_URI} !^\/?[^/]*$\n";
 		$str.= "RewriteRule .* {$gatePath} [L]\n";
-		
+
 		$str.= "ErrorDocument 404 {$gatePath}\n";
 
 	    file::get(".htaccess")->put($str);
 	}
-	
+
 	/**
 	 * Возвращает массив публичных папок приложения
 	 **/
 	public function publicFolders() {
-	
+
 	    $ret = array(
 	        $this->publicPath(),
 		);
-	
+
 		$bundleManager = mod::service("bundle");
 	    foreach($bundleManager->all() as $bundle) {
             foreach($bundle->publicFolders() as $pub) {
                 $ret[] = $pub;
             }
 		}
-		
+
 		return $ret;
-	
+
 	}
 
     /**
@@ -367,54 +367,54 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
         } while (!$done);
 
     }
-    
+
     private static $xservices = array();
-    
+
     /**
      * Возвращает службу (объект) по имени службы
      * @todo вернуть назначение класса службам через конфиг
      **/
     public function service($name) {
-    
+
         $class = $this->registredServices[$name];
-        
+
         if(!$class) {
-        
+
             if(!self::$xservices) {
                 self::$xservices = $this->service("classmap")->classmap("services");
             }
-            
+
             $class = self::$xservices[$name];
         }
-        
+
         if(!$class) {
             throw new \Exception("Service [$name] not found");
         }
-        
+
         return $class::serviceFactory();
     }
-    
+
     /**
      * Регистрирует класс в качестве службы
      **/
     public function registerService($service,$class) {
         $this->registredServices[$service] = $class;
     }
-    
+
     /**
      * Возвращает директорию данных приложения
      **/
     public function varPath() {
 		return file::get("/var");
     }
-    
+
     /**
      * Возвращает публичную директорию приложения
      **/
     public function publicPath() {
         return file::get("/pub");
     }
-    
+
     /**
      * Возвращает конфигигурацию приложения
      **/
