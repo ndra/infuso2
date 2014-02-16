@@ -155,13 +155,10 @@ abstract class Field extends Core\Component {
         // Если значение было изменено, возвращаем измененое значение
         if(func_num_args()==0) {
             return $this->model()->data($this->name());
-
         }
 
         if(func_num_args()==1) {
-
             return $this->model()->data($this->name(),$value);
-
             return $this;
         }
     }
@@ -225,8 +222,12 @@ abstract class Field extends Core\Component {
     public function mysqlNull() {
     }
 
-    public function mysqlIndexFields() {
-        return $this->name();
+    public function dbIndex() {
+        return array(
+            "type" => "index",
+            "name" => "+".$this->name(),
+            "fields" => $this->name(),
+		);
     }
 
     /**

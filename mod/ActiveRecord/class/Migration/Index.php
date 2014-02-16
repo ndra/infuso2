@@ -6,6 +6,12 @@ use Infuso\Core;
 
 class Index extends Core\Component {
 
+	public function initialParams() {
+	    return array(
+	        "type" => "index",
+		);
+	}
+
 	public function __construct($data=array()) {
 		$this->params($data);
 	}
@@ -14,7 +20,7 @@ class Index extends Core\Component {
 	    return array(
 	        "name" => "mixed",
 	        "fields" => "mixed",
-	        "automatic" => "mixed",
+	        "length" => "mixed",
 		);
 	}
 
@@ -30,9 +36,11 @@ class Index extends Core\Component {
 	public function type($type=null) {
 
 		if(func_num_args()==0) {
-			if($this->param("type")=="fulltext") {
-				return "fulltext";
-			}
+		
+		    if(in_array($this->param("type"), array("index","fulltext","primary"))) {
+		        return $this->param("type");
+		    }
+			
 		    return "index";
 	    }
 
@@ -41,17 +49,5 @@ class Index extends Core\Component {
 	        return $this;
 		}
 	}
-
-	public function fulltext() {
-		return $this->type("fulltext");
-	}
-
-	public final function table() {
-		return $this->table;
-	}
-
-	public final function setTable($table) {
-	    $this->table = $table;
-	}
-
+	
 }

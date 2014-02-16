@@ -6,14 +6,6 @@
 class reflex_table_fieldBehaviour extends mod_behaviour {
 
     /**
-     * Возвращает имя поля в формате tableName.fieldName
-     * @todo исправить ошибку
-     **/
-    public function fullName() {
-        return get_class($this->component()->model()).".".$this->name();
-    }
-
-    /**
      * Индексировать ли это поле
      **/
     public function indexEnabled() {

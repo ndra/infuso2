@@ -17,10 +17,6 @@ class Point extends Textfield {
         return "Point";
     }
 
-    public function mysqlIndexType() {
-        return "index";
-    }
-
     public function mysqlNull() {
         return true;
     }
@@ -54,8 +50,9 @@ class Point extends Textfield {
             }
         }
 
-        if(trim($val)=="")
+        if(trim($val)=="") {
             return null;
+        }
 
         return $val;
 
@@ -88,8 +85,9 @@ class Point extends Textfield {
      **/
     public function pvalue() {
         $ret = @unpack('x/x/x/x/corder/Ltype/dx/dy',$this->value());
-        if(!$ret)
+        if(!$ret) {
             $ret = array();
+        }
         return $ret;
     }
 
@@ -99,16 +97,18 @@ class Point extends Textfield {
      **/
     public function rvalue() {
 
-        if($this->value()==null)
+        if($this->value()==null) {
             return "";
+        }
 
         return $this->x().",".$this->y();
     }
 
     public function mysqlValue() {
 
-        if($this->value()==null)
+        if($this->value()==null) {
             return "null";
+        }
 
         $x = $this->x();
         $y = $this->y();

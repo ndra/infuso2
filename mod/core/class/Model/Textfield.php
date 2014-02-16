@@ -14,18 +14,19 @@ class Textfield extends Field {
 	}
 
 	public function typeAlias() {
-	    return array(
-	        "string",
-	        "textfield"
-		);
+	
+	    if(get_called_class()==get_class()) {
+		    return array(
+		        "string",
+		        "textfield"
+			);
+		} else {
+		    return parent::typeAlias();
+		}
 	}
 
 	public function mysqlType() {
 		return "varchar(".$this->length().")";
-	}
-
-	public function mysqlIndexType() {
-		return "index";
 	}
 
 	public function prepareValue($val) {

@@ -74,7 +74,7 @@ class Component {
         $ret = array();
 
         foreach(BehaviourMap::getBehavioursForMethod(get_class($this),$method,$this->behaviours,$this->behaviourHash()) as $bclass) {
-			$ret[] = $this->behaviourMethodFactory($bclass);
+			$ret[] = $this->behaviourMethodFactory($bclass,$method);
         }
         
         return $ret;

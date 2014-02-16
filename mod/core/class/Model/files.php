@@ -17,9 +17,12 @@ class Files extends Field {
 		return "blob";
 	}
 
-	public function mysqlIndexFields() {
-		return $this->name()."(1)";
-	}
+    public function dbIndex() {
+        return array(
+            "name" => "+".$this->name(),
+            "fields" => $this->name()."(1)",
+		);
+    }
 
 	public function editorInx() {
 		return array(

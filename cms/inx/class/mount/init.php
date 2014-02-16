@@ -34,7 +34,12 @@ class inx_init extends mod_init {
 	}
 
 	public static function getModulePath($mod) {
-		return mod::service("bundle")->bundle($mod)->inxPath();
+	    $conf = mod::service("bundle")->bundle($mod)->conf();
+	    $path = $conf["inx"]["path"];
+	    if(!$path) {
+	        return null;
+		}
+	    return mod::service("bundle")->bundle($mod)->path()."/".$path;
 	}
 
 	public static function buildModule($mod) {

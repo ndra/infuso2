@@ -14,13 +14,9 @@ class tester extends \infuso\core\controller {
 	
 	    $record = \mod::service("ar")->virtual("reflex_task");
         $migration = new \Infuso\ActiveRecord\Migration\Table($record->reflex_table());
-        //$migration->migrateUp();
+        $migration->migrateUp();
 
-        foreach($migration->indexes() as $index) {
-			echo "* ";
-        }
-        
-		\util::profiler();
+       \util::profiler();
 
 		\tmp::footer();
         

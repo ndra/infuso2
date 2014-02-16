@@ -55,9 +55,10 @@ class Table {
     public function indexes() {
         $ret = array();
         foreach($this->fields() as $field) {
-            echo $field->name();
-            echo $field->index();
-            echo "<br/>";
+            if($field->param("index") || 1) {
+	            $index = new Index($field->dbIndex());
+				$ret[] = $index;
+			}
         }
 		return $ret;
     }
@@ -68,7 +69,7 @@ class Table {
     public function migrateUp() {
     
         if(!$this->tableName()) {
-            throw \Exception("Migration: table name missing");
+            throw new \Exception("Migration: table name missing");
 		}
 
         $this->createTable();
@@ -79,7 +80,7 @@ class Table {
         $names = array();
         foreach($this->fields() as $field) {
             if(in_array($field->name(),$names)) {
-                throw new Exception("Duplicate field name <b>{$field->name()}</b> in table <b>{$this->table()->name()}</b>",1);
+                throw new \Exception("Duplicate field name <b>{$field->name()}</b> in table <b>{$this->table()->name()}</b>",1);
             }
             $names[] = $field->name();
         }
@@ -104,6 +105,7 @@ class Table {
         if(sizeof($this->q)) {
             $q = implode(", ",$this->q);
             $q = "alter table `{$this->prefixedTableName()}` $q";
+            
             return mod::service("db")->query($q)->exec();
         }
 
@@ -249,11 +251,7 @@ class Table {
             $a[$index->name()]["fields"] = $fields;
             $a[$index->name()]["type"] = $index->type();
         }
-        $a["PRIMARY"] = array(
-            "fields" => array("id"),
-            "type" => "index",
-        );
-
+        
         // Индексы, которые реально есть
         $b = array();
         $query = "show index from `{$this->prefixedTableName()}` ";
@@ -266,7 +264,12 @@ class Table {
                 $indexDescr.= "(".$n.")";
             }
             $b[$name]["fields"][] = $indexDescr;
-            $b[$name]["type"] = $index["Index_type"]=="BTREE" ? "index" : "fulltext";
+            
+            if($name == "PRIMARY") {
+               	$b[$name]["type"] = "primary";
+            } else {
+            	$b[$name]["type"] = $index["Index_type"] == "BTREE" ? "index" : "fulltext";
+            }
         }
 
         // Сортируем поля
@@ -275,10 +278,10 @@ class Table {
             sort($fields);
             $b[$key]["fields"] = $fields;
         }
-
+        
         // Добавляем/изменяем индексы
         foreach($a as $name => $index) {
-
+        
             $hash1 = serialize($index);
             $hash2 = serialize($b[$name]);
 
@@ -291,8 +294,6 @@ class Table {
             $fields = implode(",",$fields);
 
             if($hash1!=$hash2) {
-
-                mod::msg("alter index {$this->table()->name()}.$name ");
 
                 if(array_key_exists($name,$b)) {
                     $this->q[] = "drop index `$name`";
@@ -310,7 +311,7 @@ class Table {
         }
 
         // Убираем ненужные индексы
-        foreach($b as $name => $fuck) {
+        foreach($b as $name => $dummy) {
             if(!array_key_exists($name,$a)) {
                 $this->q[] = "drop index `$name`";
 			}
