@@ -7,7 +7,7 @@ class form_validate extends reflex {
 
 	
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'form_validate',
   'parent' => '',
   'fields' => 

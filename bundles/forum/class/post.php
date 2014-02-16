@@ -9,7 +9,7 @@ class forum_post extends reflex {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'forum_post',
   'fields' => 
   array (

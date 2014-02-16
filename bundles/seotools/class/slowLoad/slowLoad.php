@@ -4,7 +4,7 @@ class seotools_slowLoad extends reflex implements mod_handler {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'seotools_slowLoad',
   'fields' => 
   array (

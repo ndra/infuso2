@@ -43,7 +43,7 @@ class service extends \infuso\core\service {
     }
 
 	/**
-	 * @todo Включить буфферизацию
+	 * Преобразует отъект класса Url в объект класса Action
 	 **/
     public function urlToAction($url) {
 
@@ -57,7 +57,8 @@ class service extends \infuso\core\service {
                 $serializedAction = json_encode(array(
 					$action->className(),
 					$action->action(),
-					$action->params()
+					$action->params(),
+					$action->ar(),
 				));
                 Core\Mod::Service("cache")->set($key,$serializedAction);
             }
@@ -65,8 +66,9 @@ class service extends \infuso\core\service {
 
         } else {
 
-            list($class,$method,$params) = json_decode($serializedAction,true);
+            list($class,$method,$params,$ar) = json_decode($serializedAction,true);
             $action = Core\Mod::action($class,$method,$params);
+            $action->ar($ar);
 
             return $action;
 

@@ -26,7 +26,7 @@ class geo_ip_cache extends reflex {
         );
     }
     
-    public static function reflex_table() {
+    public static function recordTable() {
         return array(
             "name" => "geo_ip_cache",
             "fields" => array(

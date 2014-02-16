@@ -55,12 +55,13 @@ class moduleManager extends mod_controller{
 	        );
 
 	        // Шаблоны
-	        foreach(tmp_theme::all() as $theme) {
+	        foreach(mod::service("classmap")->classes("Infuso\Template\Theme") as $class) {
+	            $theme = new $class;
 	            if(trim($theme->bundle()->path(),"/") == $m) {
 		            $module["children"][] = array(
 		                "text" => $theme->name(),
 		                "editor" => array(
-							"themeID" => $theme->id(),
+							"themeID" => $class,
                             "type" => "inx.mod.moduleManager.templateManager",
 						),
 		                "icon" => "template"
@@ -79,17 +80,6 @@ class moduleManager extends mod_controller{
                     ),
 	            );
             }
-
-	        // Таблицы
-	        if($bundle->conf("mysql","path"))
-	            $module["children"][] = array(
-	                "text"=>"Таблицы",
-	                "icon" => self::inspector()->bundle()->path()."/icons/tables.png",
-                    "editor" => array(
-    	                "module" => $m,
-    	                "type" => "inx.mod.moduleManager.tableManager",
-                    )
-	            );
 
 	        if(sizeof($module[children])) {
 	            $tree[] = $module;

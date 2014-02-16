@@ -7,7 +7,7 @@ class reflex_editor_root extends reflex {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'reflex_editor_root',
   'fields' => 
   array (

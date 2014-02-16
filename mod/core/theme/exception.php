@@ -1,6 +1,7 @@
 <?
 
-if(mod_superadmin::check())
+if(mod_superadmin::check()) {
     tmp::exec("admin");
-else
+} else {
     tmp::exec("user");
+}

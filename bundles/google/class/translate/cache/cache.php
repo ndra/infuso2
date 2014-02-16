@@ -4,7 +4,7 @@ class google_translate_cache extends reflex {
 
 	
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'google_translate_cache',
   'fields' => 
   array (

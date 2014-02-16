@@ -34,7 +34,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	 * @return Функция должна вернуть таблицу mysql, связанную с классом
 	 * Если функция возвращает символ @, то в качестве таблицы используется имя класса
 	 **/
-	abstract public static function reflex_table();
+	abstract public static function recordTable();
 
     /**
      * Фабрика полей
@@ -42,7 +42,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * @todo сделать кэширвоанеи работы
      **/
     public function fieldFactory($name) {
-		$model = $this->reflex_table();
+		$model = $this->recordTable();
 		$ret = null;
 		foreach($model["fields"] as $fieldDescr) {
 		    if($fieldDescr["name"] == $name) {
@@ -58,7 +58,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      **/
     public function fieldNames() {
         $names = array();
-        $model = $this->reflex_table();
+        $model = $this->recordTable();
 		foreach($model["fields"] as $fieldDescr) {
 		    $names[] = $fieldDescr["name"];
 		}
@@ -70,22 +70,22 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
     
     // Триггеры
-    public function reflex_beforeCreate() {
+    public function beforeCreate() {
     }
 
-    public function reflex_afterCreate() {
+    public function afterCreate() {
     }
 
-    public function reflex_beforeStore() {
+    public function beforeStore() {
     }
 
-    public function reflex_afterStore() {
+    public function afterStore() {
     }
 
-    public function reflex_beforeDelete() {
+    public function beforeDelete() {
     }
 
-    public function reflex_afterDelete() {}
+    public function afterDelete() {}
 
     public function __sleep() {
         return array(
@@ -94,7 +94,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
     
     public final function prefixedTableName() {
-        $ret = $this->reflex_table();
+        $ret = $this->recordTable();
         return "infuso_".$ret["name"];
     }
     
@@ -104,10 +104,9 @@ abstract class Record extends \Infuso\Core\Model\Model {
     
     /**
      * @return Функция вызывается при создании коллекции
-     * @param $items class reflex_list
      **/
-    public function reflex_beforeCollection($collection) {
-		foreach($this->behaviourMethods("reflex_beforeCollection") as $method) {
+    public function beforeCollection($collection) {
+		foreach($this->behaviourMethods("beforeCollection") as $method) {
 		    $method($collection);
 		}
 
@@ -116,7 +115,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
     public function defaultBehaviours() {
         $ret = parent::defaultBehaviours();
         $ret[] = "reflex_defaultBehaviour";
-        $ret[] = "reflex_reflexBehaviour";
         return $ret;
     }
 
@@ -137,15 +135,15 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * По умолчанию название, это значение поле title, или строка вида class:id,
      * если поле title пустое или не существует.
      * Заголовок объекта отображается в редакторе каталога
-     * Саму функцию вы не можете переопределить, т.к. она финальная. Нужно переопределить ф-цию reflex_title()
+     * Саму функцию вы не можете переопределить, т.к. она финальная. Нужно переопределить ф-цию recordTitle()
      **/
     public final function title() {
-        return $this->reflex_title();
+        return $this->recordTitle();
     }
 
     /**
      * Возвращает url объекта.
-     * URL может быть задан явно ф-цией reflex_url()
+     * URL может быть задан явно ф-цией recordUrl()
      * В противном случае URL будет сгенерирован автоматически для экшна classname/item/id/$id
      * Вы можете передать первым аргументом функции массив с параметрами, которые будут учтены при генерации URL
      **/
@@ -155,7 +153,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
             $params = array();
         }
 
-        if($url = trim($this->reflex_url())) {
+        if($url = trim($this->recordUrl())) {
 
             // Если адрес передается в формате action::class_name/action/p1/123/p2/456..., преобразуем адрес в url
             if(preg_match("/action::/",$url)) {
@@ -266,21 +264,21 @@ abstract class Record extends \Infuso\Core\Model\Model {
         }
 
         if(in_array($fn,array(
-            "reflex_beforeCreate",
-            "reflex_beforeStore",
-            "reflex_beforeDelete",
+            "beforeCreate",
+            "beforeStore",
+            "beforeDelete",
         ))) {
-            if(!$this->callReflexTrigger("reflex_beforeOperation",$event)) {
+            if(!$this->callReflexTrigger("beforeOperation",$event)) {
                 return false;
 			}
 		}
 
         if(in_array($fn,array(
-            "reflex_afterCreate",
-            "reflex_afterStore",
-            "reflex_afterDelete",
+            "afterCreate",
+            "afterStore",
+            "afterDelete",
         ))) {
-            $this->callReflexTrigger("reflex_afterOperation",$event);
+            $this->callReflexTrigger("afterOperation",$event);
 		}
 		
 		$event->fire();
@@ -297,12 +295,12 @@ abstract class Record extends \Infuso\Core\Model\Model {
         if(!$this->exists())
             return;
             
-		$event = new event("reflex_beforeDelete",array(
+		$event = new event("beforeDelete",array(
 		    "item" => $this,
 		));
 
         // Вызываем пре-триггеры
-        if(!$this->callReflexTrigger("reflex_beforeDelete",$event)) {
+        if(!$this->callReflexTrigger("beforeDelete",$event)) {
             return;
 		}
 
@@ -315,12 +313,12 @@ abstract class Record extends \Infuso\Core\Model\Model {
         	$this->storage()->clear();
         }
         
-		$event = new event("reflex_afterDelete",array(
+		$event = new event("afterDelete",array(
 		    "item" => $this,
 		));
 
         // Вызываем пост-триггеры
-        if(!$this->callReflexTrigger("reflex_afterDelete",$event)) {
+        if(!$this->callReflexTrigger("afterDelete",$event)) {
             return;
 		}
 
@@ -337,6 +335,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
     /**
      * Создает для данного объекта запись в базе
+     * @todo вернуть триггеры
      **/
     public function createThis($keepID = false) {
 
@@ -368,11 +367,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return false;
 		}
 
-		$event = new event("reflex_beforeStore",array(
+		$event = new event("beforeStore",array(
 		    "item" => $this,
 		));
 
-        if(!$this->callReflexTrigger("reflex_beforeStore",$event)) {
+        if(!$this->callReflexTrigger("beforeStore",$event)) {
             return false;
 		}
 		
@@ -396,13 +395,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
         $this->id = $id;
 
-        $this->reflex_updateSearch();
-        
-		$event = new event("reflex_afterStore",array(
+		$event = new event("afterStore",array(
 		    "item" => $this,
 		));
 		
-		$this->callReflexTrigger("reflex_afterStore",$event);
+		$this->callReflexTrigger("afterStore",$event);
 
         return true;
     }
@@ -469,17 +466,17 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return false;
         }
         
-		$event = new event("reflex_beforeStore",array(
+		$event = new event("beforeStore",array(
 		    "item" => $this,
 		));
 
         // Триггер
-        if(!$this->callReflexTrigger("reflex_beforeStore",$event)) {
+        if(!$this->callReflexTrigger("beforeStore",$event)) {
             $this->markAsClean();
             return false;
         }
 
-        // После вызова reflex_beforeCreate() поля объекта могуть стать такими же как в были до изменений
+        // После вызова beforeCreate() поля объекта могуть стать такими же как в были до изменений
         // В этом случае нет смысла сохранять объект в базу
         $changedFields = $this->fields()->changed();
         if(!$changedFields->count()) {
@@ -499,16 +496,16 @@ abstract class Record extends \Infuso\Core\Model\Model {
         mod::service("db")->query("update $from $set where `id`='$id' ")->exec();
 
         // Сразу после сохранения, помечаем объект как чистый
-        // Таким образом, если в reflex_afterStore() будут изменены поля объекта,
+        // Таким образом, если в afterStore() будут изменены поля объекта,
         // Метод store может быть вызванповторно
         $this->markAsClean();
         
-		$event = new event("reflex_afterStore",array(
+		$event = new event("afterStore",array(
 		    "item" => $this,
 		    "changedFields" => $changedFields,
 		));
 
-        $this->callReflexTrigger("reflex_afterStore",$event);
+        $this->callReflexTrigger("afterStore",$event);
 
         return true;
     }
@@ -533,13 +530,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
 
     /**
-     * Записывает все объекты и очищает буффер
-     **/
-    public static function freeAll() {
-        mod::service("ar")->freeAll();
-    }
-
-    /**
      * Возвращает цепочку родителей
      * @return Array
      **/
@@ -548,16 +538,19 @@ abstract class Record extends \Infuso\Core\Model\Model {
         $parent = $this;
         $n=0;
         while(1) {
-            $parent = $parent->reflex_parent();
-            if(!$parent)
+            $parent = $parent->recordParent();
+            if(!$parent) {
                 break;
-            if(!$parent->exists())
+            }
+            if(!$parent->exists()) {
                 break;
+            }
             $parents[] = $parent;
             $n++;
 
-            if($n>100)
+            if($n>100) {
                 break;
+            }
         }
         return array_reverse($parents);
     }
@@ -571,10 +564,16 @@ abstract class Record extends \Infuso\Core\Model\Model {
         $parents = array($this);
         $parent = $this;
         while(1) {
-            $parent = $parent->reflex_parent();
-            if(!$parent) break;
-            if(!$parent->exists()) break;
-            if(in_array($parent,$parents)) return true;
+            $parent = $parent->recordParent();
+            if(!$parent) {
+				break;
+			}
+            if(!$parent->exists()) {
+				break;
+			}
+            if(in_array($parent,$parents)) {
+				return true;
+			}
             $parents[] = $parent;
         }
         return false;
@@ -584,7 +583,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * Возвращает родителя элемента
      **/
     public final function parent() {
-        return $this->reflex_parent();
+        return $this->recordParent();
     }
 
 

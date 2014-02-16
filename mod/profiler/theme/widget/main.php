@@ -26,11 +26,11 @@
         <td>
         echo mod_action::current()->canonical();
         
-        $obj = tmp::obj();
+        /*$obj = tmp::obj();
         if($obj->exists()) {
             echo " ";
             <a href='{$obj->editor()->url()}' target='_blank' >Редактировать </a>
-        }
+        } */
         </td>
         
     </tr>

@@ -68,8 +68,10 @@ class Component {
 
     /**
       * Возвращает массив замыканий методов $method из поведений, прикрепленных к объекту
+      * Методы сортируются по приоритету поведений так что первый элемент массива
+      * будет из поведения с наибольшим приоритетом
       **/
-    public function behaviourMethods($method) {
+    public final function behaviourMethods($method) {
     
         $ret = array();
 

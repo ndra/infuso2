@@ -1,5 +1,8 @@
 <?
 
+/**
+ * Контроллер для изменения статуса заказа
+ **/
 class eshop_edit extends mod_controller {
 
 	public static function postTest() {

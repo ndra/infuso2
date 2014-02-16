@@ -4,7 +4,7 @@ class seo_query extends reflex implements mod_handler {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'seo_query',
   'fields' => 
   array (

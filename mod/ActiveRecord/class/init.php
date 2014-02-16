@@ -28,7 +28,7 @@ class Init extends \mod_init {
 		
 		    try {
 				$record = mod::service("ar")->virtual($class);
-				$table = $record->reflex_table();
+				$table = $record->recordTable();
 				if($table) {
 					$migration = new Migration\Table($table);
 					$migration->migrateUp();

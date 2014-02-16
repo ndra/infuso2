@@ -33,7 +33,6 @@ class reflex_route extends mod_route implements mod_handler {
 
 	/**
 	 * url => action
-	 * @todo вынести отсюда tmp::obj
 	 **/
 	public function forward($url) {
 	
@@ -123,7 +122,7 @@ class reflex_route extends mod_route implements mod_handler {
 	/**
 	 * Вызывается до старта контроллера
 	 * Если вызван метод className::item класса, наследуемого от reflex,
-	 * то устанавливам текущий объект tmp::obj
+	 * то устанавливам текущий объект action::ar()
 	 **/
 	public static function on_mod_beforeAction($p) {
 
@@ -131,6 +130,7 @@ class reflex_route extends mod_route implements mod_handler {
 	    if($action->action()=="item") {
 			$id = $action->param("id");
 			$obj = reflex::get($action->className(),$id);
+			$obj->addBehaviour("Infuso\\Cms\\Reflex\\recordBehaviour");
 			if($obj->published()) {
 			    $action->ar(get_class($obj)."/".$obj->id());
 			} else {

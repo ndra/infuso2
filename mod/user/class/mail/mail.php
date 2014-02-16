@@ -25,7 +25,7 @@ class user_mail extends reflex {
         );
     }
 
-    public static function reflex_table() {
+    public static function recordTable() {
         return array(
             "name" => "user_mail",
             "fields" => array(

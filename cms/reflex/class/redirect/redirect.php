@@ -4,7 +4,7 @@ class reflex_redirect extends reflex {
 
 	
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'reflex_redirect',
   'parent' => '',
   'fields' => 

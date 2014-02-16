@@ -8,7 +8,7 @@ class user_mail_template extends reflex {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'user_mail_template',
   'fields' => 
   array (

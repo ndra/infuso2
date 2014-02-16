@@ -3,7 +3,7 @@
 /**
  * todo тотально рефакторить класс
  **/
-class reflex_defaultBehaviour extends mod_behaviour {
+class reflex_defaultBehaviour extends \Infuso\Core\Behaviour {
 
     public function behaviourPriority() {
         return - 1000;
@@ -14,7 +14,7 @@ class reflex_defaultBehaviour extends mod_behaviour {
 	 * По умолчанию, url объекта имеет вид /my_class_name/item/id/123
 	 * Переопределите функцию, если у элемента должен быть другой url
 	 **/
-	public function reflex_url() {
+	public function recordUrl() {
 		return null;
 	}
 
@@ -23,27 +23,29 @@ class reflex_defaultBehaviour extends mod_behaviour {
 	 * Это должен быть существующий или не существующий объект reflex, либо null
 	 * Родитель используется в каталоге для построения пути к объекту
 	 **/
-	public function reflex_parent() {
+	public function recordParent() {
 		return reflex::get("reflex_none",0);
 	}
 
-	public function reflex_title() {
-        if(!$this->component()->exists()) return "";
-        if($title = $this->component()->data($this->component()->reflex_titleField())){
+	public function recordTitle() {
+        if(!$this->exists()) {
+			return "";
+		}
+        if($title = $this->data($this->recordTitleField())){
             return $title;
         }    
-        return get_class($this->component()).":".$this->component()->id();
+        return get_class($this).":".$this->id();
     }
 
-    public function reflex_titleField() {
+    public function recordTitleField() {
         // перебираем поля до первого поля с именем title
-        foreach($this->component()->fields() as $field) {
+        foreach($this->fields() as $field) {
             if($field->name()=="title") {
                 return $field->name();
             }
         }
         // перебираем поля до первого поля сторокогвого типа и возвращаем его имя
-        foreach($this->component()->fields() as $field){
+        foreach($this->fields() as $field){
             if($field->typeID() == "v324-89xr-24nk-0z30-r243"){
                 return $field->name();    
             }
@@ -55,110 +57,14 @@ class reflex_defaultBehaviour extends mod_behaviour {
 	/**
 	 * Триггер, вызывающийся перед каждой поперацией создания, изменения или удаления
 	 **/
-	public function reflex_beforeOperation() {
+	public function beforeOperation() {
 	}
 
 	/**
 	 * Триггер, вызывающийся после каждой поперацией создания, изменения или удаления
 	 **/
-	public function reflex_afterOperation() {
+	public function afterOperation() {
 	}
 
-	public function reflex_classTitle() {
-		return "";
-	}
-
-	public function reflex_published() {
-		return $this->exists();
-	}
-
-	/**
-	 * @return bool Есть ли у объекта метаданные? Работает автоматически, переопределять только в случае необъодимости.
-	 **/
-	public function reflex_meta() { return false; }
-
-	/**
-	 * @return bool Есть ли у объекта роут?
-	 **/
-	public function reflex_route() { return $this->component()->reflex_meta(); }
-
-	public function reflex_search() {
-		return "skip";
-	}
-
-	public function reflex_searchWeight() {
-		return 1;
-	}
-
-	/**
-	 * Возвращает код маленького поискового сниппета. Этот код будет использоваться в
-	 * выводе поисковых подсказок при вводе запроса.
-	 **/
-	public function reflex_smallSearchSnippet() {
-	    ob_start();
-	    tmp::exec("reflex:search.smallSnippet",$this);
-	    return ob_get_clean();
-	}
-
-	/**
-	 * Возвращает код большого поискового сниппета.
-	 * Этот код будет использоваться в
-	 * выводе результатов поиска.
-	 **/
-	public function reflex_bigSearchSnippet() {
-	    ob_start();
-	    tmp::exec("reflex:searchResults.bigSnippet",$this);
-	    return ob_get_clean();
-	}
-
-	/**
-	 * Возвращает папку хранилища
-	 **/
-	public static function reflex_storageFolder() {
-		return null;
-	}
-
-	/**
-	 * @return Нужно ли использовать отдельную папку для каждого объекта
-	 **/
-	public static function reflex_storageUseMultipleFolders() {
-		return true;
-	}
-
-	/**
-	 * @return Какой объект использовать в качестве хранилища.
-	 * Вы можете переопределить этот метод, чтобы, к примеру, все фотографии одной новости
-	 * лежали в одной папке
-	 **/
-	public function reflex_storageSource() {
-		return $this->component();
-	}
-
-	/**
-	 * Триггер, вызывается перед просмотром хранилища из админки
-	 **/
-	public function reflex_beforeStorageView() {
-		return $this->editor()->beforeView();
-	}
-
-	/**
-	 * Триггер, вызывается перед изменением хранилища из админки
-	 **/
-	public function reflex_beforeStorageChange() {
-		return $this->editor()->beforeEdit();
-	}
-
-	/**
-	 * Триггер, вызывается после изменения файлов в хранилище
-	 **/
-	public function reflex_afterStorage() {
-	}
-
-	/**
-	 * @return Возвращает домен, которому принадлежит этот объект, по умолчанию верент первый активный домен
-	 **/
-	public function reflex_domain() {
-		return reflex_domain::get(0);
-	}
 
 }

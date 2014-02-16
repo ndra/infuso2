@@ -27,7 +27,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->itemClass = $class;
         if($class) {
             $obj = new $class;
-            $obj->reflex_beforeCollection($this);
+            $obj->beforeCollection($this);
         }
     }
     

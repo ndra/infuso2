@@ -5,7 +5,7 @@
  **/
 class reflex_task extends reflex implements mod_handler {
 
-	public static function reflex_table() {
+	public static function recordTable() {
 	
 		return array (
 			'name' => 'reflex_task',

@@ -34,17 +34,17 @@ abstract class Theme extends Core\Component {
 
 	/**
 	 * @return Возвращает тему по имени класса
+	 * @todo какая-то хуета, не пойму вобще зачем это
 	 **/
-	public function get($id) {
-		if(!self::$buffer[$id]) {
-			$path = self::mapFolder()."/".$id.".php";
+	public function get($class) {
+		if(!self::$buffer[$class]) {
+			$path = self::mapFolder()."/".$class.".php";
 			$descr = file::get($path)->inc();
-			$class = $descr["class"];
-			$theme = new $class($descr["constructor"]);
+			$theme = new $class;
 			$theme->setDescr($descr);
-	        self::$buffer[$id] = $theme;
+	        self::$buffer[$class] = $theme;
 		}
-		return self::$buffer[$id];
+		return self::$buffer[$class];
 	}
 
 	public function setDescr($descr) {
@@ -91,7 +91,7 @@ abstract class Theme extends Core\Component {
 	 * @return Возвращает путь к карте данной темы
 	 **/
 	public function mapFile() {
-		return self::mapFolder()."/".$this->id().".php";
+		return self::mapFolder()."/".get_class($this).".php";
 	}
 
 	/**

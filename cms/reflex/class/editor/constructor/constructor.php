@@ -9,7 +9,7 @@ class reflex_editor_constructor extends reflex {
 
 	
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'reflex_editor_constructor',
   'fields' => 
   array (

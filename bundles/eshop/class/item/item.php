@@ -6,7 +6,7 @@
 class eshop_item extends reflex
 {
 
-    public static function reflex_table()
+    public static function recordTable()
     {
 
         return array(

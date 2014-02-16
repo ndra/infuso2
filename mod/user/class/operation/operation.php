@@ -4,7 +4,7 @@ class user_operation extends reflex {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'user_operation',
   'fields' => 
   array (

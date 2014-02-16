@@ -1,19 +1,23 @@
 <?
 
+namespace Infuso\Cms\Reflex;
+
+use Infuso\Core;
+
 /**
  * todo тотально рефакторить класс
  **/
-class reflex_reflexBehaviour extends mod_behaviour {
+class recordBehaviour extends Core\Behaviour {
 
     public function behaviourPriority() {
         return - 1000;
     }
 
-    public function reflex_logSource() {
+    public function reflexLogSource() {
         return $this;
     }
 
-    public function getLog() {
+    public function reflexGetLog() {
         $index = get_class($this).":".$this->id();
         return reflex_log::all()->eq("index",$index);
     }
@@ -46,7 +50,7 @@ class reflex_reflexBehaviour extends mod_behaviour {
 
     }
 
-    public function reflex_editor() {
+    public function reflexEditor() {
         return null;
     }
 
@@ -54,7 +58,7 @@ class reflex_reflexBehaviour extends mod_behaviour {
      * Метод должен вернуть Массив коллекций потомков
      * Переопределите его в своем классе для реализации иерархии
      **/
-    public function reflex_children() {
+    public function reflexChildren() {
         return array();
     }
 
@@ -160,7 +164,7 @@ class reflex_reflexBehaviour extends mod_behaviour {
     /**
      * Изменяет url-адрес объекта
      **/
-    public final function setUrl($url) {
+    public function setUrl($url) {
 
         if(!$this->reflex_route()) {
             return;
@@ -181,35 +185,17 @@ class reflex_reflexBehaviour extends mod_behaviour {
         $route->store();
     }
 
-    public final function reflex_updateSearch() {
-
-        if(!$this->reflex_meta()) {
-            return;
-		}
-
-        $search = $this->reflex_search();
-
-        // Если объект не опубликован или запрещен для поиска, передаем пустую строку в данные для поиска
-        if(!$this->published() || $search=="skip") {
-            if($this->metaObject()->exists()) {
-                $this->meta("search","");
-            }
-            return;
-        }
-
-        $this->meta("search",$search);
-        $this->meta("searchWeight",$this->reflex_searchWeight());
-
-    }
-    
-
     /**
      * @return bool
      * true - объект опубликован
      * false - не опубликован
      **/
-    public final function published() {
-        return $this->reflex_published();
+    public function published() {
+        return $this->reflexPublished();
+    }
+    
+    public function reflexPublished() {
+        return true;
     }
 
 

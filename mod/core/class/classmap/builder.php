@@ -199,16 +199,29 @@ class Builder {
 		return $ret;
 	}
 
+	/**
+	 * Возвращает часть карты сайта, в которйо содержатся обработчики событий
+	 **/
 	public static function handlers() {
 		$handlers = array();
 		foreach(mod::service("classmap")->classes() as $class=>$fuck) {
 			$r = new \ReflectionClass($class);
 			if($r->implementsInterface("mod_handler")) {
-				foreach($r->getMethods() as $method) {
+			
+				/*foreach($r->getMethods() as $method) {
 				    if(preg_match("/^on_(.*)/",$method->getName(),$matches)) {
 				        $handlers[$matches[1]][] = $class;
 				    }
+				} */
+				
+				$inspector = new \Infuso\Core\Inspector($class);
+				foreach($inspector->annotations() as $method => $annotation) {
+				    $event = $annotation["handler"];
+				    if($event) {
+				        $handlers[$event][] = $class."::".$method;
+				    }
 				}
+				
 			}
 		}
 		return $handlers;

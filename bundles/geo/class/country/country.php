@@ -7,7 +7,7 @@ class geo_country extends reflex {
 
 	
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'geo_country',
   'parent' => '',
   'fields' => 

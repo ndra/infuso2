@@ -25,7 +25,7 @@ class eshop extends reflex {
 	 * У класса eshop нет таблицы, хотя он расширяет reflex
 	 * У этого класса есть только reflex_root()
 	 **/
-	public static function reflex_table() {
+	public static function recordTable() {
 		return null;
 	}
 
@@ -79,7 +79,7 @@ class eshop extends reflex {
 		return eshop_order::all();
 	}
 
-	public static function reflex_root() {
+	/*public static function reflex_root() {
 
 	    $ret = array();
 
@@ -91,23 +91,6 @@ class eshop extends reflex {
 
 	    return $ret;
 
-	}
-
-	// Возвращает все параметры конфигурации
-	public static function configuration() {
-	    return array(
-	        array("id"=>"eshop:search_eshop","title"=>"Искать по магазину","type"=>"checkbox","descr"=>"Включает товарные позиции и группы товаров в глобальный поиск по сайту."),
-	        array("id"=>"eshop:attributes","type"=>"checkbox","title"=>"Включить атрибуты у товаров"),
-	        // 1C
-	        array("id"=>"eshop:1c","type"=>"checkbox","title"=>"Включить интеграцию с 1С"),
-	        array("id"=>"eshop:1c_login","title"=>"Логин 1С"),
-	        array("id"=>"eshop:1c_password","title"=>"Пароль 1С"),
-			// Яндекс
-	        array("id"=>"eshop:yandex:market","type"=>"checkbox","title"=>"Включить интеграцию с Яндекс.Маркетом"),
-	        array("id"=>"eshop:yandex:market:grab-bids","type"=>"checkbox","title"=>"Сливать позиции с Яндекс.Маркета"),
-	        array("id"=>"eshop:yandex:grab","type"=>"checkbox","title"=>"Включить подбор фотографий и атрибутов с Яндекса"),
-
-	    );
-	}
+	} */
 
 }

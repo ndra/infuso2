@@ -9,7 +9,7 @@ class eshop_order extends reflex implements mod_handler {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'eshop_order',
   'parent' => '',
   'fields' => 

@@ -7,7 +7,7 @@
  **/
 class TaskTime extends reflex {
 
-    public static function reflex_table() {
+    public static function recordTable() {
         return array (
             'name' => "board_task_time",
             'fields' => array (

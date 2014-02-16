@@ -36,7 +36,7 @@ class Tmp implements Core\Handler {
 		$method = $map[$xmethod];
 		
 		if(!$method) {
-		    throw new Exception("tmp::{$xmethod} not found");
+		    throw new \Exception("tmp::{$xmethod} not found");
 		}
     
         $processor = Core\Mod::app()->tmp();
@@ -46,11 +46,15 @@ class Tmp implements Core\Handler {
 		),$args);
     }
 
+	/**
+	 * Статический метод для добавляния в хэдер заголовков метаданных
+	 * @Вынести меты в шаблон tmp/header
+	 **/
     public function headInsert() {
 
         $head = "";
 
-        $obj = tmp::obj();
+        /*$obj = tmp::obj();
 
         // Добавляем <title>
         $title = $obj->meta("title");
@@ -67,7 +71,7 @@ class Tmp implements Core\Handler {
             if($val = trim($obj->meta($name))) {
                 $head.= "<meta name='{$name}' content='{$val}' />\n";
             }
-        }
+        } */
 
         $head.= tmp::conveyor()->exec();
 
@@ -85,28 +89,6 @@ class Tmp implements Core\Handler {
 
     public static function nocache() {
         tmp::conveyor()->preventCaching(true);
-    }
-
-    /**
-     * Возвращает / устанавливает "текущий" объект reflex
-     **/
-    public function obj($obj=null) {
-    
-        if(self::$obj) {
-            return self::$obj;
-        }
-    
-        $action = Core\Mod::app()->action();
-        if(!$action) {
-            return \reflex::get("reflex_none",0);
-        }
-    
-		list($class,$id) = explode("/",$action->ar());
-		return \reflex::get($class,$id);
-    }
-    
-    public function setCurrentObject($obj) {
-        self::$obj = $obj;
     }
 
     /**

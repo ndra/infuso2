@@ -7,7 +7,7 @@ use \mod, \Util;
 
 class Task extends \Infuso\ActiveRecord\Record {
 
-    public static function reflex_table() {
+    public static function recordTable() {
     
         return array(
             'name' => 'board_task',

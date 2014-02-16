@@ -4,7 +4,7 @@ class seotools_rewrite extends reflex {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'seotools_rewrite',
   'fields' => 
   array (

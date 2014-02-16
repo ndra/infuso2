@@ -7,7 +7,7 @@ class reflex_route_item extends reflex {
 
 	
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'reflex_route_item',
   'fields' => 
   array (

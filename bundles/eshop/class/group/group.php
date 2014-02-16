@@ -7,7 +7,7 @@ class eshop_group extends reflex {
 
 	
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'eshop_group',
   'parent' => '',
   'fields' => 
@@ -181,6 +181,7 @@ public static function reflex_table() {return array (
 public function defaultBehaviours() {
 	    $ret = parent::defaultBehaviours();
 	    $ret[] = "eshop_group_behaviour";
+		$ret[] = "Infuso\\Cms\\Reflex\\recordBehaviour";
 	    return $ret;
 	}
 
@@ -194,11 +195,11 @@ public function defaultBehaviours() {
 	    tmp::exec("eshop:group",$item,$p);
 	}
 
-	public function reflex_meta() {
+	public function reflexMeta() {
 	    return true;
 	}
 
-	public function reflex_title() {
+	public function reflexTitle() {
 	    $title = trim($this->data("title"));
 	    if(!$title)
 			$title = "Группа товаров {$this->id()}";
@@ -260,7 +261,7 @@ public function defaultBehaviours() {
 	    return $ret;
 	}
 
-	public function reflex_parent() {
+	public function reflexParent() {
 	    return self::get($this->data("parent"));
 	}
 
@@ -339,23 +340,17 @@ public function defaultBehaviours() {
 	    return $this->handleStructureChanged();
 	}
 
-	public function reflex_afterStore() {
+	public function afterStore() {
 	    if($this->field("active")->changed() || $this->field("parent")->changed()) {
 	        $this->taskUpdateItems();
 	    }
 	}
 
-	public function reflex_afterDelete() {
+	public function afterDelete() {
 	    foreach($this->parents() as $group) {
 	        $group->updateSubgroupsNumber();
 	        $group->updateItemsNumber();
 	    }
-	}
-
-	public function reflex_repair() {
-	    // Обновляем глубину
-	    $this->updateItemsNumber();
-	    $this->updateSubgroupsNumber();
 	}
 
 	/**
@@ -396,9 +391,10 @@ public function defaultBehaviours() {
 	    return reflex::get(get_class(),$id);
 	}
 
-	public function reflex_published() {
-	    if(!$this->data("active"))
+	public function reflexPublished() {
+	    if(!$this->data("active")) {
 	        return false;
+	    }
 	    return true;
 	}
 
@@ -411,10 +407,6 @@ public function defaultBehaviours() {
 	        $extra[$key] = $val;
 	        $this->data("extra",json_encode($extra));
 	    }
-	}
-
-	public function reflex_classTitle() {
-	    return "Группа товаров";
 	}
 
 }

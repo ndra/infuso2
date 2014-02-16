@@ -1,8 +1,8 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
-class url {
+class Url {
 
     private $scheme = null;
     private $host = null;

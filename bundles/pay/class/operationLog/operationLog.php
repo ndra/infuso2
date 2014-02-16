@@ -7,7 +7,7 @@ class pay_operationLog extends reflex {
 
     
 
-public static function reflex_table() {return array (
+public static function recordTable() {return array (
   'name' => 'pay_operationLog',
   'fields' => 
   array (

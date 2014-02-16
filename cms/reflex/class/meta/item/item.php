@@ -5,7 +5,7 @@
  **/
 class reflex_meta_item extends reflex {
 
-	public static function reflex_table() {
+	public static function recordTable() {
 		return array (
 		  'name' => get_class(),
 		  'fields' =>

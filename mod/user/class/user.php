@@ -11,7 +11,7 @@ class user extends reflex {
 
     private $errorText = "";
     
-    public static function reflex_table() {
+    public static function recordTable() {
     
 		return array (
   'name' => 'user_list',

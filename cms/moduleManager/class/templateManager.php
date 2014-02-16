@@ -101,7 +101,7 @@ class moduleManager_templateManager extends mod_controller {
 				$tmp->setCSS($p["code"]);
 				break;
 		}
-		tmp_render::clearRender();
+		\Infuso\Template\Render::clearRender();
 		mod::msg("Шаблон сохранен");
 	}
 

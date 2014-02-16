@@ -23,11 +23,4 @@ class Behaviour {
 		return 0;
 	}
 
-	/**
-	 * Возвращает объект компонента - объект, к которму прикреплено данное поведение.
-	 **/
-	public final function component() {
-		return $this;
-	}
-
 }

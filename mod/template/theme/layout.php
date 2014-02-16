@@ -3,7 +3,7 @@
 tmp::header();
 tmp::reset();
 tmp::exec("header");
-tmp_lib::components();
+\infuso\Template\Lib::components();
 
 <table class='pwq3nk3agh' >
     <tr>
@@ -30,7 +30,7 @@ tmp_lib::components();
     </tr>
 </table>
 
-tmp::obj()->editor()->placeWidget();
+//tmp::obj()->editor()->placeWidget();
 
 tmp::exec("footer");
 
