@@ -290,7 +290,7 @@ class Template extends Generic {
         // Если пользователь не суперадмин - сразу выполняем шаблон
         if(core\mod::debug()) {
             if(!$this->file()->exists()) {
-                throw new \Exception("Шаблон '{$this->template()}' не найден.");
+                throw new \Exception("Шаблон '{$this->template()}' в файле {$this->file()} не найден.");
             }
         }
 

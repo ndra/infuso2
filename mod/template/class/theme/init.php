@@ -5,10 +5,6 @@
  **/
 class tmp_theme_init extends mod_init {
 
-	public function sortThemes($a,$b) {
-		return $a->priority() - $b->priority();
-	}
-
 	public function priority() {
 		return 1;
 	}
@@ -24,35 +20,25 @@ class tmp_theme_init extends mod_init {
 		file::get(tmp_theme::mapFolder())->delete(1);
 		file::mkdir(tmp_theme::mapFolder());
 
-		$themes = array();
-
-    	// Собираем темы-классы
+    	// Собираем спислк классов тем и сортируем их по приоритету
+    	$themes = array();
 		foreach(mod::service("classmap")->classes("Infuso\\Template\\Theme") as $class) {
 	        $themes[] = new $class();
 		}
+		usort($themes, function($a,$b) {
+			return $a->priority() - $b->priority();
+		});
 
 		$autoload = array();
 
 		foreach($themes as $theme) {
-		    $theme->buildMap();
+		    $map = $theme->buildMap();
 		    if($theme->autoload()) {
-		        $autoload[] = $theme;
+		        $autoload += $map;
 			}
 		}
 
-		usort($autoload,array("self","sortThemes"));
-
-		foreach($autoload as $key=>$val) {
-		    $autoload[$key] = $val->id();
-		}
-
 		util::save_for_inclusion(tmp_theme::mapFolder()."/"."_autoload.php",$autoload);
-
-		$all = array();
-		foreach($themes as $theme) {
-		    $all[] = $theme->id();
-		}
-		util::save_for_inclusion(tmp_theme::mapFolder()."/"."_themes.php",$all);
 
 	}
 

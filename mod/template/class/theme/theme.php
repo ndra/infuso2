@@ -33,10 +33,9 @@ abstract class Theme extends Core\Component {
 	}
 
 	/**
-	 * @return Возвращает объект темы по ID
+	 * @return Возвращает тему по имени класса
 	 **/
 	public function get($id) {
-
 		if(!self::$buffer[$id]) {
 			$path = self::mapFolder()."/".$id.".php";
 			$descr = file::get($path)->inc();
@@ -46,25 +45,6 @@ abstract class Theme extends Core\Component {
 	        self::$buffer[$id] = $theme;
 		}
 		return self::$buffer[$id];
-	}
-
-	/**
-	 * @return Возвращает массив из объектов всех доступных тем
-	 * Элемент массива - объект темы
-	 **/
-	public function all() {
-		$themes = array();
-		foreach(file::get(self::mapFolder()."/_themes.php")->inc() as $theme) {
-		    $themes[] = self::get($theme);
-		}
-		return $themes;
-	}
-
-	/**
-	 * @return Название темы
-	 **/
-	public function id() {
-		return get_class($this);
 	}
 
 	public function setDescr($descr) {
@@ -78,9 +58,10 @@ abstract class Theme extends Core\Component {
 	public function templateFile($template,$ext) {
 		$template = preg_replace("/[\:\.\/]+/","/",$template);
 		$template = trim($template,"/");
-		$file = $this->descr["map"][$template][$ext];
-		if($file)
+		$file = $this->descr[$template][$ext];
+		if($file) {
 			return file::get($file);
+		}
 		return file::nonExistent();
 	}
 
@@ -92,7 +73,7 @@ abstract class Theme extends Core\Component {
 		self::loadDefaults();
 		$template = preg_replace("/[\:\.\/]+/","/",$template);
 		$template = trim($template,"/");
-		return array_key_exists($template,$this->descr["map"]);
+		return array_key_exists($template,$this->descr);
 	}
 
 	/**
@@ -146,11 +127,7 @@ abstract class Theme extends Core\Component {
 	 **/
 	public function buildMap() {
 
-		$map = array(
-		    "class" => get_class($this),
-		    "constructor" => $this->constructorParams(),
-		    "map" => array(),
-		);
+		$map = array();
 
 		foreach(file::get($this->path())->search() as $file) {
 
@@ -169,10 +146,13 @@ abstract class Theme extends Core\Component {
 		    $name = trim($name,"/");
 		    $name = preg_replace("/[\:\.\/]+/","/",$name);
 		    $ext = $file->ext();
-		    $map["map"][$name][$ext] = $renderPath;
+		    $map[$name][$ext] = $renderPath;
 		}
 
 		\util::save_for_inclusion($this->mapFile(),$map);
+		
+		return $map;
+		
 	}
 
 	/**
@@ -188,7 +168,7 @@ abstract class Theme extends Core\Component {
 	 **/
 	public function templates() {
 		$ret = array();
-		foreach($this->descr["map"] as $path=>$tdesr) {
+		foreach($this->descr as $path => $tdesr) {
 		    $ret[] = new \tmp_theme_template($this,$path);
 		}
 		return $ret;
@@ -198,18 +178,21 @@ abstract class Theme extends Core\Component {
 	 * @return Массив со всеми шаблонами темы
 	 **/
 	public function templatesArray() {
-		return $this->descr["map"];
+		return $this->descr;
 	}
 
 	/**
 	 * Загружает дефолтные темы
 	 **/
 	public function loadDefaults() {
-		if(self::$defaultsLoaded)
-			return;
+	
+	    if(self::$defaultsLoaded) {
+	        return;
+	    }
 		self::$defaultsLoaded = true;
-		foreach(Core\File::get(self::mapFolder()."/_autoload.php")->inc() as $themeID) {
-			tmp::theme($themeID);
+		
+		foreach(Core\File::get(self::mapFolder()."/_autoload.php")->inc() as $key => $val) {
+            Tmp::$templateMap[$key] = $val;
 		}
 	}
 

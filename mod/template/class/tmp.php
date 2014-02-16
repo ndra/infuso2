@@ -6,7 +6,7 @@ use Infuso\Core\File;
 
 class Tmp implements Core\Handler {
 
-    private static $templateMap = array();
+    public static $templateMap = array();
     private static $obj = null;
 
     /**
