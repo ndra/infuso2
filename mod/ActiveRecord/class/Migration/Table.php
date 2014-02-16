@@ -16,6 +16,8 @@ class Table {
     private $q = array();
     
     private $model = null;
+    
+    private $messages = array();
 
     public function __construct($model) {
         $this->model = $model;
@@ -61,6 +63,14 @@ class Table {
 			}
         }
 		return $ret;
+    }
+    
+    private function msg($msg) {
+        $this->messages[] = $msg;
+    }
+    
+    public function getMessages() {
+        return $this->messages;
     }
 
     /**
@@ -117,6 +127,7 @@ class Table {
         $engine = $status["Engine"];
         if($engine!="MyISAM") {
             $this->q[] = "ENGINE=myisam";
+            $this->msg("Changing engine");
 		}
     }
 
@@ -227,6 +238,7 @@ class Table {
      **/
     public function createField($field,$descr) {
         $this->q[] = "add `{$field->name()}` $descr";
+        $this->msg("Add field ".$field->name());
     }
 
     /**
@@ -234,6 +246,7 @@ class Table {
      **/
     public function deleteField($field) {
         $this->q[] = "drop `{$field}`";
+        $this->msg("Delete field ".$field);
     }
 
     /**
@@ -306,6 +319,9 @@ class Table {
                 } else {
                     $this->q[] = "add $type `$name` ($fields) ";
                 }
+                
+                $this->msg("Update index ".$name);
+                
             }
 
         }

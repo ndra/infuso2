@@ -32,6 +32,15 @@ class Init extends \mod_init {
 				if($table) {
 					$migration = new Migration\Table($table);
 					$migration->migrateUp();
+					
+					// Если во время миграции таблицы были сообщения, выводим их
+					$messages = $migration->getMessages();
+					if(sizeof($messages)) {
+					    mod::msg("Migrating ".$class);
+						foreach($messages as $msg) {
+							mod::msg($msg);
+						}
+					}
 				}
 			} catch(\Exception $ex) {
 			
