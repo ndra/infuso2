@@ -7,8 +7,10 @@ class user_init extends \Infuso\Core\Component implements mod_handler {
 
     /**
      * Метод, в котором реализуется бизнес-логика инициализации
+     * @handler = infusoInit
+     * @handlerPriority = 0
      **/
-    public function on_mod_beforeInit() {
+    public function beforeInit() {
     
         // Очищаем список операций
         mod::msg("Init users");
@@ -85,14 +87,5 @@ class user_init extends \Infuso\Core\Component implements mod_handler {
             "icon" => self::inspector()->bundle()->path()."/res/icons/48/user.png",
             "priority" => 500,
 		));
-
     }
-
-    /**
-     * Приоритет инициализации
-     **/
-    public function priority() {
-        return 0;
-    }
-
 }

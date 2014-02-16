@@ -5,7 +5,8 @@ namespace infuso\test;
 class tester extends \infuso\core\controller implements \Infuso\Core\Handler {
 
 	/**
-	 * @handler=infusoInit(-100)
+	 * @handler=infusoInit
+	 * @handlerPriority=-100
 	 **/
     public function indexTest() {
         return true;
@@ -15,8 +16,7 @@ class tester extends \infuso\core\controller implements \Infuso\Core\Handler {
 
 		\tmp::header();
 		
-		$a = self::inspector()->annotations();
-		var_export($a);
+		echo 1;
 	
         \util::profiler();
 

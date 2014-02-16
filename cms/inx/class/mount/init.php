@@ -3,12 +3,11 @@
 /**
  * Класс для компипяции компонентов inx
  **/
-class inx_init extends mod_init {
+class inx_init implements \Infuso\Core\Handler {
 
-	public function priority() {
-	    return 0;
-	}
-
+	/**
+	 * @handler = infusoInit
+	 **/
 	public function init() {
 	
 	    mod::msg("inx");

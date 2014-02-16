@@ -194,7 +194,7 @@ class App {
 
         // Пост-обработка (отложенные функции)
         if($this->eventsEnabled()) {
-	        $event = mod::fire("mod_afterActionSYS",array(
+	        $event = mod::fire("infusoAfterActionSys",array(
 	            "content" => $content,
 	        ));
 	        $content = $event->param("content");
@@ -202,7 +202,7 @@ class App {
 
         echo $content;
 
-        mod::fire("mod_appShutdown");
+        mod::fire("infusoAppShutdown");
 
 	}
 
@@ -226,7 +226,7 @@ class App {
 
         // Если события не заблокированы - вызываем событие
         if($this->eventsEnabled()) {
-        	mod::fire("mod_beforeActionSYS");
+        	mod::fire("infusoBeforeActionSYS");
         	Profiler::addMilestone("before action sys");
         }
 
@@ -325,7 +325,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 		} else {
 
             // Метод сортироваки классов
-            $sort = function($a,$b) {
+            /*$sort = function($a,$b) {
                 $a = call_user_func(array($a,"priority"));
                 $b = call_user_func(array($b,"priority"));
                 if($a>$b) {
@@ -346,7 +346,11 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
             	call_user_func(array($class,"init"));
 			} else {
 			    $done = true;
-			}
+			} */
+			
+			$event = mod::event("infusoInit");
+			$done = !$event->firePartial($step + 1);
+			
 		}
 
         return $done;

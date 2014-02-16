@@ -3,14 +3,11 @@
 /**
  * Сборщик описаний тем
  **/
-class tmp_theme_init extends mod_init {
-
-	public function priority() {
-		return 1;
-	}
+class tmp_theme_init implements mod_handler {
 
 	/**
 	 * Составляет список файлов в каждой из тем для быстрого поиска шаблона
+    * @handler = infusoInit
 	 **/
 	public function init() {
 

@@ -16,8 +16,9 @@ class Delayed implements Core\Handler {
 	
 	/**
 	 * При завершении экшна обрабатываем отложенные функции
+	 * @handler = infusoAfterActionSys
 	 **/
-	public function on_mod_afterActionSYS($event) {
+	public function onAfterActionSYS($event) {
 	
 	    $content = $event->param("content");
 	    

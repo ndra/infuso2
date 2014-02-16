@@ -35,13 +35,11 @@ class inspector {
 	    
 	    foreach($class->getMethods() as $method) {
 	        $comments = $method->getDocComment();
-	        echo "<pre>";
 	        if(preg_match_all("/\*\s*\@([a-z0-9]+)\s*=\s*(.*)/iu",$comments,$matches,PREG_SET_ORDER )) {
 	            foreach($matches as $match) {
 	                $ret[$method->getName()][$match[1]] = trim($match[2]);
 	            }
 	        }
-	        echo "<hr/>";
 	    }
 	    
 	    return $ret;

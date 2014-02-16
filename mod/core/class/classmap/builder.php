@@ -206,14 +206,8 @@ class Builder {
 		$handlers = array();
 		foreach(mod::service("classmap")->classes() as $class=>$fuck) {
 			$r = new \ReflectionClass($class);
-			if($r->implementsInterface("mod_handler")) {
+			if($r->implementsInterface("Infuso\\Core\\Handler")) {
 			
-				/*foreach($r->getMethods() as $method) {
-				    if(preg_match("/^on_(.*)/",$method->getName(),$matches)) {
-				        $handlers[$matches[1]][] = $class;
-				    }
-				} */
-				
 				$inspector = new \Infuso\Core\Inspector($class);
 				foreach($inspector->annotations() as $method => $annotation) {
 				    $event = $annotation["handler"];

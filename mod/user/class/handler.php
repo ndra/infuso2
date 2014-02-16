@@ -17,7 +17,12 @@ class user_handler implements mod_handler {
         mod::service("user")->deleteUnverfiedUsers();        
     }
     
-    public static function on_mod_init() {
+    /**
+     * Метод, в котором реализуется бизнес-логика инициализации
+     * @handler = infusoInit
+     * @handlerPriority = 0
+     **/
+    public static function onInit() {
         reflex_task::add(array(
             "class" => "user_handler",
             "method" => "deleteUnverfiedUsers",

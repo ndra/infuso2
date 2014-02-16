@@ -43,6 +43,9 @@ class user_mail_lazySender extends mod_component implements mod_handler {
         
     }
     
+    /**
+     * @todo перевести на reflex_task
+     **/
     public function on_mod_cron() {
     
         for($i=0;$i<10;$i++) {

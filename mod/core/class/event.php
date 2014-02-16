@@ -40,12 +40,8 @@ class Event extends component {
      **/
     public function callbacks() {
         $callbacks = array();
-
         foreach($this->handlers() as $handler) {
-            $callbacks[] = array(
-                $handler,
-                "on_".$this->name()
-            );
+            $callbacks[] = explode("::",$handler);
         }
         return $callbacks;
     }

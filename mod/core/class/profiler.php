@@ -67,7 +67,7 @@ class Profiler {
         if(!mod::debug()) {
             return;
         }
-        
+
         if(!self::$paused) {
 
 	        $item = array_pop(self::$stack);
@@ -81,7 +81,7 @@ class Profiler {
 	            "d" => $time,
 	            "n" => $item[0]."/".$item[1]."/".$item[2],
 			);
-		
+
 		}
 
     }
