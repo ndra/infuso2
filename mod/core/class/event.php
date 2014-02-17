@@ -65,7 +65,7 @@ class Event extends component {
      * Метод разработан для вызова одного события в несколько подходов
      **/
     public function firePartial($from) {
-
+    
         $callbacks = $this->callbacks();
         $callback = $callbacks[$from];
         

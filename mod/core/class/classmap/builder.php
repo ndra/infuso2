@@ -211,13 +211,30 @@ class Builder {
 				$inspector = new \Infuso\Core\Inspector($class);
 				foreach($inspector->annotations() as $method => $annotation) {
 				    $event = $annotation["handler"];
+				    $priority = (int)$annotation["handlerPriority"];
 				    if($event) {
-				        $handlers[$event][] = $class."::".$method;
+				        $handlers[$event][] = array(
+							"handler" => $class."::".$method,
+							"priority" => $priority,
+						);
 				    }
 				}
 				
 			}
 		}
+		
+		foreach($handlers as $key => $val) {
+			usort($handlers[$key], function($a,$b) {
+			    return $a["priority"] - $b["priority"];
+			});
+		}
+		
+		foreach($handlers as $event => $list) {
+			foreach($list as $key => $val) {
+			    $handlers[$event][$key] = $val["handler"];
+			}
+		}
+		
 		return $handlers;
 	}
 	

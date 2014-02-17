@@ -7,7 +7,19 @@ use \mod, \file, \util;
 
 class handler extends \Infuso\Core\Component implements \mod_handler {
 
-	public function on_mod_init() {
+	/**
+	 * @handler = infusoInit
+	 * @handlerpriority = -1
+	 **/
+	public function removeRootTabs() {
+	    \mod::msg("removing root tabs");
+        rootTab::removeAll();
+	}
+
+	/**
+	 * @handler = infusoInit
+	 **/
+	public function initReflex() {
 	
 	    // Создаем роль «Контент-менеджер»
 	    

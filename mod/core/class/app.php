@@ -317,40 +317,14 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
      * Вернет true, если инициализация на этом шаге закончилась
      **/
     public function deployStep($step) {
-
+    
 		if($step==0) {
             $this->generateHtaccess();
 		    classmap\builder::buildClassMap();
 		    $next = true;
 		} else {
-
-            // Метод сортироваки классов
-            /*$sort = function($a,$b) {
-                $a = call_user_func(array($a,"priority"));
-                $b = call_user_func(array($b,"priority"));
-                if($a>$b) {
-                    return -1;
-                }
-                if($a<$b) {
-                    return 1;
-                }
-                return 0;
-            };
-
-            $classes = mod::service("classmap")->classes("mod_init");
-            usort($classes,$sort);
-            $class = $classes[$step-1];
-
-            if($class) {
-            	$done = false;
-            	call_user_func(array($class,"init"));
-			} else {
-			    $done = true;
-			} */
-			
 			$event = mod::event("infusoInit");
-			$done = !$event->firePartial($step + 1);
-			
+			$done = !$event->firePartial($step - 1);
 		}
 
         return $done;

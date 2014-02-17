@@ -5,14 +5,14 @@ namespace Infuso\Cms\Utils;
 /**
  * Контроллер для выполнения запросов sql
  **/
-class Sql extends \Infuso\Core\Controller {
+class Handlers extends \Infuso\Core\Controller {
 
 	public function indexTest() {
-	    return \infuso\core\superadmin::check();
+	    return \Infuso\Core\Superadmin::check();
 	}
 	
 	public function index() {
-	    \tmp::exec("/admin/utils/sql");
+	    \tmp::exec("/admin/utils/handlers");
 	}
 	
 }

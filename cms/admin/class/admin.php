@@ -28,10 +28,6 @@ class admin extends mod_controller {
 		tmp::exec("admin:footer");
 	}
 
-	public static function indexTitle(){
-		return "Администрирование";
-	}
-
 	public static function indexFailed() {
 		admin::fuckoff();
 	}
@@ -54,25 +50,9 @@ class admin extends mod_controller {
 	}
 
 	/**
-	 * Возвращает все параметры конфигурации
-	 **/
-	public static function configuration() {
-	    return array(
-	        array("id"=>"admin:secretURL","title"=>"Секретный ключ url"),
-	        array("id"=>"admin:showMenu","type"=>"checkbox","title"=>"Показывать меню администратора на всех страницах"),
-		);
-	}
-
-	/**
 	 * Вызывает виджет горизонтального администраторского меню
 	 **/
-	public static function menu($always=false) {
-		$obj = tmp::obj();
-		if(tmp::param("admin-header")) return;
-		if(!$always) {
-			if(!$obj->exists()) return;
-			if(!$obj->editor()->beforeView()) return;
-		}
+	public static function menu() {
 		tmp::exec("admin:menu");
 		tmp::param("admin-header",true);
 	}

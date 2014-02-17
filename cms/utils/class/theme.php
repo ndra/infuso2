@@ -1,11 +1,11 @@
 <?
 
-namespace infuso\admin\utils;
+namespace Infuso\Admin\Utils;
 
 /**
  * Стандартная тема модуля admin
  **/
-class theme extends \tmp_theme {
+class Theme extends \Infuso\Template\Theme {
 
 	/**
 	 * @return Приоритет темы =-1

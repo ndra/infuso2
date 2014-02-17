@@ -7,7 +7,10 @@ class widget extends \admin_widget {
 	public function exec() {
 
 		$url = \infuso\core\action::get(sql::inspector()->classname())->url();
-		echo "<h2><a href='{$url}' >Консоль SQL</a></h2>";
+		echo "<a href='{$url}' >Консоль SQL</a> ";
+		
+		$url = \infuso\core\action::get(Handlers::inspector()->classname())->url();
+		echo "<a href='{$url}' >События</a></h2>";
 
 	}
 
