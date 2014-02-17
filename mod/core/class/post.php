@@ -5,7 +5,7 @@ namespace Infuso\Core;
 /**
  * Обработчик пост-запросов
  **/
-class post {
+class Post {
 
     public static function getControllerClass($cmd) {
     

@@ -43,17 +43,20 @@ class App {
 	 * Подключает жизненно важные классы
 	 **/
 	public function includeCoreClasses() {
+		include("profiler.php");
+		include("mod.php");
+		
+		Profiler::beginOperation("core","includeCoreClasses",1);
 	    include("component.php");
 	    include("controller/controller.php");
-	    include("profiler.php");
 	    include("superadmin.php");
-	    include("mod.php");
 	    include("service.php");
 	    include("classmap/service.php");
 	    include("file/file.php");
 	    include("file/localFile.php");
 	    include("file/flist.php");
 	    include("bundle/bundle.php");
+	    Profiler::endOperation();
 	}
 
 	public function setErrorLevel() {

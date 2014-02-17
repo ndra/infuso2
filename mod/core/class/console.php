@@ -1,9 +1,9 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 use \infuso\core\log;
 
-class console extends controller {
+class Console extends Controller {
 
 	public static function indexTest() {
 		return mod_superadmin::check();

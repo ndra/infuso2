@@ -5,22 +5,10 @@ namespace Infuso\Core;
 /**
  * @todo убрать из класса контроллер
  **/
-class Mod extends controller {
+class Mod {
 
 	private static $debug = null;
 	
-	public static function indexTest() {
-		return true;
-	}
-	
-	public static function index() {
-		\infuso\core\console::xindex();
-	}
-	
-	public static function indexFailed() {
-		\infuso\core\console::xindex();
-	}
-
 	/**
 	 * Возвращает путь к корню сайта в файловой системе сервера
 	 * Используется функциями модуля file для перевода путей ФС в абсолютные
