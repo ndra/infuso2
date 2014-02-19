@@ -62,8 +62,9 @@ class Date extends Field {
 	}
 
 	public function defaultValue() {
-		if(trim($this->conf("default"))=="now()")
+		if(trim($this->param("default"))=="now()") {
 			return util::now()."";
+		}
 		return "";
 	}
 

@@ -18,6 +18,7 @@ class reflex_log extends reflex {
 					'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
 					'label' => 'Дата',
 					"editable" => 2,
+					"default" => "now()",
 		    	), array (
 					'name' => 'user',
 					'type' => 'pg03-cv07-y16t-kli7-fe6x',

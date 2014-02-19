@@ -1,20 +1,23 @@
 <?
 
+Namespace Infuso\Cms\Utils;
+use Infuso\Core;
+
 /**
  * Контроллер отчета крона
  **/
-class mod_cron_log extends mod_controller {
+class Cron extends Core\Controller implements Core\Handler {
 
 	public function indexFailed() {
 	    admin::fuckoff();
 	}
 
 	public function indexTest() {
-	    return mod_superadmin::check();
+	    return Core\Superadmin::check();
 	}
 	
 	public function index() {
-	    tmp::exec("/mod/cron");
+	    \tmp::exec("/admin/utils/cron");
 	}
 
 }

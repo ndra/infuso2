@@ -4,8 +4,9 @@ namespace Infuso\Cms\Reflex;
 
 use \user_role, \user_operation;
 use \mod, \file, \util;
+use Infuso\Core;
 
-class handler extends \Infuso\Core\Component implements \mod_handler {
+class Handler extends \Infuso\Core\Component implements Core\Handler {
 
 	/**
 	 * @handler = infusoInit
@@ -56,6 +57,9 @@ class handler extends \Infuso\Core\Component implements \mod_handler {
 
 	}
 	
+	/**
+	 * Строит карту редакторов
+	 **/
 	public static function buildEditorMap() {
 	    $map = array();
 		foreach(\mod::service("classmap")->classes("reflex_editor") as $class) {
@@ -66,5 +70,44 @@ class handler extends \Infuso\Core\Component implements \mod_handler {
 		file::mkdir(file::get($path)->up());
 		util::save_for_inclusion($path,$map);
 	}
+	
+	/**
+	 * @handler = infusoInit
+	 **/
+	public function onInfusoInit() {
+
+	    \user_operation::create("reflex:editLog","Редактирование лога")
+			->appendTo("reflex:viewLog");
+
+		\user_operation::create("reflex:viewLog","Редактирование лога")
+			->appendTo("admin");
+
+        \reflex_task::add(array(
+            "class" => get_class(),
+            "method" => "cleanup",
+            "crontab" => "0 0 * * *",
+        ));
+
+	}
+
+	/**
+	 * Запускается как задача раз в день
+	 * Очищает каталог от мусора
+	 **/
+    public static function cleanup() {
+
+		// Удаляем старые записи из лога (7 месцев)
+		\reflex_log::all()->leq("datetime",util::now()->shiftMonth(-6))->delete();
+
+		// Удаляем старые руты из каталога (7 дней)
+		\reflex_editor_root::all()->leq("created",util::now()->shiftDay(-7))->delete();
+
+		// Удаляем старые конструкторы (7 дней)
+		\reflex_editor_constructor::all()->leq("created",util::now()->shiftDay(-7))->delete();
+
+		// Удаляем старые задачи (60 дней)
+		\reflex_task::all()->eq("completed",1)->leq("created",util::now()->shiftDay(-60))->delete();
+
+    }
 	
 }

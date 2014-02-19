@@ -1,0 +1,22 @@
+.w7ywyb7f5 {
+
+    padding:40px;
+    
+    h1 {
+        font-size:24px;        
+        font-weight:normal;
+    }
+    
+    td {
+        padding: 4px 10px 4px 0;
+    }
+    
+    .error {
+        color:red;
+    }
+    
+    .class, .method {
+        color:#ccc;
+    }
+
+}

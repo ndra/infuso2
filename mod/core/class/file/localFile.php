@@ -347,5 +347,9 @@ class localFile extends file {
 
 		}
 	}
+	
+	public function time() {
+		return \util::date(@filemtime ($this->native()));
+	}
 
 }

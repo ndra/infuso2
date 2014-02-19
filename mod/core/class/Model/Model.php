@@ -63,12 +63,24 @@ abstract class Model extends Core\Controller {
 
     /**
      * Враппер для доступа к даным
+     * @todo рефакторить скорость для дефолтных полей
      **/
     public final function data($key=null,$val=null) {
 
         // Если параметров 0 - возвращаем массив с данными
         if(func_num_args()==0) {
-            return $this->changedData + $this->initialData;
+        
+            // Берем массив с исходными данными и мержим его с измененными данными
+            $ret = $this->changedData + $this->initialData;
+            
+            // Добавляем дефолтные значения для несуществующих индексов
+            foreach($this->fieldNames() as $name) {
+                if(!array_key_exists($name,$ret)) {
+                    $ret[$name] = $this->field($name)->defaultValue();
+                }
+            }
+            
+            return $ret;
         }
 
         // Если параметров 1 - возвращаем значение поля
@@ -78,7 +90,11 @@ abstract class Model extends Core\Controller {
                 return $this->changedData[$key];
             }
             
-            return $this->initialData[$key];
+            if(array_key_exists($key,$this->initialData)) {
+				return $this->initialData[$key];
+			}
+			
+			return $this->field($key)->defaultValue();
         }
 
         // Если два параметра - меняем значение

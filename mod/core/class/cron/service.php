@@ -3,7 +3,7 @@
 /**
  * Контроллер крона
  **/
-class mod_cron_service extends \infuso\core\service {
+class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handler {
 
 	public function defaultService() {
 	    return "cron";
@@ -36,7 +36,7 @@ class mod_cron_service extends \infuso\core\service {
      **/
     public function checkTimeAndprocess() {
 
-        $file = file::get("/mod/service/cron.php");
+        $file = file::get($this->app()->varPath()."/cron.php");
         $time = $file->time();
 
         // Читаем статус из файла
@@ -100,6 +100,34 @@ class mod_cron_service extends \infuso\core\service {
             "p1" => $time,
 		));
         
+    }
+    
+    /**
+     * Возвращает коллекцию записей в логе для крона
+     **/
+    public function getLog() {
+        return reflex_log::all()->eq("type","cron");
+    }
+    
+    /**
+     * Обработчик события Хартбит - теста системы
+     * @handler = Infuso/Admin/Heartbeat
+     **/
+    public function onHeartbeat($event) {
+    
+        $last = self::getLog()->desc("datetime")->one();
+        
+        if(!$last->exists()) {
+            $event->error("Крон не был запущен ни разу");
+            return;
+        }
+        
+        if(util::now()->stamp() - $last->pdata("datetime")->stamp() > 3600 * 2) {
+            $event->error("Крон был запущен больше двух часов назад");
+            return;
+        }
+    
+        $event->message("Последний запуск крона ".$last->pdata("datetime")->left());
     }
 
 }

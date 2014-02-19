@@ -10,8 +10,9 @@ class Handler implements \Infuso\Core\Handler {
 	/**
 	 * @handler = infusoInit
 	 * @handlerPriority = -1000
+	 * При инициализации приводим таблицы в БД в соответствии с макетами
 	 **/
-	public function migration() {
+	public function onInfusoInit() {
 
 	    Core\Mod::msg("<b>Migrating DB</b>");
 
@@ -51,46 +52,12 @@ class Handler implements \Infuso\Core\Handler {
 		}
 
 	}
-
-	/**
-	 * @handler = infusoInit
-	 **/
-	public function on_mod_init() {
-	
-	    \user_operation::create("reflex:editLog","Редактирование лога")
-			->appendTo("reflex:viewLog");
-			
-		\user_operation::create("reflex:viewLog","Редактирование лога")
-			->appendTo("admin");
-
-        \reflex_task::add(array(
-            "class" => "reflex_handler",
-            "method" => "cleanup",
-            "crontab" => "0 0 * * *",
-        ));
-	
-	}
-
-    public static function cleanup() {
-
-		// Удаляем старые записи из лога (7 месцев)
-		\reflex_log::all()->leq("datetime",util::now()->shiftMonth(-6))->delete();
-
-		// Удаляем старые руты из каталога (7 дней)
-		\reflex_editor_root::all()->leq("created",util::now()->shiftDay(-7))->delete();
-
-		// Удаляем старые конструкторы (7 дней)
-		\reflex_editor_constructor::all()->leq("created",util::now()->shiftDay(-7))->delete();
-		
-		// Удаляем старые задачи (60 дней)
-		\reflex_task::all()->eq("completed",1)->leq("created",util::now()->shiftDay(-60))->delete();
-
-    }
     
     /**
      * @handler = infusoAppShutdown
+     * При завершении приложения сохраняем все измененные записи
      **/
-    public function on_mod_appShutdown() {
+    public function onAppShutdownSys() {
         Record::storeAll();
     }
 

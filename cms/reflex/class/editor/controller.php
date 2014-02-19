@@ -7,7 +7,7 @@ use \user, \admin, \mod, \inx;
 /**
  * Основной контроллер каталога
  **/
-class controller extends \Infuso\Core\Controller {
+class Controller extends \Infuso\Core\Controller {
 
     /**
      * Видимость для браузера

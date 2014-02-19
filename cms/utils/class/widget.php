@@ -1,16 +1,22 @@
 <?
 
-namespace infuso\cms\utils;
+namespace Infuso\Cms\Utils;
 
-class widget extends \admin_widget {
+class Widget extends \admin_widget {
 
 	public function exec() {
+	
+		$url = \infuso\core\action::get(Heartbeat\Controller::inspector()->classname())->url();
+		echo "<a href='{$url}' >Пульс</a> ";
 
-		$url = \infuso\core\action::get(sql::inspector()->classname())->url();
+		$url = \infuso\core\action::get(Sql::inspector()->classname())->url();
 		echo "<a href='{$url}' >Консоль SQL</a> ";
 		
 		$url = \infuso\core\action::get(Handlers::inspector()->classname())->url();
-		echo "<a href='{$url}' >События</a></h2>";
+		echo "<a href='{$url}' >События</a> ";
+		
+		$url = \infuso\core\action::get(Cron::inspector()->classname())->url();
+		echo "<a href='{$url}' >Крон</a> ";
 
 	}
 

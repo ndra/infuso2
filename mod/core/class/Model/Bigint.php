@@ -39,7 +39,7 @@ class Bigint extends Field {
 
 	public function tableCol() {
 		return array(
-	    	width=>50
+	    	width => 50,
 		);
 	}
 
@@ -48,7 +48,7 @@ class Bigint extends Field {
 	}
 
 	public function defaultValue() {
-		return intval($this->prepareValue($this->conf("default")));
+		return intval($this->prepareValue($this->param("default")));
 	}
 
 }

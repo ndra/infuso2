@@ -66,17 +66,6 @@ public static function recordTable() {return array (
       'help' => '',
     ),
   ),
-  'indexes' => 
-  array (
-  ),
-  'fieldGroups' => 
-  array (
-    0 => 
-    array (
-      'name' => NULL,
-      'title' => NULL,
-    ),
-  ),
 );}
 
 private $idList = null;

@@ -2,7 +2,7 @@
 
 <div class='gveialugfd'> 
 
-    tmp_lib::components();
+    \Infuso\Template\Lib::components();
     
     foreach(\infuso\core\log::messages() as $msg) {
     

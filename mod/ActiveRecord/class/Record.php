@@ -339,22 +339,21 @@ abstract class Record extends \Infuso\Core\Model\Model {
      **/
     public function createThis($keepID = false) {
 
-		/*$event = new \Infuso\Core\Event("reflex_beforeCreate",array(
+		$event = new \Infuso\Core\Event("beforeCreate",array(
 		    "item" => $this,
 		));
 
-        if(!$this->callReflexTrigger("reflex_beforeCreate",$event)) {
+        if(!$this->callReflexTrigger("beforeCreate",$event)) {
             return false;
-        } */
+        }
 
 		$this->storeCreated($keepID);
             
-		/*$event = new \Infuso\Core\Event("reflex_afterCreate",array(
+		$event = new \Infuso\Core\Event("afterCreate",array(
 		    "item" => $this,
 		));
         
-        $this->callReflexTrigger("reflex_afterCreate",$event);
-        */
+        $this->callReflexTrigger("afterCreate",$event);
 
     }
 
