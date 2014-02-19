@@ -29,7 +29,7 @@ class service extends \infuso\core\service {
 
         if($url->path()=="/mod") {
             core\profiler::endOperation();
-            return core\mod::action("mod");
+            return core\mod::action("Infuso\\Core\\Console");
         }
 
         $routers = core\mod::service("classmap")->classmap("routes");

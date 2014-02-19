@@ -146,11 +146,11 @@ class App {
 	/**
 	 * Возвращает флаг того активны ли события приложения
 	 * Например, mod_beforeActionSYS или mod_afterActionSys
-	 * События приложения выключаются для контроллера mod - консоли
+	 * События приложения выключаются для контроллера infuso\core\console - консоли
 	 * т.к. ошибка в стороннем классе может сделать невозможным использование консоли
 	 **/
 	public function eventsEnabled() {
-	    if($this->action() && preg_match("/^mod$/",$this->action()->className())) {
+	    if($this->action() && preg_match("/^infuso\\\\core\\\\console/i",$this->action()->className())) {
 	        return false;
 	    }
 	    return true;

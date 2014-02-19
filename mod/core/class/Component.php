@@ -321,7 +321,7 @@ class Component {
 	 **/
     public function getComponentID() {
         if(!$this->componentID) {
-            $this->componentID = util::id();
+            $this->componentID = \util::id();
         }
         return $this->componentID;
     }

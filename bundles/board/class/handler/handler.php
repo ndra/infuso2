@@ -1,8 +1,11 @@
 <?
 
-class board_handler implements mod_handler {
+class board_handler implements \Infuso\Core\Handler {
 
-    public function on_mod_init() {
+	/**
+	 * @handler = infusoDeploy
+	 **/
+    public function init() {
         
         // Создаем роль
         

@@ -1,163 +1,160 @@
 <?
 
 namespace Infuso\Core;
-use \infuso\core\log;
+use \Infuso\Core\Log;
 
 class Console extends Controller {
 
 	public static function indexTest() {
-		return mod_superadmin::check();
+		return true;
 	}
 
 	public static function indexTitle() {
 		return "Консоль";
 	}
 
-	public static function index() {
-		header("Location:/mod/");
-	}
-
-	public static function indexFailed() {
-		admin::fuckoff();
-	}
-
-	public static function xindex() {
+	/**
+	 * @todo В случае ошибки консоль выбрасывает исключение,
+	 * которое показывается пользователю даже если он не залогинен
+	 * Это неправильно
+	 **/
+	public function index() {
 	
 	    try {
 	
-		// Пробуем залогиниться
-	    if($_GET["cmd"]=="login") {
-	        superadmin::post_login($_POST);
-	        console::redirect("/mod/");
-	    }
+			// Пробуем залогиниться
+		    if($_GET["cmd"]=="login") {
+		        superadmin::post_login($_POST);
+		        console::redirect("/mod/");
+		    }
 
-	    // Проверяем наличие административного пароля
-	    if(!superadmin::check()) {
-			self::fuckoff();
-		}
+		    // Проверяем наличие административного пароля
+		    if(!superadmin::check()) {
+				self::fuckoff();
+			}
 
-	    // Пробуем установить бесконечное время выполнения скрипта
-		if(function_exists("set_time_limit")) {
-			set_time_limit(0);
-		}
+		    // Пробуем установить бесконечное время выполнения скрипта
+			if(function_exists("set_time_limit")) {
+				set_time_limit(0);
+			}
 		
-	    switch($_GET["cmd"]) {
+		    switch($_GET["cmd"]) {
 
-	        case "logout":
-	            mod_superadmin::post_logout();
-	            self::redirect("/mod/");
-	            break;
+		        case "logout":
+		            Superadmin::post_logout();
+		            $this->redirect("/mod/");
+		            break;
 
-	        case "phpinfo":
-	            phpinfo();
-	            break;
+		        case "phpinfo":
+		            phpinfo();
+		            break;
 
-	        case "change":
-	        
-	            if($_POST["p1"]) {
-	                mod_superadmin::changePassword($_POST);
-	            }
+		        case "change":
 
-	            self::header();
-	            echo "<a href='/mod/'>&larr;Back</a><br/><br/>";
-	            echo "<form action='/mod/?cmd=change' method='post'>";
-	            echo "<small >Password</small><br/>";
-	            echo "<input name='p1' /><br/><br/>";
-	            echo "<small >And again</small><br/>";
-	            echo "<input name='p2' /><br/><br/>";
-	            echo "<input type='submit' value='Change password' />";
-	            echo "</form>";
-	            self::footer();
-	            
-	            break;
+		            if($_POST["p1"]) {
+		                Superadmin::changePassword($_POST);
+		            }
 
-	        case "relink":
+		            self::header();
+		            echo "<a href='/mod/'>&larr;Back</a><br/><br/>";
+		            echo "<form action='/mod/?cmd=change' method='post'>";
+		            echo "<small >Password</small><br/>";
+		            echo "<input name='p1' /><br/><br/>";
+		            echo "<small >And again</small><br/>";
+		            echo "<input name='p2' /><br/><br/>";
+		            echo "<input type='submit' value='Change password' />";
+		            echo "</form>";
+		            self::footer();
 
-				$step = $_POST["step"];
+		            break;
 
-                $done = mod::app()->deployStep($step);
+		        case "relink":
 
-	            $messages = array();
-	            foreach(log::messages() as $msg) {
-	            	$messages[] = array(
-						"text" => $msg->text(),
-						"error" => $msg->error()
-					);
-				}
-					
-	            $ret = array(
-					"messages" => $messages,
-					"next" => !$done,
-				);
+					$step = $_POST["step"];
 
-				echo json_encode($ret);
+	                $done = mod::app()->deployStep($step);
 
-	            break;
-
-	        case "update":
-	        
-	            $mods = array();
-	            foreach(mod::service("bundle")->all() as $bundle) {
-	                $mods[] = $bundle->path();
-	            }
-	            
-	            $ret = array();
-	            if($mod = $mods[$_POST["mod"]]) {
-	            
-					\Infuso\Update\Updater::update($mod);
 		            $messages = array();
-		            
 		            foreach(log::messages() as $msg) {
 		            	$messages[] = array(
 							"text" => $msg->text(),
 							"error" => $msg->error()
 						);
-		            }
-		            
+					}
+
 		            $ret = array(
 						"messages" => $messages,
-						"next" => true,
+						"next" => !$done,
 					);
-					
-	            } else {
-	            	mod::app()->generateHtaccess();
-	            }
-	            echo json_encode($ret);
-	            break;
 
-	        default:
+					echo json_encode($ret);
 
-	            mod::app()->generateHtaccess();
-	            self::header();
-				
-	            // Выводим предостережение в случае пароля 0000
-	            if(superadmin::is0000()) {
-	                echo "<div style='background:red;margin-bottom:20px;padding:10px;color:white;border:1px solid brown;' >";
-	                echo "Infuso works with superadmin password <b>0000</b>. You must <a style='color:white;border-bottom:1px solid white;' href='?cmd=change'>change</a> superadmin password as soon as possible.";
-	                echo "</div>";
-	            }
-	            
-	            echo "<div style='text-align:right;margin-bottom:20px;' >";
-	            // Изменить пароль
-	            echo "<a href='?cmd=phpinfo' style='margin-right:20px;' >phpinfo</a>";
-	            // Изменить пароль
-	            echo "<a href='?cmd=change' style='margin-right:20px;'>Change password</a>";
-	            // Выйти
-	            echo "<a href='?cmd=logout'>Logout</a>";
-	            echo "</div>";
+		            break;
 
-	            // Окошко лога
-	            echo "<div id='log' style='border:1px solid gray;height:200x;background:#ededed;'>";
-	            echo "</div>";
+		        case "update":
 
-	            echo "<br/><br/>";
-	            echo "<input style='margin-right:20px;' type='button' onclick='cs.clearLog();cs.linkStep(0)' value='Relink' />";
-	            echo "<input type='button' onclick='cs.clearLog();cs.updateStep(0)' value='Update' >";
-	            echo "<script>cs.log('Standby');</script>";
-	            
-	            self::footer();
-	            break;
-	    }
+		            $mods = array();
+		            foreach(mod::service("bundle")->all() as $bundle) {
+		                $mods[] = $bundle->path();
+		            }
+
+		            $ret = array();
+		            if($mod = $mods[$_POST["mod"]]) {
+
+						\Infuso\Update\Updater::update($mod);
+			            $messages = array();
+
+			            foreach(log::messages() as $msg) {
+			            	$messages[] = array(
+								"text" => $msg->text(),
+								"error" => $msg->error()
+							);
+			            }
+
+			            $ret = array(
+							"messages" => $messages,
+							"next" => true,
+						);
+
+		            } else {
+		            	mod::app()->generateHtaccess();
+		            }
+		            echo json_encode($ret);
+		            break;
+
+		        default:
+
+		            mod::app()->generateHtaccess();
+		            self::header();
+
+		            // Выводим предостережение в случае пароля 0000
+		            if(superadmin::is0000()) {
+		                echo "<div style='background:red;margin-bottom:20px;padding:10px;color:white;border:1px solid brown;' >";
+		                echo "Infuso works with superadmin password <b>0000</b>. You must <a style='color:white;border-bottom:1px solid white;' href='?cmd=change'>change</a> superadmin password as soon as possible.";
+		                echo "</div>";
+		            }
+
+		            echo "<div style='text-align:right;margin-bottom:20px;' >";
+		            // Изменить пароль
+		            echo "<a href='?cmd=phpinfo' style='margin-right:20px;' >phpinfo</a>";
+		            // Изменить пароль
+		            echo "<a href='?cmd=change' style='margin-right:20px;'>Change password</a>";
+		            // Выйти
+		            echo "<a href='?cmd=logout'>Logout</a>";
+		            echo "</div>";
+
+		            // Окошко лога
+		            echo "<div id='log' style='border:1px solid gray;height:200x;background:#ededed;'>";
+		            echo "</div>";
+
+		            echo "<br/><br/>";
+		            echo "<input style='margin-right:20px;' type='button' onclick='cs.clearLog();cs.linkStep(0)' value='Relink' />";
+		            echo "<input type='button' onclick='cs.clearLog();cs.updateStep(0)' value='Update' >";
+		            echo "<script>cs.log('Standby');</script>";
+
+		            self::footer();
+		            break;
+		    }
 	    
 	    } catch (\Exception $ex) {
 	        echo $ex;
