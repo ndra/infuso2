@@ -16,7 +16,9 @@ class tester extends \infuso\core\controller implements \Infuso\Core\Handler {
 
 		\tmp::header();
 		
-		echo 1;
+		$user = new \user;
+		$user->createThis();
+		var_export($user->data());
 	
         \util::profiler();
 

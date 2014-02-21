@@ -13,11 +13,29 @@ use \Infuso\Core;
  **/
 abstract class Record extends \Infuso\Core\Model\Model {
 
-	const STATUS_NEW = 100;
-	const STATUS_VIRTUAL = 0;
+	/**
+	 * Запись не привязана к базе
+	 **/
+	const STATUS_DETACHED = 0;
+	
+	/**
+	 * Запись изменена, изменения не сохранены
+	 **/
 	const STATUS_CHANGED = 300;
-	const STATUS_SAVED = 400;
+	
+	/**
+	 * Запись синхронизирвоана с базой
+	 **/
+	const STATUS_SYNC = 400;
+	
+	/**
+	 * Запись удалена
+	 **/
 	const STATUS_DELETED = 500;
+	
+	/**
+	 * Запись не существует
+	 **/
 	const STATUS_NON_EXISTENT = 600;
 
 	/**
@@ -69,23 +87,41 @@ abstract class Record extends \Infuso\Core\Model\Model {
 		Core\Mod::service("ar")->registerChanges(get_class($this),$this->id());
     }
     
-    // Триггеры
+    /**
+     * Триггер, вызывается перед созданием
+     **/
     public function beforeCreate() {
     }
 
+	/**
+     * Триггер, вызывается после создания
+     **/
     public function afterCreate() {
     }
 
+	/**
+     * Триггер, вызывается до сохранения
+     **/
     public function beforeStore() {
     }
 
+	/**
+     * Триггер, вызывается после сохранения
+     **/
     public function afterStore() {
     }
 
+	/**
+     * Триггер, вызывается перед удалением
+     **/
     public function beforeDelete() {
     }
 
-    public function afterDelete() {}
+	/**
+     * Триггер, вызывается после удаления
+     **/
+    public function afterDelete() {
+	}
 
     public function __sleep() {
         return array(
@@ -198,17 +234,17 @@ abstract class Record extends \Infuso\Core\Model\Model {
         return !!$this->id;
     }
 
-    /**
-     * @return true/false в зависимости от того виртуальный ли объект
-     **/
-    public function isVirtual() {
-        return $this->recordStatus() == self::STATUS_VIRTUAL;
-    }
-    
+	/**
+	 * Меняет статус записи
+	 * вы не должны вызывать этот метод напрямую
+	 **/
     public function setRecordStatus($status) {
         $this->recordStatus = $status;
     }
     
+    /**
+     * Возвращает статус записи
+     **/
 	public function recordStatus() {
 	    return $this->recordStatus;
     }
@@ -359,13 +395,10 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
     /**
      * Сохраняет созданный объект в базу
+     * @todo сделать сохранение объектов в буффер
      **/
     private final function storeCreated($keepID = false) {
     
-        if(!$this->writeEnabled()) {
-            return false;
-		}
-
 		$event = new event("beforeStore",array(
 		    "item" => $this,
 		));
@@ -384,15 +417,16 @@ abstract class Record extends \Infuso\Core\Model\Model {
             }
         }
         $insert = " (".implode(",",array_keys($data)).") values (".implode(",",$data).") ";
-
         $query = "insert into `$table` $insert ";
         $id = mod::service("db")->query($query)->exec()->lastInsertId();
-
+        
         // Заносим данные в объект
-        // Объект заносим объект в буфер
-        $this->field("id")->initialValue($id);
-
+        $initialData = $this->initialData();
+        $initialData["id"] = $id;
+        $this->setInitialData($initialData);
         $this->id = $id;
+        
+        // Объект заносим объект в буфер
 
 		$event = new event("afterStore",array(
 		    "item" => $this,
@@ -401,22 +435,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
 		$this->callReflexTrigger("afterStore",$event);
 
         return true;
-    }
-
-    /**
-     * Сохраняет виртуальный объект в базу
-     * Если объект не виртуальный, просто сохраняет его
-     * Метод отличается от reflex::store, который игнорирует виртуальные объекты
-     **/
-    public function storeVirtual() {
-
-        if($this->isVirtual()) {
-            $this->isVirtual = false;
-            $this->createThis();
-        } else {
-            $this->store();
-        }
-
     }
 
     /**
@@ -433,21 +451,22 @@ abstract class Record extends \Infuso\Core\Model\Model {
 		mod::service("ar")->storeAll();
     }
 
+	/**
+	 * @todo Надобность в этой функции под вопросом
+	 **/
     private final function from() {
         return "`".$this->prefixedTableName()."`";
     }
 
-    private final function writeEnabled() {
-    
-        if($this->isVirtual()) {
-            return false;
-         }
-
-        return true;
-    }
-    
-    public function markAsClean() {
+	/**
+	 * Помечает объект как сохраненный:
+	 * Очищает список измененных полей модели (они становятся начальными значениями)
+	 * Меняет статус записи на «Синхронизировано»
+	 * Удаляет объект из списка измененных в службе "ar"
+	 **/
+    public function markAsUnchanged() {
         $this->setInitialData($this->data());
+        mod::service("ar")->unregisterChanges(get_class($this),$this->id());
     }
 
     /**
@@ -455,11 +474,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
      **/
     public final function store() {
 
-        if(!$this->writeEnabled()) {
-            $this->markAsClean();
-            return false;
-        }
-        
         if(!$this->fields()->changed()->count()) {
             $this->markAsClean();
             return false;
@@ -483,14 +497,13 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return true;
         }
 
+		// Подготавливаем запрос в базу
         $set = array();
         foreach($changedFields as $field) {
             $set[] = "`".$field->name()."`=".$field->mysqlValue();
         }
         $set = "set ".implode(",",$set)." ";
-
         $id = $this->id();
-
         $from = $this->from();
         mod::service("db")->query("update $from $set where `id`='$id' ")->exec();
 
@@ -512,6 +525,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
     /**
      * Возвращает объект в исходное состояние
      * Отменяя все изменения, сделанные после загрузки
+     * @todo $fields
      **/
     public function revert() {
         foreach($this->fields() as $field) {
@@ -522,10 +536,18 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
     /**
      * Записывает объект и удаляет его из буфера
+     * @todo не удаляет из буффера, пофиксить
      **/
     public final function free() {
         $this->store();
-        $this->markAsClean();
+		mod::service("db")->query("update $from $set where `id`='$id' ")->exec();
+    }
+
+    /**
+     * Возвращает родителя элемента
+     **/
+    public final function parent() {
+        return $this->recordParent();
     }
 
     /**
@@ -577,15 +599,5 @@ abstract class Record extends \Infuso\Core\Model\Model {
         }
         return false;
     }
-
-    /**
-     * Возвращает родителя элемента
-     **/
-    public final function parent() {
-        return $this->recordParent();
-    }
-
-
-    
 
 }

@@ -124,6 +124,16 @@ abstract class Model extends Core\Controller {
 
     }
     
+    /**
+     * Возвращает исходные данные модели (до изменения)
+     **/
+    public final function initialData() {
+        return $this->initialData;
+    }
+    
+	/**
+     * Устанавливает исходные данные модели
+     **/
     public final function setInitialData($data) {
     
         if($data === null) {

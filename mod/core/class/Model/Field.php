@@ -204,10 +204,6 @@ abstract class Field extends Core\Component {
         return $val;
     }
     
-    public function initialValue() {
-        return null;
-    }
-
     public function mysqlValue() {
         return Core\Mod::service("db")->quote($this->value());
     }

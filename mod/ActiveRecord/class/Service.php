@@ -19,6 +19,9 @@ class Service extends Core\Service {
 	
 	private static $serviceInstance;
 
+	/**
+	 * @todo этот метод реализован в Core\Service, использовать его
+	 **/
     public static function serviceFactory() {
 
         if(!self::$serviceInstance) {
@@ -37,6 +40,9 @@ class Service extends Core\Service {
 		return $class;
 	}
 	
+	/**
+	 * @todo ен складывает в буффер объекты после загрузки, пофиксить
+	 **/
 	public function get($class,$id,$data=array()) {
 	
         // Определяем класс элементов / последовательности
@@ -44,7 +50,8 @@ class Service extends Core\Service {
 
         // Если id <= 0, возвращаем несуществующий объект без запроса в базу
         if($id <= 0) {
-            $ret = new $class(0);
+            $ret = new $class();
+            $ret->setStatus(Record::STATUS_NON_EXISTENT);
             return $ret;
         }
 
@@ -54,7 +61,7 @@ class Service extends Core\Service {
             if($data) {
                 $item = new $class($id);
                 $item->setInitialData($data);
-				$item->setRecordStatus(Record::STATUS_SAVED);
+				$item->setRecordStatus(Record::SYNC);
                 self::$buffer[$class][$id] = $item;
                 
             } else {
@@ -66,18 +73,11 @@ class Service extends Core\Service {
 	
 	}
 	
+	/**
+	 * Возвращает коллекцию элементов класса $class
+	 **/
 	public function collection($class) {
 		return Collection::get($class);
-	}
-	
-	public function virtual($class,$data=array()) {
-	
-        $class = self::getItemClass($class);
-        $item = new $class($data["id"]);
-        $item->setRecordStatus(Record::STATUS_VIRTUAL);
-        $item->setInitialData($data);
-        return $item;
-	
 	}
 	
 	/**
@@ -91,17 +91,29 @@ class Service extends Core\Service {
 
         $class = self::getItemClass($class);
         $item = new $class();
-        $item->setRecordStatus(Record::STATUS_NEW);
         $item->setInitialData($data);
         $item->createThis($keepID);
         return $item;
 	
 	}
 	
+	/**
+	 * Регистрирует изменения в объекте класса $class с ключем $id
+	 **/
 	public function registerChanges($class,$id) {
 	    self::$changedItems[$class.":".$id] = true;
 	}
 	
+	/**
+	 * Удаляет пометку об изменениях в объекте класса $class с ключем $id
+	 **/
+	public function unregisterChanges($class,$id) {
+	    unset(self::$changedItems[$class.":".$id]);
+	}
+	
+	/**
+	 * Сохраняет все измененные объекты
+	 **/
 	public function storeAll() {
 	
         Core\Profiler::addMilestone("reflex before store");
