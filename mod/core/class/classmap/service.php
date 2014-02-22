@@ -75,7 +75,7 @@ class classmapService extends service {
 	    $class = self::prepareClass($class);
 	    $extends = self::prepareClass($extends);
 	    
-		if($class=="mod" && $extends=="mod_controller") {
+		if($class=="infuso\\core\\console" && $extends=="infuso\\core\\controller") {
 		    return true;
         }
 

@@ -29,7 +29,7 @@ class Handler implements \Infuso\Core\Handler {
 		foreach(Record::classes() as $class) {
 
 		    try {
-				$record = mod::service("ar")->virtual($class);
+				$record = new $class();
 				$table = $record->recordTable();
 				if($table) {
 					$migration = new Migration\Table($table);

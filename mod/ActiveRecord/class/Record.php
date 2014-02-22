@@ -14,9 +14,14 @@ use \Infuso\Core;
 abstract class Record extends \Infuso\Core\Model\Model {
 
 	/**
+	 * Новая запись
+	 **/
+	const STATUS_NEW = 0;
+
+	/**
 	 * Запись не привязана к базе
 	 **/
-	const STATUS_DETACHED = 0;
+	const STATUS_DETACHED = 100;
 	
 	/**
 	 * Запись изменена, изменения не сохранены
@@ -213,6 +218,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
     public final function __construct($id=0) {
         $this->id = $id;
+        $this->status = self::STATUS_NEW;
     }
 
     public static function get($class,$id=null) {
@@ -475,7 +481,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
     public final function store() {
 
         if(!$this->fields()->changed()->count()) {
-            $this->markAsClean();
+            $this->markAsUnchanged();
             return false;
         }
         
@@ -485,7 +491,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
         // Триггер
         if(!$this->callReflexTrigger("beforeStore",$event)) {
-            $this->markAsClean();
+            $this->markAsUnchanged();
             return false;
         }
 
@@ -493,7 +499,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
         // В этом случае нет смысла сохранять объект в базу
         $changedFields = $this->fields()->changed();
         if(!$changedFields->count()) {
-            $this->markAsClean();
+            $this->markAsUnchanged();
             return true;
         }
 
@@ -510,7 +516,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
         // Сразу после сохранения, помечаем объект как чистый
         // Таким образом, если в afterStore() будут изменены поля объекта,
         // Метод store может быть вызванповторно
-        $this->markAsClean();
+        $this->markAsUnchanged();
         
 		$event = new event("afterStore",array(
 		    "item" => $this,
@@ -531,7 +537,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
         foreach($this->fields() as $field) {
             $field->revert();
         }
-        $this->markAsClean();
+        $this->markAsUnchanged();
     }
 
     /**

@@ -130,9 +130,9 @@ class Action extends Component {
      * Выполняет этот экшн
      * Предварительно проверяет возможность его выполнения, вызывая метод test
      **/
-    public function exec() {
+    public function exec() {     
         
-        if(!$this->test()) {
+        if(!$this->test()) {  
 			call_user_func($this->failCallback(),$this->params());
         } else {
             if(mod::app()->eventsEnabled()) {

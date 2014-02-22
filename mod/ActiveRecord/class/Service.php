@@ -51,7 +51,7 @@ class Service extends Core\Service {
         // Если id <= 0, возвращаем несуществующий объект без запроса в базу
         if($id <= 0) {
             $ret = new $class();
-            $ret->setStatus(Record::STATUS_NON_EXISTENT);
+            $ret->setRecordStatus(Record::STATUS_NON_EXISTENT);
             return $ret;
         }
 
@@ -61,7 +61,7 @@ class Service extends Core\Service {
             if($data) {
                 $item = new $class($id);
                 $item->setInitialData($data);
-				$item->setRecordStatus(Record::SYNC);
+				$item->setRecordStatus(Record::STATUS_SYNC);
                 self::$buffer[$class][$id] = $item;
                 
             } else {
@@ -96,6 +96,23 @@ class Service extends Core\Service {
         return $item;
 	
 	}
+	
+	/**
+	 * Создает виртуальный обект
+	 **/
+	public function virtual($class, $data=array()) {
+
+		if(!is_string($class)) {
+            throw new Exception ("reflex::create() first argument must be string, have ".gettype($class));
+        }
+
+        $class = self::getItemClass($class);
+        $item = new $class();
+        $item->setInitialData($data);
+        $item->setRecordStatus(Record::STATUS_DETACHED);
+        return $item;
+	
+	}	
 	
 	/**
 	 * Регистрирует изменения в объекте класса $class с ключем $id
