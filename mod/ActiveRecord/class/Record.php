@@ -89,7 +89,10 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
     
     public function handleRecordDataChanged() {
-		Core\Mod::service("ar")->registerChanges(get_class($this),$this->id());
+    	if(in_array($this->recordStatus(), array(self::STATUS_SYNC, self::STATUS_CHANGED))) {
+			Core\Mod::service("ar")->registerChanges(get_class($this),$this->id());
+			$this->setRecordStatus(self::STATUS_CHANGED);
+		}
     }
     
     /**
@@ -389,7 +392,13 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return false;
         }
 
-		$this->storeCreated($keepID);
+		$this->storeCreated($keepID);     
+		
+        // Объект заносим объект в буфер
+        Core\Mod::service("ar")->storeToBuffer($this);
+        
+        // Меняем статус объекта
+        $this->setRecordStatus(self::STATUS_SYNC);
             
 		$event = new \Infuso\Core\Event("afterCreate",array(
 		    "item" => $this,
@@ -426,13 +435,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
         $query = "insert into `$table` $insert ";
         $id = mod::service("db")->query($query)->exec()->lastInsertId();
         
-        // Заносим данные в объект
+        // Заносим id в данные объекта
         $initialData = $this->initialData();
         $initialData["id"] = $id;
         $this->setInitialData($initialData);
         $this->id = $id;
-        
-        // Объект заносим объект в буфер
 
 		$event = new event("afterStore",array(
 		    "item" => $this,
@@ -472,6 +479,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	 **/
     public function markAsUnchanged() {
         $this->setInitialData($this->data());
+        $this->setRecordStatus(self::STATUS_SYNC);
         mod::service("ar")->unregisterChanges(get_class($this),$this->id());
     }
 
@@ -479,53 +487,57 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * Сохраняет изменения в базу
      **/
     public final function store() {
+    
+    	// Сохраняем измененные объекты
+		if(in_array($this->recordStatus(), array(self::STATUS_CHANGED))) {
 
-        if(!$this->fields()->changed()->count()) {
-            $this->markAsUnchanged();
-            return false;
+	        if(!$this->fields()->changed()->count()) {
+	            $this->markAsUnchanged();
+	            return false;
+	        }
+	        
+			$event = new event("beforeStore",array(
+			    "item" => $this,
+			));
+	
+	        // Триггер
+	        if(!$this->callReflexTrigger("beforeStore",$event)) {
+	            $this->markAsUnchanged();
+	            return false;
+	        }
+	
+	        // После вызова beforeCreate() поля объекта могуть стать такими же как в были до изменений
+	        // В этом случае нет смысла сохранять объект в базу
+	        $changedFields = $this->fields()->changed();
+	        if(!$changedFields->count()) {
+	            $this->markAsUnchanged();
+	            return true;
+	        }
+	
+			// Подготавливаем запрос в базу
+	        $set = array();
+	        foreach($changedFields as $field) {
+	            $set[] = "`".$field->name()."`=".$field->mysqlValue();
+	        }
+	        $set = "set ".implode(",",$set)." ";
+	        $id = $this->id();
+	        $from = $this->from();
+	        mod::service("db")->query("update $from $set where `id`='$id' ")->exec();
+	
+	        // Сразу после сохранения, помечаем объект как чистый
+	        // Таким образом, если в afterStore() будут изменены поля объекта,
+	        // Метод store может быть вызванповторно
+	        $this->markAsUnchanged();
+	        
+			$event = new event("afterStore",array(
+			    "item" => $this,
+			    "changedFields" => $changedFields,
+			));
+	
+	        $this->callReflexTrigger("afterStore",$event);
+	
+	        return true;
         }
-        
-		$event = new event("beforeStore",array(
-		    "item" => $this,
-		));
-
-        // Триггер
-        if(!$this->callReflexTrigger("beforeStore",$event)) {
-            $this->markAsUnchanged();
-            return false;
-        }
-
-        // После вызова beforeCreate() поля объекта могуть стать такими же как в были до изменений
-        // В этом случае нет смысла сохранять объект в базу
-        $changedFields = $this->fields()->changed();
-        if(!$changedFields->count()) {
-            $this->markAsUnchanged();
-            return true;
-        }
-
-		// Подготавливаем запрос в базу
-        $set = array();
-        foreach($changedFields as $field) {
-            $set[] = "`".$field->name()."`=".$field->mysqlValue();
-        }
-        $set = "set ".implode(",",$set)." ";
-        $id = $this->id();
-        $from = $this->from();
-        mod::service("db")->query("update $from $set where `id`='$id' ")->exec();
-
-        // Сразу после сохранения, помечаем объект как чистый
-        // Таким образом, если в afterStore() будут изменены поля объекта,
-        // Метод store может быть вызванповторно
-        $this->markAsUnchanged();
-        
-		$event = new event("afterStore",array(
-		    "item" => $this,
-		    "changedFields" => $changedFields,
-		));
-
-        $this->callReflexTrigger("afterStore",$event);
-
-        return true;
     }
 
     /**

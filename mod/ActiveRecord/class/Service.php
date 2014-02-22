@@ -61,16 +61,25 @@ class Service extends Core\Service {
             if($data) {
                 $item = new $class($id);
                 $item->setInitialData($data);
-				$item->setRecordStatus(Record::STATUS_SYNC);
-                self::$buffer[$class][$id] = $item;
-                
+				$item->setRecordStatus(Record::STATUS_SYNC);                
             } else {
                 $item = self::collection($class)->eq("id",$id)->one();
             }
+            
+            $this->storeToBuffer($item);
         }
         
         return $item;
 	
+	}
+	
+	/**
+	 * Сохраняет переданную запись в буффер
+	 **/	  	
+	public function storeToBuffer($record) {
+		$class = get_class($record);
+		$id = $record->id();
+		self::$buffer[$class][$id] = $record;
 	}
 	
 	/**

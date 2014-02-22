@@ -16,9 +16,11 @@ class tester extends \infuso\core\controller implements \Infuso\Core\Handler {
 
 		\tmp::header();
 		
-		$user = new \user;
-		$user->createThis();
-		var_export($user->data());
+		$user = \user::get(4);
+		
+		$user->data("email","xxx");
+		$user->Store();
+		echo $user->recordStatus();
 	
         \util::profiler();
 
