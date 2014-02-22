@@ -1,10 +1,12 @@
 <?
 
+namespace Infuso\Cms\Admin;
+
 /**
  * Стандартная тема модуля admin
  **/
 
-class admin_theme extends tmp_theme {
+class Theme extends \Infuso\Template\Theme {
 
 	/**
 	 * @return Приоритет темы =-1
@@ -14,8 +16,6 @@ class admin_theme extends tmp_theme {
 	}
 
 	public function path() {
-	
-	    mod::msg($theme);
 		return self::inspector()->bundle()->path()."/theme/";
 	}
 

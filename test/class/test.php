@@ -17,10 +17,10 @@ class tester extends \infuso\core\controller implements \Infuso\Core\Handler {
 		\tmp::header();
 		
 		$user = \user::get(4);
+
+		//$user->data("email",rand());
 		
-		$user->data("email","xxx");
-		$user->Store();
-		echo $user->recordStatus();
+		var_export($user->data());
 	
         \util::profiler();
 
