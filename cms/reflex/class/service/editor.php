@@ -1,6 +1,10 @@
 <?
 
-class reflex_editor_service extends mod_service {
+namespace Infuso\Cms\Reflex\Service;
+use Infuso\Core;
+use \mod,\user;
+
+class Service extends Core\Service {
 
     private static $sessionHashKey = "root-hash";
     private static $sessionDataKey = "root-data";
@@ -22,7 +26,7 @@ class reflex_editor_service extends mod_service {
         $session = mod::service("session");
 
         // Хэш, который меняется при изменении возможностей для просмотра пользолвателя
-        $hash = md5(user::active()->data("roles").":".user::active()->id().":".mod_superadmin::check());
+        $hash = md5(user::active()->data("roles").":".user::active()->id().":".Core\Superadmin::check());
 
         // Если хэш изменился, очищаем кэш
         if($hash != $session->get(self::$sessionHashKey)) {
@@ -47,7 +51,7 @@ class reflex_editor_service extends mod_service {
 
         }
 
-        reflex::storeAll();
+        \mod::service("ar")->storeAll();
 
         $ret = array();
         foreach($ids as $hash) {
@@ -62,16 +66,11 @@ class reflex_editor_service extends mod_service {
      **/
     public static function buildMap() {
 
-        mod_profiler::beginOperation("reflex","buildMap",1);
+        Core\Profiler::beginOperation("reflex","buildMap",1);
 
         $ritems = array();
 
-        foreach(reflex::classes() as $class) {
-            $obj = new $class;
-            $ritems[] = $obj->reflex_root();
-        }
-
-        foreach(mod::service("classmap")->map("reflex_editor") as $class) {
+        foreach(mod::service("classmap")->map("Infuso\\Cms\\Reflex\\Editor") as $class) {
             $obj = new $class;
             $ritems[] = $obj->root();
         }
@@ -100,7 +99,7 @@ class reflex_editor_service extends mod_service {
 
         usort($heap,array("self","sortRoot"));
 
-        mod_profiler::endOperation();
+        Core\Profiler::endOperation();
 
         return $heap;
     }
@@ -111,7 +110,9 @@ class reflex_editor_service extends mod_service {
      **/
     private function buildOne($collection) {
     
-        mod_profiler::beginOperation("reflex","buildOne",1);
+    	$collection->addBehaviour("infuso\\cms\\reflex\\behaviour\\collection");
+    
+        Core\Profiler::beginOperation("reflex","buildOne",1);
 
 		// В зависимости от класса переданного объекта, дейстуем по-разному
 
@@ -126,10 +127,10 @@ class reflex_editor_service extends mod_service {
 	        $group = $collection->param("group");
 
 	        if(!$group) {
-	            $group = $collection->virtual()->reflex_rootGroup();
+	            $group = $collection->virtual()->addBehaviour("infuso\\cms\\reflex\\behaviour\\activeRecord")->editor()->rootGroup();
             }
             
-            $root = reflex::create("reflex_editor_root", array(
+            $root = \reflex::create("reflex_editor_root", array(
 	            "parent" => 0,
 	            "data" => $collection->serialize(),
 	            "title" => $collection->title(),
@@ -138,7 +139,7 @@ class reflex_editor_service extends mod_service {
 	            "tab" => $collection->param("tab"),
 	        ));
 
-            mod_profiler::endOperation();
+            Core\Profiler::endOperation();
 	        return $root->editor();
 
         }
@@ -150,7 +151,7 @@ class reflex_editor_service extends mod_service {
     }
 
     public static function clearCache() {
-        mod::service("session")->set(self::$sessionDataKey,null);
+        \Mod::service("session")->set(self::$sessionDataKey,null);
     }
 
     public static function sortRoot($a,$b) {

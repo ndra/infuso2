@@ -1,11 +1,14 @@
 <?
 
+namespace Infuso\Cms\Reflex\Route;
+use Infuso\Core;
+
 /**
  * Роутер, работающий с базой данных.
  * Отвечает за то что мы видем в каталоге в разделе «Роуты»
  **/
 
-class reflex_route extends mod_route implements mod_handler {
+class Main extends \mod_route implements Core\Handler {
 
 	private static $n = 0;
 	private static $reg = array();
@@ -19,8 +22,8 @@ class reflex_route extends mod_route implements mod_handler {
 	 * Возвращает коллекцию роутов для текущего домена
 	 **/
 	public function routesForActiveDomain() {
-	    $domain = reflex_domain::active()->id();
-	    return reflex_route_item::all()->where("!`domain` or `domain`='$domain' ");
+	    $domain = \Infuso\Cms\Reflex\Model\Domain::active()->id();
+	    return \Infuso\Cms\Reflex\Model\Route::all()->where("!`domain` or `domain`='$domain' ");
 	}
 
 	/**

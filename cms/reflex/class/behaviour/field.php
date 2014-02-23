@@ -1,9 +1,12 @@
 <?
 
+namespace Infuso\Cms\Reflex\Behaviour;
+use Infuso\Core;
+
 /**
  * Поведение для поля таблицы
  **/
-class reflex_table_fieldBehaviour extends mod_behaviour {
+class field extends Core\Behaviour {
 
     /**
      * Индексировать ли это поле

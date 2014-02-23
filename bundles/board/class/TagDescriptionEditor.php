@@ -6,7 +6,7 @@ class TagDescriptionEditor extends \reflex_editor {
 
 	public function root() {
 	    return array (
-			TaskTagDescription::all()->title("Тэги"),
+			TagDescription::all()->title("Тэги"),
 		);
 	}
 

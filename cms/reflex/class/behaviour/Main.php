@@ -1,9 +1,12 @@
 <?
 
+namespace Infuso\Cms\Reflex\Behaviour;
+use Infuso\Core;
+
 /**
  * Стандартное поведение для редактора элемента
  **/
-class reflex_editor_behaviourDefault extends mod_behaviour {
+class Main extends Core\Behaviour {
 
     /**
      * Ставим стандартному поведению низкий приоритет, чтобы можно было его переназначить
@@ -193,6 +196,9 @@ class reflex_editor_behaviourDefault extends mod_behaviour {
             ->param("id",$this->item()->id())
             ->delayed();
 
+    }
+    
+    public function rootGroup() {
     }
 
 }

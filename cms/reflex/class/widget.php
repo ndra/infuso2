@@ -1,6 +1,8 @@
 <?
 
-class reflex_editor_widget extends \Infuso\Template\widget {
+namespace Infuso\Cms\Reflex;
+
+class editorWidget extends \Infuso\Template\widget {
 
 	public function name() {
 	    return "Редактор";

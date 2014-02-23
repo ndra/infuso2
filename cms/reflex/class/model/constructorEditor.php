@@ -1,6 +1,11 @@
 <?
 
-class reflex_editor_constructor_editor extends reflex_editor {
+namespace Infuso\Cms\Reflex\Model;
+use Infuso\Cms\Reflex;
+use Infuso\Core;
+use Infuso\ActiveRecord;
+
+class ConstructorEditor extends Reflex\Editor {
 
     public function inxEditor() {
         return array(

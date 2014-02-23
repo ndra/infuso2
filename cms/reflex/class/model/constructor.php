@@ -1,11 +1,15 @@
 <?
 
+namespace Infuso\Cms\Reflex\Model;
+use Infuso\Core;
+use Infuso\ActiveRecord;
+
 /**
  * Модель конструктора
  * Конструктор - это специальный элемент, который создается пр нажатии кнопки "+"
  * Форма создания элемента - это фактически форма редактирования конструктора  
  **/ 
-class reflex_editor_constructor extends reflex {
+class Cnstructor extends ActiveRecord\Record {
 
 	
 

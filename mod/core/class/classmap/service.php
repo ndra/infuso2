@@ -193,6 +193,7 @@ class classmapService extends service {
 	    "tmp_delayed" => "\\infuso\\template\\delayed",
 	    "util" => "\\infuso\\util\\util",
 	    "reflex" => "\\infuso\\activerecord\\record",
+	    "reflex_editor" => "\\infuso\\cms\\reflex\\editor",
 	);
 	
 	/**

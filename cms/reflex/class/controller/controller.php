@@ -1,7 +1,6 @@
 <?
 
 namespace Infuso\Cms\Reflex;
-
 use \user, \admin, \mod, \inx;
 
 /**

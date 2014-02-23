@@ -6,7 +6,7 @@ use \user_role, \user_operation;
 use \mod, \file, \util;
 use Infuso\Core;
 
-class Handler extends \Infuso\Core\Component implements Core\Handler {
+class Handler extends Core\Component implements Core\Handler {
 
 	/**
 	 * @handler = infusoInit

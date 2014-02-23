@@ -1,6 +1,10 @@
 <?
 
-abstract class reflex_editor extends mod_component {
+namespace Infuso\Cms\Reflex;
+use Infuso\Core;
+use User;
+
+abstract class Editor extends Core\Component {
 
     private $item;
 
@@ -9,9 +13,9 @@ abstract class reflex_editor extends mod_component {
      **/
     public function defaultBehaviours() {
         return array(
-            "reflex_editor_behaviourDefault",
-            "reflex_editor_behaviourInx",
-            "reflex_editor_behaviourViewModes",
+            "Infuso\Cms\Reflex\Behaviour\Main",
+            "Infuso\Cms\Reflex\Behaviour\Inx",
+            "Infuso\Cms\Reflex\Behaviour\ViewModes",
         );
     }
 
@@ -27,7 +31,7 @@ abstract class reflex_editor extends mod_component {
         if(is_object($itemID)) {
             $this->item = $itemID;
         } else {
-            $this->item = reflex::get($this->itemClass(),$itemID);
+            $this->item = Core\Mod::service("ar")->get($this->itemClass(),$itemID);
         }
 
     }
@@ -87,7 +91,7 @@ abstract class reflex_editor extends mod_component {
      * Контекст в этом случае - виртуальный элемент коллекции
      **/
     public function beforeCollectionView() {
-        return $this->component()->beforeEdit();
+        return $this->beforeEdit();
     }
 
     /**
@@ -106,8 +110,8 @@ abstract class reflex_editor extends mod_component {
      * Редактирование элемента - любые изменения объекта через каталог
      **/
     public function beforeEdit() {
-        return user::active()->checkAccess("reflex:editItem",array(
-            "editor" => $this->component(),
+        return User::active()->checkAccess("reflex:editItem",array(
+            "editor" => $this,
         ));
     }
     

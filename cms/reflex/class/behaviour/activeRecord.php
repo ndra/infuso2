@@ -1,13 +1,13 @@
 <?
 
-namespace Infuso\Cms\Reflex;
-
+namespace Infuso\Cms\Reflex\Behaviour;
+use Infuso\Cms\Reflex;
 use Infuso\Core;
 
 /**
  * todo тотально рефакторить класс
  **/
-class recordBehaviour extends Core\Behaviour {
+class activeRecord extends Core\Behaviour {
 
     public function behaviourPriority() {
         return - 1000;
@@ -27,9 +27,9 @@ class recordBehaviour extends Core\Behaviour {
      **/
     public final function editor() {
 
-        $map = \infuso\core\file::get(mod::app()->varPath()."/reflex/editors.php")->inc();
+        $map = \infuso\core\file::get(Core\Mod::app()->varPath()."/reflex/editors.php")->inc();
 
-        $class = $this->reflex_editor();
+        $class = $this->reflexEditor();
 
         if(!$class) {
 
@@ -43,7 +43,8 @@ class recordBehaviour extends Core\Behaviour {
         }
 
         if(!$class) {
-            return reflex::get(0,0)->editor();
+        	$editor = new Reflex\NoneEditor;
+            return $editor;
         }
 
         return new $class($this->id());

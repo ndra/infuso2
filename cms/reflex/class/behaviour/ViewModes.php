@@ -1,10 +1,13 @@
 <?
 
+namespace Infuso\Cms\Reflex\Behaviour;
+use Infuso\Core;
+
 /**
  * Стандартное поведение для редактора элемента
  * В этом поведении описываются режимы просмотра (список, таблица и т.п.)
  **/
-class reflex_editor_behaviourViewModes extends mod_behaviour {
+class ViewModes extends Core\Behaviour {
 
     /**
      * Ставим стандартному поведению низкий приоритет, чтобы можно было его переназначить

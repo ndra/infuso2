@@ -1,9 +1,12 @@
 <?
 
+namespace Infuso\Cms\Reflex\Behaviour;
+use Infuso\Core;
+
 /**
  * Inx-компоненты для редактора элемента
  **/
-class reflex_editor_behaviourInx extends mod_behaviour {
+class Inx extends Core\Behaviour {
 
     /**
      * Ставим стандартному поведению низкий приоритет, чтобы можно было его переназначить
