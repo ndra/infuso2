@@ -1,10 +1,12 @@
 <?
 
+namespace Infuso\Cms\Reflex;
+
 /**
  * Стандартная тема модуля reflex
  **/
 
-class reflex_theme extends tmp_theme {
+class Theme extends \Infuso\Template\Theme {
 
 	/**
 	 * @return Приоритет темы =-1
