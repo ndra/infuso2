@@ -48,8 +48,8 @@ abstract class Editor extends Core\Component {
         //$hash = mod::base64URLDecode($hash);
         list($editorClass,$itemID) = explode(":",$hash);
 
-        if(!mod::service("classmap")->testClass($editorClass,"reflex_editor")) {
-            $editorClass = "reflex_none_editor";
+        if(!Core\Mod::service("classmap")->testClass($editorClass,"reflex_editor")) {
+            $editorClass = "Infuso\\Cms\\Reflex\\NoneEditor";
         }
 
         $editor = new $editorClass($itemID);

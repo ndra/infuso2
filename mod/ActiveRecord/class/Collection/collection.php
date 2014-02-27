@@ -86,6 +86,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
     /**
      * @return Сериализует текущую коллекцию в строку
+     * @todo вернуть сериализацию поведений     
      **/
     public final function serialize() {
 
@@ -98,12 +99,12 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
         // Сериализуем поведения
         $bb = array();
-        foreach($this->behaviours() as $b) {
+        /*foreach($this->behaviours() as $b) {
             $b = get_class($b);
             if(!in_array($b,array("reflex_collection_behaviour"))) {
                 $bb[] = $b;
             }
-        }
+        } */
 
         $ret["params"] = $this->params();
         $ret["behaviours"] = $bb;

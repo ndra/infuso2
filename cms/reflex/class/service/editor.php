@@ -55,7 +55,7 @@ class Service extends Core\Service {
 
         $ret = array();
         foreach($ids as $hash) {
-            $ret[] = reflex_editor::byHash($hash);
+            $ret[] = \reflex_editor::byHash($hash);
 		}
 		return $ret;
 
@@ -140,7 +140,7 @@ class Service extends Core\Service {
 	        ));
 
             Core\Profiler::endOperation();
-	        return $root->editor();
+	        return $root->addBehaviour("infuso\\cms\\reflex\\behaviour\\activeRecord")->editor();
 
         }
 
