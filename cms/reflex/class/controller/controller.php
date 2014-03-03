@@ -27,7 +27,7 @@ class Controller extends \Infuso\Core\Controller {
      **/
     public static function index($p) {
     
-        admin::header("Каталог");
+        /*admin::header("Каталог");
 
         mod::service("reflexEditor")->clearCache();
 
@@ -37,7 +37,9 @@ class Controller extends \Infuso\Core\Controller {
             "tabData" => $p["menu"]=="hide" ? null : self::tabData(),
         ));
 
-        admin::footer();
+        admin::footer(); */
+        
+    	\Infuso\Template\Tmp::exec("/reflex/main");
     }
     
     private static function tabData() {

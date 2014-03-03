@@ -62,7 +62,7 @@ class Handler extends Core\Component implements Core\Handler {
 	 **/
 	public static function buildEditorMap() {
 	    $map = array();
-		foreach(\mod::service("classmap")->classes("reflex_editor") as $class) {
+		foreach(\mod::service("classmap")->classes("infuso\\cms\\reflex\\editor") as $class) {
 		    $e = new $class;
 		    $map[$e->itemClass()][] = $class;
 		}

@@ -5,9 +5,20 @@ namespace infuso\test;
 class tester extends \infuso\core\controller implements \Infuso\Core\Handler {
 
 	/**
-	 * @handler=infusoInit
-	 * @handlerPriority=-100
+	 * @handler=reflexMenu
 	 **/
+	public function onReflexMenu($e) {
+	    $e->add(array(
+	        "template" => "/reflex/menu-item-test/",
+		));
+	    $e->add(array(
+	        "template" => "/reflex/menu-item-test2/",
+		));
+	    $e->add(array(
+	        "template" => "/reflex/menu-item-test/",
+		));
+	}
+	 
     public function indexTest() {
         return true;
     }
@@ -16,14 +27,8 @@ class tester extends \infuso\core\controller implements \Infuso\Core\Handler {
 
 		\tmp::header();
 		
-		$user = \user::get(4);
-
-		//$user->data("email",rand());
+		echo \user::active()->checkAccess("admin:showInterface");
 		
-		var_export($user->data());
-	
-        \util::profiler();
-
 		\tmp::footer();
         
     }

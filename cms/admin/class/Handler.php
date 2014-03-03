@@ -13,7 +13,7 @@ class Handler implements \Infuso\Core\Handler {
     public function onInit() {
     
         $op = \user_operation::create("admin:showInterface");
-        $op->appendTo("reflex:contentManager");
+        $op->appendTo("reflex:content-manager");
     
     }
 

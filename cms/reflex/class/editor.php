@@ -4,9 +4,41 @@ namespace Infuso\Cms\Reflex;
 use Infuso\Core;
 use User;
 
-abstract class Editor extends Core\Component {
+abstract class Editor extends Core\Controller {
 
     private $item;
+    
+    /**
+     * @todo Сделать репльную проверку
+     **/
+    public function indexTest() {
+        return true;
+    }
+    
+    public function index($p) {
+    
+        $class = get_called_class();
+		$editor = new $class($p["id"]);
+        \Infuso\Template\Tmp::exec("/reflex/editor",array(
+            "editor" => $editor,
+		));
+    }
+    
+    public function index_root($p) {
+        $id = $p["id"];
+        $collections = $this->root();
+        $collection = null;
+        foreach($collections as $collection) {
+            if($collection->param("id") == $id) {
+                break;
+            }
+        }
+        
+        $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
+		\Infuso\Template\Tmp::exec("/reflex/root2",array(
+            "collection" => $collection,
+		));
+    }
 
     /**
      * Поведения по умолчанию
@@ -36,28 +68,6 @@ abstract class Editor extends Core\Component {
 
     }
 
-    /**
-     * Возвращает хэш эдитора (строку, определяющую класс редактора и id редактируемого объекта)
-     **/
-    public function hash() {
-        return get_class($this).":".$this->item()->id();
-    }
-
-    public static function byHash($hash) {
-
-        //$hash = mod::base64URLDecode($hash);
-        list($editorClass,$itemID) = explode(":",$hash);
-
-        if(!Core\Mod::service("classmap")->testClass($editorClass,"reflex_editor")) {
-            $editorClass = "Infuso\\Cms\\Reflex\\NoneEditor";
-        }
-
-        $editor = new $editorClass($itemID);
-
-        return $editor;
-
-    }
-
     public function itemID() {
         return $this->item()->id();
     }
@@ -82,8 +92,8 @@ abstract class Editor extends Core\Component {
 
     // Возвращает url для редактирвоания объяекта
     public function _url($p=array()) {
-        $url = mod::action("reflex_editor_controller")->params($p)->url();
-        return $url."#".$this->hash();
+        $url = \mod::action(get_class($this),"index",array("id"=>$this->itemID()))->params($p)->url();
+        return $url;
     }
 
     /**
@@ -135,23 +145,17 @@ abstract class Editor extends Core\Component {
     public function afterCreate() {}
 
     /**
-     * Возвращает массив дополнительных вкладок для редактора элемента в каталоге
-     * Каждый элемент массива - массив inx-конструктор
-     * По умолчанию метожд вызывает такие же методы всех поведений и объединяет результат
-     * Таким образом, вы можете определить эту функцию в классе-поведении и добавить
-     * новые дополнительные вкладки в редактор элемента
-     **/
-    public function inxExtraTabs() {
-        return $this->callBehaviours("inxExtraTabs");
-    }
-
-    /**
      * Возвращает массив действий с объектом
+     * @todo рефакторить
      **/
     public function actions() {
         return $this->callBehaviours("actions");
     }
     
+    /**
+     * Возвращает массив действий с объектом
+     * @todo хз что это
+     **/
     public function tab() {
         return "";
     }

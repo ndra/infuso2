@@ -33,5 +33,14 @@ class eshop_group_editor extends reflex_editor {
 	        "group" => $this->item(),
 		));
 	}
+	
+	public function root() {
+
+	    $ret = array();
+        $ret[] = eshop_group::allEvenHidden()->eq("parent",0)->title("Группы товаров")->param("starred",true)->param("tab","eshop")->param("id","hkpc5sg89006bo9e97fe");
+        $ret[] = eshop_group::allEvenHidden()->title("Группы товаров без иерархии")->param("tab","eshop")->param("id","nw2f4374ll4wbm8zela2");
+	    return $ret;
+
+	}
 
 }

@@ -178,10 +178,9 @@ public static function recordTable() {return array (
   ),
 );}
 
-public function defaultBehaviours() {
+	public function defaultBehaviours() {
 	    $ret = parent::defaultBehaviours();
 	    $ret[] = "eshop_group_behaviour";
-		$ret[] = "Infuso\\Cms\\Reflex\\recordBehaviour";
 	    return $ret;
 	}
 

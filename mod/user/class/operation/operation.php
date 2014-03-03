@@ -194,7 +194,7 @@ private $idList = null;
      * Проверяет доступ пользователя к жанной операции
      **/
     public function checkAccess($user,$params) {
-    
+
         $this->errorText = "";
     
         // Попытка проверить несуществующее правило не удастся

@@ -65,7 +65,7 @@ class Service extends Core\Service {
      * Строит карту рутов
      **/
     public static function buildMap() {
-
+    
         Core\Profiler::beginOperation("reflex","buildMap",1);
 
         $ritems = array();
@@ -74,11 +74,11 @@ class Service extends Core\Service {
             $obj = new $class;
             $ritems[] = $obj->root();
         }
-
+        
         $heap = array();
         
         foreach($ritems as $items) {
-
+        
             //Если не объект и не масив
             if(!is_object($items) && !is_array($items)) {
                 throw new Exception("Метод reflex_root() вернул недопустимое значение");
@@ -118,12 +118,12 @@ class Service extends Core\Service {
 
 		// Из коллекции делаем объект reflex_editor_root
         if(mod::service("classmap")->testClass(get_class($collection),"infuso\ActiveRecord\Collection")) {
-
+        
             if(!$collection->editor()->beforeCollectionView()) {
-                mod_profiler::endOperation();
+                Core\Profiler::endOperation();
 	            return false;
             }
-
+            
 	        $group = $collection->param("group");
 
 	        if(!$group) {
@@ -138,14 +138,15 @@ class Service extends Core\Service {
 	            "priority" => $collection->param("priority"),
 	            "tab" => $collection->param("tab"),
 	        ));
-
+	        
             Core\Profiler::endOperation();
-	        return $root->addBehaviour("infuso\\cms\\reflex\\behaviour\\activeRecord")->editor();
+	        $ret = $root->addBehaviour("infuso\\cms\\reflex\\behaviour\\activeRecord")->editor();
+	        return $ret;
 
         }
 
         // Если передан редактор, кладем в базу его
-        if(mod::service("classmap")->testClass(get_class($collection),"reflex_editor")) {
+        if(Core\Mod::service("classmap")->testClass(get_class($collection),"reflex_editor")) {
             return $collection;
         }
     }

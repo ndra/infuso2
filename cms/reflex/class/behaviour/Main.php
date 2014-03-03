@@ -139,9 +139,11 @@ class Main extends Core\Behaviour {
     public function editorChildren() {
         $ret = array();
         foreach($this->item()->childrenWithBehaviours() as $list) {
-            if($list->param("menu")!==false)
-                   foreach($list->limit(200)->editors() as $editor)
-                       $ret[] = $editor;
+            if($list->param("menu")!==false) {
+				foreach($list->limit(200)->editors() as $editor) {
+					$ret[] = $editor;
+				}
+			}
         }
         return $ret;
     }
