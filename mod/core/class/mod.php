@@ -5,7 +5,7 @@ namespace Infuso\Core;
 /**
  * @todo убрать из класса контроллер
  **/
-class Mod {
+class Mod extends \Infuso\Core\Component {
 
 	private static $debug = null;
 	
@@ -64,7 +64,7 @@ class Mod {
 	 **/
 	public static function coreJS() {
         mod::app()->tmp()->jq();
-		mod::app()->tmp()->singlejs("/mod/res/core.js",-900);
+		mod::app()->tmp()->singlejs(self::inspector()->bundle()->path()."/res/core.js",-900);
 	}
 
 	/**

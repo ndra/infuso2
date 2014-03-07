@@ -1,6 +1,6 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
 class Component {
 

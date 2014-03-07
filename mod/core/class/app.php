@@ -44,10 +44,10 @@ class App {
 	 **/
 	public function includeCoreClasses() {
 		include("profiler.php");
+		include("component.php");
 		include("mod.php");
 		
 		Profiler::beginOperation("core","includeCoreClasses",1);
-	    include("component.php");
 	    include("controller/controller.php");
 	    include("superadmin.php");
 	    include("service.php");

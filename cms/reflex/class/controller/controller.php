@@ -16,72 +16,19 @@ class Controller extends \Infuso\Core\Controller {
     }
 
     /**
-     * Видимость для POST-команд
+     * Разрешение для POST-команд
      **/
     public static function postTest() {
         return user::active()->checkAccess("admin:showInterface");
     }
 
     /**
-     * Основной контроллер
+     * Основной контроллер каталога
      **/
     public static function index($p) {
-    
-        /*admin::header("Каталог");
-
-        mod::service("reflexEditor")->clearCache();
-
-        inx::add(array(
-            "type" => "inx.mod.reflex.editor",
-            "menu" => $p["menu"],
-            "tabData" => $p["menu"]=="hide" ? null : self::tabData(),
-        ));
-
-        admin::footer(); */
-        
     	\Infuso\Template\Tmp::exec("/reflex/main");
     }
     
-    private static function tabData() {
-
-        $ret = array();
-        
-        foreach(rootTab::allVisible() as $tab) {
-	        $ret[] = array(
-	            "text" => $tab->title(),
-	            "name" => $tab->data("name"),
-	            "icon" => $tab->icon()."",
-			);
-		}
-
-        return $ret;
-        
-    }
-
-    /**
-     * Контроллер просмотра элемента
-     * Перенаправляет браузер на страницу элемента
-     **/
-    public function index_view($p) {
-
-        $item = self::get($p["id"])->item();
-
-        if(!$item->published()) {
-            echo "<script>close();</script>";
-            die();
-        }
-
-        $url = $item->url();
-
-        if($url) {
-            header("location:$url");
-            die();
-        }
-
-        echo "<script>close();</script>";
-
-    }
-
     /**
      * Если не получилось войти - показываем страницу авторизации
      **/
@@ -90,227 +37,12 @@ class Controller extends \Infuso\Core\Controller {
     }
 
     /**
-     * Возаращает объект класса reflex_editor по индексу
-     **/
-    public function get($index) {
-
-        if(!$index) {
-            $editor = new \reflex_editor_root_editor(0);
-            $index = $editor->hash();
-        }
-
-        $editor = \reflex_editor::byHash($index);
-
-        return $editor;
-
-    }
-
-    public function byOldIndex($index) {
-
-        list($class,$id) = explode(":",$index);
-        return reflex::get($class,$id);
-
-    }
-
-    /**
-     * Возвращает список на основе переменной $_REQUEST
-     **/
-    public function getListByP($p,$filter=true) {
-        $list = \Infuso\ActiveRecord\Collection::unserialize($p["listData"]);
-        $list->addBehaviour("reflex_editor_collection");
-        $list->applyParams($p);
-        return $list;
-    }
-
-    /**
-     * Загрузчик нод дерева в левом меню
-     **/
-    public static function post_views($p) {
-
-        $p["expanded"][] = $p["id"]."";
-
-        $node = self::treeNode($p["id"],$p["expanded"],$p["tab"]);
-        $nodes = $node["children"];
-
-        return array(
-			"data" => $nodes,
-        );
-    }
-
-    /**
-     * Возвращает данные ноды дерева
-     **/
-    public function treeNode($nodeID,&$expanded=array(),$tab=null) {
-
-        $index = explode("/",$nodeID);
-        $index = end($index);
-        $editor = self::get($index);
-        $item = $editor->item();
-
-        // Название элемента
-        $text = $editor->title();
-        if(!trim($text))
-            $text = "&mdash;";
-
-        // Мета-заголовок элемента
-        $title = $item->meta("title");
-        if($title)
-            $text.= "&nbsp;&mdash; <i style='color:gray' >{$title}</i>";
-
-        // Количество дочерних элементов
-        if($n = $editor->numberOfChildren())
-            $text.= " ($n)";
-
-        // Иконка элемента
-        $icon = $editor->icon();
-
-        $node = array(
-            "id" => $nodeID,
-            "text" => $text,
-            "icon" => $icon,
-            "folder" => $editor->numberOfChildren(),
-        );
-
-        // Подписываем ноду
-        $node["dataHash"] = md5(serialize($node).":".serialize($item->data()));
-
-        // Если нода находится в списке раскрытых, мы рендерим ее потомков
-        if(in_array($nodeID,$expanded)) {
-
-            // Собираем ноды дочерних элемиентов
-            $children = array();
-            $lastGroup = null;
-            foreach($item->editor()->editorChildren() as $key=>$editor) {
-                if($editor->tab() == $tab) {
-
-                    // Пропускаем редакторы, которые нельзя просматривать
-                    if(!$editor->beforeView()) {
-                        continue;
-                    }
-
-                    // Эта часть кода сработает только для первого уровня каталога
-                    // (Основного меню)
-                    // Для первого уровня мы добавляем заголовки групп и разделители
-                    if($nodeID=="0") {
-
-                        $group = $editor->group();
-
-                        if($group!=$lastGroup) {
-
-                            // Выводим разделитель (только если это не первая нода)
-                            if($key)
-                                $children[] = array(
-                                    "text" => "<div style='padding:5px;' ><div style='border-bottom:1px solid #ededed;' ></div></div>",
-                                    "noedit" => true,
-                                    "selectable" => false,
-                                );
-
-                            // Выводим группу нод
-                            $children[] = array(
-                                "text" => "<div style='font-size:18px;' >{$group}</div>",
-                                "noedit" => true,
-                                "selectable" => falsem
-                            );
-
-                        }
-
-                        $lastGroup = $group;
-                    }
-
-
-                    $childID = $nodeID."/".$editor->hash();
-                    $children[$childID] = self::treeNode($childID,$expanded);
-				}
-            }
-
-            // На данный момент в массиве $children ключами нод являются их id
-            // Делаем нумерацию с нуля в массиве $children
-            $children = array_values($children);
-
-            if(count($children)) {
-                $node["children"] = $children;
-                $node["expanded"] = true;
-            }
-        }
-
-        return $node;
-    }
-
-    /**
-     * Проверяет, не изменились ли данные в дереве (левое меню каталога)
-     * $p - массив типа nodeID => dataHash
-     * В этом массиве содержатся все видимые ноды в каталоге
-     * Метод пробегается по всем нодам из массива, и, если найдет хоть одно изменение, вернет true
-     **/
-    public function post_checkTreeChanges($p) {
-
-        foreach($p["data"] as $id=>$hash) {
-            $data = self::treeNode($id);
-            if($data["dataHash"]!=$hash) {
-                return true;
-            }
-        }
-    }
-
-    /**
-     * Контроллер получения списка данных
-     **/
-    public static function post_getList($p) {
-        $list = self::getListByP($p);
-        if(!$list->editor()->beforeCollectionView()) {
-            $msg = "У вас нет прав для просмотра списка элементов ".get_class($list->editor());
-            mod::msg($msg,1);
-            return false;
-        }
-        return $list->inxData();
-    }
-
-    /**
-     * Контроллер получения данных одного элемента
-     * Используется для вывода карточки элмента в каталоге
-     **/
-    public static function post_getItem($p) {
-
-        $editor = self::get($p["index"]);
-        $item = $editor->item();
-
-        // Проверяем возвожность редактировать элемент
-        if(!$editor->beforeView()) {
-            return array (
-                "item" => array(
-                    "html" => "У вас нет прав для редактирвоания этого объекта.",
-                    style => array(
-                        padding => 50,
-                    )
-                )
-            );
-        }
-
-        // Составляем список родителей
-        $parents = array();
-        foreach($item->parents() as $parent) {
-            $parents[] = array(
-                "index" => $parent->editor()->hash(),
-                "text" => $parent->title()
-            );
-        }
-
-        // Добавляем в крошки сам элемент
-        $parents[] = array(
-            "index" => $editor->hash(),
-            "text" => $editor->title(),
-        );
-
-        return array(
-            "item" => $editor->inxEditor(),
-            "parents" => $parents,
-        );
-    }
-
-    /**
      * Сохраняет объект
      **/
     public static function post_save($p) {
+    
+		mod::msg($p);
+		return;
 
         $editor = self::get($p["index"]);
         $item = $editor->item();

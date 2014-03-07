@@ -7,8 +7,8 @@ use Infuso\Core;
 abstract class Field extends Core\Component {
 
 	const HIDDEN = 0;
-	const EDITABLE = 0;
-	const READ_ONLY = 0;
+	const EDITABLE = 1;
+	const READ_ONLY = 2;
 
 	/**
 	 * Здесь содержится значение поля

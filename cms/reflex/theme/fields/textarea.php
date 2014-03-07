@@ -1,15 +1,19 @@
 <? 
 
-<table class='x8spq9pjwjn' >
+<table class='f0rw8hlkvh' >
     <tr>
         <td class='label' >{$field->label()}</td>        
         $value = util::str($field->value())->esc();
         
         <td>
         if($field->editable()) {
-            <input name='{$field->name()}' value='{$value}' />
+            <textarea>
+                echo $value;
+            </textarea>
         } else {
-            <input value='{$value}' disabled />
+            <textarea disabled>
+                echo $value;
+            </textarea>
         }
         </td>
         

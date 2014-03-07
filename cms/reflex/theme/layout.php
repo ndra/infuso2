@@ -1,5 +1,7 @@
 <? 
 
+mod::coreJS();
+
 admin::header();
 
 <table class='x0h4tfwmhnn' >
