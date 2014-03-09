@@ -44,7 +44,7 @@ class Controller extends \Infuso\Core\Controller {
 		mod::msg($p);
 		return;
 
-        $editor = self::get($p["index"]);
+        $editor = Editor::get($p["index"]);
         $item = $editor->item();
 
         if(!$editor->beforeEdit()) {

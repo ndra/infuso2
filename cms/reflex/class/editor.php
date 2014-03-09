@@ -59,13 +59,19 @@ abstract class Editor extends Core\Controller {
      * Конструктор
      **/
     public function __construct($itemID=null) {
-
         if(is_object($itemID)) {
             $this->item = $itemID;
         } else {
             $this->item = Core\Mod::service("ar")->get($this->itemClass(),$itemID);
         }
-
+    }
+    
+    /**
+     * Возвращает редактор элемента по индексу
+     **/
+    public static function get($index) {
+		list($class,$id) = explode(":",$index);
+		return new $class($id);
     }
 
     public function itemID() {
