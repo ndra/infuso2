@@ -35,6 +35,20 @@ class Controller extends \Infuso\Core\Controller {
     public static function indexFailed() {
         admin::fuckoff();
     }
+    
+    public function post_getItems($p) {
+    
+        $collection = \Infuso\ActiveRecord\Collection::unserialize($p["collection"]);
+        $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
+        $tmp = \Infuso\Template\Tmp::get("/reflex/root2/content/items/grid-ajax");
+        $tmp->param("collection",$collection);
+        $html = $tmp->getContentForAjax();
+        
+        return array(
+            "html" => $html,
+		);
+    
+    }
 
     /**
      * Сохраняет объект

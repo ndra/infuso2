@@ -102,7 +102,7 @@ class Processor extends Core\Component {
      **/
     public function conveyor() {
         if(!count($this->conveyor)) {
-            $this->conveyor[] = new conveyor();
+            $this->conveyor[] = new Conveyor();
 		}
         return end($this->conveyor);
     }
@@ -111,7 +111,7 @@ class Processor extends Core\Component {
      * Создает новую область видимости
      **/
     public function pushConveyor() {
-        $this->conveyor[] = new tmp_conveyor();
+        $this->conveyor[] = new Conveyor();
     }
 
     /**

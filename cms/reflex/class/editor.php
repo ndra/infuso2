@@ -25,6 +25,7 @@ abstract class Editor extends Core\Controller {
     }
     
     public function index_root($p) {
+    
         $id = $p["id"];
         $collections = $this->root();
         $collection = null;

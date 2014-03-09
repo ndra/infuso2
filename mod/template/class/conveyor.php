@@ -247,7 +247,7 @@ class Conveyor extends Core\Component {
         //}
 
         // Упакованные css
-        $packCss = tmp_render::packIncludes($packCss,"css");
+        $packCss = Render::packIncludes($packCss,"css");
         if($packCss) {
             $head.= "<link rel='stylesheet' type='text/css' href='$packCss' />\n";
         }
@@ -258,7 +258,7 @@ class Conveyor extends Core\Component {
         //}
 
         // Упакованные js
-        $packJs = tmp_render::packIncludes($packJs,"js");
+        $packJs = Render::packIncludes($packJs,"js");
         if($packCss) {
             $head.= "<script type='text/javascript' src='$packJs'></script>\n";
         }
