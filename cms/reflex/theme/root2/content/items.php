@@ -1,6 +1,6 @@
 <?
 
 // Сериализуем коллекцию для ajax-запроса
-$serialized = util::str($collection->serialize())->esc();
-<div class='cjoesz8swu' infuso:collection='{$serialized}' >
+$code = util::str($collection->param("reflexCode"))->esc();
+<div class='cjoesz8swu' infuso:collection='{$code}' >
 </div>

@@ -36,13 +36,16 @@ class Controller extends \Infuso\Core\Controller {
         admin::fuckoff();
     }
     
+    /**
+     * Контроллер, возвращающий список элементов для ajax-запроса
+     **/
     public function post_getItems($p) {
     
-        $collection = \Infuso\ActiveRecord\Collection::unserialize($p["collection"]);
+        $collection = mod::service("reflex")->getCollection($p["collection"]);
         $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
-        $tmp = \Infuso\Template\Tmp::get("/reflex/root2/content/items/grid-ajax");
-        $tmp->param("collection",$collection);
-        $html = $tmp->getContentForAjax();
+        $collection->reflexApplyParams($p);
+        $html = $collection->reflexTemplate()
+			->getContentForAjax();
         
         return array(
             "html" => $html,

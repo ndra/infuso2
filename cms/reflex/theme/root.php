@@ -1,8 +1,9 @@
 <? 
 
 $url = new Infuso\Core\Action($class,"root",array(
-    "id" => $collectionID,
+    "method" => $method,
 ));
+
 <a href='{$url}' >
     echo $title;
 </a>

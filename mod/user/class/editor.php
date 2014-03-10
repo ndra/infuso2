@@ -1,6 +1,6 @@
 <?
 
-class user_editor extends reflex_editor {
+class user_editor extends \Infuso\Cms\Reflex\Editor {
 
     public function beforeEdit() {
         return user::active()->checkAccess("user:editorStore");
@@ -15,15 +15,13 @@ class user_editor extends reflex_editor {
         return user::active()->checkAccess("user:editorCollectionView");    
     }
     
-    public function root() {
-
-        $ret = array();
-
-        if(user::active()->checkAccess("user:showInCatalogMenu")) {
-            $ret[] = user::all()->title("Пользователи")->param("tab","user")->param("id","f8qaql7hxgc87rs6sgcs");
-        }
-
-        return $ret;
+    /**
+     * @reflex-root = on
+     **/
+    public function all() {
+        return user::all()
+			->title("Пользователи")
+			->param("tab","user");
     }
     
 }

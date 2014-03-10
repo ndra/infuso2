@@ -4,14 +4,21 @@ $(function() {
     var load = function() {
     
         var collection = $(".cjoesz8swu").attr("infuso:collection");
-        mod.cmd({
+    
+        var params = {
             cmd:"infuso/cms/reflex/controller/getItems",
             collection:collection
-        }, function(ret) {
+        };
+    
+        mod.fire("reflex/beforeLoad",params);
+        
+        mod.cmd(params, function(ret) {
             $(".cjoesz8swu").html(ret.html);
         });
     }
     
     load();
+    
+    mod.on("reflex/refresh",load);
 
 });

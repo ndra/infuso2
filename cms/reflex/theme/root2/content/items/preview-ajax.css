@@ -1,0 +1,21 @@
+.yy0l0qu78b {
+
+    padding:20px;    
+    
+    .items {
+    
+        .item {
+        
+            display:inline-block;
+            width:200px;
+            height:200px;
+       
+            &:hover {
+                background:#ededed;
+            }
+            
+        }
+    
+    }
+    
+}

@@ -1,6 +1,6 @@
 <? 
 
-<div class='x1arvpu0c38' >
+<div class='yy0l0qu78b' >
 
     <div class='items' >
         foreach($collection->editors() as $editor) {

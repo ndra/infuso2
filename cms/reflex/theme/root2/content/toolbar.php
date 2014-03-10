@@ -2,17 +2,19 @@
 
 <div class='qoi8w451jl' >
 
-    <input />    
-    <button>Обновить</button>
+    // Быстрый поиск
+    <input />  
+      
+    <button onclick='mod.fire("reflex/refresh");' >Обновить</button>
     
-    <select>
-        <option>Список</option>
-        <option>Таблица</option>
-        <option>Превью</option>
+    // Режим отображения
+    <select name='viewMode' >
+        foreach($editor->viewModes() as $title => $template) {
+            <option>{$title}</option>        
+        }
     </select>
     
-    <span class='spacer' ></span>
-    
+    <span class='spacer' ></span>    
     
     <button>Добавить</button>
     <button>Удалить</button>

@@ -11,6 +11,24 @@ class Collection extends Core\Behaviour {
 	public function behaviourPriority() {
 	    return -1;
 	}
+	
+	public function reflexApplyParams($params) {
+	    $this->param("viewMode",$params["viewMode"]);
+	}
+	
+	/**
+	 * Возвращает шаблон списка элементов коллекции
+	 **/
+	public function reflexTemplate() {
+	
+		$class = $this->param("reflexEditorClass");
+	    $modes = $this->editor()->viewModes();
+	    $tmp = $modes[$this->param("viewMode")];
+	    
+		$tmp = \Infuso\Template\Tmp::get($tmp);
+        $tmp->param("collection",$this);
+        return $tmp;
+	}
 
     /**
      * Возвращает редактор для виртуального элемента коллекции

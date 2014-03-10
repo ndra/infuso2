@@ -25,31 +25,13 @@ abstract class Editor extends Core\Controller {
     }
     
     public function index_root($p) {
-    
-        $id = $p["id"];
-        $collections = $this->root();
-        $collection = null;
-        foreach($collections as $collection) {
-            if($collection->param("id") == $id) {
-                break;
-            }
-        }
-        
+        $code = get_class($this).":".$p["method"];
+        $collection = Core\Mod::service("reflex")->getCollection($code);
         $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
 		\Infuso\Template\Tmp::exec("/reflex/root2",array(
+		    "editor" => $this,
             "collection" => $collection,
 		));
-    }
-
-    /**
-     * Поведения по умолчанию
-     **/
-    public function defaultBehaviours() {
-        return array(
-            "Infuso\Cms\Reflex\Behaviour\Main",
-            "Infuso\Cms\Reflex\Behaviour\Inx",
-            "Infuso\Cms\Reflex\Behaviour\ViewModes",
-        );
     }
 
     public function title() {
@@ -75,12 +57,11 @@ abstract class Editor extends Core\Controller {
 		return new $class($id);
     }
 
+	/**
+	 * Возвращает id элемента (id записи activeRecord)
+	 **/
     public function itemID() {
         return $this->item()->id();
-    }
-
-    public function root() {
-        return array();
     }
 
     /**
@@ -97,7 +78,9 @@ abstract class Editor extends Core\Controller {
         return $this->item;
     }
 
-    // Возвращает url для редактирвоания объяекта
+    /**
+     * Возвращает url для редактирвоания объяекта
+     **/
     public function _url($p=array()) {
         $url = \mod::action(get_class($this),"index",array("id"=>$this->itemID()))->params($p)->url();
         return $url;
@@ -107,17 +90,18 @@ abstract class Editor extends Core\Controller {
      * Триггер, вызывающийся перед просмотром коллекции
      * Контекст в этом случае - виртуальный элемент коллекции
      **/
-    public function beforeCollectionView() {
+    public function _beforeCollectionView() {
         return $this->beforeEdit();
     }
 
     /**
      * Триггер, вызывающийся перед просмотром элемента
      **/
-    public function beforeView() {
+    public function _beforeView() {
 
-        if(!$this->item()->exists())
+        if(!$this->item()->exists()) {
             return;
+        }
 
         return $this->component()->beforeEdit();
     }
@@ -126,7 +110,7 @@ abstract class Editor extends Core\Controller {
      * Триггер, вызывающийся перед редактированием элемента
      * Редактирование элемента - любые изменения объекта через каталог
      **/
-    public function beforeEdit() {
+    public function _beforeEdit() {
         return User::active()->checkAccess("reflex:editItem",array(
             "editor" => $this,
         ));
@@ -137,7 +121,7 @@ abstract class Editor extends Core\Controller {
     /**
      * Триггер, вызывающийся перед удалением элемента через каталог
      **/
-    public function beforeDelete() {
+    public function _beforeDelete() {
         return $this->component()->beforeEdit();
     }
 
@@ -145,27 +129,12 @@ abstract class Editor extends Core\Controller {
      * Триггер, вызывающийся перед созданием элемента через каталог
      * Контекст - виртуальный объект
      **/
-    public function beforeCreate($data) {
+    public function _beforeCreate($data) {
         return $this->component()->beforeEdit();
     }
 
-    public function afterCreate() {}
+    public function _afterCreate() {}
 
-    /**
-     * Возвращает массив действий с объектом
-     * @todo рефакторить
-     **/
-    public function actions() {
-        return $this->callBehaviours("actions");
-    }
-    
-    /**
-     * Возвращает массив действий с объектом
-     * @todo хз что это
-     **/
-    public function tab() {
-        return "";
-    }
 
     /**
      * Возвращает список дезактивированных функций
@@ -217,9 +186,11 @@ abstract class Editor extends Core\Controller {
             $obj = reflex::create("reflex_meta_item",array("hash"=>$hash));
         }
 
-        if($meta)
-            foreach($meta as $key=>$val)
+        if($meta) {
+            foreach($meta as $key => $val) {
                 $metaObject->data($key,$val);
+            }
+        }
     }
 
     public function group() {
@@ -242,6 +213,16 @@ abstract class Editor extends Core\Controller {
 
     public function actionAfterCreate() {
         return "edit/".get_class($this)."/".$this->item()->id();
+    }
+    
+    /**
+     * Возвращает список режимов отображения
+     **/
+    public function _viewModes() {
+        return array(
+            "Список" => "/reflex/root2/content/items/grid-ajax",
+            "Превью" => "/reflex/root2/content/items/preview-ajax",
+		);
     }
 
 }

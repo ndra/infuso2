@@ -9,10 +9,8 @@ class eshop_group extends reflex {
 
 public static function recordTable() {return array (
   'name' => 'eshop_group',
-  'parent' => '',
-  'fields' => 
+  'fields' =>
   array (
-    0 => 
     array (
       'id' => 'b7fabqfvb7yuiqk50nmvzt4usj8a6d',
       'name' => 'id',
@@ -23,9 +21,7 @@ public static function recordTable() {return array (
       'default' => '',
       'indexEnabled' => '0',
       'help' => '',
-    ),
-    1 => 
-    array (
+    ), array (
       'id' => 'd2qhdv2nduxijgjlg7b1imjciiugby',
       'name' => 'depth',
       'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
@@ -35,9 +31,7 @@ public static function recordTable() {return array (
       'default' => '',
       'indexEnabled' => '1',
       'help' => '',
-    ),
-    2 => 
-    array (
+    ), array (
       'id' => 'y9r7m5iok5ixpe0oyebnc16qwebjyl',
       'name' => 'priority',
       'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
@@ -47,9 +41,7 @@ public static function recordTable() {return array (
       'default' => '',
       'indexEnabled' => '1',
       'help' => '',
-    ),
-    3 => 
-    array (
+    ), array (
       'id' => '8ahqc50tcgb3mg6dweijw5z3f1iowv',
       'name' => 'parent',
       'type' => 'pg03-cv07-y16t-kli7-fe6x',
@@ -62,9 +54,7 @@ public static function recordTable() {return array (
       'class' => 'eshop_group',
       'collection' => '',
       'titleMethod' => '',
-    ),
-    4 => 
-    array (
+    ), array (
       'id' => 'bdwg2jp1snye0d4vs7p50n41znp9bo',
       'name' => 'title',
       'type' => 'v324-89xr-24nk-0z30-r243',
@@ -75,9 +65,7 @@ public static function recordTable() {return array (
       'indexEnabled' => '1',
       'help' => 'Название товарной группы',
       'length' => '',
-    ),
-    5 => 
-    array (
+    ), array (
       'id' => 'w56npv6dflzo8a03kvstcl67wvso89',
       'name' => 'icon',
       'type' => 'knh9-0kgy-csg9-1nv8-7go9',
@@ -87,9 +75,7 @@ public static function recordTable() {return array (
       'default' => '',
       'indexEnabled' => '1',
       'help' => '',
-    ),
-    6 => 
-    array (
+    ), array (
       'id' => '0xpuz3yez3c1bn8lij8lr7mlbqkgzd',
       'name' => 'active',
       'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
@@ -173,9 +159,6 @@ public static function recordTable() {return array (
       'help' => '',
     ),
   ),
-  'indexes' => 
-  array (
-  ),
 );}
 
 	public function defaultBehaviours() {
@@ -192,17 +175,6 @@ public static function recordTable() {return array (
 	    $item  = self::get($p["id"]);
 	    tmp::param("activeGroupID",$item->id());
 	    tmp::exec("eshop:group",$item,$p);
-	}
-
-	public function reflexMeta() {
-	    return true;
-	}
-
-	public function reflexTitle() {
-	    $title = trim($this->data("title"));
-	    if(!$title)
-			$title = "Группа товаров {$this->id()}";
-	    return $title;
 	}
 
 	/**
@@ -235,6 +207,7 @@ public static function recordTable() {return array (
 
 	/**
 	 * @return Возвращает коллекцию товаров в группе
+	 * @reflex-child
 	 **/
 	public function items() {
 	    return self::itemsEvenHidden()->eq("activeSys",1);
