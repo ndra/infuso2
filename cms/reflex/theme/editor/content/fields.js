@@ -2,13 +2,13 @@ $(function() {
 
     $(".svfo38b38d").each(function() {
     
-        $(this).submit(function(e) {
+        var form = $(this);
+    
+        //  Сохраняет данные формы
+        var submit = function() {
         
-            // Предотвращаем отправку формы
-            e.preventDefault();
-            
             // Собираем данные формы
-            var serialized = $(this).serializeArray();
+            var serialized = form.serializeArray();
             var formData = {};
             for(var i in serialized) {
                 formData[serialized[i].name] = serialized[i].value;
@@ -17,9 +17,23 @@ $(function() {
             // Отправляем на сервер команду сохранения
             mod.cmd({
                 cmd:"infuso/cms/reflex/controller/save",
-                id:$(this).attr("infuso:id"),
-                formData:formData
+                index:form.attr("infuso:id"),
+                data:formData
             });
+            
+        }
+    
+        $(this).submit(function(e) {
+            // Предотвращаем отправку формы
+            e.preventDefault();
+            submit();
+        });
+        
+        $(document).keydown(function(e) {
+            if(e.keyCode == 83 && e.ctrlKey) {
+                e.preventDefault();
+                submit();
+            }
         });
     
     });

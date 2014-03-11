@@ -8,7 +8,7 @@
     <button onclick='mod.fire("reflex/refresh");' >Обновить</button>
     
     // Режим отображения
-    <select name='viewMode' >
+    <select name='viewMode' onchange='mod.fire("reflex/refresh");' >
         foreach($editor->viewModes() as $title => $template) {
             <option>{$title}</option>        
         }

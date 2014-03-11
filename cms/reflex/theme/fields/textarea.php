@@ -7,7 +7,7 @@
         
         <td>
         if($field->editable()) {
-            <textarea>
+            <textarea name='{$field->name()}' >
                 echo $value;
             </textarea>
         } else {

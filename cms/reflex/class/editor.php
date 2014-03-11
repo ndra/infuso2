@@ -134,6 +134,16 @@ abstract class Editor extends Core\Controller {
     }
 
     public function _afterCreate() {}
+    
+    public function setData($data) {
+    
+        $item = $this->item();
+		foreach($data as $key => $val) {
+		    $item->data($key,$val);
+		}
+		
+		Core\Mod::msg("Объект изменен");
+    }
 
 
     /**

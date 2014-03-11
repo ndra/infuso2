@@ -20,5 +20,12 @@ $(function() {
     load();
     
     mod.on("reflex/refresh",load);
+    
+    $(document).on("keydown",function(e) {
+        if(e.keyCode == 116 && !e.ctrlKey) {
+            load();
+            e.preventDefault();
+        }
+    })
 
 });

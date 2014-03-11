@@ -58,18 +58,18 @@ class Controller extends \Infuso\Core\Controller {
      **/
     public static function post_save($p) {
     
-		mod::msg($p);
-		return;
-
         $editor = Editor::get($p["index"]);
+        
         $item = $editor->item();
 
-        if(!$editor->beforeEdit()) {
+        /*if(!$editor->beforeEdit()) {
             mod::msg("У вас нет прав для редактирования этого объекта",1);
             return;
-        }
+        }*/
+        
+        $editor->setData($p["data"]);
 
-        foreach($p["data"] as $key=>$val) {
+        /*foreach($p["data"] as $key=>$val) {
             $item->data($key,$val);
         }
 
@@ -104,7 +104,7 @@ class Controller extends \Infuso\Core\Controller {
 
         } else {
             mod::msg("Объект не сохранен",1);
-        }
+        } */
 
     }
 
