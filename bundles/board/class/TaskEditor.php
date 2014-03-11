@@ -4,10 +4,11 @@ namespace Infuso\Board;
 
 class TaskEditor extends \reflex_editor {
 
-	public function root() {
-	    return array(
-	        Task::all()->title("Çàäà÷è"),
-		);
+	/**
+	 * @reflex-root = on
+	 **/
+	public function all() {
+	    return Task::all()->title("Ð—Ð°Ð´Ð°Ñ‡Ð¸");
 	}
 
 	public function itemClass() {

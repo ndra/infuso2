@@ -617,5 +617,15 @@ abstract class Record extends \Infuso\Core\Model\Model {
         }
         return false;
     }
+    
+    public function storage() {
+        $storage = new Storage(get_class($this),$this->id());
+		return $storage;
+    }
+    
+    public function recordStorageFolder() {
+        return null;
+    }
+
 
 }

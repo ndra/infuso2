@@ -7,7 +7,7 @@ include("../class/app.php");
 $p = $_SERVER["REQUEST_URI"];
 $server = $_SERVER["SERVER_NAME"];
 $url = "http://{$server}{$p}";
-$app = new \infuso\core\app(array(
+$app = new \Infuso\Core\App(array(
     "url" => $url,
     "post" => $_POST,
     "files" => $_FILES,

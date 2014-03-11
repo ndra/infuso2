@@ -3,10 +3,16 @@ $("<style>.mod-msg{width:300px;background:black;color:white;padding:10px;margin-
 $("<style>.mod-msg-error{background:red;}</style>").appendTo("head");
 
 mod = {};
+
+/**
+ * Выводит на экран высплывающее сообщение
+ * Если второй параметр = true, сообщение - ошибка
+ **/
 mod.msg = function(text,error) {
 
-    if(!mod.msg.__container)
+    if(!mod.msg.__container) {
         mod.msg.__container = $("<div class='mod-msg-container' />").prependTo("body");
+    }
     var msg = $("<div>").addClass("mod-msg").html(text+"");
     error && msg.addClass("mod-msg-error");
     msg.css("opacity",0);
@@ -15,24 +21,51 @@ mod.msg = function(text,error) {
 }
 
 mod.handlers = {}
+
 mod.on = function(name,handler) {
-    if(!mod.handlers[name])
+    if(!mod.handlers[name]) {
         mod.handlers[name] = [];
+    }
     mod.handlers[name].push(handler);
 }
 
 /**
+ * Вызывает событие name
+ **/
+mod.fire = function(name,params) {
+    var handlers = mod.handlers[name];
+    if(handlers) {
+        for(var j in handlers) {
+            handlers[j](params);
+        }
+    }
+}
+
+
+/**
  * Отправляет команду на сервер
  **/
-mod.cmd = function(data,fn) {
+mod.call = function(params,fn,files) {
+
     if (!window.JSON) {
         return;
     }
-    var json = JSON.stringify(data);
+    
+    var fdata = new FormData();
+    fdata.append("data", JSON.stringify(params));   
+    
+    if(files) {
+        $(files).find("input[type=file]").each(function() {
+            fdata.append(this.name, this.files[0]);   
+        });
+    }
+    
     this.request = $.ajax({
-        url: "/mod_json/?cmd="+data.cmd, // Добавляем команду к get-запросу (для логов)
-        data: {data:json},
-        type: "POST",
+        url: "/mod_json/?cmd="+params.cmd, // Добавляем команду к get-запросу (для логов)
+        data: fdata,
+        contentType: false,
+        processData: false,        
+        type:"POST",
         success:function(d){
             mod.handleCmd(true,d,fn);
         },
@@ -41,7 +74,7 @@ mod.cmd = function(data,fn) {
                 mod.handleCmd(false,r.responseText);
             }
         }
-    })
+    });
 },
 
 mod.parseCmd = function(str) {
@@ -72,16 +105,6 @@ mod.parseCmd = function(str) {
         data:data.data,
         meta:data.meta
     }
-}
-
-/**
- * Вызывает событие name
- **/
-mod.fire = function(name,params) {
-    var handlers = mod.handlers[name];
-    if(handlers)
-        for(var j in handlers)
-            handlers[j](params);
 }
 
 mod.handleCmd = function(success,response,fn) {
