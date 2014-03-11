@@ -15,8 +15,10 @@ abstract class Editor extends Core\Controller {
         return true;
     }
     
+    /**
+     * Контроллер редактирования элемента
+     **/
     public function index($p) {
-    
         $class = get_called_class();
 		$editor = new $class($p["id"]);
         \Infuso\Template\Tmp::exec("/reflex/editor",array(
@@ -24,6 +26,9 @@ abstract class Editor extends Core\Controller {
 		));
     }
     
+	/**
+     * Контроллер начального списка
+     **/
     public function index_root($p) {
         $code = get_class($this).":".$p["method"];
         $collection = Core\Mod::service("reflex")->getCollection($code);
@@ -33,7 +38,42 @@ abstract class Editor extends Core\Controller {
             "collection" => $collection,
 		));
     }
+    
+    /**
+     * Контроллер списка дочерних страниц
+     **/
+    public function index_child($p) {
+    
+        $class = get_called_class();
+		$editor = new $class($p["id"]);
+    
+        $code = get_class($this).":".$p["method"].":".$editor->itemID();
+        $collection = Core\Mod::service("reflex")->getCollection($code);
+        $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
+        
+		\Infuso\Template\Tmp::exec("/reflex/children",array(
+		    "editor" => $this,
+            "collection" => $collection,
+		));
+    }
 
+	/**
+     * Контроллер лога объекта
+     **/
+    public function index_log($p) {
+        $class = get_called_class();
+		$editor = new $class($p["id"]);
+        \Infuso\Template\Tmp::exec("/reflex/log",array(
+            "editor" => $editor,
+		));
+    }
+    
+	/**
+     * Контроллер метаданных
+     **/
+    public function index_meta($p) {
+    }
+     
     public function title() {
         return $this->item()->title();
     }
@@ -233,6 +273,33 @@ abstract class Editor extends Core\Controller {
             "Список" => "/reflex/root2/content/items/grid-ajax",
             "Превью" => "/reflex/root2/content/items/preview-ajax",
 		);
+    }
+    
+    public function menu() {
+        $menu = array();
+        $menu[] = array(
+            "href" => $this->url(),
+            "title" => "Редактирование",
+		);
+        $menu[] = array(
+            "href" => \mod::action(get_class($this),"log",array("id"=>$this->itemID()))->url(),
+			"title" => "Лог",
+		);
+		
+		$class = get_class($this);
+        $a = $class::inspector()->annotations();
+        foreach($a as $fn => $annotations) {
+            if($annotations["reflex-child"] == "on") {
+                $editor = new $class;
+                $collection = $editor->$fn();
+		        $menu[] = array(
+		            "href" => \mod::action(get_class($this),"child",array("id"=>$this->itemID(),"method" => $fn))->url(),
+					"title" => $collection->title(),
+				);
+            }
+        }
+		
+        return $menu;
     }
 
 }

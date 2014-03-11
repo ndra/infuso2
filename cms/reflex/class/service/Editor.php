@@ -38,7 +38,7 @@ class Editor extends Core\Service {
 
                     $editor = new $class;
                     $collection = $editor->$fn();
-                
+
 	                $event->add(array(
 			            "template" => "/reflex/root",
 			            "templateParams" => array(
@@ -49,7 +49,6 @@ class Editor extends Core\Service {
 					));
                 }
             }
-            
         }
 
         Core\Profiler::endOperation();

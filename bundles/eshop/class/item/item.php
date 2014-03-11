@@ -166,8 +166,7 @@ class eshop_item extends reflex
     /**
      * Поведения по умолчанию
      **/
-    public function defaultBehaviours()
-    {
+    public function defaultBehaviours() {
         $ret   = parent::defaultBehaviours();
         $ret[] = "eshop_item_behaviour";
         return $ret;
@@ -281,7 +280,7 @@ class eshop_item extends reflex
     /**
      * @return Возвращает родительскую группу данного товара
      **/
-    public final function reflex_parent()
+    public final function recordParent()
     {
         return $this->group();
 

@@ -21,11 +21,6 @@ class eshop_group_editor extends \Infuso\Cms\Reflex\Editor {
 	    );
 	}
 
-	public function render() {
-	    $ret = $this->item()->title();
-	    return $ret;
-	}
-	
 	public function beforeEdit() {
 	    return user::active()->checkAccess("eshop:editGroup",array(
 	        "group" => $this->item(),
@@ -50,6 +45,22 @@ class eshop_group_editor extends \Infuso\Cms\Reflex\Editor {
 	    return eshop_group::allEvenHidden()
 			->title("Группы товаров без иерархии")
 			->param("tab","eshop");
+	}
+	
+	/**
+	 * @reflex-child = on
+	 **/
+	public function subgroups() {
+	    return $this->item()->subgroups()
+			->param("title","Подгруппы");
+	}
+	
+	/**
+	 * @reflex-child = on
+	 **/
+	public function items() {
+		return $this->item()->items()
+			->param("title","Товары");
 	}
 	
 }

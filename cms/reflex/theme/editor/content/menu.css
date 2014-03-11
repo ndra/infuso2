@@ -1,0 +1,13 @@
+.xx63vckg1k {
+
+    padding:10px;
+    
+    .item {
+        margin-right:10px;
+    }
+    
+    .active {
+        font-weight:bold;
+    }
+
+}

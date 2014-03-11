@@ -3,6 +3,10 @@
 namespace Infuso\Template;
 use Infuso\Core;
 
+function helper() {
+	echo "helper!!!";
+}
+
 class Template extends Generic {
 
     private static $current = null;
