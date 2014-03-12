@@ -26,6 +26,11 @@ class Collection extends Core\Component {
 	}
 	
 	public function unserialize($key) {
+	
+	    if(!$key) {
+	        throw new \Exception("Collection::unserialize() void key");
+	    }
+	
 		list($class,$method,$id) = explode(":",$key);
 		return new self($class, $method, $id);
 	}

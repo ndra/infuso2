@@ -31,8 +31,7 @@ abstract class Editor extends Core\Controller {
      **/
     public function index_root($p) {
         $code = get_class($this).":".$p["method"];
-        $collection = Core\Mod::service("reflex")->getCollection($code);
-        $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
+        $collection = Collection::unserialize($code);
 		\Infuso\Template\Tmp::exec("/reflex/root2",array(
 		    "editor" => $this,
             "collection" => $collection,

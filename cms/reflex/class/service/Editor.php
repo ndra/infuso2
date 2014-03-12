@@ -54,22 +54,5 @@ class Editor extends Core\Service {
         Core\Profiler::endOperation();
 
     }
-    
-    /**
-     * namespace\class:method:optionalContextID
-     **/
-    public function getCollection($hash) {
-    
-        if(!$hash) {
-            throw new \Exception("Editor::getCollection() void code");
-        }
-    
-		list($class,$method,$id) = explode(":",$hash);
-		$editor = new $class($id);
-		$collection = $editor->$method();
-		$collection->param("reflexCode",$hash);
-		$collection->param("reflexEditorClass",$class);
-		return $collection;
-    }
 
 }
