@@ -41,11 +41,10 @@ class Controller extends \Infuso\Core\Controller {
      **/
     public function post_getItems($p) {
     
-        $collection = mod::service("reflex")->getCollection($p["collection"]);
-        $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
-        $collection->reflexApplyParams($p);
-        $html = $collection->reflexTemplate()
-			->getContentForAjax();
+        $collection = Collection::unserialize($p["collection"]);
+        $collection->applyParams($p);
+        $tmp = $collection->itemsTemplate();
+        $html = $tmp->getContentForAjax();
         
         return array(
             "html" => $html,

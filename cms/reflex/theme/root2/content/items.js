@@ -12,7 +12,7 @@ $(function() {
     
         mod.fire("reflex/beforeLoad",params);
         
-        mod.cmd(params, function(ret) {
+        mod.call(params, function(ret) {
             $(".cjoesz8swu").html(ret.html);
         });
     }
