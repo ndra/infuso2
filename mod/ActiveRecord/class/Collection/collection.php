@@ -1053,17 +1053,4 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         return mod::service("ar")->virtual($this->itemClass(),$new);
     }
 
-    public final function useFilter($n) {
-        if($ff = $this->editor()->filters()) {
-            foreach($ff as $key=>$filter) {
-                if($key==$n) {
-                    $this->superposition($filter);
-                }
-            }
-        }
-        return $this;
-    }
-
-
-
 }

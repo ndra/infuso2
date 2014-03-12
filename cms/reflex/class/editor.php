@@ -21,9 +21,7 @@ abstract class Editor extends Core\Controller {
     public function index($p) {
         $class = get_called_class();
 		$editor = new $class($p["id"]);
-        \Infuso\Template\Tmp::exec("/reflex/editor",array(
-            "editor" => $editor,
-		));
+        $editor->templateMain()->exec();
     }
     
 	/**
@@ -299,6 +297,21 @@ abstract class Editor extends Core\Controller {
         }
 		
         return $menu;
+    }
+    
+    public function templateMain() {
+        return \Infuso\Template\Tmp::get("/reflex/editor",array(
+            "editor" => $this,
+		));
+	}
+    
+    /**
+     * Возвращает шаьлон формы редактирования элемента
+     **/
+    public function templateEditForm() {
+        return \Infuso\Template\Tmp::get("/reflex/editor/content/fields/form",array(
+            "editor" => $this,
+		));
     }
 
 }

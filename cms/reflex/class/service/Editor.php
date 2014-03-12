@@ -45,6 +45,7 @@ class Editor extends Core\Service {
 			                "class" => $class,
 							"method" => $fn,
 			                "title" => $collection->title(),
+			                "collection" => $collection,
 						),
 					));
                 }

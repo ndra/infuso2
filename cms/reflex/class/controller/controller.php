@@ -58,140 +58,26 @@ class Controller extends \Infuso\Core\Controller {
     public static function post_save($p) {
     
         $editor = Editor::get($p["index"]);
-        
         $item = $editor->item();
-
-        /*if(!$editor->beforeEdit()) {
-            mod::msg("У вас нет прав для редактирования этого объекта",1);
-            return;
-        }*/
-        
         $editor->setData($p["data"]);
 
-        /*foreach($p["data"] as $key=>$val) {
-            $item->data($key,$val);
-        }
-
-        if($item->testForParentsRecursion()) {
-            $item->revert();
-            mod::msg("Обнаружена рекурсия, объект не сохранен",1);
-            return;
-        }
-
-        // Список измененных полей в текстовом формате
-        $dirty = array();
-        foreach($item->fields()->changed() as $field) {
-            $dirty[] = $field->name();
-        }
-        $dirty = implode(",",$dirty);
-
-        if(!$item->fields()->changed()->count()) {
-
-            mod::msg("Изменений не обнаружено");
-
-        } elseif($item->store()) {
-
-            mod::msg("Сохранено");
-
-            if($editor->log()) {
-                $item->log("Изменение данных ".$dirty);
-			}
-			
-			$editor->afterChange();
-
-            return true;
-
-        } else {
-            mod::msg("Объект не сохранен",1);
-        } */
-
     }
 
-    /**
-     * Возвращает ссылку на страницу элемента
-     **/
-    public function post_viewItem($p) {
-        $item = self::get($p["index"]);
-        if(!$item->exists())
-            return false;
-        return $item->url();
-    }
-
-    /**
-     * Врзвращает данные для фильтра
-     **/
-    public function post_getFilter($p) {
-        $list = self::getListByP($p);
-
-        if(!$list->editor()->beforeCollectionView())
-            return false;
-
-        return $list->editor()->inxFilter($list);
-    }
-
-    /**
-     * Возвращает данные для редактора поля
-     **/
-    public static function post_getField($p) {
-
-        $editor = reflex_editor::byHash($p["editor"]);
-
-        if(!$editor->beforeEdit()) {
-            mod::msg("Ошибка доступа: вы не можете редактировать объект",1);
-            return false;
-        }
-
-        $field = $editor->item()->field($p["name"]);
-
-        if($field->editable()) {
-            return array(
-                "mode" => "editor",
-                "editor" => $field->editorInxFull($item),
-            );
-        }
-
-        mod::msg("Ошибка доступа: выбранное поле нельзя редактировать",1);
-
-    }
-
-    /**
-     * Сохраняет данные поля (редактирование поля)
-     **/
-    public static function post_saveField($p) {
-
-        $editor = reflex_editor::byHash($p["editor"]);
-
-        if(!$editor->beforeEdit()) {
-            mod::msg("Ошибка доступа: вы не можете редактировать объект",1);
-            return false;
-        }
-
-        $item = $editor->item();
-
-        $field = $editor->item()->field($p["name"]);
-        $item->data($field->name(),$p["value"]);
-
-        if($item->store()) {
-            mod::msg("Сохранено");
-            $item->log("Изменение поля {$p[name]}");
-        } else {
-            mod::msg("Объект не сохранен",1);
-        }
-    }
 
     /**
      * Контроллер создания конструктора
      **/
     public static function post_create($p) {
-
-        $list = self::getListByP($p);
+    
+        $collection = Collection::unserialize($p["collection"]);
 
         // Создаем конструктор элемента
-        $item = reflex::create("reflex_editor_constructor",array(
-            "listData" => $list->serialize(),
+        $item = mod::service("ar")->create(Model\Constructor::inspector()->className(),array(
+            "collection" => $collection->serialize(),
         ));
 
-        $url = $item->editor()->hash();
+		$editor = new Model\ConstructorEditor($item->id());
+		$url = $editor->url();
 
         return $url;
     }
@@ -201,29 +87,9 @@ class Controller extends \Infuso\Core\Controller {
      **/
     public static function post_createItem($p) {
 
-        $constructor = reflex_editor_constructor::get($p["constructorID"]);
-        $list = $constructor->getList();
-        
-        $ret = $list->editor()->beforeCreate($p["data"]);
-
-        if(!$ret) {
-            mod::msg("У вас нет прав для создания объекта",1);
-            return;
-        }
-        
-        if(is_array($ret)) {
-            $p["data"] = $ret;
-        }
-
-        $item = $list->create($p["data"]);
-        $item->log("Объект создан");
-
-        if(!$item->exists())
-            return;
-
-        $constructor->delete();
-        $item->editor()->afterCreate();
-        return $item->editor()->actionAfterCreate();
+		$constructor = new Model\ConstructorEDitor($p["constructorId"]);
+		$editor = $constructor->item()->createItem($p["data"]);
+        return $editor->url();
 
     }
 

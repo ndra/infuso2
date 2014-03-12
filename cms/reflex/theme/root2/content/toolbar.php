@@ -1,6 +1,7 @@
 <? 
 
-<div class='qoi8w451jl' >
+$code = $collection->serialize();
+<div class='qoi8w451jl' infuso:collection='{$code}' >
 
     // Быстрый поиск
     <input />  
@@ -16,7 +17,8 @@
     
     <span class='spacer' ></span>    
     
-    <button>Добавить</button>
+    <button class='create' >Добавить</button>
+    
     <button>Удалить</button>
 
 </div>

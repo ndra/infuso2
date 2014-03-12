@@ -1,6 +1,7 @@
 <?
 
 namespace Infuso\Cms\Reflex\Model;
+use Infuso\Cms\Reflex;
 use Infuso\Core;
 use Infuso\ActiveRecord;
 
@@ -9,97 +10,47 @@ use Infuso\ActiveRecord;
  * Конструктор - это специальный элемент, который создается пр нажатии кнопки "+"
  * Форма создания элемента - это фактически форма редактирования конструктора  
  **/ 
-class Cnstructor extends ActiveRecord\Record {
-
+class Constructor extends ActiveRecord\Record {
 	
-
-public static function recordTable() {return array (
-  'name' => 'reflex_editor_constructor',
-  'fields' => 
-  array (
-    0 => 
-    array (
-      'id' => 'rjpurqk9rjc52dygh789zj45rop9zx',
-      'name' => 'id',
-      'type' => 'jft7-kef8-ccd6-kg85-iueh',
-      'editable' => '0',
-      'label' => '',
-      'default' => '',
-      'indexEnabled' => '0',
-      'help' => '',
-    ),
-    1 => 
-    array (
-      'id' => 'yainkl2tfg2tw563y5h3y5so856dm1',
-      'name' => 'title',
-      'type' => 'v324-89xr-24nk-0z30-r243',
-      'editable' => '2',
-      'label' => '',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-      'length' => '',
-    ),
-    2 => 
-    array (
-      'editable' => 2,
-      'id' => 'v2ofasnc9in8abxmeh3mg0jpv6qfvz',
-      'name' => 'userID',
-      'type' => 'pg03-cv07-y16t-kli7-fe6x',
-      'label' => 'Пользователь',
-      'group' => '',
-      'default' => '',
-      'indexEnabled' => 1,
-      'help' => '',
-      'class' => 'user',
-      'foreignKey' => '',
-      'collection' => '',
-      'titleMethod' => '',
-    ),
-    3 => 
-    array (
-      'id' => 'cgsxme2qf1sqpvr34v27me6dfarnm5',
-      'name' => 'created',
-      'type' => 'ler9-032r-c4t8-9739-e203',
-      'editable' => '2',
-      'label' => 'Дата создания',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ),
-    4 => 
-    array (
-      'id' => 'a0jfa6tygrnmlsjku6nylh7ca2tcur',
-      'name' => 'listData',
-      'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
-      'editable' => '2',
-      'label' => 'Данные списка',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ),
-  ),
-  'indexes' => 
-  array (
-    0 => 
-    array (
-      'id' => 'hdwa2tf12nw12jwu6qkv0df9i3w96q',
-      'name' => 'created',
-      'fields' => 'created',
-      'type' => 'index',
-    ),
-  ),
-  'fieldGroups' => 
-  array (
-    0 => 
-    array (
-      'name' => NULL,
-      'title' => NULL,
-    ),
-  ),
-);}
-
-public $exists;
+	public static function recordTable() {return array (
+	  'name' => 'reflex_editor_constructor',
+	  'fields' =>
+	  array (
+	    array (
+	      'id' => 'rjpurqk9rjc52dygh789zj45rop9zx',
+	      'name' => 'id',
+	      'type' => 'jft7-kef8-ccd6-kg85-iueh',
+	    ),array (
+	      'id' => 'yainkl2tfg2tw563y5h3y5so856dm1',
+	      'name' => 'title',
+	      'type' => 'v324-89xr-24nk-0z30-r243',
+	      'editable' => '2',
+	      'indexEnabled' => '1',
+	    ), array (
+	      'editable' => 2,
+	      'id' => 'v2ofasnc9in8abxmeh3mg0jpv6qfvz',
+	      'name' => 'userID',
+	      'type' => 'pg03-cv07-y16t-kli7-fe6x',
+	      'label' => 'Пользователь',
+	      'indexEnabled' => 1,
+	      'class' => 'user',
+	    ), array (
+	      'id' => 'cgsxme2qf1sqpvr34v27me6dfarnm5',
+	      'name' => 'created',
+	      'type' => 'ler9-032r-c4t8-9739-e203',
+	      "default" => "now()",
+	      'editable' => '2',
+	      'label' => 'Дата создания',
+	      'indexEnabled' => '1',
+	    ),array (
+	      'id' => 'a0jfa6tygrnmlsjku6nylh7ca2tcur',
+	      'name' => 'collection',
+	      'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
+	      'editable' => '2',
+	      'label' => 'Данные списка',
+	    ),
+	  ),
+	);}
 
     public static function all() {
         return reflex::get(get_class())->desc("created");
@@ -109,26 +60,27 @@ public $exists;
         return reflex::get(get_class(),$data);
     }
     
-    public function reflex_cleanup() {
-        // Удаляем конструкторы которым больше суток
-        if(util::now()->stamp() - $this->pdata("created")->stamp() > 3600*24) return true;
+    public function beforeCreate() {
+        $this->data("userID",\user::active()->id());
     }
     
-    public function reflex_beforeCreate() {
-        $this->data("created",util::now());
-        $this->data("userID",user::active()->id());
+    public function collection() {
+        return Reflex\Collection::unserialize($this->data("collection"));
     }
     
-    public function getList() {
-        return reflex_collection::unserialize($this->data("listData"));
+    public function recordTitle() {
+        return "Новый объект ".get_class($this->collection()->editor()->item());
     }
     
-    public function reflex_title() {
-        return "Новый объект ".get_class($this->getList()->one());
+    public function recordParent() {
+        return $this->collection()->editor()->item()->parent();
     }
     
-    public function reflex_parent() {
-        return $this->getList()->one()->parent();
+    public function createItem($data) {
+        $item = $this->collection()->collection()->create($data);
+        $class = get_class($this->collection()->editor());
+        $editor = new $class($item->id());
+        return $editor;
     }
     
 }
