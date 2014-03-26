@@ -6,7 +6,7 @@ use Infuso\Core;
 class Textarea extends View {
 
 	/**
-	 * Доолжна вернуть объект шаблона для редактирования поля
+	 * Должна вернуть объект шаблона для редактирования поля
 	 **/
 	public function template() {
 		$tmp = \Infuso\Template\Tmp::get("/reflex/fields/textarea");

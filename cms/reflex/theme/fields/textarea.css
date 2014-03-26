@@ -8,6 +8,7 @@
     }
 
     .label {
+        padding-right:20px;
         width:200px;
         text-align:right;
     }
