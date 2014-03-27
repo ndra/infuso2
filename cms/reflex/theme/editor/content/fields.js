@@ -15,7 +15,7 @@ $(function() {
             }
             
             // Отправляем на сервер команду сохранения
-            mod.cmd({
+            mod.call({
                 cmd:"infuso/cms/reflex/controller/save",
                 index:form.attr("infuso:id"),
                 data:formData

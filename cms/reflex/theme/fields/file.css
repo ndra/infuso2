@@ -1,0 +1,15 @@
+.l83i1tvf0u {
+
+    width:200px;
+    height:200px;
+    border:1px solid #ccc;
+    cursor: pointer;
+    
+    &.drag-enter {
+        outline: 3px dashed green;
+    }
+    
+    
+
+}
+

@@ -1,6 +1,15 @@
-<?
+<? 
 
-tmp::exec("../field-layout" ,array(
-    "label" => $field->label(),
-    "content" => tmp::get("field",$this->params())->rexec(),
-));
+<div class='f0rw8hlkvh' >
+
+    if($field->editable()) {
+        <textarea name='{$field->name()}' >
+            echo $value;
+        </textarea>
+    } else {
+        <textarea disabled>
+            echo $value;
+        </textarea>
+    }
+
+</div>

@@ -5,6 +5,10 @@ use Infuso\Core;
 
 abstract class View extends Core\Component {
 
+	const LABEL_ALIGN_LEFT  = 1;
+	const LABEL_ALIGN_TOP  = 2;
+	const LABEL_ALIGN_CHECKBOX  = 3;
+
 	protected $field = null;
 
 	public function __construct($field) {
@@ -35,5 +39,13 @@ abstract class View extends Core\Component {
 	 * (МОжет вернуть массив из нескольких id)
 	 **/
 	abstract public static function typeID();
+	
+	/**
+	 * Возвращает типа расположения метки поля в форме
+	 * Переопределите метод в дочернем классе, если нужно изменить расположение метки в форме
+	 **/
+	public function labelAlign() {
+	    return self::LABEL_ALIGN_LEFT;
+	}
 
 }
