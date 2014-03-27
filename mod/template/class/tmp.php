@@ -168,6 +168,13 @@ class Tmp implements Core\Handler {
             return file::nonExistent();
 		}
     }
+    
+	public function templateBundle($template) {
+        Theme::loadDefaults();
+        $template = trim($template,"/");
+        $bundle = self::$templateMap[$template]["bundle"];
+		return \mod::service("bundle")->bundle($bundle);
+	}
 
     public static function helper($html) {
         return \Infuso\Template\Helper::fromHTML($html);

@@ -376,6 +376,10 @@ class Template extends Generic {
         return strtr($path,".","/");
     }
 
+	public function bundle() {
+	    return tmp::templateBundle($this->mod()."/".$this->path());
+	}
+
     /**
      * Возвращает файл с php-кодом этого шаблона
      **/

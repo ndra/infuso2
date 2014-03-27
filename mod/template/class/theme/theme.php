@@ -64,7 +64,7 @@ abstract class Theme extends Core\Component {
 		}
 		return file::nonExistent();
 	}
-
+	
 	/**
 	 * @return Возвращает путь к файлу темы
 	 * Если у темы нет соответствующего файла, возвращает null
@@ -147,6 +147,7 @@ abstract class Theme extends Core\Component {
 		    $name = preg_replace("/[\:\.\/]+/","/",$name);
 		    $ext = $file->ext();
 		    $map[$name][$ext] = $renderPath;
+		    $map[$name]["bundle"] = $file->bundle()->path();
 		}
 
 		\util::save_for_inclusion($this->mapFile(),$map);

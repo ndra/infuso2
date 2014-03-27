@@ -17,7 +17,7 @@ class tmp_theme_init implements mod_handler {
 		file::get(tmp_theme::mapFolder())->delete(1);
 		file::mkdir(tmp_theme::mapFolder());
 
-    	// Собираем спислк классов тем и сортируем их по приоритету
+    	// Собираем список классов тем и сортируем их по приоритету
     	$themes = array();
 		foreach(mod::service("classmap")->classes("Infuso\\Template\\Theme") as $class) {
 	        $themes[] = new $class();

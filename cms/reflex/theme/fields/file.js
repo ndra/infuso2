@@ -21,7 +21,7 @@ $(function() {
     });
     
     dropzone.click(function() {
-        mod.msg("filemanager");
+        mod.msg("open filemanager");
     });
 
 });

@@ -4,6 +4,8 @@ mod::coreJS();
 
 admin::header();
 
+$bundlePath = $this->bundle()->path();
+tmp::js($bundlePath."/res/js/window.js");
 
 <table class='x0h4tfwmhnn' >
     <tr>
