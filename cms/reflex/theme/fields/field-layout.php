@@ -1,11 +1,11 @@
 <? 
 
-<table>
+<table class='gpudbjvgc1' >
     <tr>
-        <td>
+        <td class='label' >
             echo $label;
         </td>
-        <td>
+        <td class='content' >
             echo $content;
         </td>
     </tr>

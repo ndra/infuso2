@@ -1,0 +1,16 @@
+.x8spq9pjwjn {
+    
+    input {
+        padding:6px;
+        border:1px solid #999;
+        border-radius:3px;
+        box-shadow: 0px 5px 8px rgba(0,0,0,.2) inset;
+        width:150px;
+        
+        &:focus {
+            border:1px solid blue;
+        }
+        
+    }
+
+}

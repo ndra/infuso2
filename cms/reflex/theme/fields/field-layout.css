@@ -1,0 +1,16 @@
+.gpudbjvgc1 {
+
+    width:100%;
+    table-layout: fixed;
+    
+    td {
+        vertical-align: middle;
+    }
+
+    .label {
+        width: 200px;
+        font-style: italic;
+        color: gray;
+    }
+
+}

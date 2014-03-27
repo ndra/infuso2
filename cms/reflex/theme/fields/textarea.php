@@ -1,21 +1,6 @@
-<? 
+<?
 
-<table class='f0rw8hlkvh' >
-    <tr>
-        <td class='label' >{$field->label()}</td>        
-        $value = util::str($field->value())->esc();
-        
-        <td>
-        if($field->editable()) {
-            <textarea name='{$field->name()}' >
-                echo $value;
-            </textarea>
-        } else {
-            <textarea disabled>
-                echo $value;
-            </textarea>
-        }
-        </td>
-        
-    </tr>
-</table>
+tmp::exec("../field-layout" ,array(
+    "label" => $field->label(),
+    "content" => tmp::get("field",$this->params())->rexec(),
+));
