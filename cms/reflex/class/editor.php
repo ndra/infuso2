@@ -20,20 +20,20 @@ abstract class Editor extends Core\Controller {
      **/
     public function index($p) {
         $class = get_called_class();
-		$editor = new $class($p["id"]);
+        $editor = new $class($p["id"]);
         $editor->templateMain()->exec();
     }
     
-	/**
+    /**
      * Контроллер начального списка
      **/
     public function index_root($p) {
         $code = get_class($this).":".$p["method"];
         $collection = Collection::unserialize($code);
-		\Infuso\Template\Tmp::exec("/reflex/root2",array(
-		    "editor" => $this,
+        \Infuso\Template\Tmp::exec("/reflex/root2",array(
+            "editor" => $this,
             "collection" => $collection,
-		));
+        ));
     }
     
     /**
@@ -42,30 +42,30 @@ abstract class Editor extends Core\Controller {
     public function index_child($p) {
     
         $class = get_called_class();
-		$editor = new $class($p["id"]);
+        $editor = new $class($p["id"]);
     
         $code = get_class($this).":".$p["method"].":".$editor->itemID();
         $collection = Core\Mod::service("reflex")->getCollection($code);
         $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
         
-		\Infuso\Template\Tmp::exec("/reflex/children",array(
-		    "editor" => $this,
+        \Infuso\Template\Tmp::exec("/reflex/children",array(
+            "editor" => $this,
             "collection" => $collection,
-		));
+        ));
     }
 
-	/**
+    /**
      * Контроллер лога объекта
      **/
     public function index_log($p) {
         $class = get_called_class();
-		$editor = new $class($p["id"]);
+        $editor = new $class($p["id"]);
         \Infuso\Template\Tmp::exec("/reflex/log",array(
             "editor" => $editor,
-		));
+        ));
     }
     
-	/**
+    /**
      * Контроллер метаданных
      **/
     public function index_meta($p) {
@@ -90,13 +90,13 @@ abstract class Editor extends Core\Controller {
      * Возвращает редактор элемента по индексу
      **/
     public static function get($index) {
-		list($class,$id) = explode(":",$index);
-		return new $class($id);
+        list($class,$id) = explode(":",$index);
+        return new $class($id);
     }
 
-	/**
-	 * Возвращает id элемента (id записи activeRecord)
-	 **/
+    /**
+     * Возвращает id элемента (id записи activeRecord)
+     **/
     public function itemID() {
         return $this->item()->id();
     }
@@ -175,11 +175,11 @@ abstract class Editor extends Core\Controller {
     public function setData($data) {
     
         $item = $this->item();
-		foreach($data as $key => $val) {
-		    $item->data($key,$val);
-		}
-		
-		Core\Mod::msg("Объект изменен");
+        foreach($data as $key => $val) {
+            $item->data($key,$val);
+        }
+        
+        Core\Mod::msg("Объект изменен");
     }
 
 
@@ -269,7 +269,7 @@ abstract class Editor extends Core\Controller {
         return array(
             "Список" => "/reflex/root2/content/items/grid-ajax",
             "Превью" => "/reflex/root2/content/items/preview-ajax",
-		);
+        );
     }
     
     public function menu() {
@@ -277,33 +277,33 @@ abstract class Editor extends Core\Controller {
         $menu[] = array(
             "href" => $this->url(),
             "title" => "Редактирование",
-		);
+        );
         $menu[] = array(
             "href" => \mod::action(get_class($this),"log",array("id"=>$this->itemID()))->url(),
-			"title" => "Лог",
-		);
-		
-		$class = get_class($this);
+            "title" => "Лог",
+        );
+        
+        $class = get_class($this);
         $a = $class::inspector()->annotations();
         foreach($a as $fn => $annotations) {
             if($annotations["reflex-child"] == "on") {
                 $editor = new $class;
                 $collection = $editor->$fn();
-		        $menu[] = array(
-		            "href" => \mod::action(get_class($this),"child",array("id"=>$this->itemID(),"method" => $fn))->url(),
-					"title" => $collection->title(),
-				);
+                $menu[] = array(
+                    "href" => \mod::action(get_class($this),"child",array("id"=>$this->itemID(),"method" => $fn))->url(),
+                    "title" => $collection->title(),
+                );
             }
         }
-		
+        
         return $menu;
     }
     
     public function templateMain() {
         return \Infuso\Template\Tmp::get("/reflex/editor",array(
             "editor" => $this,
-		));
-	}
+        ));
+    }
     
     /**
      * Возвращает шаьлон формы редактирования элемента
@@ -311,7 +311,7 @@ abstract class Editor extends Core\Controller {
     public function templateEditForm() {
         return \Infuso\Template\Tmp::get("/reflex/editor/content/fields/form",array(
             "editor" => $this,
-		));
+        ));
     }
 
 }

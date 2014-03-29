@@ -7,10 +7,16 @@ use Infuso\Core\File;
 /**
  * Класс, склеивающий кусочки файлов css и js
  **/
-class Render {
+class Render extends Core\Component {
 
 	private static $less;
 	private static $renderID = null;
+	
+	public function initialParams() {
+		return array(
+			"cache" => true,
+		);
+	}
 	
 	private static function lesscssInstance() {
 		if(!self::$less) {
@@ -62,7 +68,7 @@ class Render {
      * и возвращает имя сгенерированного файла
      * @todo Сделать отключение кэширваония рендера
      **/
-	public static function packIncludes($items,$ext) {
+	public function packIncludes($items,$ext) {
 	
 	    $rpath = self::renderPath();
 
@@ -74,7 +80,7 @@ class Render {
 	    $file = file::get("{$rpath}/$hash.$ext");
 
         //if(mod::conf("tmp:always-render") || !$file->exists()) {
-	    if(!$file->exists()) {
+	    if(!$this->param("cache") || !$file->exists()) {
 
 	        $code = "";
 	        foreach($items as $item) {

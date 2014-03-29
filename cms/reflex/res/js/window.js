@@ -12,5 +12,7 @@ jQuery.fn.window = function() {
         background: "white",
         border: "1px solid gray"
     });
+    
+    alert(6780);
 
 }
