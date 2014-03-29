@@ -1,18 +1,36 @@
-jQuery.fn.window = function() {
+jQuery.fn.window = function(params) {
 
-    var params = {
+    var defaults = {
         width: 320,
         height: 240
     };
+    
+    params = $.extend({},defaults,params);
 
-    var window = $("<div>").css({
-        position: "absolute",
+    var wnd = $("<div>").css({
+        position: "fixed",
         width: params.width,
         height: params.height,
         background: "white",
-        border: "1px solid gray"
+        border: "1px solid gray",
+        zIndex:100
     });
     
-    alert(6780);
+    // Ставит окно в центр экрана
+    var centerWindow = function() {
+        var left = ($(window).width() - wnd.outerWidth()) / 2;
+        var top = ($(window).height() - wnd.outerHeight()) / 2;
+        wnd.css({
+            left: left,
+            top: top
+        });
+    }
+    
+    wnd.appendTo("body");
+    centerWindow();
+    
+    mod.call(params.call,function(html) {
+        wnd.html(html);
+    })
 
 }
