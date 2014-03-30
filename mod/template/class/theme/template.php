@@ -8,7 +8,9 @@
 class tmp_theme_template extends mod_component {
 
 	private $theme = null;
+	
 	private $name = null;
+	
 	public function __construct($theme=null,$name=null) {
 	    $this->theme = $theme;
 	    $this->name = "/".$name;
@@ -106,21 +108,15 @@ class tmp_theme_template extends mod_component {
 	}
 
 	public function setCode($code) {
-	    $this->removeFile("php");
 	    $this->file("php")->put($code);
-	   // $this->theme()->buildMap();
 	}
 
 	public function setJS($code) {
-	    $this->removeFile("js");
 	    $this->file("js")->put($code);
-	    //$this->theme()->buildMap();
 	}
 
 	public function setCSS($code) {
-	    $this->removeFile("css");
 	    $this->file("css")->put($code);
-	    //$this->theme()->buildMap();
 	}
 
 	/**
@@ -137,6 +133,18 @@ class tmp_theme_template extends mod_component {
 	        return file::get($name)->contents();
 	    }
 
+	}
+	
+	/**
+	 * Компилирует шаблон
+	 **/
+	public function compile() {
+	    $file = $this->file("php");
+	    $renderPath = \Infuso\Template\Theme::codeRenderFolder().$file->path();
+	    file::mkdir(file::get($renderPath)->up());
+	    $parser = new \Infuso\Template\Preparser();
+	    $php = $parser->preparse($file->data());
+	    file::get($renderPath)->put($php);
 	}
 
 	/**

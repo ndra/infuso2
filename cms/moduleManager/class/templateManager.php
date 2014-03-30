@@ -93,6 +93,7 @@ class moduleManager_templateManager extends mod_controller {
 		    default:
 			case "php":
 				$tmp->setCode($p["code"]);
+				$tmp->compile();
 				break;
 			case "js":
 				$tmp->setJS($p["code"]);

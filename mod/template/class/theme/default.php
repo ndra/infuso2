@@ -17,7 +17,7 @@ class defaultTheme extends Theme {
 	}
 
 	public function path() {
-		return Core\Mod::service("classmap")->getClassBundle(get_class())->path()."/theme";
+		return self::inspector()->bundle()->path()."/theme";
 	}
 
 	public function base() {
