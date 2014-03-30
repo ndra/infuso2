@@ -21,7 +21,11 @@ $(function() {
     });
     
     dropzone.click(function() {
-        mod.msg("open filemanager");
+        $("body").window({
+            call: {
+                cmd:"infuso/cms/reflex/controller/storage/getWindow"
+            }
+        });
     });
 
 });

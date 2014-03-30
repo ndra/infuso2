@@ -12,6 +12,18 @@ class Storage extends Core\Controller {
 	    return true;
 	}
 	
+	/**
+	 * Возвращает контент для окна файлменеджера
+	 **/
+	public function post_getWindow($p) {
+	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
+	    $tmp = \Infuso\Template\Tmp::get("/reflex/storage");
+	    $tmp->param("editor",$editor);
+	    return array(
+	        "html" => $tmp->getContentForAjax(),
+		);
+	}
+	
 	public function post_getFiles($p) {
 	
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);

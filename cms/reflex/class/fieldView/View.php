@@ -10,6 +10,7 @@ abstract class View extends Core\Component {
 	const LABEL_ALIGN_CHECKBOX  = 3;
 
 	protected $field = null;
+	protected $editor = null;
 
 	public function __construct($field) {
 	    $this->field = $field;
@@ -46,6 +47,14 @@ abstract class View extends Core\Component {
 	 **/
 	public function labelAlign() {
 	    return self::LABEL_ALIGN_LEFT;
+	}
+	
+	public function setEditor($editor) {
+	    $this->editor = $editor;
+	}
+	
+	public function editor() {
+		return $this->editor();
 	}
 
 }

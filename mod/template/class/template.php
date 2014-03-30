@@ -377,28 +377,28 @@ class Template extends Generic {
     }
 
 	public function bundle() {
-	    return tmp::templateBundle($this->mod()."/".$this->path());
+	    return $this->processor()->templateBundle($this->mod()."/".$this->path());
 	}
 
     /**
      * Возвращает файл с php-кодом этого шаблона
      **/
     public function file() {
-        return tmp::filePath($this->mod()."/".$this->path(),"php");
+        return $this->processor()->filePath($this->mod()."/".$this->path(),"php");
     }
 
     /**
      * Возвращает файл с js-кодом этого шаблона
      **/
     public function fileJS() {
-        return tmp::filePath($this->mod()."/".$this->path(),"js");
+        return $this->processor()->filePath($this->mod()."/".$this->path(),"js");
     }
 
     /**
      * Возвращает файл с css-кодом этого шаблона
      **/
     public function fileCSS() {
-        return tmp::filePath($this->mod()."/".$this->path(),"css");
+        return $this->processor()->filePath($this->mod()."/".$this->path(),"css");
     }
 
     public function includeScriptsAndStyles() {

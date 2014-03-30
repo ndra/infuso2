@@ -8,6 +8,10 @@ use Infuso\Core;
  **/
 class Processor extends Core\Component {
 
+    private $templateMap = array();
+
+	private $defaultsLoaded = false;
+
 	/**
 	 * Список шаблонов в регионах
 	 **/
@@ -231,5 +235,61 @@ class Processor extends Core\Component {
 	public function jq() {
         Lib::jq();
     }
+    
+    /**
+     * Подключает тему
+     * @param $class php-класс или объект темы
+     * Если такая тема уже была подключена, то она «всплывет» на самый верх списка
+     **/
+    public function theme($id) {
+        $this->loadDefaults();
+        $theme = Theme::get($id);
+        foreach($theme->templatesArray() as $key=>$tmp) {
+            $this->templateMap[$key] = $tmp;
+		}
+    }
+    
+	/**
+	 * Загружает дефолтные темы
+	 **/
+	public function loadDefaults() {
+
+	    if($this->defaultsLoaded) {
+	        return;
+	    }
+		$this->defaultsLoaded = true;
+
+		foreach(Core\File::get(Theme::mapFolder()."/_autoload.php")->inc() as $key => $val) {
+            $this->templateMap[$key] = $val;
+		}
+	}
+
+	/**
+	 * Возвращает путь к файлу шаблона с заданным расширением
+	 **/
+    public function filePath($template,$ext) {
+
+        $this->loadDefaults();
+
+        $template = trim($template,"/");
+        $ret = $this->templateMap[$template][$ext];
+
+        if($ret) {
+            return Core\File::get($ret);
+        } else {
+            return Core\File::nonExistent();
+		}
+    }
+
+	/**
+	 * Возвращает бандл шаблона
+	 **/
+	public function templateBundle($template) {
+        $this->loadDefaults();
+        $template = trim($template,"/");
+        $bundle = $this->templateMap[$template]["bundle"];
+		return \mod::service("bundle")->bundle($bundle);
+	}
+
 
 }

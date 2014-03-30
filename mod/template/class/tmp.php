@@ -6,7 +6,6 @@ use Infuso\Core\File;
 
 class Tmp implements Core\Handler {
 
-    public static $templateMap = array();
     private static $obj = null;
 
     /**
@@ -53,25 +52,6 @@ class Tmp implements Core\Handler {
     public function headInsert() {
 
         $head = "";
-
-        /*$obj = tmp::obj();
-
-        // Добавляем <title>
-        $title = $obj->meta("title");
-        $title = strtr($title,array("<"=>"&lt;",">"=>"&gt;"));
-        $head.= "<title>$title</title>\n";
-
-        // Добавляем noindex
-        if($obj->meta("noindex") || tmp::param("meta:noindex")) {
-            $head.= "<meta name='ROBOTS' content='NOINDEX,NOFOLLOW' >\n";
-        }
-
-        // Добавляем меты
-        foreach(array("keywords","description") as $name) {
-            if($val = trim($obj->meta($name))) {
-                $head.= "<meta name='{$name}' content='{$val}' />\n";
-            }
-        } */
 
         $head.= tmp::conveyor()->exec();
 
@@ -138,43 +118,6 @@ class Tmp implements Core\Handler {
     public function templateMap() {
         return self::$templateMap;
     }
-
-    /**
-     * Подключает тему
-     * @param $class php-класс или объект темы
-     * Если такая тема уже была подключена, то она «всплывет» на самый верх списка
-     **/
-    public function theme($id) {
-        Theme::loadDefaults();
-        $theme = Theme::get($id);
-        foreach($theme->templatesArray() as $key=>$tmp) {
-            self::$templateMap[$key] = $tmp;
-		}
-    }
-
-	/**
-	 * Возвращает путь к файлу шаблона с заданным расширением
-	 **/
-    public function filePath($template,$ext) {
-
-        Theme::loadDefaults();
-
-        $template = trim($template,"/");
-        $ret = self::$templateMap[$template][$ext];
-
-        if($ret) {
-            return file::get($ret);
-        } else {
-            return file::nonExistent();
-		}
-    }
-    
-	public function templateBundle($template) {
-        Theme::loadDefaults();
-        $template = trim($template,"/");
-        $bundle = self::$templateMap[$template]["bundle"];
-		return \mod::service("bundle")->bundle($bundle);
-	}
 
     public static function helper($html) {
         return \Infuso\Template\Helper::fromHTML($html);

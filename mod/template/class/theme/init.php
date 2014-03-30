@@ -29,7 +29,7 @@ class tmp_theme_init implements mod_handler {
 		$autoload = array();
 
 		foreach($themes as $theme) {
-		    $map = $theme->buildMap();
+		    $map = $theme->compile();
 		    if($theme->autoload()) {
 		        $autoload += $map;
 			}

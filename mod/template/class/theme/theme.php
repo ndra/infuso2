@@ -66,7 +66,6 @@ abstract class Theme extends Core\Component {
 	}
 	
 	/**
-	 * @return Возвращает путь к файлу темы
 	 * Если у темы нет соответствующего файла, возвращает null
 	 **/
 	public function templateExists($template) {
@@ -83,6 +82,9 @@ abstract class Theme extends Core\Component {
 		return Core\Mod::app()->varPath()."/tmp/themes/";
 	}
 	
+	/**
+	 * Возвращает папку, в которую будут рендериться php-шаблоны
+	 **/
 	public function codeRenderFolder() {
 	    return Core\Mod::app()->varPath()."/tmp/render-php/";
 	}
@@ -92,13 +94,6 @@ abstract class Theme extends Core\Component {
 	 **/
 	public function mapFile() {
 		return self::mapFolder()."/".get_class($this).".php";
-	}
-
-	/**
-	 * @return Возвращает параметры для конструктора данной темы
-	 **/
-	public function constructorParams() {
-		return null;
 	}
 
 	/**
@@ -125,7 +120,7 @@ abstract class Theme extends Core\Component {
 	/**
 	 * Сохраняет описние и структуру файлов темы в файл
 	 **/
-	public function buildMap() {
+	public function compile() {
 
 		$map = array();
 
@@ -180,21 +175,6 @@ abstract class Theme extends Core\Component {
 	 **/
 	public function templatesArray() {
 		return $this->descr;
-	}
-
-	/**
-	 * Загружает дефолтные темы
-	 **/
-	public function loadDefaults() {
-	
-	    if(self::$defaultsLoaded) {
-	        return;
-	    }
-		self::$defaultsLoaded = true;
-		
-		foreach(Core\File::get(self::mapFolder()."/_autoload.php")->inc() as $key => $val) {
-            Tmp::$templateMap[$key] = $val;
-		}
 	}
 
 }

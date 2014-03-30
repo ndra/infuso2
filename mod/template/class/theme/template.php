@@ -123,10 +123,14 @@ class tmp_theme_template extends mod_component {
 	    //$this->theme()->buildMap();
 	}
 
+	/**
+	 * Возвращает контент шаблона
+	 **/
 	public function contents($ext) {
 	
-	    if($this->file($ext)->exists())
+	    if($this->file($ext)->exists()) {
 	        return $this->file($ext)->contents();
+	    }
 
 	    if($ext=="php") {
 	        $name = strtr($this->file($ext),array(".php" => ".inc.php"));
@@ -153,13 +157,18 @@ class tmp_theme_template extends mod_component {
 	    return true;
 	}
 
+	/**
+	 * Удаляет шаблон и вложенные в него шаблоны
+	 **/
 	public function delete() {
 	
-	    if(!$this->inTheme())
+	    if(!$this->inTheme()) {
 	        return;
+		}
 
-	    if($this->relName()=="")
+	    if($this->relName()=="") {
 	        return;
+		}
 
 	    $this->file("php")->delete();
 	    $this->file("js")->delete();
@@ -179,12 +188,15 @@ class tmp_theme_template extends mod_component {
 	    $this->theme()->buildMap();
 	}
 
+	/**
+	 * Возвращает первый комментарий в php-коде шаблона
+	 * Используется в админке в списке шаблонов
+	 **/
 	public function firstComment() {
 		$code = $this->contents("php");
 		if(preg_match("/(\/\/[^\n]*\n)|(\/\*.*\*\/)/is",$code,$matches)) {
 		    return $matches[0];
 		}
-		
 	}
 
 
