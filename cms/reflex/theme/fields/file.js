@@ -23,7 +23,8 @@ $(function() {
     dropzone.click(function() {
         $("body").window({
             call: {
-                cmd:"infuso/cms/reflex/controller/storage/getWindow"
+                cmd:"infuso/cms/reflex/controller/storage/getWindow",
+                editor: dropzone.attr("data:editor")
             }
         });
     });

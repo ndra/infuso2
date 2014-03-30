@@ -11,6 +11,7 @@ class File extends View {
 	public function template() {
 		$tmp = \Infuso\Template\Tmp::get("/reflex/fields/file");
 		$tmp->param("field", $this->field);
+		$tmp->param("view", $this);
 		return $tmp;
 	}
 	

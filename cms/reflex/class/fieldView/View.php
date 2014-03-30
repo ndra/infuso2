@@ -54,7 +54,7 @@ abstract class View extends Core\Component {
 	}
 	
 	public function editor() {
-		return $this->editor();
+		return $this->editor;
 	}
 
 }
