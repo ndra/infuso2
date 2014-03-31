@@ -45,8 +45,7 @@ abstract class Editor extends Core\Controller {
         $editor = new $class($p["id"]);
     
         $code = get_class($this).":".$p["method"].":".$editor->itemID();
-        $collection = Core\Mod::service("reflex")->getCollection($code);
-        $collection->addBehaviour("Infuso\Cms\Reflex\Behaviour\Collection");
+        $collection = Collection::unserialize($code);
         
         \Infuso\Template\Tmp::exec("/reflex/children",array(
             "editor" => $this,
