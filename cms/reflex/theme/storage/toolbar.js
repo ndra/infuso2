@@ -1,6 +1,6 @@
 $(function() {
 
-    $(".x8gdq98zre1").each(function() {
+    $(".x8gdq98zre1").mod().init(function() {
     
         var container = $(".x8gdq98zre1");
         var file = container.find("input[type=file]");
@@ -13,8 +13,7 @@ $(function() {
             },function() {
                 mod.fire("reflex/storage/upload");
             },container);
-        })
-        
+        });
         
     });
 
