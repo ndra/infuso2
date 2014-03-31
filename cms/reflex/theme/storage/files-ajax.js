@@ -8,7 +8,7 @@ $(function() {
         
         $(this).dblclick(function() {
             var filename = $(this).attr("data:filename");
-            var wnd = $(this).mod().window().trigger("selectFile", [filename]);
+            $(this).mod().window().trigger("selectFile", [filename]);
         });
     
     });

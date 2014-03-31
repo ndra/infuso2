@@ -29,6 +29,7 @@ $(function() {
                     editor: dropzone.attr("data:editor")
                 }, events: {
                     selectFile:function(event,filename) {
+                        $(this).mod().window("close");
                         console.log(filename);
                     }
                 }

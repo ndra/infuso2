@@ -18,7 +18,14 @@ jQuery.fn.mod = function() {
         /**
           * Возвращает элемент окна
           **/
-        this.window = function() {
+        this.window = function(params) {
+        
+            if(params == "close") {
+                $(this).remove();
+                alert("close");
+                return $(this);
+            }
+        
             return e.parents(".5jfNUBs7a9zwHl:first");
         }
     
