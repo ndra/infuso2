@@ -56,5 +56,12 @@ abstract class View extends Core\Component {
 	public function editor() {
 		return $this->editor;
 	}
+	
+	/**
+	 * Возвращает поле, с который связан этот вид
+	 **/
+	public function field() {
+		return $this->field;
+	}
 
 }

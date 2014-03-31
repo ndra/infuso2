@@ -21,9 +21,8 @@ jQuery.fn.mod = function() {
         this.window = function(params) {
         
             if(params == "close") {
-                $(this).remove();
-                alert("close");
-                return $(this);
+                e.remove();
+                return this;
             }
         
             return e.parents(".5jfNUBs7a9zwHl:first");

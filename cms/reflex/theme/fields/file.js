@@ -30,7 +30,7 @@ $(function() {
                 }, events: {
                     selectFile:function(event,filename) {
                         $(this).mod().window("close");
-                        console.log(filename);
+                        dropzone.find("input").val(filename)
                     }
                 }
             });
