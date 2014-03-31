@@ -290,6 +290,14 @@ class Processor extends Core\Component {
         $bundle = $this->templateMap[$template]["bundle"];
 		return \mod::service("bundle")->bundle($bundle);
 	}
+	
+    /**
+     * Запрещает текущую страницу к индексации
+     * (На практике устанавливает специальный параметр, который учитывается при построеннии шапки)
+     **/
+    public function noindex() {
+        $this->param("meta:noindex",true);
+    }
 
 
 }

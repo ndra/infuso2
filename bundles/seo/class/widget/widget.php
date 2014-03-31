@@ -1,6 +1,6 @@
 <?
 
-class seo_widget extends admin_widget {
+class seo_widget extends Infuso\Cms\Admin\Widgets\Widget {
 
 	public function test() {
 	    return user::active()->checkAccess("admin");

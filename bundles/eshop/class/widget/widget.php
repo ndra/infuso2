@@ -3,7 +3,7 @@
 /**
  * Виджет меню для интернет-магазина
  **/
-class eshop_widget extends admin_widget {
+class eshop_widget extends Infuso\Cms\Admin\Widgets\Widget {
 
 	public function test() {
 		if(user::active()->checkAccess("eshop:showMainWidget")) {

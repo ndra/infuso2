@@ -1,6 +1,6 @@
 <?
 
-class file_widget extends admin_widget {
+class file_widget extends Infuso\Cms\Admin\Widgets\Widget {
 
 	public function exec() {
 		$url = mod_action::get("file_tools")->url();

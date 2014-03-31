@@ -10,8 +10,8 @@ $(function() {
             editor: editor,
         },function(p) {
             container.find(".files").html(p.html);
-        })
-    
+        });
+   
     }
     
     load();

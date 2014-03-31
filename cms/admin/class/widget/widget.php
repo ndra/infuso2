@@ -1,6 +1,12 @@
 <?
 
-abstract class admin_widget extends mod_component {
+namespace Infuso\Cms\Admin\Widgets;
+use Infuso\Core;
+
+/**
+ * Базовый класс для виджетов, которые выводятся в верхнее меню админки
+ **/
+abstract class Widget extends Core\Component {
 
 	/**
 	 * Выполняет виджет
@@ -32,18 +38,19 @@ abstract class admin_widget extends mod_component {
 	 * @return Можно ли выводить этот виджет
 	 **/
 	public function test() {
-	    return user::active()->checkAccess("admin:showInterface");
+	    return \user::active()->checkAccess("admin:showInterface");
 	}
 
 	/**
-	 * Возвращает список всех виджетов
+	 * Возвращает массив всех админских виджетов
 	 **/
 	public function all() {
 		$ret = array();
-		foreach(mod::service("classmap")->getClassesExtends("admin_widget") as $class) {
+		foreach(Core\Mod::service("classmap")->getClassesExtends(get_class()) as $class) {
 		    $widget = new $class;
-		    if($widget->test())
+		    if($widget->test()) {
 		        $ret[] = $widget;
+		    }
 		}
 		return $ret;
 	}

@@ -3,7 +3,7 @@
 /**
  * Виджет для меню в админке
  **/
-class geo_admin_widget extends admin_widget {
+class geo_admin_widget extends Infuso\Cms\Admin\Widgets\Widget {
 
 	public function test() {
 	    return mod_superadmin::check();

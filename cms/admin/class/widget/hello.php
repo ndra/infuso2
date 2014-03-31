@@ -1,6 +1,9 @@
 <?
 
-class admin_widget_hello extends admin_widget {
+namespace Infuso\Cms\Admin\Widgets;
+use Infuso\Core;
+
+class Hello extends Widget {
 
 	/**
 	 * Выполняет виджет

@@ -1,6 +1,6 @@
 <?
 
-class doc_widget extends admin_widget {
+class doc_widget extends Infuso\Cms\Admin\Widgets\Widget {
 
 	public function exec() {
 		$url = mod_action::get("doc")->url();

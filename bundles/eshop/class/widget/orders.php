@@ -3,7 +3,7 @@
 /**
  * Виджет для вывода заказов на главной странице админки /admin/
  **/
-class eshop_widget_orders extends admin_widget {
+class eshop_widget_orders extends \Infuso\Cms\Admin\Widgets\Widget {
 
     public function test() {
         if(user::active()->checkAccess("eshop:showOrdersWidget")) {

@@ -2,7 +2,7 @@
 
 namespace Infuso\Cms\Utils;
 
-class Widget extends \admin_widget {
+class Widget extends \Infuso\Cms\Admin\Widgets\Widget {
 
 	public function exec() {
 	

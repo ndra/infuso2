@@ -79,7 +79,7 @@ class App {
 	}
 
 	public function init() {
-
+	
 	    if(!self::$initiated) {
 
 		    self::$initiated = true;

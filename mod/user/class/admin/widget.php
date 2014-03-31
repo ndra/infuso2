@@ -1,6 +1,6 @@
 <?
 
-class user_admin_diget extends admin_widget {
+class user_admin_diget extends Infuso\Cms\Admin\Widgets\Widget {
 
     public function test() {
         return mod_superadmin::check();

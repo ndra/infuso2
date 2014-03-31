@@ -1,6 +1,6 @@
 <?
 
-class moduleManager_widget extends admin_widget {
+class moduleManager_widget extends Infuso\Cms\Admin\Widgets\Widget {
 
 	public function exec() {
 

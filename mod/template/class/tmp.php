@@ -59,14 +59,6 @@ class Tmp implements Core\Handler {
 
     }
 
-    /**
-     * Запрещает текущую страницу к индексации
-     * (На практике устанавливает специальный параметр, который учитывается при построеннии шапки)
-     **/
-    public static function noindex() {
-        tmp::param("meta:noindex",true);
-    }
-
     public static function nocache() {
         tmp::conveyor()->preventCaching(true);
     }
