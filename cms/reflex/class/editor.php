@@ -48,7 +48,7 @@ abstract class Editor extends Core\Controller {
         $collection = Collection::unserialize($code);
         
         \Infuso\Template\Tmp::exec("/reflex/children",array(
-            "editor" => $this,
+            "editor" => $editor,
             "collection" => $collection,
         ));
     }
@@ -266,8 +266,8 @@ abstract class Editor extends Core\Controller {
      **/
     public function _viewModes() {
         return array(
-            "Список" => "/reflex/collection/items/grid-ajax",
-            "Превью" => "/reflex/collection/items/preview-ajax",
+            "Список" => "/reflex/shared/collection/items/grid-ajax",
+            "Превью" => "/reflex/shared/collection/items/preview-ajax",
         );
     }
     

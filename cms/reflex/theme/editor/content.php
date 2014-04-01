@@ -1,6 +1,5 @@
 <? 
 
-tmp::exec("header");
-tmp::exec("menu");
+tmp::exec("/reflex/shared/editor-head");
 tmp::exec("fields");
 

@@ -97,12 +97,14 @@ class moduleManager_templateManager extends mod_controller {
 				break;
 			case "js":
 				$tmp->setJS($p["code"]);
+				\Infuso\Template\Render::clearRender();
 				break;
 			case "css":
 				$tmp->setCSS($p["code"]);
+				\Infuso\Template\Render::clearRender();
 				break;
 		}
-		\Infuso\Template\Render::clearRender();
+		
 		mod::msg("Шаблон сохранен");
 	}
 
@@ -144,36 +146,6 @@ class moduleManager_templateManager extends mod_controller {
 		    $reload = 0;
 		}
 		return $reload;
-	}
-
-	/**
-	 * Копирование старых шаблонов
-	 **/
-	public static function post_restoreTemplates($p) {
-	
-		$theme = tmp_theme::get($p["themeID"]);
-		$folders = array(
-		    "/eshop/templates/",
-		    "/form/templates/",
-		    "/user/templates/",
-		    "/tmp/templates/",
-	     	"/ndra/templates/",
-	     	"/pay/templates/",
-	     	"/reflex/templates/",
-	     	"/vote/templates/",
-	     	"/lang/templates/",
-		);
-		
-		foreach($folders as $folder) {
-		    $folder = file::get($folder);
-		    if($folder->exists()) {
-			    $dest = file::get($theme->path()."/".$folder->up());
-			    file::get($dest->up()."/".$dest->basename().".php")->put("");
-			    $folder->copy($dest);
-		    }
-		}
-		
-		$theme->buildMap();
 	}
 
 }

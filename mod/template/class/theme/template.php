@@ -155,7 +155,7 @@ class tmp_theme_template extends mod_component {
 	    $file = file::get($file);
 	    file::mkdir($file->up(),true);
 	    $file->put("<"."? ");
-	    $this->theme()->buildMap();
+	    $this->theme()->compile();
 	}
 
 	/**
@@ -182,7 +182,7 @@ class tmp_theme_template extends mod_component {
 	    $this->file("js")->delete();
 	    $this->file("css")->delete();
 	    $this->folder()->delete(1);
-	    $this->theme()->buildMap();
+	    $this->theme()->compile();
 	}
 
 	/**
@@ -193,7 +193,7 @@ class tmp_theme_template extends mod_component {
 	    $this->file("js")->rename($this->file("js")->up()->path()."/$name.js");
 	    $this->file("css")->rename($this->file("css")->up()->path()."/$name.css");
 	    $this->folder()->rename($this->folder()->up()->path()."/$name");
-	    $this->theme()->buildMap();
+	    $this->theme()->compile();
 	}
 
 	/**

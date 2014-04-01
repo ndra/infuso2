@@ -5,12 +5,12 @@
         <tr>
             <td style='width:100%;' >
             
-                foreach($editor->item()->parents() as $parent) {
-                    $parent->addBehaviour("\\Infuso\\Cms\\Reflex\\Behaviour\\ActiveRecord");
-                    <a href='{$parent->editor()->url()}' >{$parent->title()}</a>
-                }
+                // Хлебные крошки
+                tmp::exec("breadcrumbs");                
             
+                // Заголовок элемента
                 <div class='title' >{$editor->title()}</div>
+                
             </td>
             <td>
                 tmp::exec("actions");
