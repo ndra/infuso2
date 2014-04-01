@@ -1,0 +1,21 @@
+.x1arvpu0c38 {
+
+    padding:20px;    
+    
+    .items {
+    
+        .item {
+       
+            &:hover {
+                background:#ededed;
+            }
+            
+            &.selected {
+                border:1px solid red;
+            }
+            
+        }
+    
+    }
+    
+}

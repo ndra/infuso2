@@ -1,4 +1,3 @@
 <? 
 
-tmp::exec("/reflex/root2/content/items");
-tmp::exec("/reflex/root2/content/toolbar");
+tmp::exec("/reflex/collection");

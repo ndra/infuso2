@@ -266,8 +266,8 @@ abstract class Editor extends Core\Controller {
      **/
     public function _viewModes() {
         return array(
-            "Список" => "/reflex/root2/content/items/grid-ajax",
-            "Превью" => "/reflex/root2/content/items/preview-ajax",
+            "Список" => "/reflex/collection/items/grid-ajax",
+            "Превью" => "/reflex/collection/items/preview-ajax",
         );
     }
     

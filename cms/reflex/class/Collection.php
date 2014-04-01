@@ -16,7 +16,7 @@ class Collection extends Core\Component {
 	}
 	
 	public function collection() {
-		$editor = Editor::get($this->className,$this->id);
+		$editor = Editor::get($this->className.":".$this->id);
 		$fn = $this->method;
 		return $editor->$fn();
 	}

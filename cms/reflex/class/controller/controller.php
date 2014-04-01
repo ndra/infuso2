@@ -87,8 +87,11 @@ class Controller extends \Infuso\Core\Controller {
      **/
     public static function post_createItem($p) {
 
-		$constructor = new Model\ConstructorEDitor($p["constructorId"]);
+		$constructor = new Model\ConstructorEditor($p["constructorId"]);
 		$editor = $constructor->item()->createItem($p["data"]);
+		
+		mod::msg($editor->item()->data());
+		
         return $editor->url();
 
     }

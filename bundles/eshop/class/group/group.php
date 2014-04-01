@@ -233,7 +233,7 @@ public static function recordTable() {return array (
 	    return $ret;
 	}
 
-	public function reflexParent() {
+	public function recordParent() {
 	    return self::get($this->data("parent"));
 	}
 
