@@ -1,6 +1,6 @@
 jQuery.fn.mod = function() {
 
-    var mod = function(e) {
+    var md = function(e) {
     
         /**
           * Похожа на jQuery-функцию each, но вызывается один раз для каждого элемента
@@ -27,10 +27,47 @@ jQuery.fn.mod = function() {
         
             return e.parents(".5jfNUBs7a9zwHl:first");
         }
+        
+        this.list = function(param) {
+        
+			if(param === undefined) {
+			    e.mod().init(function() {
+			        $(this).find(".list-item").mousedown(function() {
+			             $(this).toggleClass("selected");
+			        });
+			    });
+			    return e;
+			}
+        
+            if(param === "selection") {
+				var ret = [];
+				e.find(".list-item.selected").each(function() {
+				    ret.push($(this).attr("data:id"));
+				});
+				return ret;
+            }
+            
+            if(param === "keep-selection") {
+                var sel = e.mod().list("selection");
+                e.data("lsit-selection",sel);
+                return e;
+            }
+            
+            if(param === "restore-selection") {
+                var sel = e.data("lsit-selection");
+                e.find(".list-item").each(function() {
+                    if($.inArray($(this).attr("data:id",sel))) {
+                        $(this).addClass("selected");
+                    }
+                });
+                return e;
+            }
+            
+        }
     
     }
 
-    return new mod($(this));
+    return new md($(this));
 
 }
 

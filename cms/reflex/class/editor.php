@@ -92,6 +92,10 @@ abstract class Editor extends Core\Controller {
         list($class,$id) = explode(":",$index);
         return new $class($id);
     }
+    
+    public function id() {
+        return get_class($this).":".$this->itemId();
+    }
 
     /**
      * Возвращает id элемента (id записи activeRecord)

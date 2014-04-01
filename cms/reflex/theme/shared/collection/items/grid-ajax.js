@@ -1,11 +1,8 @@
 $(function() {
 
-    $(".x1arvpu0c38").each(function() {
+    $(".x1arvpu0c38").mod().init(function() {
     
-        var container = $(this);
-        container.find(".item").mousedown(function() {
-            $(this).toggleClass("selected");
-        });
+        $(this).mod().list();
     
     });
 

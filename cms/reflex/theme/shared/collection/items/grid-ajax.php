@@ -4,7 +4,7 @@
 
     <div class='items' >
         foreach($collection->editors() as $editor) {
-            <div class='item' >
+            <div class='list-item' data:id='{$editor->id()}' >
                 <a href='{$editor->url()}' >
                     echo $editor->title();
                 </a>                
