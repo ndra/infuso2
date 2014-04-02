@@ -197,7 +197,7 @@ class eshop_item extends reflex
     /**
      * Включаем метаданные у товара
      **/
-    public final function reflex_meta()
+    public final function reflexMeta()
     {
         return true;
     }
@@ -205,7 +205,7 @@ class eshop_item extends reflex
     /**
      * После каждого действия с тоаром ставим задачу пересчитать родителей
      **/
-    public final function reflex_afterStore()
+    public final function afterStore()
     {
         if ($this->field("parent")->changed() || $this->field("activeSys")->changed()) {
             $this->taskUpdateParents();
@@ -215,7 +215,7 @@ class eshop_item extends reflex
     /**
      * После удаления товара
      **/
-    public final function reflex_afterDelete()
+    public final function afterDelete()
     {
         $this->taskUpdateParents();
     }
@@ -234,7 +234,7 @@ class eshop_item extends reflex
     /**
      * Запоминает дату создания товара
      **/
-    public final function reflex_beforeCreate()
+    public final function beforeCreate()
     {
         $this->data("created", util::now());
     }
@@ -272,7 +272,7 @@ class eshop_item extends reflex
     /**
      * Чинит элемент
      **/
-    public final function reflex_beforeStore()
+    public final function beforeStore()
     {
         $this->updateParentsChain();
     }
@@ -303,11 +303,6 @@ class eshop_item extends reflex
         foreach ($this->parents() as $parent)
             $idList[] = $parent->id();
         return eshop_group::allEvenHidden()->eq("id", $idList)->desc("depth");
-    }
-
-    public function reflex_classTitle()
-    {
-        return "Товарная позиция";
     }
 
     /**
@@ -345,19 +340,19 @@ class eshop_item extends reflex
     /**
      * Включаем лог у товаров
      **/
-    public static function reflex_log()
+    public static function reflexLog()
     {
         return "true";
     }
 
-    public function reflex_published()
+    /*public function reflex_published()
     {
         if (!$this->data("active"))
             return false;
         if (!$this->data("activeSys"))
             return false;
         return true;
-    }
+    } */
 
     /**
      * Проверка возможности покупки $n штук товара
