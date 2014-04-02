@@ -65,11 +65,16 @@ abstract class Editor extends Core\Controller {
     }
     
     /**
-     * Контроллер метаданных
+     * Контроллер лога объекта
      **/
     public function index_meta($p) {
+        $class = get_called_class();
+        $editor = new $class($p["id"]);
+        \Infuso\Template\Tmp::exec("/reflex/meta",array(
+            "editor" => $editor,
+        ));
     }
-     
+    
     public function title() {
         return $this->item()->title();
     }
@@ -275,15 +280,27 @@ abstract class Editor extends Core\Controller {
         );
     }
     
+    /**
+     * Возвращает меню редактора
+     * Меню показывается в шапке редактора элемента в каталоге
+     **/
     public function menu() {
+    
         $menu = array();
+        
         $menu[] = array(
             "href" => $this->url(),
             "title" => "Редактирование",
         );
+        
         $menu[] = array(
             "href" => \mod::action(get_class($this),"log",array("id"=>$this->itemID()))->url(),
             "title" => "Лог",
+        );
+        
+        $menu[] = array(
+            "href" => \mod::action(get_class($this),"meta",array("id"=>$this->itemID()))->url(),
+            "title" => "Метаданные",
         );
         
         $class = get_class($this);
