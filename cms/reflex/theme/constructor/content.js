@@ -20,7 +20,9 @@ $(function() {
                 constructorId:form.attr("infuso:constructor"),
                 data:formData
             },function(url) {
-                window.location.href = url;
+                if(url) {
+                    window.location.href = url;
+                }
             });
             
         }

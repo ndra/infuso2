@@ -6,6 +6,7 @@
 class reflex_meta extends mod_controller {
 
 	private $reflex;
+	
 	public function __construct($reflex=null) {
 		return $this->reflex = $reflex;
 	}

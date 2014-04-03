@@ -90,9 +90,9 @@ class Controller extends \Infuso\Core\Controller {
 		$constructor = new Model\ConstructorEditor($p["constructorId"]);
 		$editor = $constructor->item()->createItem($p["data"]);
 		
-		mod::msg($editor->item()->data());
-		
-        return $editor->url();
+		if($editor->item()->exists()) {
+        	return $editor->url();
+		}
 
     }
 

@@ -92,8 +92,22 @@ class Route extends ActiveRecord\Record {
 		return \reflex::get(get_class())->asc("priority");
 	}
 	
-	public static function get($hash) {
-		return self::all()->eq("hash",$hash)->one();
+	/**
+	 * Возвращает запись роута
+	 * Можно передавать как строку class:id так и объект ActiveRecord
+	 **/
+	public static function get($param) {
+	
+	    if(is_object($param) && is_subclass_of($param,"Infuso\\ActiveRecord\\Record")) {
+			$class = get_class($param);
+			$id = $param->id();
+			return self::get($class.":".$id);
+	    } elseif(is_string($param)) {
+        	return self::all()->eq("hash",$param)->one();
+		}
+		
+		Throw new \Rxception();
+		
 	}
 
 	// Возвращает объект, к которому прикреплен данный роут
@@ -144,7 +158,7 @@ class Route extends ActiveRecord\Record {
 	 **/
 	public function action() {
 		list($class,$action) = explode("/",$this->data("controller"));
-		return mod::action($class,$action,$this->pdata("params"));
+		return Core\Action::get($class,$action,$this->pdata("params"));
 	}
 
 	/**
@@ -209,11 +223,11 @@ class Route extends ActiveRecord\Record {
 	    
 	}
 
-	public function reflex_beforeStore() {
+	public function beforeStore() {
 
 		if(!$this->data("hash")) {
 			if(!preg_match("/^([a-z0-9\_]+)\/([a-z0-9\_]+)$/i",$this->data("controller"))) {
-			    mod::msg("Неверный формат контроллера. Используйте формат class_name/action",1);
+			    Core\Mod::msg("Неверный формат контроллера. Используйте формат class_name/action",1);
 			    return false;
 			}
 		}
