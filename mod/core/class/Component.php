@@ -366,5 +366,8 @@ class Component {
 	public function app() {
 	    return \Mod::app();
 	}
-
+	
+	public function service($name) {
+	    return Mod::service($name);
+	}
 }

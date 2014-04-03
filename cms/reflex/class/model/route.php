@@ -3,6 +3,7 @@
 namespace Infuso\Cms\Reflex\Model;
 use Infuso\Core;
 use Infuso\ActiveRecord;
+use Infuso\Cms\Reflex;
 
 /**
  * Модель роута в каталоге
@@ -113,7 +114,7 @@ class Route extends ActiveRecord\Record {
 	// Возвращает объект, к которому прикреплен данный роут
 	public function item() {
 	    list($class,$id) = explode(":",$this->data("hash"));
-	    return reflex::get($class,$id);
+	    return Core\Mod::service("ar")->get($class,$id);
 	}
 
 	/**
@@ -238,7 +239,7 @@ class Route extends ActiveRecord\Record {
 	    if($this->data("hash")) {
 	        $this->data("controller",get_class($this->item())."/item");
 	        $this->data("params",array("id"=>$this->item()->id()));
-	        $this->data("domain",$this->item()->domain()->id());
+	       // $this->data("domain",$this->item()->domain()->id());
 	        $this->data("hash",get_class($this->item()).":".$this->item()->id());
 	        $this->data("priority",-10);
 	    }
@@ -268,7 +269,7 @@ class Route extends ActiveRecord\Record {
 
 	        // Переводим УРЛ в транслит
 	        $url = mb_strtolower($url,"utf-8");
-	        $url = util::translit($url);
+	        $url = \util::translit($url);
 
 	        // Убираем все лишнее из url
 	        $url = preg_replace("/[^1234567890qwertyuiopasdfghjklzxcvbnm\-\_\/\.]+/","-",$url);
