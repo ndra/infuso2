@@ -6,7 +6,8 @@
         "method" => $method,
     ));
     
-    <div class='node' data:node-id="root/{$class}/{$method}" >
+    $nodeId = "root/{$class}/{$method}";
+    <div class='node' data:node-id="{$nodeId}" >
     
         <span class='expand' > + </span>
         
@@ -15,7 +16,13 @@
             echo " (".$collection->collection()->count().")";
         </a>
         
-        <div class='subdivisions' ></div>
+        <div class='subdivisions' >
+            if(1) {
+                tmp::exec("subdivisions", array(
+                    "nodeId" => $nodeId,
+                ));
+            }
+        </div>
     
     </div>
 
