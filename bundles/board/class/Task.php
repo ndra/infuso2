@@ -150,18 +150,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         return $this->project();
     }
 
-    public static function reflex_root() {
-        return self::all()->title("Все задачи")->param("tab","system");
-    }
-
-    public function reflex_children() {
-        return array(
-            $this->getLogCustom()->title("Затраченное время"),
-            $this->subtasks()->title("Подзадачи"),
-        );
-    }
-
-    public function reflex_title() {
+    public function recordTitle() {
         return \util::str($this->data("text"))->ellipsis(50)."";
     }
 
@@ -173,13 +162,13 @@ class Task extends \Infuso\ActiveRecord\Record {
         return $this->pdata("responsibleUser");
     }
 
-    public function reflex_beforeCreate() {
+    public function beforeCreate() {
         $this->data("changed",util::now());
         $this->data("created",util::now());
         $this->data("creator",user::active()->id());
     }
 
-    public function reflex_afterCreate() {
+    public function afterCreate() {
         $this->log("Создано");
     }
 
@@ -197,7 +186,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         return $this->taskEventsSuspended;
     }
 
-    public function reflex_beforeStore() {
+    public function beforeStore() {
 
         $this->data("dataHash",\util::id());
 

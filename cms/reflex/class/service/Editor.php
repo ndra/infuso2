@@ -4,7 +4,7 @@ namespace Infuso\Cms\Reflex\Service;
 use Infuso\Core;
 use \mod,\user;
 
-class Editor extends Core\Service {
+class Editor extends Core\Service implements Core\Handler {
 
     public function defaultService() {
         return "reflex";
@@ -17,13 +17,13 @@ class Editor extends Core\Service {
 	    $event->fire();
 	    
 	    // Собираем коллекции из reflexRoot()
-	    $this->buildMap($event);
+	    //$this->buildMap($event);
 
 	    return $event->items();
 	}
 	
     /**
-     * Строит карту рутов
+     * @handler = reflexMenu
      **/
     public function buildMap($event) {
 
@@ -36,15 +36,14 @@ class Editor extends Core\Service {
             foreach($a as $fn => $annotations) {
                 if($annotations["reflex-root"] == "on") {
 
-                    $editor = new $class;
-                    $collection = $editor->$fn();
+                    $collection = new \Infuso\Cms\Reflex\Collection($class,$fn);
 
 	                $event->add(array(
-			            "template" => "/reflex/root",
+			            "template" => "/reflex/menu-root",
 			            "templateParams" => array(
 			                "class" => $class,
 							"method" => $fn,
-			                "title" => $collection->title(),
+			                "title" => $collection->collection()->title(),
 			                "collection" => $collection,
 						),
 					));
