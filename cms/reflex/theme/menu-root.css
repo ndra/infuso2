@@ -1,5 +1,27 @@
 .pp7cpa1wpc {
-    & > .items {
-        padding-left:20px;
-    }
+    
+    .node {
+    
+        white-space: nowrap;
+    
+        .expand {
+            cursor:pointer;
+            &:hover {
+                background: #ededed;
+            }
+        }
+        
+        .node-title {
+            display: inline-block;
+            max-width: 300px;
+            text-overflow: ellipsis;
+            overflow:hidden;          
+        }
+        
+        .subdivisions {
+            padding-left: 20px;
+        }
+    
+    }    
+    
 }

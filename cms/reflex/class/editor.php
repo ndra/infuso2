@@ -326,7 +326,7 @@ abstract class Editor extends Core\Controller {
     }
     
     /**
-     * Возвращает шаьлон формы редактирования элемента
+     * Возвращает шаблон формы редактирования элемента
      **/
     public function templateEditForm() {
         return \Infuso\Template\Tmp::get("/reflex/editor/content/fields/form",array(

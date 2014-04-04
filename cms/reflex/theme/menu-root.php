@@ -6,17 +6,17 @@
         "method" => $method,
     ));
     
-    <a href='{$url}' >
-        echo $title;
-        echo " (".$collection->collection()->count().")";
-    </a>
+    <div class='node' data:node-id="root/{$class}/{$method}" >
     
-    <div class='items' >
-        foreach($collection->editors() as $editor) {    
-            tmp::exec("editor", array(
-                "editor" => $editor,
-            ));
-        }
+        <span class='expand' > + </span>
+        
+        <a class='node-title' href='{$url}' >            
+            echo $title;
+            echo " (".$collection->collection()->count().")";
+        </a>
+        
+        <div class='subdivisions' ></div>
+    
     </div>
 
 </div>
