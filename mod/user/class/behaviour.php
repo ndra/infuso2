@@ -58,6 +58,7 @@ class user_behaviour extends mod_behaviour {
     
     /**
      * Возвращает объект файла юзерпика пользователя
+     * @todo вернуть переопределение через поведения
      **/
     public function userpick() {
 
@@ -65,7 +66,7 @@ class user_behaviour extends mod_behaviour {
 			return $this->pdata("userpick");
         }
 
-        $key = "userpick";
+        /*$key = "userpick";
         foreach($this->behaviours() as $b) {
             if(get_class($b) != get_class($this)) {
 	            if(method_exists($b,$key)) {
@@ -74,7 +75,7 @@ class user_behaviour extends mod_behaviour {
 	                }
 	            }
             }
-        }
+        } */
 
         return file::nonExistent();
     }

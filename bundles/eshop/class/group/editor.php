@@ -56,7 +56,7 @@ class eshop_group_editor extends \Infuso\Cms\Reflex\Editor {
 	}
 	
 	/**
-	 * @reflex-child = on
+	 * @reflex-child = off
 	 **/
 	public function items() {
 		return $this->item()->items()
