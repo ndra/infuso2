@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Heapit;
+namespace Infuso\Heapit\Model;
 use \Infuso\Core;
 
 class Org extends \Infuso\ActiveRecord\Record {
@@ -93,8 +93,11 @@ class Org extends \Infuso\ActiveRecord\Record {
 		return true;
 	}
 	
-	public static function index($p1=null,$p2=null) {
-		tmp::exec("org:title");
+	public function index_item($p) {
+		$org = self::get($p["id"]);
+		$this->app()->tmp()->exec("/heapit/org",array(
+		    "org" => $org,
+		));
 	}
 
 	public function beforeCreate() {
@@ -111,7 +114,9 @@ class Org extends \Infuso\ActiveRecord\Record {
 		return \reflex::get(get_class());
 	}
 	
-	public static function get($id) { return reflex::get("org",$id); }
+	public static function get($id) {
+		return Core\Mod::service("ar")->get(get_class(),$id);
+	}
 	
 	public function owner() {
 		return org_user::all()->eq("id",$this->data("owner"))->one();

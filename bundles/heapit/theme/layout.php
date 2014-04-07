@@ -2,6 +2,7 @@
 
 tmp::header();
 tmp::reset();
+mod::coreJS();
     
 <div class='slpod3n5sa' >
 

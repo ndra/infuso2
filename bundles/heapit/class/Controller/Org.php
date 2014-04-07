@@ -12,6 +12,10 @@ class Org extends Core\Controller {
 	public function index() {
 	    $this->app()->tmp()->exec("/heapit/index");
 	}
+	
+	public function index_add() {
+	    $this->app()->tmp()->exec("/heapit/new-org");
+	}
 
 	public static function postTest() {
 		return true;
