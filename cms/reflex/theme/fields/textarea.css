@@ -1,6 +1,7 @@
 .f0rw8hlkvh {
 
     textarea {
+        .g-input();
         width:100%;
         height:100px;
     }
