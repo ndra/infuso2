@@ -18,6 +18,10 @@
         }
     }
     
+    .list-item {
+        cursor:pointer;
+    }
+    
     .list-item.selected {
         background: gray;
     }

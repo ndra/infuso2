@@ -3,14 +3,10 @@ $(function() {
     $(".vehszhivmz").mod().init(function() {
     
         var container = $(this).find(".items");
-        container.html("");
+        var input = $(this).find("input");
         
-        var data = {
-            "a":12121,
-            "b":"ололо!",
-            "c": "вывыв",
-            "ddd": "пыщ"
-        };
+        var json = input.val();
+        var data = $.parseJSON(json);
         
         var renderData = function() {
         
@@ -28,6 +24,11 @@ $(function() {
         
         }
         
+        var updateInputValue = function() {
+            var json = JSON.stringify(data);
+            input.val(json);
+        }
+        
         renderData();
         
         $(this).find(".button-add").click(function(){
@@ -35,6 +36,7 @@ $(function() {
             var val = prompt("Введите знчение");
             data[key] = val;
             renderData();
+            updateInputValue();
         });
         
         $(this).find(".button-delete").click(function() {
@@ -46,6 +48,7 @@ $(function() {
                 }
             }
             data = newData;
+            updateInputValue();
             renderData();
         });
         
