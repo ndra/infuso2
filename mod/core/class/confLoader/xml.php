@@ -12,11 +12,12 @@ class mod_confLoader_xml {
 	public static function read($doc) {
 
 		if(is_string($doc)) {
-			$doc = @simplexml_load_string(mod_file::get($doc)->data());
+			$doc = @simplexml_load_string($doc);
 		}
 			
-		if(!$doc)
+		if(!$doc) {
 		    return false;
+		}		    
 
 		$ret = array();
 		

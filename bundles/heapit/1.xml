@@ -1,0 +1,159 @@
+<set>
+	<param name='name' >org</param>
+	<param name='lock' ></param>
+	<set name='fields' >
+		<set name='0' >
+			<param name='id' >d4e6op10j85zxkurxfgrqp1r7fv03w</param>
+			<param name='name' >id</param>
+			<param name='type' >jft7-kef8-ccd6-kg85-iueh</param>
+			<param name='editable' ></param>
+			<param name='label' ></param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='1' >
+			<param name='id' >ahnk56jcarnyli74ezdwezdme0dc9s</param>
+			<param name='name' >heapID</param>
+			<param name='type' >gklv-0ijh-uh7g-7fhu-4jtg</param>
+			<param name='editable' >0</param>
+			<param name='label' >ID базы</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='2' >
+			<param name='id' >fu2tc9sdmlr74vbx8u6t8963p5sj4v</param>
+			<param name='name' >deleted</param>
+			<param name='type' >fsxp-lhdw-ghof-1rnk-5bqp</param>
+			<param name='editable' >1</param>
+			<param name='label' >Помечен на удаление</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='3' >
+			<param name='id' >gr3p9ij4esd8gr3k1zqkubxwehny1r</param>
+			<param name='name' >created</param>
+			<param name='type' >x8g2-xkgh-jc52-tpe2-jcgb</param>
+			<param name='editable' >1</param>
+			<param name='label' >Дата создания</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='4' >
+			<param name='id' >j81hxc96twu0dpeh3cv2j41h7p9idm</param>
+			<param name='name' >changed</param>
+			<param name='type' >x8g2-xkgh-jc52-tpe2-jcgb</param>
+			<param name='editable' >1</param>
+			<param name='label' >Дата изменения</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='5' >
+			<param name='id' >usdpg2nya2tkv67we0t85iocvhxm9i</param>
+			<param name='name' >opened</param>
+			<param name='type' >x8g2-xkgh-jc52-tpe2-jcgb</param>
+			<param name='editable' >1</param>
+			<param name='label' >Время открытия</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='6' >
+			<param name='id' >5rt416qpg6nyu0nfvzqcviop9s34lz</param>
+			<param name='name' >tags</param>
+			<param name='type' >v324-89xr-24nk-0z30-r243</param>
+			<param name='editable' >1</param>
+			<param name='label' >Тэги</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='7' >
+			<param name='id' >xyeboplrtkgioc567mgh3w9zqkl23p</param>
+			<param name='name' >phone</param>
+			<param name='type' >v324-89xr-24nk-0z30-r243</param>
+			<param name='editable' >1</param>
+			<param name='label' >Телефон</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='8' >
+			<param name='id' >1znkgbn8gzdml27pv2npaz7mvr7ygh</param>
+			<param name='name' >email</param>
+			<param name='type' >v324-89xr-24nk-0z30-r243</param>
+			<param name='editable' >1</param>
+			<param name='label' >Электропочта</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='9' >
+			<param name='id' >pvso4vb7p1hq81i34a6xpgzx49rtwl</param>
+			<param name='name' >url</param>
+			<param name='type' >v324-89xr-24nk-0z30-r243</param>
+			<param name='editable' >1</param>
+			<param name='label' >Сайт</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='10' >
+			<param name='id' >tya27we6o45i7c9z7y1rxw16t4v6t4</param>
+			<param name='name' >title</param>
+			<param name='type' >v324-89xr-24nk-0z30-r243</param>
+			<param name='editable' >1</param>
+			<param name='label' >Название / ФИО</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='11' >
+			<param name='id' >jk1rdm50nclsxfg0n8esjk52jmes7p</param>
+			<param name='name' >owner</param>
+			<param name='type' >gklv-0ijh-uh7g-7fhu-4jtg</param>
+			<param name='editable' >1</param>
+			<param name='label' >Хозяин</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='12' >
+			<param name='id' >x8grjyg6qwe6dk9h7mu03wasjwuro4</param>
+			<param name='name' >person</param>
+			<param name='type' >fsxp-lhdw-ghof-1rnk-5bqp</param>
+			<param name='editable' >1</param>
+			<param name='label' >Частное лицо</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='13' >
+			<param name='id' >aix8a2nkubqylixmgs7kvsopvr7fv2</param>
+			<param name='name' >icq</param>
+			<param name='type' >v324-89xr-24nk-0z30-r243</param>
+			<param name='editable' >1</param>
+			<param name='label' >icq</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='14' >
+			<param name='id' >lrtmg2jcghop1i7p50x81rtwaho8es</param>
+			<param name='name' >skype</param>
+			<param name='type' >v324-89xr-24nk-0z30-r243</param>
+			<param name='editable' >1</param>
+			<param name='label' >Скайп</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='15' >
+			<param name='id' >wlbjkvr3pvin4uijwe6xy9b74es7m5</param>
+			<param name='name' >balance</param>
+			<param name='type' >nmu2-78a6-tcl6-owus-t4vb</param>
+			<param name='editable' >0</param>
+			<param name='label' >Баланс</param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+		<set name='16' >
+			<param name='id' >d4vh3c50q4ubd4u2ofl2qcgh7mlijf</param>
+			<param name='name' >referral</param>
+			<param name='type' >gklv-0ijh-uh7g-7fhu-4jtg</param>
+			<param name='editable' >0</param>
+			<param name='label' ></param>
+			<param name='param' ></param>
+			<param name='help' ></param>
+		</set>
+	</set>
+</set>
