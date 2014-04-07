@@ -46,7 +46,11 @@ class connection extends \infuso\core\service {
 		$dsn = $this->param("dsn");
 		$user = $this->param("user");
 		$password = $this->param("password");
+		
 	    $this->dbh = new \PDO($dsn, $user, $password);
+	    
+	    // Устанавливаем кодировку
+	    $this->dbh->exec("set names utf8");
 	}
 	
 	public function quote($str) {

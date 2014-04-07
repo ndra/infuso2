@@ -107,7 +107,9 @@ class Org extends \Infuso\ActiveRecord\Record {
 	    $this->handleTags();
 	}
 
-	public static function all() { return reflex_list::get(get_class()); }
+	public static function all() {
+		return \reflex::get(get_class());
+	}
 	
 	public static function get($id) { return reflex::get("org",$id); }
 	
