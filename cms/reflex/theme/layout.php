@@ -6,6 +6,7 @@ admin::header();
 
 $bundlePath = $this->bundle()->path();
 tmp::js($bundlePath."/res/js/window.js");
+tmp::js($bundlePath."/res/js/list.js");
 
 <table class='x0h4tfwmhnn' >
     <tr>

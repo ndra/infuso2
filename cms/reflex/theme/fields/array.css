@@ -17,5 +17,9 @@
             border: 1px solid #ccc;
         }
     }
+    
+    .list-item.selected {
+        background: gray;
+    }
 
 }
