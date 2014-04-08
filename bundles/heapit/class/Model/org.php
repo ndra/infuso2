@@ -24,11 +24,13 @@ class Org extends \Infuso\ActiveRecord\Record {
 				), array(
 					'name' => 'created',
 					'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+					"default" => "now()",
 					'editable' => '1',
 					'label' => 'Дата создания',
 				), array(
 					'name' => 'changed',
 					'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+					"default" => "now()",
 					'editable' => '1',
 					'label' => 'Дата изменения',
 				), array(
@@ -100,14 +102,8 @@ class Org extends \Infuso\ActiveRecord\Record {
 		));
 	}
 
-	public function beforeCreate() {
-	    $this->data("created",util::now());
-	    $this->data("changed",util::now());
-	}
-	
 	public function beforeStore(){
-	    $this->data("changed",util::now());
-	    $this->handleTags();
+	    $this->data("changed", \util::now());
 	}
 
 	public static function all() {
