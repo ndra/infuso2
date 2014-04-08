@@ -3,12 +3,18 @@
 header();
 tmp::reset();
 modjs();
+
+exec("menu");
    
-<div class='slpod3n5sa' >
-
-    exec("menu");
-    region("center");
-
-</div>
+<table class='slpod3n5sa' >
+    <tr>
+        <td class='left' >            
+            region("center");
+        </td>
+        <td class='right' >
+            region("right");
+        </td>
+    </tr>
+</table>
 
 footer();
