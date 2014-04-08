@@ -40,6 +40,10 @@ function action() {
 	return call_user_func_array(array("\\Infuso\\Core\\Action","get"),$args);
 }
 
+function modjs() {
+	Lib::modjs();
+}
+
 function widget() {
 	echo "Ололо я виджет!";
 }

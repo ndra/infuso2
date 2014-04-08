@@ -13,11 +13,18 @@ mod.msg = function(text,error) {
     if(!mod.msg.__container) {
         mod.msg.__container = $("<div class='mod-msg-container' />").prependTo("body");
     }
-    var msg = $("<div>").addClass("mod-msg").html(text+"");
+    var msg = $("<div>")
+		.addClass("mod-msg")
+		.html(text+"");
+		
     error && msg.addClass("mod-msg-error");
     msg.css("opacity",0);
     msg.appendTo(mod.msg.__container);
-    msg.animate({opacity:1},500).animate({opacity:1},2000).animate({opacity:0},"slow").hide("slow");
+    
+    msg.animate({opacity:1},500)
+		.animate({opacity:1},2000)
+		.animate({opacity:0},"slow")
+		.hide("slow");
 }
 
 mod.handlers = {}

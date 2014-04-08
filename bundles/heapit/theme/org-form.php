@@ -10,7 +10,7 @@
         <tr>
             <td></td>
             <td>
-                <input type='checkbox' >
+                <input type='checkbox' name='org'  >
                 <label>Организация</label>                
             </td>
         </tr>

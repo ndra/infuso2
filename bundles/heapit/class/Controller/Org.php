@@ -21,6 +21,59 @@ class Org extends Core\Controller {
 		return true;
 	}
 	
+	/**
+	 * Создает контрагента
+	 **/
+	public static function post_new($p) {
+	
+		if(!$p["data"]["title"]) {
+		    log::msg("Название не указано",1);
+		    return false;
+		}
+
+		if($p["orgID"]=="new") {
+		    $heap = org_heap::get($p["data"]["heapID"]);
+
+		    if(!$heap->exists()) {
+		        log::msg("База не выбрана",1);
+		        return;
+		    }
+
+		    if(!$heap->security(200,true)) { log::msg("У вас нет прав на изменение",1); return false; }
+		    $org = reflex::create("org",array(
+		        "heapID" => $heap->id(),
+		        "owner" => user::active()->id()
+		    ));
+		    $redirectURL = $org->url();
+
+	    } else {
+		    $org = self::get($p["orgID"]);
+		    if(!$org->security(200)) { log::msg("У вас нет прав на изменение",1); return false; }
+	    	log::msg("Сохранено");
+		}
+
+		$save = array(
+			"title",
+			"phone",
+			"email",
+			"url",
+			"tags",
+			"person",
+			"icq",
+			"skype",
+			"referral"
+		);
+
+	    foreach($save as $key)
+	    	$org->data($key,$p["data"][$key]);
+
+	    return array(
+			"redirectURL"=>$redirectURL,
+			"heap" => "{$org->heap()->id()}.{$org->heap()->title()}",
+		);
+
+	}
+	
 	public static function post_search($p) {
 
 	    $items = user::active()->visibleHeaps()->eq("id",$p["heapID"])->one()->orgs();

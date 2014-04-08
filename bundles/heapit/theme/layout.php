@@ -2,11 +2,8 @@
 
 header();
 tmp::reset();
-\mod::coreJS();
-
-$bundlePath = \Infuso\Cms\Reflex\Editor::inspector()->bundle()->path();
-js($bundlePath."/res/js/window.js");
-    
+modjs();
+   
 <div class='slpod3n5sa' >
 
     exec("menu");
