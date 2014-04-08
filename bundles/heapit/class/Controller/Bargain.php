@@ -32,7 +32,6 @@ class Bargain extends Core\Controller {
         
         $bargain = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Bargain", $p["data"]);
         Core\Mod::msg($bargain->url());
-        
     }
     
 }

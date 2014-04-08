@@ -9,8 +9,8 @@ if(!$hiddenFieldId){
     $hiddenFieldId = $fieldName."-hidden";       
 }
 
-<input type="text" id="{$fieldId}" />
-<input type="hidden" name="{$fieldName}" id="{$hiddenFieldId}">
+<input type="text" id="{$fieldId}" value="{$value}"/>
+<input type="hidden" name="{$fieldName}" id="{$hiddenFieldId}" value="{$hiddenVal}">
 
 tmp::script(<<<EOF
 

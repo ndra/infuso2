@@ -29,6 +29,16 @@ class Autocomplete extends Widget {
         return $this;    
     }
     
+    public function value($strValue){
+        $this->param("value", $strValue);
+        return $this;    
+    }
+    
+    public function hiddenValue($hiddenVal){
+        $this->param("hiddenVal", $hiddenVal);
+        return $this;        
+    }
+    
     public function execWidget() {
         \tmp::exec("/heapit/widgets/autocomplete", $this->param());    
     }

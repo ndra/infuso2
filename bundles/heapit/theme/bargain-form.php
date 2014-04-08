@@ -19,28 +19,27 @@
             <tr>
                 <td><label>Описание сделки</label></td>
                 <td>
-                    <textarea>
+                    <textarea name='description'>
                     </textarea>
                 </td>
             </tr>
             <tr>
                 <td><label>Сумма</label></td>
-                <td><input name='description' ></td>
+                <td><input name='amount' ></td>
             </tr>
             <tr>
                 <td><label>Статус</label></td>
                 <td>
-                    <select>
-                        <option>Новая</option>
-                        <option>Переговоры</option>
-                        <option>Заключен договор</option>
-                        <option>Отказ</option>
+                    <select name='status'>
+                        foreach(\Infuso\Heapit\Model\Bargain::enumStatus() as $status=>$title){
+                            <option values='$status'>$title</option>        
+                        }
                     </select>
                 </td>
             </tr>
             <tr>
                 <td><label>Причина отказа</label></td>
-                <td><input name='description' ></td>
+                <td><input name='refusalDescription' ></td>
             </tr>
             <tr>
                 <td><label>Когда связаться</label></td>
