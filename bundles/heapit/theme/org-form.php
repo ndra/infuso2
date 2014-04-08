@@ -10,7 +10,9 @@
         <tr>
             <td></td>
             <td>
-                <input type='checkbox' name='org'  >
+                helper("<input type='checkbox' name='org'  >")
+                    ->attr("checked",true)
+                    ->exec();
                 <label>Организация</label>                
             </td>
         </tr>
@@ -20,25 +22,25 @@
         </tr>
         <tr>
             <td>Сайт</td>
-            <td><input type='text' name='phone' ></td>
+            <td><input type='text' name='url' ></td>
         </tr>
         <tr>
             <td>Электропочта</td>
-            <td><input type='text' name='phone' ></td>
+            <td><input type='text' name='email' ></td>
         </tr>
         <tr>
             <td>ICQ</td>
-            <td><input type='text' name='phone' ></td>
+            <td><input type='text' name='icq' ></td>
         </tr>
         <tr>
-            <td>ICQ</td>
-            <td><input type='text' name='phone' ></td>
+            <td>Скайп</td>
+            <td><input type='text' name='skype' ></td>
         </tr>        
         <tr>
             <td>Кто привел</td>
             <td>
                 $w = new \Infuso\Heapit\Widget\Autocomplete;
-                $w->fieldName("org");
+                $w->fieldName("referral");
                 $w->serviceUrl("/infuso/heapit/controller/widget/orgList");
                 $w->exec();
             </td>

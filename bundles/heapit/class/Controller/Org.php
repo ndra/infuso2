@@ -51,7 +51,6 @@ class Org extends Core\Controller {
 			"phone",
 			"email",
 			"url",
-			"tags",
 			"person",
 			"icq",
 			"skype",

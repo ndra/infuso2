@@ -4,8 +4,9 @@ if(!$tag) {
     throw new Exception("Параметр \$tag не задан");
 }
 
-foreach($attributes as $key=>$val)
-    $attributes[$key] = $key."='".util::str($val)->esc()."'";
+foreach($attributes as $key=>$val) {
+    $attributes[$key] = $key."='".\util::str($val)->esc()."'";
+}
     
 $attributes = implode(" ",$attributes);
 
