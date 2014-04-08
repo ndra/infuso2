@@ -12,7 +12,7 @@
             <td>
                 $w = new \Infuso\Heapit\Widget\Autocomplete;
                 $w->fieldName("org");
-                $w->serviceUrl("/infuso/heapit/controller/org/orgList");
+                $w->serviceUrl("/infuso/heapit/controller/widget/orgList");
                 $w->exec();
             </td>
         </tr>
