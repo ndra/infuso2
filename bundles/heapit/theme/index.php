@@ -1,4 +1,4 @@
 <? 
 
-tmp::add("center","org-list");
-tmp::exec("/heapit/layout");
+add("center","org-list");
+exec("/heapit/layout");

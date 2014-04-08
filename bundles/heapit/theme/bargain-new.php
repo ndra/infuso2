@@ -1,4 +1,4 @@
 <? 
 
-tmp::add("center","content");
-tmp::exec("/heapit/layout");
+add("center","content");
+exec("/heapit/layout");

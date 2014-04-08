@@ -20,6 +20,8 @@ class Template extends Generic {
     public $recache = null;
     
     private $templateProcessor = null;
+    
+    private static $functionsIncluded = false;
 
     public function __construct($name=null,$processor = null) {
 
@@ -201,6 +203,11 @@ class Template extends Generic {
      * Последующие параметры будут переданы внутрь шаблона как $p1,$p2 и т.д.
      **/
     public function exec() {
+    
+        if(!self::$functionsIncluded) {
+        	Core\File::get(self::inspector()->bundle()->path()."/functions.php")->inc();
+        	self::$functionsIncluded = true;
+        }
 
         // Если текущий шаблон отложенный - ставим маркер и выходим
         if($this->param("*delayed")) {

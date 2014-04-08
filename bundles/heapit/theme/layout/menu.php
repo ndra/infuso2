@@ -3,11 +3,11 @@
 <div class='ncecpy3pn9' >
 
     $menu = array(
-        (string)\Infuso\Core\Action::get("infuso\\heapit\\controller\\org") => "Контрагенты",
-        (string)\Infuso\Core\Action::get("infuso\\heapit\\controller\\org", "add") => "+",
+        (string) action("infuso\\heapit\\controller\\org") => "Контрагенты",
+        (string) action("infuso\\heapit\\controller\\org", "add") => "+",
         
-        (string)\Infuso\Core\Action::get("infuso\\heapit\\controller\\bargain") => "Сделки",
-        (string)\Infuso\Core\Action::get("infuso\\heapit\\controller\\bargain", "add") => "+",
+        (string) action("infuso\\heapit\\controller\\bargain") => "Сделки",
+        (string) action("infuso\\heapit\\controller\\bargain", "add") => "+",
         
         "payments" => "Платежи +",
         "reports" => "Отчеты",
