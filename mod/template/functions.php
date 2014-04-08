@@ -56,3 +56,9 @@ function esc($str) {
 	return e($str);
 }
 
+function helper($str) {
+	return tmp::helper($str);
+}
+
+
+
