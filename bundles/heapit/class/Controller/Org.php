@@ -8,11 +8,11 @@ class Org extends Core\Controller {
 	public static function indexTest() {
 		return true;
 	}
-	
+
 	public function index() {
 	    $this->app()->tmp()->exec("/heapit/index");
 	}
-	
+
 	public function index_add() {
 	    $this->app()->tmp()->exec("/heapit/org-new");
 	}
@@ -20,17 +20,17 @@ class Org extends Core\Controller {
 	public static function postTest() {
 		return true;
 	}
-	
+
 	/**
 	 * Создает контрагента
 	 **/
 	public static function post_new($p) {
-	
+
 		if(!$p["data"]["title"]) {
 		    Core\Mod::msg("Название не указано",1);
 		    return false;
 		}
-		
+
 		/*$save = array(
 			"title",
 			"phone",
@@ -46,12 +46,12 @@ class Org extends Core\Controller {
 	    foreach($save as $key) {
 	    	$org->data($key,$p["data"][$key]);
 	    } */
-	    
+
 	    $org = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Org", $p["data"]);
 		Core\Mod::msg($org->url());
 
 	}
-	
+
 	public static function post_search($p) {
 
 	    $items = user::active()->visibleHeaps()->eq("id",$p["heapID"])->one()->orgs();

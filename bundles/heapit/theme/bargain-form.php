@@ -9,7 +9,12 @@
         </tr>
         <tr>
             <td><label>Организация</label></td>
-            <td><input name='title' ></td>
+            <td>
+                $w = new \Infuso\Heapit\Widget\Autocomplete;
+                $w->fieldName("org");
+                $w->serviceUrl("/infuso/heapit/controller/widget/orgList");
+                $w->exec();
+            </td>
         </tr>
         <tr>
             <td><label>Описание сделки</label></td>

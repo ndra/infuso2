@@ -41,11 +41,11 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     
     public function prefixedTableName() {
         return $this->virtual()->prefixedTableName();
-	}
-	
-	public function tableExists() {
-	    return $this->virtual()->tableExists();
-	}
+    }
+    
+    public function tableExists() {
+        return $this->virtual()->tableExists();
+    }
 
     public function _beforeQuery() {
     }
@@ -77,11 +77,11 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->where($filter->where());
         foreach($filter->eqs() as $key=>$val) {
             $this->def($key,$val);
-		}
+        }
 
         if($filter->sort) {
             $this->sort = $filter->sort;
-		}
+        }
     }
 
     /**
@@ -170,7 +170,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             foreach(reflex::virtual($join["class"])->fields() as $field) {
                 $ret[] = $field;
             }
-		}
+        }
 
         return $ret;
     }
@@ -184,13 +184,13 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
         if($field->typeID()!="pg03-cv07-y16t-kli7-fe6x") {
             return $this;
-		}
-		
-		if($this->param("fieldJoin-".$name)) {
-		    return $this;
-		}
-		
-		$this->param("fieldJoin-".$name,true);
+        }
+        
+        if($this->param("fieldJoin-".$name)) {
+            return $this;
+        }
+        
+        $this->param("fieldJoin-".$name,true);
 
         $class = $field->itemClass();
         $list = reflex::get($class);
@@ -216,7 +216,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             if($field->typeID()=="pg03-cv07-y16t-kli7-fe6x") {
                 $this->joinByField($field->name());
             }
-		}
+        }
         return $this;
     }
 
@@ -452,8 +452,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
         // Если оба параметра скаляры и не задана ф-ция
         if($type=="s:s" && !$fn) {
-			$this->eqs[$key] = $val;
-		}
+            $this->eqs[$key] = $val;
+        }
 
         switch($type) {
 
@@ -461,8 +461,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 $key = $this->normalizeColName($key);
                 $val = mod::service("db")->quote($val);
                 if($fn) {
-					$key = "$fn($key)";
-				}
+                    $key = "$fn($key)";
+                }
                 $this->where("$key=$val",$key);
                 break;
 
@@ -470,8 +470,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 if(func_num_args()==1) {
                     foreach($key as $k=>$v) {
                         $this->eq($k,$v);
-					}
-				}
+                    }
+                }
                 break;
 
             // Если второй параметр массив, производится выборка p1 in p2
@@ -480,7 +480,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 $r = array();
                 foreach($val as $v) {
                     $r[] = mod::service("db")->quote($v);
-				}
+                }
 
                 switch(sizeof($r)) {
 
@@ -532,14 +532,14 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         
         switch($type) {
     
-		    case "s:s":
-		        $key = $this->normalizeColName($key);
-		        $val = mod::service("db")->quote($val);
-		        $this->where("{$key}<>{$val}",$key);
-		        break;
-		        
-			case "s:a":
-			$r = array();
+            case "s:s":
+                $key = $this->normalizeColName($key);
+                $val = mod::service("db")->quote($val);
+                $this->where("{$key}<>{$val}",$key);
+                break;
+                
+            case "s:a":
+            $r = array();
                 foreach($val as $v) {
                     $r[] = "'".reflex_mysql::escape($v)."'";
                 }
@@ -559,7 +559,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                         break;
                 }
                 break;
-		}
+        }
         
         return $this;
     }
@@ -570,9 +570,10 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      **/
     public function like($key,$val) {
         $key = $this->normalizeColName($key);
-        $val = reflex_mysql::escape($val);
+        $val = "%".$val."%";
+        $val = mod::service("db")->quote($val);
         $val = mb_strtolower($val,"utf-8");
-        $this->where("lower($key) LIKE '%$val%'");
+        $this->where("lower($key) LIKE {$val}");
         return $this;
     }
 
@@ -829,9 +830,9 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         return $this;
     }
 
-	/**
-	 * Устанавливает коллекции сортировку по возрастанию
-	 **/
+    /**
+     * Устанавливает коллекции сортировку по возрастанию
+     **/
     public function asc($field, $keep = false) {
         if(!$keep) {
             $this->resetSort();
@@ -879,7 +880,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $ret = $this->items[0];
         if(!$ret) {
             return Record::get($items->itemClass(),0);
-		}
+        }
         return $ret;
     }
 
@@ -958,7 +959,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $query.= " order by {$this->orderBy()} ";
         if($perPage) {
             $query.= "limit $from,$perPage";
-		}
+        }
         reflex_mysql::query($query);
         return reflex_mysql::get_col();
 
@@ -1025,9 +1026,9 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             $new[$key] = $val;
         }
         if(is_array($p)) {
-	        foreach($p as $key=>$val) {
-	            $new[$key] = $val;
-	        }
+            foreach($p as $key=>$val) {
+                $new[$key] = $val;
+            }
         }
         return mod::service("ar")->create($this->itemClass(),$new);
     }
