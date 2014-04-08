@@ -8,9 +8,9 @@ use Infuso\Core;
  **/
 class Lib {
 
-	public function path() {
-	    return \mod::service("classmap")->getClassBundle(get_class())->path()."/res/";
-	}
+    public function path() {
+        return \mod::service("classmap")->getClassBundle(get_class())->path()."/res/";
+    }
 
     public function jq() {
         tmp::singleJS(self::path()."/js/jquery-2.1.0.min.js",-1000);
@@ -21,8 +21,8 @@ class Lib {
      **/
     public function jqui() {
         self::jq();
-        tmp::js("http://yandex.st/jquery-ui/1.10.3/jquery-ui.min.js");
-        tmp::css("http://yandex.st/jquery-ui/1.10.3/themes/base/jquery-ui.min.css");
+        tmp::js("http://yandex.st/jquery-ui/1.10.4/jquery-ui.min.js");
+        tmp::css("http://yandex.st/jquery-ui/1.10.4/themes/base/jquery-ui.min.css");
     }
     
     public function reset() {

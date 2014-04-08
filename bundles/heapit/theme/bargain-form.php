@@ -44,7 +44,11 @@
             </tr>
             <tr>
                 <td><label>Когда связаться</label></td>
-                <td><input name='callTime' ></td>
+                <td>
+                    $w = new \Infuso\Heapit\Widget\Datepicker;
+                    $w->param("callTime");
+                    $w->exec();
+                </td>
             </tr>
             <tr >
                 <td><label>Ответственный</label></td>
