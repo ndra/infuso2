@@ -1,4 +1,9 @@
-jQuery.fn.mod = function() {
+jQuery.fn.mod = function(param) {
+
+    if(param === "formData") {
+        alert(12);
+        return this;
+    }
 
     var md = function(e) {
     
@@ -26,43 +31,6 @@ jQuery.fn.mod = function() {
             }
         
             return e.parents(".5jfNUBs7a9zwHl:first");
-        }
-        
-        this.list = function(param) {
-        
-			if(param === undefined) {
-			    e.mod().init(function() {
-			        $(this).find(".list-item").mousedown(function() {
-			             $(this).toggleClass("selected");
-			        });
-			    });
-			    return e;
-			}
-        
-            if(param === "selection") {
-				var ret = [];
-				e.find(".list-item.selected").each(function() {
-				    ret.push($(this).attr("data:id"));
-				});
-				return ret;
-            }
-            
-            if(param === "keep-selection") {
-                var sel = e.mod().list("selection");
-                e.data("lsit-selection",sel);
-                return e;
-            }
-            
-            if(param === "restore-selection") {
-                var sel = e.data("lsit-selection");
-                e.find(".list-item").each(function() {
-                    if($.inArray($(this).attr("data:id",sel))) {
-                        $(this).addClass("selected");
-                    }
-                });
-                return e;
-            }
-            
         }
     
     }

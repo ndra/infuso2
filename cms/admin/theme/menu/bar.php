@@ -23,7 +23,7 @@
         }
                 
         <td style='font-weight:bold;'>
-            $url = mod::action("mod_about")->url();
+            $url = \mod::action("mod_about")->url();
             echo "Работает на <a href='$url' style='color:red;' >infuso</a>";
         </td>    
     </tr>

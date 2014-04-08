@@ -25,7 +25,7 @@
             }
         } */
         
-        echo tmp_delayed::add(array(
+        echo \tmp_delayed::add(array(
             "class" => "tmp",
             "method" => "headInsert",
             "priority" => 1000,

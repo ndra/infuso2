@@ -59,7 +59,7 @@ class Preparser {
 
 		}
 
-		$out = "";
+		$out = "<? namespace Infuso\\Template; \n use \Infuso\Core\Mod; \n use \User; ?".">";
 		foreach($this->lines as $line) {
 
 		    $str = $line["content"];

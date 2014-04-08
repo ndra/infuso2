@@ -4,7 +4,7 @@
 
     <table>
         <tr>
-            <td><label>ФИО / Название</label></td>
+            <td>ФИО / Название</td>
             <td><input type='text' name='title' ></td>
         </tr>
         <tr>
@@ -15,30 +15,34 @@
             </td>
         </tr>
         <tr>
-            <td><label>Телефон</label></td>
+            <td>Телефон</td>
             <td><input type='text' name='phone' ></td>
         </tr>
         <tr>
-            <td><label>Сайт</label></td>
+            <td>Сайт</td>
             <td><input type='text' name='phone' ></td>
         </tr>
         <tr>
-            <td><label>Электропочта</label></td>
+            <td>Электропочта</td>
             <td><input type='text' name='phone' ></td>
         </tr>
         <tr>
-            <td><label>ICQ</label></td>
+            <td>ICQ</td>
+            <td><input type='text' name='phone' ></td>
+        </tr>
+        <tr>
+            <td>ICQ</td>
             <td><input type='text' name='phone' ></td>
         </tr>        
-
         <tr>
-            <td><label>ICQ</label></td>
+            <td>Кто привел</td>
             <td><input type='text' name='phone' ></td>
-        </tr>        
+        </tr> 
         <tr>
             <td></td>
             <td><input type='submit' value='Создать' /></td>
         </tr>
+        
     </table>
 
 </div>

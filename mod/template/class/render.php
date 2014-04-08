@@ -10,6 +10,7 @@ use Infuso\Core\File;
 class Render extends Core\Component {
 
 	private static $less;
+	
 	private static $renderID = null;
 	
 	public function initialParams() {
