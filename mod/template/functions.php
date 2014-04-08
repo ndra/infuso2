@@ -47,3 +47,12 @@ function modjs() {
 function widget() {
 	echo "Ололо я виджет!";
 }
+
+function e($str) {
+	return \util::str($str)->esc();
+}
+
+function esc($str) {
+	return e($str);
+}
+

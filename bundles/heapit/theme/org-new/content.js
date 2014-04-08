@@ -6,6 +6,10 @@ $(function() {
         mod.call({
             cmd:"infuso/heapit/controller/org/new",
             data:data
+        }, function(ret) {
+            if(ret) {
+                window.location.href = ret;
+            }
         })
     });
 

@@ -52,10 +52,11 @@ class Preparser {
 	            $newLine = false;
 		    }
 
-		    if($add)
+		    if($add) {
 		        $newLine = true;
-			else
+		    } else {
 				$newLine = false;
+			}
 
 		}
 
@@ -64,11 +65,7 @@ class Preparser {
 
 		    $str = $line["content"];
 		    if($line["html"]) {
-
-		        preg_match("/^\s*/",$str,$m);
-		        $before = $m[0];
-
-		    	$str = $before.'echo "'.strtr(trim($str),array('"'=>'\"')).'";';
+		        $str = self::processLine($str);
 			}
 
 		    $out.= $str;
@@ -76,6 +73,29 @@ class Preparser {
 
 		return $out;
 
+	}
+	
+	private static function processLine($str) {
+	
+	    $markers = array();
+	    
+	    $str = preg_replace_callback("/\{(.*)\}/U",function($r) use (&$markers) {
+	        $key = \util::id();
+	        $markers[$key] = $r[1];
+	        return $key;
+		} , $str);
+		
+		preg_match("/^\s*/",$str,$m);
+        $before = $m[0];
+    	$str = $before.'echo "'.strtr(trim($str),array('"'=>'\"')).'";';
+    	
+    	foreach($markers as $id => $expr) {
+    	    $str = preg_replace_callback("/$id/",function($r) use ($expr) {
+				return '".('.$expr.')."';
+    	    }, $str);
+    	}
+    	
+    	return $str;
 	}
 
 	public function addLexem($str) {

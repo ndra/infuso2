@@ -31,7 +31,22 @@ class Org extends Core\Controller {
 		    return false;
 		}
 
-		/*$save = array(
+	    $org = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Org", $p["data"]);
+		return $org->url();
+
+	}
+	
+
+	// Вносит изменения в карточку
+	public static function post_save($p) {
+
+		if(!$p["data"]["title"]) {
+		    log::msg("Название не указано",1);
+		    return false;
+		}
+
+	    $org = \Infuso\Heapit\Model\Org::get($p["orgId"]);
+		$save = array(
 			"title",
 			"phone",
 			"email",
@@ -45,11 +60,9 @@ class Org extends Core\Controller {
 
 	    foreach($save as $key) {
 	    	$org->data($key,$p["data"][$key]);
-	    } */
-
-	    $org = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Org", $p["data"]);
-		Core\Mod::msg($org->url());
-
+	    }
+	    
+		Core\Mod::msg("Сохранено");
 	}
 
 	public static function post_search($p) {
@@ -143,56 +156,6 @@ class Org extends Core\Controller {
 	    return $data;
 	}
 
-	// Вносит изменения в карточку
-	public static function post_save($p) {
-
-		if(!$p["data"]["title"]) {
-		    log::msg("Название не указано",1);
-		    return false;
-		}
-
-		if($p["orgID"]=="new") {
-		    $heap = org_heap::get($p["data"]["heapID"]);
-
-		    if(!$heap->exists()) {
-		        log::msg("База не выбрана",1);
-		        return;
-		    }
-
-		    if(!$heap->security(200,true)) { log::msg("У вас нет прав на изменение",1); return false; }
-		    $org = reflex::create("org",array(
-		        "heapID" => $heap->id(),
-		        "owner" => user::active()->id()
-		    ));
-		    $redirectURL = $org->url();
-
-	    } else {
-		    $org = self::get($p["orgID"]);
-		    if(!$org->security(200)) { log::msg("У вас нет прав на изменение",1); return false; }
-	    	log::msg("Сохранено");
-		}
-
-		$save = array(
-			"title",
-			"phone",
-			"email",
-			"url",
-			"tags",
-			"person",
-			"icq",
-			"skype",
-			"referral"
-		);
-
-	    foreach($save as $key)
-	    	$org->data($key,$p["data"][$key]);
-
-	    return array(
-			"redirectURL"=>$redirectURL,
-			"heap" => "{$org->heap()->id()}.{$org->heap()->title()}",
-		);
-
-	}
 
 	// Удаляет карточку
 	public static function post_delete($p) {
