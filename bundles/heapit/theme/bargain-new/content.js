@@ -4,7 +4,7 @@ $(function() {
         e.preventDefault();
         var data = $(this).mod("formData");
         mod.call({
-            cmd:"infuso/heapit/controller/bargian/new",
+            cmd:"infuso/heapit/controller/bargain/new",
             data:data
         })
     });

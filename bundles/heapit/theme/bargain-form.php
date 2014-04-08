@@ -12,6 +12,7 @@
                 <td>
                     $w = new \Infuso\Heapit\Widget\Autocomplete;
                     $w->fieldName("orgID");
+                    $w>
                     $w->serviceUrl("/infuso/heapit/controller/widget/orgList");
                     $w->exec();
                 </td>
@@ -31,21 +32,21 @@
                 <td><label>Статус</label></td>
                 <td>
                     <select name='status'>
-                        foreach(\Infuso\Heapit\Model\Bargain::enumStatus() as $status=>$title){
-                            <option values='$status'>$title</option>        
+                        foreach(\Infuso\Heapit\Model\Bargain::enumStatuses() as $status=>$title){
+                            <option value='$status'>$title</option>        
                         }
                     </select>
                 </td>
             </tr>
-            <tr>
+            <tr class="refusalDescription">
                 <td><label>Причина отказа</label></td>
-                <td><input name='refusalDescription' ></td>
+                <td><textarea name='refusalDescription'/></textarea></td>
             </tr>
             <tr>
                 <td><label>Когда связаться</label></td>
                 <td><input name='callTime' ></td>
             </tr>
-            <tr>
+            <tr >
                 <td><label>Ответственный</label></td>
                 <td><input name='userID' ></td>
             </tr>

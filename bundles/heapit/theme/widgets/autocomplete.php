@@ -19,7 +19,7 @@ jQuery(function(){
     options = { 
         serviceUrl:'{$serviceUrl}',
         minChars:2,
-        onSelect: function(value){ console.log(value);$('#{$hiddenFieldId}').val(value.data); } 
+        onSelect: function(value){ $('#{$hiddenFieldId}').val(value.data); } 
     };
     a = $('#{$fieldId}').autocomplete(options);
 }); 
