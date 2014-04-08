@@ -43,11 +43,11 @@
             </tr>
             <tr>
                 <td><label>Когда связаться</label></td>
-                <td><input name='description' ></td>
+                <td><input name='callTime' ></td>
             </tr>
             <tr>
                 <td><label>Ответственный</label></td>
-                <td><input name='description' ></td>
+                <td><input name='userID' ></td>
             </tr>
             <tr>
                 <td></td>

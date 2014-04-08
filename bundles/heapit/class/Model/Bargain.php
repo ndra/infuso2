@@ -53,7 +53,18 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'type' => 'textarea',
                     'editable' => '1',
                     'label' => 'Причина отказа',
+                ),  array(
+                    'name' => 'callTime',
+                    'type' => 'datetime',
+                    'editable' => '1',
+                    'label' => 'Когда связаться',
+                ), array(
+                    'name' => 'userID',
+                    'type' => 'link',
+                    'editable' => '1',
+                    'label' => 'Ответственный',
                 ),
+                
             ) ,
         );
     }
@@ -78,7 +89,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
         return Core\Mod::service("ar")->get(get_class(),$id);
     }
     
-    public function enumStatus() {
+    public static function enumStatuses() {
         return array(
             self::STATUS_NEW => "Новая",
             self::STATUS_INPROCESS => "Переговоры",
