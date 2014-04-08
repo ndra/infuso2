@@ -14,11 +14,6 @@ class Autocomplete extends Widget {
         return $this;
     }
     
-    public function hiddenFieldName($hiddenFieldName) {
-        $this->param("hiddenFieldName", $hiddenFieldName);
-        return $this;
-    }
-    
     public function hiddenFieldId($hiddenFieldId) {
         $this->param("hiddenFieldId", $hiddenFieldId);
         return $this;

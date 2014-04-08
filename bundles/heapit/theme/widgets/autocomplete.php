@@ -4,16 +4,13 @@ tmp::js($this->bundle()->path()."/res/js/jquery.autocomplete.min.js");
 if(!$fieldId){
     $fieldId = $fieldName;   
 }
-if(!$hiddenFieldName){
-    $hiddenFieldName = $fieldName."ID";    
-}
 
 if(!$hiddenFieldId){
-    $hiddenFieldId = $hiddenFieldName;       
+    $hiddenFieldId = $fieldName."-hidden";       
 }
 
-<input type="text" name="{$fieldName}" id="{$fieldId}" />
-<input type="hidden" name="{$hiddenFieldName}" id="{$hiddenFieldId}">
+<input type="text" id="{$fieldId}" />
+<input type="hidden" name="{$fieldName}" id="{$hiddenFieldId}">
 
 tmp::script(<<<EOF
 
@@ -22,7 +19,7 @@ jQuery(function(){
     options = { 
         serviceUrl:'{$serviceUrl}',
         minChars:2,
-        onSelect: function(value){ $('#{$hiddenFieldId}').val(value.data); } 
+        onSelect: function(value){ console.log(value);$('#{$hiddenFieldId}').val(value.data); } 
     };
     a = $('#{$fieldId}').autocomplete(options);
 }); 
