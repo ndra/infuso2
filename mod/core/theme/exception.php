@@ -1,7 +1,7 @@
 <?
 
-if(mod_superadmin::check()) {
-    tmp::exec("admin");
+if(\Infuso\Core\superadmin::check()) {
+    exec("admin");
 } else {
-    tmp::exec("user");
+    exec("user");
 }
