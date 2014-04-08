@@ -4,6 +4,10 @@
         .g-input();
     }
     
+    input[type='submit'] {
+        .g-button();
+    }
+    
     textarea {
         width: 500px;
         height:100px;
