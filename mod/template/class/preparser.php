@@ -79,7 +79,7 @@ class Preparser {
 	
 	    $markers = array();
 	    
-	    $str = preg_replace_callback("/\{(.*)\}/",function($r) use (&$markers) {
+	    $str = preg_replace_callback("/\{(.*)\}/U",function($r) use (&$markers) {
 	        $key = \util::id();
 	        $markers[$key] = $r[1];
 	        return $key;
