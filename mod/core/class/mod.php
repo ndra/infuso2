@@ -63,8 +63,7 @@ class Mod extends \Infuso\Core\Component {
 	 * Подключает библиотеку core.js
 	 **/
 	public static function coreJS() {
-        mod::app()->tmp()->jq();
-		mod::app()->tmp()->singlejs(self::inspector()->bundle()->path()."/res/core.js",-900);
+		\Infuso\Template\Lib::modjs();
 	}
 
 	/**

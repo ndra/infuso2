@@ -1,16 +1,16 @@
 jQuery.fn.list = function(param) {
 
     var e = $(this);
-        
+
     if(param === undefined) {
-        
+
         $(this).find(".list-item").mousedown(function() {
             $(this).toggleClass("selected");
         });
-       
+
         return e;
     }
-    
+
     if(param === "selection") {
         var ret = [];
         e.find(".list-item.selected").each(function() {
@@ -18,13 +18,13 @@ jQuery.fn.list = function(param) {
         });
         return ret;
     }
-    
+
     if(param === "keep-selection") {
         var sel = e.mod().list("selection");
         e.data("lsit-selection",sel);
         return e;
     }
-    
+
     if(param === "restore-selection") {
         var sel = e.data("lsit-selection");
         e.find(".list-item").each(function() {
@@ -33,6 +33,6 @@ jQuery.fn.list = function(param) {
             }
         });
         return e;
-    }  
+    }
 
 }
