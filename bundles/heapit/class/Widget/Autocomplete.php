@@ -29,13 +29,13 @@ class Autocomplete extends Widget {
         return $this;    
     }
     
-    public function value($strValue){
-        $this->param("value", $strValue);
+    public function value($value){
+        $this->param("value", $value);
         return $this;    
     }
     
-    public function hiddenValue($hiddenVal){
-        $this->param("hiddenVal", $hiddenVal);
+    public function title($title){
+        $this->param("title", $title);
         return $this;        
     }
     
