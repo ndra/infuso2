@@ -48,7 +48,7 @@ class Org extends Core\Controller {
 	    } */
 
 	    $org = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Org", $p["data"]);
-		Core\Mod::msg($org->url());
+		return $org->url();
 
 	}
 

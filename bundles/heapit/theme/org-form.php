@@ -5,7 +5,7 @@
     <table>
         <tr>
             <td>ФИО / Название</td>
-            <td><input type='text' name='title' ></td>
+            <td><input type='text' name='title' value='{e($org->data("title"))}' ></td>
         </tr>
         <tr>
             <td></td>
@@ -36,7 +36,12 @@
         </tr>        
         <tr>
             <td>Кто привел</td>
-            <td><input type='text' name='phone' ></td>
+            <td>
+                $w = new \Infuso\Heapit\Widget\Autocomplete;
+                $w->fieldName("org");
+                $w->serviceUrl("/infuso/heapit/controller/widget/orgList");
+                $w->exec();
+            </td>
         </tr> 
         <tr>
             <td></td>
