@@ -9,7 +9,8 @@
         (string) action("infuso\\heapit\\controller\\bargain") => "Сделки",
         (string) action("infuso\\heapit\\controller\\bargain", "add") => "+",
         
-        "payments" => "Платежи +",
+        (string) action("infuso\\heapit\\controller\\payment") => "Платежи",
+        (string) action("infuso\\heapit\\controller\\payment", "add") => "+",
         "reports" => "Отчеты",
         "1" => "натсройки",
     );

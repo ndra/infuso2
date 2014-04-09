@@ -47,7 +47,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'type' => 'select',
                     'values' => self::enumStatuses(),
                     'editable' => '1',
-                    'label' => 'Сумма',
+                    'label' => 'Статус',
                 ), array(
                     'name' => 'refusalDescription',
                     'type' => 'textarea',
@@ -56,6 +56,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                 ),  array(
                     'name' => 'callTime',
                     'type' => 'date',
+                    'default' => 'now()',
                     'editable' => '1',
                     'label' => 'Когда связаться',
                 ), array(
