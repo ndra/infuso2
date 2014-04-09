@@ -3,10 +3,10 @@
 namespace Infuso\Heapit\Widget;
 use Infuso\Template\Widget;
 
-class Datepicker extends Widget {
+class UserChooser extends Widget {
     
     public function name() {
-        return "Датапикер";
+        return "Выбиралка юзера";
     }
     
     public function fieldName($fieldName) {
@@ -15,6 +15,6 @@ class Datepicker extends Widget {
     }
      
     public function execWidget() {
-        \tmp::exec("/heapit/widgets/datepicker",$this->params());          
+        \tmp::exec("/heapit/widgets/userchooser",$this->params());          
     }    
 }

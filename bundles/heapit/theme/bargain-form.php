@@ -46,13 +46,17 @@
                 <td><label>Когда связаться</label></td>
                 <td>
                     $w = new \Infuso\Heapit\Widget\Datepicker;
-                    $w->param("callTime");
+                    $w->fieldName("callTime");
                     $w->exec();
                 </td>
             </tr>
             <tr >
                 <td><label>Ответственный</label></td>
-                <td><input name='userID' ></td>
+                <td>
+                    $w = new \Infuso\Heapit\Widget\UserChooser;
+                    $w->fieldName("userID");
+                    $w->exec();
+                </td>
             </tr>
             <tr>
                 <td></td>

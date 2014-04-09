@@ -15,7 +15,7 @@ class Admin extends Core\Controller {
 	 * @todo wtf ::$showLogin
 	 **/
 	public static function fuckoff() {
-	    tmp::noindex();
+	    \tmp::noindex();
 		if(self::$showLogin) {
 		    if(user::active()->checkAccess("admin:showInterface")) {
 		        header("Location:/admin/");

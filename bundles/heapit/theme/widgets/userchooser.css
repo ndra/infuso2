@@ -1,0 +1,8 @@
+.userChooser-r5rr523ugt {
+    position: relative;
+    
+    .currentUser {
+        display: block;
+        width: 100px;
+    }    
+}
