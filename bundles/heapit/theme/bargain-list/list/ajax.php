@@ -3,6 +3,6 @@
 $bargains = \Infuso\Heapit\Model\Bargain::all();
 foreach($bargains as $bargain) {
     <div>
-        echo $bargain->title();
+        <a href='{$bargain->url()}' >{$bargain->title()}</a>
     </div>
 }

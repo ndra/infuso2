@@ -55,7 +55,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'label' => 'Причина отказа',
                 ),  array(
                     'name' => 'callTime',
-                    'type' => 'datetime',
+                    'type' => 'date',
                     'editable' => '1',
                     'label' => 'Когда связаться',
                 ), array(

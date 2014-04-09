@@ -4,5 +4,6 @@
     .currentUser {
         display: block;
         width: 100px;
+        cursor: pointer;
     }    
 }

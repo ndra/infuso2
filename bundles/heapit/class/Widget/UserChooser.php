@@ -13,6 +13,11 @@ class UserChooser extends Widget {
         $this->param("fieldName", $fieldName);
         return $this;
     }
+    
+    public function value($value){
+        $this->param("userID", $value);
+        return $this;    
+    }
      
     public function execWidget() {
         \tmp::exec("/heapit/widgets/userchooser",$this->params());          
