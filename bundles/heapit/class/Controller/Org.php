@@ -64,16 +64,16 @@ class Org extends Core\Controller {
 		Core\Mod::msg("Сохранено");
 	}
 
-	public static function post_search($p) {
+	/**
+	 * Возвращает html-код списка контрагентов
+	 **/
+	public function post_search($p) {
 
-	    $items = user::active()->visibleHeaps()->eq("id",$p["heapID"])->one()->orgs();
+	    $items = \Infuso\Heapit\Model\Org::all();
 	    $items->page($p["page"]);
 
 	    // Учитываем поиск по имени
 	    if($search = trim($p["search"])) $items->like("title","$search");
-
-	    // Учитываем тэг
-	    if($tag=$p["tag"]) $items->like("tags",",$tag,");
 
 	    $order = $p["order"];
 	    if(!$order) $order = "opened";
@@ -91,129 +91,12 @@ class Org extends Core\Controller {
 			    break;
 	    }
 
-	    mod_cmd::meta("pages",$items->pages());
-	    $ret = array();
-	    foreach($items as $item)
-	        $ret[] = $item->listData();
-
-	    $status = "";
-	    $status.= "Карточек в базе: ".$items->count();
-	    mod_cmd::meta("status",$status);
-	    mod_cmd::meta("cols",array(
-	        "icon" => array("type"=>"image"),
-	        "title" => array("title"=>"ФИО / Название","width"=>300),
-	        "phone" => array("title"=>"Телефон","width"=>140),
-	        "email" => array("title"=>"E-mail","width"=>220),
-	        "balance" => array("title"=>"Баланс","width"=>70),
-	      //  "heap" => array("title"=>"База","width"=>220),
-		));
-	    return $ret;
-	}
-
-	public function listData() {
-		if(!$this->security(100))
-			return array(
-				"id" => $this->id(),
-				"title" => "<b>{$this->id()}. Просмотр недоступен</b>",
-	        );
-
-		$txt = "";
-		$oo = array();
-		foreach(org_occupation::all()->eq("personID",$this->id()) as $o)
-		    $oo[] = $o->org()->title();
-		$txt = implode(",",$oo);
-		if($txt) $txt = "<div style='color:gray;font-size:10px;'>$txt</div>";
-
-		$title = $this->title();
-		if($this->data("deleted")) $title = "<s>$title</s>";
-
-		return array(
-		    "id" => $this->id(),
-		    "icon" => $this->data("person") ? "user" : "building",
-		    "title" => $title,
-		    "phone" => $this->data("phone"),
-		    "email" => "<a href='mailto:{$this->data(email)}'>{$this->data(email)}</a>",
-		   // "heap" => $this->heap()->title(),
-		    "balance" => "<a target='_new' href='/org/stat/balance/-/{$this->id()}/'>".$this->data("balance")."</a>",
-	     	"url" => $this->url(),
-	     	"text" => $txt,
-		);
-
-	}
-
-	public static function post_getData($p) {
-	    $org = self::get($p["orgID"]);
-	    if(!$org->security(100))
-	        return false;
-
-	    $org->data("opened",util::now());
-	    $data = $org->data();
-	    $data["heapID"] = "{$org->heap()->id()}.{$org->heap()->title()}";
-	    if($org->referral()->exists())
-	    	$data["referral"] = "{$org->referral()->id()}.{$org->referral()->title()}";
-	    $data["tags"] = trim($data["tags"],",");
-	    return $data;
-	}
-
-
-	// Удаляет карточку
-	public static function post_delete($p) {
-		foreach($p["ids"] as $id) {
-		    $org = self::get($id);
-		    if($org->security(200)) {
-		        $org->data("deleted",1);
-		        log::msg("Объект удален");
-		    } else {
-				log::msg("У вас нет прав на изменение",1);
-		    }
-	    }
-	}
-
-	// ----------------------------------------------------------------------------- Перенос и объединение
-
-	public static function post_merge($p) {
-
-		$orgs = org::all()->eq("id",$p["ids"]);
-
-		foreach($orgs as $org)
-		    if(!$org->security(200)) {
-			    log::msg("У вас нет прав для совершения данной операции",1);
-				return false;
-		    }
-
-		$first = $orgs->first();
-
-		$fields = array(
-		    "title" => array(),
-		    "url" => array(),
-		    "email" => array(),
-		    "phone" => array(),
-		    "tags" => array(),
-		    "icq" => array(),
-		    "skype" => array(),
-		);
-
-		foreach($orgs as $org) {
-
-			foreach($fields as $key=>$val)
-		    	$fields[$key][] = $org->data($key);
-
-		    if($org->id()!=$first->id()) {
-		        $org->messages()->data("parent","org:{$first->id()}");
-		        $org->payments()->data("orgID",$first->id());
-		        $org->bills()->data("orgID",$first->id());
-		        $org->occupations()->data("orgID",$first->id());
-		        $org->delete();
-		    }
-		}
-
-		foreach($fields as $key=>$val)
-		    $first->data($key,implode(" / ",array_unique($val)));
-
-		$first->reflex_repair();
-
-		return true;
-
+	    $ret = \tmp::get("/heapit/index/org-list/ajax")
+			->param("orgs", $items)
+			->getContentForAjax();
+		
+		return $ret;
+		
 	}
 
 }

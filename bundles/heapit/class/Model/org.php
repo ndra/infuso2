@@ -98,6 +98,7 @@ class Org extends \Infuso\ActiveRecord\Record {
 	
 	public function index_item($p) {
 		$org = self::get($p["id"]);
+		$org->registerView();
 		$this->app()->tmp()->exec("/heapit/org",array(
 		    "org" => $org,
 		));
@@ -105,6 +106,10 @@ class Org extends \Infuso\ActiveRecord\Record {
 
 	public function beforeStore(){
 	    $this->data("changed", \util::now());
+	}
+
+	public function registerView(){
+	    $this->data("opened", \util::now());
 	}
 
 	public static function all() {

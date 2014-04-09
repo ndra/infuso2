@@ -48,26 +48,39 @@ mod.fire = function(name,params) {
     }
 }
 
+mod.uniqueCalls = {};
+
 
 /**
  * Отправляет команду на сервер
  **/
-mod.call = function(params,fn,files) {
+mod.call = function(params,fn,conf) {
 
     if (!window.JSON) {
         return;
     }
     
+    if(!conf) {
+        conf = {}
+    }
+    
     var fdata = new FormData();
     fdata.append("data", JSON.stringify(params));   
     
-    if(files) {
-        $(files).find("input[type=file]").each(function() {
+    if(conf.files) {
+        $(conf.files).find("input[type=file]").each(function() {
             fdata.append(this.name, this.files[0]);   
         });
     }
     
-    this.request = $.ajax({
+    if(conf.unique) {
+        var xhr = this.uniqueCalls[conf.unique];
+        if(xhr) {
+            xhr.abort();
+        }
+	}
+    
+    var xhr = $.ajax({
         url: "/mod_json/?cmd="+params.cmd, // Добавляем команду к get-запросу (для логов)
         data: fdata,
         contentType: false,
@@ -82,6 +95,11 @@ mod.call = function(params,fn,files) {
             }
         }
     });
+    
+    if(conf.unique) {
+        this.uniqueCalls[conf.unique] = xhr;
+    }
+    
 },
 
 mod.parseCmd = function(str) {
