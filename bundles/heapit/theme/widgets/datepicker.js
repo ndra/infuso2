@@ -1,5 +1,6 @@
 /* Russian (UTF-8) initialisation for the jQuery UI date picker plugin. */
 /* Written by Andrew Stromnov (stromnov@gmail.com). */
+
 jQuery(function($){
     $.datepicker.regional['ru'] = {
         closeText: 'Закрыть',
@@ -27,7 +28,7 @@ jQuery(function($){
             yearRange: "c-5:c+5",
             changeMonth: true,
             changeYear: true,
-            altField: ".yoo8c3of0o-"+$(this).next().attr("name"),
+            altField: $(this).next(),
             altFormat: "yy-mm-dd" 
         });
     });

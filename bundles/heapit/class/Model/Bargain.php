@@ -9,7 +9,7 @@ use \Infuso\Core;
  **/
 class Bargain extends \Infuso\ActiveRecord\Record {
     
-    const STATUS_NEW  = 100;
+    const STATUS_NEW  = 0;
     const STATUS_INPROCESS = 200;
     const STATUS_SIGNED = 300;
     const STATUS_REFUSAL = 400;
@@ -27,7 +27,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Название сделки',
                 ), array(
-                    'name' => 'orgID',
+                    'name' => 'orgId',
                     'type' => 'link',
                     'editable' => '1',
                     'class' => 'Infuso\\Heapit\\Model\\Org',
@@ -53,7 +53,12 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'type' => 'textarea',
                     'editable' => '1',
                     'label' => 'Причина отказа',
-                ),  array(
+                ), array(
+                    'name' => 'created',
+                    'type' => 'date',
+                    'default' => 'now()',
+                    'label' => 'Создано',
+                ), array(
                     'name' => 'callTime',
                     'type' => 'date',
                     'default' => 'now()',

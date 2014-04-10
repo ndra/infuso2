@@ -1,5 +1,5 @@
 <? 
 
-<div class="bairgain-item-s0jioq8htr">
+<form class="bairgain-item-s0jioq8htr" data:bargainid='{$bargain->id()}' >
     exec("/heapit/bargain-form");
-</div>
+</form>

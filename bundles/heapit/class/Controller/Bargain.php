@@ -2,6 +2,7 @@
 
 namespace Infuso\Heapit\Controller;
 use \Infuso\Core;
+use \Infuso\Heapit\Model;
 
 class Bargain extends Core\Controller {
 
@@ -25,7 +26,8 @@ class Bargain extends Core\Controller {
      * Создает сделки
      **/
     public static function post_new($p) {
-        if(!$p["data"]["orgID"]) {
+    
+        if(!$p["data"]["orgId"]) {
             Core\Mod::msg("id контранета не указано",1);
             return false;
         }
@@ -33,5 +35,31 @@ class Bargain extends Core\Controller {
         $bargain = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Bargain", $p["data"]);
         Core\Mod::msg($bargain->url());
     }
+    
+    public static function post_save($p) {
+        $bargain = Model\Bargain::get($p["bargainId"]);
+        $bargain->setData($p["data"]);
+    }
+    
+	/**
+	 * Возвращает html-код списка сделок
+	 **/
+	public function post_search($p) {
+
+	    $bargains = \Infuso\Heapit\Model\Bargain::all();
+	    $bargains->page($p["page"]);
+
+	    // Учитываем поиск по имени
+	    if($search = trim($p["search"])) {
+			$bargains->like("title","$search");
+		}
+
+	    $ret = \tmp::get("/heapit/bargain-list/content/ajax")
+			->param("bargains", $bargains)
+			->getContentForAjax();
+
+		return $ret;
+
+	}
     
 }

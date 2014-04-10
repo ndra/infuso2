@@ -8,6 +8,6 @@
     } 
     
     <img class="currentUser" src='$path'>
-    \tmp::exec("user-select", array("fieldName" => $fieldName));
-    <input type='hidden' class='user-select-zaqfrsj6nf-{$fieldName}'  name='{$fieldName}' value='{$userID}'>
+    exec("user-select", array("fieldName" => $fieldName));
+    <input type='hidden' class='user-select-zaqfrsj6nf-{$fieldName}' name='{$fieldName}' value='{$userID}'>
 </div>

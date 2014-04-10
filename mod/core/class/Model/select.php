@@ -47,19 +47,6 @@ class Select extends Field {
 		return $this->pvalue();
 	}
 
-	public function extraConf() {
-		return array(
-		    array(
-				"name" => "list",
-				"label" => "Список значений (через запятую)",
-				"itWasParam" => true,
-			),array(
-				"name" => "method",
-				"label" => "Метод обьекта, возвращающий список",
-			)
-		);
-	}
-
 	/**
 	 * Возвращает список значений ввиде массива $ключ => $значение
 	 **/
@@ -68,20 +55,21 @@ class Select extends Field {
 	    if(func_num_args()==0) {
 	
 			// Вызов метода
-			if($fn = $this->conf("method")) {
+			if($fn = $this->param("method")) {
 			    return call_user_func(array($this->reflexItem(),$fn));
 			}
 			
-            $options = $this->conf("values");
+            $options = $this->param("values");
             if(!$options) {
-                $options = $this->conf("list");
+                $options = $this->param("list");
             }
 			
 			// Разбор значений из строки
 			if(!is_array($options)) {
 				$ret = array();
-				foreach(util::splitAndTrim($options,",") as $key=>$val)
+				foreach(util::splitAndTrim($options,",") as $key => $val) {
 				    $ret[$key+1] = $val;
+				}
 				$options = $ret;
 			}
 			
@@ -90,7 +78,7 @@ class Select extends Field {
 		}
 		
 	    if(func_num_args()==1) {
-			$this->conf("values",$options);
+			$this->param("values",$options);
 			return $this;
 		}
 

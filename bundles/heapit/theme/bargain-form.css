@@ -8,6 +8,10 @@
         .g-button();
     }
     
+    input[name='amount'] {
+        width:60px !important;
+    }
+    
     textarea {
         width: 500px;
         height:100px;

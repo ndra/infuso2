@@ -6,7 +6,7 @@ use \Infuso\Core\File;
 /**
  * Класс с набором статических методов, облегчающий рутинные действия
  **/
-class util {
+class Util {
 
     /**
      * Выводит профайлер
@@ -236,7 +236,7 @@ class util {
      * @return class util_string
      */
     public static function a($a) {
-        return new \util_array($a);
+        return new Collection($a);
     }
 
     /**

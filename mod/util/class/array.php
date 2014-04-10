@@ -1,9 +1,12 @@
 <?
 
+namespace Infuso\Util;
+use Infuso\Core;
+
 /**
  * Класс для работы с массивами в ООП-стиле
  **/
-class util_array extends mod_component implements iterator {
+class Collection extends Core\Component implements \Iterator {
 
     private $data = array();
 
