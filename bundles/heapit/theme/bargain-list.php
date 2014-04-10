@@ -1,5 +1,4 @@
 <? 
 
-tmp::add("center","toolbar");
-tmp::add("center","list");
-tmp::exec("/heapit/layout");
+add("center","content");
+exec("/heapit/layout");

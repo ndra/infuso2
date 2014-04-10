@@ -2,8 +2,12 @@
 
 <div class='fbknw356c6' >
     foreach($comments as $comment) {
-        <div>
-            echo $comment->id();
-        </div>
+        <table>
+            <tr>
+                <td>{$comment->id()}</td>
+                <td>{e($comment->data("message"))}</td>
+                <td></td>            
+            </tr>
+        </table>
     }
 </div>

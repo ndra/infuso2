@@ -34,7 +34,7 @@ class Comment extends \Infuso\ActiveRecord\Record {
     }
     
     public static function all() {
-        return \reflex::get(get_class());
+        return \reflex::get(get_class())->desc("datetime");
     }
     
     public static function get($id) {
