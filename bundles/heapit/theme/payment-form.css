@@ -1,7 +1,11 @@
 .payment-vlj855earc {
 
-    input, textarea, select {
+    input[type='text'], textarea, select {
         .g-input();
+    }
+    
+    input[type='submit'] {
+        .g-button();
     }
     
     textarea {

@@ -1,7 +1,11 @@
 .qs1t5z7t8d {
 
-    input, textarea, select {
+    input[type='text'], textarea, select {
         .g-input();
+    }
+    
+    input[type='submit'] {
+        .g-button();
     }
     
     textarea {
