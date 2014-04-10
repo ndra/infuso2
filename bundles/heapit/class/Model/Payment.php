@@ -7,7 +7,7 @@ class Payment extends \Infuso\ActiveRecord\Record {
 
     public static function recordTable() {
         return array(
-            'name' => 'payment',
+            'name' => 'heapitPayment',
             'fields' => array(
                 array(
                     'name' => 'id',

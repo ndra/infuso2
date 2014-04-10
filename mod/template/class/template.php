@@ -43,6 +43,10 @@ class Template extends Generic {
         }
     }
     
+    public static function current() {
+        return self::$current;
+    }
+    
     /**
      * Возвращает объект процессора шаблонов, к которому относится этот шаблон
      **/

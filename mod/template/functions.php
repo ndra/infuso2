@@ -1,6 +1,7 @@
 <?
 
 namespace Infuso\Template;
+use \Infuso\Core;
 
 function exec() {
 	$args = func_get_args();
@@ -44,8 +45,21 @@ function modjs() {
 	Lib::modjs();
 }
 
-function widget() {
-	echo "Ололо я виджет!";
+/**
+ * @todo Рефакторить скорость
+ * @todo Сделать чтобы оно понимало полный путь к классу
+ **/
+function widget($name) {
+	$name = strtolower($name);
+	$current = Template::current();
+	foreach(Core\Mod::service("classmap")->classes(Widget::inspector()->classname()) as $class) {
+	    if($class::inspector()->bundle()->path() == $current->bundle()->path()) {
+	        $reflect = new \ReflectionClass($class);
+			if (strtolower($reflect->getShortName()) === $name) {
+			    return new $class;
+            }
+	    }
+	}
 }
 
 function e($str) {

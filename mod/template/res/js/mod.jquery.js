@@ -1,4 +1,4 @@
-jQuery.fn.mod = function(param) {
+jQuery.fn.mod = function(param,p2) {
 
 	/**
 	 * Возвращает данные формы в виде массива ключ => значение
@@ -23,7 +23,7 @@ jQuery.fn.mod = function(param) {
     
     if(param == "init") {
         if(!$(this).data("hrbCtS8MoMw61V")) {
-            fn.apply(this);
+            p2.apply(this);
             $(this).data("hrbCtS8MoMw61V", true);
         }
     };
