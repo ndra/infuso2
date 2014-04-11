@@ -20,13 +20,13 @@
         "r" => "spacer",
         
         "#reports" => "Отчеты",
-        "#1" => "Настройки",
+        (string) action("infuso\\heapit\\controller\\conf") => "Настройки",
     );
     
     foreach($menu as $key => $val) {
-        if($val == "spacer"){
+        if($val == "spacer") {
             <span class="spacer"></span> 
-        }else{
+        } else {
             <a class='item' href='{$key}' >{$val}</a>
             echo " ";    
         }

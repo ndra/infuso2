@@ -4,11 +4,7 @@ namespace Infuso\Heapit\Controller;
 use \Infuso\Core;
 use Infuso\Heapit\Model;
 
-class Comments extends Core\Controller {
-    
-    public static function postTest() {
-        return true;
-    }
+class Comments extends Base {
     
     public function post_list($p) {
     

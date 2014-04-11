@@ -3,11 +3,7 @@
 namespace Infuso\Heapit\Controller;
 use \Infuso\Core;
 
-class Org extends Core\Controller {
-
-	public static function indexTest() {
-		return true;
-	}
+class Org extends Base {
 
 	public function index() {
 	    $this->app()->tmp()->exec("/heapit/index");
@@ -15,10 +11,6 @@ class Org extends Core\Controller {
 
 	public function index_add() {
 	    $this->app()->tmp()->exec("/heapit/org-new");
-	}
-
-	public static function postTest() {
-		return true;
 	}
 
 	/**

@@ -3,16 +3,8 @@
 namespace Infuso\Heapit\Controller;
 use \Infuso\Core;
 
-class Payment extends Core\Controller {
+class Payment extends Base {
 
-    public static function indexTest() {
-        return true;
-    }
-    
-    public static function postTest() {
-        return true;
-    }
-    
     public function index() {
         $this->app()->tmp()->exec("/heapit/payment-list");
     }

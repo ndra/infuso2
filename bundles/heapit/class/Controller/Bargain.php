@@ -4,16 +4,8 @@ namespace Infuso\Heapit\Controller;
 use \Infuso\Core;
 use \Infuso\Heapit\Model;
 
-class Bargain extends Core\Controller {
+class Bargain extends Base {
 
-    public static function indexTest() {
-        return true;
-    }
-    
-    public static function postTest() {
-        return true;
-    }
-    
     public function index() {
         $this->app()->tmp()->exec("/heapit/bargain-list");
     }
