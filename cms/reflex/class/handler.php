@@ -82,7 +82,7 @@ class Handler extends Core\Component implements Core\Handler {
 		\user_operation::create("reflex:viewLog","Редактирование лога")
 			->appendTo("admin");
 
-        \reflex_task::add(array(
+        \mod::service("task")->add(array(
             "class" => get_class(),
             "method" => "cleanup",
             "crontab" => "0 0 * * *",

@@ -1,34 +1,46 @@
 <?
 
-class reflex_task_service extends mod_service {
+namespace Infuso\Cms\Task;
+use Infuso\Core;
 
- 
-    public function defaultService() {
-        return "task";
+class Handler implements Core\Handler {
+
+    public static $origin = null;
+
+    public function on_mod_cron() {
+        mod::service("task")->runTasks();     
     }
     
-    public function initialParams() {
-        return array(
-            "timeout" => 2,
-        );
-    } 
+    public function on_mod_beforeInit() {
+        self::$origin = util::id();
+    }
     
-     /**
+    /**
+    * Грохает задачи кототыре были добавлены в предущий mod_init
+    **/
+    public function on_mod_afterInit() {
+        reflex_task::all()
+            ->eq("completed",0)
+            ->neq("origin","")
+            ->neq("origin",self::$origin)
+            ->data("completed",1);
+    }
+    
+    /**
      * Возвращает список задач, которые уже могут быть выполнены
      **/
-    public function tasksToLaunch() {
+    public static function tasksToLaunch() {
         return reflex_task::all()
             ->leq("nextLaunch",util::now())
             ->eq("completed",0);
     }
     
-    
     /**
      * Выполняет одно задание
      **/
-    public function execOne() {
+    public static function execOne() {
 
-        $tasks = $this->tasksToLaunch();
+        $tasks = self::tasksToLaunch();
         $total = $tasks->count();
 
         if($total==0) {
@@ -49,14 +61,5 @@ class reflex_task_service extends mod_service {
 
         $task->exec();
     }
-    
-    
-     public function runTasks() {
-        $start = microtime(true);
-        while(microtime(true) - $start < $this->param("timeout")) {
-            $this->execOne();
-            reflex::storeAll();
-        }        
-    }
-    
-}     
+
+}

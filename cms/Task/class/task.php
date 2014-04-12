@@ -1,9 +1,13 @@
 <?
 
+namespace Infuso\Cms\Task;
+use Infuso\Core;
+use Infuso\ActiveRecord;
+
 /**
- * Реализация очереди задач в reflex
+ * Модель задачи
  **/
-class reflex_task extends reflex implements mod_handler {
+class Task extends ActiveRecord\Record implements Core\Handler {
 
 	public static function recordTable() {
 	
@@ -35,6 +39,7 @@ class reflex_task extends reflex implements mod_handler {
 					'name' => 'created',
 					'type' => 'datetime',
 					'editable' => '2',
+					"default" => "now",
 				), array (
 					'name' => 'called',
 					'type' => 'datetime',
@@ -76,12 +81,11 @@ class reflex_task extends reflex implements mod_handler {
 		);
 	}
 	
-    public function reflex_beforeCreate() {
-        $this->data("created",util::now());
+    public function beforeCreate() {
         $this->updateNextLaunchTime();
     }
 
-    public function reflex_beforeStore() {
+    public function beforeStore() {
         if($this->field("crontab")->changed()) {
             $this->updateNextLaunchTime();
         }
@@ -91,7 +95,7 @@ class reflex_task extends reflex implements mod_handler {
      * Возвращает коллекцию задач
      **/
     public static function all() {
-        return reflex::get(get_class())->desc("nextLaunch",true);
+        return \reflex::get(get_class())->desc("nextLaunch",true);
     }
 
     /**
@@ -99,85 +103,6 @@ class reflex_task extends reflex implements mod_handler {
      **/
     public static function get($id) {
         return reflex::get(get_class(),$id);
-    }
-    
-
-    /**
-     * Добавляет новое задание очередь. Задание - это выполнение заданного метода заданной модели по крону.
-     * Перебирается полная коллекция элементова можели или ее часть, если задано условие "query"
-     * Если задание уже есть, повторного добавления не будет
-     *
-     * reflex_task::create(
-     *    "class" => ..,
-     *    "method" => ..,
-     *    "query" => ..,
-     *    "priority" => ..,
-     *    "params" => ..,
-     * )
-     * @todo $params["params"] = mod::field("array")->prepareValue($params["params"])->value(); - какая-то хер, я не понимаю [Голиков]
-     **/
-    public static function add($params) {
-    
-        // Разруливаем олдскульный случай, когда параметры передавались не массивом а в аргументах
-    
-        if(is_array($params)) {
-            $params = util::a($params)->filter("class","query","method","params","crontab")->asArray();
-
-        } else {
-
-            $args = func_get_args();
-
-            $params = array(
-                "class" => $args[0],
-                "method" => $args[2],
-                "params" => $args[3] ? $args[3] : array(),
-            );
-        }
-        
-        // Разруливаем reflex-задачи
-        
-        $mode = "reflex";
-
-        try {
-	        $rmethod = new ReflectionMethod($params["class"],$params["method"]);
-	        if($rmethod->isStatic()) {
-	            $mode = "static";
-	        }
-		} catch (Exception $ex) {}
-
-        if($mode == "reflex") {
-            reflex_task_reflex::add($params);
-            return;
-        }
-        
-		// Если мы дошли до этого места, у нас обычная статическая задача
-        
-        if(!$params["class"]) {
-            throw new Exception("Параметр <b>class</b> не указан");
-        }
-        
-        if(!$params["method"]) {
-            throw new Exception("Параметр <b>method</b> не указан");
-        }
-
-        $params["completed"] = 0;
-        $params["params"] = mod::field("array")->prepareValue($params["params"]);
-
-        $item = self::all()
-            ->eq($params)
-            ->one();
-            
-		$params["origin"] = reflex_task_handler::$origin;
-
-        if(!$item->exists()) {
-            $item = reflex::create("reflex_task",$params);
-        } else {
-            if($params["origin"]) {
-            	$item->data("origin",$params["origin"]);
-            	$item->store();
-            }
-        }
-
     }
 
 	/**
