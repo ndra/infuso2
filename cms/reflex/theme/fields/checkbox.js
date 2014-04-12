@@ -1,6 +1,6 @@
 $(function() {
 
-    $(".vgd2nzxvnn").mod().init(function() {
+    $(".vgd2nzxvnn").mod("init", function() {
         var container = $(this);
         var checkbox = container.find("input[type='checkbox']");
         checkbox.change(function() {

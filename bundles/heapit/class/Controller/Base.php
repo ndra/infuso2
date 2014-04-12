@@ -6,7 +6,7 @@ use \Infuso\Core;
 abstract class Base extends Core\Controller {
 
     public final function indexTest() {
-        return \user::active()->exists();
+        return \Infuso\User\Model\User::active()->exists();
     }
     
     public final function indexFailed() {
@@ -14,6 +14,6 @@ abstract class Base extends Core\Controller {
     }
     
     public final function postTest() {
-        return \user::active()->exists();
+        return \Infuso\User\Model\User::active()->exists();
     }
 }

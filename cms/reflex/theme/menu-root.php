@@ -2,7 +2,7 @@
 
 <div class='pp7cpa1wpc' >
 
-    $url = new Infuso\Core\Action($class,"root",array(
+    $url = action($class,"root",array(
         "method" => $method,
     ));
     
@@ -18,7 +18,7 @@
         
         <div class='subdivisions' >
             if(1) {
-                tmp::exec("subdivisions", array(
+                exec("subdivisions", array(
                     "nodeId" => $nodeId,
                 ));
             }

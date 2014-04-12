@@ -2,7 +2,7 @@
 
 mod::coreJS();
 
-admin::header();
+\admin::header();
 
 $bundlePath = $this->bundle()->path();
 tmp::js($bundlePath."/res/js/window.js");
@@ -20,4 +20,4 @@ tmp::js($bundlePath."/res/js/list.js");
     </tr>
 </table>
 
-admin::footer();
+\admin::footer();

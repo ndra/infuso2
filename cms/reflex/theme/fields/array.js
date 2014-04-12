@@ -1,6 +1,6 @@
 $(function() {
 
-    $(".vehszhivmz").mod().init(function() {
+    $(".vehszhivmz").mod("init", function() {
     
         var container = $(this).find(".items");
         var input = $(this).find("input");

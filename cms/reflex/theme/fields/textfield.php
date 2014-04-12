@@ -1,13 +1,11 @@
 <?
 
 <div class='x8spq9pjwjn' >
-
-    $value = util::str($field->value())->esc();
     
     if($field->editable()) {
-        <input name='{$field->name()}' value='{$value}' autocomplete="off" />
+        <input name='{$field->name()}' value='{e($field->value())}' autocomplete="off" />
     } else {
-        <input value='{$value}' disabled />
+        <input value='{e($field->value())}' disabled />
     }
         
 </div>

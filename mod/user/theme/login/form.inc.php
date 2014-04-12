@@ -1,3 +1,0 @@
-<?
-
-tmp::exec("user:loginForm");

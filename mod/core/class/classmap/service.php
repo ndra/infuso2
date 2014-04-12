@@ -195,6 +195,9 @@ class classmapService extends service {
 	    "reflex" => "\\infuso\\activerecord\\record",
 	    "reflex_editor" => "\\infuso\\cms\\reflex\\editor",
 	    "admin" => "\\infuso\\cms\\admin\\admin",
+	    "user" => "\\infuso\\user\\model\\user",
+	    "user_operation" => "\\infuso\\user\\model\\operation",
+	    "user_role" => "\\infuso\\user\\model\\role",
 	);
 	
 	/**

@@ -1,6 +1,6 @@
 $(function() {
 
-    $(".ioy1gedqt1").mod().init(function() {
+    $(".ioy1gedqt1").mod("init", function() {
     
         var container = $(this);
     

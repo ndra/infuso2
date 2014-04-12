@@ -2,8 +2,6 @@
 
 <div class='gveialugfd'> 
 
-    \Infuso\Template\Lib::components();
-    
     foreach(\infuso\core\log::messages() as $msg) {
     
         $class = $msg->error() ? "error" : "ok";

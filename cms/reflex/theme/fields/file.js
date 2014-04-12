@@ -1,6 +1,6 @@
 $(function() {
 
-    $(".l83i1tvf0u").mod().init(function() {
+    $(".l83i1tvf0u").mod("init", function() {
     
         var dropzone = $(this);
     

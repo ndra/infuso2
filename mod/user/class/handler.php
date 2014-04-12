@@ -1,9 +1,12 @@
 <?
 
+namespace Infuso\User;
+use \Infuso\Core;
+
 /**
  * Служебный класс - обработчик событий
  **/
-class user_handler implements mod_handler {
+class Handler implements Core\Handler {
 
     public function on_mod_beforeAction() {
         user::active()->registerActivity();
@@ -23,8 +26,9 @@ class user_handler implements mod_handler {
      * @handlerPriority = 0
      **/
     public static function onInit() {
+        return;
         reflex_task::add(array(
-            "class" => "user_handler",
+            "class" => get_class(),
             "method" => "deleteUnverfiedUsers",
             "crontab" => "0 0 * * *"
         ));
