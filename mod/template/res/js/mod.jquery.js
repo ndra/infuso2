@@ -22,9 +22,11 @@ jQuery.fn.mod = function(param,p2) {
     }
     
     if(param == "init") {
-        if(!$(this).data("hrbCtS8MoMw61V")) {
-            p2.apply(this);
-            $(this).data("hrbCtS8MoMw61V", true);
-        }
+        $(this).each(function() {
+	        if(!$(this).data("hrbCtS8MoMw61V")) {
+	            p2.apply(this);
+	            $(this).data("hrbCtS8MoMw61V", true);
+	        }
+        });
     };
 }
