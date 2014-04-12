@@ -1,9 +1,12 @@
+html, body {
+    height: 100%;
+}
+
 .x0h4tfwmhnn {
 
     table-layout:fixed;
     width:100%;
-    min-height: 400px;
-    
+   
 }
 
 .g-input {
