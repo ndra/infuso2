@@ -17,11 +17,11 @@
         </a>
         
         <div class='subdivisions' >
-            if(1) {
+            /*if(1) {
                 exec("subdivisions", array(
                     "nodeId" => $nodeId,
                 ));
-            }
+            } */
         </div>
     
     </div>
