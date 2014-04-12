@@ -15,7 +15,9 @@ tmp::js($bundlePath."/res/js/list.js");
         </td>
         <td style='width:4px;border-left:1px solid #ededed;border-right:1px solid #ededed;' ></td>
         <td>
-            tmp::region("center");
+            <div style='overflow-x:auto;width:100%;' >
+                tmp::region("center");
+            </div>
         </td>
     </tr>
 </table>

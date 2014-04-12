@@ -1,0 +1,17 @@
+.x0kf50uz479 {
+    padding: 20px;
+    
+    td {
+        padding: 10px;
+    }
+    
+    thead {
+        td {
+            color:gray;
+            font-style: italic;
+            border-bottom: 1px solid #ededed;
+            vertical-align:bottom;
+        }
+    }
+    
+}

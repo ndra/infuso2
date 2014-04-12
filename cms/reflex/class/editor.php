@@ -30,7 +30,7 @@ abstract class Editor extends Core\Controller {
     public function index_root($p) {
         $code = get_class($this).":".$p["method"];
         $collection = Collection::unserialize($code);
-        \Infuso\Template\Tmp::exec("/reflex/root2",array(
+        \Infuso\Template\Tmp::exec("/reflex/root",array(
             "editor" => $this,
             "collection" => $collection,
         ));
@@ -190,86 +190,6 @@ abstract class Editor extends Core\Controller {
         Core\Mod::msg("Объект изменен");
     }
 
-
-    /**
-     * Возвращает список дезактивированных функций
-     **/
-    public final function getDisableItems($list=null) {
-
-        // Отключаем лишние функции
-        $disable = $this->disable();
-        if(!$disable)
-            $disable = array();
-        if(is_string($disable))
-            $disable = util::splitAndTrim($disable,",");
-
-        // Параметр "disable" коллекции
-        if($list) {
-            $disable2 = $list->param("disable");
-            if(!$disable2) $disable2 = array();
-            if(is_string($disable2))
-                $disable2 = util::splitAndTrim($disable2,",");
-            foreach($disable2 as $item)
-                $disable[] = $item;
-        }
-
-        // Если выключена кнопка "Добавить", прячем кнопку "Закачать"
-        if(in_array("add",$disable)) {
-            $disable[] = "upload";
-        }
-
-        // Фильтруем уникальные значения
-        $disable = array_unique($disable);
-
-        return $disable;
-    }
-
-    /**
-     * @return Возвращает массив фильтров
-     * Пробегается по всем плведениям, вызываеит метод filters() и объединяет результаты
-     **/
-    public function filters() {
-        return $this->callBehaviours("filters");
-    }
-
-    public function saveMeta($meta,$langID) {
-
-        $metaObject = $this->item()->metaObject();
-
-        if(!$metaObject->exists()) {
-            $hash = get_class($this->item()).":".$this->itemID();
-            $obj = reflex::create("reflex_meta_item",array("hash"=>$hash));
-        }
-
-        if($meta) {
-            foreach($meta as $key => $val) {
-                $metaObject->data($key,$val);
-            }
-        }
-    }
-
-    public function group() {
-        return $this->item()->data("group");
-    }
-
-    public function rootPriority() {
-        return 0;
-    }
-
-    public function deleteMeta($langID) {
-
-        $metaObject = $this->item()->metaObject();
-        $metaObject->delete();
-    }
-
-    public function setURL($url) {
-        $this->item()->setURL($url);
-    }
-
-    public function actionAfterCreate() {
-        return "edit/".get_class($this)."/".$this->item()->id();
-    }
-    
     /**
      * Возвращает список режимов отображения
      **/

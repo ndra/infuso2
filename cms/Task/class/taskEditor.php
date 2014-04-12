@@ -16,5 +16,11 @@ class TaskEditor extends Reflex\Editor {
 	public function all() {
 	    return Task::all()->title("Задачи");
 	}
+	
+    public function viewModes() {
+        return array(
+            "Таблица" => "/task/grid",
+        );
+    }
 
 }
