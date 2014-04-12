@@ -34,5 +34,11 @@ class Lib {
         tmp::js(self::path()."/js/mod.js",-900);
         tmp::js(self::path()."/js/mod.jquery.js",-900);
     }
+    
+    public function modJSUI() {
+        self::jq();
+        tmp::js(self::path()."/js/mod.window.js");
+        tmp::js(self::path()."/js/mod.list.js");
+    }
 
 }

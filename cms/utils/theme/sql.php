@@ -5,7 +5,7 @@ admin::header();
 <form class='joe9zokei' method='post' >
 
     <textarea name='query' >
-        echo util::str($_POST["query"])->esc();
+        echo e($_POST["query"]);
     </textarea>
     
     <input type='submit' value='Выполнить' />
@@ -13,7 +13,7 @@ admin::header();
     if($_POST["query"]) {
         try {
         
-            $result = mod::service("db")->query($_POST["query"])->exec();
+            $result = \mod::service("db")->query($_POST["query"])->exec();
             
             <table class='result' >
                 

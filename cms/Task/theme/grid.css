@@ -1,6 +1,10 @@
 .x0kf50uz479 {
     padding: 20px;
     
+    tr {
+        cursor: pointer;
+    }
+    
     td {
         padding: 10px;
     }
@@ -13,5 +17,15 @@
             vertical-align:bottom;
         }
     }
+   
+    tr:hover {        
+        background: #ededed;       
+    }
+    
+    .selected {
+        td {
+            background: rgba(0,100,255,.2);
+        }
+    }    
     
 }

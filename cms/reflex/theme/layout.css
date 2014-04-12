@@ -11,14 +11,37 @@ html, body {
 
 .g-input {
 
-    padding:6px;
+    padding:8px;
     border:1px solid #999;
-    border-radius:3px;
+    border-radius:5px;
     box-shadow: 0px 5px 8px rgba(0,0,0,.2) inset;
     width:150px;
+    box-sizing: content-box;
+    margin: 0;
     
     &:focus {
         border:1px solid blue;
+    }    
+}
+
+.g-button {
+    padding:8px;
+    border:1px solid #999;
+    background: white;
+    border-radius:10px;
+    width: auto;
+    box-sizing: content-box;
+    margin:0;
+    cursor: pointer;
+     
+    &:hover {
+        background :#ededed;
     }
     
+    &:active {
+        box-shadow: 0px 5px 8px rgba(0,0,0,.2) inset;
+        padding-top: 9px;
+        padding-bottom: 7px;
+    }    
+ 
 }

@@ -1,7 +1,7 @@
 <? 
 
 $code = $collection->serialize();
-<div class='qoi8w451jl' infuso:collection='{$code}' >
+<div class='qoi8w451jl c-toolbar' infuso:collection='{$code}' >
 
     // Быстрый поиск
     <input />  
@@ -19,6 +19,8 @@ $code = $collection->serialize();
     
     <button class='create' >Добавить</button>
     
+    <span class='selection-info' >
+    </span>
     <button>Удалить</button>
 
 </div>

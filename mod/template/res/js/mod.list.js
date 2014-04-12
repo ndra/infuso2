@@ -1,12 +1,41 @@
 jQuery.fn.list = function(param) {
 
     var e = $(this);
-
-    if(param === undefined) {
+    
+    /**
+     * Создаем список
+     **/
+    if(param === undefined || typeof(param) === "object" ) {
+    
+        if(!param) {
+            param = {};
+        }
+        
+        var e = $(this);
+        
+        var keepSelection = function() {
+            var sel = e.list("selection");
+            jQuery.fn.list.keepSelection[param.keepSelection] = sel;
+        }
+        
+		var restoreSelection = function() {
+			var sel = jQuery.fn.list.keepSelection[param.keepSelection];
+	        e.find(".list-item").each(function() {
+	            if($.inArray($(this).attr("data:id"),sel) !== -1) {
+	                $(this).addClass("selected");
+	            }
+	        });
+        }
 
         $(this).find(".list-item").mousedown(function() {
             $(this).toggleClass("selected");
+			keepSelection();
+			e.trigger("listSelectionChanged",[{
+			    selection: e.list("selection")
+			}]);
         });
+        
+        restoreSelection();
 
         return e;
     }
@@ -36,3 +65,5 @@ jQuery.fn.list = function(param) {
     }
 
 }
+
+jQuery.fn.list.keepSelection = {};

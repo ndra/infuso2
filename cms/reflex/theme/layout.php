@@ -3,10 +3,7 @@
 mod::coreJS();
 
 \admin::header();
-
-$bundlePath = $this->bundle()->path();
-tmp::js($bundlePath."/res/js/window.js");
-tmp::js($bundlePath."/res/js/list.js");
+lib::modjsui();
 
 <table class='x0h4tfwmhnn' >
     <tr>

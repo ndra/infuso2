@@ -15,7 +15,7 @@
     
         foreach($collection->editors() as $editor) {
             $item = $editor->item();
-            <tr>
+            <tr class='list-item' data:id='{$editor->id()}' >
                 foreach($item->fields() as $field) {
                     if($field->visible()) {
                         <td>{$field->rvalue()}</td>
