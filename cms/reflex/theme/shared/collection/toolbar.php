@@ -4,7 +4,8 @@ $code = $collection->serialize();
 <div class='qoi8w451jl c-toolbar' infuso:collection='{$code}' >
 
     // Быстрый поиск
-    <input />  
+    widget("\\infuso\\cms\\ui\\widgets\\textfield")
+        ->exec();
       
     <button onclick='mod.fire("reflex/refresh");' >Обновить</button>
     

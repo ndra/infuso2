@@ -1,0 +1,31 @@
+.x8zq1fi07zr {    
+
+    background: {@color} !important;
+    
+    &:before {  
+        content: @color;
+        width: @width;
+        color: @color;
+        display: inline-block;  
+    }  
+}
+
+/*    position:relative;
+    display:inline-block;
+    margin-right: 10px;
+    
+    input {
+        .g-input();
+    }
+    
+    @icon: "@{bundle}res/img/icons24/delete.png";
+    
+    .button {        
+        position:absolute;
+        right:5px;
+        top: 5px;
+        width: 24px;
+        height: 24px;
+        background: url(@icon);
+        cursor: pointer;
+    } */

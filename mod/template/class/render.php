@@ -80,12 +80,17 @@ class Render extends Core\Component {
 	    $hash = md5(self::renderID()." - ".serialize($items));
 	    $file = file::get("{$rpath}/$hash.$ext");
 
-        //if(mod::conf("tmp:always-render") || !$file->exists()) {
 	    if(!$this->param("cache") || !$file->exists()) {
 
 	        $code = "";
 	        foreach($items as $item) {
 	            if($str = trim(file::get($item)->data())) {
+	            
+					if($ext=="css" && self::less()) {
+	                	$code.= '@bundle: "'.(file::get($item)->bundle()->path()).'/";'."\n\n";
+	                	$code.= '@template: "'.(file::get($item)).'/";'."\n\n";
+	                }
+	            
 	                // В режиме отладки дописываем источник
 	                if(\mod::debug()) {
 	                	$code.= "/* source:".$item.": */\n\n";
@@ -96,10 +101,8 @@ class Render extends Core\Component {
 			}
 
 			// Если включен lesscss и расширение css - пропускаем через пармер less
-			if(self::less()) {
-				if($ext=="css") {
-				    $code = self::lesscssInstance()->parse($code);
-				}
+			if($ext=="css" && self::less()) {
+			    $code = self::lesscssInstance()->parse($code);
 			}
 			
 			if(!trim($code)) {

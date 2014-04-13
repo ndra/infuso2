@@ -50,9 +50,17 @@ function modjs() {
  * @todo Сделать чтобы оно понимало полный путь к классу
  **/
 function widget($name) {
+
+	$classmap = Core\Mod::service("classmap");
+	
+	if($classmap->testClass($name,Widget::inspector()->classname())) {
+	    return new $name;
+	}
+
 	$name = strtolower($name);
 	$current = Template::current();
-	foreach(Core\Mod::service("classmap")->classes(Widget::inspector()->classname()) as $class) {
+
+	foreach($classmap->classes(Widget::inspector()->classname()) as $class) {
 	    if($class::inspector()->bundle()->path() == $current->bundle()->path()) {
 	        $reflect = new \ReflectionClass($class);
 			if (strtolower($reflect->getShortName()) === $name) {

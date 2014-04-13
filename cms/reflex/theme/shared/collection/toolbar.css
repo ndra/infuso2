@@ -8,7 +8,7 @@
         display:inline-block;
     }
     
-    input,select {
+    select {
         .g-input();
         margin-right: 10px;
     }
