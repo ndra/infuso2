@@ -86,23 +86,27 @@ class Render extends Core\Component {
 	        foreach($items as $item) {
 	            if($str = trim(file::get($item)->data())) {
 	            
+					$id = \util::id();
+					$str = preg_replace("/@bundle/","@bundle-{$id}",$str);
+					$str = preg_replace("/@{bundle}/",'@{bundle-'.$id.'}',$str);
+	            
 					if($ext=="css" && self::less()) {
-	                	$code.= '@bundle: "'.(file::get($item)->bundle()->path()).'/";'."\n\n";
-	                	$code.= '@template: "'.(file::get($item)).'/";'."\n\n";
+	                	$code.= '@bundle-'.$id.': "'.(file::get($item)->bundle()->path()).'/";'."\n\n";
 	                }
 	            
 	                // В режиме отладки дописываем источник
 	                if(\mod::debug()) {
 	                	$code.= "/* source:".$item.": */\n\n";
 	                }
-
+	                
 	                $code.= $str.($ext=="js" ? "\n;\n" : "\n\n");
+	                
 				}
 			}
 
 			// Если включен lesscss и расширение css - пропускаем через пармер less
 			if($ext=="css" && self::less()) {
-			    $code = self::lesscssInstance()->parse($code);
+				$code = self::lesscssInstance()->parse($code);
 			}
 			
 			if(!trim($code)) {
