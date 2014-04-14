@@ -94,7 +94,7 @@ class Helper extends Widget {
 
     }
 
-    public final function attr($key,$val=null,$processStyles = true) {
+    public final function attr($key = null, $val = null,$processStyles = true) {
 
         if(func_num_args()==0) {
             $attributes = $this->param("attributes");

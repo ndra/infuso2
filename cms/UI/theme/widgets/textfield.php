@@ -14,7 +14,7 @@ $container = helper("<span class='x8zq1fi07zr' >");
 $container->begin();
 
     $input = helper("<input type='text' />");
-    $input->attr("name", $widget->param("fieldName"));
+    $input->attr("name", $widget->param("name"));
     $input->attr("value", $widget->param("value"));
     $input->attr("placeholder", $widget->param("placeholder"));    
     
@@ -27,6 +27,10 @@ $container->begin();
         } else {
             $input->style($key,$val);
         }
+    }
+    
+    foreach($widget->attr() as $key => $val) {
+        $input->attr($key,$val);
     }
     
     $input->exec();

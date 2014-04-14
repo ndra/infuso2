@@ -8,7 +8,15 @@
         <input value='{e($field->value())}' disabled />
     } */
     
-    $w = widget("\\infuso\\cms\\ui\\widgets\\textfield");
+    $w = widget("\\infuso\\cms\\ui\\widgets\\textfield")
+        ->value($field->value())        
+        ->fieldName($field->name());
+        
+    if(!$field->editable()) {
+        $w->attr("disabled", true);
+    }
+        
+        
     $w->exec();
         
 </div>
