@@ -6,12 +6,24 @@ use Infuso\Core;
 
 class Updater extends \Infuso\Core\Component {
 
-	public function update($mod) {
-		$bundle = Core\Mod::service("bundle")->bundle($mod);
+	public function update($bundleName) {
+	
+		$bundle = Core\Mod::service("bundle")->bundle($bundleName);
 		$conf = $bundle->conf();
+		
 		if($conf["update"]) {
-		    Core\Mod::msg($conf);
-			Core\Mod::msg("update {$bundle->path()}");
+		
+		    Core\Mod::msg("Updating {$bundle->path()}");
+		
+		    $params = $conf["update"];
+		    $tmpFolder = Core\File::tmp();
+		    $params["dest"] = $tmpFolder;
+			$hub = new \Infuso\Update\Github;
+			$hub->downloadFolder($params);
+			
+			$bundle->path()->delete(true);
+			$tmpFolder->rename($bundle->path());
+		    
 		} else {
 		    Core\Mod::msg("skip {$bundle->path()}");
 		}
