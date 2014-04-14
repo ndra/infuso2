@@ -13,10 +13,10 @@ $containerStyles = array(
 $container = helper("<span class='x8zq1fi07zr' >");
 $container->begin();
 
-    $value = $widget->param("value");
-    $name = $widget->param("name");
-    
-    $input = helper("<input type='textfield' value='{$value}' name='{$name}' />");
+    $input = helper("<input type='text' />");
+    $input->attr("name", $widget->param("fieldName"));
+    $input->attr("value", $widget->param("value"));
+    $input->attr("placeholder", $widget->param("placeholder"));    
     
     // Некоторые стили, например отступы, присваиваются контейнеру
     // Все остальные, например цвет, присваиваются полю

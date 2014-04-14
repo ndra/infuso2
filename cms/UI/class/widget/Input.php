@@ -18,4 +18,9 @@ abstract class Input extends \Infuso\Template\Helper {
 	    return $this;
 	}
 	
+	public final function placeholder($placeholder) {
+	    $this->param("placeholder", $placeholder);
+	    return $this;
+	}
+	
 }

@@ -18,6 +18,11 @@
         height: 24px;
         background: url(@icon);
         cursor: pointer;
+        opacity: .1;
+        
+        &:hover {
+            opacity: 1;
+        }
     }
     
 }
