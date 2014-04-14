@@ -3,5 +3,4 @@ update:
   owner: ndra
   repo: infuso2
   branch: dev
-  path: mod
-  path: /test/
+  path: /mod/
