@@ -1,7 +1,6 @@
 <?
 
 namespace Infuso\Update;
-
 use Infuso\Core;
 
 /**
@@ -9,70 +8,54 @@ use Infuso\Core;
  **/
 class GitHub extends \Infuso\Core\Component {
 
-	public function __construct($params) {
-	    $this->params($params);
-	}
+	public function downloadFolder($params) {
 	
-	public function owner() {
-	    return $this->param("owner");
-	}
-	
-	public function repo() {
-	    return $this->param("repo");
-	}
-	
-	public function branch() {
-	    return $this->param("branch");
-	}
-	
-	/**
-	 * Делает запрос к гитхабу
-	 **/
-	public function query($url,$params = array()) {
-	
-	    $params += $this->params();
-	
-		$url = preg_replace_callback("/\:([a-z]+)/",function($match) use(&$params) {
-		    $key = $match[1];
-		    return $params[$key];
-		},$url);
+		$obligatoryKeys = array(
+		    "owner",
+		    "repo",
+		    "branch",
+		    "path",
+		    "dest",
+		);
 		
-		$file = Core\File::http($url);
-		$file->userAgent("Infuso-Update");
-		$file->curlParam("CURLOPT_USERPWD", "xxx:x-oauth-basic");
-		$file->curlParam("CURLOPT_HTTPAUTH", CURLAUTH_BASIC);
-		$json = $file->contents();
-		$data = json_decode($json,1);
-
-		if($data["message"]) {
-			throw new \Exception($url.": ".$data["message"]."\n".$data["documentation_url"]);
+		foreach($obligatoryKeys as $key) {
+		    if(!$params[$key]) {
+		        throw new \Exception("Error in \\Infuso\\Update\\GitHub::downloadFolder(\$params): \$params[{$key}] missing");
+		    }
 		}
-		
-		return $data;
-		
-	}
-	
-	public function zip() {
 	
 	    $url = "https://api.github.com/repos/:owner/:repo/:format/:branch";
 	
-	    $params = $this->params();
 	    $params["format"] = "zipball";
 
 		$url = preg_replace_callback("/\:([a-z]+)/",function($match) use(&$params) {
 		    $key = $match[1];
 		    return $params[$key];
 		},$url);
-
+		
 		$file = Core\File::http($url);
-		$file->userAgent("Infuso-Update");
-		$file->curlParam("CURLOPT_USERPWD", ":x-oauth-basic");
-		$file->curlParam("CURLOPT_HTTPAUTH", CURLAUTH_BASIC);
-		$data = $file->contents();
+		$file->userAgent("Awesome-Octocat-App");
+		$contents = $file->contents();
+		$info = $file->info();
+		
+		if($info["http_code"] != 200 ) {
+		
+			$data = json_decode($contents,1);
+			
+			// $headers = $file->responseHeaders();
+
+		    if(is_array($data)) {
+				Throw new \Exception("Github code {$info['http_code']}: {$url} ".$data["message"]);
+			} elseif(is_string($json)) {
+			    Throw new \Exception("Github code {$info['http_code']} {$url} ".$json);
+			} else {
+			    Throw new \Exception("Github returns {$info['http_code']}");
+			}
+		}
 		
 		$zip = Core\File::tmp()."/1.zip";
-		Core\File::get($zip)->put($data);
-		$this->extract($zip,"zzz","mod");
+		Core\File::get($zip)->put($contents);
+		$this->extract($zip,$params["dest"],$params["path"]);
 		
 	}
 	
@@ -88,13 +71,16 @@ class GitHub extends \Infuso\Core\Component {
 	    
 	    $root = "";
 	    for($i = 0; $i < $zip->numFiles; $i ++) {
+	    
 	    	$file = $zip->getNameIndex($i);
 	    	$file = explode("/",trim($file,"/"));
 	    	array_shift($file);
 	    	if(!sizeof($file)) {
 	    	    continue;
 	    	}
+	    	
 	    	$file = implode("/",$file);
+	    	
 	    	if($file == $path) {
 	    	    $root = $zip->getNameIndex($i);
 	    	}

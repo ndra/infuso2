@@ -6,8 +6,6 @@ abstract class File extends Component {
 
     public static $fileClass = "mod_file";
     
-    private static $temporaryFolder = "/mod/_temp/";
-    
     private static $foldersToDelete = array();
 
     protected $path = null;
@@ -19,6 +17,10 @@ abstract class File extends Component {
      * Все обращения к этому файлу не будут отсылаться файловой системе
      **/
     protected $exists = true;
+    
+    public static function temporaryFolder() {
+        return Mod::app()->varPath()."/__tmp";
+    }
     
     /**
      * Возвращает полный путь к файлу
@@ -88,8 +90,10 @@ abstract class File extends Component {
     public function tmp() {
         $chars = "1234567890qwertyuiopasdfghjklzxcvbnm";
         $id = "";
-        for($i=0;$i<20;$i++) $id.= $chars[rand()%strlen($chars)];
-        $path = self::$temporaryFolder."/$id/";
+        for($i=0;$i<20;$i++) {
+			$id.= $chars[rand()%strlen($chars)];
+		}
+        $path = self::temporaryFolder()."/$id/";
         file::mkdir($path,1);
         self::$foldersToDelete[] = $path;
         register_shutdown_function(array("mod_file","clearTemporaryFolders"));

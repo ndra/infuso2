@@ -1,10 +1,7 @@
-public:
-  -/res/
-  -/pub/
-  -/conf/
-  
-leave:
-  - /trace/
-  - /service/
-  - /cache/
-  - /exclude/
+update:
+  source: github
+  owner: ndra
+  repo: infuso2
+  branch: dev
+  path: mod
+  path: /test/

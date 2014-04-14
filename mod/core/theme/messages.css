@@ -10,11 +10,13 @@
     }
 
     .error {
+        background: #d06666;
         .gradient(#d06666,#af0000);
         .message();
     }
     
     .ok {
+        background: #66cc66;
         .gradient(#66cc66,#00aa00);
         .message();
     }

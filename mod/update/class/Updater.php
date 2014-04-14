@@ -10,6 +10,7 @@ class Updater extends \Infuso\Core\Component {
 		$bundle = Core\Mod::service("bundle")->bundle($mod);
 		$conf = $bundle->conf();
 		if($conf["update"]) {
+		    Core\Mod::msg($conf);
 			Core\Mod::msg("update {$bundle->path()}");
 		} else {
 		    Core\Mod::msg("skip {$bundle->path()}");

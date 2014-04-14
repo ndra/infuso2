@@ -9,8 +9,20 @@ class tester extends \infuso\core\controller implements \Infuso\Core\Handler {
     }
     
     public function index($p) {
-		\tmp::add("center","/reflex/test");
-		\tmp::exec("/reflex/layout");
+    
+        \tmp::header();
+
+		$hub = new \Infuso\Update\Github;
+		$hub->downloadFolder(array(
+		    "owner" => "ndra",
+		    "repo" => "infuso2",
+		    "branch" => "dev",
+		    "path" => "/mod/",
+		    "dest" => "/xxx/",
+		));
+		
+		\tmp::footer();
+
     }
 
 }
