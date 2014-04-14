@@ -5,12 +5,13 @@
         <tr>
             <td><label>Организация</label></td>
             <td>
-                $w = new \Infuso\Heapit\Widget\Autocomplete;
+                $w = new \Infuso\Cms\UI\Widgets\Autocomplete();
                 $w->fieldName("orgId");
                 $w->value($bargain->data("orgId"));
                 $w->title($bargain->pdata("orgId")->title());
-                $w->serviceUrl("/infuso/heapit/controller/widget/orgList");
+                $w->cmd("/infuso/heapit/controller/widget/orgList");
                 $w->exec();
+                
             </td>
         </tr>
         <tr>
@@ -23,7 +24,10 @@
         </tr>
         <tr>
             <td>Сумма</td>
-            <td><input  type='text' name='amount' value='{e($bargain->data("amount"))}'></td>
+            <td>
+                $w = new \Infuso\Cms\UI\Widgets\Autocomplete();
+                //<input  type='text' name='amount' value='{e($bargain->data("amount"))}'>
+            </td>
         </tr>
         <tr>
             <td><label>Статус</label></td>

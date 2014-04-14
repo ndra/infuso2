@@ -536,6 +536,7 @@
         },
 
         suggest: function () {
+            console.log(this.suggestions.length);
             if (this.suggestions.length === 0) {
                 this.hide();
                 return;
