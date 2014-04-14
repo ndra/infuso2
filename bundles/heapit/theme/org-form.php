@@ -42,11 +42,11 @@
         <tr>
             <td>Кто привел</td>
             <td>
-                $w = new \Infuso\Heapit\Widget\Autocomplete;
+                $w = new \Infuso\Cms\UI\Widgets\Autocomplete;
                 $w->fieldName("referral");
                 $w->value($org->data("referral"));
                 $w->title($org->pdata("referral")->title());
-                $w->serviceUrl("/infuso/heapit/controller/widget/orgList");
+                $w->cmd("/infuso/heapit/controller/widget/orgList");
                 $w->exec();
             </td>
         </tr> 
