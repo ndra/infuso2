@@ -15,7 +15,7 @@ class Datepicker extends Widget {
     }
     
     public function value($value){
-        $this->param("date", $value);
+        $this->param("value", $value);
         return $this;    
     }
      

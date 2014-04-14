@@ -50,7 +50,7 @@
             <td>
                 $w = new \Infuso\Heapit\Widget\Datepicker;
                 $w->fieldName("callTime");
-                $w->value($bargain->pdata("callTime")->num());
+                $w->value($bargain->data("callTime"));
                 $w->exec();
             </td>
         </tr>
