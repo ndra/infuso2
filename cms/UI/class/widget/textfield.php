@@ -2,7 +2,7 @@
 
 namespace Infuso\Cms\UI\Widgets;
 
-class Textfield extends \Infuso\Template\Helper {
+class Textfield extends Input {
 
 	public function name() {
 	    return "Текстовое поле";

@@ -5,6 +5,7 @@ $code = $collection->serialize();
 
     // Быстрый поиск
     widget("\\infuso\\cms\\ui\\widgets\\textfield")
+        ->value(2121)
         ->exec();
       
     <button onclick='mod.fire("reflex/refresh");' >Обновить</button>
