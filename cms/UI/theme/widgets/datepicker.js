@@ -22,15 +22,16 @@ jQuery(function($){
         yearSuffix: ''};
     $.datepicker.setDefaults($.datepicker.regional['ru']);
     
-    
-    $('.yoo8c3of0o').each(function(){
-        $(this).datepicker({
+    $(".datepicker-89z0fcfy09").mod("init", function(){
+        var input = $(this).find("input[type='text']");
+        var inputHidden = $(this).find("input[type='hidden']");
+        input.datepicker({
             yearRange: "c-5:c+5",
             changeMonth: true,
             changeYear: true,
-            altField: $(this).next(),
+            altField: inputHidden,
             altFormat: "yy-mm-dd" 
         });
     });
-    
+
 });

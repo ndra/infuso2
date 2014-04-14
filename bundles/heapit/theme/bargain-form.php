@@ -52,7 +52,7 @@
         <tr>
             <td><label>Когда связаться</label></td>
             <td>
-                $w = new \Infuso\Heapit\Widget\Datepicker;
+                $w = new \Infuso\Cms\UI\Widgets\Datepicker;
                 $w->fieldName("callTime");
                 $w->value($bargain->data("callTime"));
                 $w->exec();
