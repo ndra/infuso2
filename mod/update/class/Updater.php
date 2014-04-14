@@ -4,6 +4,9 @@ namespace Infuso\Update;
 
 use Infuso\Core;
 
+/**
+ * Класс для обновления модулей
+ **/
 class Updater extends \Infuso\Core\Component {
 
 	public function update($bundleName) {
