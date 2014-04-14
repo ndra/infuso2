@@ -21,7 +21,7 @@ class Updater extends \Infuso\Core\Component {
 			$hub = new \Infuso\Update\Github;
 			$hub->downloadFolder($params);
 			
-			$bundle->path()->delete(true);
+			Core\File::get($bundle->path())->delete(true);
 			$tmpFolder->rename($bundle->path());
 		    
 		} else {
