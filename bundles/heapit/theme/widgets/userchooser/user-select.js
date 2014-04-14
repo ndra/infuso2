@@ -9,9 +9,10 @@ $(function(){
     
     $(".user-select-zaqfrsj6nf .item").click(function(){
         var fieldName = $(this).parent().attr("userchooser:name");
-        $("input[name='"+fieldName+"']").val($(this).attr("user:id"));
+        var input = $(this).parents(".userChooser-r5rr523ugt").find("input");
+        var userID = $(this).attr("user:id");
         var src = $(this).attr("src");
-        $(".userChooser-r5rr523ugt .currentUser").attr("src", src);
+        $(input).trigger("userSelected", { userID: userID, userPic: src});
         $(this).parent().hide(); 
     });
 });

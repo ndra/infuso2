@@ -5,5 +5,11 @@ $(function(){
         var top = event.offsetY - usersCont.get(0).scrollHeight/2;
         var left = event.offsetX;
         usersCont.css({top: top, left: left});    
-    });    
+    });
+    
+    $(".userChooser-r5rr523ugt .user-select-hiddenField").on("userSelected", function(event, params){
+        event.stopPropagation(); 
+        $(this).val(params.userID);
+        $(this).parent().find(".currentUser").attr("src", params.userPic);    
+    });      
 });

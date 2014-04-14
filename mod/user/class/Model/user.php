@@ -15,162 +15,162 @@ class User extends ActiveRecord\Record {
 
     private $errorText = "";
     
-	public static function recordTable() {
-	
-		return array(
-			'name' => 'user_list',
-			'fields' => array(
-				array(
-					'name' => 'id',
-					'type' => 'jft7-kef8-ccd6-kg85-iueh',
-					'editable' => '0',
-					'group' => 'Основное',
-					'indexEnabled' => '0',
-				) ,
-				array(
-					'name' => 'password',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '0',
-					'label' => 'Хэш пароля',
-					'group' => 'Основное',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'email',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '2',
-					'label' => 'Электронная почта',
-					'group' => 'Основное',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'roles',
-					'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
-					'editable' => 0,
-					'id' => 'y9sd81h7p5rdy1zqkgztklzqwestc9',
-					'label' => 'Роли',
-					'indexEnabled' => 0,
-					'class' => Role::inspector()->className(),
-				) ,
-				array(
-					'name' => 'registrationTime',
-					'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
-					'editable' => '2',
-					'label' => 'Время регистрации',
-					'group' => 'Основное',
-					'indexEnabled' => '1',
-					"default" => "now()",
-				) ,
-				array(
-					'name' => 'lastActivity',
-					'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
-					'editable' => 2,
-					'id' => 'tyvbxplhnw9htkg2qme038gsxwgsxp',
-					'indexEnabled' => 1,
-					'label' => 'Когда был на сайте',
-					'group' => 'Основное',
-				) ,
-				array(
-					'name' => 'rights',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '0',
-					'label' => 'Права',
-					'group' => 'Основное',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'verificationCode',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '2',
-					'label' => 'Код подтверждения операции',
-					'group' => 'Основное',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'verified',
-					'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-					'editable' => '2',
-					'label' => 'Почта подтверждена',
-					'group' => 'Основное',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'extra',
-					'type' => 'puhj-w9sn-c10t-85bt-8e67',
-					'editable' => '1',
-					'label' => 'Дополнительно',
-					'group' => 'Основное',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'self-registered',
-					'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-					'editable' => '1',
-					'label' => 'Зарегистрировался самостоятельно',
-					'group' => 'Основное',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'firstName',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '1',
-					'label' => 'Имя',
-					'group' => 'Личные данные',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'lastName',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '1',
-					'label' => 'Фамилия',
-					'group' => 'Личные данные',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'nickName',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '1',
-					'label' => 'Никнейм',
-					'group' => 'Личные данные',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'userpick',
-					'type' => 'knh9-0kgy-csg9-1nv8-7go9',
-					'editable' => '1',
-					'label' => 'Юзерпик',
-					'group' => 'Личные данные',
-					'indexEnabled' => '1',
-				) ,
-				array(
-					'name' => 'country',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '1',
-					'id' => 'p9ztkg03wvh7pvioyaix4uztwgsqyl',
-					'label' => 'Страна',
-					'indexEnabled' => '0',
-					'group' => 'Личные данные',
-				) ,
-				array(
-					'name' => 'region',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '1',
-					'id' => 'rnwahtf5st81rdkvhnyl63y5r3c5ht',
-					'label' => 'Регион',
-					'indexEnabled' => '0',
-					'group' => 'Личные данные',
-				) ,
-				array(
-					'name' => 'city',
-					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '1',
-					'id' => '4asx8ub7c9hx4art81b3mvr7plhnce',
-					'label' => 'Город',
-					'indexEnabled' => '0',
-					'group' => 'Личные данные',
-				) ,
-			) ,
-		);
+    public static function recordTable() {
+    
+        return array(
+            'name' => 'user_list',
+            'fields' => array(
+                array(
+                    'name' => 'id',
+                    'type' => 'jft7-kef8-ccd6-kg85-iueh',
+                    'editable' => '0',
+                    'group' => 'Основное',
+                    'indexEnabled' => '0',
+                ) ,
+                array(
+                    'name' => 'password',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '0',
+                    'label' => 'Хэш пароля',
+                    'group' => 'Основное',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'email',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '2',
+                    'label' => 'Электронная почта',
+                    'group' => 'Основное',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'roles',
+                    'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
+                    'editable' => 0,
+                    'id' => 'y9sd81h7p5rdy1zqkgztklzqwestc9',
+                    'label' => 'Роли',
+                    'indexEnabled' => 0,
+                    'class' => Role::inspector()->className(),
+                ) ,
+                array(
+                    'name' => 'registrationTime',
+                    'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+                    'editable' => '2',
+                    'label' => 'Время регистрации',
+                    'group' => 'Основное',
+                    'indexEnabled' => '1',
+                    "default" => "now()",
+                ) ,
+                array(
+                    'name' => 'lastActivity',
+                    'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+                    'editable' => 2,
+                    'id' => 'tyvbxplhnw9htkg2qme038gsxwgsxp',
+                    'indexEnabled' => 1,
+                    'label' => 'Когда был на сайте',
+                    'group' => 'Основное',
+                ) ,
+                array(
+                    'name' => 'rights',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '0',
+                    'label' => 'Права',
+                    'group' => 'Основное',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'verificationCode',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '2',
+                    'label' => 'Код подтверждения операции',
+                    'group' => 'Основное',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'verified',
+                    'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
+                    'editable' => '2',
+                    'label' => 'Почта подтверждена',
+                    'group' => 'Основное',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'extra',
+                    'type' => 'puhj-w9sn-c10t-85bt-8e67',
+                    'editable' => '1',
+                    'label' => 'Дополнительно',
+                    'group' => 'Основное',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'self-registered',
+                    'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
+                    'editable' => '1',
+                    'label' => 'Зарегистрировался самостоятельно',
+                    'group' => 'Основное',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'firstName',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '1',
+                    'label' => 'Имя',
+                    'group' => 'Личные данные',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'lastName',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '1',
+                    'label' => 'Фамилия',
+                    'group' => 'Личные данные',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'nickName',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '1',
+                    'label' => 'Никнейм',
+                    'group' => 'Личные данные',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'userpick',
+                    'type' => 'knh9-0kgy-csg9-1nv8-7go9',
+                    'editable' => '1',
+                    'label' => 'Юзерпик',
+                    'group' => 'Личные данные',
+                    'indexEnabled' => '1',
+                ) ,
+                array(
+                    'name' => 'country',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '1',
+                    'id' => 'p9ztkg03wvh7pvioyaix4uztwgsqyl',
+                    'label' => 'Страна',
+                    'indexEnabled' => '0',
+                    'group' => 'Личные данные',
+                ) ,
+                array(
+                    'name' => 'region',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '1',
+                    'id' => 'rnwahtf5st81rdkvhnyl63y5r3c5ht',
+                    'label' => 'Регион',
+                    'indexEnabled' => '0',
+                    'group' => 'Личные данные',
+                ) ,
+                array(
+                    'name' => 'city',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '1',
+                    'id' => '4asx8ub7c9hx4art81b3mvr7plhnce',
+                    'label' => 'Город',
+                    'indexEnabled' => '0',
+                    'group' => 'Личные данные',
+                ) ,
+            ) ,
+        );
 
     
     }
@@ -179,7 +179,7 @@ class User extends ActiveRecord\Record {
      * Возвращает коллекцию всех пользователей
      **/
     public static function all() {
-        return reflex::get(get_class())->desc("registrationTime");
+        return \reflex::get(get_class())->desc("registrationTime");
     }
 
     /**
@@ -301,8 +301,8 @@ class User extends ActiveRecord\Record {
      **/
     public final function setVerification() {
         if(!$this->data("email")) {
-			return this;
-		}
+            return this;
+        }
         $this->data("verified",1);
         $this->log("Адрес электронной почты подтвержден");
         return $this;
@@ -404,11 +404,11 @@ class User extends ActiveRecord\Record {
 
         if($this->exists() && $this->id()==user::active()->id()) {
             return true;
-		}
+        }
 
         if($this->thisIsActiveUser) {
             return true;
-		}
+        }
 
         return false;
 
