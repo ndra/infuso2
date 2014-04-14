@@ -149,7 +149,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
             
 		// Прочее - кронтаб
         } else {
-            $time = reflex_task_crontab::nextDate($this->data("crontab"));
+            $time = \reflex_task_crontab::nextDate($this->data("crontab"));
             $this->data("nextLaunch",$time);
         }
     }

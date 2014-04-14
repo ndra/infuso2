@@ -82,6 +82,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
     public function fieldNames() {
         $names = array();
         $model = $this->recordTable();
+        
+        if(!is_array($model["fields"])) {
+            throw new \Exception("Model[fields] must be Array in ".get_class($this));
+        }
+        
 		foreach($model["fields"] as $fieldDescr) {
 		    $names[] = $fieldDescr["name"];
 		}
