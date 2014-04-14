@@ -1,16 +1,6 @@
 .x8zq1fi07zr {    
 
-    background: {@color} !important;
-    
-    &:before {  
-        content: @color;
-        width: @width;
-        color: @color;
-        display: inline-block;  
-    }  
-}
-
-/*    position:relative;
+    position:relative;
     display:inline-block;
     margin-right: 10px;
     
@@ -28,4 +18,6 @@
         height: 24px;
         background: url(@icon);
         cursor: pointer;
-    } */
+    }
+    
+}
