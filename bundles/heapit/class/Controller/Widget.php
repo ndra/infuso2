@@ -20,6 +20,20 @@ class Widget extends Base {
         $ret["suggestions"] = $suggestions;
 
         echo json_encode($ret);
-    }    
+    } 
+    
+    
+    public function post_orgList($p) {
+        $orgs = \Infuso\Heapit\Model\Org::all()->like("title", $p["query"]);
+        $ret = array();
+        $ret["query"] = $p["query"];
+        $suggestions = array();
+        $data = array();  
+        foreach($orgs as $org){
+            $suggestions[] = array("value"=>$org->title(),"key"=>$org->id());
+        }
+        $ret["suggestions"] = $suggestions;
+        return $ret;
+    }   
         
 }
