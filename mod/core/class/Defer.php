@@ -1,5 +1,7 @@
 <?
 
+
+
 namespace Infuso\Core;
 
 class Defer {

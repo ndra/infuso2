@@ -250,6 +250,8 @@ class App {
 	}
 
 	public function generateHtaccess() {
+	
+	    return;
 
 		$gatePath = mod::service("classmap")->getClassBundle(get_class())->path()."/pub/gate.php";
 		$gatePath = file::get($gatePath);
