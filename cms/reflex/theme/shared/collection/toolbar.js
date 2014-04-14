@@ -22,7 +22,7 @@ $(function() {
     // реагируем на смену выделения    
     
     $(".qoi8w451jl").on("selectionChanged", function(e, selection) {
-        $(this).find(".selection-info").html("Выбрано элементов: "+selection.length);
+        $(this).find(".selection-info").html("Выбрано элементов: " + selection.length);
     })
 
 });

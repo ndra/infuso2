@@ -2,6 +2,7 @@
 
     width:100%;
     table-layout: fixed;
+    margin-bottom: 12px;
     
     td {
         vertical-align: middle;
@@ -17,4 +18,5 @@
 
 .gpudbjvgc1-checkbox {
     padding-left: 200px;
+    margin-bottom: 12px;
 }
