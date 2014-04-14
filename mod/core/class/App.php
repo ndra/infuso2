@@ -43,9 +43,10 @@ class App {
 	 * Подключает жизненно важные классы
 	 **/
 	public function includeCoreClasses() {
-		include("profiler.php");
-		include("component.php");
-		include("mod.php");
+	
+		include("Profiler.php");
+		include("Component.php");
+		include("Mod.php");
 		
 		Profiler::beginOperation("core","includeCoreClasses",1);
 	    include("controller/controller.php");
