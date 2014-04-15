@@ -1,7 +1,7 @@
 <?
 
 // Загружаем основной класс приложения
-include("../class/app.php");
+include("../class/App.php");
 
 // Создаем приложение
 $p = $_SERVER["REQUEST_URI"];
