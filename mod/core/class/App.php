@@ -49,14 +49,14 @@ class App {
 		include("Mod.php");
 		
 		Profiler::beginOperation("core","includeCoreClasses",1);
-	    include("controller/controller.php");
-	    include("superadmin.php");
-	    include("service.php");
-	    include("classmap/service.php");
-	    include("file/file.php");
-	    include("file/localFile.php");
-	    include("file/flist.php");
-	    include("bundle/bundle.php");
+	    include("Controller/Controller.php");
+	    include("Superadmin.php");
+	    include("Service.php");
+	    include("Classmap/Service.php");
+	    include("File/File.php");
+	    include("File/LocalFile.php");
+	    include("File/Flist.php");
+	    include("Bundle/Bundle.php");
 	    Profiler::endOperation();
 	}
 
@@ -251,8 +251,6 @@ class App {
 
 	public function generateHtaccess() {
 	
-	    return;
-
 		$gatePath = mod::service("classmap")->getClassBundle(get_class())->path()."/pub/gate.php";
 		$gatePath = file::get($gatePath);
 
