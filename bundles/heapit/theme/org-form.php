@@ -52,7 +52,7 @@
         </tr> 
         <tr>
             <td></td>
-            <td><input type='submit' value='Создать' /></td>
+            <td><input type='submit' value='{$org->exists() ? "Сохранить" : "Создать"}' /></td>
         </tr>
         
     </table>

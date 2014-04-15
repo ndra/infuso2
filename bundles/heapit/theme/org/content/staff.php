@@ -4,6 +4,9 @@
     echo "Сотрудники";
     <div class="controls">
         <div class="add" data:orgid='{$org->id()}'></div>
+        $w = new \Infuso\Heapit\Widget\Button();
+        $w->param("icon", "/heapit/res/img/staff/plus.png");
+        $w->exec();
     </div>
     <table class="list">
         <thead>
