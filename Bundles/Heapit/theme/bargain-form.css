@@ -1,0 +1,35 @@
+.qs1t5z7t8d {
+
+    input[type='text'], textarea, select {
+        .g-input();
+    }
+    
+    input[type='submit'] {
+        .g-button();
+    }
+    
+    input[name='amount'] {
+        width:60px !important;
+    }
+    
+    textarea {
+        width: 500px;
+        height:100px;
+    }
+    
+    td {
+        vertical-align: middle;
+        padding-bottom: 10px;
+    }
+    
+    td:first-child {
+        text-align: right;
+        padding-right:20px;
+        color:gray;
+        font-style: italic;
+    }
+    
+    .refusalDescription {
+        display: none;
+    }
+}

@@ -1,0 +1,24 @@
+.mgh1nqv4qw {
+
+    position:relative;
+    height:200px;
+    
+    .segment {
+        position:absolute;
+        height:40px;    
+        background:rgba(0,0,0,.3);
+        
+        &:hover {
+            outline:1px solid black;
+        }
+    }
+    
+    .label {
+        position:absolute;
+        left:100%;
+        white-space:nowrap;
+        font-size:10px;
+        border-left:1px solid #ccc;
+    }
+    
+}
