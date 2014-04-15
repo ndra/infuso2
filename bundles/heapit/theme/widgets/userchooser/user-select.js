@@ -12,7 +12,7 @@ $(function(){
         var input = $(this).parents(".userChooser-r5rr523ugt").find("input");
         var userID = $(this).attr("user:id");
         var src = $(this).attr("src");
-        $(input).trigger("userSelected", { userID: userID, userPic: src});
+        $(input).trigger("userSelected", { userID: userID, userPic: src });
         $(this).parent().hide(); 
     });
 });

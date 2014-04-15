@@ -14,8 +14,9 @@ $(function(){
                     //мапим данные ответа
                     var reponseData = $.map(data.suggestions, function(m) {
                         return {
-                            value: m.value,
+                            label: m.value,
                             key: m.key,
+                            icon: m.icon
                         };
                     });
                     
@@ -24,7 +25,17 @@ $(function(){
                 });    
             },
             select: function( event, ui ) { hiddenInput.val(ui.item.key); }
-        });
+        }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
+            var str = "";
+            if(item.icon){
+                str = "<a>" + "<img src='" + item.icon + "'/>" + item.label + "</a>";
+            }else{
+                str = "<a>" + item.label + "</a>";    
+            }
+            return $( "<li>" )
+                .append( str )
+                .appendTo( ul );
+            };
         
         input.click(function(){
             $(this).focus();

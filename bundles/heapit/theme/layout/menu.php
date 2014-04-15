@@ -3,7 +3,7 @@
 <div class='ncecpy3pn9 gradient-pattern' >
 
     $menu = array(
-        (string) action("infuso\\heapit\\controller\\org") => "ШмотКонтрагенты",
+        (string) action("infuso\\heapit\\controller\\org") => "Контрагенты",
         (string) action("infuso\\heapit\\controller\\org", "add") => "+",
         
         (string) action("infuso\\heapit\\controller\\bargain") => "Сделки",

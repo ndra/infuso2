@@ -1,9 +1,8 @@
 <?
 
 namespace Infuso\Heapit\Widget;
-use Infuso\Template\Widget;
 
-class Button extends Widget {
+class Button extends \Infuso\Template\Helper {
 
     /**
     * Название виджета
@@ -16,16 +15,12 @@ class Button extends Widget {
     * Рендер виджета
     **/
     public function execWidget() {
-        $this->tag($this->param("submit") ? "button" : "a");
         if($this->param("submit")){
             $this->attr("type", "submit"); 
         }
-        $this->addClass("button-2xgda31m91");
+        $this->addClass("button-tnctafx7bo");
         if($this->param("class")){
             $this->addClass($this->param("class"));    
-        }
-        if($this->param("icon")){
-            $this->addClass($this->param("icon"));
         }
         if($this->param("title")){
             $this->attr("title", $this->param("title"));

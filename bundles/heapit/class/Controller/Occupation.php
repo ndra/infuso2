@@ -20,5 +20,12 @@ class Occupation extends Base {
         $ret = \tmp::get("/heapit/org/content/staff/item", array("occ" => $occ))->getContentForAjax();
         return $ret; 
     }
+    
+    public static function post_delete($p) {
+        //$occ = \Infuso\Heapit\Model\Occupation::get($p["occId"]);
+        $occ = \Infuso\Heapit\Model\Occupation::all()->eq("id", $p["occId"]);
+        $occ->delete();
+        return true;    
+    }
         
 }
