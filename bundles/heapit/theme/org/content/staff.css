@@ -1,4 +1,21 @@
-.x1lsfa0a64l {
+.staff-x1lsfa0a64l {
     border:1px solid #ededed;
-    padding: 20px;
+    padding: 5px;
+    .controls {
+        .add {
+            display:inline-block;
+            background: url("@{bundle}res/img/staff/plus.png") no-repeat center center;
+            width:24px;
+            height: 24px;
+            cursor: pointer;
+            
+            .g-button();
+        }        
+    }
+    
+    .list {
+        td {
+            padding: 5px;
+        }
+    }
 }

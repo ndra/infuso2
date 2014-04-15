@@ -65,9 +65,9 @@ class Link extends Field {
 
         if($fn) {
             return $this->reflexItem()->$fn();
-		}
+        }
 
-        $items = reflex::get($this->itemClass())->limit(100);
+        $items = \reflex::get($this->itemClass())->limit(100);
         
         return $items;
     }

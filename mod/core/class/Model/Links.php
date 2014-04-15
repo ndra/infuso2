@@ -21,7 +21,7 @@ class Links extends Link {
         return array(
             "name" => "+".$this->name(),
             "fields" => $this->name()."(1)",
-		);
+        );
     }
 
     public function editorInx() {

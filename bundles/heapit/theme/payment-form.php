@@ -7,11 +7,11 @@
             <tr>
                 <td><label>Организация</label></td>
                 <td>
-                    $w = new \Infuso\Heapit\Widget\Autocomplete;
+                    $w = new \Infuso\Cms\UI\Widgets\Autocomplete;
                     $w->fieldName("orgID");
                     $w->value($payment->data("orgID"));
                     $w->title($payment->pdata("orgID")->title());
-                    $w->serviceUrl("/infuso/heapit/controller/widget/orgList");
+                    $w->cmd("/infuso/heapit/controller/widget/orgList");
                     $w->exec();
                 </td>
             </tr>
@@ -25,7 +25,12 @@
             </tr>
             <tr>
                 <td><label>Сумма</label></td>
-                <td><input name='amount' value='{e($payment->data("amount"))}'></td>
+                <td>
+                    $w = new \Infuso\Cms\UI\Widgets\Textfield();
+                    $w->fieldName("amount");
+                    $w->value($payment->data("amount"));
+                    $w->exec();
+                </td>
             </tr>          
             <tr>
                 <td></td>

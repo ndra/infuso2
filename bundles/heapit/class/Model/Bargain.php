@@ -50,7 +50,8 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'label' => 'Статус',
                 ), array(
                     'name' => 'refusalDescription',
-                    'type' => 'textarea',
+                    'type' => 'select',
+                    'values' => self::enumRefusalDescription(),
                     'editable' => '1',
                     'label' => 'Причина отказа',
                 ), array(
@@ -67,6 +68,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                 ), array(
                     'name' => 'userID',
                     'type' => 'link',
+                    'class' => '\\Infuso\\User\\Model\\User',
                     'editable' => '1',
                     'label' => 'Ответственный',
                 ),
@@ -101,6 +103,15 @@ class Bargain extends \Infuso\ActiveRecord\Record {
             self::STATUS_INPROCESS => "Переговоры",
             self::STATUS_SIGNED => "Заключен договор",
             self::STATUS_REFUSAL => "Отказ",
+        );    
+    }
+    
+    public static function enumRefusalDescription() {
+        return array(
+            100 => "Клиент мудак",
+            200 => "Мы мудаки",
+            300 => "Все мудаки",
+            400 => "Не срослось",
         );    
     }
     

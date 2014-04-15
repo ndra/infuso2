@@ -3,7 +3,7 @@
 class util_date extends mod_component {
 
 
-    private $format = "d.m.y H:i:s";
+    private $format = "d.m.Y H:i:s";
     private $time = null;
 
     private $notime = null;
@@ -39,14 +39,14 @@ class util_date extends mod_component {
     
         switch(func_num_args()) {
             case 1:
-		        // Числа интерпретируются как timestamp
-		        if(intval($time).""==$time) {
-		            $this->time = intval($time);
+                // Числа интерпретируются как timestamp
+                if(intval($time).""==$time) {
+                    $this->time = intval($time);
 
-		        // В противном случае попробуем распарсить строку
-		        } else {
-		            $this->time = @strtotime($time);
-		        }
+                // В противном случае попробуем распарсить строку
+                } else {
+                    $this->time = @strtotime($time);
+                }
                 break;
             case 2:
             case 3:
@@ -120,7 +120,7 @@ class util_date extends mod_component {
      **/
     public function date() {
         $this->notime = 1;
-        $this->format("d.m.y");
+        $this->format("d.m.Y");
         $this->time = strtotime(date("Y-m-d", $this->time));
         return $this;
     }
@@ -252,14 +252,14 @@ class util_date extends mod_component {
     public function day($day = null) {
     
         if(func_num_args() == 0 ) {
-        	return @date("j",$this->stamp());
-		}
-		
-		if(func_num_args() == 1 ) {
-        	$date = new self($this->year(),$this->month(),$day,$this->hours(),$this->minutes(),$this->seconds());
-        	$this->time = $date->stamp();
-        	return $this;
-		}
+            return @date("j",$this->stamp());
+        }
+        
+        if(func_num_args() == 1 ) {
+            $date = new self($this->year(),$this->month(),$day,$this->hours(),$this->minutes(),$this->seconds());
+            $this->time = $date->stamp();
+            return $this;
+        }
     }
     
     /**
@@ -273,25 +273,25 @@ class util_date extends mod_component {
     
         if(func_num_args() == 0 ) {
         
-			$map = array(
-				0 => 7,
-				1 => 1,
-				2 => 2,
-				3 => 3,
-				4 => 3,
-				5 => 5,
-				6 => 6,
-			);
+            $map = array(
+                0 => 7,
+                1 => 1,
+                2 => 2,
+                3 => 3,
+                4 => 3,
+                5 => 5,
+                6 => 6,
+            );
         
-        	return $map[date("w",$this->stamp())];
+            return $map[date("w",$this->stamp())];
         }
         
-		if(func_num_args() == 1 ) {
-			$wday = $this->commercialWeekDay();
-			$this->shiftDay( 1 - $wday );
-			$this->shiftDay( $day - 1 );
-			return $this;
-		}
+        if(func_num_args() == 1 ) {
+            $wday = $this->commercialWeekDay();
+            $this->shiftDay( 1 - $wday );
+            $this->shiftDay( $day - 1 );
+            return $this;
+        }
         
     }
 

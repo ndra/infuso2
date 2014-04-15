@@ -25,7 +25,10 @@
         <tr>
             <td>Сумма</td>
             <td>
-                $w = new \Infuso\Cms\UI\Widgets\Autocomplete();
+                $w = new \Infuso\Cms\UI\Widgets\Textfield();
+                $w->fieldName("amount");
+                $w->value($bargain->data("amount"));
+                $w->exec();
                 //<input  type='text' name='amount' value='{e($bargain->data("amount"))}'>
             </td>
         </tr>
@@ -33,8 +36,13 @@
             <td><label>Статус</label></td>
             <td>
                 <select name='status'>
+                    
                     foreach(\Infuso\Heapit\Model\Bargain::enumStatuses() as $status=>$title){
-                        <option value='$status'>$title</option>        
+                        $selected = "";
+                        if($bargain->data("status") == $status){
+                            $selected = "selected";    
+                        }
+                        <option $selected value='$status'>$title</option>        
                     }
                 </select>
             </td>
@@ -43,8 +51,12 @@
             <td>Причина отказа</td>
             <td>
                 <select name='refusalDescription'>
-                    foreach(\Infuso\Heapit\Model\Bargain::enumStatuses() as $status=>$title){
-                        <option value='$status'>$title</option>        
+                    foreach(\Infuso\Heapit\Model\Bargain::enumRefusalDescription() as $status=>$title){
+                        $selected = "";
+                        if($bargain->data("refusalDescription") == $status){
+                            $selected = "selected";    
+                        }
+                        <option value='$status' $selected>$title</option>        
                     }
                 </select>
             </td>
