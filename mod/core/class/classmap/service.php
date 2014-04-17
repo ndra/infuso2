@@ -224,6 +224,8 @@ class classmapService extends service {
 	
 	public function includeClass($class) {
 	
+	    $class = strtolower($class);
+	
 	    \Infuso\Core\Profiler::beginOperation("core","includeClass",$class);
 	
 	    $class = strtolower($class);
