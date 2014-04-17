@@ -328,11 +328,14 @@ class User extends ActiveRecord\Record {
      **/
     public final function changePassword($pass) {
     
+		if(!$this->exists()) {
+		    throw new \Exception("Попытка смены пароля у несуществующего пользователя");
+		}
+    
         $pass = self::checkAbstractPassword($pass);
         if(!$pass) {
             return false;
         }
-        
         $this->data("password", Core\Crypt::hash($pass));
         $cookie = $_COOKIE["login"];
         $this->authorizations()->neq("cookie",$cookie)->delete();
@@ -421,36 +424,12 @@ class User extends ActiveRecord\Record {
      * Генерирует пользователю новый код для куков, устанавливает его и возвращает его же
      **/
     private final function newCookie() {
-        $cookie = util::id();
-        $auth = reflex::create("Auth",array(
+        $cookie = \util::id();
+        $auth = Core\Mod::service("ar")->create(Auth::inspector()->className(),array(
             "cookie" => $cookie,
             "userID" => $this->id(),
         ));
         return $cookie;
-    }
-
-
-    /**
-     * Пытается выполнить вход по данному логину (электронной почте) и паролю.
-     * Возвращает true/false
-     **/
-    public static final function login($login,$pass,$keep=null) {
-    
-        $login = strtolower(trim($login));
-        $pass = trim($pass);
-        $user = user::byEmail($login);
-        
-        if(!$user->verified()) {
-            return false;
-        }
-        
-        if($user->checkPassword($pass)) {
-            $user->activate($keep);
-            return true;
-        }
-        
-        return false;
-            
     }
 
     /**
@@ -466,7 +445,7 @@ class User extends ActiveRecord\Record {
         setcookie("login",$cookie,$expire,"/");
         $_COOKIE["login"] = $cookie;
         self::$activeUser = $this;
-        $this->log("Вход");
+        //$this->log("Вход");
     }
 
     /**
@@ -768,6 +747,25 @@ class User extends ActiveRecord\Record {
         $stamp = util::now()->stamp();
         $stamp = round($stamp/60/5)*60*5;
         $this->data("lastActivity",$stamp);
+    }
+    
+    /**
+     * Проверяет пароль $pass для данного полбзователя
+     * Возвращает true/false
+     **/
+    public function checkPassword($pass) {
+        $check = Core\Crypt::checkHash($this->data("password"),$pass);
+        return $check;
+    }
+
+    public function recordTitle() {
+        if($r = $this->data("email")) {
+            return $r;
+        }
+		if($r = $this->data("nickname")) {
+            return $r;
+        }
+        return "user-".$this->id();
     }
 
 }

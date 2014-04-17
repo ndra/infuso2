@@ -1,6 +1,6 @@
 <? 
 
-<div class='hk5yt7oqut' >
+<div class='hk5yt7oqut' data:userid='{$user->id()}' >
 
     <h2>Изменение пароля</h2>
     

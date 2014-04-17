@@ -24,6 +24,7 @@ $(function() {
     
         mod.call({
             cmd: "infuso/cms/user/controller/changePassword",
+            userId: container.attr("data:userid"),
             password: p1
         }, function(ret) {
             if(ret) {
