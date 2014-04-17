@@ -1,8 +1,8 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
-class log {
+class Log {
 
     /**
      * Отправляет сообщение

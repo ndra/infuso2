@@ -1,11 +1,11 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
 /**
  * Базовый класс для служб
  **/
-class service extends controller {
+class Service extends Controller {
 
     private static $serviceInstance = null;
 

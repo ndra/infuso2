@@ -1,6 +1,8 @@
 <?
 
-class mod_crypt {
+namespace Infuso\Core;
+
+class Crypt {
 
 	public static function hash($source) {
 		$salt = mod::id(12);

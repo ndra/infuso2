@@ -1,8 +1,8 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
-class superadmin extends controller {
+class Superadmin extends Controller {
 
     private static $checked = false;
 	private static $checkResult = false;
@@ -16,7 +16,7 @@ class superadmin extends controller {
             return;
         }
 
-        $hash = mod_crypt::hash($p1);
+        $hash = Crypt::hash($p1);
         mod_file::get(mod::app()->confPath()."/__superadmin.txt")->put($hash);
     }
 
@@ -36,7 +36,7 @@ class superadmin extends controller {
 	        if($hash==="0000") {
 	            self::$checkResult = ($hash===$password);
 	        } else {
-	            self::$checkResult = \mod_crypt::checkHash($hash,$password);
+	            self::$checkResult = Crypt::checkHash($hash,$password);
             }
 		}
 

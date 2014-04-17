@@ -44,9 +44,9 @@ class App {
 	 **/
 	public function includeCoreClasses() {
 	
-		include("Profiler.php");
-		include("Component.php");
-		include("Mod.php");
+		include("profiler.php");
+		include("component.php");
+		include("mod.php");
 		
 		Profiler::beginOperation("core","includeCoreClasses",1);
 	    include("controller/controller.php");
