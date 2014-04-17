@@ -42,6 +42,10 @@ class BehaviourMap {
 	
 	}
 
+	/**
+	 * Возвращает карту поведений для класса $class
+	 * Кэширует результат
+	 **/
 	private function getMap($class,$addBehaviours,$behavioursHash) {
 		
 		Profiler::beginOperation("core","behaviour map",$class);
@@ -56,12 +60,14 @@ class BehaviourMap {
 	        Mod::service("cache")->set($key,$data);
 	    }
 	    
-	    
-	    
 	    return $data;
 	
 	}
 
+	/**
+	 * Возвращает карту поведений для класса $class
+	 * Результат не кэшируется
+	 **/
     private static function getMapNocache($class,$addBehaviours) {
     
         $behaviours = self::getList($class,$addBehaviours);

@@ -4,7 +4,7 @@ namespace Infuso\Update;
 use Infuso\Core;
 
 /**
- * ����� ��� ������ � API github.com
+ * Класс для работы с API github.com
  **/
 class GitHub extends \Infuso\Core\Component {
 
@@ -60,7 +60,8 @@ class GitHub extends \Infuso\Core\Component {
 	}
 	
 	/**
-	 * ��������� �� ������ $zip � ����� $dest �����, ��������������� ���� $path
+	 * Извлекает из архива $zip в папку $dest часть, соответствующую пути $path
+	 * @todo рефакторить извлечение данных из архива (сейчас траблы с распаковкой файлов длины 0)
 	 **/
 	public function extract($src,$dest,$path) {
 	
@@ -86,6 +87,14 @@ class GitHub extends \Infuso\Core\Component {
 	    	}
 	    }
 	    
+	    $extensions = array(
+	        "php",
+	        "css",
+	        "js",
+	        "txt",
+	        "xml"
+		);
+	    
 	    for($i = 0; $i < $zip->numFiles; $i ++) {
 	    	$file = $zip->getNameIndex($i);
 	    	if(strpos($file,$root)===0) {
@@ -93,14 +102,14 @@ class GitHub extends \Infuso\Core\Component {
 	    	    $name = substr($name,strlen($root));
 	    	    if($name) {
 	    	    	$stat = $zip->statIndex($i);
-	    	    	if($stat["crc"] != 0) {
+	    	    	if($stat["crc"] != 0 || in_array(Core\File::get($name)->ext(), $extensions)) {
 	    	    	    $itemDest = Core\File::get($dest."/".$name);
 	    	    		Core\File::mkdir($itemDest->up(),1);
 	    	    		$itemDest->put($zip->getFromIndex($i));
 	    	    	}
 	    	    }
 	    	}
-	    	
+
 	    }
 	}
 
