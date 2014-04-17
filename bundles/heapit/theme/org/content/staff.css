@@ -1,14 +1,42 @@
 .staff-x1lsfa0a64l {
     border:1px solid #ededed;
-
+    margin-top: 40px;
+    
     .controls {
         .g-toolbar();
         position: relative;       
     }
     
     .list {
+        thead {
+            td {
+                font-style: italic;
+            }
+        }
+        
         td {
-            padding: 5px;
+            padding: 10px;
+            border-bottom:1px solid #ededed;
+        }
+        
+        .fio {
+            width:300px;
+        }
+        
+        .email {
+            width: 200px;
+        }
+        
+        .phone {
+            width: 200px;
+        }
+        
+        .item {
+            &:hover {
+                td {
+                    background: #aaa;
+                }
+            }     
         }
     }
 }

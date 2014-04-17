@@ -1,2 +1,14 @@
-.fbknw356c6 {
+.comments-fbknw356c6 {
+    table {
+        
+        td {
+            padding: 5px;
+            
+            .userName {
+                color: #777;    
+            }
+        }
+        
+        border-bottom: 1px solid #aaa;
+    }    
 }

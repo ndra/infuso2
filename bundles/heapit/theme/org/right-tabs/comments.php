@@ -5,4 +5,6 @@
     <div class='items' >        
     </div>
     
+    exec("addComment");
+    
 </div>
