@@ -4,13 +4,25 @@ $(function(){
         var hiddenInput = $(this).find("input[type='hidden']");
         var button = $(this).find("div"); 
         var sourceUrl = input.attr("widget:cmd");
+        var sourceParams = input.attr("widget:cmdparams").split(";");
         
         input.autocomplete({
             delay: 500,
             minLength: 0,
             source: function(request, response) {
+                
                 //в request.term лежит то что юзер ввел в поле поиска
-                mod.call({cmd: sourceUrl , query: request.term}, function(data){
+                var cmdObject = {cmd: sourceUrl , query: request.term};
+                //разбираем параметры для контроллера 
+                if(sourceParams){
+                    $.each(sourceParams, function (key, val){
+                        var param = val.split(":");
+                        if(param[0] && param[1]){
+                            cmdObject[param[0]] = param[1];     
+                        }           
+                    });             
+                }
+                mod.call(cmdObject, function(data){
                     //мапим данные ответа
                     var reponseData = $.map(data.suggestions, function(m) {
                         return {

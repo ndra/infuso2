@@ -23,7 +23,15 @@ class Widget extends Base {
     }
     
     public function post_personalList($p) {
+        $neqIds = array();
         $orgs = \Infuso\Heapit\Model\Org::all()->like("title", $p["query"])->eq("person", 1);
+        if($p["orgId"]){
+            $org = \Infuso\Heapit\Model\Org::get($p["orgId"]);
+            foreach($org->occupations() as $occ){
+                $neqIds[] = $occ->data("occId");    
+            }
+            $orgs->neq("id", $neqIds); 
+        }
         $ret = array();
         $ret["query"] = $p["query"];
         $suggestions = array();

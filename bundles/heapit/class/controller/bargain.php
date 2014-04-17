@@ -18,14 +18,9 @@ class Bargain extends Base {
      * Создает сделки
      **/
     public static function post_new($p) {
-    
-        if(!$p["data"]["orgId"]) {
-            Core\Mod::msg("id контранета не указано",1);
-            return false;
-        }
         
         $bargain = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Bargain", $p["data"]);
-        Core\Mod::msg($bargain->url());
+        return $bargain->url();
     }
     
     public static function post_save($p) {
@@ -33,25 +28,25 @@ class Bargain extends Base {
         $bargain->setData($p["data"]);
     }
     
-	/**
-	 * Возвращает html-код списка сделок
-	 **/
-	public function post_search($p) {
+    /**
+     * Возвращает html-код списка сделок
+     **/
+    public function post_search($p) {
 
-	    $bargains = \Infuso\Heapit\Model\Bargain::all();
-	    $bargains->page($p["page"]);
+        $bargains = \Infuso\Heapit\Model\Bargain::all();
+        $bargains->page($p["page"]);
 
-	    // Учитываем поиск по имени
-	    if($search = trim($p["search"])) {
-			$bargains->like("title","$search");
-		}
+        // Учитываем поиск по имени
+        if($search = trim($p["search"])) {
+            $bargains->like("title","$search");
+        }
 
-	    $ret = \tmp::get("/heapit/bargain-list/content/ajax")
-			->param("bargains", $bargains)
-			->getContentForAjax();
+        $ret = \tmp::get("/heapit/bargain-list/content/ajax")
+            ->param("bargains", $bargains)
+            ->getContentForAjax();
 
-		return $ret;
+        return $ret;
 
-	}
+    }
     
 }

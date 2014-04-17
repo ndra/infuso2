@@ -13,11 +13,20 @@ class Autocomplete extends Input {
         return $this;    
     }
     
+    public function cmdParams($params){
+        $str = "";
+        foreach($params as $key=>$value){
+            $str .= "$key:$value;";        
+        }
+        $this->param("cmdParams", $str);
+        return $this;
+    }
     
     public function title($title){
         $this->param("title", $title);
         return $this;        
     }
+    
     
     public function execWidget() {
         \tmp::exec("/ui/widgets/autocomplete", array (

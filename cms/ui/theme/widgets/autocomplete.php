@@ -19,10 +19,12 @@ $container->begin();
     $name = $widget->param("name");
     $title = $widget->param("title");
     $cmd = $widget->param("cmd");
+    $cmdParams = $widget->param("cmdParams");
     
     $input = helper("<input type='text' />");
     $input->attr("value", $title);
     $input->attr("widget:cmd", $cmd);
+    $input->attr("widget:cmdparams", $cmdParams);
     $input->attr("placeholder", $widget->param("placeholder"));
 
     $hiddenInput = helper("<input type='hidden' value='{$value}' name='{$name}'/>");

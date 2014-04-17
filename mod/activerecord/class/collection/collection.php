@@ -539,10 +539,11 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 break;
                 
             case "s:a":
-            $r = array();
+                $r = array();
                 foreach($val as $v) {
-                    $r[] = "'".reflex_mysql::escape($v)."'";
+                    $r[] = mod::service("db")->quote($v);
                 }
+
                 switch(sizeof($r)) {
 
                     case 0:
@@ -558,7 +559,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                         $this->where("$key not in ($r)",$key);
                         break;
                 }
-                break;
+                break;    
         }
         
         return $this;

@@ -6,6 +6,8 @@ $(function() {
         mod.call({
             cmd:"infuso/heapit/controller/bargain/new",
             data:data
+        }, function(url){
+            window.location.href = url;
         })
     });
 
