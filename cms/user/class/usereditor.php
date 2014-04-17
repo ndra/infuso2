@@ -32,7 +32,7 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	 * Контроллер управления пользователем: изменение email и пароля
 	 **/
 	public function index_manage($p) {
-	    $editor = \Infuso\Cms\Reflex\Editor::get("Infuso\\User\\Model\\UserEditor:".$p["id"]);
+	    $editor = \Infuso\Cms\Reflex\Editor::get("Infuso\\Cms\\User\\UserEditor:".$p["id"]);
 		$this->app()->tmp()->exec("/user/editor/manage", array(
 		    "editor" => $editor,
 		));

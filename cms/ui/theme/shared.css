@@ -20,7 +20,7 @@
     border-radius:10px;
     width: auto;
     box-sizing: content-box;
-    margin:0;
+    margin:0 10px 0 0;
     cursor: pointer;
     vertical-align: top;
      
@@ -34,4 +34,11 @@
         padding-bottom: 7px;
     }    
  
+}
+
+.g-header {
+    font-size: 24px;
+    padding:0;
+    margin: 0 0 20px 0;
+    font-weight: normal;    
 }

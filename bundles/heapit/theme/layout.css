@@ -27,12 +27,3 @@ html,body {
 .g-input-long {
     width: 400px !important;
 }
-
-.g-header {
-    font-size: 24px;
-    padding:0;
-    margin: 0 0 20px 0;
-    font-weight: normal;    
-}
-
-
