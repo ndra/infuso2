@@ -35,5 +35,8 @@ $container->begin();
     
     $input->exec();
     
-    <div class='button' ></div>
+    if($this->param("clearButton")) {
+        <div class='button' ></div>
+    }
+    
 $container->end();
