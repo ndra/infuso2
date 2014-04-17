@@ -1,0 +1,13 @@
+.staff-x1lsfa0a64l {
+    border:1px solid #ededed;
+    padding: 5px;
+    .controls {
+        .g-toolbar();       
+    }
+    
+    .list {
+        td {
+            padding: 5px;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+.svn
+/.htaccess
+/robots.txt
+/favicon.ico
+
+#PhpStorm project files
+/.idea/*
+
+# Папки
+/var/*
+/pub/*
+/conf/*
+/test/
+/Migration from infuso v.1

@@ -1,0 +1,50 @@
+.nw5bny9hxyu6 {
+
+    font-size:12px;
+    width:100%;
+    border-top:3px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    
+    .glass {
+        width:1000px;
+        margin:0px auto;        
+    }
+    
+    .t1 {
+   
+        td {
+            padding:5px;
+            border-bottom:1px solid rgba(0,0,0,.15);
+        }
+        
+        td:first-child {
+            opacity:.5;
+            font-size:18px;
+            font-weight:normal;
+            vertical-align:middle;
+        }
+        
+        .title {
+            font-weight:bold;
+        }
+        
+        .a {
+        
+            cursor:pointer;
+            &:hover span {
+                text-decoration:underline;
+            }
+            
+            span {
+                width:150px;
+                display:inline-block;
+            }
+        }
+        
+        .b {
+            display:none;
+        }
+    
+    }
+
+}
