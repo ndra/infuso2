@@ -343,15 +343,16 @@ class User extends ActiveRecord\Record {
     public final function changeEmail($email) {
 
         if(!$email = self::normalizeEmail($email)) {
-            mod::msg("Ошибка в адресе электронной почты",1);
+            throw new \Exception("Ошибка в адресе электронной почты",1);
             return false;
         }
 
-        if($email==$this->data("email"))
+        if($email==$this->data("email")) {
             return true;
+        }
 
         if(user::byEmail($email)->exists()) {
-            mod::msg("Пользователь с такой электронной почтой уже существует",1);
+            throw new \Exception("Пользователь с такой электронной почтой уже существует",1);
             return false;
         }
 

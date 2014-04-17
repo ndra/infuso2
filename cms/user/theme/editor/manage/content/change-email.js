@@ -3,7 +3,11 @@ $(function() {
     var container = $(".jgaz87ie6e");
 
     container.find(".change").click(function() {
-        alert(1);
+        mod.call({
+            cmd:"infuso/cms/user/controller/changeEmail",
+            userId: container.attr("data:userid"),
+            newEmail: container.find("input[name=newEmail]").val(),
+        });
     });
 
 });
