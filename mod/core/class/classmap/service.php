@@ -250,10 +250,13 @@ class classmapService extends service {
 		
 		else {
 		
-		    $class2 = preg_replace("%infuso\\\\core\\\\%","",$class);
-			$a = explode("\\",$class2);
-			$p1 = mod::root()."/".$this->scanFolder()."/".implode("/",$a).".php";
-		    include_once($p1);
+			if(preg_match('/^infuso\\core$/',$class)) {
+		
+			    $class2 = preg_replace("%infuso\\\\core\\\\%","",$class);
+				$a = explode("\\",$class2);
+				$p1 = mod::root()."/".$this->scanFolder()."/".implode("/",$a).".php";
+			    include_once($p1);
+		    }
 			
 		}
 		
