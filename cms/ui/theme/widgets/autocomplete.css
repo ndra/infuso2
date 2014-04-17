@@ -1,8 +1,11 @@
 .autocomplete-jk7zsaj00t {
     position:relative;
     display:inline-block;
+    margin-right: 10px;
+    
     input {
         .g-input();
+        padding: 9px;
     }
     
     @icon: "@{bundle}res/img/icons24/dropdown.png";

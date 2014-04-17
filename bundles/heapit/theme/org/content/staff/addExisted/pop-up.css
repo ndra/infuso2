@@ -1,7 +1,5 @@
 .popup-ejmhyas19m {
     display: none; 
-    position: absolute;
-    padding: 10px;
-    background: #FFF;
     border: 1px solid #ededed;
+    vertical-align: top;
 }

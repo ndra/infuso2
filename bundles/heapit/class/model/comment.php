@@ -13,7 +13,7 @@ class Comment extends \Infuso\ActiveRecord\Record {
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
                 ), array(
-                    'name' => 'message',
+                    'name' => 'text',
                     'type' => 'textarea',
                     'editable' => '1',
                     'label' => 'Сообщение',
@@ -26,7 +26,7 @@ class Comment extends \Infuso\ActiveRecord\Record {
                     'name' => 'datetime',
                     'type' => 'datetime',
                     'editable' => '1',
-                    'label' => 'Дата платежа',
+                    'label' => 'Дата написания',
                     'default' => 'now()',
                 ),
              ),

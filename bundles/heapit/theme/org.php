@@ -1,5 +1,5 @@
 <? 
 
 add("center","content");
-//add("right","right-tabs");
+add("right","right-tabs");
 exec("/heapit/layout");
