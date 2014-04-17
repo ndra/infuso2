@@ -17,5 +17,15 @@ class Controller extends \Infuso\Core\Controller {
 		    Core\Mod::msg("Электронная почта изменена");
 		}
 	}
+	
+	public function post_changePassword($p) {
+
+	    $user = \user::get($p["userId"]);
+		if($user->changePassword($p["password"])) {
+		    Core\Mod::msg("Пароль изменен");
+		    return true;
+		}
+		
+	}
 
 }

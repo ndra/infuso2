@@ -1,15 +1,24 @@
 <? 
 
 <div class='hk5yt7oqut' >
+
     <h2>Изменение пароля</h2>
     
     <form class='change-form' >
-        widget("\\infuso\\cms\\ui\\widgets\\textfield")
-            ->exec();            
-        widget("\\infuso\\cms\\ui\\widgets\\textfield")
-            ->exec();
-        <input type='button' class='g-button' value='Ок' />
-        <input type='button' class='g-button' value='Отмена' />
+        <div style='margin-bottom:20px;' >
+            widget("\\infuso\\cms\\ui\\widgets\\textfield")
+                ->placeholder("Пароль")
+                ->fieldName("password")
+                ->attr("type", "password")
+                ->exec();            
+            widget("\\infuso\\cms\\ui\\widgets\\textfield")                
+                ->placeholder("Повтор пароля")
+                ->fieldName("passwordConfirmation")
+                ->attr("type", "password")
+                ->exec();
+        </div>
+        <input type='button' class='g-button save' value='Сохранить' />
+        <input type='button' class='g-button cancel' value='Отмена' />
     </form>
         
     <input type='button' class='g-button change' value='Изменить' />

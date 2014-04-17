@@ -327,11 +327,13 @@ class User extends ActiveRecord\Record {
      * @return Меняет пароль рользоватея
      **/
     public final function changePassword($pass) {
+    
         $pass = self::checkAbstractPassword($pass);
         if(!$pass) {
             return false;
         }
-        $this->data("password",mod_crypt::hash($pass));
+        
+        $this->data("password", Core\Crypt::hash($pass));
         $cookie = $_COOKIE["login"];
         $this->authorizations()->neq("cookie",$cookie)->delete();
         return true;
@@ -643,13 +645,16 @@ class User extends ActiveRecord\Record {
     /**
      * Проверяет пароль на соответствие требованиям безопасности (минимальная длина и т.п.)
      * Проверкой пароля конкретного пользователя этот метод не занимается
+     * @todo вынести в настройки минимальную длину пароля
      **/
     public static final function checkAbstractPassword($password) {
         $password = trim($password);
-        $passlen = intval(mod::conf("user:passwordLength"));
-        if($passlen<1) $passlen = 1;
-        if(strlen($password)<$passlen) {
-            mod::msg("Слишком короткий пароль. Минимальное количество символов: $passlen",1);
+        $passlen = 5;
+        if($passlen < 1) {
+			$passlen = 1;
+		}
+        if(strlen($password) < $passlen) {
+            Core\Mod::msg("Слишком короткий пароль. Минимальное количество символов: $passlen",1);
             return false;
         }
         return $password;
