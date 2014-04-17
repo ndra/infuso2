@@ -49,14 +49,14 @@ class App {
 		include("Mod.php");
 		
 		Profiler::beginOperation("core","includeCoreClasses",1);
-	    include("Controller/Controller.php");
-	    include("Superadmin.php");
-	    include("Service.php");
-	    include("Classmap/Service.php");
-	    include("File/File.php");
-	    include("File/LocalFile.php");
-	    include("File/Flist.php");
-	    include("Bundle/Bundle.php");
+	    include("controller/controller.php");
+	    include("superadmin.php");
+	    include("service.php");
+	    include("classmap/service.php");
+	    include("file/file.php");
+	    include("file/localfile.php");
+	    include("file/flist.php");
+	    include("bundle/bundle.php");
 	    Profiler::endOperation();
 	}
 
@@ -96,7 +96,7 @@ class App {
 		$this->registerService("classmap","infuso\\core\\classmapService");
 		$this->registerService("route","\\infuso\\core\\route\\service");
 		$this->registerService("bundle","\\infuso\\core\\bundle\\manager");
-		$this->registerService("yaml","mod_confLoader_yaml");
+		$this->registerService("yaml","\\infuso\\core\\yaml");
 		$this->registerService("cache","\\infuso\\core\\cache\\service");
 
 	}

@@ -1,11 +1,11 @@
 <?
 
-namespace infuso\core;
+namespace Infuso\Core;
 
 /**
  * Класс для загрузки конфигурации
  **/
-class conf extends component {
+class Conf extends Component {
 
 	private static $generalConf = null;
 
@@ -17,7 +17,7 @@ class conf extends component {
         // Если в буфере нет конфигурации - загружаем ее
         if(self::$generalConf===null) {
 
-            $reader = new \mod_confLoader_yaml();
+            $reader = new Yaml();
             $yml = file::get(mod::app()->confPath()."/components.yml")->data();
             self::$generalConf = $reader->read($yml);
 

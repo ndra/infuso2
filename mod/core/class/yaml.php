@@ -1,8 +1,8 @@
 <?
 
-use infuso\core;
+namespace Infuso\Core;
 
-class mod_confLoader_yaml extends core\service {
+class Yaml extends Service {
 
 	public function defaultService() {
 	    return "yaml";
