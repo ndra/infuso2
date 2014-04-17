@@ -171,11 +171,13 @@ class Component {
             return true;
 		}
 
-        foreach($this->behaviours() as $b) {
-            if($b->routeBehaviourMethod($fn)) {
-                return true;
-			}
+        $behaviourClass = BehaviourMap::routeMethod(get_class($this),$fn,$this->behaviours,$this->behaviourHash());
+		if($behaviourClass) {
+		    return true;
 		}
+		
+		return false;
+		
     }
 
 

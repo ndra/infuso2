@@ -6,7 +6,12 @@ $(function() {
         var input = $(this).find("input");
         
         var json = input.val();
-        var data = $.parseJSON(json);
+        
+        try {
+            var data = $.parseJSON(json);
+        } catch(ex) {
+            data = {};
+        }
         
         var renderData = function() {
         

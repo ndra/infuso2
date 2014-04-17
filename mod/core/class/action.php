@@ -125,6 +125,10 @@ class Action extends Component {
     public static function current() {
 		return mod::app()->action();
     }
+    
+    public function exists() {
+        return (bool)$this->className();
+    }
 
     /**
      * Выполняет этот экшн

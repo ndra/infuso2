@@ -73,6 +73,8 @@ class service extends \infuso\core\service {
             return $action;
 
         }
+        
+		return new Core\Action();
 
     }
 
