@@ -14,14 +14,16 @@ $(function() {
     $(document).on("click", ".staff-x1lsfa0a64l .list .delete", function(event){
         event.preventDefault();
         var that = this;
-        mod.call({
-            cmd: "infuso/heapit/controller/occupation/delete",
-            occId: $(this).attr("data:occId")
-        }, function(ret){
-            if(ret){
-                $(that).parent().parent().remove();
-            }
-        });       
+        if (confirm("Точно удалить?")) {
+            mod.call({
+                cmd: "infuso/heapit/controller/occupation/delete",
+                occId: $(this).attr("data:occId")
+            }, function(ret){
+                if(ret){
+                    $(that).parent().parent().remove();
+                }
+            });
+        }       
     });
 
 });
