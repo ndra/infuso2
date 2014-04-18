@@ -1,2 +1,16 @@
 .zrtlp4pj2i {
+    
+    .roles {
+    
+        margin-bottom: 10px;
+        
+        .role {
+            margin-bottom: 5px;
+        }
+        
+    }
+    
+    .add-role-container {
+        display:none;
+    }
 }
