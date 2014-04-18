@@ -26,6 +26,7 @@ class Bargain extends Base {
     public static function post_save($p) {
         $bargain = Model\Bargain::get($p["bargainId"]);
         $bargain->setData($p["data"]);
+        Core\Mod::msg("Сохранено");
     }
     
     /**

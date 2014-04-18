@@ -1,5 +1,16 @@
 $(function() {
-
+    var form = $(".qs1t5z7t8d");     
+    $(window).bind('keydown', function(event) {
+        if (event.ctrlKey || event.metaKey) {
+            switch (String.fromCharCode(event.which).toLowerCase()) {
+            case 's':
+                event.preventDefault();
+                    form.parent().submit();
+                break;
+            }
+        }
+    });
+    
     var form = $(".qs1t5z7t8d");
 
     // Показываем/прячем поле с причиной отказа
