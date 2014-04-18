@@ -938,12 +938,14 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     /**
      * Возвразает массив уникальных значений по колонке
      **/
-    public function distinct($key,$fn=null) {
+    public function distinct($ukey,$fn=null) {
         $this->callBeforeQuery();
-        $key = $this->normalizeColName($key);
-        if($fn) $key = "$fn($key)";
-        reflex_mysql::query("select distinct $key from {$this->from()} where {$this->whereQuery()} order by {$this->orderBy()} ");
-        return reflex_mysql::get_col();
+        $key = $this->normalizeColName($ukey);
+        if($fn) {
+			$key = "$fn($key)";
+		}
+        $q = ("select distinct $key from {$this->from()} where {$this->whereQuery()} order by {$this->orderBy()} ");
+        return mod::service("db")->query($q)->exec()->fetchCol($ukey);
     }
 
     /**

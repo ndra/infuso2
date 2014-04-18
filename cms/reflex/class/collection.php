@@ -15,6 +15,9 @@ class Collection extends Core\Component {
 	    $this->id = $id;
 	}
 	
+	/**
+	 * @todo безопасностью здесь и не пахнет
+	 **/
 	public function collection() {
 		$editor = Editor::get($this->className.":".$this->id);
 		$fn = $this->method;
@@ -43,10 +46,37 @@ class Collection extends Core\Component {
 	}
 	
 	/**
+	 * Возвращает класс редактора
+	 **/
+	public function editorClass() {
+	
+		$map = \infuso\core\file::get(Core\Mod::app()->varPath()."/reflex/editors.php")->inc();
+
+        if(!$class) {
+
+            $classes = $map[$this->collection()->itemClass()];
+            if(!$classes) {
+                $classes = array();
+            }
+
+            $class = end($classes);
+
+        }
+
+        if(!$class) {
+        	$editor = new Reflex\NoneEditor;
+            return $editor;
+        }
+
+        return new $class;
+	
+	}
+	
+	/**
 	 * Возвращает виртуальный редактор
 	 **/
 	public function editor() {
-	    $class = $this->className;
+	    $class = $this->editorClass();
 	    return new $class;
 	}
 	
@@ -55,7 +85,7 @@ class Collection extends Core\Component {
      **/
     public function editors() {
 
-        $class = get_class($this->editor());
+        $class = $this->editorClass();
 
         $ret = array();
         foreach($this->collection() as $item) {

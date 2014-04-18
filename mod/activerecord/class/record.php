@@ -269,10 +269,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * field
      * table.field
      * fn(field)
+     * @todo - я добавил возвожность использовать бэкслэши в именах полей. Проверить на возможность инъекций
      **/
     public static function normalizeColName($name,$table=null) {
 
-        $symbols = "[a-z0-9\_\-\:]+";
+        $symbols = "[a-z0-9\_\-\:\\\\]+";
 
         if(preg_match("/^{$symbols}$/i",$name)) {
             return "`$table`.`".$name."`";

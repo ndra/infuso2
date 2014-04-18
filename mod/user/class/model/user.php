@@ -23,14 +23,11 @@ class User extends ActiveRecord\Record {
                 array(
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
-                    'editable' => '0',
                     'group' => 'Основное',
-                    'indexEnabled' => '0',
                 ) ,
                 array(
                     'name' => 'password',
                     'type' => 'v324-89xr-24nk-0z30-r243',
-                    'editable' => '0',
                     'label' => 'Хэш пароля',
                     'group' => 'Основное',
                     'indexEnabled' => '1',
@@ -38,19 +35,9 @@ class User extends ActiveRecord\Record {
                 array(
                     'name' => 'email',
                     'type' => 'v324-89xr-24nk-0z30-r243',
-                    'editable' => '2',
                     'label' => 'Электронная почта',
                     'group' => 'Основное',
                     'indexEnabled' => '1',
-                ) ,
-                array(
-                    'name' => 'roles',
-                    'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
-                    'editable' => 0,
-                    'id' => 'y9sd81h7p5rdy1zqkgztklzqwestc9',
-                    'label' => 'Роли',
-                    'indexEnabled' => 0,
-                    'class' => Role::inspector()->className(),
                 ) ,
                 array(
                     'name' => 'registrationTime',
@@ -69,14 +56,6 @@ class User extends ActiveRecord\Record {
                     'indexEnabled' => 1,
                     'label' => 'Когда был на сайте',
                     'group' => 'Основное',
-                ) ,
-                array(
-                    'name' => 'rights',
-                    'type' => 'v324-89xr-24nk-0z30-r243',
-                    'editable' => '0',
-                    'label' => 'Права',
-                    'group' => 'Основное',
-                    'indexEnabled' => '1',
                 ) ,
                 array(
                     'name' => 'verificationCode',
@@ -99,14 +78,6 @@ class User extends ActiveRecord\Record {
                     'type' => 'puhj-w9sn-c10t-85bt-8e67',
                     'editable' => '1',
                     'label' => 'Дополнительно',
-                    'group' => 'Основное',
-                    'indexEnabled' => '1',
-                ) ,
-                array(
-                    'name' => 'self-registered',
-                    'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-                    'editable' => '1',
-                    'label' => 'Зарегистрировался самостоятельно',
                     'group' => 'Основное',
                     'indexEnabled' => '1',
                 ) ,
@@ -179,7 +150,9 @@ class User extends ActiveRecord\Record {
      * Возвращает коллекцию всех пользователей
      **/
     public static function all() {
-        return \reflex::get(get_class())->desc("registrationTime");
+        return \reflex::get(get_class())
+            ->addBehaviour("\\Infuso\\User\\Model\\UserCollection")
+			->desc("registrationTime");
     }
 
     /**
@@ -529,24 +502,16 @@ class User extends ActiveRecord\Record {
 
         Core\Profiler::beginOperation("user","roles",1);
 
-        if($this->roles===null) {
-
-            $this->roles = array();
-
-            $this->roles[] = Role::get("guest");
-
-            foreach(\util::splitAndTrim($this->data("roles")," ") as $role) {
-                $role = Role::get($role);
-                if($role->exists() && $role->code()!="guest") {
-                    $this->roles[] = $role;
-                }
-            }
-
-        }
+        $rolesCodeList = $this->rolesAttached()->distinct("role");
+        $roles = Role::all()->eq("code",$rolesCodeList);
 
         Core\Profiler::endOperation();
 
-        return $this->roles;
+        return $roles;
+    }
+    
+    public function rolesAttached() {
+        return RoleAttached::all()->eq("userId", $this->id());
     }
 
      /**
@@ -556,39 +521,8 @@ class User extends ActiveRecord\Record {
         if(!is_string($roleCode)) {
             throw new Exception("user::hasRole() first argument must be a string");
         }
-        $roles = $this->roles();
-        foreach($roles as $role) {
-          if($roleCode == $role->code()){
-              return true;
-          }  
-        }       
         
-        return false;      
-    }
-
-    /**
-     * Удаляет роль у пользователя
-     **/
-    public function removeRole($roleToDelete) {
-        $roles = array();
-        foreach($this->roles() as $role)
-            if($role->code()!=$roleToDelete)
-                $roles[] = $role->code();
-        $this->data("roles",implode(" ",$roles));
-        $this->roles = null;
-    }
-
-    /**
-     * Добавляет пользователю роль
-     **/
-    public function addRole($role) {
-        $roles = array($role);
-        foreach($this->roles() as $role) {
-            $roles[] = $role->code();
-        }
-        $roles = array_unique($roles);
-        $this->data("roles",implode(" ",$roles));
-        $this->roles = null;
+        return !$this->rolesAttached()->eq("role",$roleCode)->void();
     }
 
     /**
