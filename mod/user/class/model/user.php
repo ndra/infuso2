@@ -509,6 +509,25 @@ class User extends ActiveRecord\Record {
 
         return $roles;
     }
+
+    public function addRole($role) {
+
+        if(!$role) {
+            throw new \Exception("Void role");
+        }
+
+        if($this->rolesAttached()->eq("role", $role)->void()) {
+            $this->rolesAttached()->create(array(
+                "role" => $role,
+            ));
+        }
+    }
+
+    public function removeRole($role) {
+        $this->rolesAttached()
+            ->eq("role", $role)
+            ->delete();
+    }
     
     public function rolesAttached() {
         return RoleAttached::all()->eq("userId", $this->id());

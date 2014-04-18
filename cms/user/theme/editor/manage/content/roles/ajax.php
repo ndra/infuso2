@@ -1,29 +1,37 @@
 <? 
 
+exec("/ui/shared");
+
 <div class='zrtlp4pj2i' data:userid='{$user->id()}'  >
 
     <div class='roles' >
         foreach($user->roles() as $role) {
             <div class='role' >
                 echo $role->title();
+                <div class='remove' data:role='{$role->code()}' ></div>
             </div>
         }
     </div>
     
-    <input type='button' class='g-button add' value='Добавить роль' />   
+    $roles = \Infuso\User\Model\Role::all();
+    $roles->neq("code", $user->roles()->distinct("code"));
     
-    <div class='add-role-container' >
+    if(!$roles->void()) {
     
-        <select class='g-input role-select' style='margin-right:10px;' >
-            $roles = \Infuso\User\Model\Role::all();
-            foreach($roles as $role) {
-                <option value='{$role->code()}' >{$role->title()}</option>
-            }
-        </select>
+        <input type='button' class='g-button add' value='Добавить роль' />   
+    
+        <div class='add-role-container' >
         
-        <input type='button' class='g-button ok' value='Добавить' />
-        <input type='button' class='g-button cancel' value='Отмена' />
-    
-    </div>    
+            <select class='g-input role-select' style='margin-right:10px;' >
+                foreach($roles as $role) {
+                    <option value='{$role->code()}' >{$role->title()}</option>
+                }
+            </select>
+            
+            <input type='button' class='g-button ok' value='Добавить' />
+            <input type='button' class='g-button cancel' value='Отмена' />
+        
+        </div>    
+    }
     
 </div>
