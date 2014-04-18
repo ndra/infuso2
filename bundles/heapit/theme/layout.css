@@ -3,18 +3,20 @@ html,body {
 
 .layout-slpod3n5sa {
 
-    table-layout:fixed;
+    //table-layout:fixed;
     width: 100%;
 
     & > tbody > tr > td {
         &.left {
             width:100%;
+
         }
         &.right {
             width:400px;
             border-left: 1px solid #ededed;
         }
     }
+    
 }
 
 .g-toolbar {
