@@ -7,7 +7,10 @@
         <table>
             <tr>
                 <td><img src='$userpick'></td>
-                <td style="width:100%;"><span class="userName">{e($owner->data("email"))}</span></td>
+                <td style="width:100%;">
+                    <span class="userName">{e($owner->data("email"))}</span>
+                    <span class="date">{$comment->pdata("datetime")->num()}</span>
+                </td>
                             
             </tr>
             <tr>

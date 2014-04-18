@@ -23,7 +23,7 @@ class Payment extends Base {
         }
         
         $bargain = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Payment", $p["data"]);
-        Core\Mod::msg($bargain->url());
+        return $bargain->url();
     }
     
 }

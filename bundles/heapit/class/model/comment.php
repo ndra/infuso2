@@ -28,6 +28,11 @@ class Comment extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Дата написания',
                     'default' => 'now()',
+                ), array(
+                    'name' => 'parent',
+                    'type' => 'v324-89xr-24nk-0z30-r243',
+                    'editable' => '1',
+                    'label' => 'Родитель',
                 ),
              ),
         );

@@ -7,8 +7,10 @@
     }else{
         $path = $this->bundle()->path()."/res/img/widgets/UserChooser/emptyUser.png";    
     } 
-    
-    <img class="currentUser" src='$path'>
+    <div class="currentUser">
+        <img  src='$path'>
+        <div class="currentUserNickname"></div>
+    </div>    
     exec("user-select");
     <input type='hidden' class='user-select-hiddenField' name='{$fieldName}' value='{$userID}'>
 </div>

@@ -1,0 +1,17 @@
+.payment-items-xqdd2vkc9s {
+    .item {
+        padding: 5px;
+        
+        .head {
+            span {
+                padding-right: 10px;
+                color: #777;
+            }
+        }
+        
+        .sum {
+            color: #777;
+            font-style: italic;    
+        }
+    }
+}

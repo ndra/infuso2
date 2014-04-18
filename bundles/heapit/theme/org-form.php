@@ -21,23 +21,23 @@
         </tr>
         <tr>
             <td>Телефон</td>
-            <td><input type='text' name='phone' value='{e($org->data("phone"))}' ></td>
+            <td><input type='text' name='phone' value='{e($org->data("phone"))}' class='g-input-long'></td>
         </tr>
         <tr>
             <td>Сайт</td>
-            <td><input type='text' name='url' value='{e($org->data("url"))}' ></td>
+            <td><input type='text' name='url' value='{e($org->data("url"))}' class='g-input-long'></td>
         </tr>
         <tr>
             <td>Электропочта</td>
-            <td><input type='text' name='email' value='{e($org->data("email"))}' ></td>
+            <td><input type='text' name='email' value='{e($org->data("email"))}' class='g-input-long'></td>
         </tr>
         <tr>
             <td>ICQ</td>
-            <td><input type='text' name='icq' value='{e($org->data("icq"))}' ></td>
+            <td><input type='text' name='icq' value='{e($org->data("icq"))}' class='g-input-long'></td>
         </tr>
         <tr>
             <td>Скайп</td>
-            <td><input type='text' name='skype' value='{e($org->data("skype"))}' ></td>
+            <td><input type='text' name='skype' value='{e($org->data("skype"))}' class='g-input-long'></td>
         </tr>        
         <tr>
             <td>Кто привел</td>

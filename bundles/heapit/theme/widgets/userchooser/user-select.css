@@ -8,10 +8,15 @@
     width: 440px;
     .item {
         width: 100px;
-        height: 100px;
         display: inline-block;
         margin-right: 10px;
         margin-bottom: 10px;
         cursor: pointer;
+        
+            img {
+                width: 100px;
+                height: 100px;
+                display: block;    
+            }
     }    
 }
