@@ -8,4 +8,7 @@
             <option>{$role->title()}</option>
         }
     </select>
+    
+    exec("ajax");
+    
 </div>

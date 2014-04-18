@@ -1,0 +1,21 @@
+.x2b84c6nxat {
+
+    padding: 5px 10px;
+    
+    td {
+        vertical-align: middle;
+        padding-right: 10px;
+    }
+    
+    .userpic {
+        width:32px;
+        height: 32px;
+        background: red;
+    }
+    
+    .role {
+        font-size: 11px;
+        opacity: .5;
+    }
+    
+}

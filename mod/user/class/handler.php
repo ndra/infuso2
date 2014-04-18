@@ -29,6 +29,8 @@ class Handler implements Core\Handler {
     
 		$operations = \Infuso\User\Model\Operation::all();
 		$operations->delete();
+		
+		\Infuso\User\Model\Role::create("admin","Администратор");
     
         return;
         reflex_task::add(array(

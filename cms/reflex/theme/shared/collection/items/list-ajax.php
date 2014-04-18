@@ -4,9 +4,12 @@
 
     <div class='items' >
         foreach($collection->editors() as $editor) {
-            exec("item" ,array(
+            /*exec("item", array(
                 "editor" => $editor,
-            ));
+            )); */
+            
+            $editor->listItemTemplate()->exec();
+            
         }
     </div>
     

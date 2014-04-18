@@ -195,9 +195,14 @@ abstract class Editor extends Core\Controller {
      **/
     public function _viewModes() {
         return array(
-            "Список" => "/reflex/shared/collection/items/grid-ajax",
+            "Список" => "/reflex/shared/collection/items/list-ajax",
             "Превью" => "/reflex/shared/collection/items/preview-ajax",
         );
+    }
+    
+    public function listItemTemplate() {
+        return \tmp::get("/reflex/shared/collection/items/list-ajax/item")
+            ->param("editor", $this);
     }
     
     /**

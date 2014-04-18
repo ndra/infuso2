@@ -106,7 +106,7 @@ class User extends ActiveRecord\Record {
                     'indexEnabled' => '1',
                 ) ,
                 array(
-                    'name' => 'userpick',
+                    'name' => 'userpic',
                     'type' => 'knh9-0kgy-csg9-1nv8-7go9',
                     'editable' => '1',
                     'label' => 'Юзерпик',
@@ -671,6 +671,10 @@ class User extends ActiveRecord\Record {
     public function country() {
         return $this->fieldOrBehaviour("country");
     }
+    
+	public function userpic() {
+	    return $this->pdata("userpic");
+	}
 
     /**
      * Системная функция
