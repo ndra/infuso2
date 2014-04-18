@@ -9,11 +9,11 @@ use \Infuso\Core;
 class Handler implements Core\Handler {
 
     public function on_mod_beforeAction() {
-        user::active()->registerActivity();
+        User::active()->registerActivity();
     }
     
     public function on_mod_beforecmd() {
-        user::active()->registerActivity();
+        User::active()->registerActivity();
     }
     
     public static function deleteUnverfiedUsers() {
@@ -23,9 +23,13 @@ class Handler implements Core\Handler {
     /**
      * Метод, в котором реализуется бизнес-логика инициализации
      * @handler = infusoInit
-     * @handlerPriority = 0
+     * @handlerPriority = -1
      **/
     public static function onInit() {
+    
+		$operations = \Infuso\User\Model\Operation::all();
+		$operations->delete();
+    
         return;
         reflex_task::add(array(
             "class" => get_class(),

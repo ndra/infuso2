@@ -20,6 +20,22 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	}
 	
 	/**
+	 * @reflex-root = on
+	 **/
+	public function operations() {
+	    return User\Model\Operation::all()
+			->title("Операции");
+	}
+	
+	/**
+	 * @reflex-root = on
+	 **/
+	public function allRoles() {
+	    return User\Model\Role::all()
+			->title("Роли");
+	}
+	
+	/**
 	 * @reflex-child = on
 	 **/
 	public function roles() {

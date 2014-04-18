@@ -14,4 +14,8 @@ $user = $editor->item();
         "user" => $user,
     ));
     
+    exec("roles", array(
+        "user" => $user,
+    ));
+    
 </div>
