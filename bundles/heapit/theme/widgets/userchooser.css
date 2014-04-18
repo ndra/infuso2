@@ -2,9 +2,14 @@
     position: relative;
     
     .currentUser {
-        display: block;
         width: 100px;
-        height: 100px;
-        cursor: pointer;
-    }    
+        
+        img {
+            display: block;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+        }
+    }
+        
 }

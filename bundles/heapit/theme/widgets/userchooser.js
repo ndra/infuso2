@@ -10,6 +10,7 @@ $(function(){
     $(".userChooser-r5rr523ugt .user-select-hiddenField").on("userSelected", function(event, params){
         event.stopPropagation(); 
         $(this).val(params.userID);
-        $(this).parent().find(".currentUser").attr("src", params.userPic);    
+        $(this).parent().find(".currentUser").find("img").attr("src", params.userPic); 
+        $(this).parent().find(".currentUser").find("div").text(params.nick);   
     });      
 });

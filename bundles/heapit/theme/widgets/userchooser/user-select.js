@@ -12,7 +12,8 @@ $(function(){
         var input = $(this).parents(".userChooser-r5rr523ugt").find("input");
         var userID = $(this).attr("user:id");
         var src = $(this).find("img").attr("src");
-        $(input).trigger("userSelected", { userID: userID, userPic: src });
+        var nick = $(this).find("div").text();
+        $(input).trigger("userSelected", { userID: userID, userPic: src, nick: nick});
         $(this).parent().hide(); 
     });
 });
