@@ -1,6 +1,6 @@
 <? 
 
-<div class='comments-fbknw356c6' >
+<div class='comments-nni5vez0qz' >
     foreach($comments as $comment) {
         $owner = $comment->pdata("author");
         $userpick = $owner->pdata("userpick")->preview(16,16)->resize();

@@ -6,5 +6,10 @@
             <img src="$str">
             <div>{$user->title()}</div>
         </div>    
-    }    
+    }
+        $zombie = $this->bundle()->path()."/res/img/widgets/UserChooser/zombie.png";
+        <div class="item" user:id="0">
+            <img src="$zombie">
+            <div>Зомби-юзер</div>
+        </div>    
 </div>

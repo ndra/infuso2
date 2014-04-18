@@ -7,9 +7,7 @@
     $tabs = widget("tabs");
     
     $tabs->tab("заметки");
-    
-        exec("comments");
-        
+        exec("/heapit/comments", array("parent" => "org:".$org->id()));
     $tabs->tab("Платежи");
     
         exec("payments");

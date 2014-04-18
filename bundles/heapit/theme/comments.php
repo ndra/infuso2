@@ -1,6 +1,6 @@
 <? 
 
-<div class='vlk5bx6x1q' org:id='{$org->id()}'>
+<div class='comments-ckvopjhgwq' data:parent='{$parent}'>
     
     <div class='items' >        
     </div>

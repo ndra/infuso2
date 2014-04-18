@@ -1,11 +1,11 @@
 $(function() {
-    $(".vlk5bx6x1q").mod("init",function() {
+    $(".comments-ckvopjhgwq").mod("init",function() {
         var container = $(this).find(".items");
-        var orgId = $(this).attr("org:id");
+        var parent = $(this).attr("data:parent");
         var updateComments = function(){
             mod.call({
             cmd: "infuso/heapit/controller/comments/list",
-            orgId: orgId
+            parent: parent
             }, function(html) {
                 container.html(html);
             });    

@@ -1,5 +1,5 @@
 $(function(){
-    $(".add-comment-sldsjsct4f").mod("init", function(){
+    $(".add-comment-rz7kt16k3a").mod("init", function(){
         var commentBlock = $(this).find(".comment-block");
         var button = $(this).find(".add-comment");
         button.click(function(event){
@@ -10,7 +10,7 @@ $(function(){
                     cmd: "infuso/heapit/controller/comments/addComment",
                     text: commentBlock.val(),
                     userId: $(this).attr("data:userId"),
-                    orgId: $(this).attr("data:orgId")  
+                    parent: $(this).attr("data:parent")  
                 }, function(ret){
                     commentBlock.val("");
                     mod.fire("comments/update-list");   
