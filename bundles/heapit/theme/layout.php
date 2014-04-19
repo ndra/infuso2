@@ -8,13 +8,15 @@ exec("menu");
    
 <table class='layout-slpod3n5sa' >
     <tr>
-        <td class='left' >            
-            region("center");
+        <td class='left' >
+            <div style='height:100%;overflow:auto;' >           
+                region("center");
+            </div>
         </td>
         <td class='right' >
-            
-            region("right");
-           
+            <div style='height:100%;overflow:auto;' > 
+                region("right");
+            </div>
         </td>
     </tr>
 </table>

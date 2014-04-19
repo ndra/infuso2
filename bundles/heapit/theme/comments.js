@@ -2,10 +2,10 @@ $(function() {
     $(".comments-ckvopjhgwq").mod("init",function() {
         var container = $(this).find(".items");
         var parent = $(this).attr("data:parent");
-        var updateComments = function(){
+        var updateComments = function() {
             mod.call({
-            cmd: "infuso/heapit/controller/comments/list",
-            parent: parent
+                cmd: "infuso/heapit/controller/comments/list",
+                parent: parent
             }, function(html) {
                 container.html(html);
             });    

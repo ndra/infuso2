@@ -1,0 +1,20 @@
+.comments-ckvopjhgwq {
+
+    height:100%;
+    
+    & > .g-toolbar {
+        height: 34px;
+        overflow:hidden;
+    }
+    
+    & > .items {
+        height: ~"calc(100% - 170px)";
+        overflow:auto;
+    }
+    
+    & > .comment-container {
+        height: 123px;
+        overflow:hidden;
+    }
+
+}

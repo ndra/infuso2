@@ -1,6 +1,9 @@
 <? 
+
 <div class="add-comment-rz7kt16k3a">
+
     <textarea class="comment-block" name="comment"></textarea>
+    
     $w = new \Infuso\Cms\UI\Widgets\Button();
     $w->tag("button");
     $w->addClass("add-comment");

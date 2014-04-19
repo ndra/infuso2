@@ -1,8 +1,12 @@
 .x8dhiuue82x {
 
+    height:100%;
+    overflow:hidden;
+
     & > .head {
     
         padding:10px;
+        height:30px;
         
         .tab {
         
@@ -24,8 +28,11 @@
     }
     
     & > .content {
+        height: ~"calc(100% - 50px)";
         & > .tab {
             display:none;
+            height:100%;
+            overflow:hidden;
             &:first-child {
                 display: block;
             }

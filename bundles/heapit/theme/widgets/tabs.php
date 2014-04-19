@@ -17,6 +17,6 @@
         foreach($tabs as $tab) {
             <div class='tab' >{$tab["content"]}</div>
         }
-    </div>    
+    </div>
     
 </div>

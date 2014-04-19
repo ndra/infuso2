@@ -1,6 +1,6 @@
 <? 
 
-<div class='ncecpy3pn9 gradient-pattern' >
+<div class='ncecpy3pn9 gradient-pattern main-menu' >
 
     $menu = array(
         (string) action("infuso\\heapit\\controller\\org") => "Контрагенты",
@@ -34,6 +34,6 @@
     }
     
     <span class="logout">Выход</span>
-    <span class="me">Вы - Амаяьк Акопян</span>
+    <span class="me">Вы — {\user::active()->title()}</span>
     
 </div>

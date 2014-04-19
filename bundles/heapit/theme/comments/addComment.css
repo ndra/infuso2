@@ -1,7 +1,18 @@
 .add-comment-rz7kt16k3a {
+
+    background: white;
+    padding:10px;
+    text-align: right;
     
-    .comment-block {
-        display: block;
-        width: 394px;
-    }    
+    button {
+        margin-right:0;
+    }
+
+    textarea {
+        .g-input();
+        box-sizing: border-box;
+        width:100%;
+        margin-bottom: 10px;
+    }
+ 
 }
