@@ -37,7 +37,6 @@ class Storage extends Core\Controller {
 	 * @todo проверка безопасности
 	 **/
 	public function post_upload($p) {
-	
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
 	    $storage = $editor->item()->storage();
 	    $storage->addUploaded($_FILES["file"]["tmp_name"],$_FILES["file"]["name"]);

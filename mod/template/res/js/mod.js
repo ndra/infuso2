@@ -81,7 +81,7 @@ mod.call = function(params,fn,conf) {
 	}
     
     var xhr = $.ajax({
-        url: "/mod_json/?cmd="+params.cmd, // Добавляем команду к get-запросу (для логов)
+        url: "/mod_json/?cmd=" + params.cmd, // Добавляем команду к get-запросу (для логов)
         data: fdata,
         contentType: false,
         processData: false,        

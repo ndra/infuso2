@@ -422,21 +422,6 @@ class User extends ActiveRecord\Record {
     }
 
     /**
-     * Деактивирует пользователя активного пользователя
-     **/
-    public static final function logout() {
-
-        $user = user::active();
-        $user->store();
-        $user->log("Выход");
-
-        $cookie = $_COOKIE["login"];
-        $user->authorizations()->eq("cookie",$cookie)->delete();
-
-        self::$activeUser = null;
-    }
-
-    /**
      * Возвращает коллекцию авторизаций пользователя
      **/
     public function authorizations() {
@@ -590,17 +575,6 @@ class User extends ActiveRecord\Record {
             return false;
         }
         return $password;
-    }
-
-    /**
-     * Возвращает все параметры конфигурации
-     **/
-    public static function configuration() {
-        return array(
-            array("id"=>"user:passwordLength","title"=>"Минимальная длина пароля"),
-            array("id"=>"user:email_template","title"=>"Шаблон письма","type"=>"textarea","descr"=>"Используйте формат Шапка %text% Подвал"),
-            array("id"=>"user:email_from","title"=>"Отправитель письма","type"=>"textfield","descr"=>"То, что будет стоять в поле «От» писем, пришедших с сайта."),
-        );
     }
 
     public function extra($key,$val=null) {

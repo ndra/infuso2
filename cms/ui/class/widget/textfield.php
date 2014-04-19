@@ -8,8 +8,12 @@ class Textfield extends Input {
 	    return "Текстовое поле";
 	}
 
-	public function execWidget() {
+    public function clearButton() {
+        $this->param("clearButton", true);
+        return $this;
+    }
 
+	public function execWidget() {
 		$this->app()->tmp()
 			->exec("/ui/widgets/textfield",array (
 			    "widget" => $this,

@@ -5,11 +5,9 @@ jQuery.fn.window = function(params) {
         return this;
     }
 
-    return $(this).parents(".5jfNUBs7a9zwHl:first");
-    
-}
-
-jQuery.fn.window = function(params) {
+    if(params === undefined) {
+        return $(this).parents(".5jfNUBs7a9zwHl:first");
+    }
 
     var defaults = {
         width: 320,

@@ -1,5 +1,5 @@
 <? 
-//$occ = $occ->pdata("occId");
+
 $item = $occ->pdata("occId");
 <tr class="item">
     <td>
@@ -12,12 +12,12 @@ $item = $occ->pdata("occId");
         <div class='phone'>{$item->data('phone')}</div>    
     </td>
     <td>
-        $w = new \Infuso\Heapit\Widget\Button();
+        /*$w = new \Infuso\Heapit\Widget\Button();
         $w->tag("button");
         $w->addClass("delete");
         $w->addClass("no-border");
         $w->attr("data:occId", $occ->id());
         $w->param("icon", $this->bundle()->path()."/res/img/staff/delete.png");
-        $w->exec();    
+        $w->exec(); */   
     </td>
 </tr>

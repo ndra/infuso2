@@ -35,13 +35,6 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 			->title("Роли");
 	}
 	
-	/**
-	 * @reflex-child = on
-	 **/
-	public function roles() {
-	    return $this->item()->rolesAttached()->title("Роли");
-	}
-	
 	public function menu() {
 	    $menu = parent::menu();
 		$menu[] = array(

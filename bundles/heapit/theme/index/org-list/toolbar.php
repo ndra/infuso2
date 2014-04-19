@@ -1,5 +1,8 @@
 <? 
 
 <div class='x13g6lu6fbo' >
-    <input class='quicksearch' placeholder='Поиск' />
+    widget("\\infuso\\cms\\ui\\widgets\\textfield")
+        ->addClass("quicksearch")
+        ->clearButton()
+        ->exec();
 </div>

@@ -20,6 +20,20 @@ html,body {
     
 }
 
+* {
+
+    ::-webkit-scrollbar {
+        height: 12px;
+        width: 12px;
+    }    
+    
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,.4);
+    }
+
+
+}
+
 .g-toolbar {
     padding: 6px;
     background: #ededed;

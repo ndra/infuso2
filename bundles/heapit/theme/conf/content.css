@@ -2,25 +2,4 @@
     
     padding: 30px;
     
-    input[type='text'], textarea, select {
-        .g-input();
-    }
-    
-    input[type='submit'] {
-        .g-button();
-    }    
-   
-    td {
-        vertical-align: middle;
-        padding-bottom: 10px;
-    }
-    
-    td:first-child {
-        text-align: right;
-        padding-right:20px;
-        color:gray;
-        font-style: italic;
-    }
-    
-    
 }

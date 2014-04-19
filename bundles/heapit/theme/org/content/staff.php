@@ -24,13 +24,10 @@
                 <td>
                     <div class='phone'>Телефон</div>    
                 </td>
-                <td>
-                    <div class='delete'>Удалить</div>    
-                </td>
             </tr>
         </thead>
         foreach($org->occupations() as $occ){
-            exec("item", array("occ"=>$occ));
+            exec("item", array("occ" => $occ));
         }
     </table>
 </div>

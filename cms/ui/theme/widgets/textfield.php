@@ -35,7 +35,7 @@ $container->begin();
     
     $input->exec();
     
-    if($this->param("clearButton")) {
+    if($widget->param("clearButton")) {
         <div class='button' ></div>
     }
     

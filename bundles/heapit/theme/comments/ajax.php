@@ -3,7 +3,7 @@
 <div class='comments-nni5vez0qz' >
     foreach($comments as $comment) {
         $owner = $comment->pdata("author");
-        $userpick = $owner->pdata("userpic")->preview(16,16)->resize();
+        $userpick = $owner->pdata("userpic")->preview(16,16)->crop();
         <table>
             <tr>
                 <td><img src='$userpick'></td>

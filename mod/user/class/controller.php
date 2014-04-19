@@ -36,4 +36,12 @@ class Controller extends Core\Controller {
         return false;
 	}
 
+    public function post_logout($p) {
+
+        $user = \User::active();
+        $cookie = $_COOKIE["login"];
+        $user->authorizations()->eq("cookie",$cookie)->delete();
+
+    }
+
 }
