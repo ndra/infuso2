@@ -1,9 +1,16 @@
 <? 
 
 admin::header("Синхронизация");
-<div style='padding:40px;' >
+<div class='x0f1k9gbr5c' style='padding:40px;' >
 
-    inx::add("inx.mod.reflex.sync");
+    foreach($classes as $class) {
+        <div class='class' >
+            echo $class;
+        </div>
+    }
+    
+    widget("infuso\\cms\\ui\\widgets\\button")
+        ->exec();
 
 </div>
 admin::footer();

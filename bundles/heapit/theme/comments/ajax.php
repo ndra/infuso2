@@ -4,7 +4,7 @@
     foreach($comments as $comment) {
         $owner = $comment->pdata("author");
         $userpick = $owner->pdata("userpic")->preview(16,16)->crop();
-        <table>
+        <table class='item' data:id='{$comment->id()}' >
             <tr>
                 <td><img src='$userpick'></td>
                 <td style="width:100%;">

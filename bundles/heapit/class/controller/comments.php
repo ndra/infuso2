@@ -21,5 +21,10 @@ class Comments extends Base {
             return true;     
         }                           
     }   
+
+    public function post_get($p) {
+        Core\Mod::msg($p);
+        return 12;
+    }
         
 }

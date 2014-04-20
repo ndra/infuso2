@@ -9,6 +9,10 @@ jQuery.fn.window = function(params) {
         return $(this).parents(".5jfNUBs7a9zwHl:first");
     }
 
+};
+
+jQuery.window = function(params) {
+
     var defaults = {
         width: 320,
         height: 240,

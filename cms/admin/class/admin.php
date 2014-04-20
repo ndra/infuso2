@@ -17,12 +17,7 @@ class Admin extends Core\Controller {
 	public static function fuckoff() {
 	    \tmp::noindex();
 		if(self::$showLogin) {
-		    if(user::active()->checkAccess("admin:showInterface")) {
-		        header("Location:/admin/");
-		        die();
-			} else {
-	    		tmp::exec("admin:not_logged_in");
-			}
+            tmp::exec("admin:not_logged_in");
 		} else {
 			mod::app()->httpError(404);
 		}

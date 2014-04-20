@@ -4,6 +4,8 @@ header();
 tmp::reset();
 modjs();
 
+lib::modJSUI();
+
 exec("menu");
    
 <table class='layout-slpod3n5sa' >

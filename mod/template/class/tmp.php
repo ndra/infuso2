@@ -31,6 +31,7 @@ class Tmp implements Core\Handler {
             "header" => "header",
             "footer" => "footer",
             "jq" => "jq",
+            "noindex" => "noindex",
 		);
 		$method = $map[$xmethod];
 		

@@ -1,7 +1,7 @@
 <? 
 
 if(!$tag) {
-    throw new Exception("Параметр \$tag не задан");
+    throw new \Exception("Параметр \$tag не задан");
 }
 
 foreach($attributes as $key=>$val) {

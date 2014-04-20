@@ -1,4 +1,5 @@
 .button-tnctafx7bo {
+
     .g-button();
     display: inline-block;
     font-size: 16px;
@@ -7,9 +8,5 @@
     .icon {
         display:inline-block;
         vertical-align:middle;
-    }
-    
-    &.no-border {
-        border: 1px solid transparent;    
-    }     
+    }  
 }
