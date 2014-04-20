@@ -246,6 +246,7 @@ class App {
 	}
 
 	public function httpError() {
+        header("Status: 404 Not Found");
 		\tmp::exec("/mod/404");
 	}
 

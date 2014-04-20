@@ -83,7 +83,7 @@ class Sync extends \Infuso\Core\Controller {
             $limit = 100;
         }
 
-        $items = reflex::get($class)
+        $items = \reflex::get($class)
             ->asc("id")
             ->gt("id",$p["id"])
             ->limit($limit);
@@ -124,26 +124,34 @@ class Sync extends \Infuso\Core\Controller {
 
         $class = $p["className"];
 
-        $token = $this->param("remoteToken");
-        $host = $this->param("remoteHost");
+        if(!$token = $this->param("remoteToken")) {
+            throw new \Exception("Token missing");
+        }
+
+        if(!$host = $this->param("remoteHost")) {
+            throw new \Exception("Host missing");
+        }
+
         $limit = $this->param("remoteLimit");
 
         if(!$limit) {
             $limit = 500;
         }
 
-        $url = "http://$host/reflex_sync/get/class/".$class."/id/{$p[fromID]}/token/{$token}/limit/{$limit}";
-        
-        mod::trace($url);
+        $url = "http://$host/infuso/cms/reflex/controller/sync/get/class/".$class."/id/{$p[fromID]}/token/{$token}/limit/{$limit}";
 
-        $data = file::http($url)->data();
+        $data = Core\File::http($url)->data();
 
         if(!$data) {
             mod::msg("No data received",1);
             return false;
         }
 
-        $data = gzuncompress($data);
+        $data = @gzuncompress($data);
+
+        if(!$data) {
+            throw new \Exception("Data received but unzip failed. Possible wrong format.");
+        }
 
         $data = json_decode($data,1);
         if($data===null) {
@@ -158,10 +166,11 @@ class Sync extends \Infuso\Core\Controller {
         }
 
         $v = reflex::virtual($class);
-        $table = $v->table()->prefixedName();
+        $table = $v->prefixedTableName();
 
         if($p["fromID"]==0) {
-            reflex_mysql::query("truncate table `$table` ");
+            $q = "truncate table `$table` ";
+            Core\Mod::service("dao")->query($q);
             mod::msg("truncate $class");
         }
 
@@ -180,7 +189,7 @@ class Sync extends \Infuso\Core\Controller {
             $itemData = array();
             $insert = " (".implode(",",array_keys($row)).") values (".implode(",",$row).") ";
             $query = "insert into `$table` $insert ";
-            reflex_mysql::query($query);
+            Core\Mod::service("dao")->query($query);
         }
 
         return array(

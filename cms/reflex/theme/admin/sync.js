@@ -1,5 +1,9 @@
 $(function() {
 
+    $(".x0f1k9gbr5c .go").click(function() {
+        fetchClass();
+    });
+
     var classList = [];
     $(".x0f1k9gbr5c .class").each(function() {
         classList.push($(this).text());
@@ -7,6 +11,10 @@ $(function() {
     
     var fromId = null;
     var className = null;
+    
+    var log = function(txt) {
+        mod.msg(txt);
+    }
     
     var handleStep = function(data) {
     
@@ -33,8 +41,8 @@ $(function() {
     }
     
     var step = function() {
-        this.call({
-            cmd:"reflex/sync/syncStep",
+        mod.call({
+            cmd:"infuso/cms/reflex/controller/sync/syncStep",
             className: className,
             fromId: fromId
         },handleStep)
@@ -51,6 +59,6 @@ $(function() {
             fromId = 0;
             step();
         }
-    },
+    }
 
 });
