@@ -83,31 +83,38 @@ class Sync extends \Infuso\Core\Controller {
             $limit = 100;
         }
 
-        $items = \reflex::get($class)
-            ->asc("id")
-            ->gt("id",$p["id"])
-            ->limit($limit);
+        if(Core\Mod::service("classmap")->testClass($class)) {
 
-        $data["total"] = $items->count();
+            $items = \reflex::get($class)
+                ->asc("id")
+                ->gt("id",$p["id"])
+                ->limit($limit);
 
-        $n = 0;
-        foreach($items as $item) {
+            $data["total"] = $items->count();
 
-            $itemData = $item->data();
-            foreach($itemData as $key=>$val) {
-                $itemData[$key] = base64_encode($val);
+            $n = 0;
+            foreach($items as $item) {
+
+                $itemData = $item->data();
+                foreach($itemData as $key=>$val) {
+                    $itemData[$key] = base64_encode($val);
+                }
+
+                $data["rows"][] = $itemData;
+
+                $data["nextId"] = $item->id();
+                $this->app()->service("ar")->freeAll();
+                $n++;
             }
 
-            $data["rows"][] = $itemData;
+            // Если записано 0 строк, мы закончили с этим классом
+            if($n == 0) {
+                $data["completed"] = true;
+            }
+        } else {
 
-            $data["nextId"] = $item->id();
-            $this->app()->service("ar")->freeAll();
-            $n++;
-        }
-
-        // Если записано 0 строк, мы закончили с этим классом
-        if($n == 0) {
             $data["completed"] = true;
+
         }
 
         header("content-type:application/json");
@@ -138,7 +145,11 @@ class Sync extends \Infuso\Core\Controller {
             $limit = 500;
         }
 
-        $url = "http://$host/infuso/cms/reflex/controller/sync/get/class/".$class."/id/{$p[fromID]}/token/{$token}/limit/{$limit}";
+        $url = Core\Mod::url("http://$host/infuso/cms/reflex/controller/sync/get");
+        $url->query("class", $class);
+        $url->query("id", $p["fromID"]);
+        $url->query("token", $token);
+        $url->query("limit", $limit);
 
         $data = Core\File::http($url)->data();
 
@@ -147,6 +158,7 @@ class Sync extends \Infuso\Core\Controller {
             return false;
         }
 
+        core\File::get("1.txt")->put($data);
         $data = @gzuncompress($data);
 
         if(!$data) {
