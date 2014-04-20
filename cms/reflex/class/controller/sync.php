@@ -103,7 +103,7 @@ class Sync extends \Infuso\Core\Controller {
                 $data["rows"][] = $itemData;
 
                 $data["nextId"] = $item->id();
-                $this->app()->service("ar")->freeAll();
+                //$this->app()->service("ar")->freeAll();
                 $n++;
             }
 
@@ -111,6 +111,7 @@ class Sync extends \Infuso\Core\Controller {
             if($n == 0) {
                 $data["completed"] = true;
             }
+
         } else {
 
             $data["completed"] = true;
@@ -158,7 +159,7 @@ class Sync extends \Infuso\Core\Controller {
             return false;
         }
 
-        core\File::get("1.txt")->put($data);
+        core\File::get("1.txt")->put($url);
         $data = @gzuncompress($data);
 
         if(!$data) {
@@ -166,10 +167,12 @@ class Sync extends \Infuso\Core\Controller {
         }
 
         $data = json_decode($data,1);
-        if($data===null) {
-            mod::msg("Json decode failed",1);
+        if($data === null) {
+            Core\Mod::msg("Json decode failed",1);
             return;
         }
+
+        Core\Mod::msg($data);
 
         if($data["completed"]) {
             return array(
@@ -177,13 +180,13 @@ class Sync extends \Infuso\Core\Controller {
             );
         }
 
-        $v = reflex::virtual($class);
+        $v = new $class;
         $table = $v->prefixedTableName();
 
         if($p["fromID"]==0) {
             $q = "truncate table `$table` ";
-            Core\Mod::service("dao")->query($q);
-            mod::msg("truncate $class");
+            Core\Mod::service("db")->query($q);
+            Core\Mod::msg("truncate $class");
         }
 
         foreach($data["rows"] as $row) {
@@ -201,15 +204,15 @@ class Sync extends \Infuso\Core\Controller {
             $itemData = array();
             $insert = " (".implode(",",array_keys($row)).") values (".implode(",",$row).") ";
             $query = "insert into `$table` $insert ";
-            Core\Mod::service("dao")->query($query);
+            Core\Mod::service("db")->query($query);
         }
 
         return array(
-            "action" => "nextID",
-            "nextID" => $data["nextID"],
+            "action" => "nextId",
+            "nextId" => $data["nextId"],
             "log" => array(
                 "class" => $class,
-                "message" => $class.": {$data[nextID]} total {$data[total]}"
+                "message" => $class.": {$data[nextId]} total {$data[total]}"
             ),
         );
 

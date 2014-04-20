@@ -13,7 +13,7 @@ $(function() {
     var className = null;
     
     var log = function(txt) {
-        mod.msg(txt);
+       console.log(txt);
     }
     
     var handleStep = function(data) {
