@@ -4,6 +4,8 @@
 
     tmp::exec("toolbar");
     
+    tmp::exec("stat");
+    
     <div class='items' >
     </div>
 

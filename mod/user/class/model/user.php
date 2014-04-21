@@ -690,12 +690,15 @@ class User extends ActiveRecord\Record {
     }
 
     public function recordTitle() {
+
+		if($r = $this->data("nickName")) {
+            return $r;
+        }
+
         if($r = $this->data("email")) {
             return $r;
         }
-		if($r = $this->data("nickname")) {
-            return $r;
-        }
+
         return "user-".$this->id();
     }
 
