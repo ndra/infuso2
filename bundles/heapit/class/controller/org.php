@@ -83,11 +83,14 @@ class Org extends Base {
                 break;
         }
 
-        $ret = \tmp::get("/heapit/index/org-list/ajax")
+        $html = \tmp::get("/heapit/index/org-list/ajax")
             ->param("orgs", $items)
             ->getContentForAjax();
         
-        return $ret;
+        return array(
+            "html" => $html,
+            "count" => $items->pages(),
+        );
         
     }
 
