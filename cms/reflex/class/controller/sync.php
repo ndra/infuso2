@@ -76,6 +76,7 @@ class Sync extends \Infuso\Core\Controller {
         $data = array(
             "rows" => array(),
         );
+        
         $class = $p["class"];
 
         $limit = $p["limit"] * 1;
@@ -148,7 +149,7 @@ class Sync extends \Infuso\Core\Controller {
 
         $url = Core\Mod::url("http://$host/infuso/cms/reflex/controller/sync/get");
         $url->query("class", $class);
-        $url->query("id", $p["fromID"]);
+        $url->query("id", $p["fromId"]);
         $url->query("token", $token);
         $url->query("limit", $limit);
 
@@ -159,9 +160,8 @@ class Sync extends \Infuso\Core\Controller {
             return false;
         }
 
-        core\File::get("1.txt")->put($url);
         $data = @gzuncompress($data);
-
+        
         if(!$data) {
             throw new \Exception("Data received but unzip failed. Possible wrong format.");
         }
@@ -172,21 +172,23 @@ class Sync extends \Infuso\Core\Controller {
             return;
         }
 
-        Core\Mod::msg($data);
-
         if($data["completed"]) {
             return array(
                 "action" => "nextClass",
+				"log" => array(
+	                "class" => md5($class),
+	                "message" => "done"
+            	),
             );
         }
 
         $v = new $class;
         $table = $v->prefixedTableName();
 
+		// Если индекс нулевой - очищаем таблицу
         if($p["fromID"]==0) {
             $q = "truncate table `$table` ";
             Core\Mod::service("db")->query($q);
-            Core\Mod::msg("truncate $class");
         }
 
         foreach($data["rows"] as $row) {
@@ -211,7 +213,7 @@ class Sync extends \Infuso\Core\Controller {
             "action" => "nextId",
             "nextId" => $data["nextId"],
             "log" => array(
-                "class" => $class,
+                "class" => md5($class),
                 "message" => $class.": {$data[nextId]} total {$data[total]}"
             ),
         );

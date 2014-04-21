@@ -1,2 +1,0 @@
-
-Fatal error: Class 'infuso\board\tagdescription' not found in /home/ndratest/data/www/ndratest.ndra.ru/public_html/mod/activerecord/class/collection/collection.php on line 29

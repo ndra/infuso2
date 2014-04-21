@@ -4,7 +4,7 @@ tmp::header();
 
 mod::coreJS();
 
-inx::add(array(
+\inx::add(array(
     "type" => "inx.mod.admin.login",
     "startup" => "true",
 ));

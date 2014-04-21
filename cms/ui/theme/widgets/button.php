@@ -12,7 +12,6 @@ foreach($widget->style() as $key => $val) {
 }
 $helper->attr("type", "button");
 $helper->addClass("g-button");
-$helper->attr("value",rand());
 $helper->exec();
 
 /*$button->begin();

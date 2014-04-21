@@ -12,8 +12,8 @@ $(function() {
     var fromId = null;
     var className = null;
     
-    var log = function(txt) {
-       console.log(txt);
+    var log = function(data) {
+       $(".x0f1k9gbr5c .class-"+data["class"]+" .log").html(data.message);
     }
     
     var handleStep = function(data) {
