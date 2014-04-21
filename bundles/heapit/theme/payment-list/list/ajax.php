@@ -9,7 +9,8 @@
                 <td>Дата</td>
                 <td>Организация</td>
                 <td>Описание сделки</td>
-                <td>Сумма</td>
+                <td>Приход</td>
+                <td>Расход</td>
             </tr>
         </thead>
         $payments = \Infuso\Heapit\Model\Payment::all();

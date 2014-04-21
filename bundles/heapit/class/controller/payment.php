@@ -22,8 +22,32 @@ class Payment extends Base {
             Core\Mod::msg("id контранета не указано",1);
             return false;
         }
-        
-        $payment = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Payment", $p["data"]);
+
+        $amount = (int) $p["data"]["amount"];
+
+        if(!$amount) {
+            Core\Mod::msg("Не указана сумма");
+            return;
+        }
+
+        if($amount < 0) {
+            Core\Mod::msg("Месье пытается указать отрицательную сумму", 1);
+            return;
+        }
+
+        if($p["data"]["direction"] === "income") {
+            $data["income"] = $amount;
+            $data["expenditure"] = 0;
+        } else {
+            $data["income"] = 0;
+            $data["expenditure"] = $amount;
+        }
+
+        $data["description"] = $p["data"]["description"];
+        $data["orgId"] = $p["data"]["orgId"];
+        $data["date"] = $p["data"]["date"];
+
+        $payment = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Payment", $data);
         return $payment->url();
     }
     
@@ -43,6 +67,7 @@ class Payment extends Base {
         $payment = \Infuso\Heapit\Model\Payment::get($p["paymentId"]);
         $payment->data("description", $p["data"]["description"]);
         $payment->data("orgId", $p["data"]["orgId"]);
+        $payment->data("date", $p["data"]["date"]);
 
         $amount = (int) $p["data"]["amount"];
 

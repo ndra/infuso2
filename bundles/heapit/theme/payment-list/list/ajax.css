@@ -2,7 +2,25 @@
 
     padding: 20px;
     
-    td {
-        padding: 5px;
+    a {
+        text-decoration:none;
+        color:black;
     }
+    
+    thead {
+        td {
+            color:gray;
+            font-style: italic;
+            padding-bottom: 20px;
+        }
+    }
+    
+    td {
+        padding: 5px 10px;
+    }
+    
+    tr:hover td {
+        background: #ededed;
+    }
+    
 }

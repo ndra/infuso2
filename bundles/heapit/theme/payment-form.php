@@ -3,7 +3,15 @@
 <div class='payment-vlj855earc' >
     <form class='payment-form-rxuwp132pd'>
         <table>
-
+            <tr>
+                <td><label>Дата</label></td>
+                <td>
+                    $w = new \Infuso\Cms\UI\Widgets\Datepicker();
+                    $w->fieldName("date");
+                    $w->value($payment->data("date"));
+                    $w->exec();
+                </td>
+            </tr> 
             <tr>
                 <td><label>Организация</label></td>
                 <td>

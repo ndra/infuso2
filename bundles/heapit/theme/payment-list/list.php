@@ -1,5 +1,8 @@
 <? 
 
 <div>
-    tmp::exec("ajax");
+    exec("toolbar");
+    <div class='ajax-container' >
+        exec("ajax");
+    <div>
 </div>
