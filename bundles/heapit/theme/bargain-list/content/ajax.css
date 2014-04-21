@@ -1,5 +1,6 @@
 .bargain-list-uluetdzzol {
 
+    width: 100%;
     padding: 20px;
     table-layout: fixed;
     
@@ -21,4 +22,21 @@
     .org {
         width:200px;
     }
+    
+    .callTime, .lastComment {
+        white-space:nowrap;
+        width:100px;
+        font-size:11px;
+        color:gray;
+    }
+    
+    .comment {
+        font-size:11px;
+        color:gray;
+    }
+    
+    .comment-author {
+        margin-right:5px;
+    }
+    
 }

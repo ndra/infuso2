@@ -57,5 +57,9 @@ class Comment extends \Infuso\ActiveRecord\Record {
         }
         return Bargain::get(0);
     }
+    
+    public function author() {
+        return $this->pdata("author");
+    }
 
 }

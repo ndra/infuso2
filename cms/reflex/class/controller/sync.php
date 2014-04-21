@@ -156,7 +156,7 @@ class Sync extends \Infuso\Core\Controller {
         $data = Core\File::http($url)->data();
 
         if(!$data) {
-            mod::msg("No data received",1);
+            Coe\Mod::msg("No data received",1);
             return false;
         }
 
@@ -186,7 +186,7 @@ class Sync extends \Infuso\Core\Controller {
         $table = $v->prefixedTableName();
 
 		// Если индекс нулевой - очищаем таблицу
-        if($p["fromID"]==0) {
+        if($p["fromId"]==0) {
             $q = "truncate table `$table` ";
             Core\Mod::service("db")->query($q)->exec();
         }
