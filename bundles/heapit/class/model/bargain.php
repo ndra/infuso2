@@ -67,7 +67,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Когда связаться',
                 ), array(
-                    'name' => 'userID',
+                    'name' => 'userId',
                     'type' => 'link',
                     'class' => '\\Infuso\\User\\Model\\User',
                     'editable' => '1',

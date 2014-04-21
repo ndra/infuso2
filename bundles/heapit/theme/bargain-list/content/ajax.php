@@ -23,13 +23,13 @@
             <td>{$bargain->data("amount")}</td>
             <td>
                 echo $bargain->pdata("status");
-                if($bargain->data("status") == \Infuso\Heapit\Model\Bargain::STATUS_REFUSAL){
+                if($bargain->data("status") == \Infuso\Heapit\Model\Bargain::STATUS_REFUSAL) {
                     echo "&#92;".$bargain->pdata("refusalDescription");   
                 }
             </td>
             <td style='text-align: center;'>
-                $preview = $bargain->pdata("userID")->pdata("userpick")->preview(40,40)->resize();
-                <img src="$preview">
+                $preview = $bargain->pdata("userId")->userpic()->preview(40,40)->resize();
+                <img src="{$preview}" >
             </td>
         </tr>
     }
