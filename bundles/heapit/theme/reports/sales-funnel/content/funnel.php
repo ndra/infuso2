@@ -33,8 +33,6 @@
         "n" => $n,
     ));
     
-    <div class='hr' ></div>
-    
     foreach($data as $item) {
     
         $amount -= $item["sum"]; 

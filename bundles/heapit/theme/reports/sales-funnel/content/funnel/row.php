@@ -27,7 +27,7 @@ $bg = $colors[$n];
 
 $percent = round($percent, 2);
 
-<div class='e56siw3fuj' style='background:$bg;width:{$width}%;' >
+<div class='e56siw3fuj' style='background:$bg linear-gradient(45deg,rgba(255,255,255,0),rgba(255,255,255,.3));width:{$width}%;' >
 
     <div>
         echo $text;
