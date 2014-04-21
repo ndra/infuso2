@@ -33,5 +33,8 @@ $users = \User::all()->withRole("heapit:manager");
         }
     
     }
+    
+    $url = action("infuso\\heapit\controller\\report","salesFunnel");
+    <a href='{$url}' >Воронка продаж</a>
            
 </div>
