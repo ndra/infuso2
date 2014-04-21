@@ -113,7 +113,8 @@ class Org extends \Infuso\ActiveRecord\Record {
     }
 
     public static function all() {
-        return \reflex::get(get_class());
+        return \reflex::get(get_class())
+            ->addBehaviour("infuso\\heapit\\model\\OrgCollection");
     }
     
     public static function get($id) {
@@ -124,16 +125,40 @@ class Org extends \Infuso\ActiveRecord\Record {
         return org_user::all()->eq("id",$this->data("owner"))->one();
     }
 
+    /**
+     * Возвращает список сотрудников организации
+     **/
+    public function employees() {
+        $idList = Occupation::all()->eq("orgId", $this->id())->distinct("occId");
+        return Org::all()->eq("id",$idList);
+    }
+
+    /**
+     * Возвращает список ораганизаций, в которых работает сотрудник
+     **/
+    public function orgs() {
+        $idList = Occupation::all()->eq("occId", $this->id())->distinct("orgId");
+        return Org::all()->eq("id",$idList);
+    }
+
     public function occupations() {
 		return \Infuso\Heapit\Model\Occupation::all()->eq("orgId",$this->id());
 	}
     
-    public function payments() { return org_payment::all()->eq("orgID",$this->id()); }
+    public function payments() {
+        return org_payment::all()->eq("orgID",$this->id());
+    }
     
-    public function messages() { return org_chat::all()->eq("parent","org:{$this->id()}"); }
+    public function messages() {
+        return org_chat::all()->eq("parent","org:{$this->id()}");
+    }
 
-    public function referral() { return self::get($this->data("referral")); }
+    public function referral() {
+        return self::get($this->data("referral"));
+    }
 
-    public function updateStatus() { return $this->handleTags(); }
+    public function updateStatus() {
+        return $this->handleTags();
+    }
 
 }

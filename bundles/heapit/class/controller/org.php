@@ -65,23 +65,12 @@ class Org extends Base {
         $items->page($p["page"]);
 
         // Учитываем поиск по имени
-        if($search = trim($p["search"])) $items->like("title","$search");
-
-        $order = $p["order"];
-        if(!$order) $order = "opened";
-        switch($order) {
-            case "balance":
-                $items->asc("balance");
-                $items->neq("balance",0); // При сортировке по балансу не учитываем объекты с нулевым балансом
-                break;
-            case "deleted":
-                $items->desc("deleted");
-                break;
-            default:
-                $items->eq("deleted",0);
-                $items->desc($order);
-                break;
+        if($search = trim($p["search"])) {
+            $items->search($p["search"]);
         }
+
+        $items->eq("deleted",0);
+        $items->desc("opened");
 
         $html = \tmp::get("/heapit/index/org-list/ajax")
             ->param("orgs", $items)

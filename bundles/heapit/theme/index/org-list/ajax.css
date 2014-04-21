@@ -1,9 +1,30 @@
 .bzcw5kluwu {
+
     padding: 30px;
     
+    table {
+        table-layout: fixed;
+        width: 100%;
+    }
+    
+    tbody:hover td {
+        background: #ededed;
+    }
+    
+    td {
+        vertical-align: middle;
+        padding: 5px 10px;
+    }
+    
+    .links {
+        font-size:11px;
+        a {
+            color:gray;
+            margin-right:10px;
+        }
+    }
+    
     .item {
-        margin-bottom: 10px;
-        line-height: 24px;
         
         &.factory {
             background: url("@{bundle}res/img/org/factory.png") no-repeat left center;

@@ -19,7 +19,7 @@ class util_str_ru extends mod_behaviour {
     */
     function numEnding($number, $endingArray) {
     
-        array_unshift($endingArray,$this->component()."");
+        array_unshift($endingArray,$this."");
     
         $number = $number % 100;
         if ($number>=11 && $number<=19) {
@@ -84,7 +84,7 @@ class util_str_ru extends mod_behaviour {
             "z","x","c","v","b","n","m",",","."
         );
 
-        $ret = strtr((string)$this->component(),array_combine($en,$ru) + array_combine($ru,$en));
+        $ret = strtr((string)$this,array_combine($en,$ru) + array_combine($ru,$en));
         return $ret;
 
     }
