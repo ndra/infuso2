@@ -1,2 +1,22 @@
 .fr8dqef87w {
+
+    .page {
+        display: inline-block;
+        border:1px solid rgba(0,0,0,0);
+        padding: 4px;
+        min-width: 15px;
+        text-align:center;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    
+    .page.active {
+        border:1px solid #ccc;
+        background: white;
+    }
+    
+    .page:hover {
+        border:1px solid #ccc;
+    }
+
 }

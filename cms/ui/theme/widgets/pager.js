@@ -27,9 +27,8 @@ $.fn.pager = function(p1,p2) {
         var to = Math.min(active + range, total * 1);
         
         for(var i = from; i <= to; i++) {
-            var button = $("<input type='button' class='g-button' >")
-                .attr("value", i)
-                .css("margin-right", 5)
+            var button = $("<span class='page' >")
+                .html(i)
                 .appendTo(items)
                 .data("page", i)
                 .click(function() {
@@ -37,9 +36,7 @@ $.fn.pager = function(p1,p2) {
                     container.pager("select",page);
                 });
             if(i == active) {
-                button.css({
-                    fontWeight: "bold"
-                })
+                button.addClass("active");
             }
         }
     }
