@@ -24,11 +24,6 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
                 ), array(
-                    'name' => 'title',
-                    'type' => 'textfield',
-                    'editable' => '1',
-                    'label' => 'Название сделки',
-                ), array(
                     'name' => 'orgId',
                     'type' => 'link',
                     'editable' => '1',
@@ -97,7 +92,9 @@ class Bargain extends \Infuso\ActiveRecord\Record {
     }
 
     public static function all() {
-        return \reflex::get(get_class())->desc("created");
+        return \reflex::get(get_class())
+            ->desc("created")
+            ->addBehaviour("infuso\\heapit\\model\\BargainCollection");
     }
     
     

@@ -38,16 +38,17 @@ class Bargain extends Base {
 		$bargains->asc("status");
 		$bargains->asc("lastComment", true);
 
-        // Учитываем поиск по имени
-        if($search = trim($p["search"])) {
-            $bargains->like("title","$search");
-        }
+        // Учитываем поиск
+        $bargains->search($p["search"]);
 
         $ret = \tmp::get("/heapit/bargain-list/content/ajax")
             ->param("bargains", $bargains)
             ->getContentForAjax();
 
-        return $ret;
+        return array(
+            "html" => $ret,
+            "total" => $bargains->pages(),
+        );
 
     }
     
