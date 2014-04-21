@@ -112,6 +112,10 @@ class Bargain extends \Infuso\ActiveRecord\Record {
         $this->data("lastComment", $this->comments()->max("datetime"));
     }
     
+    public function responsibleUser() {
+        return $this->pdata("userId");
+    }
+    
     public function comments() {
         return Comment::all()->eq("parent","bargain:".$this->id());
     }

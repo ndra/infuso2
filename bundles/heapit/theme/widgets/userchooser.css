@@ -1,15 +1,20 @@
 .userChooser-r5rr523ugt {
-    position: relative;
+
+    position: relative;    
     
-    .currentUser {
+    .userpic {
         width: 100px;
-        
-        img {
-            display: block;
-            width: 100px;
-            height: 100px;
-            cursor: pointer;
-        }
+        height: 100px;
+        display: block; 
+        margin-bottom: 7px; 
+        cursor: pointer;  
+    }
+    
+    .name {
+        font-size: 11px;
+        color: gray;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
         
 }

@@ -9,13 +9,13 @@ class UserChooser extends Widget {
         return "Выбиралка юзера";
     }
     
-    public function fieldName($fieldName) {
-        $this->param("fieldName", $fieldName);
+    public function fieldName($name) {
+        $this->param("name", $name);
         return $this;
     }
     
     public function value($value){
-        $this->param("userID", $value);
+        $this->param("userId", $value);
         return $this;    
     }
      

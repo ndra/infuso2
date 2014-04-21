@@ -74,8 +74,8 @@
             <td><label>Ответственный</label></td>
             <td>
                 $w = new \Infuso\Heapit\Widget\UserChooser;
-                $w->fieldName("userID");
-                $w->value($bargain->data("userID"));
+                $w->fieldName("userId");
+                $w->value($bargain->data("userId"));
                 $w->exec();
             </td>
         </tr>

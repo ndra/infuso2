@@ -30,7 +30,7 @@
                     }
                 </td>
                 <td style='text-align: center;'>
-                    $preview = $bargain->pdata("userId")->userpic()->preview(40,40)->resize();
+                    $preview = $bargain->responsibleUser()->userpic()->preview(40,40)->resize();
                     <img src="{$preview}" >
                 </td>
             </tr>
