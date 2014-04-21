@@ -17,9 +17,10 @@
             <tr>
                 <td><a href='{$payment->url()}' >{$payment->id()}</a></td>
                 <td><a href='{$payment->url()}' >{$payment->pdata("date")->num()}</a></td>
-                <td><a href='{$payment->url()}' >{$payment->pdata("orgID")->title()}</a></td>
+                <td><a href='{$payment->url()}' >{$payment->org()->title()}</a></td>
                 <td><a href='{$payment->url()}' >{$payment->data("description")}</a></td>
-                <td><a href='{$payment->url()}' >{$payment->data("amount")}</a></td>
+                <td><a href='{$payment->url()}' >{$payment->data("income")}</a></td>
+                <td><a href='{$payment->url()}' >{$payment->data("expenditure")}</a></td>
             </tr>
            
         }

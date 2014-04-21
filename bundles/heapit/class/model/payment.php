@@ -13,7 +13,7 @@ class Payment extends \Infuso\ActiveRecord\Record {
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
                 ), array(
-                    'name' => 'orgID',
+                    'name' => 'orgId',
                     'type' => 'link',
                     'editable' => '1',
                     'class' => 'Infuso\\Heapit\\Model\\Org',
@@ -24,10 +24,15 @@ class Payment extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Описание',
                 ), array(
-                    'name' => 'amount',
+                    'name' => 'income',
                     'type' => 'currency',
                     'editable' => '1',
-                    'label' => 'Сумма',
+                    'label' => 'Приход',
+                ), array(
+                    'name' => 'expenditure',
+                    'type' => 'currency',
+                    'editable' => '1',
+                    'label' => 'Приход',
                 ), array(
                     'name' => 'date',
                     'type' => 'date',
@@ -48,6 +53,10 @@ class Payment extends \Infuso\ActiveRecord\Record {
         $this->app()->tmp()->exec("/heapit/payment",array(
             "payment" => $payment,
         ));
+    }
+
+    public function org() {
+        return $this->pdata("orgId");
     }
     
     public static function all() {
