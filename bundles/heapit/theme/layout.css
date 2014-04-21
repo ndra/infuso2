@@ -20,6 +20,10 @@ html,body {
     
 }
 
+a {
+    color: #1e0fbe;
+}
+
 * {
 
     ::-webkit-scrollbar {

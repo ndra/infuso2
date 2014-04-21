@@ -67,6 +67,12 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Когда связаться',
                 ), array(
+                    'name' => 'lastComment',
+                    'type' => 'datetime',
+                    'default' => 'now()',
+                    'editable' => '1',
+                    'label' => 'Последний комментарий',
+                ), array(
                     'name' => 'userId',
                     'type' => 'link',
                     'class' => '\\Infuso\\User\\Model\\User',
@@ -98,6 +104,18 @@ class Bargain extends \Infuso\ActiveRecord\Record {
         return Core\Mod::service("ar")->get(get_class(),$id);
     }
     
+    public function org() {
+        return $this->pdata("orgId");
+    }
+    
+    public function handleComment() {
+        $this->data("lastComment", $this->comments()->max("datetime"));
+    }
+    
+    public function comments() {
+        return Comment::all()->eq("parent","bargain:".$this->id());
+    }
+    
     public static function enumStatuses() {
         return array(
             self::STATUS_NEW => "Новая",
@@ -110,10 +128,14 @@ class Bargain extends \Infuso\ActiveRecord\Record {
     
     public static function enumRefusalDescription() {
         return array(
-            100 => "Клиент мудак",
-            200 => "Мы мудаки",
-            300 => "Все мудаки",
-            400 => "Не срослось",
+			100 => "Дорого",
+			200 => "Выбрали предыдущего разработчика",
+			300 => "Клиент пропал",
+			400 => "Не увидели того что хотели",
+			500 => "Хотят битрикс / другую ЦМС",
+			600 => "Хотят гарантию за результат",
+			700 => "Отложили задачу",
+			666 => "Мы сами отказались"
         );    
     }
     

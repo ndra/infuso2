@@ -9,6 +9,7 @@
     $w->addClass("add-comment");
     $w->attr("data:userId", \user::active()->id());
     $w->attr("data:parent", $parent);
-    $w->param("title", "Отправить");
+    $w->style("margin-right", 0);
+    $w->text("Отправить");
     $w->exec();  
 </div>

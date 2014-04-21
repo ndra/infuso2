@@ -15,11 +15,13 @@ exec("menu");
                 region("center");
             </div>
         </td>
-        <td class='right' >
-            <div style='height:100%;overflow:auto;' > 
-                region("right");
-            </div>
-        </td>
+        if(tmp::block("right")->count()) {
+            <td class='right' >
+                <div style='height:100%;overflow:auto;' > 
+                    region("right");
+                </div>
+            </td>
+        }
     </tr>
 </table>
 

@@ -911,8 +911,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function max($key) {
         $this->callBeforeQuery();
         $key = $this->normalizeColName($key);
-        reflex_mysql::query("select max($key) from {$this->from()} where {$this->whereQuery()} ");
-        return reflex_mysql::get_scalar();
+        $q = "select max($key) from {$this->from()} where {$this->whereQuery()} ";
+        return mod::service("db")->query($q)->exec()->fetchScalar();
     }
 
     /**

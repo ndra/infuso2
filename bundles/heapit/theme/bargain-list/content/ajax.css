@@ -1,8 +1,24 @@
 .bargain-list-uluetdzzol {
 
     padding: 20px;
+    table-layout: fixed;
+    
+    a {
+        text-decoration:none;
+    }
+    
+    thead td {
+        color: gray;
+        font-style: italic;
+        padding-bottom: 15px;    
+    }
     
     td {
-        padding: 5px;
+        padding: 5px 10px;
+        vertical-align: middle;
+    }
+    
+    .org {
+        width:200px;
     }
 }

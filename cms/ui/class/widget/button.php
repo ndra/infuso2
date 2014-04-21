@@ -21,4 +21,9 @@ class Button extends \Infuso\Template\Helper {
         ));
     }  
     
+    public function text($text) {
+        $this->param("text", $text);
+        return $this;
+    }
+    
 }

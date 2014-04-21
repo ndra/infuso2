@@ -124,7 +124,9 @@ class Org extends \Infuso\ActiveRecord\Record {
         return org_user::all()->eq("id",$this->data("owner"))->one();
     }
 
-    public function occupations() { return \Infuso\Heapit\Model\Occupation::all()->eq("orgId",$this->id()); }
+    public function occupations() {
+		return \Infuso\Heapit\Model\Occupation::all()->eq("orgId",$this->id());
+	}
     
     public function payments() { return org_payment::all()->eq("orgID",$this->id()); }
     

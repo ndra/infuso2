@@ -18,7 +18,6 @@ class Bargain extends Base {
      * Создает сделки
      **/
     public static function post_new($p) {
-        
         $bargain = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Bargain", $p["data"]);
         return $bargain->url();
     }
@@ -36,6 +35,8 @@ class Bargain extends Base {
 
         $bargains = \Infuso\Heapit\Model\Bargain::all();
         $bargains->page($p["page"]);
+		$bargains->asc("status");
+		$bargains->asc("lastComment", true);
 
         // Учитываем поиск по имени
         if($search = trim($p["search"])) {

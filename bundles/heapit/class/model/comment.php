@@ -45,5 +45,17 @@ class Comment extends \Infuso\ActiveRecord\Record {
     public static function get($id) {
         return Core\Mod::service("ar")->get(get_class(),$id);
     }   
+    
+    public function afterCreate() {
+        $this->bargain()->handleComment();
+    }
+    
+    public function bargain() {
+        list($type,$id) = explode(":", $this->data("parent"));
+        if($type === "bargain") {
+        	return Bargain::get($id);
+        }
+        return Bargain::get(0);
+    }
 
 }
