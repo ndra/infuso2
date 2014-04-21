@@ -188,7 +188,7 @@ class Sync extends \Infuso\Core\Controller {
 		// Если индекс нулевой - очищаем таблицу
         if($p["fromID"]==0) {
             $q = "truncate table `$table` ";
-            Core\Mod::service("db")->query($q);
+            Core\Mod::service("db")->query($q)->exec();
         }
 
         foreach($data["rows"] as $row) {
@@ -206,7 +206,8 @@ class Sync extends \Infuso\Core\Controller {
             $itemData = array();
             $insert = " (".implode(",",array_keys($row)).") values (".implode(",",$row).") ";
             $query = "insert into `$table` $insert ";
-            Core\Mod::service("db")->query($query);
+            core\mod::trace($query);
+            Core\Mod::service("db")->query($query)->exec();
         }
 
         return array(

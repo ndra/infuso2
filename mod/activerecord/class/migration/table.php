@@ -14,9 +14,9 @@ class Table {
      * сюда будут складываться кусочки запросов по изменению таблицы
      **/
     private $q = array();
-    
+
     private $model = null;
-    
+
     private $messages = array();
 
     public function __construct($model) {
@@ -29,7 +29,7 @@ class Table {
     public function tableName() {
         return $this->model["name"];
     }
-    
+
     /**
      * Возвращает имя таблицы с префиксом
      * @todo использовать реальный префикс
@@ -37,11 +37,11 @@ class Table {
     public function prefixedTableName() {
         return "infuso_".$this->model["name"];
     }
-    
-	/**
-	 * Возвращает массив полей таблицы
-	 * Элемнты массива - объекты
-	 **/
+
+    /**
+     * Возвращает массив полей таблицы
+     * Элемнты массива - объекты
+     **/
     public function fields() {
         $ret = array();
         foreach($this->model["fields"] as $field) {
@@ -50,25 +50,35 @@ class Table {
         return $ret;
     }
 
-	/**
-	 * Возвращает массив индексов таблицы
-	 * Элемнты массива - объекты
-	 **/
+    public function fieldExists($name) {
+        foreach($this->model["fields"] as $field) {
+            $field = \Infuso\Core\Model\Field::get($field);
+            if($field->name() == $name) {
+                return true;
+            }
+        }
+        return $false;
+    }
+
+    /**
+     * Возвращает массив индексов таблицы
+     * Элемнты массива - объекты
+     **/
     public function indexes() {
         $ret = array();
         foreach($this->fields() as $field) {
             if($field->param("index") || 1) {
-	            $index = new Index($field->dbIndex());
-				$ret[] = $index;
-			}
+                $index = new Index($field->dbIndex());
+                $ret[] = $index;
+            }
         }
-		return $ret;
+        return $ret;
     }
-    
+
     private function msg($msg) {
         $this->messages[] = $msg;
     }
-    
+
     public function getMessages() {
         return $this->messages;
     }
@@ -77,10 +87,10 @@ class Table {
      * Миграция таблицы до актуального состояния
      **/
     public function migrateUp() {
-    
+
         if(!$this->tableName()) {
             throw new \Exception("Migration: table name missing");
-		}
+        }
 
         $this->createTable();
 
@@ -99,36 +109,36 @@ class Table {
         foreach($this->fields() as $field) {
             $this->updateField($field);
         }
-        
-		/*
+
+
         // Удаляем лишние поля
         foreach($this->realFields() as $field) {
-            if(!$this->table()->field($field)->exists()) {
-                mod::msg("Field ".$this->table()->name().".".$field." not exists in model. You need to remove it manually. ");
-                //$this->deleteField($field);
+            if(!$this->fieldExists($field)) {
+                mod::msg("Field ".$this->tableName().".".$field." not exists in model.", 1);
+                $this->deleteField($field);
             }
-        }*/
+        }
 
         $this->updateIndex();
-        
+
 
         if(sizeof($this->q)) {
             $q = implode(", ",$this->q);
             $q = "alter table `{$this->prefixedTableName()}` $q";
-            
+
             return mod::service("db")->query($q)->exec();
         }
 
     }
 
     public function updateEngine() {
-		$query = "SHOW TABLE STATUS like '{$this->prefixedTableName()}' ";
+        $query = "SHOW TABLE STATUS like '{$this->prefixedTableName()}' ";
         $status = mod::service("db")->query($query)->exec()->fetch();
         $engine = $status["Engine"];
         if($engine!="MyISAM") {
             $this->q[] = "ENGINE=myisam";
             $this->msg("Changing engine");
-		}
+        }
     }
 
     /*public function updateRowFormat() {
@@ -169,7 +179,7 @@ class Table {
     }
 
     public function existsType($field) {
-    
+
         $descr = $this->describeField($field);
         $ret = $descr["Type"]." ";
 
@@ -180,11 +190,11 @@ class Table {
         if($descr["Null"]=="NO") {
             $ret.= "NOT NULL ";
         }
-            
+
         if($descr["Extra"]=="auto_increment") {
             $ret.= "auto_increment ";
         }
-            
+
         return strtolower($ret);
     }
 
@@ -193,7 +203,7 @@ class Table {
         $a = $this->needType($field);
         $b = $this->existsType($field);
         $descr = $this->describeField($field);
-        
+
         if(!$descr) {
             $this->createField($field,$a);
         } else {
@@ -221,15 +231,20 @@ class Table {
      * Возвращает описание поля
      **/
     public function describeField($field) {
-        $query = "show full columns from `{$this->prefixedTableName()}` like '{$field->name()}' ";
-        return mod::service("db")->query($query)->exec()->fetch();
+        $query = "show full columns from `{$this->prefixedTableName()}` ";
+        $ret = mod::service("db")->query($query)->exec()->fetchAll();
+        foreach($ret as $row) {
+            if($row["Field"] == $field->name()) {
+                return $row;
+            }
+        }
     }
 
     /**
      * Возвращает список полей в реальной таблице
      **/
     public function realFields() {
-        $query = "show full columns from `{$this->table()->prefixedName()}` ";
+        $query = "show full columns from `{$this->prefixedTableName()}` ";
         return mod::service("db")->query($query)->exec()->fetchCol("Field");
     }
 
@@ -264,12 +279,12 @@ class Table {
             $a[$index->name()]["fields"] = $fields;
             $a[$index->name()]["type"] = $index->type();
         }
-        
+
         // Индексы, которые реально есть
         $b = array();
         $query = "show index from `{$this->prefixedTableName()}` ";
         $items = mod::service("db")->query($query)->exec()->fetchAll();
-        
+
         foreach($items as $index) {
             $name = $index["Key_name"];
             $indexDescr = $index["Column_name"];
@@ -277,11 +292,11 @@ class Table {
                 $indexDescr.= "(".$n.")";
             }
             $b[$name]["fields"][] = $indexDescr;
-            
+
             if($name == "PRIMARY") {
-               	$b[$name]["type"] = "primary";
+                   $b[$name]["type"] = "primary";
             } else {
-            	$b[$name]["type"] = $index["Index_type"] == "BTREE" ? "index" : "fulltext";
+                $b[$name]["type"] = $index["Index_type"] == "BTREE" ? "index" : "fulltext";
             }
         }
 
@@ -291,10 +306,10 @@ class Table {
             sort($fields);
             $b[$key]["fields"] = $fields;
         }
-        
+
         // Добавляем/изменяем индексы
         foreach($a as $name => $index) {
-        
+
             $hash1 = serialize($index);
             $hash2 = serialize($b[$name]);
 
@@ -319,9 +334,9 @@ class Table {
                 } else {
                     $this->q[] = "add $type `$name` ($fields) ";
                 }
-                
+
                 $this->msg("Update index ".$name);
-                
+
             }
 
         }
@@ -330,8 +345,8 @@ class Table {
         foreach($b as $name => $dummy) {
             if(!array_key_exists($name,$a)) {
                 $this->q[] = "drop index `$name`";
-			}
-		}
+            }
+        }
 
     }
 
