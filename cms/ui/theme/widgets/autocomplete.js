@@ -1,7 +1,5 @@
 $(function(){
 
-    return;
-
     $(".autocomplete-jk7zsaj00t").mod("init", function(){
         var input = $(this).find("input[type='text']");
         var hiddenInput = $(this).find("input[type='hidden']");

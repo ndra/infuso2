@@ -3,11 +3,11 @@
 <div class='staff-x1lsfa0a64l' >
     <div class="controls">
         //<div class="" ='{}'></div>
-        $w = new \Infuso\Heapit\Widget\Button();
+        $w = new \Infuso\Cms\UI\Widgets\Button();
         $w->tag("button");
         $w->addClass("add");
         $w->attr("data:orgid", $org->id());
-        $w->attr("title", "Добавить нового сотрудника");
+        $w->text("Добавить нового сотрудника");
         $w->param("icon", $this->bundle()->path()."/res/img/staff/plus.png");
         $w->exec();
         exec("addExisted");

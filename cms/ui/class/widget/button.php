@@ -26,4 +26,9 @@ class Button extends \Infuso\Template\Helper {
         return $this;
     }
     
+    public function icon($icon) {
+        $this->param("icon", $icon);
+        return $this;
+    }
+    
 }

@@ -14,6 +14,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
     const STATUS_SIGNED = 300;
     const STATUS_REFUSAL = 400;
     const STATUS_HOLD = 500;
+    const STATUS_DELETED = 1000;
     
     public static function recordTable() {
         return array(
@@ -127,6 +128,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
             self::STATUS_SIGNED => "Заключен договор",
             self::STATUS_REFUSAL => "Отказ",
             self::STATUS_HOLD => "Отложен",
+            self::STATUS_DELETED => "Удалено",
         );    
     }
     
