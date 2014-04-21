@@ -30,6 +30,7 @@ $container->begin();
     $input->attr("value", $date);
     $input->attr("placeholder", $placeholder);
     $input->attr("readonly", "readonly"); 
+    $input->style("width",70);
     $hiddenInput = helper("<input type='hidden' value='{$value}' name='{$name}'/>");
     $input->exec();
     $hiddenInput->exec();     
