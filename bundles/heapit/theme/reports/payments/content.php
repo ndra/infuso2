@@ -53,9 +53,11 @@ $payments = \Infuso\Heapit\Model\Payment::all();
             foreach($yearData as $monthData) {
                 foreach($monthData["income"] as $group => $amount) {
                     $avgMonthData["income"][$group] += $amount / $monthCount;
+                    $avgMonthData["income-total"][$group] += $amount;
                 }
                 foreach($monthData["expenditure"] as $group => $amount) {
                     $avgMonthData["expenditure"][$group] += $amount / $monthCount;
+                    $avgMonthData["expenditure-total"][$group] += $amount;
                 }
             }
             
