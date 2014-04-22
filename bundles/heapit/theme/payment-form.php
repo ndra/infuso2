@@ -55,7 +55,22 @@
                     <label for='{$id}' >Расход</label>
                     
                 </td>
-            </tr>          
+            </tr>    
+            <tr>
+                <td>Статья расходов</td>
+                <td>
+                    $w = new \Infuso\Cms\UI\Widgets\Select();
+                    $w->fieldName("group");
+                    
+                    $values = array();
+                    foreach(\Infuso\Heapit\Model\PaymentGroup::all()->limit(0) as $group) {
+                        $values[$group->id()] = $group->title();
+                    }
+                    $w->values($values);
+                    $w->value($payment->data("group"));
+                    $w->exec();
+                </td>
+            </tr> 
             <tr>
                 <td></td>
                 <td>
