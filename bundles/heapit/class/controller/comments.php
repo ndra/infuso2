@@ -26,5 +26,28 @@ class Comments extends Base {
         Core\Mod::msg($p);
         return 12;
     }
+    
+    /**
+     * Возвращает html-код списка платежей
+     **/
+    public function post_search($p) {
+
+        $comments = \Infuso\Heapit\Model\Comment::all()->eq("parent", $p["parent"]);
+        $comments->page($p["page"]);
+
+
+        // Учитываем поиск
+        $comments->search($p["search"]);
+
+        $ret = \tmp::get("/heapit/comments/ajax")
+            ->param("comments", $comments)
+            ->getContentForAjax();
+
+        return array(
+            "html" => $ret,
+            "total" => $comments->pages(),
+        );
+
+    }
         
 }

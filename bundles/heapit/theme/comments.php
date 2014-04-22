@@ -2,11 +2,7 @@
 
 <div class='comments-ckvopjhgwq' data:parent='{$parent}'>
 
-    <div class='g-toolbar'>
-        widget("infuso\\cms\\ui\\widgets\\textfield")
-        ->placeholder("Найти сообщение")
-        ->exec();
-    </div>
+    exec("toolbar");
     
     <div class='items' >        
     </div>

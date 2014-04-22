@@ -39,7 +39,7 @@ class Comment extends \Infuso\ActiveRecord\Record {
     }
     
     public static function all() {
-        return \reflex::get(get_class())->desc("datetime");
+        return \reflex::get(get_class())->desc("datetime")->addBehaviour("infuso\\heapit\\model\\CommentCollection");
     }
     
     public static function get($id) {
@@ -53,7 +53,7 @@ class Comment extends \Infuso\ActiveRecord\Record {
     public function bargain() {
         list($type,$id) = explode(":", $this->data("parent"));
         if($type === "bargain") {
-        	return Bargain::get($id);
+            return Bargain::get($id);
         }
         return Bargain::get(0);
     }
