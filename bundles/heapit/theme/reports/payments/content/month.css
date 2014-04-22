@@ -1,6 +1,15 @@
 .h4icank8er {
 
-    width:100px;
+    width:6.5%;
+    position:relative;
     display: inline-block;
+    margin-right:1%;
+    
+    .month {
+        position: absolute;
+        bottom: 0;
+        width:100%;
+        text-align: center;
+    }
 
 }
