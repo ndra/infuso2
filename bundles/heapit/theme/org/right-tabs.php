@@ -8,6 +8,6 @@ $tabs->tab("заметки");
     
 $tabs->tab("Платежи");
 
-    exec("payments");
+    exec("/heapit/shared/payment-list", array("orgId" => $org->id()));
     
 $tabs->exec();

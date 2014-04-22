@@ -1,6 +1,6 @@
 <? 
 
-<div class="payments-list-j5mafyccpm">
+<div class="payments-list-j5mafyccpm" data:orgId='{$orgId}'>
     exec("toolbar");
     <div class='items' >
     </div>

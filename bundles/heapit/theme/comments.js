@@ -6,20 +6,21 @@ $(function() {
         itemsList.html("");
         loader.show();
         var data = {};
-        mod.fire("beforeLoadCollection", data);
+        mod.fire("beforeLoadComments", data);
         data.cmd = "Infuso/Heapit/Controller/Payment/search";
         data.parent = $(".comments-ckvopjhgwq").attr("data:parent");
-        data.cmd = "Infuso/Heapit/Controller/Comments/search";   
+        data.cmd = "Infuso/Heapit/Controller/Comments/search";
+        console.log(data);   
         mod.call(data, function(data) {
             loader.hide();
             itemsList.html(data.html);
-            $(".comments-ckvopjhgwq .c-toolbar").trigger("collection-loaded", data);
+            $(".comments-ckvopjhgwq .c-toolbar").trigger("comments-loaded", data);
         }, {
-            unique: "j5mafyccpm"
+            unique: "ckvopjhgwq"
         });
     }
     
-    mod.on("collectionFilterChanged", load);
+    mod.on("commentsFilterChanged", load);
     
     mod.on("comments/update-list", load);
     

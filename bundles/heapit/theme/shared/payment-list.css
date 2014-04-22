@@ -1,0 +1,25 @@
+.payments-list-j5mafyccpm {
+    position: relative;
+    height:100%;
+    
+    & > .g-toolbar {
+        height: 34px;
+        overflow:hidden;
+    }
+    
+    & > .items {
+        height: ~"calc(100% - 45px)";
+        overflow:auto;
+        padding:10px;
+        box-sizing: border-box;
+    }
+    
+    & > .loader {
+        display: none;
+        position: absolute;
+        left: 50%;
+        margin-left: -110px;
+        top: 100px;
+    }
+    
+}

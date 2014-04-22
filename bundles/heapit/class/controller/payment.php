@@ -102,14 +102,17 @@ class Payment extends Base {
     public function post_search($p) {
 
         $payments = \Infuso\Heapit\Model\Payment::all();
+        if($p["orgId"]){
+            $payments->eq("orgId", $p["orgId"]);
+        }
         $payments->page($p["page"]);
         $payments->desc("date");
         //$bargains->asc("lastComment", true);
-
+        
         // Учитываем поиск
         $payments->search($p["search"]);
 
-        $ret = \tmp::get("/heapit/payment-list/list/ajax")
+        $ret = \tmp::get("/heapit/shared/payment-list/ajax")
             ->param("payments", $payments)
             ->getContentForAjax();
 

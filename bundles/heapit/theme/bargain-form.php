@@ -14,6 +14,17 @@
                 
             </td>
         </tr>
+        
+        <tr>
+            <td><label>Как узнал о нас</label></td>
+            <td>
+                $w = new \Infuso\Cms\UI\Widgets\Select();
+                $w->fieldName("source");
+                $w->values(\Infuso\Heapit\Model\Bargain::enumSources());
+                $w->exec();        
+            </td>
+        </tr>
+        
         <tr>
             <td><label>Описание сделки</label></td>
             <td>
@@ -47,6 +58,9 @@
                 </select>
             </td>
         </tr>
+        
+        
+        
         <tr class="refusalDescription">
             <td>Причина отказа</td>
             <td>

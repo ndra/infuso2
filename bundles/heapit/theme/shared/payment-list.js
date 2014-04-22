@@ -8,7 +8,7 @@ $(function() {
         var data = {};
         mod.fire("beforeLoadCollection", data);
         data.cmd = "Infuso/Heapit/Controller/Payment/search";
-    
+        data.orgId = $(".payments-list-j5mafyccpm").attr("data:orgId");;
         mod.call(data, function(data) {
             loader.hide();
             itemsList.html(data.html);
