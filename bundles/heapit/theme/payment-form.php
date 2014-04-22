@@ -41,7 +41,7 @@
         </tr> 
         
         // Направление платежа ( 1 - приход,  -1 - расход)
-        $direction = $payment->data("income") - $payment->data("expanditure") >= 0 ? 1 : -1;
+        $direction = $payment->data("income") - $payment->data("expenditure") >= 0 ? 1 : -1;
         
         <tr>
             <td></td>
