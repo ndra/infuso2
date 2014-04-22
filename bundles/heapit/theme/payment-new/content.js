@@ -1,14 +1,16 @@
 $(function() {
 
-    $(".payment-form-rxuwp132pd").submit(function(e) {
+    $(".aqzdqv7jjr").submit(function(e) {
         e.preventDefault();
         var data = $(this).mod("formData");
         mod.call({
             cmd:"infuso/heapit/controller/payment/new",
             data:data
-        }, function(url){
-            window.location.href = url;
-        })
+        }, function(url) {
+            if(url) {
+                window.location.href = url;
+            }
+        });
     });
 
 });
