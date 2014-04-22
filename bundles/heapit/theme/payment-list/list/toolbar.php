@@ -1,6 +1,6 @@
 <? 
 
-<div class='g-toolbar' >
+<div class='g-toolbar c-toolbar payment-toolabr-ah3hf8pqdk swjdscw1a3' >
 
     widget("\\infuso\\cms\\ui\\widgets\\textfield")
         ->addClass("quicksearch")

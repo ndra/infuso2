@@ -8,6 +8,10 @@
     }
     
     thead {
+        tr:hover td {
+            background: #fff;
+        }
+    
         td {
             color:gray;
             font-style: italic;

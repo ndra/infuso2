@@ -60,7 +60,7 @@ class Payment extends \Infuso\ActiveRecord\Record {
     }
     
     public static function all() {
-        return \reflex::get(get_class())->desc("date");
+        return \reflex::get(get_class())->desc("date")->addBehaviour("infuso\\heapit\\model\\PaymentCollection");
     }
     
     public static function get($id) {

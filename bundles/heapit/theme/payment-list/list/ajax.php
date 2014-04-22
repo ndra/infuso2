@@ -13,7 +13,6 @@
                 <td>Расход</td>
             </tr>
         </thead>
-        $payments = \Infuso\Heapit\Model\Payment::all();
         foreach($payments as $payment) {
             <tr>
                 <td><a href='{$payment->url()}' >{$payment->id()}</a></td>

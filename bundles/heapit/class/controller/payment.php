@@ -2,6 +2,7 @@
 
 namespace Infuso\Heapit\Controller;
 use \Infuso\Core;
+use \Infuso\Heapit\Model;
 
 class Payment extends Base {
 
@@ -90,6 +91,31 @@ class Payment extends Base {
         }
         
         Core\Mod::msg("Сохранено");
+    }
+    
+    
+    /**
+     * Возвращает html-код списка платежей
+     **/
+    public function post_search($p) {
+
+        $payments = \Infuso\Heapit\Model\Payment::all();
+        $payments->page($p["page"]);
+        $payments->asc("date");
+        //$bargains->asc("lastComment", true);
+
+        // Учитываем поиск
+        $payments->search($p["search"]);
+
+        $ret = \tmp::get("/heapit/payment-list/list/ajax")
+            ->param("payments", $payments)
+            ->getContentForAjax();
+
+        return array(
+            "html" => $ret,
+            "total" => $payments->pages(),
+        );
+
     }
     
 }

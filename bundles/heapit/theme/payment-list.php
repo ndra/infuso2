@@ -1,3 +1,3 @@
 <? 
-tmp::add("center","list");
-tmp::exec("/heapit/layout");
+add("center","list");
+exec("/heapit/layout");
