@@ -39,6 +39,12 @@ class Payment extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Дата платежа',
                     'default' => 'now()',
+                ), array(
+                    'name' => 'group',
+                    'type' => 'link',
+                    'editable' => '1',
+                    'label' => 'Статья доходов / расходов',
+                    'class' => PaymentGroup::inspector()->className(),
                 ),
              ),
         );
@@ -66,5 +72,9 @@ class Payment extends \Infuso\ActiveRecord\Record {
     public static function get($id) {
         return Core\Mod::service("ar")->get(get_class(),$id);
     }   
+    
+    public function group() {
+        return $this->pdata("group");
+    }
 
 }

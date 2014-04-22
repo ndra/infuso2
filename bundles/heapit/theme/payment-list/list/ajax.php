@@ -11,6 +11,7 @@
                 <td>Описание сделки</td>
                 <td>Приход</td>
                 <td>Расход</td>
+                <td>Группа</td>
             </tr>
         </thead>
         foreach($payments as $payment) {
@@ -21,6 +22,7 @@
                 <td><a href='{$payment->url()}' >{$payment->data("description")}</a></td>
                 <td><a href='{$payment->url()}' >{$payment->data("income")}</a></td>
                 <td><a href='{$payment->url()}' >{$payment->data("expenditure")}</a></td>
+                <td><a href='{$payment->url()}' >{$payment->group()->title()}</a></td>
             </tr>
            
         }
