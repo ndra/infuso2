@@ -28,4 +28,8 @@
     .refusalDescription {
         display: none;
     }
+    
+    select[disabled] {
+        display: none;
+    }
 }
