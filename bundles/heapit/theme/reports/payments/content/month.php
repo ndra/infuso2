@@ -25,14 +25,21 @@ $colors = array(
     "#3B3EAC",
 );
 
+$income = array_sum($data["income"]);
+$expenditure = array_sum($data["expenditure"]);
+
 <div class='h4icank8er' style='height:{$maxHeight+20}px;' >
 
     // Приход
 
     <div style='position:absolute;bottom:20px;width:50%;' >
+    
+        <div class='total' >{round($income / 1000)} т.</div>
+    
         ksort($data["income"]);    
         foreach($data["income"] as $key => $val) {
             $k = $val / $max;
+            $percent = round($val / $income * 100, 2);
             $height = round($k * $maxHeight);
             $h = helper("<div>");
             $h->style("background", $colors[$key]);
@@ -41,7 +48,7 @@ $colors = array(
             
             $title = \Infuso\Heapit\Model\PaymentGroup::get($key)->title();
             $title.= " ".$val." р.";
-            $title.= " ".round($k*100)."%";
+            $title.= " ".$percent."%";
             $h->attr("title", $title);
             $h->exec();            
         }
@@ -50,9 +57,13 @@ $colors = array(
     // Расход
     
     <div style='position:absolute;bottom:20px;left:calc(50% + 1px);width:calc(50% - 1px);' >
+    
+        <div class='total' >{round($expenditure / 1000)} т.</div>
+    
         ksort($data["expenditure"]);
-            foreach($data["expenditure"] as $key => $val) {
+        foreach($data["expenditure"] as $key => $val) {
             $k = $val / $max;
+            $percent = round($val / $expenditure * 100, 2);
             $height = round($k * $maxHeight);
             $h = helper("<div>");
             $h->style("background", $colors[$key]);
@@ -61,7 +72,7 @@ $colors = array(
             
             $title = \Infuso\Heapit\Model\PaymentGroup::get($key)->title();
             $title.= " ".$val." р.";
-            $title.= " ".round($k*100)."%";
+            $title.= " ".$percent."%";
             $h->attr("title", $title);
             $h->exec();
             

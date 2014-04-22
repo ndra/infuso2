@@ -45,7 +45,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
     
     foreach($data as $year => $yearData) {
         <div class='year' >
-            <h2 class='g-header' >{$year}</h2>
+            <div class='year-n' >{$year}</div>
             
             $monthCount = sizeof($yearData);
             
@@ -64,6 +64,8 @@ $payments = \Infuso\Heapit\Model\Payment::all();
                 "data" => $avgMonthData,
                 "max" => $max,
             ));
+            
+            <span style='margin-right:4%;' ></span>
             
             foreach(array_reverse($yearData, true) as $month => $monthData) {
                 exec("month", array(

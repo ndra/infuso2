@@ -4,7 +4,12 @@
     
     .year {
         width:100%;
-        margin-bottom: 50px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ededed;
+        padding-bottom:20px;
+    }
+    
+    .year-n {
     }
 
 }

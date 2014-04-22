@@ -1,6 +1,6 @@
 .h4icank8er {
 
-    width:6.5%;
+    width:6%;
     position:relative;
     display: inline-block;
     margin-right:1%;
@@ -10,6 +10,14 @@
         bottom: 0;
         width:100%;
         text-align: center;
+        font-size:11px;
+        color: gray;
+    }
+    
+    .total {
+        text-align: center;
+        font-size:11px;
+        color: gray;
     }
 
 }
