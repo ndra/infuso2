@@ -19,7 +19,7 @@
         "e" => "spacer",
         "r" => "spacer",
         
-        "#reports" => "Отчеты",
+        (string) action("infuso\\heapit\\controller\\report") => "Отчеты",
         (string) action("infuso\\heapit\\controller\\conf") => "Настройки",
     );
     
