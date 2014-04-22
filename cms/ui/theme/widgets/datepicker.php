@@ -26,12 +26,27 @@ $containerStyles = array(
 
 $container = helper("<span class='datepicker-89z0fcfy09' >");
 $container->begin();
-    $input = helper("<input type='text' />");
+    $input = helper("<input type='text' class='visibleField'/>");
     $input->attr("value", $date);
     $input->attr("placeholder", $placeholder);
-    $input->attr("readonly", "readonly"); 
-    $input->style("width",70);
-    $hiddenInput = helper("<input type='hidden' value='{$value}' name='{$name}'/>");
+    //$input->attr("readonly", "readonly"); 
+    $input->style("width",80);
+    $hiddenInput = helper("<input type='hidden' value='{$value}' class='hiddenField' name='{$name}'/>");
+    
+    if($widget->param("clearButton")) {
+        $input->style("padding-right",30);
+        <div class='button' ></div>
+    }
+    
     $input->exec();
-    $hiddenInput->exec();     
+    $hiddenInput->exec();
+    $fastDayShifts = $widget->param("fastDayShifts");
+    if($fastDayShifts){
+        foreach($fastDayShifts as $dayShift => $title){
+            $tomorrow = \util::now()->shiftDay($dayShift)->notime()->num(); 
+            <span class='fast-date' >$title<input type='hidden' class="fast-date-val" value='{$tomorrow}'></span>    
+        }
+    }     
+    
+         
 $container->end();

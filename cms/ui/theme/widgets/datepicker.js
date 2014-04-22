@@ -23,14 +23,30 @@ jQuery(function($){
     $.datepicker.setDefaults($.datepicker.regional['ru']);
     
     $(".datepicker-89z0fcfy09").mod("init", function(){
-        var input = $(this).find("input[type='text']");
-        var inputHidden = $(this).find("input[type='hidden']");
+        var input = $(this).find(".visibleField");
+        var inputHidden = $(this).find(".hiddenField");
         input.datepicker({
             yearRange: "c-5:c+5",
             changeMonth: true,
             changeYear: true,
             altField: inputHidden,
             altFormat: "yy-mm-dd" 
+        });
+        
+        var button = $(this).find(".button");
+        button.click(function(){
+            input.val('');
+            inputHidden.val('');    
+        });
+        
+        input.change(function(){
+            if (!$(this).val()) inputHidden.val('');
+        });
+        
+        var fastDate = $(this).find(".fast-date");
+        fastDate.click(function(){
+            var val = $(this).find(".fast-date-val").val();
+            input.datepicker( "setDate", val );      
         });
     });
 

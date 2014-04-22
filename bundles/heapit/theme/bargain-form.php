@@ -78,8 +78,11 @@
         <tr>
             <td><label>Когда связаться</label></td>
             <td>
+                $fastDayShifts  = array(-1 => "Вчера", 0 => "Сегодня", 1=> "Завтра");
                 $w = new \Infuso\Cms\UI\Widgets\Datepicker;
                 $w->fieldName("callTime");
+                $w->fastDayShifts($fastDayShifts);
+                $w->clearButton();
                 $w->value($bargain->data("callTime"));
                 $w->exec();
             </td>

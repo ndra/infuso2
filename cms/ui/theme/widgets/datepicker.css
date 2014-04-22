@@ -1,0 +1,27 @@
+.datepicker-89z0fcfy09 {
+    position: relative;
+    .fast-date {
+        margin-left: 10px;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    @icon: "@{bundle}res/img/icons24/delete.png";
+    .button {        
+        position:absolute;
+        left: 90px;
+        top: 0;
+        width: 24px;
+        height: 24px;
+        background: url(@icon);
+        cursor: pointer;
+        opacity: .1;
+        
+        &:hover {
+            opacity: 1;
+        }
+    }
+    
+}
