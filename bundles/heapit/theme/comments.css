@@ -1,5 +1,5 @@
 .comments-ckvopjhgwq {
-
+    position:relative;
     height:100%;
     
     & > .g-toolbar {
@@ -18,5 +18,13 @@
         height: 123px;
         overflow:hidden;
     }
-
+    
+    & > .loader {
+        display: none;
+        position: absolute;
+        left: 50%;
+        margin-left: -110px;
+        top: ~"calc(50% - 170px)";;
+    }
+    
 }
