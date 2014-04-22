@@ -23,7 +23,7 @@
             </td>
         </tr>
         <tr>
-            <td><label>Описание сделки</label></td>
+            <td><label>Назначение платежа</label></td>
             <td>
                 <textarea name='description'>
                     echo e($payment->data("description"));
