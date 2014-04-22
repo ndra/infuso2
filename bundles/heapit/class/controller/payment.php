@@ -101,7 +101,7 @@ class Payment extends Base {
 
         $payments = \Infuso\Heapit\Model\Payment::all();
         $payments->page($p["page"]);
-        $payments->asc("date");
+        $payments->desc("date");
         //$bargains->asc("lastComment", true);
 
         // Учитываем поиск
