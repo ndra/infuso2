@@ -10,7 +10,6 @@ $(function() {
         data.cmd = "Infuso/Heapit/Controller/Payment/search";
         data.parent = $(".comments-ckvopjhgwq").attr("data:parent");
         data.cmd = "Infuso/Heapit/Controller/Comments/search";
-        console.log(data);   
         mod.call(data, function(data) {
             loader.hide();
             itemsList.html(data.html);
