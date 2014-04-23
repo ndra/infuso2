@@ -13,7 +13,7 @@ $(function() {
         mod.fire("commentsFilterChanged");
     });
     
-    $(".comments-toolbar-9mblmj0kwq").on("collection-loaded", function(e,data) {
+    $(".comments-toolbar-9mblmj0kwq").on("comments-loaded", function(e,data) {
         $(".comments-toolbar-9mblmj0kwq").pager("total", data.total);
     });
 
