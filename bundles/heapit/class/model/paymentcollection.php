@@ -14,8 +14,8 @@ class PaymentCollection extends Core\Behaviour {
         $this->like("description", $q);
         $this->orr()->like("description", \util::str($q)->switchLayout());
         $this->joinByField("orgId");
-        $this->orr()->like("infuso\\heapit\\model\\org.title", $q);
-        $this->orr()->like("infuso\\heapit\\model\\org.title", \util::str($q)->switchLayout());
+        $this->orr()->like("Infuso\\Heapit\\Model\\Org.title", $q);
+        $this->orr()->like("Infuso\\Heapit\\Model\\Org.title", \util::str($q)->switchLayout());
 
         return $this;
 

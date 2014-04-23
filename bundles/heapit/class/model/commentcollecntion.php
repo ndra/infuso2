@@ -14,8 +14,8 @@ class CommentCollection extends Core\Behaviour {
         $this->like("text", $q);
         $this->orr()->like("text", \util::str($q)->switchLayout());
         $this->joinByField("author");
-        $this->orr()->like("infuso\\user\\model\\user.nickName", $q);
-        $this->orr()->like("infuso\\user\\model\\user.nickName", \util::str($q)->switchLayout());
+        $this->orr()->like("Infuso\\User\\Model\\User.nickName", $q);
+        $this->orr()->like("Infuso\\User\\Model\\User.nickName", \util::str($q)->switchLayout());
 
         
         return $this;
