@@ -1,5 +1,9 @@
 <? 
 
+foreach($bargains->copy()->limit(0) as $bargain) {
+    $bargain->beforeStore();
+}
+
 <div class='bargain-list-uluetdzzol' >
 
     <table>
