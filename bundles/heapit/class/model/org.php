@@ -146,7 +146,7 @@ class Org extends \Infuso\ActiveRecord\Record {
 	}
     
     public function payments() {
-        return org_payment::all()->eq("orgID",$this->id());
+        return Payment::all()->eq("orgId",$this->id());
     }
     
     public function messages() {
