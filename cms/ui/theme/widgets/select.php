@@ -17,11 +17,13 @@ foreach($widget->attr() as $key => $val) {
     $input->attr($key,$val);
 }
 
+$input->addClass("oblzx9jto3");
+
 $input->begin();
 
 foreach($widget->param("values") as $key => $val) {
 
-    if($key == $widget->param("value")) {
+    if($key."" == $widget->param("value")."") {
         <option selected value='{e($key)}' >{e($val)}</option>
     } else {
         <option value='{e($key)}' >{e($val)}</option>

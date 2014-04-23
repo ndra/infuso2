@@ -1,5 +1,9 @@
 <? 
 
+foreach($bargains->copy()->limit(0) as $bargain) {
+    $bargain->beforeStore();
+}
+
 <div class='bargain-list-uluetdzzol' >
 
     <table>
@@ -7,7 +11,6 @@
             <tr>
                 <td class='id-head' >id</td>
                 <td class='time-head' >Когда связаться</td>
-                <td class='time-head' >Изменено</td>
                 <td class='org-head' >Организация</td>
                 <td class='descr-head' >Описание</td>
                 <td class='amount-head' >Сумма</td>
@@ -21,16 +24,17 @@
                     <td><a href='{$bargain->url()}' >{$bargain->id()}</a></td>
                     
                     <td class='callTime' >
-                    $h = helper("<span>");
-                    if(\util::now()->stamp() > $bargain->pdata("callTime")->stamp()) {
-                        $h->addClass("expired");
-                    }                
-                    $h->begin();
-                        echo $bargain->pdata("callTime")->left();
-                    $h->end();
+                        if(!$bargain->closed()) {
+                            $h = helper("<span>");                        
+                            if(\util::now()->stamp() > $bargain->pdata("callTime")->stamp()) {
+                                $h->addClass("expired");
+                            }                
+                            $h->begin();
+                                echo $bargain->pdata("callTime")->left();
+                            $h->end();
+                        }
                     </td>
                                     
-                    <td class='lastComment' >{$bargain->pdata("lastComment")->left()}</td>
                     <td class='org' ><a href='{$bargain->org()->url()}' >{$bargain->org()->title()}</a></td>
                     <td><a href='{$bargain->url()}' >{$bargain->data("description")}</a></td>
                     <td>{$bargain->data("amount")}</td>

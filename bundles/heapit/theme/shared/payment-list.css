@@ -8,7 +8,7 @@
     }
     
     & > .items {
-        height: ~"calc(100% - 45px)";
+        height: ~"calc(100% - 46px)";
         overflow:auto;
         padding:10px;
         box-sizing: border-box;

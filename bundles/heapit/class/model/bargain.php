@@ -46,6 +46,10 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Статус',
                 ), array(
+                    'name' => 'statusPriority',
+                    'type' => 'bigint',
+                    'label' => 'Приоритет статуса',
+                ), array(
                     'name' => 'refusalDescription',
                     'type' => 'select',
                     'values' => self::enumRefusalDescription(),
@@ -123,6 +127,24 @@ class Bargain extends \Infuso\ActiveRecord\Record {
     public function comments() {
         return Comment::all()->eq("parent","bargain:".$this->id());
     }
+
+    public function beforeStore() {
+        $plist = self::statusPriority();
+        $priority = $plist[$this->data("status")];
+        $this->data("statusPriority", $priority);
+    }
+
+    /**
+     * Закрыта ли сделка
+     * Закрыта сделки - это те что не в стаьтусе Новая, Переговоры или Отложено
+     **/
+    public function closed() {
+        return !in_array($this->data("status"), array (
+            self::STATUS_NEW,
+            self::STATUS_INPROCESS,
+            self::STATUS_HOLD,
+        ));
+    }
     
     public static function enumStatuses() {
         return array(
@@ -133,6 +155,17 @@ class Bargain extends \Infuso\ActiveRecord\Record {
             self::STATUS_HOLD => "Отложен",
             self::STATUS_DELETED => "Удалено",
         );    
+    }
+
+    public static function statusPriority() {
+        return array(
+            self::STATUS_NEW => 0,
+            self::STATUS_INPROCESS => 100,
+            self::STATUS_SIGNED => 200,
+            self::STATUS_REFUSAL => 200,
+            self::STATUS_HOLD => 100,
+            self::STATUS_DELETED => 300,
+        );
     }
     
     public static function enumRefusalDescription() {

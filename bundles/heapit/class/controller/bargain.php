@@ -35,11 +35,19 @@ class Bargain extends Base {
 
         $bargains = \Infuso\Heapit\Model\Bargain::all();
         $bargains->page($p["page"]);
-		$bargains->asc("status");
-		$bargains->asc("lastComment", true);
+        $bargains->asc("statusPriority");
+        $bargains->asc("callTime", true);
 
         // Учитываем поиск
         $bargains->search($p["search"]);
+
+        if($p["user"]) {
+            $bargains->eq("userId", $p["user"]);
+        }
+
+        if($p["status"] != "*") {
+            $bargains->eq("status", $p["status"]);
+        }
 
         $ret = \tmp::get("/heapit/bargain-list/content/ajax")
             ->param("bargains", $bargains)
