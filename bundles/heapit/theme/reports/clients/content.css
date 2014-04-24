@@ -1,0 +1,20 @@
+.h7sa84p707 {
+
+    .title {
+        text-anchor: middle;
+        fill: white;
+    }
+    
+    .amount {
+        text-anchor: middle;
+        fill: white;
+        opacity: .5;
+        font-size: .7em;
+    }
+    
+    .percent {
+        text-anchor: middle;
+        fill: white;
+    }
+
+}
