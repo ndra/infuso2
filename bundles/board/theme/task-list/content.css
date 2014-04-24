@@ -1,0 +1,9 @@
+.task-list-layout-32tvfkepng {
+    & > .loader {
+        display: none;
+        position: absolute;
+        left: 50%;
+        margin-left: -110px;
+        top: 200px;
+    }    
+}

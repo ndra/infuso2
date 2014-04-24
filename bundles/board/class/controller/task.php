@@ -16,11 +16,18 @@ class Task extends \Infuso\Core\Controller {
     }
     
     public function index_listTasks($p) {
+        
+        
+        $this->app()->tmp()->exec("/board/task-list",array(
+            "status" => $p["status"],
+        ));  
+    }
+    
+    public function post_getTasks($p) {
         $limit = 40; 
         
         // Статус для которого мы смотрим задачи
         $status = Board\TaskStatus::get($p["status"]);
-        \mod::msg(var_export($p));
         // Полный список задач
         $tasks = Board\Task::visible()->orderByExpr($status->order())->limit($limit);
 
@@ -59,10 +66,18 @@ class Task extends \Infuso\Core\Controller {
         $tasks->page($p["page"]);
 
         $lastChange = null; 
+       
         
-        $this->app()->tmp()->exec("/board/task-list",array(
-            "tasks" => $tasks,
-        ));  
+        $ret = \tmp::get("/board/shared/task-list")
+            ->param("tasks", $tasks)
+            ->getContentForAjax();
+            
+        
+        return array(
+            "html" => $ret,
+            "total" => 0,
+        );
+                  
     }
     
     /**

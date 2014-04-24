@@ -1,3 +1,3 @@
 <? 
-add("center", "/board/shared/task-list/", array("tasks"=>$tasks));
+add("center", "content");
 exec("/board/layout");
