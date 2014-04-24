@@ -13,11 +13,6 @@
     </div>
     
     <div class='item' >
-        $url = action("infuso\\heapit\\controller\\report", "referrals");
-        <a href='{$url}' >Пути передачи</a>
-    </div>
-    
-    <div class='item' >
         $url = action("infuso\\heapit\\controller\\report", "clients");
         <a href='{$url}' >Клиенты</a>
     </div>

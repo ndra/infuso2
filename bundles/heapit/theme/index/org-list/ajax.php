@@ -26,7 +26,8 @@
                 </td>
                 
                 <td>
-                    echo $org->data("email");
+                    $email = $org->data("email");
+                    <a href='mailto:{$email}' >{$email}</a>
                 </td>
             
             </tr>

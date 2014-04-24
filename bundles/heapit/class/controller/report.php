@@ -13,57 +13,6 @@ class Report extends Base {
         \tmp::exec("/heapit/reports/payments");
     }
 
-    public function index_referrals() {
-        \tmp::exec("/heapit/reports/referrals");
-    }
-
-    /**
-     * Возвращает дланные для отчета по рефералам
-     **/
-    public function post_referralsData() {
-
-        $ret = array(
-            "nodes" => array(),
-            "edges" => array(),
-        );
-
-        $orgs = \Infuso\Heapit\Model\Org::all()
-            ->neq("referral", 0)
-            ->limit(0);
-
-        $added = array();
-        $add = function($org) use (&$added) {
-            $key = array_search($org->id(), $added);
-            if($key === false) {
-                $added[] = $org->id();
-            }
-            $key = array_search($org->id(), $added);
-            return $key;
-        };
-
-        foreach($orgs as $org) {
-            $source = $add($org);
-            $target = $add($org->pdata("referral"));
-
-            $ret["edges"][] = array (
-                "source" => $source,
-                "target" => $target,
-            );
-
-        }
-
-        foreach($added as $n => $id) {
-            $org = \Infuso\Heapit\Model\Org::get($id);
-            $income = $org->payments()->sum("income");
-            $ret["nodes"][] = array(
-                //"title" => $org->title()." ".$income,
-                "radius" => sqrt($income) / 30,
-            );
-        }
-
-        return $ret;
-    }
-
     public function index_clients() {
         \tmp::exec("/heapit/reports/clients");
     }
