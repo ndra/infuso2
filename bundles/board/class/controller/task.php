@@ -2,7 +2,7 @@
 
 namespace Infuso\Board\Controller;
 
-use Infuso\Board;
+use Infuso\Board\Model;
 use \user;
 
 class Task extends \Infuso\Core\Controller {
@@ -16,8 +16,6 @@ class Task extends \Infuso\Core\Controller {
     }
     
     public function index_listTasks($p) {
-        
-        
         $this->app()->tmp()->exec("/board/task-list",array(
             "status" => $p["status"],
         ));  
@@ -27,21 +25,21 @@ class Task extends \Infuso\Core\Controller {
         $limit = 40; 
         
         // Статус для которого мы смотрим задачи
-        $status = Board\TaskStatus::get($p["status"]);
+        $status = Model\TaskStatus::get($p["status"]);
         // Полный список задач
-        $tasks = Board\Task::visible()->orderByExpr($status->order())->limit($limit);
+        $tasks = Model\Task::visible()->orderByExpr($status->order())->limit($limit);
 
         if($p["parentTaskID"]) {
 
             $tasks = $tasks->eq("epicParentTask",$p["parentTaskID"])->orderByExpr("`status` != 1")->asc("priority",true);
-            $tasks->eq("status",array(Board\TaskStatus::STATUS_NEW,Board\TaskStatus::STATUS_IN_PROGRESS))
+            $tasks->eq("status",array(Model\TaskStatus::STATUS_NEW,Board\TaskStatus::STATUS_IN_PROGRESS))
                 ->orr()->gt("changed",\util::now()->shift(-60));
 
         } else {
         
             $tasks->eq("status",$p["status"]);
             
-            if($p["status"] != Board\TaskStatus::STATUS_IN_PROGRESS) {
+            if($p["status"] != Model\TaskStatus::STATUS_IN_PROGRESS) {
                 $tasks->eq("epicParentTask",0);
             }
             

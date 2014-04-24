@@ -1,11 +1,14 @@
 <?
 
+namespace Infuso\Board\Model;
 
+use  \Infuso\ActiveRecord;
+use  \Infuso\Core;
 
 /**
  * Модель записи в логе
  **/
-class TaskTime extends reflex {
+class TaskTime extends ActiveRecord\Record {
 
     public static function recordTable() {
         return array (
@@ -39,7 +42,7 @@ class TaskTime extends reflex {
                     'type' => 'link',
                     'editable' => '2',
                     'label' => 'Задача',
-                    'class' => 'board_task',
+                    'class' => Task::inspector()->className(),
                 ),
             ),
         );
@@ -71,8 +74,8 @@ class TaskTime extends reflex {
     }
 
     public function reflex_beforeCreate() {
-        $this->data("begin",util::now());
-        $this->data("userID",user::active()->id());
+        $this->data("begin", \util::now());
+        $this->data("userID", \user::active()->id());
     }
 
     /**

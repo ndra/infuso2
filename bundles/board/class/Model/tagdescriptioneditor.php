@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Board;
+namespace Infuso\Board\Model;
 
 class TagDescriptionEditor extends \reflex_editor {
 

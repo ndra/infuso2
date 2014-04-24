@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Board;
+namespace Infuso\Board\Model;
 
 class Project extends \Infuso\ActiveRecord\Record {
 
@@ -68,8 +68,8 @@ class Project extends \Infuso\ActiveRecord\Record {
 			$projects = Project::all();
         } else {
 
-            $access = board_access::all()
-                ->eq("userID",user::active()->id())
+            $access = Access::all()
+                ->eq("userID",\user::active()->id())
                 ->neq("userID",0);
 
 			$projects = Project::all()->eq("id",$access->distinct("projectID"));

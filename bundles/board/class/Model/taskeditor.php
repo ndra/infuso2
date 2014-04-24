@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Board;
+namespace Infuso\Board\Model;
 
 class TaskEditor extends \reflex_editor {
 

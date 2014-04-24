@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Board;
+namespace Infuso\Board\Model;
 
 use  \Infuso\ActiveRecord\Record;
 use  \User;

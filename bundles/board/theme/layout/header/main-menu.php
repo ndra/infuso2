@@ -1,12 +1,9 @@
 <?
 
-//namespace Infuso\Board;
-//use \User, \ndra_menu;
-
 <div class='x55qv4lhb8m' >
 
-    foreach(\Infuso\Board\TaskStatus::all() as $status) {
-        if($status->id() != \Infuso\Board\taskStatus::STATUS_DRAFT) {
+    foreach(\Infuso\Board\Model\TaskStatus::all() as $status) {
+        if($status->id() != \Infuso\Board\Model\TaskStatus::STATUS_DRAFT) {
             $url = action("infuso\\board\\controller\\task\\listtasks")->param("status", $status->id())->url();
             <a class='item' href='{$url}' >
                 echo $status->title();

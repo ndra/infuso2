@@ -1,6 +1,7 @@
 <?
 
-namespace Infuso\Board;
+namespace Infuso\Board\Model;
+use \Infuso\Core;
 
 class Access extends \Infuso\ActiveRecord\Record {
 
@@ -15,11 +16,11 @@ class Access extends \Infuso\ActiveRecord\Record {
                 ), array (
                     'name' => 'userID',
                     'type' => 'link',
-                    'class' => "user",
+                    'class' => \user::inspector()->className(),
                 ), array (
                     'name' => 'projectID',
                     'type' => 'link',
-                    'class' => "board_project",
+                    'class' => Project::inspector()->className(),
                 ), array (
                     'name' => 'showComments',
                     'type' => 'checkbox',

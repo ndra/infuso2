@@ -1,0 +1,16 @@
+<?
+
+namespace Infuso\Board\Model;
+use Infuso\Core;
+
+class ProjectEditor extends \Infuso\Cms\Reflex\Editor {
+
+	public function itemClass() {
+	    return Project::inspector()->className();
+	}
+
+	public function beforeEdit() {
+	    return Core\Superadmin::check();
+	}
+
+}

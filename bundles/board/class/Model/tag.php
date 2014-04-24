@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Board;
+namespace Infuso\Board\Model;
 
 class Tag extends \Infuso\ActiveRecord\Record {
 
