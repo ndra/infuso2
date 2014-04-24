@@ -20,14 +20,17 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'type' => 'string',
                 ), array (
                     'name' => 'text',
+                    'label' => "Описание задачи",
                     'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
                     'editable' => '1',
                 ),array (
+                    'label' => "Цвет задачи",
                     'name' => 'color',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
                     'label' => 'Цвет',
                 ),array (
+                    'label' => "Статус задачи",
                     'name' => 'status',
                     'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
                     'editable' => '1',
@@ -38,81 +41,79 @@ class Task extends \Infuso\ActiveRecord\Record {
                 ),array (
                     'name' => 'created',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+                    "editable" => 2,
                 ),array (
                     'name' => 'creator',
                     'type' => 'link',
+                    "editable" => 2,
+                    "label" => "Автор задачи",
                     'class' => User::inspector()->className(),
                 ),array (
                     'name' => 'changed',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+                    "label" => "Изменено",
+                    "editable" => 2,
                 ),array (
                     'name' => 'projectID',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
                     'class' => Project::inspector()->className(),
-                ),array (
-                    'name' => 'bonus',
-                    'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-                    'label' => 'Бонус',
+                    "label" => "Проект",
+                    "editable" => 1,
                 ),array (
                     'name' => 'timeScheduled',
                     'type' => 'yvbj-cgin-m90o-cez7-mv2j',
                     'label' => 'Планируемое время',
+                    "editable" => 1,
                 ),array (
                     'name' => 'timeSpent',
                     'type' => 'yvbj-cgin-m90o-cez7-mv2j',
                     'label' => 'Потрачено времени',
+                    "editable" => 2,
                 ),array (
                     'name' => 'responsibleUser',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
                     'label' => User::inspector()->className(),
                     "class" => "\\Infuso\\User\\Model\\User",
+                    "editable" => 2,
                 ),array (
                     'name' => 'deadline',
                     'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
+                    "editable" => 1,
+                    "label" => "Дэдлайн"
                 ),array (
                     'name' => 'deadlineDate',
                     'type' => 'ler9-032r-c4t8-9739-e203',
+                    "editable" => 1,
                 ),array (
                     'name' => 'epic',
                     'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
                     'label' => 'Эпик',
+                    "editable" => 2,
                 ),array (
                     'name' => 'epicParentTask',
                     'type' => 'link',
-                    'label' => 'reflex_task',
+                    'label' => 'Родительская задача-эпик',
                     'class' => Task::inspector()->className(),
-                ),array (
-                    'name' => 'hindrance',
-                    'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-                    'label' => 'Помеха',
                 ),array (
                     'name' => 'paused',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
                     'label' => 'Пауза',
+                    "editable" => 2,
                 ),array (
                     'name' => 'files',
                     'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
                     'label' => 'Количество файлов',
+                    'editable' => 2,
                 ),array (
                     'name' => 'notice',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'label' => 'Заметка',
-                ), array(
-                    "name" => "type",
-                    "type" => "select",
-                    "options" => self::enumTypes(),
-                )
+                    'editable' => 1,
+                ),
             ),
         );
     }
 
-    public function enumTypes() {
-        return array(
-            0 => "Задача",
-            1 => "Группа",
-            2 => "Todo"
-        );
-    }
 
     /**
      * Возвращает список всех задач
@@ -169,7 +170,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function afterCreate() {
-        $this->log("Создано");
+        //$this->log("Создано");
     }
 
     public $taskEventsSuspended = false;
@@ -186,6 +187,9 @@ class Task extends \Infuso\ActiveRecord\Record {
         return $this->taskEventsSuspended;
     }
 
+    /**
+     * @todo Вернуть рассылку
+     **/
     public function beforeStore() {
 
         $this->data("dataHash",\util::id());
@@ -201,7 +205,7 @@ class Task extends \Infuso\ActiveRecord\Record {
             $this->data("paused",false);
 
             // Отправляем рассылку про выполненные сообщения
-            if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS
+            /*if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS
                 && in_array($this->data("status"),array(TaskStatus::STATUS_COMPLETED, TaskStatus::STATUS_CHECKOUT))) {
                 $this->defer("handleCompleted");
             }
@@ -210,11 +214,11 @@ class Task extends \Infuso\ActiveRecord\Record {
             if($this->field("status")->initialValue() == TaskStatus::STATUS_CHECKOUT
                 && in_array($this->data("status"),array(TaskStatus::STATUS_NEW))) {
                 $this->defer("handleRevision");
-            }
+            }   */
 
             // При переходи задачи в статус к исполнению она ставится на первое место
             if($this->data("status") == TaskStatus::STATUS_NEW) {
-                $min = board_task::all()->eq("status",TaskStatus::STATUS_IN_PROGRESS)->min("priority");
+                $min = Task::all()->eq("status",TaskStatus::STATUS_IN_PROGRESS)->min("priority");
                 $this->data("priority",$min - 1);
             }
 
@@ -224,10 +228,10 @@ class Task extends \Infuso\ActiveRecord\Record {
             }
 
             // Если задача перестала выполняться - останавливаем таймер
-            if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS) {
+            /*if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS) {
                 $this->stopTimer();
                 $this->timeLog()->data("charged",1);
-            }
+            } */
 
         }
 
@@ -297,7 +301,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         $host = mod_url::current()->scheme()."://".mod_url::current()->domain();
 
         $user = user::active();
-        $userpick = $host.$user->userpick()->preview(50,50)->crop();
+        $userpick = $host.$user->userpic()->preview(50,50)->crop();
         $message.= "<table><tr>";
         $message.= "<td><img src='{$userpick}' ></td>";
         $message.= "<td>";
@@ -592,7 +596,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         // Ответственный пользователь
         $ret["responsibleUser"] = array(
             "nick" => $this->responsibleUser()->title(),
-            "userpic" => (string)$this->responsibleUser()->userpick()->preview(16,16)->crop(),
+            "userpic" => (string)$this->responsibleUser()->userpic()->preview(16,16)->crop(),
         );
 
         // Своя задача

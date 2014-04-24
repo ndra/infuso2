@@ -1,8 +1,9 @@
 <?
 
 namespace Infuso\Board\Model;
+use Infuso\Core;
 
-class TaskEditor extends \reflex_editor {
+class TaskEditor extends \Infuso\Cms\Reflex\Editor {
 
 	/**
 	 * @reflex-root = on
@@ -26,11 +27,11 @@ class TaskEditor extends \reflex_editor {
 	}
 
 	public function itemClass() {
-	    return "Infuso\\Board\\Task";
+	    return Task::inspector()->className();
 	}
 
 	public function beforeEdit() {
-	    return \Infuso\Core\Superadmin::check();
+	    return Core\Superadmin::check();
 	}
 
 }

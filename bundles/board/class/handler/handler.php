@@ -3,7 +3,7 @@
 class board_handler implements \Infuso\Core\Handler {
 
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infusoInit
 	 **/
     public function init() {
         

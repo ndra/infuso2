@@ -85,28 +85,23 @@ class Project extends \Infuso\ActiveRecord\Record {
 		return reflex::get(get_class(),$id);
 	}
 
+    /**
+     * Возвращает коллекцию задач в проекте
+     **/
 	public function tasks() {
 		return board_task::all()->eq("projectID",$this->id());
 	}
 
-	public function customer() {
-		return $this->pdata("customerUserID");
-	}
-
-	public static function reflex_root() {
-	    return self::all()->title("Проекты")->param("tab","system");
-	}
-
-	public function reflex_children() {
-	    return array(
-	        $this->tasks()->title("Задачи"),
-	    );
-	}
-
+    /**
+     * Возвращает иконку проекта
+     **/
     public function icon() {
         return $this->pdata("icon");
     }
 
+    /**
+     * Загружает фавиконку в качестве иконки проекта
+     **/
     public function loadFavicon() {
 
         if(!$url = trim($this->data("url"))) {
