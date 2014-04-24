@@ -1,23 +1,28 @@
 <? 
 
-<div class='bv3vjfvd5n' >
+<form class='bv3vjfvd5n' >
     
-    $years = array(2001,2002,2014);
+    $years = \Infuso\Heapit\Model\Payment::all()->asc("date")->distinct("date", "year");
     
+    $last = end($years);
     foreach($years as $year) {
         $id = \util::id();
-        <input type='checkbox' id='{$id}' />
+        $h = helper("<input name='year' value='{$year}' type='checkbox' id='{$id}' />");
+        if($year == $last) {
+            $h->attr("checked", "checked");
+        }
+        $h->exec();
         <label for='{$id}' >{$year}</label>
     }
     
     <span style='margin-right: 40px' ></span>
 
     $id = \util::id();
-    <input type='checkbox' id='{$id}' />
+    <input name='income' checked type='checkbox' id='{$id}' />
     <label for='{$id}' >Доход</label>    
 
     $id = \util::id();
-    <input type='checkbox' id='{$id}' />
+    <input name='expenditure' type='checkbox' id='{$id}' />
     <label for='{$id}' >Расход</label>
     
-</div>
+</form>

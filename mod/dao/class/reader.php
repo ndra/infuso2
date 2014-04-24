@@ -24,10 +24,16 @@ class reader {
 		return $this->statement->fetch();
 	}
 	
-	public function fetchCol($col) {
+	public function fetchCol($col = null) {
 	    $ret = array();
 		foreach ($this->fetchAll() as $row) {
-		    $ret[] = $row[$col];
+
+            if($col !== null) {
+                $ret[] = $row[$col];
+            } else {
+                $ret[] = end($row);
+            }
+
 		}
 		return $ret;
 	}

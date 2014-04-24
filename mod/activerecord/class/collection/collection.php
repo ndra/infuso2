@@ -945,7 +945,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 			$key = "$fn($key)";
 		}
         $q = ("select distinct $key from {$this->from()} where {$this->whereQuery()} order by {$this->orderBy()} ");
-        return mod::service("db")->query($q)->exec()->fetchCol($ukey);
+        return mod::service("db")->query($q)->exec()->fetchCol();
     }
 
     /**

@@ -20,37 +20,45 @@ class Report extends Base {
     /**
      * Возвращает дланные для отчета по рефералам
      **/
-    public function post_clientsData() {
-
+    public function post_clientsData($data) {
 
         $ret = array(
             "name" => "cluster",
             "children" => array(),
         );
 
-        $payments = \Infuso\Heapit\Model\Payment::all()
-            ->limit(0)
-            ->joinByField("orgId")
-            ->groupBy("orgId")
-            ->gt("income", 0)
-            ->where("year(date) in (2013,2014)")
-            ->select("sum(`income`) as `sum` ,`Infuso\\Heapit\\Model\\Org`.`title` as `title`");
+        foreach(array("income", "expenditure") as $type) {
 
-        $sum = 0;
-        $max = 0;
-        array_map(function($item) use (&$sum,&$max) {
-            $sum += $item["sum"];
-            $max = max($max, $item["sum"]);
-        }, $payments);
+            if($data["filter"][$type] == true) {
 
-        foreach($payments as $payment) {
-            $ret["children"][] = array(
-                "title" => $payment["title"],
-                "value" => round($payment["sum"] / 1000),
-                "total" => round($payment["sum"] / 1000),
-                "percent" => round($payment["sum"] / $sum * 100, 2),
-                "kmax" => $payment["sum"] / $max
-            );
+                $payments = \Infuso\Heapit\Model\Payment::all()
+                    ->limit(0)
+                    ->joinByField("orgId")
+                    ->groupBy("orgId")
+                    ->gt($type, 0) // income или expenditure
+                    ->eq("year(date)", $data["filter"]["years"])
+                    ->select("sum(`$type`) as `sum` ,`Infuso\\Heapit\\Model\\Org`.`title` as `title`");
+
+                $sum = 0;
+                $max = 0;
+                array_map(function($item) use (&$sum,&$max) {
+                    $sum += $item["sum"];
+                    $max = max($max, $item["sum"]);
+                }, $payments);
+
+                foreach($payments as $payment) {
+                    $ret["children"][] = array(
+                        "title" => $payment["title"],
+                        "value" => round($payment["sum"] / 1000),
+                        "total" => round($payment["sum"] / 1000),
+                        "percent" => round($payment["sum"] / $sum * 100, 2),
+                        "kmax" => $payment["sum"] / $max,
+                        "type" => $type,
+                    );
+                }
+
+            }
+
         }
 
         return $ret;
