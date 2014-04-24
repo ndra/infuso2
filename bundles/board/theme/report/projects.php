@@ -5,14 +5,14 @@ tmp::reset();
 
 <div style='padding:20px;' >
 
-    $from = util::date($params["from"])->date();
-    $to = util::date($params["to"])->date();
+    $from = \util::date($params["from"])->date();
+    $to = \util::date($params["to"])->date();
     
     <div style='margin-bottom:20px;' >
         echo "Отчет по проектам {$from->text()} &mdash; {$to->text()}";
     </div>
 
-    $items = board_task_log::visible()
+    $items = \Infuso\Board\TaskLog::visible()
         ->groupBy("board_task.projectID")
         ->joinByField("taskID")
         ->orderByExpr("`spent` desc ")

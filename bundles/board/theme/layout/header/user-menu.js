@@ -2,7 +2,7 @@ $(function() {
 
     setInterval(function() {
     
-        mod.cmd({
+        mod.call({
             cmd:"board/controller/messages/getUnreadMessagesNumber"
         },function(ret) {
             $(".jmi8th58od .messages").text(ret);

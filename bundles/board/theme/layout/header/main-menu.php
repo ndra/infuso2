@@ -1,13 +1,14 @@
 <?
 
-namespace Infuso\Board;
-use \User, \ndra_menu;
+//namespace Infuso\Board;
+//use \User, \ndra_menu;
 
 <div class='x55qv4lhb8m' >
 
-    foreach(taskStatus::all() as $status) {
-        if($status->id() != taskStatus::STATUS_DRAFT) {
-            <a class='item' href='#task-list/status/{$status->id()}' >
+    foreach(\Infuso\Board\TaskStatus::all() as $status) {
+        if($status->id() != \Infuso\Board\taskStatus::STATUS_DRAFT) {
+            $url = action("infuso\\board\\controller\\task\\listtasks")->param("status", $status->id())->url();
+            <a class='item' href='{$url}' >
                 echo $status->title();
                 $n = $status->visibleTasks()->count();
                 <span class='count' >{$n}</span>
@@ -51,4 +52,4 @@ use \User, \ndra_menu;
     </div>
 </div>
 
-ndra_menu::create(".x55qv4lhb8m .item",".x55qv4lhb8m-submenu .submenu")->exec();
+\Infuso\Plugins\Menu::create(".x55qv4lhb8m .item",".x55qv4lhb8m-submenu .submenu")->exec();

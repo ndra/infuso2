@@ -1,13 +1,13 @@
 <?
 
 // Меню
-<table class='sr3yrzht3j' >
+<table class='tob-bar-sr3yrzht3j' >
     <tr>
         <td class='left' >
-            tmp::exec("main-menu");
+            exec("main-menu");
         </td>
         <td class='right' >
-            tmp::exec("user-menu");
+            exec("user-menu");
         </td>
     </tr>
 </table>

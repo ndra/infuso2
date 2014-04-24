@@ -10,7 +10,61 @@ class Task extends \Infuso\Core\Controller {
     public function postTest() {
         return user::active()->exists();
     }
+    
+    public function indexTest() {
+        return user::active()->exists();
+    }
+    
+    public function index_listTasks($p) {
+        $limit = 40; 
+        
+        // Статус для которого мы смотрим задачи
+        $status = Board\TaskStatus::get($p["status"]);
+        \mod::msg(var_export($p));
+        // Полный список задач
+        $tasks = Board\Task::visible()->orderByExpr($status->order())->limit($limit);
 
+        if($p["parentTaskID"]) {
+
+            $tasks = $tasks->eq("epicParentTask",$p["parentTaskID"])->orderByExpr("`status` != 1")->asc("priority",true);
+            $tasks->eq("status",array(Board\TaskStatus::STATUS_NEW,Board\TaskStatus::STATUS_IN_PROGRESS))
+                ->orr()->gt("changed",\util::now()->shift(-60));
+
+        } else {
+        
+            $tasks->eq("status",$p["status"]);
+            
+            if($p["status"] != Board\TaskStatus::STATUS_IN_PROGRESS) {
+                $tasks->eq("epicParentTask",0);
+            }
+            
+        }
+
+        // Учитываем поиск
+        if($search = trim($p["search"])) {
+        
+            $search2 = \util::str($search)->switchLayout();
+
+            $tasks->joinByField("projectID");
+            $tasks->like("text",$search)
+                ->orr()->like("board_project.title",$search)
+                ->orr()->like("text",$search2)
+                ->orr()->like("board_project.title",$search2);
+        }
+
+        if(($tag = trim($p["tag"])) && $tag!="*") {
+            $tasks->useTag($tag);
+        }
+
+        $tasks->page($p["page"]);
+
+        $lastChange = null; 
+        
+        $this->app()->tmp()->exec("/board/task-list",array(
+            "tasks" => $tasks,
+        ));  
+    }
+    
     /**
      * Экшн получения списка задач
      **/             

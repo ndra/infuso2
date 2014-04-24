@@ -24,13 +24,13 @@ class Report extends \Infuso\Core\Controller {
         if(!\user::active()->checkAccess("board/showReportUsers",array(
             "task" => $task
         ))) {
-            mod::msg(user::active()->errorText(),1);
-            tmp::header();
-            tmp::footer();
+            \mod::msg(user::active()->errorText(),1);
+            \tmp::header();
+            \tmp::footer();
             return;
         }
     
-        tmp::exec("/board/report/workers");
+        \tmp::exec("/board/report/workers");
 
     }
 
@@ -42,9 +42,9 @@ class Report extends \Infuso\Core\Controller {
         if(!\user::active()->checkAccess("board/showUserReport",array(
             "task" => $task
         ))) {
-            mod::msg(\user::active()->errorText(),1);
-            tmp::header();
-            tmp::footer();
+            \mod::msg(\user::active()->errorText(),1);
+            \tmp::header();
+            \tmp::footer();
             return;
         }
 
@@ -56,14 +56,14 @@ class Report extends \Infuso\Core\Controller {
     public function index_projects($p) {
     
         // Параметры задачи
-        if(!\user::active()->checkAccess("board/showProjectsReport")) {
-            mod::msg(\user::active()->errorText(),1);
-            tmp::header();
-            tmp::footer();
+        /*if(!\user::active()->checkAccess("board/showProjectsReport")) {
+            \mod::msg(\user::active()->errorText(),1);
+            \tmp::header();
+            \tmp::footer();
             return;
-        }
+        }*/
 
-        tmp::exec("/board/report/projects", array(
+        \tmp::exec("/board/report/projects", array(
             "params" => $p,
         ));
     
@@ -74,12 +74,12 @@ class Report extends \Infuso\Core\Controller {
         $project = Board\Project::get($p["projectID"]);
 
         // Параметры задачи
-        if(!\user::active()->checkAccess("board/showProjectsReport")) {
-            mod::msg(\user::active()->errorText(),1);
-            tmp::header();
-            tmp::footer();
+        /*if(!\user::active()->checkAccess("board/showProjectsReport")) {
+            \mod::msg(\user::active()->errorText(),1);
+            \tmp::header();
+            \tmp::footer();
             return;
-        }
+        }*/
 
         tmp::exec("/board/report/project-detailed", array(
             "project" => $project,
@@ -91,12 +91,12 @@ class Report extends \Infuso\Core\Controller {
     public function index_done($p) {
 
         // Параметры задачи
-        if(!\user::active()->checkAccess("board/showReportDone")) {
-            mod::msg(\user::active()->errorText(),1);
-            tmp::header();
-            tmp::footer();
+        /*if(!\user::active()->checkAccess("board/showReportDone")) {
+            \mod::msg(\user::active()->errorText(),1);
+            \tmp::header();
+            \tmp::footer();
             return;
-        }
+        }*/
 
         tmp::exec("/board/report/done", array(
             "params" => $p,
@@ -146,9 +146,9 @@ class Report extends \Infuso\Core\Controller {
 
         // Параметры задачи
         if(!\user::active()->checkAccess("board/showReportVote")) {
-            mod::msg(user::active()->errorText(),1);
-            tmp::header();
-            tmp::footer();
+            \mod::msg(user::active()->errorText(),1);
+            \tmp::header();
+            \tmp::footer();
             return;
         }
 
@@ -182,9 +182,9 @@ class Report extends \Infuso\Core\Controller {
 
         // Параметры задачи
         if(!\user::active()->checkAccess("board/showReportVote")) {
-            mod::msg(\user::active()->errorText(),1);
-            tmp::header();
-            tmp::footer();
+            \mod::msg(\user::active()->errorText(),1);
+            \tmp::header();
+            \tmp::footer();
             return;
         }
 
@@ -203,9 +203,9 @@ class Report extends \Infuso\Core\Controller {
         if(!\user::active()->checkAccess("board/showReportProjectActivity",array(
             "project" => $project,
         ))) {
-            mod::msg(\user::active()->errorText(),1);
-            tmp::header();
-            tmp::footer();
+            \mod::msg(\user::active()->errorText(),1);
+            \tmp::header();
+            \tmp::footer();
             return;
         }
 

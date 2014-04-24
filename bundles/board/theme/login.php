@@ -1,13 +1,23 @@
 <?
 
-tmp::reset();
-tmp::header();
+header();
 
-echo "<div style='width:400px;margin:200px auto;' >";
-echo "<h2 style='padding:0 0 20px 0;' >Менеджер заявок. Веб-студия ndra.</h2>";
-tmp::exec("user:loginForm");
-echo "</div>";
+<form class='crrmu5wd20' method='post' >    
+        
+    widget("\\infuso\\cms\\ui\\widgets\\textfield")
+        ->placeholder("Логин")
+        ->fieldName("email")
+        ->exec();
+        
+    widget("\\infuso\\cms\\ui\\widgets\\textfield")
+        ->placeholder("Пароль")
+        ->fieldName("password")
+        ->attr("type","password")
+        ->exec();  
+    
+    <input type='hidden' name='cmd' value='infuso/user/controller/login' />          
+    <input type='submit' class='g-button' value='Войти' />
+    
+</form>
 
-tmp::footer();
-
-?>
+footer();

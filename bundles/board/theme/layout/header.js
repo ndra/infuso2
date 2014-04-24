@@ -2,7 +2,7 @@ $(function() {
 
     var check = function() {
     
-        $(".sr3yrzht3j a").each(function() {
+        $(".tob-bar-sr3yrzht3j a").each(function() {
             if(this.href==window.location.href) {
                 $(this).addClass("active");
             } else {
@@ -11,7 +11,7 @@ $(function() {
         })
     
     }
-
-    setInterval(check,1000);
+    check();
+    //setInterval(check,1000);
 
 });

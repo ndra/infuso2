@@ -65,7 +65,7 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'name' => 'responsibleUser',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
                     'label' => User::inspector()->className(),
-                    "class" => "user",
+                    "class" => "\\Infuso\\User\\Model\\User",
                 ),array (
                     'name' => 'deadline',
                     'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
@@ -200,34 +200,34 @@ class Task extends \Infuso\ActiveRecord\Record {
             
             $this->data("paused",false);
 
-			// Отправляем рассылку про выполненные сообщения
-			if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS
-				&& in_array($this->data("status"),array(TaskStatus::STATUS_COMPLETED, TaskStatus::STATUS_CHECKOUT))) {
-            	$this->defer("handleCompleted");
-			}
-			
-			// Отправляем рассылку про возвращанные на доработку сообщения
-			if($this->field("status")->initialValue() == TaskStatus::STATUS_CHECKOUT
-				&& in_array($this->data("status"),array(TaskStatus::STATUS_NEW))) {
-            	$this->defer("handleRevision");
-			}
+            // Отправляем рассылку про выполненные сообщения
+            if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS
+                && in_array($this->data("status"),array(TaskStatus::STATUS_COMPLETED, TaskStatus::STATUS_CHECKOUT))) {
+                $this->defer("handleCompleted");
+            }
+            
+            // Отправляем рассылку про возвращанные на доработку сообщения
+            if($this->field("status")->initialValue() == TaskStatus::STATUS_CHECKOUT
+                && in_array($this->data("status"),array(TaskStatus::STATUS_NEW))) {
+                $this->defer("handleRevision");
+            }
 
-			// При переходи задачи в статус к исполнению она ставится на первое место
-			if($this->data("status") == TaskStatus::STATUS_NEW) {
-			    $min = board_task::all()->eq("status",TaskStatus::STATUS_IN_PROGRESS)->min("priority");
-			    $this->data("priority",$min - 1);
-			}
+            // При переходи задачи в статус к исполнению она ставится на первое место
+            if($this->data("status") == TaskStatus::STATUS_NEW) {
+                $min = board_task::all()->eq("status",TaskStatus::STATUS_IN_PROGRESS)->min("priority");
+                $this->data("priority",$min - 1);
+            }
 
-			// Если взяли задачу - запускаем таймер
-			if($this->data("status") == TaskStatus::STATUS_IN_PROGRESS) {
+            // Если взяли задачу - запускаем таймер
+            if($this->data("status") == TaskStatus::STATUS_IN_PROGRESS) {
                 $this->startTimer();
-			}
+            }
 
-			// Если задача перестала выполняться - останавливаем таймер
-			if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS) {
+            // Если задача перестала выполняться - останавливаем таймер
+            if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS) {
                 $this->stopTimer();
                 $this->timeLog()->data("charged",1);
-			}
+            }
 
         }
 
@@ -296,7 +296,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         
         $host = mod_url::current()->scheme()."://".mod_url::current()->domain();
 
-		$user = user::active();
+        $user = user::active();
         $userpick = $host.$user->userpick()->preview(50,50)->crop();
         $message.= "<table><tr>";
         $message.= "<td><img src='{$userpick}' ></td>";
@@ -331,7 +331,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         $url = $this->url();
         $user->mailer()
             ->subject("Задача {$this->id()} <a href='{$url}' >«{$taskText}»</a> отправлена да доработку. Причина: {$reason}")
-			->send();
+            ->send();
         
     }
 
@@ -577,7 +577,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 
         $ret = array();
 
-		$ret["id"] = $this->id();
+        $ret["id"] = $this->id();
 
         // Текст стикера
         $ret["text"] = \util::str($this->data("text"))->ellipsis(200)->secure()."";
@@ -585,25 +585,25 @@ class Task extends \Infuso\ActiveRecord\Record {
         // Проект
         $ret["project"] = array(
             "id" => $this->project()->id(),
-			"title" => $this->project()->title(),
+            "title" => $this->project()->title(),
             "icon" => $this->project()->icon()->preview(16,16),
-		);
-		
-		// Ответственный пользователь
-		$ret["responsibleUser"] = array(
-		    "nick" => $this->responsibleUser()->title(),
-		    "userpic" => (string)$this->responsibleUser()->userpick()->preview(16,16)->crop(),
-		);
+        );
+        
+        // Ответственный пользователь
+        $ret["responsibleUser"] = array(
+            "nick" => $this->responsibleUser()->title(),
+            "userpic" => (string)$this->responsibleUser()->userpick()->preview(16,16)->crop(),
+        );
 
-		// Своя задача
+        // Своя задача
         $ret["my"] = $this->responsibleUser()->id() == user::active()->id();
         
         // Статус
         $ret["status"] = array(
             "id" => $this->status()->id(),
             "title" => $this->statusText(),
-		);
-		
+        );
+        
         // Цвет стикера
         $ret["color"] = $this->data("color");
 
@@ -617,7 +617,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         $ret["deadline"] = $this->data("deadline");
         
         if($this->data("deadline")) {
-        	$ret["deadlineMissed"] = util::now()->stamp() > $this->pdata("deadlineDate")->stamp();
+            $ret["deadlineMissed"] = util::now()->stamp() > $this->pdata("deadlineDate")->stamp();
         }
 
         // Пропущенный дэдлайн
@@ -632,17 +632,17 @@ class Task extends \Infuso\ActiveRecord\Record {
             $ret["attachment"] = true;
         }
         
-		// Стоит ли задача на паузе
+        // Стоит ли задача на паузе
         $ret["paused"] = $this->paused();
 
         $ret["percentCompleted"] = $this->percentCompleted();
         
         $ret["images"] = array();
-		foreach($this->storage()->files() as $file) {
+        foreach($this->storage()->files() as $file) {
             $ret["images"][] = array(
                 "x30" => $file->preview(30,30),
                 "original" => $file,
-			);
+            );
         }
 
         // Кнопки задачи (видны только если можно изменять задачу)
@@ -734,9 +734,9 @@ class Task extends \Infuso\ActiveRecord\Record {
         return Tag::all()->eq("taskID",$this->id());
     }
     
-	/**
-	 * Добавляет в задачу тэг
-	 **/
+    /**
+     * Добавляет в задачу тэг
+     **/
     public function addTag($tagID) {
     
         if(!$this->exists()) {
@@ -748,19 +748,19 @@ class Task extends \Infuso\ActiveRecord\Record {
             $tag = \Infuso\ActiveRecord\Record::create("board_task_tag",array(
                 "taskID" => $this->id(),
                 "tagID" => $tagID,
-			));
+            ));
         }
         
         mod::fire("board/tagsChanged",array(
             "taskID" => $this->id(),
             "deliverToClient" => true
-		));
+        ));
     
-	}
-	
-	/**
-	 * Убирает из задачи тэг
-	 **/
+    }
+    
+    /**
+     * Убирает из задачи тэг
+     **/
     public function removeTag($tagID) {
     
         if(!$this->exists()) {
@@ -773,52 +773,52 @@ class Task extends \Infuso\ActiveRecord\Record {
         mod::fire("board/tagsChanged",array(
             "taskID" => $this->id(),
             "deliverToClient" => true
-		));
-	}
-	
-	/**
-	 * Отмечена ли эта задача тэгом
-	 **/
-	public function tagExists($tagID) {
-	    return $this->tags()->eq("tagID",$tagID)->one()->exists();
-	}
-	
+        ));
+    }
+    
     /**
-	 * Обновляет тэг (добавляет-удаляет тэг автоматически)
-	 **/
-	public function updateTag($tagID,$value) {
-	    if($value) {
-	        $this->addTag($tagID);
-	    } else {
-	        $this->removeTag($tagID);
-	    }
-	}
+     * Отмечена ли эта задача тэгом
+     **/
+    public function tagExists($tagID) {
+        return $this->tags()->eq("tagID",$tagID)->one()->exists();
+    }
+    
+    /**
+     * Обновляет тэг (добавляет-удаляет тэг автоматически)
+     **/
+    public function updateTag($tagID,$value) {
+        if($value) {
+            $this->addTag($tagID);
+        } else {
+            $this->removeTag($tagID);
+        }
+    }
 
-	public function tryAutocomplete() {
+    public function tryAutocomplete() {
 
-		// Если задача не на проверке - выходим
-	    if($this->data("status") != TaskStatus::STATUS_CHECKOUT) {
-	        return;
-	    }
-	
-	    // Закрываем задачи у которых есть родители
-	    if($this->data("epicParentTask")) {
-	        $this->data("status",TaskStatus::STATUS_COMPLETED);
-	        $this->logCustom("Закрыто автоматически");
-	        return;
-	    }
-	    
-	    $days = $this->project()->data("completeAfter");
-	    if(!$days) {
-	        return;
-	    }
-	    
-	    $taskDays = (util::now()->date()->stamp() - $this->pdata("changed")->date()->stamp()) / 3600 / 24;
-	    if($taskDays >= $days) {
-	        $this->data("status",TaskStatus::STATUS_COMPLETED);
-	        $this->logCustom("Закрыто автоматически");
-	    }
-	
-	}
+        // Если задача не на проверке - выходим
+        if($this->data("status") != TaskStatus::STATUS_CHECKOUT) {
+            return;
+        }
+    
+        // Закрываем задачи у которых есть родители
+        if($this->data("epicParentTask")) {
+            $this->data("status",TaskStatus::STATUS_COMPLETED);
+            $this->logCustom("Закрыто автоматически");
+            return;
+        }
+        
+        $days = $this->project()->data("completeAfter");
+        if(!$days) {
+            return;
+        }
+        
+        $taskDays = (util::now()->date()->stamp() - $this->pdata("changed")->date()->stamp()) / 3600 / 24;
+        if($taskDays >= $days) {
+            $this->data("status",TaskStatus::STATUS_COMPLETED);
+            $this->logCustom("Закрыто автоматически");
+        }
+    
+    }
 
 }
