@@ -29,7 +29,6 @@ $container->begin();
     $input = helper("<input type='text' class='visibleField'/>");
     $input->attr("value", $date);
     $input->attr("placeholder", $placeholder);
-    //$input->attr("readonly", "readonly"); 
     $input->style("width",80);
     $hiddenInput = helper("<input type='hidden' value='{$value}' class='hiddenField' name='{$name}'/>");
     
@@ -43,7 +42,7 @@ $container->begin();
     $fastDayShifts = $widget->param("fastDayShifts");
     if($fastDayShifts){
         foreach($fastDayShifts as $dayShift => $title){
-            $tomorrow = \util::now()->shiftDay($dayShift)->notime()->num(); 
+            $tomorrow = \util::now()->shiftDay($dayShift)->date()->num(); 
             <span class='fast-date' >$title<input type='hidden' class="fast-date-val" value='{$tomorrow}'></span>    
         }
     }     

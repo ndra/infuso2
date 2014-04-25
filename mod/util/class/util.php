@@ -214,7 +214,7 @@ class Util {
      * Возвращает текущую дату
      **/
     public static function now() {
-        return \util_date::now();
+        return \Infuso\Util\Date::now();
     }
 
     /**
@@ -222,7 +222,7 @@ class Util {
      **/
     public static function date() {
         $args = func_get_args();
-        return call_user_func_array(array("util_date","get"),$args);
+        return call_user_func_array(array("Infuso\\Util\\Date","get"),$args);
     }
 
     /**

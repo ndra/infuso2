@@ -1,13 +1,45 @@
 <?
 
-class util_date extends mod_component {
+namespace Infuso\Util;
+use \Infuso\Core;
 
+class Date extends Core\Component {
 
-    private $format = "d.m.Y H:i:s";
+    /**
+     * Метка времени
+     **/
     private $time = null;
 
-    private $notime = null;
-    private $noyear = null;
+    private $timeEnabled = true;
+
+    /**
+     * Конструктор
+     **/
+    private function __construct($time,$m=1,$d=1,$h=0,$min=0,$s=0) {
+
+        $this->addBehaviour("Infuso\\Util\\Date\\Ru");
+
+        switch(func_num_args()) {
+            case 1:
+                // Числа интерпретируются как timestamp
+                if(intval($time).""==$time) {
+                    $this->time = intval($time);
+
+                // В противном случае попробуем распарсить строку
+                } else {
+                    $this->time = @strtotime($time);
+                }
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                $this->time = mktime($h,$min,$s,$m,$d,$time);
+                break;
+        }
+
+    }
     
     /**
      * Возвращает текущую дату
@@ -33,34 +65,6 @@ class util_date extends mod_component {
     }
 
     /**
-     * Конструктор
-     **/
-    private function __construct($time,$m=1,$d=1,$h=0,$min=0,$s=0) {
-    
-        switch(func_num_args()) {
-            case 1:
-                // Числа интерпретируются как timestamp
-                if(intval($time).""==$time) {
-                    $this->time = intval($time);
-
-                // В противном случае попробуем распарсить строку
-                } else {
-                    $this->time = @strtotime($time);
-                }
-                break;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                $this->time = mktime($h,$min,$s,$m,$d,$time);
-                break;
-        }
-
-
-    }
-
-    /**
      * Объект преобразуется в строку c mysql-представлением даты, например 2038-01-19 03:14:07
      */
     public function __toString() {
@@ -71,47 +75,12 @@ class util_date extends mod_component {
         return clone $this;
     }
 
+
     /**
-     * Возвращает текстовое значение времни
-     * Например, 12 февраля 2012 г. 12:35
+     * Алиас к функции text
      **/
-    public function text() {
-
-        $ret = "";
-        $date = @getdate($this->time);
-
-        $d = clone $this;
-
-
-        if($d->notime()->num()==util::now()->notime()->num()) {
-            $ret.= "сегодня ";
-        } elseif($d->notime()->num()==util::now()->shiftDay(-1)->notime()->num()) {
-            $ret.= "вчера ";
-        } else {
-
-            $months = array("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря");
-            $ret.= $date["mday"]." ".$months[$date["mon"]-1];
-
-            if(!$this->noyear) {
-                $ret.= " $date[year] г. ";
-            }
-        }
-
-        // Добавляем время
-        if(!$this->notime)
-            $ret.= $date["hours"].":".str_pad($date["minutes"],2,0,STR_PAD_LEFT);
-        return $ret;
-    }
-
-    public function txt() {
+    public final function txt() {
         return $this->text();
-    }
-
-    /**
-     * Возвращает числовое значение времени, например 30.12.20012
-     **/
-    public function num() {
-        return @date($this->format,$this->stamp());
     }
 
     /**
@@ -119,40 +88,21 @@ class util_date extends mod_component {
      * Убираем часы, минуты и секунды из таймстэмпа
      **/
     public function date() {
-        $this->notime = 1;
-        $this->format("d.m.Y");
+        $this->timeEnabled = false;
         $this->time = strtotime(date("Y-m-d", $this->time));
         return $this;
     }
 
-    /**
-     * Алиас к util_date::date()
-     **/
-    public function notime() {
-        return $this->date();
-    }
-
-    public function noyear() {
-        $this->noyear = 1;
-        return $this;
-    }
-
-    public function time() {
-        $this->notime = 1;
-        $this->format("H:i:s");
-        return $this->num();
-    }
-
-    public function format($format) {
-        $this->format = $format;
-        return $this;
-    }
 
     /**
      * Возвращет метку времени linux
      **/
     public function stamp() {
         return $this->time;
+    }
+
+    public function timeEnabled() {
+        return $this->timeEnabled;
     }
 
     /**
@@ -207,33 +157,11 @@ class util_date extends mod_component {
     }
 
     public function standart() {
-        return @date($this->notime ? "Y-m-d" : "Y-m-d H:i:s", $this->stamp());
-    }
-
-    public function left() {
-        $d = time()-$this->stamp();
-        $ret = "";
-        $ret.= self::duration($d);
-        $ret = $d>0 ? "$ret назад" : "через $ret";
-        return $ret;
-    }
-
-    public static function duration($d) {
-        $d = abs($d);
-        $minutes = floor($d/60);
-        $hours = floor($minutes/60);
-        $days = floor($hours/24);
-        $minutes%=60;
-        $hours%=24;
-        $ret = "";
-        if($days) $ret.= "$days д. ";
-        if(($days>0 && $days<4)||($days==0&$hours>0)) $ret.= "$hours ч. ";
-        if(!$days && $hours<3) $ret.= "$minutes мин. ";
-        return trim($ret);
+        return @date($this->timeEnabled() ? "Y-m-d H:i:s" : "Y-m-d", $this->stamp());
     }
 
     /**
-    * Возвращает год
+    * Возвращает год, четыре цифры
     **/
     public function year() {
         return @date("Y",$this->stamp());
@@ -247,7 +175,7 @@ class util_date extends mod_component {
     }
 
     /**
-    * Возвращает день
+    * Возвращает / устанавливает день
     **/
     public function day($day = null) {
     
@@ -344,35 +272,6 @@ class util_date extends mod_component {
             return $this;
         }
 
-    }
-
-    /**
-    * Возвращает месяц в текстовом виде
-    **/
-    public function monthTxt() {
-        $m = array(
-            "январь",
-            "февраль",
-            "март",
-            "апрель",
-            "май",
-            "июнь",
-            "июль",
-            "август",
-            "сентябрь",
-            "октябрь",
-            "ноябрь",
-            "декабрь",
-        );
-        return $m[$this->month()-1];
-    }
-
-    /**
-    * Возвращает фазу луны
-    **/
-    public function moonPhase() {
-        $ret = date_moon::phase($this->stamp());
-        var_export($ret);
     }
 
 }

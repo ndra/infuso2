@@ -40,7 +40,7 @@ class Date extends Field {
 	}
 
 	public function pvalue() {
-		return util::date($this->value())->notime();
+		return util::date($this->value())->date();
 	}
 
 	public function prepareValue($val) {

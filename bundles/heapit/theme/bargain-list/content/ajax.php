@@ -19,12 +19,17 @@
                 <tr>
                     <td><a href='{$bargain->url()}' >{$bargain->id()}</a></td>
                     
+                    // Время созвона
+                    
                     <td class='callTime' >
                         if(!$bargain->closed()) {
                             $h = helper("<span>");                        
-                            if(\util::now()->stamp() > $bargain->pdata("callTime")->stamp()) {
+                            if(\util::now()->date()->stamp() > $bargain->pdata("callTime")->stamp()) {
                                 $h->addClass("expired");
-                            }                
+                            }  
+                            if(\util::now()->date()->stamp() == $bargain->pdata("callTime")->stamp()) {
+                                $h->addClass("today");
+                            }    
                             $h->begin();
                                 echo $bargain->pdata("callTime")->left();
                             $h->end();
@@ -54,6 +59,9 @@
                             
                             $userpic = $comment->author()->userpic()->preview(16,16)->crop();
                             <img class='comment-author' src='{$userpic}' align='absmiddle' />
+                            
+                            <span class='date' >{$comment->pdata("datetime")->left()}</span>
+                            
                             echo $comment->data("text");
                         </td>
                     </tr>

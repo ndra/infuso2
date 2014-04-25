@@ -72,8 +72,14 @@
     }
     
     .comment {
+    
         font-size:11px;
         color:gray;
+        
+        .date {
+            margin-right: 10px;
+            font-style: italic;
+        }
     }
     
     .comment-author {
@@ -82,6 +88,12 @@
     
     .expired {
         background: red;
+        color: white;
+        padding:4px 8px;
+    }
+    
+    .today {
+        background: green;
         color: white;
         padding:4px 8px;
     }
