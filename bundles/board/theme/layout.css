@@ -1,15 +1,15 @@
 html,body {
 }
 
-.layout-s898twt16c {
+.layout-slpod3n5sa {
 
     table-layout:fixed;
-    width: 100%;
 
     & > tbody > tr > td {
         &.left {
             width:100%;
             height:100%;
+            
         }
         &.right {
             width:400px;
@@ -35,16 +35,4 @@ a {
         background: rgba(0,0,0,.4);
     }
 
-
-}
-
-.g-toolbar {
-    padding: 6px;
-    background: #ededed;
-}
-
-
-
-.g-input-long {
-    width: 400px !important;
 }

@@ -8,7 +8,7 @@ lib::modJSUI();
 
 exec("header");
    
-<table class='layout-slpod3n5sa' >
+<table class='layout-slpod3n5sa' style='border:1 solid red;' >
     <tr>
         <td class='left' >
             <div style='height:100%;overflow:auto;' >           
