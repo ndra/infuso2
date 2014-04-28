@@ -48,7 +48,8 @@ class Payment extends Base {
         $data["orgId"] = $p["data"]["orgId"];
         $data["date"] = $p["data"]["date"];
         $data["group"] = $p["data"]["group"];
-        $payment->data("status", $p["data"]["status"]); 
+        $data["status"] = $p["data"]["status"];
+        
         $payment = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Payment", $data);
         return $payment->url();
     }
