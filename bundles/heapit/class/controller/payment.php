@@ -48,7 +48,7 @@ class Payment extends Base {
         $data["orgId"] = $p["data"]["orgId"];
         $data["date"] = $p["data"]["date"];
         $data["group"] = $p["data"]["group"];
-
+        $payment->data("status", $p["data"]["status"]); 
         $payment = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Payment", $data);
         return $payment->url();
     }
@@ -71,7 +71,7 @@ class Payment extends Base {
         $payment->data("orgId", $p["data"]["orgId"]);
         $payment->data("date", $p["data"]["date"]);
         $payment->data("group", $p["data"]["group"]);
-
+        $payment->data("status", $p["data"]["status"]);    
         $amount = (int) $p["data"]["amount"];
 
         if(!$amount) {
@@ -83,7 +83,7 @@ class Payment extends Base {
             Core\Mod::msg("Месье пытается указать отрицательную сумму", 1);
             return;
         }
-
+        
         if($p["data"]["direction"] === "income") {
             $payment->data("income", $amount);
             $payment->data("expenditure", 0);
@@ -106,7 +106,8 @@ class Payment extends Base {
             $payments->eq("orgId", $p["orgId"]);
         }
         $payments->page($p["page"]);
-        $payments->desc("date");
+        $payments->asc("status");
+        $payments->desc("date", true);
         //$bargains->asc("lastComment", true);
         
         // Учитываем поиск

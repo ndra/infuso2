@@ -37,6 +37,15 @@
                 $w->fieldName("amount");
                 $w->value($payment->data("income") + $payment->data("expenditure"));
                 $w->exec();
+                <span style='margin-left:20px;'>
+                $statuses = \Infuso\Heapit\Model\Payment::enumStatuses();
+                foreach($statuses as $val => $label){
+                    $inject = $payment->data("status") == $val ? "checked" : "";
+                    $id = \util::id();
+                    <input name='status' value='{$val}' id='{$id}' type='radio' $inject >
+                    <label for='{$id}' style='margin-right:10px;' >$label</label>        
+                }
+                </span>
             </td>
         </tr> 
         
@@ -102,7 +111,7 @@
             <td></td>
             <td>
                 <br/>
-                <input type='submit' value='Создать' />
+                <input type='submit' value='{$payment->exists() ? "Сохранить" : "Создать"}' />
             </td>
         </tr>
     </table>

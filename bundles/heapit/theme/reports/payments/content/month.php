@@ -29,7 +29,6 @@ $income = array_sum($data["income"]);
 $incomeTotal = array_key_exists("income-total", $data) ? array_sum($data["income-total"]) : 0;
 $expenditure = array_sum($data["expenditure"]);
 $expenditureTotal = array_key_exists("expenditure-total", $data) ? array_sum($data["expenditure-total"]) : 0;
-
 <div class='h4icank8er' style='height:{$maxHeight+20}px;' >
 
     // Приход

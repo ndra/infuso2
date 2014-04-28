@@ -1,4 +1,4 @@
-.bargain-list-zbp7jn8x8s {
+.payment-list-m0hv68kxht {
 
     padding: 20px;
     
@@ -21,10 +21,23 @@
     
     td {
         padding: 5px 10px;
+        border: 1px solid #FFF;
+        &.paymentStatus-100 {
+            background: #e6be33;        
+        }
+        &.paymentStatus-200 {
+            background: #bbd633;        
+        }
     }
     
     tr:hover td {
         background: #ededed;
+        &.paymentStatus-200 {
+            background: #adc62c;        
+        }
+        &.paymentStatus-100 {
+            background: #d6b130;        
+        }
     }
     
 }

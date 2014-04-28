@@ -4,7 +4,10 @@ namespace Infuso\Heapit\Model;
 use \Infuso\Core;
 
 class Payment extends \Infuso\ActiveRecord\Record {
-
+    //планируется, высталвен счет,  оплачено 
+    const STATUS_PUSHED = 100;
+    const STATUS_PAYED = 200;
+    
     public static function recordTable() {
         return array(
             'name' => 'heapitPayment',
@@ -39,6 +42,13 @@ class Payment extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Дата платежа',
                     'default' => 'now()',
+                ), array(
+                    'name' => 'status',
+                    'type' => 'select',
+                    'values' => self::enumStatuses(),
+                    'editable' => '1',
+                    'label' => 'Причина отказа',
+                    'default' => 200
                 ), array(
                     'name' => 'group',
                     'type' => 'link',
@@ -76,5 +86,11 @@ class Payment extends \Infuso\ActiveRecord\Record {
     public function group() {
         return $this->pdata("group");
     }
-
+    
+    public function enumStatuses() {
+        return array(
+            self::STATUS_PUSHED => "Выставлен счет",
+            self::STATUS_PAYED => "Оплачено "
+        );    
+    }
 }

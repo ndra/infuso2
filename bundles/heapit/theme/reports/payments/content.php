@@ -19,7 +19,6 @@ $monthNames = array(
 );
 
 $payments = \Infuso\Heapit\Model\Payment::all();
-
 <div class='z5qk1csmtq' >
 
     $payments->groupBy("`year`, `month`, `group`");
@@ -50,7 +49,9 @@ $payments = \Infuso\Heapit\Model\Payment::all();
             $monthCount = sizeof($yearData);
             
             $avgMonthData = array();
-            foreach($yearData as $monthData) {
+            
+            foreach($yearData as $monthData) {    
+                //var_export($monthData);
                 foreach($monthData["income"] as $group => $amount) {
                     $avgMonthData["income"][$group] += $amount / $monthCount;
                     $avgMonthData["income-total"][$group] += $amount;
