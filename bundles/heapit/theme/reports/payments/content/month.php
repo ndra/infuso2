@@ -25,80 +25,84 @@ $colors = array(
     "#3B3EAC",
 );
 
-$income = array_sum($data["income"]);
-$incomeTotal = array_key_exists("income-total", $data) ? array_sum($data["income-total"]) : 0;
-$expenditure = array_sum($data["expenditure"]);
-$expenditureTotal = array_key_exists("expenditure-total", $data) ? array_sum($data["expenditure-total"]) : 0;
 <div class='h4icank8er' style='height:{$maxHeight+20}px;' >
 
-    // Приход
-
-    <div style='position:absolute;bottom:20px;width:45%;' >    
+    // Функция вывода данных по столбцу
+    $fn = function($data,$dataTotal,$dataPlan) use ($max,$maxHeight,$colors) {    
+    
+        $sum = $data ? array_sum($data) : 0;
+        $total = $dataTotal ? array_sum($dataTotal) : 0;
+    
+        if($sum) {
+            if($total) {
+                <div class='total' >{round($sum / 1000)} т./ мес.</div>
+                <div class='total' >&sum; {round($total / 1000)} т.</div>
+            } else {
+                <div class='total' >{round($sum / 1000)} т.</div>
+            }
+        }
         
-        if($incomeTotal) {
-            <div class='total' >{round($income / 1000)} т./ мес.</div>
-            <div class='total' >&sum; {round($incomeTotal / 1000)} т.</div>
-        } else {
-            <div class='total' >{round($income / 1000)} т.</div>
+        // Данные по плану
+        
+        if($dataPlan) {
+            foreach($dataPlan as $key => $val) {
+                $k = $val / $max;
+                $height = round($k * $maxHeight);
+                $h = helper("<div>");
+                $h->style("background", "#ededed");
+                $h->style("height", $height);
+                $h->style("width", "100%");
+                
+                $title = $key;
+                $title.= " ".$val." р.";            
+                $h->attr("title", $title);
+                $h->exec();            
+            }
         }
     
-        ksort($data["income"]);    
-        foreach($data["income"] as $key => $val) {
-            $k = $val / $max;
-            $percent = round($val / $income * 100, 2);
-            $height = round($k * $maxHeight);
-            $h = helper("<div>");
-            $h->style("background", $colors[$key]);
-            $h->style("height", $height);
-            $h->style("width", "100%");
-            
-            $title = \Infuso\Heapit\Model\PaymentGroup::get($key)->title();
-            $title.= " ".$val." р.";
-            if($data["income-total"]) {
-                $title.= " / ".$data["income-total"][$key]." р.";
-            }
-            $title.= " ".$percent."%";
-            $h->attr("title", $title);
-            $h->exec();            
+        // Данные по опдлаченным ссчетам
+    
+        if($data) {
+            ksort($data);            
+            foreach($data as $key => $val) {
+                $k = $val / $max;
+                $percent = round($val / $sum * 100, 2);
+                $height = round($k * $maxHeight);
+                $h = helper("<div>");
+                $h->style("background", $colors[$key]);
+                $h->style("height", $height);
+                $h->style("width", "100%");
+                
+                $title = \Infuso\Heapit\Model\PaymentGroup::get($key)->title();
+                $title.= " ".$val." р.";
+                if($dataTotal) {
+                    $title.= " / ".$dataTotal[$key]." р.";
+                }
+                $title.= " ".$percent."%";
+                $h->attr("title", $title);
+                $h->exec();            
+            }        
         }
+    
+    };
+
+    // Приход
+    <div style='position:absolute;bottom:20px;width:45%;' > 
+        $fn($data["income"],$data["income-total"],$data["income-plan"]);        
     </div>
     
-    // Расход
-    
-    <div style='position:absolute;bottom:20px;left:55%;width:40%;' >
-    
-        if($expenditureTotal) {
-            <div class='total' >-{round($expenditure / 1000)} т./ мес.</div>
-            <div class='total' >&sum; -{round($expenditureTotal / 1000)} т.</div>
-        } else {
-            <div class='total' >-{round($expenditure / 1000)} т.</div>
-        }
-    
-        ksort($data["expenditure"]);
-        foreach($data["expenditure"] as $key => $val) {
-            $k = $val / $max;
-            $percent = round($val / $expenditure * 100, 2);
-            $height = round($k * $maxHeight);
-            $h = helper("<div>");
-            $h->style("background", $colors[$key]);
-            $h->style("height", $height);
-            $h->style("width", "100%");
-            
-            $title = \Infuso\Heapit\Model\PaymentGroup::get($key)->title();
-            $title.= " ".$val." р.";
-            if($data["expenditure-total"]) {
-                $title.= " / ".$data["expenditure-total"][$key]." р.";
-            }
-            $title.= " ".$percent."%";
-            $h->attr("title", $title);
-            $h->exec();
-            
-        }      
-        
+    // Расход    
+    <div style='position:absolute;bottom:20px;left:55%;width:40%;' >    
+        $fn($data["expenditure"],$data["expenditure-total"],$data["expenditure-plan"]);        
     </div>
     
     // Прибыль
     
+    $income = $data["income"] ? array_sum($data["income"]) : 0;
+    $incomeTotal = array_key_exists("income-total", $data) ? array_sum($data["income-total"]) : 0;
+    $expenditure = $data["expenditure"] ? array_sum($data["expenditure"]) : 0;
+    $expenditureTotal = array_key_exists("expenditure-total", $data) ? array_sum($data["expenditure-total"]) : 0;
+        
     <div style='position:absolute;bottom:20px;left:45%;width:10%;' >    
         $profit = round($income - $expenditure);
         $profitTotal = round($incomeTotal - $expenditureTotal);
