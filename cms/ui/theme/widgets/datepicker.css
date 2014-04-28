@@ -1,13 +1,16 @@
 .datepicker-89z0fcfy09 {
     position: relative;
+    
     .fast-date {
         margin-left: 10px;
-        text-decoration: underline;
         cursor: pointer;
+        border-bottom: 1px dotted gray;
+        color:gray;
         &:hover {
-            text-decoration: none;
+            color: black;
         }
     }
+    
     @icon: "@{bundle}res/img/icons24/delete.png";
     .button {        
         position:absolute;
