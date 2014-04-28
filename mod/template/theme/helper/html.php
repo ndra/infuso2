@@ -1,5 +1,4 @@
 <? 
-
 if(!$tag) {
     throw new \Exception("Параметр \$tag не задан");
 }
