@@ -73,6 +73,11 @@ class Bargain extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Когда связаться',
                 ), array(
+                    'name' => 'paymentDate',
+                    'type' => 'date',
+                    'editable' => '1',
+                    'label' => 'Предпологаемая дата оплаты',
+                ), array(
                     'name' => 'lastComment',
                     'type' => 'datetime',
                     'default' => 'now()',

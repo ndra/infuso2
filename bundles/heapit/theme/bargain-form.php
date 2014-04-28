@@ -41,7 +41,14 @@
                 $w->fieldName("amount");
                 $w->value($bargain->data("amount"));
                 $w->exec();
-                //<input  type='text' name='amount' value='{e($bargain->data("amount"))}'>
+                
+                $w = new \Infuso\Cms\UI\Widgets\Datepicker;
+                $w->fieldName("paymentDate");
+                $w->clearButton();
+                $w->placeholder("Дата оплаты");
+                $w->value($bargain->data("paymentDate"));
+                $w->exec();
+                
             </td>
         </tr>
         <tr>

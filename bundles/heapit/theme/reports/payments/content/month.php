@@ -49,7 +49,7 @@ $colors = array(
                 $k = $val / $max;
                 $height = round($k * $maxHeight);
                 $h = helper("<div>");
-                $h->style("background", "#ededed");
+                $h->style("background", in_array($key, array("Планируемые доходы","Планируемые расходы")) ? "#ccc" : "#ededed");
                 $h->style("height", $height);
                 $h->style("width", "100%");
                 

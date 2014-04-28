@@ -36,6 +36,15 @@ $payments = \Infuso\Heapit\Model\Payment::all();
         $data[$row["year"]][$row["month"]]["income"][$row["group"]] = $row["sum"];
     }
     
+    // Данные по доходам (сделки)
+    $ipdata = \Infuso\Heapit\Model\Bargain::all()->copy()
+        ->groupBy("`year`, `month`")
+        ->eq("status", 200)
+        ->select("month(`paymentDate`) as month, year(`paymentDate`) as `year`, sum(`amount`) as `sum`");
+    foreach($ipdata as $row) {
+        $data[$row["year"]][$row["month"]]["income-plan"]["Сделки"] = $row["sum"];
+    }
+    
     // Данные по доходам (счета)
     $ipdata = $payments->copy()
         ->groupBy("`year`, `month`")
