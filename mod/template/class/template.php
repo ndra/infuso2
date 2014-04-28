@@ -286,7 +286,7 @@ class Template extends Generic {
     private function aexec($params) {
 
         // Запоминаем предыдущий шаблон
-        $last = self::$current;
+        $__last__ = self::$current;
 
         self::$current = $this->base() ? $this->processor()->template($this->base()) : $this;
 
@@ -315,7 +315,7 @@ class Template extends Generic {
 			echo "<!-- end of ".$this->template()." -->";
         }
 
-        self::$current = $last;
+        self::$current = $__last__;
 
     }
 
