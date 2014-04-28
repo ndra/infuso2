@@ -28,9 +28,10 @@
         <tr>
             <td><label>Описание сделки</label></td>
             <td>
-                <textarea name='description'>
-                    echo e($bargain->data("description"));
-                </textarea>
+                $w = new \Infuso\Cms\UI\Widgets\Textarea();
+                $w->fieldName("description");
+                $w->value($bargain->data("description"));
+                $w->exec();
             </td>
         </tr>
         <tr>
