@@ -17,14 +17,14 @@
         </thead>
         foreach($payments as $payment) {
             <tr>
-                <td><a href='{$payment->url()}' >{$payment->id()}</a></td>
-                <td><a href='{$payment->url()}' >{$payment->pdata("date")->num()}</a></td>
-                <td><a href='{$payment->url()}' >{$payment->org()->title()}</a></td>
+                <td class='id' ><a href='{$payment->url()}' >{$payment->id()}</a></td>
+                <td class='date' ><a href='{$payment->url()}' >{$payment->pdata("date")->num()}</a></td>
+                <td><b><a href='{$payment->org()->url()}' >{$payment->org()->title()}</a></b></td>
                 <td><a href='{$payment->url()}' >{$payment->data("description")}</a></td>
                 <td class="paymentStatus-{$payment->data(status)}"><a href='{$payment->url()}' >{$payment->pdata("status")}</a></td>
-                <td><a href='{$payment->url()}' >{$payment->data("income")}</a></td>
-                <td><a href='{$payment->url()}' >{$payment->data("expenditure")}</a></td>
-                <td><a href='{$payment->url()}' >{$payment->group()->title()}</a></td>
+                <td class='income' ><a href='{$payment->url()}' >{$payment->data("income") ?: ""}</a></td>
+                <td class='expenditure' ><a href='{$payment->url()}' >{$payment->data("expenditure") ?: ""}</a></td>
+                <td class='group' ><a href='{$payment->url()}' >{$payment->group()->title()}</a></td>
             </tr>
            
         }

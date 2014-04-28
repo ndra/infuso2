@@ -42,7 +42,11 @@ class Ru extends Core\Behaviour {
      * Возвращает числовое значение времени, например 30.12.20012
      **/
     public function num() {
-        return @date("d.m.Y H:i",$this->stamp());
+        if($this->timeEnabled()) {
+            return @date("d.m.Y H:i",$this->stamp());
+        } else {
+            return @date("d.m.Y",$this->stamp());
+        }
     }
 
     /**

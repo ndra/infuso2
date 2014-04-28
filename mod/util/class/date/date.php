@@ -21,14 +21,18 @@ class Date extends Core\Component {
 
         switch(func_num_args()) {
             case 1:
+            
                 // Числа интерпретируются как timestamp
+
                 if(intval($time).""==$time) {
                     $this->time = intval($time);
 
                 // В противном случае попробуем распарсить строку
+
                 } else {
                     $this->time = @strtotime($time);
                 }
+
                 break;
             case 2:
             case 3:

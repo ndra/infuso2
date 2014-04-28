@@ -33,10 +33,11 @@ class Date extends Field {
 	}
 
 	public function rvalue() {
-		if($this->value())
+		if($this->value()) {
 			return $this->pvalue()->num();
-		else
+		} else {
 			return "";
+		}
 	}
 
 	public function pvalue() {

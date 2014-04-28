@@ -41,8 +41,8 @@ $container->begin();
     $hiddenInput->exec();
     $fastDayShifts = $widget->param("fastDayShifts");
     if($fastDayShifts){
-        foreach($fastDayShifts as $dayShift => $title){
-            $tomorrow = \util::now()->shiftDay($dayShift)->date()->num(); 
+        foreach($fastDayShifts as $date => $title){
+            $tomorrow = \util::date($date)->num(); 
             <span class='fast-date' >$title<input type='hidden' class="fast-date-val" value='{$tomorrow}'></span>    
         }
     }     

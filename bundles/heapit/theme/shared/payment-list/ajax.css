@@ -8,6 +8,7 @@
     }
     
     thead {
+    
         tr:hover td {
             background: #fff;
         }
@@ -38,6 +39,26 @@
         &.paymentStatus-100 {
             background: #d6b130;        
         }
+    }
+    
+    .id, .date {
+        font-size:11px;
+        a {
+            color: gray;
+        }
+    }
+    
+    .income a {
+        color: green;
+    }
+    
+    .expenditure a {
+        color: red;
+    }
+    
+    .group a {
+        color: gray;
+        font-style: italic;
     }
     
 }
