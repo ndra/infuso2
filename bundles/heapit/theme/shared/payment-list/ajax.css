@@ -8,6 +8,7 @@
     }
     
     thead {
+    
         tr:hover td {
             background: #fff;
         }
@@ -25,6 +26,26 @@
     
     tr:hover td {
         background: #ededed;
+    }
+    
+    .id, .date {
+        font-size:11px;
+        a {
+            color: gray;
+        }
+    }
+    
+    .income a {
+        color: green;
+    }
+    
+    .expenditure a {
+        color: red;
+    }
+    
+    .group a {
+        color: gray;
+        font-style: italic;
     }
     
 }

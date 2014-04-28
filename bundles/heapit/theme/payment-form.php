@@ -23,8 +23,8 @@
             </td>
         </tr>
         <tr>
-            <td><label>Назначение платежа</label></td>
-            <td>
+            <td style='padding-bottom: 30px;'>Назначение платежа</td>
+            <td style='padding-bottom: 30px;' >
                 <textarea name='description'>
                     echo e($payment->data("description"));
                 </textarea>
@@ -102,7 +102,11 @@
             <td></td>
             <td>
                 <br/>
-                <input type='submit' value='Создать' />
+                $w = new \Infuso\Cms\UI\Widgets\Button();
+                $w->text($payment->exists() ? "Сохранить" : "Создать");
+                $w->attr("type", "submit");
+                $w->exec();
+                //<input type='submit' value='Создать' />
             </td>
         </tr>
     </table>
