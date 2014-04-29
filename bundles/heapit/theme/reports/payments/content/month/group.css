@@ -1,0 +1,47 @@
+.iuh5t5jrex {
+
+    background: green;     
+    color: black;
+    
+   
+    
+    h2 {
+        .g-header();
+    }
+    
+    .header {
+    
+        width:100%;
+        table-layout: fixed;
+        
+        td {
+            padding: 10px;
+            font-size:24px;
+        }
+    
+    }
+    
+    .payment {
+        width:100%;
+        
+        td {
+            padding: 5px 10px 3px 10px;
+        }
+        
+        .description {
+            font-size:12px;
+            opacity:.5;
+            padding-top:0;
+        }
+        
+        .date {
+            font-size:12px;
+            opacity:.5;
+        }
+        
+        tbody:hover tr {
+            background: rgba(0,0,0,.2);
+        }
+    }
+
+}

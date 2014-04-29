@@ -25,8 +25,8 @@ $colors = array(
     "#3B3EAC",
 );
 
-<div class='h4icank8er' style='height:{$maxHeight+20}px;' >
-
+<a href='{$href}' class='h4icank8er' style='height:{$maxHeight+20}px;' >
+ 
     // Функция вывода данных по столбцу
     $fn = function($data,$dataTotal,$dataPlan) use ($max,$maxHeight,$colors) {    
     
@@ -125,4 +125,4 @@ $colors = array(
     </div>
     
     <div class='month' >{$month}</div>
-</div>
+</a>

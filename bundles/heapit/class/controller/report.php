@@ -13,6 +13,13 @@ class Report extends Base {
         \tmp::exec("/heapit/reports/payments");
     }
 
+    public function index_paymentsMonth($p) {
+        \tmp::exec("/heapit/reports/payments-month", array(
+            "year" => $p["year"],
+            "month" => $p["month"],
+        ));
+    }
+
     public function index_clients() {
         \tmp::exec("/heapit/reports/clients");
     }

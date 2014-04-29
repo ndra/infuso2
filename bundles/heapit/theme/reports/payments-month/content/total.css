@@ -1,0 +1,40 @@
+.k0633ep90u {
+
+    width:100%;
+    table-layout: fixed;
+    
+    & > tbody > tr > td {
+        width: 33.33%;
+    }
+    
+    h2 {
+        .g-header();
+    }
+    
+    .group {
+        display:inline-block;
+        text-align:left;
+        margin-bottom:30px;
+        
+        td {
+            padding: 0 5px 10px;
+            text-align: center;
+            vertical-align:middle;
+        }
+        
+        .plan {
+            border-top: 1px solid #ededed;
+            padding-top:5px;
+            color:gray;
+            font-size: 11px;
+        }
+        
+    }
+    
+    .title {
+        color:gray;
+        font-size:11px;
+        margin-right:4px;
+    }
+
+}

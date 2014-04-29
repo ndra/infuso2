@@ -120,6 +120,10 @@ $payments = \Infuso\Heapit\Model\Payment::all();
                     "month" => $monthNames[$month],
                     "data" => $monthData,
                     "max" => $max,
+                    "href" => action("infuso/heapit/controller/report", "paymentsMonth", array(
+                        "month" => $month,
+                        "year" => $year,
+                    )),
                 ));
             }
         </div>
