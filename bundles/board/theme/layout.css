@@ -36,3 +36,14 @@ a {
     }
 
 }
+
+.g-toolbar {
+    padding: 6px;
+    background: #ededed;
+}
+
+
+
+.g-input-long {
+    width: 400px !important;
+}

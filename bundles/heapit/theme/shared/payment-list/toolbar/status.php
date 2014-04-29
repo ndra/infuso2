@@ -1,16 +1,15 @@
 <? 
 
-$years = \Infuso\Heapit\Model\Payment::all()->asc("date")->distinct("date", "year");
+$statuses = \Infuso\Heapit\Model\Payment::enumStatuses();
 
 <span class='year-select'>    
-$last = end($years);
-foreach($years as $year) {
+foreach($statuses as $val=>$title) {
     $id = \util::id();
-    $h = helper("<input value='{$year}' type='checkbox' id='{$id}' />");
+    $h = helper("<input value='{$val}' type='checkbox' id='{$id}' />");
     /*if($year == $last) {
         $h->attr("checked", "checked");
     }*/
     $h->exec();
-    <label for='{$id}' >{$year}</label>
+    <label for='{$id}' >{$title}</label>
 }
 </span>

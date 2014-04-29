@@ -1,0 +1,12 @@
+.task-list-rpu80rt4m0 {
+    position: relative;
+    height:100%;
+
+    & > .loader {
+        display: none;
+        position: absolute;
+        left: 50%;
+        margin-left: -110px;
+        top: ~"calc(50% - 170px)";
+    }
+}

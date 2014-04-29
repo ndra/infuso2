@@ -57,11 +57,15 @@ class Task extends \Infuso\Core\Controller {
 
             $tasks->joinByField("projectID");
             $tasks->like("text",$search)
-                ->orr()->like("board_project.title",$search)
+                ->orr()->like("Infuso\\Board\\Model\\Project.title",$search)
                 ->orr()->like("text",$search2)
-                ->orr()->like("board_project.title",$search2);
+                ->orr()->like("Infuso\\Board\\Model\\Project.title",$search2);
         }
-
+        
+        if(count($p["projects"])){
+            $tasks->eq("projectID", $p["projects"]);
+        }
+        
         if(($tag = trim($p["tag"])) && $tag!="*") {
             $tasks->useTag($tag);
         }
@@ -78,7 +82,7 @@ class Task extends \Infuso\Core\Controller {
         
         return array(
             "html" => $ret,
-            "total" => 0,
+            "total" => $tasks->pages(),
         );
                   
     }
