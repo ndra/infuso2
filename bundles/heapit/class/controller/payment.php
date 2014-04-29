@@ -110,7 +110,9 @@ class Payment extends Base {
         $payments->asc("status");
         $payments->desc("date", true);
         //$bargains->asc("lastComment", true);
-        
+        if(count($p["years"])){
+            $payments->eq("YEAR(date)", $p["years"]);    
+        }
         // Учитываем поиск
         $payments->search($p["search"]);
 
