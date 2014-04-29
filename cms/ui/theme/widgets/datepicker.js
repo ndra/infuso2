@@ -22,25 +22,43 @@ jQuery(function($){
         yearSuffix: ''};
     $.datepicker.setDefaults($.datepicker.regional['ru']);
     
-    $(".datepicker-89z0fcfy09").mod("init", function(){
+    $(".datepicker-89z0fcfy09").mod("init", function() {
+    
+        var lastValue = null;
+        
+        var fireChangeEvent = function() {
+            if(lastValue != inputHidden.val()) {
+                inputHidden.trigger("change");
+            }            
+            lastValue = inputHidden.val();
+        }
+    
         var input = $(this).find(".visibleField");
         var inputHidden = $(this).find(".hiddenField");
+        
+        input.on("input", fireChangeEvent);
+        
         input.datepicker({
             yearRange: "c-5:c+5",
             changeMonth: true,
             changeYear: true,
             altField: inputHidden,
-            altFormat: "yy-mm-dd" 
+            altFormat: "yy-mm-dd",
+            onSelect: fireChangeEvent
         });
         
         var button = $(this).find(".button");
         button.click(function(){
             input.val('');
             inputHidden.val('');    
+            fireChangeEvent();
         });
         
-        input.change(function(){
-            if (!$(this).val()) inputHidden.val('');
+        input.on("input", function(){
+            if (!$(this).val()) {
+                inputHidden.val('');
+                fireChangeEvent();
+            }
         });
         
         var fastDate = $(this).find(".fast-date");

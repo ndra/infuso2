@@ -6,6 +6,19 @@
         ->addClass("quicksearch")
         ->clearButton()
         ->exec();
+        
+    widget("\\infuso\\cms\\ui\\widgets\\datepicker")
+        ->clearButton()    
+        ->fieldName("from")    
+        ->placeholder("от")
+        ->exec();
+        
+    widget("\\infuso\\cms\\ui\\widgets\\datepicker")
+        ->clearButton()
+        ->placeholder("до")
+        ->fieldName("to")
+        ->value(\util::now()->shiftDay(14))
+        ->exec();
     
     exec("status");
         

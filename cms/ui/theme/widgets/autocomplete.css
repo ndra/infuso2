@@ -5,7 +5,7 @@
     
     input {
         .g-input();
-        padding: 9px;
+        margin:0 !important;
     }
     
     @icon: "@{bundle}res/img/icons24/dropdown.png";

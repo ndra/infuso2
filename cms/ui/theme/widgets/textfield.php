@@ -13,7 +13,7 @@ $containerStyles = array(
 $container = helper("<span class='x8zq1fi07zr' >");
 $container->begin();
 
-    $input = helper("<input type='text' />");
+    $input = helper("<input type='text' autocomplete='off' />");
     $input->attr("name", $widget->param("name"));
     $input->attr("value", $widget->param("value"));
     $input->attr("placeholder", $widget->param("placeholder"));    

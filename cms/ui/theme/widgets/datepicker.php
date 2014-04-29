@@ -4,7 +4,8 @@
 $date = "";
 $value = $widget->param("value");
 if($value) {
-    $date = \util::date($value)->date()->num();
+    $date = \util::date($value)->date();
+    $value = (string)\util::date($value)->date();
 }
 
 $placeholder = "Указать дату";

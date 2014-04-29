@@ -622,8 +622,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
     public function geq($key,$val) {
         $key = $this->normalizeColName($key);
-        $val = reflex_mysql::escape($val);
-        $this->where("$key>='$val'",$key);
+        $val = mod::service("db")->quote($val);
+        $this->where("{$key} >= {$val}",$key);
         return $this;
     }
 

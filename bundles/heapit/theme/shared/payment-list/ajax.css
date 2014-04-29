@@ -60,4 +60,11 @@
         font-style: italic;
     }
     
+    .total {
+        td {
+            font-weight: bold;
+            padding-top:20px;
+        }
+    }
+    
 }

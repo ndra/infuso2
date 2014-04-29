@@ -101,7 +101,7 @@ class Payment extends Base {
      * Возвращает html-код списка платежей
      **/
     public function post_search($p) {
-
+    
         $payments = \Infuso\Heapit\Model\Payment::all();
         if($p["orgId"]){
             $payments->eq("orgId", $p["orgId"]);
@@ -109,6 +109,15 @@ class Payment extends Base {
         $payments->page($p["page"]);
         $payments->asc("status");
         $payments->desc("date", true);
+        
+        if($p["from"]) {
+            $payments->geq("date", $p["from"]);
+        }
+        
+        if($p["to"]) {
+            $payments->leq("date", $p["to"]);
+        }
+        
         //$bargains->asc("lastComment", true);
         if(count($p["statuses"])){
             $payments->eq("status", $p["statuses"]);    

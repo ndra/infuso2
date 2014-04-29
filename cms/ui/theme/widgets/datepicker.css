@@ -1,5 +1,10 @@
 .datepicker-89z0fcfy09 {
+
     position: relative;
+    
+    input {
+        .g-input();
+    }
     
     .fast-date {
         margin-left: 10px;

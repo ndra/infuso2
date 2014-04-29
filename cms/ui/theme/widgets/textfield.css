@@ -6,6 +6,7 @@
     
     input {
         .g-input();
+        margin:0 !important;
     }
     
     @icon: "@{bundle}res/img/icons24/delete.png";
