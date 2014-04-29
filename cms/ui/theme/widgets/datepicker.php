@@ -4,7 +4,7 @@
 $date = "";
 $value = $widget->param("value");
 if($value) {
-    $date = \util::date($value)->date();
+    $date = \util::date($value)->date()->num();
     $value = (string)\util::date($value)->date();
 }
 
