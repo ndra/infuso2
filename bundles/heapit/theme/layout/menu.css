@@ -1,27 +1,27 @@
 .ncecpy3pn9 {
 
-    background: blue;
-    color: white;
+    color: white;    
     padding:10px;
     
     a {
         color:white;
+        padding:10px 15px;
     }
     
-    .item {
-        padding-right:7px;
+    .item {        
         text-decoration:none;
         font-size:18px;
+        &:hover {
+            text-decoration:underline;
+        }
+        &.active {
+            background: rgba(255,255,255,.7);
+            color:#006622;
+        }
     }
     
     .spacer {
-        padding-left: 10px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+        padding-left: 100px;
     }
     
     .me {

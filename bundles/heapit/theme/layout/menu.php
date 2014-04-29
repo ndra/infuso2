@@ -3,35 +3,57 @@
 <div class='ncecpy3pn9 gradient-pattern main-menu' >
 
     $menu = array(
-        (string) action("infuso\\heapit\\controller\\org") => "Контрагенты",
-        (string) action("infuso\\heapit\\controller\\org", "add") => "+",
-        
-        (string) action("infuso\\heapit\\controller\\bargain") => "Сделки",
-        (string) action("infuso\\heapit\\controller\\bargain", "add") => "+",
-        
-        (string) action("infuso\\heapit\\controller\\payment") => "Платежи",
-        (string) action("infuso\\heapit\\controller\\payment", "add") => "+",
-        
-        "s" => "spacer",
-        "p" => "spacer",
-        "a" => "spacer",
-        "c" => "spacer",
-        "e" => "spacer",
-        "r" => "spacer",
-        
-        (string) action("infuso\\heapit\\controller\\report") => "Отчеты",
-        (string) action("infuso\\heapit\\controller\\conf") => "Настройки",
+        array (
+            "url" => (string) action("infuso\\heapit\\controller\\org"),
+            "title" => "Контрагенты",
+            "code" => "orgs",
+        ), array (
+            "url" => (string) action("infuso\\heapit\\controller\\org", "add"),
+            "title" => "+",
+            "code" => "org-add",
+        ), array (
+            "url" => (string) action("infuso\\heapit\\controller\\bargain"),
+            "title" => "Сделки",
+            "code" => "bargains",
+        ), array (
+            "url" => (string) action("infuso\\heapit\\controller\\bargain", "add"),
+            "title" => "+",
+            "code" => "bargain-add",
+        ), array (
+            "url" => (string) action("infuso\\heapit\\controller\\payment"),
+            "title" => "Платежи",
+            "code" => "payments",
+        ), array (
+            "url" => (string) action("infuso\\heapit\\controller\\payment", "add"),
+            "title" => "+",
+            "code" => "payment-add",
+        ), array (
+            "spacer" => true,
+        ), array (
+            "url" => (string) action("infuso\\heapit\\controller\\report"),
+            "title" => "Отчеты",
+            "code" => "reports",
+        ), array (
+            "url" => (string) action("infuso\\heapit\\controller\\conf"),
+            "title" => "Настройки",
+            "code" => "conf",
+        ),
     );
     
-    foreach($menu as $key => $val) {
-        if($val == "spacer") {
-            <span class="spacer"></span> 
-        } else {
-            <a class='item' href='{$key}' >{$val}</a>
-            echo " ";    
+    foreach($menu as $item) {
+    
+        if($item["spacer"]) {
+            <span class="spacer" ></span> 
+        } else {    
+            $h = helper("<a class='item' href='{$item[url]}' >");
+            $h->param("content", $item["title"]);
+            if(tmp::param("main-menu") == $item["code"]) {
+                $h->addClass("active");
+            }
+            $h->exec();
         }
         
-    }
+     }
     
     <span class="logout" >Выход</span>
     

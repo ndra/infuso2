@@ -1,3 +1,11 @@
-.payment-toolabr-ah3hf8pqdk .year-select {
-    margin-right: 10px;    
+.year-select-tyt5o23yxj {    
+    
+    label {
+        margin-right: 10px;    
+    }
+    
+    input,label {
+        vertical-align: middle;
+    }
+    
 }
