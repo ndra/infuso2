@@ -84,8 +84,7 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 
 	            $params = array_merge($url->query(),$params);
 	            $params = array_merge($params,$route->pdata("params"));
-	            list($class,$action) = explode("/",$route->data("controller"));
-	            $action = mod_action::get($class,$action,$params);
+	            $action = Core\Action::get($route->className(),$route->action(),$params);
 	            $action->ar(get_class($route)."/".$route->id());
 	            return $action;
 	        }
@@ -123,7 +122,7 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 
 		// Если быстрый способ не сработал, перебираем все роуты и ищем подходящий
 	    foreach(self::allRoutes() as $route) {
-	        if($url = $route->testController($action)) {
+	        if($url = $route->actionToUrl($action)) {
 	            return $url;
             }
 	    }
