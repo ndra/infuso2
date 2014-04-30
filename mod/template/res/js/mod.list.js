@@ -1,67 +1,72 @@
+/**
+ * Плагин для работы со списками
+ * - Позволяет выделят один или несколько элементов списка.
+ * - ПОлучаеть массив id выделенных элементов
+ * -
+ **/
 jQuery.fn.list = function(param) {
 
-    var e = $(this);
-    
+    // Контейнер
+    var $e = $(this);
+
     /**
      * Создаем список
      **/
     if(param === undefined || typeof(param) === "object" ) {
-    
+
         if(!param) {
             param = {};
         }
-        
-        var e = $(this);
-        
+
+        // Сохраняет состояние выделения
         var keepSelection = function() {
-            var sel = e.list("selection");
+            var sel = $e.list("selection");
             jQuery.fn.list.keepSelection[param.keepSelection] = sel;
         }
-        
+
+        // Восстанавливает состояние выделения
 		var restoreSelection = function() {
 			var sel = jQuery.fn.list.keepSelection[param.keepSelection];
-	        e.find(".list-item").each(function() {
+	        $e.find(".list-item").each(function() {
 	            if($.inArray($(this).attr("data:id"),sel) !== -1) {
 	                $(this).addClass("selected");
 	            }
 	        });
         }
 
-        $(this).find(".list-item").mousedown(function() {
+        $e.find(".list-item").mousedown(function(event) {
+            if(!event.ctrlKey) {
+                $e.find(".list-item.selected").removeClass("selected");
+            }
             $(this).toggleClass("selected");
 			keepSelection();
-			e.trigger("listSelectionChanged",[{
-			    selection: e.list("selection")
+			$e.trigger("list/select",[{
+			    selection: $e.list("selection")
 			}]);
         });
-        
+
+        $e.attr("tabindex", 1);
+        $e.keydown(function(event) {
+            if(event.which == 38) {
+                $(this).list("prev");
+            }
+        });
+
         restoreSelection();
 
-        return e;
+        return $e;
     }
 
     if(param === "selection") {
         var ret = [];
-        e.find(".list-item.selected").each(function() {
+        $e.find(".list-item.selected").each(function() {
             ret.push($(this).attr("data:id"));
         });
         return ret;
     }
 
-    if(param === "keep-selection") {
-        var sel = e.mod().list("selection");
-        e.data("lsit-selection",sel);
-        return e;
-    }
-
-    if(param === "restore-selection") {
-        var sel = e.data("lsit-selection");
-        e.find(".list-item").each(function() {
-            if($.inArray($(this).attr("data:id",sel))) {
-                $(this).addClass("selected");
-            }
-        });
-        return e;
+    if(param === "prev") {
+        mod.msg("prev");
     }
 
 }

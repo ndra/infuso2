@@ -11,7 +11,14 @@
             }
             
             &.selected {
-                border:1px solid red;
+                background: #0099C6;
+                color: white;
+                a {
+                    color: white;
+                }
+                &:hover {
+                    background: darken(#0099C6,3);
+                }
             }
             
         }

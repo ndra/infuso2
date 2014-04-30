@@ -1,0 +1,15 @@
+.cjoesz8swu {
+
+    position: relative;
+
+    .loader {
+        width:100px;
+        height:100px;
+        background: red;
+        position: absolute;
+        left: 100px;
+        top: 100px;
+        display: none;
+    }
+
+}

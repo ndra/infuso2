@@ -9,17 +9,20 @@ $(function() {
             cmd:"infuso/cms/reflex/controller/getItems",
             collection:collection
         };
+        
+        $(".cjoesz8swu > .loader").show();
     
         mod.fire("reflex/beforeLoad",params);
         
         mod.call(params, function(ret) {
-            $(".cjoesz8swu").html(ret.html);
+            $(".cjoesz8swu .ajax").html(ret.html);
+            $(".cjoesz8swu > .loader").hide();
         });
     }
     
     load();
     
-    mod.on("reflex/refresh",load);
+    $(".cjoesz8swu").on("reflex/refresh", load);
     
     $(document).on("keydown",function(e) {
         if(e.keyCode == 116 && !e.ctrlKey) {
