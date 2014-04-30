@@ -30,6 +30,7 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 
 	/**
 	 * Возвращает коллекцию всех роутов
+	 * @todo сделать настраиваемым макс количество роутов для перебора
 	 **/
 	public static function allRoutes() {
 	    // Ограничение в 100 роутов нужно чтобы система не впала в кому в случае ошибки :)
@@ -42,15 +43,18 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 	public function urlToAction($url) {
 	
         // Пытаемся найти роут прямым запросом в базу
+        
 	    $route = self::routesForActiveDomain()->eq("url",$url->path())->one();
 	    if($route->exists()) {
 	        $params = $url->query();
 	        $params = array_merge($params,$route->pdata("params"));
 	        list($class,$action) = explode("/",$route->data("controller"));
-	        $action = mod_action::get($class,$action,$params);
+	        $action = \Infuso\Core\Action::get($class,$action,$params);
 	        $action->ar(get_class($route)."/".$route->id());
 	        return $action;
 	    }
+	    
+	    // Не удалось найти прямым запросом - будем перебирать
 
 	    foreach(self::allRoutes() as $route) {
 	    

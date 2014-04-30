@@ -302,7 +302,7 @@ class Route extends ActiveRecord\Record {
 	    
 	    if($dupes->count()) {
 	        if(!$this->data("suffix")) {
-	            $this->data("suffix",util::id(7));
+	            $this->data("suffix",\util::id(7));
 	        }
 			$this->data("url",$this->data("url")."-".$this->data("suffix"));
 	    }

@@ -6,7 +6,10 @@ $id = get_class($editor).":".$editor->itemID();
     $editor->templateEditForm()->exec();
     
     <div style='padding-left:200px;' >
-        <input type='submit' value='Сохранить' />
+        widget("\\infuso\\cms\\ui\\widgets\\button")
+            ->text("Сохранить")
+            ->attr("type", "submit")
+            ->exec();
     </div>
     
 </form>

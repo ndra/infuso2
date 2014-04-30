@@ -2,14 +2,14 @@
 
 <div class='f0rw8hlkvh' >
 
-    if($field->editable()) {
-        <textarea name='{$field->name()}' >
-            echo $value;
-        </textarea>
-    } else {
-        <textarea disabled>
-            echo $value;
-        </textarea>
+    $w = widget("\\infuso\\cms\\ui\\widgets\\textarea")
+        ->value($field->value())        
+        ->fieldName($field->name());
+        
+    if(!$field->editable()) {
+        $w->attr("disabled", true);
     }
+    
+    $w->exec();
 
 </div>

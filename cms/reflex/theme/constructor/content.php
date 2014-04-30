@@ -6,7 +6,10 @@
     $tmp->exec();
     
     <div style='padding-left:200px;padding-top:15px;' >
-        <input type='submit' value='Создать' />
+        widget("\\infuso\\cms\\ui\\widgets\\button")
+            ->text("Сохранить")
+            ->attr("type", "submit")
+            ->exec();
     </div>
 
 </form>

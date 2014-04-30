@@ -5,11 +5,13 @@ use Infuso\Core;
 use Infuso\ActiveRecord;
 
 /**
- * Модель домена модуля reflex
+ * Модель домена
  **/
- 
 class Domain extends ActiveRecord\Record {	
 
+	/**
+	 * Здесь будет лежать объект активного домена
+	 **/
 	private static $active = null;
 
 	public static function recordTable() {
@@ -33,21 +35,32 @@ class Domain extends ActiveRecord\Record {
 			    'id' => '9btfebxmv6qm50xp92jfvhjfv2xw5i',
 			    'name' => 'priority',
 			    'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
-			    'editable' => '0',
 			  ),
 			),
 		);
 	}
 
+	/**
+	 * Возвращает список доманов
+	 **/
 	public static function all() {
-		return \reflex::get(get_class())->asc("priority")->param("sort",true);
+		return \reflex::get(get_class())
+			->asc("priority")
+			->param("sort",true);
 	}
 	
+	/**
+	 * Возвращает домен по id
+	 **/
 	public static function get($id) {
-		return Core\Mod::service("ar")->get(get_class(),$id);
+		return Core\Mod::service("ar")
+			->get(get_class(),$id);
 	}
 
-	public function reflex_title() {
+	/**
+	 * Возвращает имя записи
+	 **/
+	public function recordTitle() {
 	
 	    if(!$this->exists()) {
 	        return "";
@@ -57,36 +70,52 @@ class Domain extends ActiveRecord\Record {
 		if(!$ret) {
 		    $ret = $this->firstDomain();
 		}
+		
 		if(!$ret) {
 		    $ret = "Домен:".$this->id();
 		}
+		
+		if($this->isActive()) {
+		    $ret.= " (текущий)";
+		}
+		
 		return $ret;
 	}
 
+	/**
+	 * Возвращает массив алиасов для данного домена
+	 **/
+	public function domainList() {
+		return \util::splitAndTrim($this->data("domains"),"\n");
+	}
+
+	/**
+	 * Возвращает активный домен
+	 **/
 	public function active() {
 		if(!self::$active) {
 		    self::$active = self::get(0);
-			$url = \mod_url::current()->domain();
 			foreach(self::all() as $domain) {
-			    foreach($domain->domainList() as $d) {
-			    	if(trim($d)==$url) {
-						self::$active = $domain;
-						break;
-					}
+			    if($domain->isActive()) {
+					self::$active = $domain;
+					break;
 				}
 			}
 		}
 		return self::$active;
 	}
-
-	public static function reflex_root() {
-		return array(
-		    self::all()->title("Домены")->param("tab","system"),
-		);
-	}
-
-	public function domainList() {
-		return util::splitAndTrim($this->data("domains"),"\n");
+	
+	/**
+	 * Возвращает признак активности этого домена
+	 **/
+	public function isActive() {
+		$currentDomain = \mod_url::current()->domain();
+	    foreach($this->domainList() as $domain) {
+	    	if(trim($domain) == $currentDomain) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public function firstDomain() {
@@ -94,7 +123,7 @@ class Domain extends ActiveRecord\Record {
 		return $ret[0];
 	}
 
-	public function reflex_url() {
+	public function recordUrl() {
 		$domains = $this->domainList();
 		return "http://".$domains[0];
 	}
