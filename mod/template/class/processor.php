@@ -22,6 +22,9 @@ class Processor extends Core\Component {
      **/
     private $ar = null;
     
+    /**
+     * Активный конвеер
+     **/
     private $conveyor = array();
     
     /**
@@ -224,10 +227,16 @@ class Processor extends Core\Component {
         ));
     }
     
+    /**
+     * Выводит шиблон хэдера
+     **/
     public function header() {
         $this->exec("/tmp/header");
     }
 
+    /**
+     * Выводит шиблон футера
+     **/
     public function footer() {
         echo "</body></html>";
     }

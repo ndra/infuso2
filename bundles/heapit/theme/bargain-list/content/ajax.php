@@ -17,7 +17,7 @@
         foreach($bargains as $bargain) {
             <tbody>
                 <tr>
-                    <td><a href='{$bargain->url()}' >{$bargain->id()}</a></td>
+                    <td><a href='{$bargain->url()}' target='_blank' >{$bargain->id()}</a></td>
                     
                     // Время созвона
                     
@@ -35,10 +35,20 @@
                             $h->end();
                         }
                     </td>
-                                    
-                    <td class='org' ><a href='{$bargain->org()->url()}' >{$bargain->org()->title()}</a></td>
-                    <td><a href='{$bargain->url()}' >{$bargain->data("description")}</a></td>
+                    
+                    // Организация                
+                    <td class='org' >
+                        <a href='{$bargain->org()->url()}' target='_blank' >{$bargain->org()->title()}</a>
+                    </td>
+                    
+                    // Описание сделки
+                    <td>
+                        <a href='{$bargain->url()}' target='_blank' >{$bargain->data("description")}</a>
+                    </td>
+                    
+                    // Сумма
                     <td>{$bargain->data("amount")}</td>
+                    
                     <td>
                         echo $bargain->pdata("status");
                         if($bargain->data("status") == \Infuso\Heapit\Model\Bargain::STATUS_REFUSAL) {

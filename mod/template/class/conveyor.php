@@ -200,6 +200,7 @@ class Conveyor extends Core\Component {
     
     /**
      * Выполняет конвеер и генерирует данные для ajax
+     * @todo добавить вывод одиночных css и js, подключать скрипты инлайном как и css
      **/
     public function getContentForAjax() {
 
@@ -249,7 +250,9 @@ class Conveyor extends Core\Component {
         // Упакованные css
         $packCss = Render::packIncludes($packCss,"css");
         if($packCss) {
-            $head.= "<link rel='stylesheet' type='text/css' href='$packCss' />\n";
+			$head.= "<style type='text/css'>";
+			$head.= Core\File::get($packCss)->data();
+			$head.= "</style>";
         }
 
         // Одиночные js

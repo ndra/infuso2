@@ -3,7 +3,7 @@ $(function() {
     var load = function() {
         var loader = $(".od655esqwh .loader");
         var itemsList = $(".od655esqwh .items");
-        itemsList.html("");
+        //itemsList.html("");
         loader.show();
         var data = {};
         mod.fire("beforeLoadCollection", data);
@@ -20,6 +20,8 @@ $(function() {
     }
     
     mod.on("collectionFilterChanged",load);
+    
+    $(window).on("focus", load);
     
     setTimeout(load,0);
 

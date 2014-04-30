@@ -3,7 +3,6 @@ $(function() {
     var load = function() {
         var loader = $(".ro33jkjt9t .loader");
         var itemsList = $(".ro33jkjt9t .items");
-        itemsList.html("");
         loader.show();
         var data = {};
         mod.fire("beforeLoadOrgs", data);
@@ -20,6 +19,7 @@ $(function() {
     }
     
     mod.on("orgFilterChanged",load);
+    $(window).on("focus", load);
     
     setTimeout(load,0);
 

@@ -11,6 +11,7 @@
             "url" => (string) action("infuso\\heapit\\controller\\org", "add"),
             "title" => "+",
             "code" => "org-add",
+            "newtab" => true,
         ), array (
             "url" => (string) action("infuso\\heapit\\controller\\bargain"),
             "title" => "Сделки",
@@ -19,6 +20,7 @@
             "url" => (string) action("infuso\\heapit\\controller\\bargain", "add"),
             "title" => "+",
             "code" => "bargain-add",
+            "newtab" => true,
         ), array (
             "url" => (string) action("infuso\\heapit\\controller\\payment"),
             "title" => "Платежи",
@@ -27,16 +29,19 @@
             "url" => (string) action("infuso\\heapit\\controller\\payment", "add"),
             "title" => "+",
             "code" => "payment-add",
+            "newtab" => true,
         ), array (
             "spacer" => true,
         ), array (
             "url" => (string) action("infuso\\heapit\\controller\\report"),
             "title" => "Отчеты",
             "code" => "reports",
+            "newtab" => true,
         ), array (
             "url" => (string) action("infuso\\heapit\\controller\\conf"),
             "title" => "Настройки",
             "code" => "conf",
+            "newtab" => true,
         ),
     );
     
@@ -50,6 +55,11 @@
             if(tmp::param("main-menu") == $item["code"]) {
                 $h->addClass("active");
             }
+            
+            if($item["newtab"]) {
+                $h->attr("target", "_blank");
+            }
+            
             $h->exec();
         }
         

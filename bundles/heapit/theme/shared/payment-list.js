@@ -3,7 +3,6 @@ $(function() {
     var load = function() {
         var loader = $(".payments-list-j5mafyccpm .loader");
         var itemsList = $(".payments-list-j5mafyccpm .items");
-        itemsList.html("");
         loader.show();
         var data = {};
         mod.fire("beforeLoadCollection", data);
@@ -20,6 +19,7 @@ $(function() {
     }
     
     mod.on("collectionFilterChanged",load);
+    $(window).on("focus", load);
     
     setTimeout(load,0);
 

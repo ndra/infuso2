@@ -82,5 +82,9 @@ function helper($str) {
 	return tmp::helper($str);
 }
 
+function title($title) {
+	tmp::param("head/title", $title);
+}
+
 
 

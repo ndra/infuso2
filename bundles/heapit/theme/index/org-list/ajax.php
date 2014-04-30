@@ -16,7 +16,7 @@
                     }
                     
                     <div class='item $icon' >
-                        <a href='{$org->url()}' >{$org->title()}</a>
+                        <a href='{$org->url()}' target='_blank' >{$org->title()}</a>
                     </div>
                 
                 </td>
@@ -27,7 +27,7 @@
                 
                 <td>
                     $email = $org->data("email");
-                    <a href='mailto:{$email}' >{$email}</a>
+                    <a href='mailto:{$email}' target='_blank' >{$email}</a>
                 </td>
             
             </tr>
@@ -35,10 +35,10 @@
             <tr>
                 <td colspan='3' class='links' >
                     foreach($org->employees() as $employee) {
-                        <a href='{$employee->url()}' >{$employee->title()}</a>
+                        <a href='{$employee->url()}' target='_blank' >{$employee->title()}</a>
                     }
                     foreach($org->orgs() as $employee) {
-                        <a href='{$employee->url()}' >{$employee->title()}</a>
+                        <a href='{$employee->url()}' target='_blank' >{$employee->title()}</a>
                     }
                 </td>
             </tr>
