@@ -41,15 +41,14 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 	 * url => action
 	 **/
 	public function urlToAction($url) {
-	
+
         // Пытаемся найти роут прямым запросом в базу
         
 	    $route = self::routesForActiveDomain()->eq("url",$url->path())->one();
 	    if($route->exists()) {
 	        $params = $url->query();
 	        $params = array_merge($params,$route->pdata("params"));
-	        list($class,$action) = explode("/",$route->data("controller"));
-	        $action = \Infuso\Core\Action::get($class,$action,$params);
+	        $action = \Infuso\Core\Action::get($route->className(),$route->action(),$params);
 	        $action->ar(get_class($route)."/".$route->id());
 	        return $action;
 	    }
@@ -113,9 +112,11 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 		// Пытаемся получить url по запросу в базу
 		// Это сработет для статических url, без параметров
 		$seek = $action->hash();
+
 	    $route = self::routesForActiveDomain()->eq("seek",$seek)->one();
+
 	    if($route->exists()) {
-	        if($url = $route->testController($action)) {
+	        if($url = $route->actionToUrl($action)) {
 				return $url;
 			}
         }

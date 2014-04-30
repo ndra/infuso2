@@ -9,11 +9,17 @@ class Action extends Component {
     private $ar = "";
 
     public function __construct($className=null,$action=null,$params = array()) {
+
+        // Переводим в нижний регистр имя класса и метод
+        $className = strtolower($className);
+        $action = strtolower($action);
     
         if(!trim($action)) {
             $action = "index";
         }
+
         $this->action = $action;
+
         $this->className = $className;
         
         if($params) {
@@ -79,16 +85,15 @@ class Action extends Component {
      * */
     public function hash() {
 
-        $controller = $this;
-        $seek = $controller->className();
-        if($a = $controller->action()) {
-            $seek.= "/".$controller->action();
+
+        $seek = $this->className();
+        if($a = $this->action()) {
+            $seek.= "/".$this->action();
         }
             
-        $params = $controller->params();
-
-        foreach($params as $key=>$val) {
-            $params[$key] = $val."";
+        $params = $this->params();
+        foreach($params as $key => $val) {
+            $params[$key] = (string) $val;
         }
 
         sort($params);

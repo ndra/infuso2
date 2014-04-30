@@ -19,9 +19,9 @@ class service extends \infuso\core\service {
 	    }
 	}
 
-    public final function forwardTest($url) {
-    
-        core\profiler::beginOperation("url","forward",$url);
+    public final function urlToActionNocache($url) {
+
+        Core\profiler::beginOperation("url","forward",$url);
 
         if(is_string($url)) {
             $url = mod_url::get($url);
@@ -35,11 +35,14 @@ class service extends \infuso\core\service {
         $routers = core\mod::service("classmap")->classmap("routes");
         
         foreach($routers as $router) {
-            if($callback = call_user_func(array($router,"urlToAction"),$url)) {
-                \infuso\core\profiler::endOperation();
-                return $callback;
+            if($action = call_user_func(array($router,"urlToAction"),$url)) {
+                Core\Profiler::endOperation();
+                return $action;
             }
         }
+
+        Core\Profiler::endOperation();
+        return new Action();
     }
 
 	/**
@@ -52,16 +55,16 @@ class service extends \infuso\core\service {
 
         if(!$serializedAction) {
         
-            $action = $this->forwardTest($url);
-            if($action) {
-                $serializedAction = json_encode(array(
-					$action->className(),
-					$action->action(),
-					$action->params(),
-					$action->ar(),
-				));
-                Core\Mod::Service("cache")->set($key,$serializedAction);
-            }
+            $action = $this->urlToActionNocache($url);
+
+            $serializedAction = json_encode(array(
+				$action->className(),
+				$action->action(),
+				$action->params(),
+				$action->ar(),
+			));
+            Core\Mod::Service("cache")->set($key,$serializedAction);
+
             return $action;
 
         } else {
@@ -99,7 +102,7 @@ class service extends \infuso\core\service {
         }
 
 
-        $url = $this->urlWithoutCache($action);
+        $url = $this->actionToUrlNocache($action);
 
         if(true) {
             Core\Mod::service("cache")->set($hash,$url);
@@ -115,10 +118,9 @@ class service extends \infuso\core\service {
      * Возвращает url экшна
      * результат не кэшируется
      **/
-    private final function urlWithoutCache($action) {
-    
+    public function actionToUrlNocache($action) {
+
         $routes = Core\Mod::service("classmap")->classmap("routes");
-    
         foreach($routes as $router) {
             if($url = call_user_func(array($router,"actionToUrl"),$action)) {
                 return $url;

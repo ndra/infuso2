@@ -32,16 +32,22 @@ class Route extends ActiveRecord\Record {
 		      'label' => 'Адрес url',
 		      'length' => '100',
 		    ), array (
-		      'name' => 'controller',
+		      'name' => 'className',
 		      'type' => 'v324-89xr-24nk-0z30-r243',
 		      'editable' => '1',
-		      'label' => 'Контроллер',
+		      'label' => 'className',
+		      'length' => '100',
+		    ), array (
+		      'name' => 'action',
+		      'type' => 'v324-89xr-24nk-0z30-r243',
+		      'editable' => '1',
+		      'label' => 'action',
 		      'length' => '100',
 		    ), array (
 		      'name' => 'params',
 		      'type' => 'puhj-w9sn-c10t-85bt-8e67',
 		      'editable' => '1',
-		      'label' => 'Дополнительные параметры контроллера',
+		      'label' => 'Параметры контроллера',
 		    ), array (
 		      'name' => 'priority',
 		      'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
@@ -70,18 +76,6 @@ class Route extends ActiveRecord\Record {
 	}
 
 	public function recordTitle() {
-		return $this->data("url");
-	}
-
-	public function reflex_meta() {
-		return true;
-	}
-	
-	public function reflex_route() {
-		return false;
-	}
-	
-	public function reflex_url() {
 		return $this->data("url");
 	}
 
@@ -153,12 +147,19 @@ class Route extends ActiveRecord\Record {
 	}
 
 	/**
-	 * Возвращает экшн (mod_action), связанный с данным роутом
+	 * Возвращает экшн (\Infuso\Core\Action), связанный с данным роутом
 	 **/
-	public function action() {
-		list($class,$action) = explode("/",$this->data("controller"));
-		return Core\Action::get($class,$action,$this->pdata("params"));
+	public function actionObject() {
+		return Core\Action::get($this->className(),$this->action(),$this->pdata("params"));
 	}
+
+    public function className() {
+        return $this->data("className");
+    }
+
+    public function action() {
+        return $this->data("action");
+    }
 
 	/**
 	 * Проверяет, может ли роут построить урл для данного экшна
@@ -166,40 +167,41 @@ class Route extends ActiveRecord\Record {
 	 * - Чтобы класс и экшн совпадал
 	 * - Чтобы совпадал набор параметров
 	 * - Чтобы параметры экшна прошли режекс роута
+	 * В случае успеха возвращает строку с url
+	 * В противном случае возвращает false
 	 **/
-	public function testController($controller) {
-
-	    list($class,$action) = explode("/",$this->data("controller"));
+	public function actionToUrl($action) {
 
         // Первым делом сравниваем класс и метод
 
-	    if($class != $controller->className()) {
+	    if($this->className() != $action->className()) {
 	        return;
         }
 
-	    if($action != $controller->action()) {
+	    if($this->action() != $action->action()) {
 	        return;
         }
 
         // Проверяем, чтобы были одинаковые наборы параметров
 	    $params1 = array_keys($this->regex());
-	    $params2 = array_keys($controller->params());
+	    $params2 = array_keys($action->params());
 	    sort($params1);
 	    sort($params2);
-	    
-	    if(serialize($params1)!=serialize($params2)) {
+	    if(serialize($params1) != serialize($params2)) {
 	        return false;
 		}
 
+        // Проверяем, проходят ли параметры экшна реджексы url
 	    $regex = $this->regex();
-	    foreach($controller->params() as $key=>$val) {
+	    foreach($action->params() as $key => $val) {
 	        if(!preg_match($regex[$key],$val)) {
 	            return false;
             }
         }
 
+        // Заменяем реджексы в url на значения параметров
 	    $ret = $this->data("url");
-        foreach($controller->params() as $key=>$val) {
+        foreach($action->params() as $key => $val) {
             $ret = preg_replace("/\<$key\:.*?\>/s",$val,$ret);
         }
 
@@ -213,7 +215,7 @@ class Route extends ActiveRecord\Record {
 	
 	    // Если у роута нет параметров, расчитываем индекс для быстрого поиска
 	    if(!$this->parametric()) {
-	        $seek = $this->action()->hash();
+	        $seek = $this->actionObject()->hash();
 	        $this->data("seek",$seek);
 	    } else { // Если у роута есть параметры, очищаем индекс
 	        $this->data("seek","");
@@ -222,13 +224,6 @@ class Route extends ActiveRecord\Record {
 	}
 
 	public function beforeStore() {
-
-		/*if(!$this->data("hash")) {
-			if(!preg_match("/^([a-z0-9\_]+)\/([a-z0-9\_]+)$/i",$this->data("controller"))) {
-			    Core\Mod::msg("Неверный формат контроллера. Используйте формат class_name/action",1);
-			    return false;
-			}
-		} */
 
 	    // Для метаданных обрабатываем урл дополнительно
 	    $this->normalizeUrl();
@@ -240,6 +235,24 @@ class Route extends ActiveRecord\Record {
 	        $this->data("hash",get_class($this->item()).":".$this->item()->id());
 	        $this->data("priority",-10);
 	    }
+
+        $className = $this->data("className");
+        $className = strtr($className, array('/' => '\\'));
+        $className = trim($className,'\\ ');
+        $this->data("className", $className);
+
+		if(!preg_match("/^[a-z0-9\_\\\\]+$/",$this->data("className"))) {
+		    Core\Mod::msg("Недопустимое имя класса. Можно использовать маленькие будкы, цифры, подчеркивание и слэши неймспейсов",1);
+		    return false;
+		}
+
+        $action = trim($this->data("action"));
+        $this->data("action", $action);
+
+        if(!preg_match("/^[a-z0-9\_]+$/",$this->data("action"))) {
+		    Core\Mod::msg("Недопустимое имя экшна. Можно использовать маленькие будкы, цифры и подчеркивание",1);
+		    return false;
+		}
 
 		$this->updateSeekHash();
 

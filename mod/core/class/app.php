@@ -43,6 +43,8 @@ class App {
 	 * Подключает жизненно важные классы
 	 **/
 	public function includeCoreClasses() {
+
+        include("../appfn.php");
 	
 		include("profiler.php");
 		include("component.php");
@@ -234,7 +236,7 @@ class App {
         	Profiler::addMilestone("before action sys");
         }
 
-	    if($action) {
+	    if($action->exists()) {
 			$action->exec();
 			Profiler::addMilestone("exec");
 	    } else {

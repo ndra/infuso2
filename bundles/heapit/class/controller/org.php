@@ -9,6 +9,11 @@ class Org extends Base {
         $this->app()->tmp()->exec("/heapit/index");
     }
 
+    public function index_test() {
+        $action = Core\Action::get("infuso\\heapit\\cOntroller\\org", "index");
+        echo service("route")->actionToUrlNocache($action);
+    }
+
     public function index_add() {
         $this->app()->tmp()->exec("/heapit/org-new");
     }
