@@ -3,13 +3,13 @@
 /**
  * Роут для стандартных урл
  **/
-class mod_route_default extends mod_route {
+class mod_route_default extends \Infuso\Core\Route {
 
 	public function priority() {
 		return -1000;
 	}
 
-	public function forward($url) {
+	public function urlToAction($url) {
 	
 		$segments = explode("/",trim($url->path(),"/"));
 		$classmap = mod::service("classmap");
@@ -43,9 +43,9 @@ class mod_route_default extends mod_route {
 		
 	}
 
-	public function backward($controller) {
-		$ret = "/".strtr($controller->className(),array("\\" => "/"))."/".$controller->action()."/";
-		foreach($controller->params() as $key=>$val) {
+	public function actionToUrl($action) {
+		$ret = "/".strtr($action->className(),array("\\" => "/"))."/".$action->action()."/";
+		foreach($action->params() as $key => $val) {
 		    $ret.= "$key/$val/";
 		}
 		return $ret;

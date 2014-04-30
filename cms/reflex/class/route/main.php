@@ -8,10 +8,12 @@ use Infuso\Core;
  * Отвечает за то что мы видем в каталоге в разделе «Роуты»
  **/
 
-class Main extends \mod_route implements Core\Handler {
+class Main extends \Infuso\Core\Route implements Core\Handler {
 
 	private static $n = 0;
+	
 	private static $reg = array();
+	
 	private static $keys = array();
 
 	public function priority() {
@@ -37,7 +39,7 @@ class Main extends \mod_route implements Core\Handler {
 	/**
 	 * url => action
 	 **/
-	public function forward($url) {
+	public function urlToAction($url) {
 	
         // Пытаемся найти роут прямым запросом в базу
 	    $route = self::routesForActiveDomain()->eq("url",$url->path())->one();
@@ -102,21 +104,21 @@ class Main extends \mod_route implements Core\Handler {
 	 * Отображение action => url
 	 * Используется системой при построении url
 	 **/
-	public function backward($controller) {
+	public function actionToUrl($action) {
 	
 		// Пытаемся получить url по запросу в базу
 		// Это сработет для статических url, без параметров
-		$seek = $controller->hash();
+		$seek = $action->hash();
 	    $route = self::routesForActiveDomain()->eq("seek",$seek)->one();
 	    if($route->exists()) {
-	        if($url=$route->testController($controller)) {
-	            return $url;
-             }
+	        if($url = $route->testController($action)) {
+				return $url;
+			}
         }
 
 		// Если быстрый способ не сработал, перебираем все роуты и ищем подходящий
 	    foreach(self::allRoutes() as $route) {
-	        if($url = $route->testController($controller)) {
+	        if($url = $route->testController($action)) {
 	            return $url;
             }
 	    }
@@ -126,6 +128,7 @@ class Main extends \mod_route implements Core\Handler {
 	 * Вызывается до старта контроллера
 	 * Если вызван метод className::item класса, наследуемого от reflex,
 	 * то устанавливам текущий объект action::ar()
+	 * @todo сделать же чтобы работало да
 	 **/
 	public static function on_mod_beforeAction($p) {
 

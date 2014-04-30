@@ -181,59 +181,12 @@ class Action extends Component {
         return array($obj,"indexFailed");
     }
 
-    public function all() {
-        $map = mod::service("classmap")->classmap("routes");
-        return $map;
-    }
-
-    /**
-     * @return Возвращает url экшна
-     * url Кэшируется на сутки
-     * @todo сделать настройки кэширвоания url
-     **/
-    public final function url() {
-
-        profiler::beginOperation("url","build",$this->canonical());
-
-        if(true) {
-
-            // Урл кэшируются на день
-            $hash = "action-url:".$this->hash().ceil(time()/3600/24);
-
-            if($url = mod::service("cache")->get($hash)) {
-                profiler::endOperation();
-                return $url;
-            }
-        }
-
-
-        $url = $this->urlWithoutCache();
-
-        //if(conf::get("mod:cacheURL")) {
-        if(true) {
-            mod::service("cache")->set($hash,$url);
-        }
-
-        profiler::endOperation();
-
-        return $url;
-
-    }
-
     public function __toString() {
         return $this->url();
     }
-
-    /**
-     * Возвращает url экшна
-     * результат не кэшируется
-     **/
-    private final function urlWithoutCache() {
-        foreach(self::all() as $router) {
-            if($url = call_user_func(array($router,"backward"),$this)) {
-                return $url;
-            }
-        }
+    
+    public function url() {
+        return $this->app()->service("route")->actionToURL($this);
     }
 
     public function redirect() {

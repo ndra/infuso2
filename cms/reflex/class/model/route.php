@@ -69,11 +69,7 @@ class Route extends ActiveRecord\Record {
 		);
 	}
 
-	public static function reflex_root() {
-	    return self::all()->title("Роуты")->param("sort",true)->param("tab","system");
-	}
-
-	public function reflex_title() {
+	public function recordTitle() {
 		return $this->data("url");
 	}
 
@@ -107,11 +103,13 @@ class Route extends ActiveRecord\Record {
         	return self::all()->eq("hash",$param)->one();
 		}
 		
-		Throw new \Rxception();
+		Throw new \Exception();
 		
 	}
 
-	// Возвращает объект, к которому прикреплен данный роут
+	/**
+	 * Возвращает объект, к которому прикреплен данный роут
+	 **/
 	public function item() {
 	    list($class,$id) = explode(":",$this->data("hash"));
 	    return Core\Mod::service("ar")->get($class,$id);
@@ -175,7 +173,7 @@ class Route extends ActiveRecord\Record {
 
         // Первым делом сравниваем класс и метод
 
-	    if($class!=$controller->className()) {
+	    if($class != $controller->className()) {
 	        return;
         }
 
@@ -184,7 +182,6 @@ class Route extends ActiveRecord\Record {
         }
 
         // Проверяем, чтобы были одинаковые наборы параметров
-
 	    $params1 = array_keys($this->regex());
 	    $params2 = array_keys($controller->params());
 	    sort($params1);
@@ -226,12 +223,12 @@ class Route extends ActiveRecord\Record {
 
 	public function beforeStore() {
 
-		if(!$this->data("hash")) {
+		/*if(!$this->data("hash")) {
 			if(!preg_match("/^([a-z0-9\_]+)\/([a-z0-9\_]+)$/i",$this->data("controller"))) {
 			    Core\Mod::msg("Неверный формат контроллера. Используйте формат class_name/action",1);
 			    return false;
 			}
-		}
+		} */
 
 	    // Для метаданных обрабатываем урл дополнительно
 	    $this->normalizeUrl();

@@ -1,13 +1,14 @@
 <?
 
-abstract class mod_route {
+namespace Infuso\Core;
+abstract class Route {
 
 	public function priority() {
 		return 0;
 	}
 
-	abstract public function forward($url);
+	abstract public function urlToAction($url);
 
-	abstract public function backward($controller);
+	abstract public function actionToUrl($action);
 
 }

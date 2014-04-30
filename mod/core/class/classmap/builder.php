@@ -266,7 +266,7 @@ class Builder {
 		$ret = array();
 
 		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
-		foreach(mod::service("classmap")->classes("mod_route") as $class) {
+		foreach(mod::service("classmap")->classes("infuso\\core\\route") as $class) {
 			$ret[] = $class;
 		}
 		

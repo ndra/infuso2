@@ -7,13 +7,13 @@ use Infuso\Core;
  * Отвечает за то что мы видем в каталоге в разделе «Редиректы»
  **/
 
-class Redirect extends \mod_route {
+class Redirect extends \Infuso\Core\Route {
 
 	/**
 	 * url => action
 	 *  @todo восстановить	 
 	 **/
-	public function forward($url) {
+	public function urlToAction($url) {
 	
 	
 		return;
@@ -27,6 +27,6 @@ class Redirect extends \mod_route {
 		}
 	}
 
-	public function backward($controller) {}
+	public function actionToUrl($action) {}
 
 }

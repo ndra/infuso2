@@ -1,7 +1,7 @@
 <?
 
-namespace infuso\core\route;
-use infuso\core;
+namespace Infuso\Core\Route;
+use Infuso\Core;
 
 class service extends \infuso\core\service {
 
@@ -35,7 +35,7 @@ class service extends \infuso\core\service {
         $routers = core\mod::service("classmap")->classmap("routes");
         
         foreach($routers as $router) {
-            if($callback = call_user_func(array($router,"forward"),$url)) {
+            if($callback = call_user_func(array($router,"urlToAction"),$url)) {
                 \infuso\core\profiler::endOperation();
                 return $callback;
             }
@@ -78,7 +78,52 @@ class service extends \infuso\core\service {
 
     }
 
-    public function actionToUrl() {
+    /**
+     * @return Возвращает url экшна
+     * url Кэшируется на сутки
+     * @todo сделать настройки кэширвоания url
+     **/
+    public final function actionToUrl($action) {
+
+        Core\Profiler::beginOperation("url","build",$action->canonical());
+
+        if(true) {
+
+            // Урл кэшируются на день
+            $hash = "action-url:".$action->hash().ceil(time()/3600/24);
+
+            if($url = Core\Mod::service("cache")->get($hash)) {
+                Core\Profiler::endOperation();
+                return $url;
+            }
+        }
+
+
+        $url = $this->urlWithoutCache($action);
+
+        if(true) {
+            Core\Mod::service("cache")->set($hash,$url);
+        }
+
+        Core\Profiler::endOperation();
+
+        return $url;
+
+    }
+
+    /**
+     * Возвращает url экшна
+     * результат не кэшируется
+     **/
+    private final function urlWithoutCache($action) {
+    
+        $routes = Core\Mod::service("classmap")->classmap("routes");
+    
+        foreach($routes as $router) {
+            if($url = call_user_func(array($router,"actionToUrl"),$action)) {
+                return $url;
+            }
+        }
     }
 
 }
