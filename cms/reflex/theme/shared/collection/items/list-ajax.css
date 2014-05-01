@@ -7,17 +7,17 @@
         .list-item {
        
             &:hover {
-                background:#ededed;
+               // background:#ededed;
             }
             
             &.selected {
-                background: #0099C6;
+                background: @selection;
                 color: white;
                 a {
                     color: white;
                 }
                 &:hover {
-                    background: darken(#0099C6,3);
+                    //background: darken(@selection-color,3);
                 }
             }
             

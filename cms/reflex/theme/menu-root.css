@@ -10,6 +10,7 @@
     .node {
     
         white-space: nowrap;
+        overflow: hidden;
     
         & > .expander {
             cursor:pointer;
@@ -41,7 +42,11 @@
     }
     
     .node.active {
-        background: red;
+        background: @selection;
+        color: white;
+        a {
+            color: white;
+        }
     }
     
 }

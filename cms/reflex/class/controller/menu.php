@@ -15,6 +15,7 @@ class Menu extends Core\Controller {
             "expanded" => $p["expanded"],
 		));
 
+        // Пробрасываем url из ajax
         \tmp::param("url", $p["url"]);
 
 		return $tmp->getContentForAjax();
@@ -28,6 +29,7 @@ class Menu extends Core\Controller {
             "expanded" => $p["expanded"],
 		));
 
+        // Пробрасываем url из ajax
         \tmp::param("url", $p["url"]);
 
 		return $tmp->getContentForAjax();

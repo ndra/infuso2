@@ -1,5 +1,7 @@
 <? 
 
+exec("/reflex/layout/global");
+
 <div class='pp7cpa1wpc' >
 
     $url = action($class,"root",array(

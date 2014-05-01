@@ -1,5 +1,7 @@
 <? 
 
+exec("/reflex/layout/global");
+
 <div class='x1arvpu0c38' >
 
     <div class='items' >
