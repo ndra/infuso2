@@ -1,5 +1,7 @@
 $(function() {
 
+    var container = $(".qoi8w451jl");
+
     // Изменение режима просмотра
     $(".qoi8w451jl select[name='viewMode']").change(function() {
         $(this).trigger("reflex/refresh");
@@ -7,7 +9,7 @@ $(function() {
     
     // Быстрый поиск
     $(".qoi8w451jl input[name='query']").on("input", function() {
-        $(this).trigger("reflex/refresh");
+        container.trigger("reflex/refresh");
     });
     
     // Учет параметров фильтра перед загрузкой
@@ -32,6 +34,8 @@ $(function() {
     
     // реагируем на смену выделения    
     
+    var sel = [];
+    
     $(".qoi8w451jl").on("selectionChanged", function(e, selection) {
         $(this).find(".selection-info").html("Выбрано: " + selection.length);
         var container = $(this).find(".with-selected");
@@ -40,11 +44,22 @@ $(function() {
         } else {
             container.animate({opacity:0});
         }
+        sel = selection;
     });
     
 
     $(".qoi8w451jl .delete").click(function() {
-        $(this).trigger("reflex/refresh");
+    
+        if(!confirm("Удалить выбранные объекты")) {
+            return;
+        }
+    
+        mod.call({
+            cmd:"infuso/cms/reflex/controller/delete",
+            items: sel
+        }, function() {
+            container.trigger("reflex/refresh");   
+        });        
     })
 
 });

@@ -123,29 +123,9 @@ class Controller extends \Infuso\Core\Controller {
      * Контроллер удаления объекта
      **/
     public static function post_delete($p) {
-
-        foreach($p["ids"] as $id) {
-
-            $editor = self::get($id);
-            $item = $editor->item();
-
-            if($editor->beforeEdit()) { // Проверяем возможность удаления объекта
-
-                $item->log("Объект {$item->title()} удален");
-                if(get_class($item)!="reflex_editor_trash") {
-                    $trash = reflex::create("reflex_editor_trash",array(
-                        "title" => $item->title(),
-                        "data" => json_encode($item->data()),
-                        "meta" => json_encode($item->metaObject()->data()),
-                        "img" => $item->editor()->img(),
-                        "class" => get_class($item),
-                    ));
-                }
-                $item->metaObject()->delete();
-                $item->delete();
-            } else {
-                mod::msg("У вас нет прав для удаления этого объекта",1);
-            }
+        foreach($p["items"] as $id) {
+            $editor = Editor::get($id);
+            $editor->delete();
         }
     }
 
@@ -256,61 +236,6 @@ class Controller extends \Infuso\Core\Controller {
 
             }
         }
-    }
-
-    /**
-     * Контроллер, возвращающий полный список элементов коллекции
-     * @todo Надо возвращать сериализованныю колекцию, а не список id (и на клиенте учитывать ее)
-     **/
-    public static function post_getAll($p) {
-
-        $list = self::getListByP($p);
-
-        $ids = $list->limit(0)->idList();
-
-        return array(
-            "ids" => $ids,
-            "class" => $list->itemClass(),
-        );
-
-    }
-
-    /**
-     * Контроллер получения лога для данного объекта
-     **/
-    public static function post_log($p) {
-
-        $items = self::get($p["index"])->item()->getLog();
-
-        $ret = array();
-
-        foreach($items as $item) {
-            $txt = "";
-            $txt.= "<div style='font-size:11px;opacity:.5;' >";
-            $txt.= $item->pdata("user")->title()." / ".$item->pdata("datetime")->txt();
-            $txt.= "</div>";
-
-            $inject = $item->data("comment") ? " style='border-radius:10px;border:1px solid #ccc;padding:5px;' " : "";
-            $txt.= "<div $inject>".$item->msg()."</div>";
-            $ret[] = array(
-                "text" => $txt,
-            );
-        }
-
-        return $ret;
-
-    }
-
-    /**
-     * Контроллер комментирования
-     **/
-    public static function post_comment($p) {
-        $editor = self::get($p["index"]);
-        if(!$editor->beforeEdit()) {
-            mod::msg("Вы не можете оставлять комментарии для данного объекта",1);
-            return;
-        }
-        $editor->item()->log($p["txt"],array("comment"=>true));
     }
 
     /**

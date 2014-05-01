@@ -214,8 +214,8 @@ class Storage extends \Infuso\Core\Controller {
 	    if(!$this->exists())
 	        return;
 	    $path = $this->path();
-	    file::get($path,1)->delete(true);
-	    $this->reflex()->reflex_afterStorage();
+	    Core\File::get($path,1)->delete(true);
+	    //$this->reflex()->reflex_afterStorage();
 	}
 
 	/**

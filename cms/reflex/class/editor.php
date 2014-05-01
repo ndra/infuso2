@@ -163,6 +163,29 @@ abstract class Editor extends Core\Controller {
     
     public function _afterChange() {}
 
+    public function delete() {
+
+        $this->item()->delete();
+
+        /*if($editor->beforeEdit()) { // Проверяем возможность удаления объекта
+
+            $item->log("Объект {$item->title()} удален");
+            if(get_class($item)!="reflex_editor_trash") {
+                $trash = reflex::create("reflex_editor_trash",array(
+                    "title" => $item->title(),
+                    "data" => json_encode($item->data()),
+                    "meta" => json_encode($item->metaObject()->data()),
+                    "img" => $item->editor()->img(),
+                    "class" => get_class($item),
+                ));
+            }
+            $item->metaObject()->delete();
+            $item->delete();
+        } else {
+            mod::msg("У вас нет прав для удаления этого объекта",1);
+        }  */
+    }
+
     /**
      * Триггер, вызывающийся перед удалением элемента через каталог
      **/

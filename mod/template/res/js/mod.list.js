@@ -9,6 +9,12 @@ jQuery.fn.list = function(param) {
     // Контейнер
     var $e = $(this);
 
+    var triggerSelectionEvent = function() {
+        $e.trigger("list/select",[{
+		    selection: $e.list("selection")
+		}]);
+    }
+
     /**
      * Создаем список
      **/
@@ -27,11 +33,18 @@ jQuery.fn.list = function(param) {
         // Восстанавливает состояние выделения
 		var restoreSelection = function() {
 			var sel = jQuery.fn.list.keepSelection[param.keepSelection];
+            if(!sel) {
+                return;
+            }
 	        $e.find(".list-item").each(function() {
 	            if($.inArray($(this).attr("data:id"),sel) !== -1) {
 	                $(this).addClass("selected");
 	            }
 	        });
+
+            if(sel.length != $e.list("selection").length) {
+                triggerSelectionEvent();
+            }
         }
 
         $e.find(".list-item").mousedown(function(event) {
@@ -40,9 +53,7 @@ jQuery.fn.list = function(param) {
             }
             $(this).toggleClass("selected");
 			keepSelection();
-			$e.trigger("list/select",[{
-			    selection: $e.list("selection")
-			}]);
+            triggerSelectionEvent();
         });
 
         $e.attr("tabindex", 1);

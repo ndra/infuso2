@@ -355,12 +355,12 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return;
 		}
 
-        $prefixedTableName = $this->table()->prefixedName();
-        $id = reflex_mysql::escape($this->id());
-        reflex_mysql::query("delete `$tableName` from `$prefixedTableName` as `$tableName` where `id`='$id'");
+        $prefixedTableName = $this->prefixedTableName();
+        $id = service("db")->quote($this->id());
+        service("db")->query("delete `$tableName` from `$prefixedTableName` as `$tableName` where `id`={$id}")->exec();
 
         // Очищаем хранилище (Если не используется чужое хранилище)
-        if($this->storage()->reflex()==$this) {
+        if($this->storage()->record()==$this) {
         	$this->storage()->clear();
         }
         
@@ -373,8 +373,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return;
 		}
 
-        // Счетчик
-        self::$deleted++;
     }
 
     /**
