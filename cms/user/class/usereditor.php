@@ -59,4 +59,12 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 			->param("editor", $this);
 	}
 
+    /**
+     * Быстрый поиск пользователей работает по нику и email
+     **/
+    public function applyQuickSearch($collection, $search) {
+        $collection->like("email", $search);
+        $collection->orr()->like("nickName", $search);
+    }
+
 }

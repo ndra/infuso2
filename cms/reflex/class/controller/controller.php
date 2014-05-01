@@ -56,13 +56,9 @@ class Controller extends \Infuso\Core\Controller {
      * Сохраняет объект
      **/
     public static function post_save($p) {
-    
         $editor = Editor::get($p["index"]);
-        $item = $editor->item();
         $editor->setData($p["data"]);
-
     }
-
 
     /**
      * Контроллер создания конструктора

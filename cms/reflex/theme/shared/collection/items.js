@@ -17,6 +17,8 @@ $(function() {
         mod.call(params, function(ret) {
             $(".cjoesz8swu .ajax").html(ret.html);
             $(".cjoesz8swu > .loader").hide();
+        }, {
+            unique: "ui7605fvbl"
         });
     }
     

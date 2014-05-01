@@ -16,12 +16,28 @@ class Collection extends Core\Component {
 	}
 	
 	/**
+	 * Возвращает коллекцию элементов (ActiveRecord\Collection)
 	 * @todo безопасностью здесь и не пахнет
 	 **/
 	public function collection() {
 		$editor = Editor::get($this->className.":".$this->id);
 		$fn = $this->method;
-		return $editor->$fn();
+		$collection = $editor->$fn();
+
+        if($q = $this->param("query")) {
+            $class = $this->editorClass();
+            $virtual = new $class;
+            $virtual->applyQuickSearch($collection, $q);
+        }
+
+        return $collection;
+	}
+
+	public function collectionWithoutRestrictions() {
+		$editor = Editor::get($this->className.":".$this->id);
+		$fn = $this->method;
+		$collection = $editor->$fn();
+        return $collection;
 	}
 	
 	public function serialize() {
@@ -43,6 +59,11 @@ class Collection extends Core\Component {
 	 **/
 	public function applyParams($params) {
 	    $this->param("viewMode",$params["viewMode"]);
+
+        if($query = trim($params["query"])) {
+            $this->param("query", $query);
+        }
+
 	}
 	
 	/**
@@ -54,7 +75,7 @@ class Collection extends Core\Component {
 
         if(!$class) {
 
-            $classes = $map[$this->collection()->itemClass()];
+            $classes = $map[$this->collectionWithoutRestrictions()->itemClass()];
             if(!$classes) {
                 $classes = array();
             }

@@ -1,13 +1,20 @@
 $(function() {
 
+    // Изменение режима просмотра
     $(".qoi8w451jl select[name='viewMode']").change(function() {
         $(this).trigger("reflex/refresh");
     });
-
+    
+    // Быстрый поиск
+    $(".qoi8w451jl input[name='query']").on("input", function() {
+        $(this).trigger("reflex/refresh");
+    });
+    
     // Учет параметров фильтра перед загрузкой
 
     mod.on("reflex/beforeLoad",function(p) {    
         p.viewMode = $(".qoi8w451jl select[name='viewMode']").val();
+        p.query = $(".qoi8w451jl input[name='query']").val();
     });
     
     // Создание элемента

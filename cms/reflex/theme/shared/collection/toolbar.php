@@ -9,6 +9,7 @@ $code = $collection->serialize();
     widget("\\Infuso\\Cms\\UI\\Widgets\\Textfield")
         ->placeholder("Быстрый поиск")
         ->style("width", 120)
+        ->fieldName("query")
         ->clearButton()
         ->exec();
       

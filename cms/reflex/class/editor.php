@@ -190,6 +190,35 @@ abstract class Editor extends Core\Controller {
         Core\Mod::msg("Объект изменен");
     }
 
+    public function _applyQuickSearch($collection, $search) {
+
+        $item = $this->item();
+
+        $name = null;
+        foreach($item->fields() as $field) {
+            if($field->name() == "title") {
+                $name = "title";
+                break;
+            }
+        }
+
+        if(!$name) {
+            foreach($item->fields() as $field) {
+                if($field->editable() && $field->typeId() == "v324-89xr-24nk-0z30-r243") {
+                    $name = $field->name();
+                    break;
+                }
+            }
+        }
+
+        Core\Mod::msg($name);
+
+        if($name) {
+            $collection->like($name, $search);
+        }
+
+    }
+
     /**
      * Возвращает список режимов отображения
      **/
