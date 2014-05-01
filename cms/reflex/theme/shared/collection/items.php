@@ -4,7 +4,7 @@
 $code = $collection->serialize();
 <div class='cjoesz8swu c-items' infuso:collection='{$code}' >
 
-    <div class='loader' ></div>
+    <div class='loader' >Загрузка...</div>
     <div class='ajax'></div>
  
 </div>

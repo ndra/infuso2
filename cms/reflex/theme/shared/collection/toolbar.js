@@ -12,6 +12,10 @@ $(function() {
         container.trigger("reflex/refresh");
     });
     
+    container.find(".refresh").click(function() {
+        container.trigger("reflex/refresh");
+    });
+    
     // Учет параметров фильтра перед загрузкой
 
     mod.on("reflex/beforeLoad",function(p) {    

@@ -13,7 +13,7 @@ $code = $collection->serialize();
         ->clearButton()
         ->exec();
       
-    <button onclick='mod.fire("reflex/refresh");' >Обновить</button>
+    <button class='refresh' >Обновить</button>
     
     // Режим отображения
     <select name='viewMode' >
