@@ -35,6 +35,11 @@ class Controller extends \Infuso\Core\Controller {
     public static function indexFailed() {
         admin::fuckoff();
     }
+
+    public function index_test() {
+        $user = \infuso\user\model\user::get(124);
+        $user->plugin("log")->log(rand());
+    }
     
     /**
      * Контроллер, возвращающий список элементов для ajax-запроса

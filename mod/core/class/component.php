@@ -372,4 +372,14 @@ class Component {
 	public function service($name) {
 	    return Mod::service($name);
 	}
+
+    public function plugin($name) {
+
+        switch($name) {
+            case "log":
+                return new \Infuso\Cms\Reflex\LogPlugin($this);
+                break;
+        }
+
+    }
 }

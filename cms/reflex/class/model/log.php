@@ -1,9 +1,14 @@
 <?
 
+namespace Infuso\Cms\Reflex\Model;
+use Infuso\Core;
+use Infuso\ActiveRecord;
+use Infuso\Cms\Reflex;
+
 /**
  * Модель записи в журнале
  **/ 
-class reflex_log extends reflex {
+class Log extends ActiveRecord\Record {
 
 	public static function recordTable() {
 		return array (
@@ -23,7 +28,7 @@ class reflex_log extends reflex {
 					'name' => 'user',
 					'type' => 'pg03-cv07-y16t-kli7-fe6x',
 					'label' => 'Пользователь',
-					'class' => 'user',
+					'class' => 'infuso\\user\\model\\user',
 					"editable" => 2,
 		    	), array (
 					'name' => 'index',
@@ -34,11 +39,6 @@ class reflex_log extends reflex {
 					'name' => 'text',
 					'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
 					'label' => 'Текст',
-					"editable" => 2,
-		    	), array (
-					'name' => 'comment',
-					'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-					'label' => 'Это комментарий',
 					"editable" => 2,
 		    	), array (
 					'name' => 'type',
@@ -52,13 +52,6 @@ class reflex_log extends reflex {
 					'editable' => 2,
 		    	),
 			),
-			'indexes' => array (
-				array (
-				  'name' => 'main',
-				  'fields' => 'datetime,user,index,comment',
-				  'type' => 'index',
-				),
-			),
 		);
 	}
 
@@ -68,10 +61,6 @@ class reflex_log extends reflex {
 
     public static function all() {
         return reflex::get(get_class())->desc("datetime");
-    }
-
-    public function reflex_beforeCreate() {
-        $this->data("datetime",util::now());
     }
 
     /**
@@ -84,22 +73,8 @@ class reflex_log extends reflex {
     /**
      * Возвращает текст сообщения
      **/
-    public function message() {
+    public function text() {
         return $this->data("text");
-    }
-
-    /**
-     * Возвращает текст сообщения
-     **/
-    public function msg() {
-		return $this->message();
-	}
-
-    /**
-     * Иконка для лога
-     **/
-    public function reflex_icon() {
-        return "log";
     }
 
 	/**
