@@ -5,17 +5,21 @@ $collection = new \Infuso\Cms\Reflex\Collection($class,$param);
 
 switch($type) {
 
+    // Уровень списка рутов
     case "root":
+    
         foreach($collection->editors() as $editor) {    
             $nodeId = "child/".get_class($editor)."/".$editor->itemId();
-            <div class='node' data:node-id='{$nodeId}' >
-                <span class='expand' > + </span>
-                <a class='node-title' href='{$editor->url()}' >{$editor->title()}</a>
-                <div class='subdivisions' ></div>
-            </div>
+            exec("/reflex/menu-root/node", array(
+                "title" => $editor->title(),
+                "url" => $editor->url(),
+                "nodeId" => $nodeId,
+                "expanded" => $expanded,
+            ));
         }
         break;
 
+    // Уровень вложенных редакторов
     case "child":
        
         $a = $class::inspector()->annotations();
@@ -24,11 +28,12 @@ switch($type) {
                 $collection = new \Infuso\Cms\Reflex\Collection($class,$fn,$param);                
                 foreach($collection->editors() as $editor) {    
                     $nodeId = "child/".get_class($editor)."/".$editor->itemId();
-                    <div class='node' data:node-id='{$nodeId}' >
-                        <span class='expand' > + </span>
-                        <a class='node-title' href='{$editor->url()}' >{$editor->title()}</a>
-                        <div class='subdivisions' ></div>
-                    </div>
+                    exec("/reflex/menu-root/node", array(
+                        "title" => $editor->title(),
+                        "url" => $editor->url(),
+                        "nodeId" => $nodeId,
+                        "expanded" => $expanded,
+                    ));
                 }
             }
         }

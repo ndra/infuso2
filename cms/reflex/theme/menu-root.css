@@ -1,13 +1,25 @@
 .pp7cpa1wpc {
+
+    a {
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
     
     .node {
     
         white-space: nowrap;
     
-        .expand {
+        & > .expander {
             cursor:pointer;
+            
             &:hover {
                 background: #ededed;
+            }
+            
+            &:before {
+                content: " + "
             }
         }
         
@@ -23,5 +35,13 @@
         }
     
     }    
+    
+    .node.expanded > .expander:before {
+        content: " - "
+    }
+    
+    .node.active {
+        background: red;
+    }
     
 }
