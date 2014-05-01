@@ -28,6 +28,7 @@ class Auth extends ActiveRecord\Record {
 				), array (
 					'name' => 'time',
 					'type' => 'datetime',
+                    "label" => "Время создания",
 					"default" => "now()",
 					'editable' => '2',
 				), array (
