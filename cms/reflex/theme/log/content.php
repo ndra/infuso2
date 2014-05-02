@@ -1,5 +1,5 @@
 <? 
 
 <div class='nxfcqphbun' >
-    echo "Здесь будет лог";
+    exec("ajax");
 </div>

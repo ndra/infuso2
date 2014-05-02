@@ -25,6 +25,9 @@ class LogPlugin extends \Infuso\Core\Component {
     }
 
     public function getLog() {
+        return service("ar")
+            ->collection("infuso\\cms\\reflex\\model\\log")
+            ->eq("index", get_class($this->component()).":".$this->component()->id());
     }
 
 }
