@@ -21,16 +21,16 @@ class Storage extends Core\Controller {
 	    $tmp->param("editor",$editor);
 	    return $tmp->getContentForAjax();
 	}
-	
+
 	public function post_getFiles($p) {
-	
+
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
 	    $tmp = \Infuso\Template\Tmp::get("/reflex/storage/files-ajax");
 	    $tmp->param("editor",$editor);
 	    return array(
 	        "html" => $tmp->getContentForAjax(),
 		);
-		
+
 	}
 
 	/**

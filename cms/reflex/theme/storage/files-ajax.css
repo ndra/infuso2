@@ -3,11 +3,26 @@
     padding:10px;
     
     .item {
+    
         display:inline-block;
-        width:100px;
-        height:100px;
-        box-shadow: 0 0 10px rgba(0,0,0,.2);
+        width:150px;        
         margin: 10px;
+        text-align: center;
+        
+        .preview {
+            width:150px;
+            height:150px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,.2);
+        }
+        
+        .name, .size {
+            font-size:12px;
+            overflow: hidden;
+            white-space:nowrap;
+            color:gray;
+        }
+        
     }
     
     .selected {

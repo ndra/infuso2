@@ -3,6 +3,8 @@ $(function() {
     $(".l83i1tvf0u").mod("init", function() {
     
         var dropzone = $(this);
+        
+        // Перетаскивание файла в дропзону
     
         $(this).on("dragover", function(e) {
             e.stopPropagation();
@@ -22,8 +24,12 @@ $(function() {
             mod.msg("drop");
         });
         
-        $(this).click(function() {
-            $("body").window({
+        // Окно выбора файлов
+        
+        dropzone.click(function() {
+            $.window({
+                width:600,
+                height: 400,
                 call: {
                     cmd:"infuso/cms/reflex/controller/storage/getWindow",
                     editor: dropzone.attr("data:editor")

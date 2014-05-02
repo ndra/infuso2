@@ -90,11 +90,11 @@ class Storage extends \Infuso\Core\Controller {
 	}
 
 	/**
-	 * Возвращает список всех файлов в хранилище, включая те тчо во вложенных папках
+	 * Возвращает список всех файлов в хранилище, включая те что во вложенных папках
 	 **/
 	public function allFiles() {
 	    if(!$this->exists()) {
-			return file_list::void();
+			return Core\FList::void();
 		}
 	    return Core\File::get($this->root())->search()->exclude("storage.descr");
 	}
@@ -159,7 +159,7 @@ class Storage extends \Infuso\Core\Controller {
 	public function addUploaded($src,$name) {
 	    $name = self::normalizeName($name);
 	    if(!$this->exists()) {
-	        mod::msg("Вы пытаетесь закачать файл в несуществующий объект",1);
+	        Core\Mod::msg("Вы пытаетесь закачать файл в несуществующий объект",1);
 	        return;
 	    }
 	    $this->prepareFolder();
