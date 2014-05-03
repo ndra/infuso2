@@ -2,7 +2,15 @@
 
     padding:10px;
     
-    .item {
+    .back-path {
+        margin-right: 10px;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+    .list-item {
     
         display:inline-block;
         width:150px;        
@@ -20,13 +28,17 @@
             font-size:12px;
             overflow: hidden;
             white-space:nowrap;
-            color:gray;
+            opacity: .5;
         }
         
     }
     
     .selected {
-        outline:1px solid blue;
+        outline:10px solid @selection;
+        background: @selection;
+        * {
+            color:white;
+        }
     }
 
 }

@@ -23,14 +23,14 @@ class Storage extends Core\Controller {
 	}
 
 	public function post_getFiles($p) {
-
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
-	    $tmp = \Infuso\Template\Tmp::get("/reflex/storage/files-ajax");
-	    $tmp->param("editor",$editor);
+        $storage = $editor->item()->storage();
+        $storage->setPath($p["path"]);
+        $tmp = \Infuso\Template\Tmp::get("/reflex/storage/files-ajax");
+	    $tmp->param("storage",$storage);
 	    return array(
 	        "html" => $tmp->getContentForAjax(),
 		);
-
 	}
 
 	/**
@@ -39,7 +39,18 @@ class Storage extends Core\Controller {
 	public function post_upload($p) {
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
 	    $storage = $editor->item()->storage();
+        $storage->setPath($p["path"]);
 	    $storage->addUploaded($_FILES["file"]["tmp_name"],$_FILES["file"]["name"]);
 	}
+
+    public function post_delete($p) {
+    }
+
+    public function post_createFolder($p) {
+	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
+	    $storage = $editor->item()->storage();
+        $storage->setPath($p["path"]);
+        $storage->mkdir($p["name"]);
+    }
    
 }

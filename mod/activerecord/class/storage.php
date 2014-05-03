@@ -23,6 +23,10 @@ class Storage extends \Infuso\Core\Controller {
         return $this;
 	}
 
+	public function relPath() {
+	    return $this->path;
+	}
+
 	/**
 	 * Возвращает id записи ActiveRecord, с которой связан этот экземпляр хранилища
 	 **/
@@ -192,9 +196,11 @@ class Storage extends \Infuso\Core\Controller {
 	}
 
 	public function mkdir($name) {
-	    if(!$this->exists()) return;
+	    if(!$this->exists()) {
+            return;
+        }
 	    $this->prepareFolder();
-	    file::mkdir("{$this->path()}/$name");
+	    Core\File::mkdir("{$this->path()}/$name");
 	}
 
 	/**
@@ -211,8 +217,9 @@ class Storage extends \Infuso\Core\Controller {
 	 * Очищает хранилище, удаляет все файлы
 	 **/
 	public function clear() {
-	    if(!$this->exists())
+	    if(!$this->exists()) {
 	        return;
+        }
 	    $path = $this->path();
 	    Core\File::get($path,1)->delete(true);
 	    //$this->reflex()->reflex_afterStorage();

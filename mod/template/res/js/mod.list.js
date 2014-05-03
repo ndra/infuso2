@@ -10,9 +10,10 @@ jQuery.fn.list = function(param) {
     var $e = $(this);
 
     var triggerSelectionEvent = function() {
-        $e.trigger("list/select",[{
+        $e.trigger({
+            type: "list/select",
 		    selection: $e.list("selection")
-		}]);
+		});
     }
 
     /**

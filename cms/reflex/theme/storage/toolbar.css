@@ -2,5 +2,9 @@
 
     padding:10px;
     background:#ededed;
+    
+    .with-selection {
+        display: none;
+    }
 
 }
