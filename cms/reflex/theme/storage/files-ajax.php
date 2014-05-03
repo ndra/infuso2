@@ -4,13 +4,19 @@ exec("/reflex/layout/global");
 
 <div class='getcbtu0lh' >
 
-    <div class='path' >
-        $segments = explode("/",trim($storage->relPath(),"/"));
-        <span class='back-path' data:path='/' >/</span>
-        foreach($segments as $n => $segment) {
-            <span class='back-path' data:path='{implode("/",array_slice($segments,0,$n+1))}' >{$segment}</span>
-        }
-    </div>
+    $segments = trim($storage->relPath(), "/") ? explode("/",trim($storage->relPath(),"/")) : array();
+    
+    if(sizeof($segments)) {
+        <div class='path' >
+            <span class='back-path' data:path='/' >В корень</span>
+            foreach($segments as $n => $segment) {
+                if($n != sizeof($segments)) {
+                    <span class='spacer' >/</span>
+                }
+                <span class='back-path' data:path='{implode("/",array_slice($segments,0,$n+1))}' >{$segment}</span>
+            }
+        </div>
+    }    
 
     // Список файлов    
     foreach($storage->files() as $file) {

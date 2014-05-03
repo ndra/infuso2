@@ -2,11 +2,17 @@
 
     padding:10px;
     
-    .back-path {
-        margin-right: 10px;
-        cursor: pointer;
-        &:hover {
-            text-decoration: underline;
+    .path {
+        margin: 0 0 10px 10px;
+        .back-path {
+            margin-right: 10px;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .spacer {
+            margin-right: 10px;
         }
     }
     
