@@ -47,3 +47,13 @@
     margin: 0 0 20px 0;
     font-weight: normal;    
 }
+
+.icon24(@name) {
+    background-image: url("@{bundle}res/img/icons24/@{name}.png");
+}
+
+.icon24i(@name) {
+    background-image: url("@{bundle}res/img/icons24i/@{name}.png");
+}
+
+

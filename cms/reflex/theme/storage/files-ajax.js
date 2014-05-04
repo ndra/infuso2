@@ -4,19 +4,27 @@ $(function() {
     
         var container = $(this);
 
-        /*$(this).mousedown(function() {
-            $(this).toggleClass("selected");
-        });
-        
-        $(this).dblclick(function() {
+        /*$(this).dblclick(function() {
             var filename = $(this).attr("data:filename");
            // var preview = 
             $(this).window().trigger("selectFile", [filename]);
         }); */
         
-        $(this).list();
+        $(this).list({
+            selectHandle: ".select-handle",
+            easyMultiselect: true
+        });
         
-        $(this).find(".folder").click(function() {
+        // При клике на папку, меняем текущуюу папку
+        // Если мы кликнули на выбиралку, папку не меняем
+        $(this).find(".folder").click(function(event) { 
+        
+            // Клик на выбиралку пропускаем
+            if($(event.target).is(".select-handle")) {
+                return;
+            }
+             
+            // Меняем папку  
             var path = $(this).attr("data:id");
             container.trigger({
                 type: "reflex/storage/cd",

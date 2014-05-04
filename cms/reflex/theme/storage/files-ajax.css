@@ -19,6 +19,7 @@
     .list-item {
     
         display:inline-block;
+        position: relative;
         width:150px;        
         margin: 10px;
         text-align: center;
@@ -37,6 +38,23 @@
             opacity: .5;
         }
         
+        .select-handle {
+            width:50px;
+            height: 50px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            background: @selection center center no-repeat;     
+            .icon24i("ok");            
+        }
+        
+        &:hover {
+            .select-handle {
+                opacity: .5;
+            }
+        }
+        
     }
     
     .selected {
@@ -44,6 +62,9 @@
         background: @selection;
         * {
             color:white;
+        }
+        .select-handle {
+            opacity: 1 !important;
         }
     }
 

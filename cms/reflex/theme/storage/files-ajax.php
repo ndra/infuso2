@@ -1,5 +1,6 @@
 <?
 
+exec("/ui/shared");
 exec("/reflex/layout/global");
 
 <div class='getcbtu0lh' >
@@ -29,6 +30,8 @@ exec("/reflex/layout/global");
         
         $h->attr("data:id", $file->rel($storage->root()));
         $h->begin();
+        
+            <div class='select-handle' ></div>
     
             $preview = $file->preview(150,150);
             <div style='background:url($preview)' class='preview' data:filename='{$file}' ></div>

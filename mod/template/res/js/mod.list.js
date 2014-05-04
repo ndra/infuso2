@@ -48,16 +48,25 @@ jQuery.fn.list = function(param) {
             }
         }
 
+        // Обрабатываем клик на элементе - выделение
         $e.find(".list-item").mousedown(function(event) {
-            if(!event.ctrlKey) {
-                $e.find(".list-item.selected").removeClass("selected");
+
+            var item = $(this);
+
+            if(!param.selectHandle || $(event.target).is(item.find(param.selectHandle))) {
+                if(!event.ctrlKey && !param.easyMultiselect) {
+                    $e.find(".list-item.selected").removeClass("selected");
+                }
+                item.toggleClass("selected");
+    			keepSelection();
+                triggerSelectionEvent();
             }
-            $(this).toggleClass("selected");
-			keepSelection();
-            triggerSelectionEvent();
         });
 
+        // Добавляем контейнеру табиндекс чтобы он мог реагировать на нажатие
         $e.attr("tabindex", 1);
+
+        // Обрабатываем горячие клавиши - вверх и вниз
         $e.keydown(function(event) {
             if(event.which == 38) {
                 $(this).list("prev");
