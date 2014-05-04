@@ -205,12 +205,20 @@ class Storage extends \Infuso\Core\Controller {
 
 	/**
 	 * Удаляет файл из хранилища
+	 * @todo добавить проверку безопасности
 	 **/
 	public function delete($name) {
-	    if(!$this->exists()) return;
+
+        if(!$name) {
+            throw new \Exception("Storage::delete void argument");
+        }
+
+	    if(!$this->exists()) {
+            return;
+        }
+
 	    $path = "{$this->path()}/$name";
-	    file::get($path,1)->delete();
-	    $this->reflex()->reflex_afterStorage();
+	    Core\File::get($path,1)->delete(true);
 	}
 
 	/**

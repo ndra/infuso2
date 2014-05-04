@@ -44,6 +44,13 @@ class Storage extends Core\Controller {
 	}
 
     public function post_delete($p) {
+
+	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
+	    $storage = $editor->item()->storage();
+        foreach($p["items"] as $file) {
+            $storage->delete($file);
+        }
+        Core\Mod::msg("Файлы удалены");
     }
 
     public function post_createFolder($p) {

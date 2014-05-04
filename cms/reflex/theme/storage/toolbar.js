@@ -53,7 +53,19 @@ $(function() {
         // Удалить
         
         container.find(".delete").click(function() {
-            container.trigger("reflex/storage/upload");
+        
+            if(!window.confirm("Удалить выбранные файлы?")) {
+                return;
+            }
+        
+            mod.call({
+                cmd:"infuso/cms/reflex/controller/storage/delete",
+                editor:editor,
+                items: selection,
+                path:path
+            }, function() {
+                container.trigger("reflex/storage/upload");
+            });  
         });
         
         container.on("list/select", function(e) {
