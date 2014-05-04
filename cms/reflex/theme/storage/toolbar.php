@@ -1,7 +1,7 @@
 <? 
 
-$editor = get_class($editor).":".$editor->itemId();
-<div class='x8gdq98zre1 c-toolbar' infuso:editor='{$editor}' >
+$editorId = get_class($editor).":".$editor->itemId();
+<div class='x8gdq98zre1 c-toolbar' infuso:editor='{$editorId}' data:root='{$editor->item()->storage()->root()}' >
 
     <input name='file' type='file' />
     
@@ -14,6 +14,7 @@ $editor = get_class($editor).":".$editor->itemId();
     
         widget("infuso\\cms\\ui\\widgets\\button")
             ->text("Выбрать")
+            ->addClass("selectFile")
             ->exec();
             
         widget("infuso\\cms\\ui\\widgets\\button")

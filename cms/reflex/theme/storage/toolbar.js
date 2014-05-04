@@ -5,7 +5,10 @@ $(function() {
         var container = $(".x8gdq98zre1");
         var file = container.find("input[type=file]");
         var editor = container.attr("infuso:editor");
+        var root = container.attr("data:root");
         var selection = [];
+        var selectedFilename = null;
+        var selectedPreview150 = null;
         var path = "/";
         
         // Когда пользолватель выбрал файл, закачиваем его
@@ -20,6 +23,15 @@ $(function() {
             },{
                 files: container
             });
+        });        
+        
+        container.find(".selectFile").click(function() {        
+            $(this).trigger({
+                type: "reflex/storage/file",
+                filename: selectedFilename,
+                preview150: selectedPreview150
+            });         
+            
         });
         
         // Создание папки
@@ -46,7 +58,7 @@ $(function() {
         
         container.find(".download").click(function() {
             for(var i in selection) {
-                window.open(selection[i]);
+                window.open(root + selection[i]);
             }
         });
         
@@ -70,6 +82,8 @@ $(function() {
         
         container.on("list/select", function(e) {
             selection =  e.selection;
+            selectedFilename = e.filename;
+            selectedPreview150 = e.preview150;
             if(e.selection.length) {
                 container.find(".with-selection").fadeIn();
             } else {

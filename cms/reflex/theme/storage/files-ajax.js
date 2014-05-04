@@ -4,15 +4,28 @@ $(function() {
     
         var container = $(this);
 
-        /*$(this).dblclick(function() {
-            var filename = $(this).attr("data:filename");
-           // var preview = 
-            $(this).window().trigger("selectFile", [filename]);
-        }); */
+        $(this).find(".list-item").not(".folder").click(function() {
+            // Клик на выбиралку пропускаем
+            if($(event.target).is(".select-handle")) {
+                return;
+            }
+            
+            $(this).trigger({
+                type: "reflex/storage/file",
+                filename: $(this).attr("data:filename"),
+                preview150: $(this).attr("data:preview150")
+            });
+        });
         
         $(this).list({
             selectHandle: ".select-handle",
             easyMultiselect: true
+        });
+        
+        $(this).on("list/select", function(event) {
+            var selected = container.find(".list-item.selected").not(".folder").eq(0);
+            event.filename = selected.attr("data:filename");
+            event.preview150 = selected.attr("data:preview150");
         });
         
         // При клике на папку, меняем текущуюу папку

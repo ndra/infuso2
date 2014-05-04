@@ -21,6 +21,8 @@ exec("/reflex/layout/global");
 
     // Список файлов    
     foreach($storage->files() as $file) {
+    
+        $preview = $file->preview(150,150);
         
         $h = helper("<div>");
         $h->addCLass("list-item");
@@ -29,11 +31,12 @@ exec("/reflex/layout/global");
         }
         
         $h->attr("data:id", $file->rel($storage->root()));
+        $h->attr("data:filename", $file);
+        $h->attr("data:preview150", $preview);
         $h->begin();
         
-            <div class='select-handle' ></div>
-    
-            $preview = $file->preview(150,150);
+            <div class='select-handle' ></div>    
+            
             <div style='background:url($preview)' class='preview' data:filename='{$file}' ></div>
             
             <div class='name' >{$file->name()}</div>

@@ -28,15 +28,16 @@ $(function() {
         
         dropzone.click(function() {
             $.window({
-                width:600,
-                height: 400,
+                width:800,
+                height: 500,
                 call: {
                     cmd:"infuso/cms/reflex/controller/storage/getWindow",
                     editor: dropzone.attr("data:editor")
                 }, events: {
-                    selectFile:function(event,filename) {
+                    "reflex/storage/file":function(event) {
                         $(this).window("close");
-                        dropzone.find("input").val(filename)
+                        dropzone.find("input").val(event.filename);
+                        dropzone.find("img").attr("src",event.preview150);
                     }
                 }
             });
