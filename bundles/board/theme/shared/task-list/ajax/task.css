@@ -1,7 +1,7 @@
 .i95bnu5fvm {
     
     display: inline-block;
-    width: 130px;
+    width: 160px;
     height: 160px;
     margin: 10px;
     font-size: 12px;
@@ -9,5 +9,20 @@
     border:1px solid #ededed;
     overflow: hidden;
     background: white;
+    padding: 3px;
+    position: relative;
+    
+    .title {
+        font-weight: bold;
+    }
+    
+    .tools {
+        position: absolute;
+        left:0;
+        bottom:0;
+        width: 100%;
+        background: rgba(0,0,0,.8);
+        height: 32px;
+    }
 
 }

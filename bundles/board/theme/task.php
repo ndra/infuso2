@@ -2,10 +2,13 @@
 
 <form class='ybslv95net' >
     
-    widget("infuso\\cms\\ui\\widgets\\textfield")
-        ->value($task->data("text"))
-        ->fieldName("text")
-        ->exec();
+    <div style='margin-bottom:10px;' >
+        widget("infuso\\cms\\ui\\widgets\\textarea")
+            ->value($task->data("text"))
+            ->fieldName("text")
+            ->style("width", 500)
+            ->exec();
+    </div>
         
     widget("infuso\\cms\\ui\\widgets\\textfield")
         ->value($task->data("timePlanned"))
