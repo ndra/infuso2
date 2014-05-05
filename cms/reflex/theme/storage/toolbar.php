@@ -27,4 +27,5 @@ $editorId = get_class($editor).":".$editor->itemId();
             ->addClass("delete")
             ->exec();
     </span>
+    
 </div>

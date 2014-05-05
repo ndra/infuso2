@@ -44,14 +44,6 @@ $(function() {
                 path: path
             });
         });
-        
-        $(this).find(".back-path").click(function() {
-            var path = $(this).attr("data:path");
-            container.trigger({
-                type: "reflex/storage/cd",
-                path: path
-            });
-        });
     
     });
 

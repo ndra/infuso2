@@ -68,11 +68,21 @@ mod.call = function(params,fn,conf) {
     fdata.append("data", JSON.stringify(params));   
     
     if(conf.files) {
-        $(conf.files).find("input[type=file]").each(function() {
-            fdata.append(this.name, this.files[0]);   
-        });
+
+        if(conf.files.constructor === Object) {
+
+            for(var i in conf.files) {
+                fdata.append(i, conf.files[i]);
+            }
+
+        } else {
+            $(conf.files).find("input[type=file]").each(function() {
+                fdata.append(this.name, this.files[0]);
+            });
+        }
     }
     
+    // Если зазад уникальный id запроса, удаляем предыдущие запросы с таким id
     if(conf.unique) {
         var xhr = this.uniqueCalls[conf.unique];
         if(xhr) {

@@ -2,6 +2,10 @@
 
     padding:10px;
     
+    &.drag-enter {
+        outline: 4px dashed green;
+    }
+    
     .path {
         margin: 0 0 10px 10px;
         .back-path {
