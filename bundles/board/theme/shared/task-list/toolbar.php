@@ -7,7 +7,7 @@
         ->clearButton()
         ->exec();
         
-    exec("projects"); 
+    // exec("projects"); 
     
     widget("\\infuso\\cms\\ui\\widgets\\pager")
         ->fieldName("pager")

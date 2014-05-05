@@ -27,12 +27,14 @@ class Task extends \Infuso\Core\Controller {
      * Возвращает html списка заадч
      **/
     public function post_getTasks($p) {
+
         $limit = 40; 
         
         // Статус для которого мы смотрим задачи
         $status = Model\TaskStatus::get($p["status"]);
         // Полный список задач
         $tasks = Model\Task::visible()->orderByExpr($status->order())->limit($limit);
+        $tasks->eq("status", $p["status"]);
 
         if($p["parentTaskID"]) {
 
@@ -82,7 +84,7 @@ class Task extends \Infuso\Core\Controller {
         
         return array(
             "html" => $ret,
-            "total" => $tasks->pages(),
+            "pages" => $tasks->pages(),
         );
                   
     }

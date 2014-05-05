@@ -25,13 +25,13 @@ class mod_route_default extends \Infuso\Core\Route {
 		        if($action === null) {
 		            $action = "index";
 		        }
-		        
+
 		        $params = $_GET;
 				while (count($rest)) {
 				    list($key,$value) = array_splice($rest, 0, 2);
 				    $params[$key] = $value;
 				}
-				
+
 				return \infuso\core\action::get($class,$action,$params);
 
 		    }

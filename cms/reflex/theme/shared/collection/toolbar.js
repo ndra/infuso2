@@ -40,15 +40,15 @@ $(function() {
     
     var sel = [];
     
-    $(".qoi8w451jl").on("selectionChanged", function(e, selection) {
-        $(this).find(".selection-info").html("Выбрано: " + selection.length);
+    $(".qoi8w451jl").on("list/select", function(e) {
+        $(this).find(".selection-info").html("Выбрано: " + e.selection.length);
         var container = $(this).find(".with-selected");
-        if(selection.length > 0) {
+        if(e.selection.length > 0) {
             container.animate({opacity:1});
         } else {
             container.animate({opacity:0});
         }
-        sel = selection;
+        sel = e.selection;
     });
     
 

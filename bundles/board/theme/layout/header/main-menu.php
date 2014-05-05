@@ -2,9 +2,11 @@
 
 <div class='x55qv4lhb8m' >
 
+    <a class='item' href='яяя' >Новая задача</a>
+
     foreach(\Infuso\Board\Model\TaskStatus::all() as $status) {
         if($status->id() != \Infuso\Board\Model\TaskStatus::STATUS_DRAFT) {
-            $url = action("infuso\\board\\controller\\task\\listtasks")->param("status", $status->id())->url();
+            $url = action("infuso\\board\\controller\\task","listtasks")->param("status", $status->id())->url();
             <a class='item' href='{$url}' >
                 echo $status->title();
                 $n = $status->visibleTasks()->count();
