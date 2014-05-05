@@ -194,11 +194,12 @@ class TaskStatus extends \Infuso\Core\Controller {
     }
 
     public function visibleTasks() {
-        $tasks = Task::visible();
+        $tasks = Task::all();
         $tasks->eq("status",$this->id());
         if($this->id() != self::STATUS_IN_PROGRESS) {
             $tasks->eq("epicParentTask",0);
         }
+        $tasks->visible();
         return $tasks;
     }
 

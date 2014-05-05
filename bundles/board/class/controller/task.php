@@ -33,39 +33,16 @@ class Task extends \Infuso\Core\Controller {
         // Статус для которого мы смотрим задачи
         $status = Model\TaskStatus::get($p["status"]);
         // Полный список задач
-        $tasks = Model\Task::visible()->orderByExpr($status->order())->limit($limit);
+        $tasks = Model\Task::all()->orderByExpr($status->order())->limit($limit);
         $tasks->eq("status", $p["status"]);
-
-        if($p["parentTaskID"]) {
-
-            $tasks = $tasks->eq("epicParentTask",$p["parentTaskID"])->orderByExpr("`status` != 1")->asc("priority",true);
-            $tasks->eq("status",array(Model\TaskStatus::STATUS_NEW,Board\TaskStatus::STATUS_IN_PROGRESS))
-                ->orr()->gt("changed",\util::now()->shift(-60));
-
-        } else {
-        
-            $tasks->eq("status",$p["status"]);
             
-            if($p["status"] != Model\TaskStatus::STATUS_IN_PROGRESS) {
-                $tasks->eq("epicParentTask",0);
-            }
-            
+        if($p["status"] != Model\TaskStatus::STATUS_IN_PROGRESS) {
+            $tasks->eq("epicParentTask",0);
         }
 
         // Учитываем поиск
         if($search = trim($p["search"])) {
-        
-            $search2 = \util::str($search)->switchLayout();
-
-            $tasks->joinByField("projectID");
-            $tasks->like("text",$search)
-                ->orr()->like("Infuso\\Board\\Model\\Project.title",$search)
-                ->orr()->like("text",$search2)
-                ->orr()->like("Infuso\\Board\\Model\\Project.title",$search2);
-        }
-        
-        if(count($p["projects"])){
-            $tasks->eq("projectID", $p["projects"]);
+            $tasks->search($search);
         }
         
         if(($tag = trim($p["tag"])) && $tag!="*") {
@@ -73,17 +50,13 @@ class Task extends \Infuso\Core\Controller {
         }
 
         $tasks->page($p["page"]);
-
-        $lastChange = null; 
-       
         
-        $ret = \tmp::get("/board/shared/task-list/ajax")
+        $html = \tmp::get("/board/shared/task-list/ajax")
             ->param("tasks", $tasks)
             ->getContentForAjax();
-            
         
         return array(
-            "html" => $ret,
+            "html" => $html,
             "pages" => $tasks->pages(),
         );
                   

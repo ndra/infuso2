@@ -15,7 +15,7 @@ class Task extends \Infuso\ActiveRecord\Record {
                 array (
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
-                ),array (
+                ), array (
                     'name' => 'dataHash',
                     'type' => 'string',
                 ), array (
@@ -23,88 +23,90 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'label' => "Описание задачи",
                     'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
                     'editable' => '1',
-                ),array (
+                ), array (
                     'label' => "Цвет задачи",
                     'name' => 'color',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
                     'label' => 'Цвет',
-                ),array (
+                ), array (
                     'label' => "Статус задачи",
                     'name' => 'status',
                     'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
                     'editable' => '1',
-                ),array (
+                ), array (
                     'name' => 'priority',
                     'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
                     'label' => 'Приоритет',
-                ),array (
+                ), array (
                     'name' => 'created',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+                    "default" => "now()",
                     "editable" => 2,
-                ),array (
+                ), array (
                     'name' => 'creator',
                     'type' => 'link',
                     "editable" => 2,
                     "label" => "Автор задачи",
                     'class' => User::inspector()->className(),
-                ),array (
+                ), array (
                     'name' => 'changed',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
                     "label" => "Изменено",
+                    "default" => "now()",
                     "editable" => 2,
-                ),array (
+                ), array (
                     'name' => 'projectID',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
                     'class' => Project::inspector()->className(),
                     "label" => "Проект",
                     "editable" => 1,
-                ),array (
+                ), array (
                     'name' => 'timeScheduled',
                     'type' => 'yvbj-cgin-m90o-cez7-mv2j',
                     'label' => 'Планируемое время',
                     "editable" => 1,
-                ),array (
+                ), array (
                     'name' => 'timeSpent',
                     'type' => 'yvbj-cgin-m90o-cez7-mv2j',
                     'label' => 'Потрачено времени',
                     "editable" => 2,
-                ),array (
+                ), array (
                     'name' => 'responsibleUser',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
                     'label' => User::inspector()->className(),
                     "class" => "\\Infuso\\User\\Model\\User",
                     "editable" => 2,
-                ),array (
+                ), array (
                     'name' => 'deadline',
                     'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
                     "editable" => 1,
                     "label" => "Дэдлайн"
-                ),array (
+                ), array (
                     'name' => 'deadlineDate',
                     'type' => 'ler9-032r-c4t8-9739-e203',
                     "editable" => 1,
-                ),array (
+                ), array (
                     'name' => 'epic',
                     'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
                     'label' => 'Эпик',
                     "editable" => 2,
-                ),array (
+                ), array (
                     'name' => 'epicParentTask',
                     'type' => 'link',
                     'label' => 'Родительская задача-эпик',
                     'class' => Task::inspector()->className(),
-                ),array (
+                ), array (
                     'name' => 'paused',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
                     'label' => 'Пауза',
                     "editable" => 2,
-                ),array (
+                ), array (
                     'name' => 'files',
                     'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
                     'label' => 'Количество файлов',
                     'editable' => 2,
-                ),array (
+                ), array (
                     'name' => 'notice',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'label' => 'Заметка',
@@ -114,22 +116,13 @@ class Task extends \Infuso\ActiveRecord\Record {
         );
     }
 
-
     /**
      * Возвращает список всех задач
      **/
     public static function all() {
         return \Infuso\ActiveRecord\Record::get(get_class())
-            ->addBehaviour("Infuso\\Board\\CollectionBehaviour")
+            ->addBehaviour("Infuso\\Board\\Model\\CollectionBehaviour")
             ->asc("priority");
-    }
-
-    /**
-     * Возвращает список видимых задач для активного пользователя
-     **/
-    public static function visible() {
-        $projects = Project::visible();
-        return self::all()->joinByField("projectID",$projects);
     }
 
     /**
@@ -139,15 +132,11 @@ class Task extends \Infuso\ActiveRecord\Record {
         return \Infuso\ActiveRecord\Record::get(get_class(),$id);
     }
 
-    public function reflex_url() {
-        return "/board/#task/id/".$this->id();
-    }
-
     public function project() {
         return $this->pdata("projectID");
     }
 
-    public function reflex_parent() {
+    public function recordParent() {
         return $this->project();
     }
 
@@ -164,8 +153,6 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function beforeCreate() {
-        $this->data("changed",util::now());
-        $this->data("created",util::now());
         $this->data("creator",user::active()->id());
     }
 
