@@ -24,9 +24,6 @@ jQuery.fn.mod = function(param,p2) {
     if(param == "init") {
         $(this).each(function() {
 	        if(!$(this).data("hrbCtS8MoMw61V")) {
-	            if($(this).hasClass("i95bnu5fvm")) {
-	                console.log(p2);
-	            }
 	            p2.apply(this);
 	            $(this).data("hrbCtS8MoMw61V", true);
 	        }
