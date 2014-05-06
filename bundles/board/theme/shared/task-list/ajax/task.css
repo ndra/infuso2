@@ -9,11 +9,16 @@
     border:1px solid #ededed;
     overflow: hidden;
     background: white;
-    padding: 3px;
+    padding: 6px;
     position: relative;
+    
+    .text {
+        
+    }
     
     .title {
         font-weight: bold;
+        margin-bottom:3px;
     }
     
     .tools {
