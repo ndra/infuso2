@@ -10,6 +10,28 @@
     
     exec("files");
     
-    <div class='tools' ></div>
+    <div class='tools-wrapper' >
+        <div class='tools' >
+            $tools = $task->tools();
+            foreach($tools as $section) {
+                foreach($section as $item) {
+                    switch($item) {
+                        case "take":
+                            <input type='button' class='take' title='Взять задачу' />
+                            break;
+                        case "problems":
+                            <input type='button' class='problems' title='Проблемы' />
+                            break;
+                        case "cancel":
+                            <input type='button' class='cancel' title='Отменить задачу' />
+                            break;
+                        default:
+                            <input type='button' class='take' title='$item' />
+                            break;
+                    }
+                }
+            }
+        </div>
+    </div>
         
 </div>

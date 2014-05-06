@@ -785,6 +785,9 @@ class Task extends \Infuso\ActiveRecord\Record {
         }
     }
 
+	/**
+	 * Делает попытку закрыть задачу автоматически
+	 **/
     public function tryAutocomplete() {
 
         // Если задача не на проверке - выходим

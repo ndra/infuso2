@@ -12,11 +12,15 @@ $(function() {
         });
      
         $(this).mouseenter(function() {
-            $(this).find(".tools").fadeIn("fast");
+            $(this).find(".tools").animate({
+                top: 0
+            }, "fast");
         });
         
         $(this).mouseleave(function() {
-            $(this).find(".tools").fadeOut("fast");
+            $(this).find(".tools").animate({
+                top: 45
+            }, "fast");
         });
         
      });

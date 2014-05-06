@@ -7,13 +7,14 @@
     font-size: 12px;
     cursor: pointer;
     border:1px solid #ededed;
-    overflow: hidden;
     background: white;
     padding: 6px;
     position: relative;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
     
     .text {
-        
+        height: 140px;
+        overflow: hidden;
     }
     
     .title {
@@ -21,14 +22,47 @@
         margin-bottom:3px;
     }
     
-    .tools {
+    .tools-wrapper {
+    
         position: absolute;
         left:0;
         bottom:0;
-        width: 100%;
-        background: rgba(0,0,0,.8);
+        width: 100%;        
         height: 45px;
-        display: none;
+        overflow: hidden;
+        
+        .tools {
+            position: absolute;
+            left:0;
+            top:45px;
+            width: 100%;
+            background: rgba(0,0,0,.8);
+            height: 45px;
+            
+            input {
+                display:inline-block;
+                width: 45px;
+                height:45px;
+                box-sizing: border-box;
+                border: none;
+                &:hover {
+                    background-color: gray;
+                }
+            }
+            
+            .take {
+                background: url("@{bundle}res/img/icons24inverse/take.png") center center no-repeat;
+            }
+            
+            .problems {
+                background: url("@{bundle}res/img/icons24inverse/problems.png") center center no-repeat;
+            }
+            
+            .cancel {
+                background: url("@{bundle}res/img/icons24inverse/cancel.png") center center no-repeat;
+            }
+            
+        }        
     }
 
 }
