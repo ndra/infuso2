@@ -6,11 +6,17 @@
     margin: 10px;
     font-size: 12px;
     cursor: pointer;
-    border:1px solid #ededed;
+    border:1px solid #ccc;
     background: white;
     padding: 6px;
     position: relative;
     box-shadow: 0 0 10px rgba(0,0,0,.1);
+    
+    &:hover {
+        //box-shadow: 0 0 20px rgba(0,0,0,.2);
+        border:1px solid #999;
+        outline:1px solid #999;
+    }
     
     .text {
         height: 140px;

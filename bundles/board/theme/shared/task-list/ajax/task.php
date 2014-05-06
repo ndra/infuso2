@@ -1,6 +1,11 @@
 <? 
 
-<div class="task i95bnu5fvm" data:id='{$task->id()}' >
+$h = helper("<div>");
+$h->addClass("task");
+$h->addClass("i95bnu5fvm");
+$h->attr("data:id", $task->id());
+$h->style("background", $task->data("color"));
+$h->begin();
 
     <div class='title' >{$task->id()}. {$task->project()->title()}</div>
 
@@ -34,4 +39,4 @@
         </div>
     </div>
         
-</div>
+$h->end();
