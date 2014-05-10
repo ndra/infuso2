@@ -72,6 +72,14 @@
                 background: url("@{bundle}res/img/icons24inverse/cancel.png") center center no-repeat;
             }
             
+            .stop {
+                background: url("@{bundle}res/img/icons24inverse/stop.png") center center no-repeat;
+            }
+            
+            .done {
+                background: url("@{bundle}res/img/icons24inverse/done.png") center center no-repeat;
+            }
+            
         }        
     }
 

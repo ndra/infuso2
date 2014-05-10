@@ -93,7 +93,7 @@ class Task extends \Infuso\Core\Controller {
         if(!\user::active()->checkAccess("board/takeTask",array(
             "task" => $task,
         ))) {
-            Core\Mod::msg(user::active()->errorText(),1);
+            Core\Mod::msg(\user::active()->errorText(),1);
             return;
         }
 
@@ -120,6 +120,31 @@ class Task extends \Infuso\Core\Controller {
 
         $task->pauseToggle();
 
+    }
+
+    /**
+     * Положить задачу обратно
+     **/
+    public function post_stopTask($p) {
+
+        $task = Model\Task::get($p["taskId"]);
+        $time = $p["time"];
+
+        if(!\user::active()->checkAccess("board/stopTask",array(
+            "task" => $task,
+        ))) {
+            Core\Mod::msg(\user::active()->errorText(),1);
+            return;
+        }
+
+        $task->data("status",Model\taskStatus::STATUS_BACKLOG);
+        $task->logCustom(array(
+            "text" => $p["comment"],
+            "time" => $time,
+            "type" => Model\Log::TYPE_TASK_STOPPED,
+        ));
+
+        return true;
     }
 
 

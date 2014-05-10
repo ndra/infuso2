@@ -35,6 +35,8 @@ class Defer {
 
         $n = 0;
 
+        Mod::fire("infuso/defer");
+
         while(sizeof(self::$defer)) {
 
             $defer = self::$defer;
@@ -48,8 +50,8 @@ class Defer {
 
             $n++;
 
-            if($n>500) {
-                throw new Exception("Defered function recursion");
+            if($n > 500) {
+                throw new \Exception("Defered function recursion");
             }
         }
     }

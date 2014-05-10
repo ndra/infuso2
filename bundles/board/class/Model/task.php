@@ -340,7 +340,6 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Вызывает сообщение об изменении задачи
      **/
     public function fireChangedEventDefer() {
-        Core\Mod::msg($this->id());
         Core\Mod::fire("board/taskChanged",array(
             "deliverToClient" => true,
             "taskId" => $this->id(),

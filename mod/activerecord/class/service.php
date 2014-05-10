@@ -141,7 +141,7 @@ class Service extends Core\Service {
 	 * Сохраняет все измененные объекты
 	 **/
 	public function storeAll() {
-	
+
         Core\Profiler::addMilestone("reflex before store");
 
         $items = array_keys(self::$changedItems);

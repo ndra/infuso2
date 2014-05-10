@@ -76,7 +76,6 @@ class Post {
 			        } catch(mod_userLevelException $ex) {
 			            mod::msg($ex->getMessage(),1);
 			        }
-			        Defer::callDeferedFunctions();
 			        return $ret;
 			    }
 			}

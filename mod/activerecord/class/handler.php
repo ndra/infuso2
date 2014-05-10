@@ -54,10 +54,10 @@ class Handler implements \Infuso\Core\Handler {
 	}
     
     /**
-     * @handler = infusoAppShutdown
+     * @handler = infuso/defer
      * При завершении приложения сохраняем все измененные записи
      **/
-    public function onAppShutdownSys() {
+    public function onDefer() {
         Record::storeAll();
     }
 

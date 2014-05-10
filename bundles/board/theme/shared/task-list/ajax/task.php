@@ -27,6 +27,12 @@ $h->begin();
                         case "take":
                             <input type='button' class='take' title='Взять задачу' />
                             break;
+                       case "stop":
+                            <input type='button' class='stop' title='Остановить' />
+                            break;
+                       case "done":
+                            <input type='button' class='done' title='Задача выполнена' />
+                            break;
                         case "resume":
                             <input type='button' class='resume' title='Возобновить задачу' />
                             break;

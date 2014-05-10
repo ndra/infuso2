@@ -33,13 +33,13 @@ class mod_json extends \infuso\core\controller {
 				mod::msg($txt,1);
 			}
 
-			reflex::storeAll();
-
 		} catch(Exception $ex) {
 
 			mod::msg("<b>Exception:</b> ".$ex->getMessage(),1);
 
 		}
+
+        \Infuso\Core\Defer::callDeferedFunctions();
 
 		// Собираем массив сообщений
 		$messages = array();

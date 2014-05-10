@@ -221,7 +221,7 @@ class App {
 	    Header("HTTP/1.0 200 OK");
 
 		// Выполняем post-команду
-	    post::process($this->post(),$this->files());
+	    Post::process($this->post(),$this->files());
 	    Profiler::addMilestone("post completed");
 
 	    Defer::callDeferedFunctions();

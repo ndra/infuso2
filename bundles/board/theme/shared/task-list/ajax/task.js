@@ -23,6 +23,12 @@ $(function() {
                             taskId:id
                         });
                         break;
+                    case "stop":
+                        mod.call({
+                            cmd:"infuso/board/controller/task/stopTask",
+                            taskId:id
+                        });
+                        break;
                 }
                 return;
             }
