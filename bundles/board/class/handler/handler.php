@@ -29,7 +29,7 @@ class board_handler implements \Infuso\Core\Handler {
             ->appendTo("boardUser");
 
         user_operation::create("board/viewGrantedProject","Просмотр проекта (когда предоставлен доступ к проекту) ")
-            ->addBusinessRule('$projects = board_project::visible()->eq("id",$project->id()); return !$projects->void(); ')
+            ->addBusinessRule('$projects = \Infuso\Board\Model\Project::all()->visible()->eq("id",$project->id()); return !$projects->void(); ')
 			->appendTo('guest');
 
         user_operation::create("board/viewProject","Просмотр проекта")
@@ -39,7 +39,7 @@ class board_handler implements \Infuso\Core\Handler {
         // Операции с задачами
 
         user_operation::create("board/task/fullAccess","Редактирование задачи (когда предоставлен доступ к проекту)")
-            ->addBusinessRule('return board_access::all()->eq("userID",$user->id())->eq("editTasks",1)->eq("projectID",$task->project()->id())->one()->exists();')
+            ->addBusinessRule('return \Infuso\Board\Model\Access::all()->eq("userId",$user->id())->eq("editTasks",1)->eq("projectID",$task->project()->id())->one()->exists();')
 			->appendTo('guest');
 
         user_operation::create("board/task/limitedAccess","Редактирование задачи (ограниченый доступ к проекту)")
@@ -57,7 +57,7 @@ class board_handler implements \Infuso\Core\Handler {
 			->appendTo('boardUser');
 
         user_operation::create("board/viewGrantedTask","Просмотр задачи (когда предоставлен доступ к проекту) ")
-            ->addBusinessRule('$tasks = board_task::visible()->eq("id",$task->id()); return !$tasks->void(); ')
+            ->addBusinessRule('$tasks = \Infuso\Board\Model\Task::all()->visible()->eq("id",$task->id()); return !$tasks->void(); ')
 			->appendTo('guest');
 
         user_operation::create("board/viewTask","Просмотр задачи")
@@ -117,7 +117,7 @@ class board_handler implements \Infuso\Core\Handler {
             ->appendTo("boardUser");
 
        user_operation::create("board/newTaskInGrantedProject","Создание задачи в проекте, к которому предоставлен доступ")
-            ->addBusinessRule('return board_access::all()->eq("userID",$user->id())->eq("editTasks",1)->eq("projectID",$project->id())->one()->exists();')
+            ->addBusinessRule('return \Infuso\Board\Model\Access::all()->eq("userID",$user->id())->eq("editTasks",1)->eq("projectID",$project->id())->one()->exists();')
             ->appendTo("guest");
 
         user_operation::create("board/newTask","Создание задачи")
@@ -140,7 +140,7 @@ class board_handler implements \Infuso\Core\Handler {
             ->appendTo("board/editTask");
 
        user_operation::create("board/pauseTask","Приостановка задачи")
-            ->addBusinessRule('if($task->data("status") != board_task_status::STATUS_IN_PROGRESS) $this->error("Нельзя поставить задачу на паузу в статусе {$task->status()->title()}");')
+            ->addBusinessRule('if($task->data("status") != \Infuso\Board\Model\TaskStatus::STATUS_IN_PROGRESS) $this->error("Нельзя поставить задачу на паузу в статусе {$task->status()->title()}");')
             ->addBusinessRule("return true;")
             ->appendTo("board/editTask");
 
@@ -165,14 +165,6 @@ class board_handler implements \Infuso\Core\Handler {
 
         user_operation::create("board/getUserList","Просмотр списка пользователей")
 			->appendTo("boardUser");
-            
-		// Голосование
-		
-       user_operation::create("board/vote","Голосовать за задачу")
-			->addBusinessRule('if($user->id()==$task->responsibleUser()->id() && $criteria->data("voter-self")) return true;')
-			->addBusinessRule('if($user->id()!=$task->responsibleUser()->id() && $criteria->data("voter-other")) return true;')
-			->addBusinessRule('return false;')
-            ->appendTo("boardUser");
 
 		// Отчеты
 

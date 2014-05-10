@@ -52,14 +52,14 @@ class TaskTime extends ActiveRecord\Record {
      * Возвращает коллекцию всех записей в логе
      **/
     public static function all() {
-        return reflex::get(get_class())->desc("begin");
+        return service("ar")->collection(get_class())->desc("begin");
     }
 
     /**
      * Возвращает запись в логе по id
      **/
     public static function get($id) {
-        return reflex::get(get_class(),$id);
+        return service("ar")->get(get_class(),$id);
     }
 
     /**

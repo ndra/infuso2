@@ -49,6 +49,10 @@ $(function() {
             load();
         });
         
+        mod.on("board/taskChanged", function(data) {
+            load();
+        });
+        
     });
 
 }); 

@@ -60,6 +60,10 @@
                 background: url("@{bundle}res/img/icons24inverse/take.png") center center no-repeat;
             }
             
+            .resume {
+                background: url("@{bundle}res/img/icons24inverse/resume.png") center center no-repeat;
+            }
+            
             .problems {
                 background: url("@{bundle}res/img/icons24inverse/problems.png") center center no-repeat;
             }

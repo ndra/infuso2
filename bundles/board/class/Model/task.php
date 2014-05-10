@@ -4,6 +4,7 @@ namespace Infuso\Board\Model;
 
 use \User;
 use \mod, \Util;
+use Infuso\Core;
 
 class Task extends \Infuso\ActiveRecord\Record {
 
@@ -132,10 +133,16 @@ class Task extends \Infuso\ActiveRecord\Record {
         return \Infuso\ActiveRecord\Record::get(get_class(),$id);
     }
 
+    /**
+     * Возвращает проект
+     **/
     public function project() {
         return $this->pdata("projectID");
     }
 
+    /**
+     * Возвращает родителя записи, т.е. проект
+     **/
     public function recordParent() {
         return $this->project();
     }
@@ -236,10 +243,14 @@ class Task extends \Infuso\ActiveRecord\Record {
         }
 
         // Если статус задачи "к исполнению", ответственным лицом становится текущий пользователь.
+        // Если были выполняющиеся задачи, они ставятся на паузу
         if($this->field("status")->changed() && $this->status()->id()==1) {
+
+            // Назначаем ответственного пользователя
             $this->data("responsibleUser",user::active()->id());
 
-            $xtasks = board_task::all()
+            // Ставим на паузу выполняющиеся задачи
+            $xtasks = Task::all()
                 ->eq("responsibleUser",user::active()->id())
                 ->eq("status",TaskStatus::STATUS_IN_PROGRESS)
                 ->neq("id",$this->id());
@@ -248,19 +259,11 @@ class Task extends \Infuso\ActiveRecord\Record {
             }
         }
 
-        if(!$this->isTaskEventsSuspended()) {
-
-            mod::fire("board/taskChanged",array(
-                "deliverToClient" => true,
-                "taskID" => $this->id(),
-                "sticker" => $this->stickerData(),
-                "statusText" => $this->statusText(),
-                "changed" => $changed,
-            ));
-        }
-
     }
     
+    /**
+     * Возвращает текст статуса задачи
+     **/
     public function statusText() {
     
         if($this->paused()) {
@@ -326,22 +329,32 @@ class Task extends \Infuso\ActiveRecord\Record {
         
     }
 
+    /**
+     * Вызывает сообщение об изменении задачи (добавляет отложенную функцию)
+     **/
     public function fireChangedEvent() {
-        mod::fire("board/taskChanged",array(
+        $this->defer("fireChangedEventDefer");
+    }
+
+    /**
+     * Вызывает сообщение об изменении задачи
+     **/
+    public function fireChangedEventDefer() {
+        Core\Mod::msg($this->id());
+        Core\Mod::fire("board/taskChanged",array(
             "deliverToClient" => true,
-            "taskID" => $this->id(),
-            "sticker" => $this->stickerData(),
-            "changed" => array(),
+            "taskId" => $this->id(),
+            "task"
         ));
     }
 
-    public function reflex_afterStore() {
+    public function afterStore() {
         if($this->data("epicParentTask")) {
-
             $task = $this->pdata("epicParentTask");
             $task->fireChangedEvent();
             $task->data("responsibleUser",0);
-
+        } else {
+            $this->fireChangedEvent();
         }
     }
 
@@ -373,7 +386,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function getLogCustom() {
-        return TaskLog::all()->eq("taskID",$this->id());
+        return Log::all()->eq("taskID",$this->id());
     }
 
     public function logCustom($params) {
@@ -387,7 +400,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function timeLog() {
-        return board_task_time::all()->eq("taskID",$this->id());
+        return taskTime::all()->eq("taskID",$this->id());
     }
 
     public function startTimer() {
@@ -468,8 +481,9 @@ class Task extends \Infuso\ActiveRecord\Record {
             return;
         }
 
-        $this->data("paused",util::now());
+        $this->data("paused",\util::now());
         $this->stopTimer();
+        $this->fireChangedEvent();
 
     }
 
@@ -483,8 +497,8 @@ class Task extends \Infuso\ActiveRecord\Record {
         }
 
         // Ставим остальные задачи на паузу
-        $xtasks = board_task::all()
-            ->eq("responsibleUser",user::active()->id())
+        $xtasks = Task::all()
+            ->eq("responsibleUser",\user::active()->id())
             ->eq("status",TaskStatus::STATUS_IN_PROGRESS)
             ->neq("id",$this->id());
         foreach($xtasks as $xtask) {
@@ -493,6 +507,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 
         $this->data("paused",null);
         $this->startTimer();
+        $this->fireChangedEvent();
     }
 
     /**

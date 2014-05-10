@@ -8,7 +8,7 @@ use  \User;
 /**
  * Модель записи в логе
  **/
-class TaskLog extends Record {
+class Log extends Record {
 
     const TYPE_COMMENT = 1;
     const TYPE_TASK_MODIFIED = 3;
