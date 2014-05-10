@@ -49,8 +49,7 @@ exec("/reflex/layout/global");
         $h->end();
     }
     
-    // Подвал со статистикой
-    
+    // Подвал со статистикой    
     <div class='stats' >
         echo \Infuso\Util\Units::formatBytes($storage->size());
         echo " в ".$storage->count()." файлов";    
