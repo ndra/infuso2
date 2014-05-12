@@ -16,12 +16,12 @@
     }
     <i>
         <a href='#' menu:id='reports' class='item' >Отчеты</a>
-        <a href='#' menu:id='conf' class='item' >Настройки</a>
+        <a href='#' menu:id='conf' class='item' >Настройки</a>        
     </i>
 </div>
     
 // Субменю
-<div class='x55qv4lhb8m-submenu' style='position:absolute;z-index:100' >  
+<div class='x55qv4lhb8m-submenu' style='position:absolute;z-index:100;' >
     <div class='submenu' menu:id='reports' >
         <a class='item' href='#report-done' >Сделано сегодня</a>
         <a class='item' href='#report-projects' >Проекты</a>
@@ -46,7 +46,8 @@
             <a class='item' href='#conf-access' >Доступ</a>
         }
         
-        <a class='item' href='#conf-profile' >Профиль</a>
+        $url = action("infuso\\board\\controller\\conf")->url();
+        <a class='item' href='{$url}' >Профиль</a>
         
     </div>
 </div>
