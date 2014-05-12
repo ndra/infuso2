@@ -40,7 +40,9 @@
         
     </div>
     <div class='submenu' menu:id='conf' >
-        <a class='item' href='#conf-projects' >Проекты</a>
+    
+        $url = action("infuso\\board\\controller\\projects")->url();
+        <a class='item' href='{$url}' >Проекты</a>
         
         if(user::active()->checkAccess("board/showAccessList")) {
             <a class='item' href='#conf-access' >Доступ</a>

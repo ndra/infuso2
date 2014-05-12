@@ -1,0 +1,17 @@
+.hek1b6stnl {
+
+    td {
+        padding: 3px 6px;
+    }
+    
+    thead td {
+        color: gray;
+        padding-bottom: 10px;
+        font-style: italic;
+    }
+    
+    tr:hover td {
+        background: #ededed;
+    }
+
+}

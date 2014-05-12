@@ -42,7 +42,7 @@ class service extends \infuso\core\service {
         }
 
         Core\Profiler::endOperation();
-        return new Action();
+        return new Core\Action();
     }
 
 	/**

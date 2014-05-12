@@ -14,11 +14,11 @@ class Access extends \Infuso\ActiveRecord\Record {
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
                 ), array (
-                    'name' => 'userID',
+                    'name' => 'userId',
                     'type' => 'link',
                     'class' => \user::inspector()->className(),
                 ), array (
-                    'name' => 'projectID',
+                    'name' => 'projectId',
                     'type' => 'link',
                     'class' => Project::inspector()->className(),
                 ), array (
@@ -55,11 +55,11 @@ class Access extends \Infuso\ActiveRecord\Record {
 	}
 
     public function user() {
-        return $this->pdata("userID");
+        return $this->pdata("userId");
     }
 
     public function project() {
-        return $this->pdata("projectID");
+        return $this->pdata("projectId");
     }
 	
 }

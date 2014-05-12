@@ -4,6 +4,17 @@ namespace Infuso\Board\Model;
 
 class Project extends \Infuso\ActiveRecord\Record {
 
+	public function indexTest() {
+	    return true;
+	}
+	
+	public function index_item($p) {
+	    $project = self::get($p["id"]);
+		$this->app()->tmp()->exec("/board/project", array(
+		    "project" => $project,
+		));
+	}
+
     public static function recordTable() {
 
         return array (
@@ -16,8 +27,7 @@ class Project extends \Infuso\ActiveRecord\Record {
                     'name' => 'title',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
-                    'label' => '',
-                    'default' => '',
+                    'label' => 'Название проекта',
                 ), array (
                     'name' => 'priority',
                     'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
@@ -43,6 +53,21 @@ class Project extends \Infuso\ActiveRecord\Record {
         );
 
     }
+
+    /**
+     * Возвращает проект по id
+     **/
+	public static function get($id) {
+		return service("ar")->get(get_class(),$id);
+	}
+
+	/**
+	 * Возвращает список всех проектов
+	 **/
+	public static function all() {
+		return \Infuso\ActiveRecord\Record::get(get_class())
+			->desc("priority");
+	}
     
     /**
      * Возвращает флаг наличия у активного пользователя подписки на этот проект
@@ -50,13 +75,6 @@ class Project extends \Infuso\ActiveRecord\Record {
 	public function isActiveUserHaveSubscription() {
 	    $subscriptionKey = "board/project-{$this->id()}/taskCompleted";
 	    return !user::active()->subscriptions()->eq("key",$subscriptionKey)->void();
-	}
-
-	/**
-	 * Возвращает список всех проектов
-	 **/
-	public static function all() {
-		return \Infuso\ActiveRecord\Record::get(get_class())->desc("priority");
 	}
 
 	/**
@@ -76,13 +94,6 @@ class Project extends \Infuso\ActiveRecord\Record {
         }
 
 		return $projects;
-	}
-
-    /**
-     * Возвращает проект по id
-     **/	     
-	public static function get($id) {
-		return reflex::get(get_class(),$id);
 	}
 
     /**
@@ -117,6 +128,9 @@ class Project extends \Infuso\ActiveRecord\Record {
         $icon = $this->storage()->add($tmp,"favicon.png");
         $this->data("icon",$icon);
 
+    }
+    
+    public function accesses() {
     }
 	
 }
