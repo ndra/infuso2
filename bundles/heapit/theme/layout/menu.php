@@ -36,12 +36,12 @@
             "url" => (string) action("infuso\\heapit\\controller\\report"),
             "title" => "Отчеты",
             "code" => "reports",
-            "newtab" => true,
+            //"newtab" => true,
         ), array (
             "url" => (string) action("infuso\\heapit\\controller\\conf"),
             "title" => "Настройки",
             "code" => "conf",
-            "newtab" => true,
+            //"newtab" => true,
         ),
     );
     

@@ -54,7 +54,7 @@ exec("/ui/shared");
         "incomePlan" => $payments->copy()->eq("status", $statusPlan)->sum("income"),
         "expenditure" => $payments->copy()->eq("status", $statusPaid)->sum("expenditure"),
         "expenditurePlan" => $payments->copy()->eq("status", $statusPlan)->sum("expenditure"),
-        "bargains" => $bargains->sum("amount"),
+        "bargains" => $bargains->eq("invoiced",0)->sum("amount"),
     ));
     
     <table style='width:100%;' >
@@ -63,7 +63,7 @@ exec("/ui/shared");
                 exec("group", array(
                     "bgcolor" => "#ededed",
                     "title" => "Планируемый доход",
-                    "payments" => $payments->copy()->eq("status",array(\Infuso\Heapit\Model\Payment::STATUS_PUSHED, \Infuso\Heapit\Model\Payment::STATUS_PLAN))->gt("income",0),
+                    "payments" => $payments->copy()->eq("status", $statusPlan)->gt("income",0),
                 ));  
                 exec("group", array(
                     "bgcolor" => "#ddd",
@@ -76,7 +76,7 @@ exec("/ui/shared");
                 exec("group", array(
                     "bgcolor" => "#ededed",
                     "title" => "Планируемые расходы",
-                    "payments" => $payments->copy()->neq("status",200)->gt("expenditure",0),
+                    "payments" => $payments->copy()->eq("status", $statusPlan)->gt("expenditure",0),
                 ));  
                 $fn($data["expenditure"]);
             </td>
