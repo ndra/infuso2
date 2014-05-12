@@ -1,11 +1,11 @@
 .i95bnu5fvm {
 
     display: inline-block;
-    width: 260px;
-    margin: 10px;
+    width: 150px;
+    margin: 5px;
     
     .sticker {
-        height: 160px;        
+        height: 150px;        
         font-size: 12px;
         margin-bottom: 5px;
         cursor: pointer;
