@@ -49,6 +49,14 @@
                 $w->value($bargain->data("paymentDate"));
                 $w->exec();
                 
+                $checkboxId = \util::id();
+                $checkbox = helper("<input id='{$checkboxId}' type='checkbox' name='invoiced'  >");                    
+                if($bargain->data("invoiced")) {
+                    $checkbox->attr("checked",true);
+                }
+                $checkbox->exec();
+                <label for='{$checkboxId}' >Выставлен счет <sup title='Если одновременно существует сделка и выставлен счет (или есть счет в статусе «Планируется»), то сумма в отчете удвоится и отчет станет неправильным. Поэтому можно исключить сделку из отчетов, выставив этот чекбокс.' >?</sup></label>    
+                
             </td>
         </tr>
         <tr>

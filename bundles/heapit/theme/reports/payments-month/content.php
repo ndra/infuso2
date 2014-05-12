@@ -46,11 +46,14 @@ exec("/ui/shared");
         }    
     };
     
+    $statusPaid = \Infuso\Heapit\Model\Payment::STATUS_PAID;
+    $statusPlan = array(\Infuso\Heapit\Model\Payment::STATUS_PUSHED, \Infuso\Heapit\Model\Payment::STATUS_PLAN);
+    
     exec("total", array(
-        "income" => $payments->copy()->eq("status", 200)->sum("income"),
-        "incomePlan" => $payments->copy()->neq("status", 200)->sum("income"),
-        "expenditure" => $payments->copy()->eq("status", 200)->sum("expenditure"),
-        "expenditurePlan" => $payments->copy()->neq("status", 200)->sum("expenditure"),
+        "income" => $payments->copy()->eq("status", $statusPaid)->sum("income"),
+        "incomePlan" => $payments->copy()->eq("status", $statusPlan)->sum("income"),
+        "expenditure" => $payments->copy()->eq("status", $statusPaid)->sum("expenditure"),
+        "expenditurePlan" => $payments->copy()->eq("status", $statusPlan)->sum("expenditure"),
         "bargains" => $bargains->sum("amount"),
     ));
     
