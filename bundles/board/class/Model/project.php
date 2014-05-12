@@ -100,7 +100,7 @@ class Project extends \Infuso\ActiveRecord\Record {
      * Возвращает коллекцию задач в проекте
      **/
 	public function tasks() {
-		return board_task::all()->eq("projectID",$this->id());
+		return Task::all()->eq("projectId",$this->id());
 	}
 
     /**
@@ -131,6 +131,7 @@ class Project extends \Infuso\ActiveRecord\Record {
     }
     
     public function accesses() {
+        return Access::all()->eq("projectId", $this->id());
     }
 	
 }

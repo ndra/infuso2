@@ -20,6 +20,7 @@ class TaskTime extends ActiveRecord\Record {
                 ), array (
                     'name' => 'begin',
                     'type' => 'datetime',
+                    "default" => "now",
                     'editable' => 1,
                     'label' => 'Начало',
                 ), array (
@@ -32,13 +33,13 @@ class TaskTime extends ActiveRecord\Record {
                     'type' => 'checkbox',
                     'label' => 'Учтено',
                 ), array (
-                    'name' => 'userID',
+                    'name' => 'userId',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
                     'editable' => '2',
                     'label' => 'Пользователь',
                     'class' => 'user',
                 ), array (
-                    'name' => 'taskID',
+                    'name' => 'taskId',
                     'type' => 'link',
                     'editable' => '2',
                     'label' => 'Задача',
@@ -66,23 +67,22 @@ class TaskTime extends ActiveRecord\Record {
      * Возвращает задачу к которой относится запись в логе
      **/
     public function task() {
-        return $this->pdata("taskID");
+        return $this->pdata("taskId");
     }
 
-    public function reflex_parent() {
+    public function recordParent() {
         return $this->task();
     }
 
-    public function reflex_beforeCreate() {
-        $this->data("begin", \util::now());
-        $this->data("userID", \user::active()->id());
+    public function beforeCreate() {
+        $this->data("userId", \user::active()->id());
     }
 
     /**
      * Возвращает пользователя от которого сделана запись
      **/
     public function user() {
-        return $this->pdata("userID");
+        return $this->pdata("userId");
     }
 
 

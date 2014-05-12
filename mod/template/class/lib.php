@@ -41,4 +41,8 @@ class Lib {
         tmp::js(self::path()."/js/mod.list.js");
     }
 
+    public function d3() {
+        js("http://d3js.org/d3.v3.min.js");
+    }
+
 }

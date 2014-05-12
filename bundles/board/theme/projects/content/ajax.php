@@ -10,6 +10,7 @@ $projects = \Infuso\Board\Model\Project::all()->limit(0);
                 <td colspan='2' >Проект</td>
                 <td>Сайт</td>
                 <td>Автозакрытие задач</td>
+                <td>Доступ</td>
             </tr>
         </thead>
     
@@ -20,6 +21,10 @@ $projects = \Infuso\Board\Model\Project::all()->limit(0);
                 <td><a href='{$project->url()}' >{$project->title()}</a></td>
                 <td>{$project->data("url")}</td>
                 <td>{$project->data("completeAfter")}</td>
+                <td>
+                    foreach($project->accesses() as $access) {
+                        <span class='access' >{$access->user()->title()}</span>
+                    }
             </tr>
         }
     </table>
