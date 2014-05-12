@@ -9,6 +9,8 @@ exec("/ui/shared");
     $payments = \Infuso\Heapit\Model\Payment::all()
         ->eq("year(date)", $year)
         ->eq("month(date)",$month)
+        ->asc("orgId")
+        ->asc("date", true)
         ->limit(0);
         
     $bargains = \Infuso\Heapit\Model\Bargain::all()
@@ -58,7 +60,7 @@ exec("/ui/shared");
                 exec("group", array(
                     "bgcolor" => "#ededed",
                     "title" => "Планируемый доход",
-                    "payments" => $payments->copy()->neq("status",200)->gt("income",0),
+                    "payments" => $payments->copy()->eq("status",array(\Infuso\Heapit\Model\Payment::STATUS_PUSHED, \Infuso\Heapit\Model\Payment::STATUS_PLAN))->gt("income",0),
                 ));  
                 exec("group", array(
                     "bgcolor" => "#ddd",

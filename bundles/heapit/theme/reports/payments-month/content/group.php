@@ -33,7 +33,10 @@ if($inverse) {
                 <tbody>
                     <tr>
                         <td class='date' >{$payment->pdata("date")->num()}</td>
-                        <td>{$payment->org()->title()}</td>
+                        <td>
+                            <a href='{$payment->url()}' >{$payment->org()->title()}</a>
+                            <span class='status' >{$payment->pdata("status")}</span>
+                        </td>
                         <td>{max($payment->data("income"),$payment->data("expenditure"))} р.</td>
                     </tr>
                     <tr>

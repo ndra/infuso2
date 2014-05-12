@@ -45,7 +45,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
         $data[$row["year"]][$row["month"]]["income-plan"]["Сделки"] = $row["sum"];
     }
     
-    // Данные по доходам (счета)
+    // Планируемый доход (счета)
     $ipdata = $payments->copy()
         ->groupBy("`year`, `month`")
         ->eq("status", array(50,100))
@@ -54,7 +54,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
         $data[$row["year"]][$row["month"]]["income-plan"]["Планируемые доходы"] = $row["sum"];
     }
     
-    // Данные по расходам
+    // Данные по расходам (оплачено)
     $edata = $payments->copy()
         ->groupBy("`year`, `month`, `group`")
         ->eq("status", 200)
@@ -63,7 +63,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
         $data[$row["year"]][$row["month"]]["expenditure"][$row["group"]] = $row["sum"];
     }
     
-    // Данные по расходам (счета)
+    // Данные по расходам (планируется)
     $epdata = $payments->copy()
         ->groupBy("`year`, `month`")
         ->eq("status", array(50,100))
