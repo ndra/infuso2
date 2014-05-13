@@ -33,13 +33,13 @@ class Log extends Record {
                   'editable' => '2',
                   'label' => 'Время записи',
                 ), array (
-                  'name' => 'userID',
+                  'name' => 'userId',
                   'type' => 'pg03-cv07-y16t-kli7-fe6x',
                   'editable' => '2',
                   'label' => 'Пользователь',
                   'class' => \User::inspector()->className(),
                 ), array (
-                  'name' => 'taskID',
+                  'name' => 'taskId',
                   'type' => 'pg03-cv07-y16t-kli7-fe6x',
                   'editable' => '2',
                   'label' => 'Задача',

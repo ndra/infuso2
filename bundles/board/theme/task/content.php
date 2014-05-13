@@ -29,5 +29,6 @@
         
     <br/><br/>
     exec("/board/shared/task-tools");
+    exec("timeline");
     
 </form>

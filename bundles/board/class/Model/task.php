@@ -402,7 +402,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 
     public function logCustom($params) {
         $this->getLogCustom()->create(array(
-            "taskID" => $this->id(),
+            "taskId" => $this->id(),
             "type" => $params["type"],
             "text" => $params["text"],
             "timeSpent" => $params["time"],
@@ -411,7 +411,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function timeLog() {
-        return taskTime::all()->eq("taskID",$this->id());
+        return taskTime::all()->eq("taskId",$this->id());
     }
 
     public function startTimer() {

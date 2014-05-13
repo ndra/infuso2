@@ -20,7 +20,7 @@ class TaskTime extends ActiveRecord\Record {
                 ), array (
                     'name' => 'begin',
                     'type' => 'datetime',
-                    "default" => "now",
+                    "default" => "now()",
                     'editable' => 1,
                     'label' => 'Начало',
                 ), array (
