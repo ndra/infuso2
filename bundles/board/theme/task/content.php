@@ -1,6 +1,13 @@
 <? 
 
 <form class='ybslv95net' data:task='{$task->id()}' >
+
+    <div style='margin-bottom:20px;' >
+        echo $task->id();
+        echo " / ";
+        echo $task->project()->title();
+        echo $task->statusText();
+    </div>
     
     <div style='margin-bottom:10px;' >
         widget("infuso\\cms\\ui\\widgets\\textarea")
@@ -19,5 +26,8 @@
         ->text("Сохранить")
         ->attr("type", "submit")
         ->exec();
+        
+    <br/><br/>
+    exec("/board/shared/task-tools");
     
 </form>
