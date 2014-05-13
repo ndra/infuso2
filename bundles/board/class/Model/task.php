@@ -354,7 +354,8 @@ class Task extends \Infuso\ActiveRecord\Record {
         Core\Mod::fire("board/taskChanged",array(
             "deliverToClient" => true,
             "taskId" => $this->id(),
-            "task"
+            "toolbarLarge" => \tmp::get("/board/shared/task-tools")->param("task", $this)->getContentForAjax(),
+            "statusText" => $this->statusText(),
         ));
     }
 
@@ -545,127 +546,7 @@ class Task extends \Infuso\ActiveRecord\Record {
             return false;
         }
 
-        return (bool)$this->data("paused");
-    }
-
-    /**
-     * Возвращает голоса за задачу
-     **/
-    public function votes() {
-        return board_task_vote::all()->eq("taskID",$this->id());
-    }
-
-    /**
-     * Возвращает джанные стикера задачи
-     * Кэширует результат
-     **/
-    public function stickerData() {
-
-        $key = "board/stickerData/".$this->id()."/".$this->data("dataHash")."/".user::active()->id();
-        $cacheService = mod::service("cache");
-        $cached = $cacheService->get($key);
-        if($cached) {
-            $cached = json_decode($cached,1);
-            return $cached;
-        }
-
-        $data = $this->stickerDataNoCache();
-        $loader = new \mod_confLoader_json();
-        $cached = $loader->write($data);
-
-        // Кэшируем данные задачи на 10 минут
-        $cacheService->set($key,$cached,600);
-
-        return $data;
-
-    }
-
-    /**
-     * Возвращает данные для стикера
-     **/
-    public function stickerDataNoCache() {
-
-        if($this->data("type")==1) {
-            return array(
-                "folder" => true,
-            );
-        }
-
-        $ret = array();
-
-        $ret["id"] = $this->id();
-
-        // Текст стикера
-        $ret["text"] = \util::str($this->data("text"))->ellipsis(200)->secure()."";
-        
-        // Проект
-        $ret["project"] = array(
-            "id" => $this->project()->id(),
-            "title" => $this->project()->title(),
-            "icon" => $this->project()->icon()->preview(16,16),
-        );
-        
-        // Ответственный пользователь
-        $ret["responsibleUser"] = array(
-            "nick" => $this->responsibleUser()->title(),
-            "userpic" => (string)$this->responsibleUser()->userpic()->preview(16,16)->crop(),
-        );
-
-        // Своя задача
-        $ret["my"] = $this->responsibleUser()->id() == user::active()->id();
-        
-        // Статус
-        $ret["status"] = array(
-            "id" => $this->status()->id(),
-            "title" => $this->statusText(),
-        );
-        
-        // Цвет стикера
-        $ret["color"] = $this->data("color");
-
-        // Хапланированное и потраченное время
-        $ret["timeSpent"] = round($this->timeSpent(),2);
-        $ret["timeSpentProgress"] = round($this->timeSpentProgress()/3600,2);
-        $ret["timeScheduled"] = round($this->timeScheduled(),2);
-
-        // Установленный дэдлайн
-        $ret["deadlineDate"] = $this->data("deadlineDate");
-        $ret["deadline"] = $this->data("deadline");
-        
-        if($this->data("deadline")) {
-            $ret["deadlineMissed"] = util::now()->stamp() > $this->pdata("deadlineDate")->stamp();
-        }
-
-        // Пропущенный дэдлайн
-        $d = util::now()->stamp() - $this->pdata("deadlineDate")->stamp();
-        // @todo сделать
-
-        // Эпик (задача с подзадачами)
-        $ret["epic"] = $this->isEpic();
-
-        // Наличие прикрепленных файлов
-        if($this->data("files")) {
-            $ret["attachment"] = true;
-        }
-        
-        // Стоит ли задача на паузе
-        $ret["paused"] = $this->paused();
-
-        $ret["percentCompleted"] = $this->percentCompleted();
-        
-        $ret["images"] = array();
-        foreach($this->storage()->files() as $file) {
-            $ret["images"][] = array(
-                "x30" => $file->preview(30,30),
-                "original" => $file,
-            );
-        }
-
-        // Кнопки задачи (видны только если можно изменять задачу)
-
-        $ret["tools"] = $this->tools();
-        
-        return $ret;
+        return (bool) $this->data("paused");
     }
 
     /**

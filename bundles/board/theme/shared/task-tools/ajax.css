@@ -1,0 +1,44 @@
+.ttbuu8389u {
+
+    .iconPack(@pack) {
+    
+        .take {
+            background: url("@{bundle}res/img/@{pack}/take.png") center center no-repeat;
+        }
+        
+        .resume {
+            background: url("@{bundle}res/img/@{pack}/resume.png") center center no-repeat;
+        }
+        
+        .problems {
+            background: url("@{bundle}res/img/@{pack}/problems.png") center center no-repeat;
+        }
+        
+        .cancel {
+            background: url("@{bundle}res/img/@{pack}/cancel.png") center center no-repeat;
+        }
+        
+        .stop {
+            background: url("@{bundle}res/img/@{pack}/stop.png") center center no-repeat;
+        }
+        
+        .done {
+            background: url("@{bundle}res/img/@{pack}/done.png") center center no-repeat;
+        }
+    }    
+    
+    input {
+        display:inline-block;
+        width: 45px;
+        height:45px;
+        box-sizing: border-box;
+        margin-right:10px;
+        border: none;
+        &:hover {
+            background-color: #ededed;
+            border-radius: 5px;
+        }
+    } 
+    
+    .iconPack("icons24");
+}
