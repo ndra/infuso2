@@ -8,6 +8,17 @@ use Infuso\Core;
 
 class Task extends \Infuso\ActiveRecord\Record {
 
+    public function indexTest() {
+        return true;
+    }
+
+    public function index_item($p) {
+        $task = self::get($p["id"]);
+        $this->app()->tmp()->exec("/board/task", array(
+            "task" => $task,
+        ));
+    }
+
     public static function recordTable() {
     
         return array(

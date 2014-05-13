@@ -1,14 +1,14 @@
 $(function() {
 
-    var w = 350,                        //width
-    h = 350,                            //height
-    r = 100,                            //radius
+    var w = 600,                        //width
+    h = 600,                            //height
+    r = 200,                            //radius
     color = d3.scale.category20
     ();     //builtin range of colors
  
-    data = JSON.parse($(".aqmg2ttrto .contributors").attr("data:data"));
+    data = JSON.parse($(".tlajvftvvk .pie").attr("data:data"));
     
-    var vis = d3.select(".aqmg2ttrto .contributors")
+    var vis = d3.select(".tlajvftvvk .pie")
         .append("svg:svg") 
         .data([data])
         .attr("width", w)
