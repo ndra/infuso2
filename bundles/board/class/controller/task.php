@@ -73,14 +73,18 @@ class Task extends \Infuso\Core\Controller {
      * Используется в диалоге, который открывается если кликнуть на карточку задачи.
      **/
     public function post_getTask($p) {
-
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
-
         $html = \tmp::get("/board/task")
             ->param("task", $task)
             ->getContentForAjax();
-
         return $html;
+    }
+
+    public function post_saveTask($p) {
+        $task = \Infuso\Board\Model\Task::get($p["taskId"]);
+        $task->setData($p["data"]);
+        Core\Mod::msg("Задача изменена");
+
     }
 
     /**

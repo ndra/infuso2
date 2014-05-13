@@ -1,6 +1,6 @@
 <? 
 
-<form class='ybslv95net' >
+<form class='ybslv95net' data:task='{$task->id()}' >
     
     <div style='margin-bottom:10px;' >
         widget("infuso\\cms\\ui\\widgets\\textarea")
