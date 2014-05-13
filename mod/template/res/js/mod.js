@@ -163,3 +163,11 @@ mod.handleCmd = function(success,response,fn) {
         fn(ret.data);
 
 }
+
+mod.init = function(selector, fn) {
+
+    $(function() {
+        $(selector).mod("init", fn);
+    });
+
+}

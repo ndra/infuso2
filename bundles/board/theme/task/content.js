@@ -1,6 +1,8 @@
-$(function() {
+mod.init(".ybslv95net", function() {
 
-    $(".ybslv95net").submit(function(e) {
+    var container = $(this);
+
+    container.submit(function(e) {
         e.preventDefault();
         var data = $(this).mod("formData");
         mod.call({
@@ -9,5 +11,9 @@ $(function() {
             data:data
         });
     });
+    
+    mod.on("board/taskChanged", function(data) {
+        container.find(".status-text").html(data.statusText)
+    });
 
-});
+})

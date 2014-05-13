@@ -6,7 +6,7 @@
         echo $task->id();
         echo " / ";
         echo $task->project()->title();
-        echo $task->statusText();
+        <span class='status-text' >{$task->statusText()}</a>
     </div>
     
     <div style='margin-bottom:10px;' >
