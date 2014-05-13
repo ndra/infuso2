@@ -233,10 +233,10 @@ class Task extends \Infuso\ActiveRecord\Record {
             }
 
             // Если задача перестала выполняться - останавливаем таймер
-            /*if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS) {
+            if($this->field("status")->initialValue() == TaskStatus::STATUS_IN_PROGRESS) {
                 $this->stopTimer();
                 $this->timeLog()->data("charged",1);
-            } */
+            }
 
         }
 

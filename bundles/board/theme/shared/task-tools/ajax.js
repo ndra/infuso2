@@ -16,6 +16,12 @@ $(function() {
                             taskId:id
                         });
                         break;
+                    case "pause":
+                        mod.call({
+                            cmd:"infuso/board/controller/task/pauseTask",
+                            taskId:id
+                        });
+                        break;
                     case "resume":
                         mod.call({
                             cmd:"infuso/board/controller/task/pauseTask",
@@ -32,8 +38,6 @@ $(function() {
                 return;
             }
         
-            
-            mod.fire("openTask",id);
         });
     
     });

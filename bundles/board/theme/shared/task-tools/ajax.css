@@ -6,6 +6,10 @@
             background: url("@{bundle}res/img/@{pack}/take.png") center center no-repeat;
         }
         
+        .pause {
+            background: url("@{bundle}res/img/@{pack}/pause.png") center center no-repeat;
+        }
+        
         .resume {
             background: url("@{bundle}res/img/@{pack}/resume.png") center center no-repeat;
         }

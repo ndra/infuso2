@@ -179,6 +179,14 @@ abstract class Field extends Core\Component {
     }
 
     /**
+     * Возвращает значение поля до изменения
+     **/
+    public function initialValue() {
+        $initialData = $this->model()->initialData();
+        return $initialData[$this->name()];
+    }
+
+    /**
      * @return Возвращает обработанное значение поля. Тип возвращаемого значения
      * и способ обработки зависит от типа поля
      **/
