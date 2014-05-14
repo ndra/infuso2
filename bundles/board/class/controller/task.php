@@ -84,7 +84,6 @@ class Task extends \Infuso\Core\Controller {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         $task->setData($p["data"]);
         Core\Mod::msg("Задача изменена");
-
     }
 
     /**
@@ -101,7 +100,9 @@ class Task extends \Infuso\Core\Controller {
             return;
         }
 
+		// Меняем статус задачи
         $task->data("status",Model\TaskStatus::STATUS_IN_PROGRESS);
+        // Записываем изменения статуса в лог
         $task->logCustom(array(
             "type" => Model\Log::TYPE_TASK_TAKEN,
         ));
@@ -146,6 +147,31 @@ class Task extends \Infuso\Core\Controller {
             "text" => $p["comment"],
             "time" => $time,
             "type" => Model\Log::TYPE_TASK_STOPPED,
+        ));
+
+        return true;
+    }
+    
+    /**
+     * Задача выполнена
+     **/
+    public function post_doneTask($p) {
+
+        $task = Model\Task::get($p["taskId"]);
+        $time = $p["time"];
+
+        if(!\user::active()->checkAccess("board/doneTask",array(
+            "task" => $task,
+        ))) {
+            Core\Mod::msg(\user::active()->errorText(),1);
+            return;
+        }
+
+        $task->data("status",Model\taskStatus::STATUS_DONE);
+        $task->logCustom(array(
+            "text" => $p["comment"],
+            "time" => $time,
+            "type" => Model\Log::TYPE_TASK_DONE,
         ));
 
         return true;

@@ -22,6 +22,12 @@ $(function() {
                             taskId:id
                         });
                         break;
+                    case "done":
+                        mod.call({
+                            cmd:"infuso/board/controller/task/doneTask",
+                            taskId:id
+                        });
+                        break;
                     case "resume":
                         mod.call({
                             cmd:"infuso/board/controller/task/pauseTask",

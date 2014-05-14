@@ -32,6 +32,7 @@ class Log extends Record {
                   'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
                   'editable' => '2',
                   'label' => 'Время записи',
+                  "default" => "now()",
                 ), array (
                   'name' => 'userId',
                   'type' => 'pg03-cv07-y16t-kli7-fe6x',
@@ -56,11 +57,6 @@ class Log extends Record {
                   'type' => 'yvbj-cgin-m90o-cez7-mv2j',
                   'editable' => '1',
                   'label' => 'Потрачено времени',
-                ), array (
-                  'name' => 'blah',
-                  'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-                  'editable' => '1',
-                  'label' => 'Треп',
                 ), array (
                     'name' => 'type',
                     'type' => 'select',
@@ -87,15 +83,6 @@ class Log extends Record {
     }
 
     /**
-     * Возвращает коллекцию записей в логе, видимых для активного пользователя
-     **/
-    public static function visible() {
-        $visibleTasks = Task::visible();
-        $log = self::all()->joinByField("taskID",$visibleTasks);
-        return $log;
-    }
-
-    /**
      * Возвращает запись в логе по id
      **/
     public static function get($id) {
@@ -106,19 +93,18 @@ class Log extends Record {
      * Возвращает задачу к которой относится запись в логе
      **/
     public function task() {
-        return $this->pdata("taskID");
+        return $this->pdata("taskId");
     }
 
-    public function reflex_parent() {
+    public function recordParent() {
         return $this->task();
     }
 
-    public function reflex_beforeCreate() {
-        $this->data("created",\util::now());
-        $this->data("userID",\user::active()->id());
+    public function beforeCreate() {
+        $this->data("userId",\user::active()->id());
     }
 
-    public function reflex_afterCreate() {
+    public function afterCreate() {
 
         if($this->data("type") == self::TYPE_COMMENT) {
 
@@ -141,11 +127,11 @@ class Log extends Record {
         }
     }
 
-    public function reflex_afterStore() {
+    public function afterStore() {
         $this->task()->updateTimeSpent();
     }
 
-    public function reflex_afterDelete() {
+    public function afterDelete() {
         $this->task()->updateTimeSpent();
     }
 
@@ -153,7 +139,7 @@ class Log extends Record {
      * Возвращает пользователя от которого сделана запись
      **/
     public function user() {
-        return $this->pdata("userID");
+        return $this->pdata("userId");
     }
 
     /**
@@ -195,7 +181,47 @@ class Log extends Record {
         } else {
             return array();
         }
-
+    }
+    
+	/**
+	 * Возвращает иконку статуса 16x16
+	 **/
+    public function icon16() {
+    
+        $icon = "";
+        switch($this->data("type")) {
+            default:
+            case self::TYPE_COMMENT:
+                $icon = "message";
+                break;
+            case self::TYPE_TASK_MODIFIED:
+            	$icon = "modified";
+                break;
+		    case self::TYPE_TASK_STOPPED:
+		    	$icon = "stop";
+		        break;
+		    case self::TYPE_TASK_TAKEN:
+		        $icon = "take";
+		        break;
+		    case self::TYPE_TASK_DONE:
+		        $icon = "done";
+		        break;
+		    case self::TYPE_TASK_COMPLETED:
+		        $icon = "completed";
+		        break;
+		    case self::TYPE_TASK_REVISED:
+		        $icon = "revised";
+		        break;
+			case self::TYPE_TASK_CANCELLED:
+				$icon = "revised";
+			    break;
+		    case self::TYPE_TASK_MOVED_TO_BACKLOG:
+		        $icon = "moved-to-backlog";
+		        break;
+        }
+        
+        return self::inspector()->bundle()->path()."/res/img/icons16/{$icon}.png";
+        
     }
 
 }
