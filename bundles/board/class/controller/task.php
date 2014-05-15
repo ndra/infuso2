@@ -74,10 +74,13 @@ class Task extends \Infuso\Core\Controller {
      **/
     public function post_getTask($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
-        $html = \tmp::get("/board/task")
+        $html = \tmp::get("/board/task/content")
             ->param("task", $task)
             ->getContentForAjax();
-        return $html;
+        return array(
+			"html" => $html,
+			"taskURL" => $task->url(),
+		);
     }
 
     public function post_saveTask($p) {

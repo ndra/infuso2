@@ -4,7 +4,7 @@
 
     <h1>{$project->title()}</h1>
     
-    foreach($this->accesses() as $access) {
+    foreach($project->accesses() as $access) {
         <div>
             echo $access->user()->title();
         </div>

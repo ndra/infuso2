@@ -8,7 +8,7 @@ lib::modJSUI();
 
 exec("header");
    
-<table class='layout-slpod3n5sa' style='border:1 solid red;' >
+<table class='layout-slpod3n5sa' >
     <tr>
         <td class='left' >
             <div style='height:100%;overflow:auto;' >           
@@ -24,5 +24,10 @@ exec("header");
         }
     </tr>
 </table>
+
+<div class='task-container-slpod3n5sa' >
+    <div class='close' >закрыть</div>
+    <div class='ajax'></div>
+</div>
 
 footer();

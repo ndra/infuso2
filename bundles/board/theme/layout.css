@@ -21,6 +21,22 @@ html,body {
     
 }
 
+.task-container-slpod3n5sa {
+    position: absolute;
+    width:100%;
+    left:0;
+    top:0;
+    background: white;
+    display: none;
+    
+    .close {
+        position:absolute;
+        right: 10px;
+        top: 10px;
+    }
+    
+}
+
 a {
     color: #1e0fbe;
 }
