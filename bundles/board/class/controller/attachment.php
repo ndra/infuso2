@@ -34,5 +34,18 @@ class Attachment extends Core\Controller {
         $task->uploadFilesCount();
 
     }
+    
+    /**
+     * Возвращает html списка прикрепленных файлов для страницы задачи.
+     **/
+    public function post_getAttachments($p) {
+        $task = \Infuso\Board\Model\Task::get($p["taskId"]);
+        $html = \tmp::get("/board/task/content/files/ajax")
+            ->param("task", $task)
+            ->getContentForAjax();
+        return array(
+			"html" => $html,
+		);
+    }
 
 }

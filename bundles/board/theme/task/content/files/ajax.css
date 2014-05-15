@@ -1,0 +1,37 @@
+.wq01orrvbq {
+
+    .file {
+    
+        width:200px;
+        margin: 0 20px 20px 0;
+        display:inline-block;
+        position: relative;
+    
+        img {
+            box-shadow: 0 0 10px rgba(0,0,0,.2);    
+            width:200px;
+            height:200px;
+            display: block;
+            margin-bottom: 10px;        
+        }
+        
+        .delete {
+            position: absolute;
+            top:0;
+            right:0;
+            width: 32px;
+            height: 32px;
+            background: red;
+        }
+        
+        .name {
+            white-space:nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-size:12px;
+            color: gray;
+        }
+        
+    }
+    
+}
