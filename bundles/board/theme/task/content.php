@@ -1,22 +1,20 @@
 <? 
 
-<div class='ddksfajhjz' data:task='{$task->id()}' >
+<div class='ddksfajhjz layout' data:task='{$task->id()}' style='height:100%;' >
 
-    <table>
-        <tr>
-            <td>
-                exec("status");
-                <br/>
-                exec("form");                
-                exec("/board/shared/task-tools");
-                <br/>
-                exec("timeline");
-                <br/>
-                exec("files");            
-            </td>
-            <td>
-                exec("comments");
-            </td>
-        </tr>
-    </table>
+    <div class='center' style='overflow:auto;padding: 30px;' >    
+        exec("status");
+        <br/>
+        exec("form");                
+        exec("/board/shared/task-tools");
+        <br/>
+        exec("timeline");
+        <br/>
+        exec("files");            
+    </div>
+    
+    <div class='right' style='width:300px;' >
+        exec("comments");                
+    </div>
+                
 </div>

@@ -12,6 +12,7 @@ $(function() {
     
     resize();
     setInterval(resize, 1000);
+    $(window).resize(resize);
     
     // Функция для закрытия окна    
     var closeTask = function() {  
