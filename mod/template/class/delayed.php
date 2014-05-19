@@ -22,7 +22,8 @@ class Delayed implements Core\Handler {
 	
 	    $content = $event->param("content");
 	    
-	    if(sizeof(Core\Log::messages(false))) {
+        $messages = service("msg")->messages(false);       
+	    if($messages) {
 	    	$content = self::insertMessages($content);
 	    }
 	    
