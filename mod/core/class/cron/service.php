@@ -91,7 +91,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
     public function process() {
     
         $begin = util::now()->stamp();
-        mod::fire("mod_cron");
+        mod::fire("infuso/cron");
         $time = util::now()->stamp() - $begin;
         
         mod::service("log")->log(array(

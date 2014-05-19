@@ -185,7 +185,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
     
         try {
         
-			$this->data("called",util::now());
+			$this->data("called", \util::now());
 
             if($this->oneTime()) {
                 $this->data("completed",true);
@@ -200,7 +200,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 	        $callback = array($class, $method);
 
 	        if(!is_callable($callback)) {
-	            throw new Exception("{$callback[0]}::{$callback[1]} is not a callback");
+	            throw new \Exception("{$callback[0]}::{$callback[1]} is not a callback");
 	            return;
 	        }
 	        
@@ -209,7 +209,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 			$this->data("counter",$this->data("counter")+1);
 	        $this->log("Выполняем");
 	        
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 		
 		    $this->data("lastErrorDate",util::now());
 			$this->log("Exception: ".$ex->getMessage());

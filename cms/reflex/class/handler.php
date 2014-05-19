@@ -93,8 +93,11 @@ class Handler extends Core\Component implements Core\Handler {
 	/**
 	 * Запускается как задача раз в день
 	 * Очищает каталог от мусора
+	 * @todo включить функцию     
 	 **/
     public static function cleanup() {
+    
+        return;
 
 		// Удаляем старые записи из лога (7 месцев)
 		\reflex_log::all()->leq("datetime",util::now()->shiftMonth(-6))->delete();

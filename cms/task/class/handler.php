@@ -7,8 +7,11 @@ class Handler implements Core\Handler {
 
     public static $origin = null;
 
-    public function on_mod_cron() {
-        mod::service("task")->runTasks();     
+    /**
+     * @handler = infuso/cron
+     **/         
+    public function onCron() {
+        service("task")->runTasks();     
     }
     
     public function on_mod_beforeInit() {

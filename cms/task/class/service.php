@@ -20,8 +20,8 @@ class Service extends Core\Service {
      * Возвращает список задач, которые уже могут быть выполнены
      **/
     public function tasksToLaunch() {
-        return reflex_task::all()
-            ->leq("nextLaunch",util::now())
+        return Task::all()
+            ->leq("nextLaunch", \util::now())
             ->eq("completed",0);
     }
     
@@ -117,7 +117,7 @@ class Service extends Core\Service {
         }
 
         // $n - хранится в кэше и увеличивается на 1 с каждым запуском крона
-        $n = mod_cache::get("01h1b4yw6kbz2l9y6orj");
+        $n = service("cache")->get("01h1b4yw6kbz2l9y6orj");
         if(!$n) {
             $n = 0;
         }
@@ -126,7 +126,7 @@ class Service extends Core\Service {
         // Т.о. каждый на запуск крона задачи будут поочередно вызываны
         $task = $tasks->limit(1)->page($n%$total+1)->one();
 
-        mod_cache::set("01h1b4yw6kbz2l9y6orj",$n+1);
+        service("cache")->set("01h1b4yw6kbz2l9y6orj",$n+1);
 
         $task->exec();
     }
@@ -136,7 +136,7 @@ class Service extends Core\Service {
         $start = microtime(true);
         while(microtime(true) - $start < $this->param("timeout")) {
             $this->execOne();
-            reflex::storeAll();
+            \mod::fire("cleanup");
         }        
     }
     
