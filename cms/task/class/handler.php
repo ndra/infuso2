@@ -38,12 +38,12 @@ class Handler implements Core\Handler {
     /**
      * Выполняет одно задание
      **/
-    public static function execOne() {
+    /*public static function execOne() {
 
         $tasks = self::tasksToLaunch();
         $total = $tasks->count();
 
-        if($total==0) {
+        if($total == 0) {
             return;
         }
 
@@ -60,6 +60,6 @@ class Handler implements Core\Handler {
         mod_cache::set("01h1b4yw6kbz2l9y6orj",$n+1);
 
         $task->exec();
-    }
+    }     */
 
 }

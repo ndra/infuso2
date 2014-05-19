@@ -330,7 +330,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 		    classmap\builder::buildClassMap();
 		    $next = true;
 		} else {
-			$event = mod::event("infusoInit");
+			$event = mod::event("infusoDeploy");
 			$done = !$event->firePartial($step - 1);
 		}
 

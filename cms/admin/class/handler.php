@@ -8,9 +8,9 @@ namespace Infuso\Cms\Admin;
 class Handler implements \Infuso\Core\Handler {
 
 	/** 
-	 * @handler = infusoInit
+	 * @handler = infusoDeploy
 	 **/	 	
-    public function onInit() {
+    public function onDeploy() {
     
         $op = \user_operation::create("admin:showInterface");
         $op->appendTo("reflex:content-manager");

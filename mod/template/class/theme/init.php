@@ -7,9 +7,9 @@ class tmp_theme_init implements mod_handler {
 
 	/**
 	 * Составляет список файлов в каждой из тем для быстрого поиска шаблона
-    * @handler = infusoInit
+    * @handler = infusoDeploy
 	 **/
-	public function init() {
+	public function deploy() {
 
 		mod::msg("Init themes");
 

@@ -6,11 +6,11 @@ use Infuso\Core;
 class Handler implements Core\Handler {
 
 	/**
-	 * @handler = infusoInit
+	 * @handler = infusoDeploy
 	 **/
-	public function onInit() {
+	public function onDeploy() {
 	    \mod::msg("clear css and js render");
-		Render::clearRender();
+        Render::clearRender();
 	}
 
 }

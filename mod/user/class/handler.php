@@ -22,10 +22,10 @@ class Handler implements Core\Handler {
     
     /**
      * Метод, в котором реализуется бизнес-логика инициализации
-     * @handler = infusoInit
+     * @handler = infusoDeploy
      * @handlerPriority = -1
      **/
-    public static function onInit() {
+    public static function onDeploy() {
     
 		$operations = \Infuso\User\Model\Operation::all();
 		$operations->delete();

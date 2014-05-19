@@ -8,11 +8,11 @@ use Infuso\Core\Mod;
 class Handler implements \Infuso\Core\Handler {
 
 	/**
-	 * @handler = infusoInit
+	 * @handler = infusoDeploy
 	 * @handlerPriority = -1000
 	 * При инициализации приводим таблицы в БД в соответствии с макетами
 	 **/
-	public function onInfusoInit() {
+	public function onDeploy() {
 
 	    Core\Mod::msg("<b>Migrating DB</b>");
 

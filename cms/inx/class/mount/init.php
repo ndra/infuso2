@@ -6,7 +6,7 @@
 class inx_init implements \Infuso\Core\Handler {
 
 	/**
-	 * @handler = infusoInit
+	 * @handler = infusoDeploy
 	 **/
 	public function init() {
 	

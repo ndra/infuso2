@@ -9,7 +9,7 @@ use Infuso\Core;
 class Handler extends Core\Component implements Core\Handler {
 
 	/**
-	 * @handler = infusoInit
+	 * @handler = infusoDeploy
 	 * @handlerpriority = -1
 	 **/
 	public function removeRootTabs() {
@@ -18,7 +18,7 @@ class Handler extends Core\Component implements Core\Handler {
 	}
 
 	/**
-	 * @handler = infusoInit
+	 * @handler = infusoDeploy
 	 **/
 	public function initReflex() {
 	
@@ -72,9 +72,9 @@ class Handler extends Core\Component implements Core\Handler {
 	}
 	
 	/**
-	 * @handler = infusoInit
+	 * @handler = infusoDeploy
 	 **/
-	public function onInfusoInit() {
+	public function onDeploy() {
 
 	    \user_operation::create("reflex:editLog","Редактирование лога")
 			->appendTo("reflex:viewLog");
