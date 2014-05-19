@@ -13,7 +13,7 @@ admin::header();
         foreach($event->getMessages() as $record) {        
         
             $class = "message";                
-            if($message["type"] == Infuso\Cms\Utils\Heartbeat\Event::TYPE_ERROR) {
+            if($message["type"] == \Infuso\Cms\Utils\Heartbeat\Event::TYPE_ERROR) {
                 $class = "error";
             }
         

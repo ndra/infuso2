@@ -56,26 +56,26 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
         $left = $time->stamp() + $delay - util::now()->stamp();
 
         // Рарзрешаем обработчикам крона запуститься только если истек кулдаун или мы в режиме суперадмина
-        if($left<0 || mod_superadmin::check()) {
+        if($left<0 || \mod_superadmin::check()) {
             $file->put("processing");
-            $t1 = util::now()->stamp();
+            $t1 = \util::now()->stamp();
             self::process();
-            $t2 = util::now()->stamp();
+            $t2 = \util::now()->stamp();
             $time = $t2 - $t1;
             $file->put("done: ".$time);
         }
 
         // Выводим инфу
-        if(mod_superadmin::check()) {            
-            tmp::header();
+        if(\mod_superadmin::check()) {            
+            \tmp::header();
             
             echo "<div style='padding:100px;' >";
             echo "Time to next launch ".$left." sec.";
             echo "</div>";
             
-            tmp::reset();
-            util::profiler();
-            tmp::footer();
+            \tmp::reset();
+           // \util::profiler();
+            \tmp::footer();
 
             if(array_key_exists("loop",$_GET)) {
                 echo "<script>window.location.reload();</script>";
@@ -96,7 +96,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
         
         mod::service("log")->log(array(
             "type" => "cron",
-            "text" => "completed: {$time} s.",
+            "message" => "completed: {$time} s.",
             "p1" => $time,
 		));
         
@@ -115,7 +115,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
      **/
     public function onHeartbeat($event) {
     
-        $last = self::getLog()->desc("datetime")->one();
+        $last = service("log")->all()->desc("datetime")->one();
         
         if(!$last->exists()) {
             $event->error("Крон не был запущен ни разу");

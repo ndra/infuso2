@@ -2,10 +2,10 @@
 
 admin::header("Лог крона");
 
-$log = reflex_log::all()
+$log = service("log")->all()
     ->limit(0)
     ->eq("type","cron")
-    ->eq("date(datetime)",util::now()->date());
+    ->eq("date(datetime)", \util::now()->date());
 $data = $log->groupby("time")->select("`datetime` - interval (MINUTE(`datetime`)*60 + second(`datetime`)) second as `time`, count(*) as `count`, round(min(`p1`),1) as `min`, round(max(`p1`),1) as `max`, round(avg(`p1`),1) as `avg`");
 
 <div style='padding:20px;' >
@@ -23,7 +23,7 @@ $data = $log->groupby("time")->select("`datetime` - interval (MINUTE(`datetime`)
     
         foreach($data as $row) {
             <tr>
-                $time = util::date($row["time"])->txt();
+                $time = \util::date($row["time"])->txt();
                 <td>{$time}</td>
                 <td>{$row[min]}</td>
                 <td>{$row[max]}</td>

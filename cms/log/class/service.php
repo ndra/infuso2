@@ -18,5 +18,9 @@ class Service extends Core\Service {
     public function log($params) {
         service("ar")->create(Log::inspector()->className(), $params);
     } 
+    
+    public function all() {
+        return service("ar")->collection(Log::inspector()->className());
+    }
 
 }
