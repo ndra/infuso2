@@ -77,7 +77,7 @@ class Mod extends \Infuso\Core\Component {
 	 * Заносит сообщение в лог
 	 **/
 	public function trace($message) {
-		log::trace($message);
+		//log::trace($message);
 	}
 
 	/**

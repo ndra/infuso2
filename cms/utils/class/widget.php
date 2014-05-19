@@ -14,6 +14,9 @@ class Widget extends \Infuso\Cms\Admin\Widgets\Widget {
 		
 		$url = \infuso\core\action::get(Handlers::inspector()->classname())->url();
 		echo "<a href='{$url}' >События</a> ";
+        
+		$url = \infuso\core\action::get(Services::inspector()->classname())->url();
+		echo "<a href='{$url}' >Службы</a> ";        
 		
 		$url = \infuso\core\action::get(Cron::inspector()->classname())->url();
 		echo "<a href='{$url}' >Крон</a> ";

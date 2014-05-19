@@ -43,7 +43,7 @@ class mod_json extends \infuso\core\controller {
 
 		// Собираем массив сообщений
 		$messages = array();
-		foreach(\infuso\core\log::messages() as $msg) {
+		foreach(service("msg")->messages() as $msg) {
 			$messages[] = array(
 				"text" => $msg->text(),
 				"error" => $msg->error(),

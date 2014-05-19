@@ -24,6 +24,14 @@ class inspector {
 	public function path() {
 	    return mod::service("classmap")->classPath($this->className);
 	}
+    
+    /**
+     * Возвращает описание класса из phpdoc
+     **/         
+    public function docComment() {       
+        $reflection = new \ReflectionClass($this->className());
+        return $reflection->getDocComment();     
+    }
 	
 	/**
 	 * Возвращает массив аннотаций для класса
