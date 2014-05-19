@@ -163,6 +163,9 @@ abstract class Editor extends Core\Controller {
     
     public function _afterChange() {}
 
+    /**
+     * @todo Сделать перенос объектов в корзину, а не простое их удаление
+     **/         
     public function delete() {
 
         $this->item()->delete();
@@ -309,6 +312,19 @@ abstract class Editor extends Core\Controller {
         return \Infuso\Template\Tmp::get("/reflex/editor/content/fields/form",array(
             "editor" => $this,
         ));
+    }
+    
+    /**
+     * Возвращает массив объектов fieldView - представлений полей
+     **/         
+    public function fields() {
+    
+        $fields = array();
+        foreach($this->item()->fields() as $field) {
+            $fields[] = FieldView\View::get($field);
+        }
+        return $fields;
+                                        
     }
 
 }

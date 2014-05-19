@@ -22,5 +22,9 @@ class File extends View {
 	public static function typeID() {
 	    return "knh9-0kgy-csg9-1nv8-7go9";
 	}
+    
+    public function colWidth() {
+        return 50;
+    }
 
 }

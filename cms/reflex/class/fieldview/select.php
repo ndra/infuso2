@@ -21,5 +21,9 @@ class Select extends View {
 	public static function typeID() {
 	    return "fahq-we67-klh3-456t-plbo";
 	}
+    
+    public function colWidth() {
+        return 100;
+    }
 
 }

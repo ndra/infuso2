@@ -22,5 +22,9 @@ class Str extends View {
 	public static function typeID() {
 	    return array();
 	}
+    
+    public function colWidth() {
+        return 100;
+    }
 
 }

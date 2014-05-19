@@ -25,5 +25,9 @@ class Checkbox extends View {
 	public function labelAlign() {
 	    return self::LABEL_ALIGN_CHECKBOX;
 	}
+    
+    public function colWidth() {
+        return 20;
+    }
 
 }

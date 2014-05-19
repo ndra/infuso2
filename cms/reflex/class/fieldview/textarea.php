@@ -21,5 +21,9 @@ class Textarea extends View {
 	public static function typeID() {
 	    return "kbd4-xo34-tnb3-4nxl-cmhu";
 	}
+    
+    public function colWidth() {
+        return 100;
+    }
 
 }

@@ -1,5 +1,11 @@
 .x0kf50uz479 {
+
     padding: 20px;
+    
+    & > table {
+        width:100%;
+        table-layout: fixed;
+    }
     
     tr {
         cursor: pointer;
@@ -7,6 +13,8 @@
     
     td {
         padding: 10px;
+        width:100px;
+        overflow: hidden;
     }
     
     thead {

@@ -5,9 +5,9 @@
     
         <thead>
             <tr>
-                foreach($collection->editor()->item()->fields() as $field) {
-                    if($field->visible()) {
-                        <td>{$field->label()}</td>
+                foreach($collection->editor()->fields() as $field) {
+                    if($field->field()->visible()) {
+                        <td style='width:{$field->colWidth()}px;' >{$field->field()->label()}</td>
                     }
                 }
             </tr>
