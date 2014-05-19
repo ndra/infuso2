@@ -1,6 +1,11 @@
 <?
 
-class mod_log_msg {
+namespace Infuso\Core\Message;
+use \Infuso\Core;
+
+class Message {
+
+    private $data;
 
 	public function __construct($data) {
 		$this->data = $data;

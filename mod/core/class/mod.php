@@ -69,8 +69,8 @@ class Mod extends \Infuso\Core\Component {
 	/**
 	 * Выводит сообщение
 	 **/
-	public function msg($message,$error=false) {
-		log::msg($message,$error);
+	public function msg($message, $error = false) {
+		service("msg")->msg($message, $error);
 	}
 
 	/**

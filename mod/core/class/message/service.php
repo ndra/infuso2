@@ -1,13 +1,21 @@
 <?
 
-namespace Infuso\Core;
+namespace Infuso\Core\Message;
+use \Infuso\Core;
 
-class Log {
+/**
+ * Служба пользовательских сообщений
+ **/ 
+class Service extends Core\Service {
+
+    public function serviceName() {
+        return "msg";
+    }
 
     /**
-     * Отправляет сообщение
+     * Отправляет пользовательское сообщение
      **/
-    public function msg($message,$error=false,$extra=null) {
+    public function msg($message, $error = false) { 
     
         $message = self::toString($message);
 
@@ -25,7 +33,6 @@ class Log {
             $_SESSION["log:messages"][] = array(
                 'text' => $message,
                 'error' => $error,
-                'extra' => $extra,
                 "count" => 1,
             );
         }
@@ -46,15 +53,21 @@ class Log {
     public static function messages($clear=true) {
         $msg = array();
         @session_start();
-        if(!$_SESSION["log:messages"]) $_SESSION["log:messages"] = array();
-        foreach($_SESSION["log:messages"] as $m) {
-            $msg[] = new \mod_log_msg($m);
+        if(!$_SESSION["log:messages"]) {
+            $_SESSION["log:messages"] = array();
         }
-        if($clear)
+        foreach($_SESSION["log:messages"] as $m) {
+            $msg[] = new Message($m);
+        }
+        if($clear) {
             self::clear();
+        }
         return $msg;
     }
 
+    /**
+     * Преобразует переданное занчение в строку
+     **/         
     public function toString($a) {
 
         // Массив
@@ -72,44 +85,6 @@ class Log {
 
         // Скаляр или прочее
         return $a;
-    }
-
-    /**
-     * Заносит запись в лог
-     **/
-    public static function trace($trace) {
-    
-        $tracePath = mod::app()->varPath()."/trace/";
-
-        $trace = self::toString($trace);
-        file::mkdir($tracePath);
-
-        $message = "";
-        $message.= date("h:i:s")." ";
-        $debug = debug_backtrace();
-
-        // Добавляем в трэйс метод из которого была сделана запись
-        // Т.к. методы вызывают друг-друга, мы бедем последний по debug_backtrace(),
-        // исключив из него вызовы внутри самого лога
-
-        $skip = array("mod_log::trace","mod::trace"); // это мы пропустим
-
-        foreach($debug as $d) {
-
-            $call = $d["class"].$d["type"].$d["function"];
-
-            if(!in_array($call,$skip)) {
-                $message.= $call;
-                break;
-            }
-
-        }
-
-        $message.= " >> ".$trace."\n";
-        $date = date("Y-m-d");
-        $path = "/{$tracePath}/$date.txt";
-        $handle = fopen(file::get($path)->native(),'a');
-        fwrite($handle, $message);
     }
 
 }

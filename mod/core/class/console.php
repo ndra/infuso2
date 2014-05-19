@@ -75,7 +75,7 @@ class Console extends Controller {
 	                $done = mod::app()->deployStep($step);
 
 		            $messages = array();
-		            foreach(log::messages() as $msg) {
+		            foreach(service("msg")->messages() as $msg) {
 		            	$messages[] = array(
 							"text" => $msg->text(),
 							"error" => $msg->error()

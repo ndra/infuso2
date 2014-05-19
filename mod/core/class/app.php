@@ -100,6 +100,7 @@ class App {
 		$this->registerService("bundle","\\infuso\\core\\bundle\\manager");
 		$this->registerService("yaml","\\infuso\\core\\yaml");
 		$this->registerService("cache","\\infuso\\core\\cache\\service");
+        $this->registerService("msg","\\infuso\\core\\message\\service");
 
 	}
 

@@ -19,10 +19,12 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 					'type' => 'id',
 				), array (
 					'name' => 'class',
+                    "label" => "Класс",
 					'type' => 'textfield',
 					'editable' => '1',
 				), array (
 					'name' => 'method',
+                    "label" => "Метод",
 					'type' => 'textfield',
 					'editable' => '1',
 				), array (
@@ -39,7 +41,8 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 					'name' => 'created',
 					'type' => 'datetime',
 					'editable' => '2',
-					"default" => "now",
+					"default" => "now()",
+                    "label" => "Создано",
 				), array (
 					'name' => 'called',
 					'type' => 'datetime',

@@ -60,7 +60,9 @@ class Log extends ActiveRecord\Record {
     }
 
     public static function all() {
-        return service("ar")->collection(get_class())->desc("datetime");
+        return service("ar")
+            ->collection(get_class())
+            ->desc("datetime");
     }
 
     /**
