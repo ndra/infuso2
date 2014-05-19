@@ -8,5 +8,9 @@ $(function() {
     $(".x2s6mdnq7sy").on("reflex/refresh",function(e,params) {
         $(this).find(".c-items").triggerHandler("reflex/refresh");
     })
+    
+    $(".x2s6mdnq7sy").on("reflex/deselect",function(e,params) {
+        $(this).find(".c-items").triggerHandler("reflex/deselect");
+    })
 
 });

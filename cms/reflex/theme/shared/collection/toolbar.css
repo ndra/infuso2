@@ -1,4 +1,10 @@
 .qoi8w451jl {
+
+    h1 {
+        margin:0;
+        padding:10px 10px 0 10px;
+        margin: 0;
+    }
     
     .a {
         padding:10px;
@@ -20,17 +26,44 @@
     }
     
     .with-selected {
-        opacity:0;
-        background: #ffff99;
+    
+        position:relative;        
+        height:32px;
         padding: 10px;
-        
-        & > * {
-            vertical-align: middle;
-        }
-        
+       
         .selection-info {
             margin-right:10px;
-            font-size:16px;
+        }
+        
+        .deselect {
+            border-bottom: 1px solid black;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .functions {
+
+            width: 100%;
+            box-sizing: border-box;
+            background: #ffff99;
+            opacity: 0;
+            padding: 10px 20px;
+            position: absolute;
+            left:0px;
+            top:0px;
+            
+            & > * {
+                vertical-align: middle;
+            }
+            
+        }
+        
+        .hint {
+            position: absolute;
+            left:20px;
+            top:19px;
+            font-style: italic;
+            color: gray;
         }
     }
 

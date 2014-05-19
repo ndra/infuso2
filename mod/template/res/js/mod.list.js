@@ -85,6 +85,11 @@ jQuery.fn.list = function(param) {
         });
         return ret;
     }
+    
+    if(param === "deselect") {
+        $e.find(".list-item").removeClass("selected");
+        triggerSelectionEvent();
+    }
 
     if(param === "prev") {
         mod.msg("prev");

@@ -26,6 +26,10 @@ $(function() {
     
     $(".cjoesz8swu").on("reflex/refresh", load);
     
+    $(".cjoesz8swu").on("reflex/deselect", function() {
+        $(this).list("deselect");
+    });
+    
     $(document).on("keydown",function(e) {
         if(e.keyCode == 116 && !e.ctrlKey) {
             load();

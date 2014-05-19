@@ -42,11 +42,14 @@ $(function() {
     
     $(".qoi8w451jl").on("list/select", function(e) {
         $(this).find(".selection-info").html("Выбрано: " + e.selection.length);
-        var container = $(this).find(".with-selected");
+        var container = $(this).find(".functions");
+        var hint = $(this).find(".hint");
         if(e.selection.length > 0) {
             container.animate({opacity:1});
+            hint.animate({opacity:0});
         } else {
             container.animate({opacity:0});
+            hint.animate({opacity:1});
         }
         sel = e.selection;
     });
@@ -65,5 +68,9 @@ $(function() {
             container.trigger("reflex/refresh");   
         });        
     })
+    
+    $(".qoi8w451jl .deselect").click(function() {
+        container.trigger("reflex/deselect");
+    });
 
 });
