@@ -8,7 +8,10 @@ admin::header();
 
     foreach(mod::service("classmap")->map("infuso\\core\\service") as $class) {
         <div class='service' >
-            <div class='name' >{$class}</div>
+            <div style='margin-bottom:10px;' >
+                <span class='name' >{$class::defaultService()}</span>
+                <span class='class' >{$class}</span>
+            </div>
             <div class='comment' >
                 echo $class::inspector()->docComment();
             </div>

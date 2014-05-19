@@ -1,9 +1,10 @@
 <?
 
-namespace Infuso\Cms\Reflex\Model;
-use Infuso\Cms\Reflex;
+namespace Infuso\Cms\Log;
 use Infuso\Core;
 use Infuso\ActiveRecord;
+use Infuso\Cms\Reflex;
+
 
 /**
  * Редактор домена

@@ -23,8 +23,8 @@ class Main extends \Infuso\Core\Controller {
         
         tmp::header();
         
-        $items = Task::visible();
-        echo $items->count();
+        //\mod::trace(rand());
+        \user::active()->xxx();
 
         tmp::footer();
         

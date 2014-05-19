@@ -1,9 +1,8 @@
 <?
 
-namespace Infuso\Cms\Reflex\Model;
+namespace Infuso\Cms\Log;
 use Infuso\Core;
 use Infuso\ActiveRecord;
-use Infuso\Cms\Reflex;
 
 /**
  * Модель записи в журнале
@@ -36,7 +35,7 @@ class Log extends ActiveRecord\Record {
 					'label' => 'Индекс',
 					"editable" => 2,
 		    	), array (
-					'name' => 'text',
+					'name' => 'message',
 					'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
 					'label' => 'Текст',
 					"editable" => 2,
@@ -75,8 +74,8 @@ class Log extends ActiveRecord\Record {
     /**
      * Возвращает текст сообщения
      **/
-    public function text() {
-        return $this->data("text");
+    public function message() {
+        return $this->data("message");
     }
 
 	/**
