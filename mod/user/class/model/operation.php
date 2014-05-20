@@ -94,7 +94,7 @@ class Operation extends ActiveRecord\Record {
 
         if($this->idList===null) {
             $this->idList = array();
-            foreach(user_operation::all()->limit(0) as $op) {
+            foreach(Operation::all()->limit(0) as $op) {
                 $roles = explode(" ",$op->data("parents"));
                 if(in_array($this->code(),$roles)) {
                     $this->idList[] = $op->id();
@@ -102,7 +102,7 @@ class Operation extends ActiveRecord\Record {
             }
         }
 
-        return user_operation::all()->eq("id",$this->idList);
+        return Operation::all()->eq("id",$this->idList);
     }
     
     /**

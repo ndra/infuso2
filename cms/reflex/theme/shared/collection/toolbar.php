@@ -23,7 +23,7 @@ $code = $collection->serialize();
                 
         // Режим отображения
         <select name='viewMode' >
-            foreach($editor->viewModes() as $title => $template) {
+            foreach($collection->editor()->viewModes() as $title => $template) {
                 <option>{$title}</option>        
             }
         </select>
