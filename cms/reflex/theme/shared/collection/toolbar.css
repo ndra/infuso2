@@ -1,13 +1,15 @@
 .qoi8w451jl {
 
     h1 {
-        margin:0;
-        padding:10px 10px 0 10px;
-        margin: 0;
+        display: inline-block;
+        margin: 0 20px 0 0;
     }
     
     .a {
-        padding:10px;
+        padding: 10px 10px 0 20px;
+        & > * {
+            vertical-align: middle;
+        }
     }
     
     .spacer {
@@ -45,7 +47,7 @@
 
             width: 100%;
             box-sizing: border-box;
-            background: #ffff99;
+            //background: #ffff99;
             opacity: 0;
             padding: 10px 20px;
             position: absolute;

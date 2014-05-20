@@ -1,11 +1,11 @@
 <? 
 
 $code = $collection->serialize();
-<div class='qoi8w451jl c-toolbar' infuso:collection='{$code}' >
-
-    <h1 class='g-header' >{$collection->collection()->title()}</h1>
+<div class='qoi8w451jl c-toolbar' infuso:collection='{$code}' >    
 
     <div class='a' >
+    
+        <h1 class='g-header' >{$collection->collection()->title()}</h1>
 
         // Быстрый поиск
         widget("\\Infuso\\Cms\\UI\\Widgets\\Textfield")
