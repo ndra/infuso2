@@ -49,25 +49,8 @@ function modjs() {
  * @todo Рефакторить скорость
  * @todo Сделать чтобы оно понимало полный путь к классу
  **/
-function widget($name) {
-
-	$classmap = Core\Mod::service("classmap");
-	
-	if($classmap->testClass($name,Widget::inspector()->classname())) {
-	    return new $name;
-	}
-
-	$name = strtolower($name);
-	$current = Template::current();
-
-	foreach($classmap->classes(Widget::inspector()->classname()) as $class) {
-	    if($class::inspector()->bundle()->path() == $current->bundle()->path()) {
-	        $reflect = new \ReflectionClass($class);
-			if (strtolower($reflect->getShortName()) === $name) {
-			    return new $class;
-            }
-	    }
-	}
+function widget($name) {        
+    return Widget::get($name);
 }
 
 function e($str) {

@@ -3,6 +3,10 @@
     background: url(@url);
 }
 
+.air + *:not(.air) {
+    margin-left: 10px !important;
+}
+
 .g-input {
 
     padding:8px;
@@ -15,10 +19,12 @@
     
     &:focus {
         border:1px solid blue;
-    }    
+    }  
+
 }
 
 .g-button {
+
     padding:8px;
     border:1px solid #999;
     background: white;
@@ -27,10 +33,33 @@
     box-sizing: content-box;
     margin:0 10px 0 0;
     cursor: pointer;
-    vertical-align: top;
+    vertical-align: top;    
+    display: inline-block;
+    font-size: 16px;   
+    background-repeat: no-repeat !important;   
+    
+    &.air {
+        border: 1px solid rgba(0,0,0,0);
+        margin-right: 0;
+    } 
+    
+    &.icon-only {
+        width: 20px;
+        background-position: center center !important;
+    }
+    
+    &.icon-and-text {
+        background-position: 8px center !important;
+        padding: 8px 8px 8px 28px;
+    }
      
     &:hover {
         background :#ededed;
+        border:1px solid #999;
+    }
+    
+    &:focus {
+        outline: none;
     }
     
     &:active, &.active {

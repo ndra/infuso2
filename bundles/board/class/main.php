@@ -23,8 +23,39 @@ class Main extends \Infuso\Core\Controller {
         
         tmp::header();
         
-        //\mod::trace(rand());
-        \user::active()->xxx();
+        $w = \tmp::widget("Infuso\\Cms\\UI\\Widgets\\Button")
+            ->text("Я кнопка")
+            ->exec();
+        
+        $w = \tmp::widget("Infuso\\Cms\\UI\\Widgets\\Button")
+            ->icon("edit")
+            ->exec();
+            
+        $w = \tmp::widget("Infuso\\Cms\\UI\\Widgets\\Button")
+            ->text("Я кнопка")
+            ->icon("edit")
+            ->exec();
+            
+        $w = \tmp::widget("Infuso\\Cms\\UI\\Widgets\\Button")
+            ->icon("edit")
+            ->air()
+            ->exec();
+            
+        $w = \tmp::widget("Infuso\\Cms\\UI\\Widgets\\Button")
+            ->icon("edit")
+            ->air()
+            ->exec();
+            
+        $w = \tmp::widget("Infuso\\Cms\\UI\\Widgets\\Button")
+            ->icon("edit")
+            ->air()
+            ->exec();
+            
+        $w = \tmp::widget("Infuso\\Cms\\UI\\Widgets\\Button")
+            ->text("Я кнопка")
+            ->icon("edit")
+            ->exec();
+        
 
         tmp::footer();
         

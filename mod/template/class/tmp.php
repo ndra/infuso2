@@ -117,7 +117,7 @@ class Tmp implements Core\Handler {
     }
 
     public static function widget($name) {
-        return tmp_widget::get($name);
+        return Widget::get($name);
     }
 
 }

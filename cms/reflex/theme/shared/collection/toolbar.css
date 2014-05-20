@@ -20,6 +20,7 @@
     select {
         .g-input();
         margin-right: 10px;
+        width:70px;
     }
     
     button {

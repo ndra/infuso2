@@ -19,5 +19,19 @@ foreach($widget->style() as $key => $val) {
     $helper->style($key, $val);
 }
 
+if($icon = $widget->param("icon")) {
+    $helper->style("background-image", "url({$icon})");
+    
+    if(!$text) {
+        $helper->addClass("icon-only");
+    } else {
+        $helper->addClass("icon-and-text");
+    }
+}
+
+if($widget->param("air")) {
+    $helper->addClass("air");
+}
+
 $helper->addClass("g-button");
 $helper->exec();

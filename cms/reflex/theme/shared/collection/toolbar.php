@@ -15,8 +15,12 @@ $code = $collection->serialize();
             ->clearButton()
             ->exec();
         
-        <button class='refresh' >Обновить</button>
-        
+        $w = widget("infuso\\cms\\ui\\widgets\\button")
+            ->icon("refresh")
+            ->air()
+            ->addClass(".refresh")
+            ->exec();
+                
         // Режим отображения
         <select name='viewMode' >
             foreach($editor->viewModes() as $title => $template) {
@@ -26,7 +30,12 @@ $code = $collection->serialize();
         
         <span class='spacer' ></span>    
         
-        <button class='create' >Добавить</button>
+        $w = widget("infuso\\cms\\ui\\widgets\\button")
+            ->icon("plus")
+            ->text("Создать")
+            ->air()
+            ->addClass(".refresh")
+            ->exec();
     
     </div>
     
@@ -35,6 +44,13 @@ $code = $collection->serialize();
         <div class='functions' >
             <span class='selection-info' ></span>
             <span class='deselect' >Отменить</span>
+            
+            $w = widget("infuso\\cms\\ui\\widgets\\button")
+                ->icon("edit")
+                ->air()
+                ->exec();
+            
+            <button>Просмотр</button>
             <button>Копировать</button>
             <button class='delete' >Удалить</button>    
         </div>

@@ -11,23 +11,25 @@ abstract class Widget extends Generic {
 	/**
 	 * @return Возвращает объект виджета
 	 */
-	public final function get($class) {
+	public final function get($name) {
 	
-	    if(is_object($class)) {
-	    
-	        if(!mod::testClass(get_class($class),"tmp_widget")) {
-	            throw new Exception(get_class($class)." is not a widget");
-	        }
-	        
-	        return $class;
-	    
-	    }
-	
-	    if(!\mod::service("classmap")->testClass($class,"mod\\template\\widget")) {
-	        throw new \Exception("$class is not a widget");
-	    }
-	
-	    return new $class;
+    	$classmap = Core\Mod::service("classmap");
+    	
+    	if($classmap->testClass($name,Widget::inspector()->classname())) {
+    	    return new $name;
+    	}
+    
+    	$name = strtolower($name);
+    	$current = Template::current();
+    
+    	foreach($classmap->classes(Widget::inspector()->classname()) as $class) {
+    	    if($class::inspector()->bundle()->path() == $current->bundle()->path()) {
+    	        $reflect = new \ReflectionClass($class);
+    			if (strtolower($reflect->getShortName()) === $name) {
+    			    return new $class;
+                }
+    	    }
+    	}
 	}
 
 	/**

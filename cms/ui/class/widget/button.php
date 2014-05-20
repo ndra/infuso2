@@ -26,8 +26,14 @@ class Button extends \Infuso\Template\Helper {
         return $this;
     }
     
-    public function icon($icon) {
+    public function icon($icon) {    
+        $icon = self::inspector()->bundle()->path()."/res/img/icons16/{$icon}.png";       
         $this->param("icon", $icon);
+        return $this;
+    }
+    
+    public function air() {
+        $this->param("air", true);
         return $this;
     }
     
