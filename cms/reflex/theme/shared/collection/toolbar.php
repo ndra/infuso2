@@ -50,9 +50,22 @@ $code = $collection->serialize();
                 ->air()
                 ->exec();
             
-            <button>Просмотр</button>
-            <button>Копировать</button>
-            <button class='delete' >Удалить</button>    
+            $w = widget("infuso\\cms\\ui\\widgets\\button")
+                ->icon("edit")
+                ->air()
+                ->exec();
+                
+            $w = widget("infuso\\cms\\ui\\widgets\\button")
+                ->icon("edit")
+                ->air()
+                ->exec();
+                
+            $w = widget("infuso\\cms\\ui\\widgets\\button")
+                ->icon("delete")
+                ->addClass("delete")
+                ->air()
+                ->exec();
+                   
         </div>
     </div>
 

@@ -6,5 +6,9 @@
     .title {
         font-size:24px;    
     }
+    
+    td {
+        vertical-align: middle;
+    }
 
 }

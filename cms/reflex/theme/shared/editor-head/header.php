@@ -1,9 +1,9 @@
 <? 
 
 <div class='qm15c9g910' >
-    <table style='width:100%;' >
+    <table >
         <tr>
-            <td style='width:100%;' >
+            <td >
             
                 // Хлебные крошки
                 tmp::exec("breadcrumbs");                
@@ -13,7 +13,7 @@
                 
             </td>
             <td>
-                tmp::exec("actions");
+                exec("functions");
             </td>
         </tr>
     </table>

@@ -18,7 +18,7 @@ class LogPlugin extends \Infuso\Core\Component {
     }
 
     public function log($text) {
-        service("ar")->create("infuso\\cms\\reflex\\model\\log", array(
+        service("ar")->create("infuso\\cms\\log\\log", array(
             "text" => $text,
             "index" => get_class($this->component()).":".$this->component()->id(),
         ));
@@ -26,7 +26,7 @@ class LogPlugin extends \Infuso\Core\Component {
 
     public function getLog() {
         return service("ar")
-            ->collection("infuso\\cms\\reflex\\model\\log")
+            ->collection("infuso\\cms\\log\\log")
             ->eq("index", get_class($this->component()).":".$this->component()->id());
     }
 
