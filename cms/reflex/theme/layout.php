@@ -1,6 +1,6 @@
 <? 
 
-mod::coreJS();
+lib::modJS();
 
 \admin::header();
 lib::modjsui();

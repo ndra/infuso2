@@ -246,7 +246,7 @@ class classmapService extends service {
 		// Если класс найден в карте сайта, подключаем
 		
 	    if($path) {
-			include_once(mod::root()."/".$path);
+			include_once(app()->root()."/".$path);
 		}
 		// Если класс не нашелся в карте сайта, пробуем подключить класс напрямую
 		
@@ -256,7 +256,7 @@ class classmapService extends service {
 			
 			    $class2 = preg_replace("%infuso\\\\core\\\\%","",$class);
 				$a = explode("\\",$class2);
-				$p1 = mod::root()."/".$this->scanFolder()."/".implode("/",$a).".php";
+				$p1 = app()->root()."/".$this->scanFolder()."/".implode("/",$a).".php";
 			    include_once($p1);
 		    }
 			

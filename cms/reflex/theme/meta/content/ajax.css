@@ -1,5 +1,10 @@
 .lonjnbmi8k {
 
     padding: 20px;
+    
+    span {
+        vertical-align: middle;
+        margin-right: 10px;
+    }
 
 }

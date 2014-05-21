@@ -1,27 +1,28 @@
 <?
 
+namespace Infuso\Cms\Reflex\Controller;
+use \Infuso\Core;
+
 /**
  * Контроллер управления мета-данными через админку
  **/
-class reflex_meta extends mod_controller {
-
-	private $reflex;
-	
-	public function __construct($reflex=null) {
-		return $this->reflex = $reflex;
-	}
-
-	public function hash() {
-		return get_class($this->reflex).":".$this->reflex->id();
-	}
+class Meta extends \Infuso\Core\Controller {
 
 	/**
 	 * На свякий случай, ограничиваем доступ к контроллерам метаданных только для
 	 * зарегистрированных пользователей
 	 **/
 	public static function postTest() {
-		return user::active()->checkAccess("admin:showInterface");
+		return \user::active()->checkAccess("admin:showInterface");
 	}
+    
+    public function post_create($p) {
+    
+        $editor = \Infuso\CMS\Reflex\Editor::get($p["index"]);
+        $item = $editor->item();
+        $item->plugin("meta")->create();
+    
+    }
 
 	/**
 	 * Контроллер получения метаданных объекта

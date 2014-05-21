@@ -56,7 +56,7 @@ class localFile extends file {
 	 * Возвращает полный путь к файлу в ФС
 	 **/
 	public function native() {
-	    return mod::root().$this->path;
+	    return app()->root().$this->path;
 	}
 
 	/**

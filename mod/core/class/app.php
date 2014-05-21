@@ -386,6 +386,14 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
     public function registerService($service,$class) {
         $this->registredServices[$service] = $class;
     }
+    
+	/**
+	 * Возвращает путь к корню сайта в файловой системе сервера
+	 * Используется функциями модуля file для перевода путей ФС в абсолютные
+	 **/
+	public function root() {
+	    return $_SERVER["DOCUMENT_ROOT"]."/";
+	}
 
     /**
      * Возвращает директорию данных приложения
@@ -406,6 +414,13 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
      **/
     public function confPath() {
         return file::get("/conf");
+    }
+    
+    /**
+     * Отправляет пользователю сообщение
+     **/         
+    public function msg($message, $error = null) {
+        service("msg")->msg($message, $error);
     }
 
 

@@ -34,7 +34,7 @@ $code = $collection->serialize();
             ->icon("plus")
             ->text("Создать")
             ->air()
-            ->addClass(".refresh")
+            ->addClass("create")
             ->exec();
     
     </div>

@@ -9,13 +9,7 @@ class Mod extends \Infuso\Core\Component {
 
 	private static $debug = null;
 	
-	/**
-	 * Возвращает путь к корню сайта в файловой системе сервера
-	 * Используется функциями модуля file для перевода путей ФС в абсолютные
-	 **/
-	public static function root() {
-	    return $_SERVER["DOCUMENT_ROOT"]."/";
-	}
+
 
 	/**
 	 * Включен ли режим отладки
@@ -57,13 +51,6 @@ class Mod extends \Infuso\Core\Component {
 		    $ret.= $chars[rand()%strlen($chars)];
 		}
 		return $ret;
-	}
-
-	/**
-	 * Подключает библиотеку core.js
-	 **/
-	public static function coreJS() {
-		\Infuso\Template\Lib::modjs();
 	}
 
 	/**
@@ -127,13 +114,6 @@ class Mod extends \Infuso\Core\Component {
 	}
 
 	/**
-	 * @return object mod_url url реферера
-	 **/
-	public function referer() {
-		return mod_url::get($_SERVER["HTTP_REFERER"]);
-	}
-
-	/**
 	 * @param $url string
 	 * @return object mod_url При вызове без параметра, вернет текущий урл
 	 **/
@@ -143,21 +123,11 @@ class Mod extends \Infuso\Core\Component {
 		}
 		return url::get($url);
 	}
-
-	/**
-	 * @param $class string
-	 * @return Создает и возвращает поле соответствующего класса
-	 * Вместо класса может использоваться короткий алиас, например "checkbox"
-	 **/
-	public function field($class) {
-		return Model\Field::get($class);
-	}
 	
 	/**
 	 * Возвращает службу по ее имени
 	 **/
 	public function service($serviceName) {
-
      	Profiler::beginOperation("core","service",$serviceName);
 	    $ret = mod::app()->service($serviceName);
 		Profiler::endOperation("core","service",$serviceName);
