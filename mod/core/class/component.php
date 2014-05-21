@@ -377,7 +377,10 @@ class Component {
 
         switch($name) {
             case "log":
-                return new \Infuso\Cms\Reflex\LogPlugin($this);
+                return new \Infuso\Cms\Reflex\Plugin\Log($this);
+                break;
+            case "meta":
+                return new \Infuso\Cms\Reflex\Plugin\Meta($this);
                 break;
         }
 

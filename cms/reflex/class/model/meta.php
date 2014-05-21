@@ -1,9 +1,13 @@
 <?
 
+namespace Infuso\Cms\Reflex\Model;
+use Infuso\Core;
+use Infuso\ActiveRecord;
+
 /**
- * Модель объекта метаданных
+ * Модель метаданных
  **/
-class reflex_meta_item extends reflex {
+class Meta extends ActiveRecord\Record {
 
 	public static function recordTable() {
 		return array (
