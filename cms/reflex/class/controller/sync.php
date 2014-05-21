@@ -168,7 +168,7 @@ class Sync extends \Infuso\Core\Controller {
 
         $data = json_decode($data,1);
         if($data === null) {
-            Core\Mod::msg("Json decode failed",1);
+            app()->msg("Json decode failed",1);
             return;
         }
 

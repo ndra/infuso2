@@ -50,7 +50,7 @@ class Storage extends Core\Controller {
         foreach($p["items"] as $file) {
             $storage->delete($file);
         }
-        Core\Mod::msg("Файлы удалены");
+        app()->msg("Файлы удалены");
     }
 
     public function post_createFolder($p) {

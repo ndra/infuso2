@@ -23,7 +23,7 @@ class Controller extends Core\Controller {
         $user = Model\User::byEmail($login);
         
         if(!$user->verified()) {
-            Core\Mod::msg("Неправильное имя пользователя или пароль");
+            app()->msg("Неправильное имя пользователя или пароль");
             return false;
         }
 
@@ -32,7 +32,7 @@ class Controller extends Core\Controller {
             return true;
         }
 
-		Core\Mod::msg("Неправильное имя пользователя или пароль");
+		app()->msg("Неправильное имя пользователя или пароль");
         return false;
 	}
 

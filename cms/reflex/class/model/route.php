@@ -242,7 +242,7 @@ class Route extends ActiveRecord\Record {
         $this->data("className", $className);
 
 		if(!preg_match("/^[a-z0-9\_\\\\]+$/",$this->data("className"))) {
-		    Core\Mod::msg("Недопустимое имя класса. Можно использовать маленькие будкы, цифры, подчеркивание и слэши неймспейсов",1);
+		    app()->msg("Недопустимое имя класса. Можно использовать маленькие будкы, цифры, подчеркивание и слэши неймспейсов",1);
 		    return false;
 		}
 
@@ -250,7 +250,7 @@ class Route extends ActiveRecord\Record {
         $this->data("action", $action);
 
         if(!preg_match("/^[a-z0-9\_]+$/",$this->data("action"))) {
-		    Core\Mod::msg("Недопустимое имя экшна. Можно использовать маленькие будкы, цифры и подчеркивание",1);
+		    app()->msg("Недопустимое имя экшна. Можно использовать маленькие будкы, цифры и подчеркивание",1);
 		    return false;
 		}
 

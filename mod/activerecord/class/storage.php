@@ -163,7 +163,7 @@ class Storage extends \Infuso\Core\Controller {
 	public function addUploaded($src,$name) {
 	    $name = self::normalizeName($name);
 	    if(!$this->exists()) {
-	        Core\Mod::msg("Вы пытаетесь закачать файл в несуществующий объект",1);
+	        app()->msg("Вы пытаетесь закачать файл в несуществующий объект",1);
 	        return;
 	    }
 	    $this->prepareFolder();

@@ -20,19 +20,19 @@ class Payment extends Base {
     public static function post_new($p) {
 
         if(!$p["data"]["orgId"]) {
-            Core\Mod::msg("id контранета не указано",1);
+            app()->msg("id контранета не указано",1);
             return false;
         }
 
         $amount = (int) $p["data"]["amount"];
 
         if(!$amount) {
-            Core\Mod::msg("Не указана сумма");
+            app()->msg("Не указана сумма");
             return;
         }
 
         if($amount < 0) {
-            Core\Mod::msg("Месье пытается указать отрицательную сумму", 1);
+            app()->msg("Месье пытается указать отрицательную сумму", 1);
             return;
         }
 
@@ -58,12 +58,12 @@ class Payment extends Base {
     public static function post_save($p) {
 
         if(!$p["data"]["orgId"]) {
-            Core\Mod::msg("id контранета не указано",1);
+            app()->msg("id контранета не указано",1);
             return false;
         }
         
         if(!$p["paymentId"]){
-            Core\Mod::msg("id платежа не указано",1);
+            app()->msg("id платежа не указано",1);
             return false;    
         }
 
@@ -76,12 +76,12 @@ class Payment extends Base {
         $amount = (int) $p["data"]["amount"];
 
         if(!$amount) {
-            Core\Mod::msg("Не указана сумма");
+            app()->msg("Не указана сумма");
             return;
         }
 
         if($amount < 0) {
-            Core\Mod::msg("Месье пытается указать отрицательную сумму", 1);
+            app()->msg("Месье пытается указать отрицательную сумму", 1);
             return;
         }
         
@@ -93,7 +93,7 @@ class Payment extends Base {
             $payment->data("expenditure", $amount);
         }
         
-        Core\Mod::msg("Сохранено");
+        app()->msg("Сохранено");
     }
     
     

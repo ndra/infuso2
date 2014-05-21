@@ -14,7 +14,7 @@ class Handler implements \Infuso\Core\Handler {
 	 **/
 	public function onDeploy() {
 
-	    Core\Mod::msg("<b>Migrating DB</b>");
+	    app()->msg("<b>Migrating DB</b>");
 
 	    $v = Mod::service("db")->query("select version()")->exec()->fetchScalar();
 

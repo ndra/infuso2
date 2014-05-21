@@ -213,7 +213,7 @@ abstract class Editor extends Core\Controller {
             $item->data($key,$val);
         }
         
-        Core\Mod::msg("Объект изменен");
+        app()->msg("Объект изменен");
     }
 
     public function _applyQuickSearch($collection, $search) {
@@ -237,7 +237,7 @@ abstract class Editor extends Core\Controller {
             }
         }
 
-        Core\Mod::msg($name);
+        app()->msg($name);
 
         if($name) {
             $collection->like($name, $search);

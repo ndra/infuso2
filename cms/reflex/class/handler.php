@@ -13,7 +13,7 @@ class Handler extends Core\Component implements Core\Handler {
 	 * @handlerpriority = -1
 	 **/
 	public function removeRootTabs() {
-	    \mod::msg("removing root tabs");
+	    app()->msg("removing root tabs");
         rootTab::removeAll();
 	}
 

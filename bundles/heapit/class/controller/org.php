@@ -24,7 +24,7 @@ class Org extends Base {
     public static function post_new($p) {
 
         if(!$p["data"]["title"]) {
-            Core\Mod::msg("Название не указано",1);
+            app()->msg("Название не указано",1);
             return false;
         }
 
@@ -58,7 +58,7 @@ class Org extends Base {
             $org->data($key,$p["data"][$key]);
         }
         
-        Core\Mod::msg("Сохранено");
+        app()->msg("Сохранено");
     }
 
     /**

@@ -16,7 +16,7 @@ class Updater extends \Infuso\Core\Component {
 		
 		if($conf["update"]) {
 		
-		    Core\Mod::msg("Updating {$bundle->path()}");
+		    app()->msg("Updating {$bundle->path()}");
 		
 		    $params = $conf["update"];
 		    $tmpFolder = Core\File::tmp();
@@ -28,7 +28,7 @@ class Updater extends \Infuso\Core\Component {
 			$tmpFolder->rename($bundle->path());
 		    
 		} else {
-		    Core\Mod::msg("skip {$bundle->path()}");
+		    app()->msg("skip {$bundle->path()}");
 		}
 	}
 

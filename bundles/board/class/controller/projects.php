@@ -16,7 +16,7 @@ class Projects extends Base {
     public function post_save($p) {
         $project = Model\Project::get($p["projectId"]);
         $project->setData($p["data"]);
-        Core\Mod::msg("Сохранено");
+        app()->msg("Сохранено");
     }
 
 }

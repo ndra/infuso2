@@ -54,13 +54,6 @@ class Mod extends \Infuso\Core\Component {
 	}
 
 	/**
-	 * Выводит сообщение
-	 **/
-	public function msg($message, $error = false) {
-		service("msg")->msg($message, $error);
-	}
-
-	/**
 	 * Заносит сообщение в лог
 	 **/
 	public function trace($message) {

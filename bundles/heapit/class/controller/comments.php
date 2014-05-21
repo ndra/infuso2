@@ -23,7 +23,7 @@ class Comments extends Base {
     }   
 
     public function post_get($p) {
-        Core\Mod::msg($p);
+        app()->msg($p);
         return 12;
     }
     

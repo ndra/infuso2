@@ -571,7 +571,7 @@ class User extends ActiveRecord\Record {
 			$passlen = 1;
 		}
         if(strlen($password) < $passlen) {
-            Core\Mod::msg("Слишком короткий пароль. Минимальное количество символов: $passlen",1);
+            app()->msg("Слишком короткий пароль. Минимальное количество символов: $passlen",1);
             return false;
         }
         return $password;

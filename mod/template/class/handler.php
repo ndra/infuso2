@@ -9,7 +9,7 @@ class Handler implements Core\Handler {
 	 * @handler = infusoDeploy
 	 **/
 	public function onDeploy() {
-	    \mod::msg("clear css and js render");
+	    app()->msg("clear css and js render");
         Render::clearRender();
 	}
 

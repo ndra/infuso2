@@ -15,7 +15,7 @@ class Conf extends Base {
     public function post_save($p) {
         $user = \User::active();
         $user->data("nickName", $p["data"]["nickName"]);
-        Core\Mod::msg("настройки сохранены");
+        app()->msg("настройки сохранены");
     }
 
     /**
@@ -27,7 +27,7 @@ class Conf extends Base {
         $ext = strtolower($ext);
 
         if($ext != "jpg") {
-            Core\Mod::msg("Файл должен иметь расширение jpg");
+            app()->msg("Файл должен иметь расширение jpg");
             return;
         }
 

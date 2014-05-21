@@ -86,7 +86,7 @@ class Task extends \Infuso\Core\Controller {
     public function post_saveTask($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         $task->setData($p["data"]);
-        Core\Mod::msg("Задача изменена");
+        app()->msg("Задача изменена");
     }
 
     /**
@@ -99,7 +99,7 @@ class Task extends \Infuso\Core\Controller {
         if(!\user::active()->checkAccess("board/takeTask",array(
             "task" => $task,
         ))) {
-            Core\Mod::msg(\user::active()->errorText(),1);
+            app()->msg(\user::active()->errorText(),1);
             return;
         }
 
@@ -122,7 +122,7 @@ class Task extends \Infuso\Core\Controller {
         if(!\user::active()->checkAccess("board/pauseTask",array(
             "task" => $task,
         ))) {
-            Core\Mod::msg(\user::active()->errorText(),1);
+            app()->msg(\user::active()->errorText(),1);
             return;
         }
 
@@ -141,7 +141,7 @@ class Task extends \Infuso\Core\Controller {
         if(!\user::active()->checkAccess("board/stopTask",array(
             "task" => $task,
         ))) {
-            Core\Mod::msg(\user::active()->errorText(),1);
+            app()->msg(\user::active()->errorText(),1);
             return;
         }
 
@@ -166,7 +166,7 @@ class Task extends \Infuso\Core\Controller {
         if(!\user::active()->checkAccess("board/doneTask",array(
             "task" => $task,
         ))) {
-            Core\Mod::msg(\user::active()->errorText(),1);
+            app()->msg(\user::active()->errorText(),1);
             return;
         }
 

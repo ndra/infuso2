@@ -13,7 +13,7 @@ class Controller extends \Infuso\Core\Controller {
 	public function post_changeEmail($p) {
 	    $user = \user::get($p["userId"]);
 		if($user->changeEmail($p["newEmail"])) {
-		    Core\Mod::msg("Электронная почта изменена");
+		    app()->msg("Электронная почта изменена");
 		}
 	}
 	
@@ -21,7 +21,7 @@ class Controller extends \Infuso\Core\Controller {
 
 	    $user = \user::get($p["userId"]);
 		if($user->changePassword($p["password"])) {
-		    Core\Mod::msg("Пароль изменен");
+		    app()->msg("Пароль изменен");
 		    return true;
 		}
 		
