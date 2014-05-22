@@ -52,7 +52,7 @@ class moduleManager_inxManager extends mod_controller {
         
         // Компилируем компонет
         inx_init::packFile($params["module"],$params["path"].".js");
-        mod::msg("Компонент сохранен");
+        app()->msg("Компонент сохранен");
     }
     
     
@@ -89,7 +89,7 @@ class moduleManager_inxManager extends mod_controller {
         $new = self::getPath($module)."/".$new_name;
         file::get($old)->rename($new);
     
-        mod::msg("Компонент переименован");
+        app()->msg("Компонент переименован");
     
     }
     

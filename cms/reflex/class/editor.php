@@ -185,7 +185,7 @@ abstract class Editor extends Core\Controller {
             $item->metaObject()->delete();
             $item->delete();
         } else {
-            mod::msg("У вас нет прав для удаления этого объекта",1);
+            app()->msg("У вас нет прав для удаления этого объекта",1);
         }  */
     }
 
@@ -278,10 +278,12 @@ abstract class Editor extends Core\Controller {
             "title" => "Лог",
         );
         
-        $menu[] = array(
-            "href" => \mod::action(get_class($this),"meta",array("id"=>$this->itemID()))->url(),
-            "title" => "Метаданные",
-        );
+        if($this->metaEnabled()) {
+            $menu[] = array(
+                "href" => \mod::action(get_class($this),"meta",array("id"=>$this->itemID()))->url(),
+                "title" => "Метаданные",
+            );
+        }
         
         $class = get_class($this);
         $a = $class::inspector()->annotations();
@@ -325,6 +327,10 @@ abstract class Editor extends Core\Controller {
         }
         return $fields;
                                         
+    }
+    
+    public function metaEnabled() {
+        return true;
     }
 
 }

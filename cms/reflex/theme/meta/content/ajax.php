@@ -14,6 +14,11 @@ $metaObject = $item->plugin("meta")->metaObject();
             ->addClass("create-meta")
             ->exec();
         
+    } else {
+    
+        echo $metaObject->prefixedTableName();
+        
+    
     }
     
 </div>

@@ -10,7 +10,7 @@ class inx_init implements \Infuso\Core\Handler {
 	 **/
 	public function init() {
 	
-	    mod::msg("inx");
+	    app()->msg("inx");
 	
 		// Очищаем папку
 		//file::get("/inx/pub/")->delete(true);

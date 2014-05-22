@@ -85,7 +85,7 @@ class Service extends Core\Service {
         }
 
         $params["completed"] = 0;
-        $params["params"] = \mod::field("array")->prepareValue($params["params"]);
+        $params["params"] = Core\Model\Field::get("array")->prepareValue($params["params"]);
 
         $item = Task::all()
             ->eq($params)

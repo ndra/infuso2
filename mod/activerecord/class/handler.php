@@ -19,11 +19,11 @@ class Handler implements \Infuso\Core\Handler {
 	    $v = Mod::service("db")->query("select version()")->exec()->fetchScalar();
 
 	    if(floatval($v)<5) {
-	        Mod::msg("You need mysql version 5 or greater. You haver version $v",1);
+	        app()->msg("You need mysql version 5 or greater. You haver version $v",1);
 	        return;
 	    }
 
-	    Mod::msg("mysql version {$v} ok");
+	    app()->msg("mysql version {$v} ok");
 
 		// Проходимся по классам и создаем таблицы для них
 		foreach(Record::classes() as $class) {
@@ -38,9 +38,9 @@ class Handler implements \Infuso\Core\Handler {
 					// Если во время миграции таблицы были сообщения, выводим их
 					$messages = $migration->getMessages();
 					if(sizeof($messages)) {
-					    mod::msg("Migrating ".$class);
+					    app()->msg("Migrating ".$class);
 						foreach($messages as $msg) {
-							mod::msg($msg);
+							app()->msg($msg);
 						}
 					}
 				}

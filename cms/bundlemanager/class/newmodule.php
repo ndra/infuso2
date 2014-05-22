@@ -29,12 +29,12 @@ public static function post_create($p) {
     
     $l = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
     if(!preg_match("/^[$l][{$l}1234567890]*/", $name)) {
-        mod::msg("Недопустимое имя модуля",1);
+        app()->msg("Недопустимое имя модуля",1);
         return false;
     }
     
     if(file::get("/$name/")->exists()) {
-        mod::msg("Модуль <b>$name</b> уже существует",1);
+        app()->msg("Модуль <b>$name</b> уже существует",1);
         return false;
     }
     
@@ -53,7 +53,7 @@ edit[] = inx
 edit[] = tables
 	";
     file::get("$name/info.ini")->put($info);
-    mod::msg("Модуль <b>$name</b> создан");
+    app()->msg("Модуль <b>$name</b> создан");
     
 }
 

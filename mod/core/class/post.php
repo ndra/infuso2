@@ -74,7 +74,7 @@ class Post {
 			        	$ret = call_user_func_array(array($obj,"post_".$method),array($p,$files));
 			        	
 			        } catch(mod_userLevelException $ex) {
-			            mod::msg($ex->getMessage(),1);
+			            app()->msg($ex->getMessage(),1);
 			        }
 			        return $ret;
 			    }
@@ -83,7 +83,7 @@ class Post {
 		}
 
 	    $cmd = superadmin::check() ? $cmd : "";
-	    mod::msg("Команда $cmd отклонена",1);
+	    app()->msg("Команда $cmd отклонена",1);
 	}
 
 }

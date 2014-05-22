@@ -230,7 +230,7 @@ class Component {
     /**
      * Возвращает параметр конфигурации компонента
      **/
-    public function componentConf() {
+    public final function componentConf() {
         $args = func_get_args();
         array_unshift($args,strtolower(get_class($this)));
         array_unshift($args,"components");

@@ -126,11 +126,11 @@ class Builder {
 		        	$class = strtolower($class);
 		        	
 		        	if(!preg_match("/[a-zA-Z0-9\_\/]/",$class)) {
-						mod::msg("Class $class have strange symbols in it's name.",1);
+						app()->msg("Class $class have strange symbols in it's name.",1);
 		        	}
 		        	    
 					if(array_key_exists($class,$ret) && !$secondScan) {
-					    mod::msg("Duplicate file ".$file->path()." for class $class",1);
+					    app()->msg("Duplicate file ".$file->path()." for class $class",1);
 					}
 
 		        	if($secondScan) {
@@ -140,7 +140,7 @@ class Builder {
 		        	    // Пока не изменится его содержимое
 					    $hash = md5($file->data());
 					    if(in_array($hash,$excludes)) {
-					        mod::msg("File ".$file->path()." disabled due fatal error on previous relink",1);
+					        app()->msg("File ".$file->path()." disabled due fatal error on previous relink",1);
 					        continue;
 						}
 						file::mkdir(self::excludePath(),1);
@@ -330,7 +330,7 @@ class Builder {
 		// Сохраняем карту классов в памяти, чтобы использовать ее уже в этом запуске скрипта
 		mod::service("classmap")->storeClassMap($map);
 
-		mod::msg("Карта классов построена");
+		app()->msg("Карта классов построена");
 		
 		self::$building = false;
 	}

@@ -156,7 +156,7 @@ class Sync extends \Infuso\Core\Controller {
         $data = Core\File::http($url)->data();
 
         if(!$data) {
-            Coe\Mod::msg("No data received",1);
+            app()->msg("No data received",1);
             return false;
         }
 

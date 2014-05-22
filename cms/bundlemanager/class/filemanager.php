@@ -124,16 +124,16 @@ class moduleManager_fileManager extends mod_controller {
         $file = file::get($path);
 
         if(!$file->exists()) {
-            mod::msg("Файл, который вы пытаетесь сохранить не существует",1);
+            app()->msg("Файл, который вы пытаетесь сохранить не существует",1);
             return;
         }
 
         $file->put($params["php"]);
 
         if($file->data()==$params["php"])
-            mod::msg("Файл сохранен");
+            app()->msg("Файл сохранен");
         else
-            mod::msg("Не удалось сохранить файл",1);
+            app()->msg("Не удалось сохранить файл",1);
     }
 
 	/**
@@ -141,7 +141,7 @@ class moduleManager_fileManager extends mod_controller {
 	 **/
     public static function post_newFile($p) {
 
-        mod::msg($p);
+        app()->msg($p);
 
         $dir = $p["path"];
         file::mkdir($dir);
@@ -197,7 +197,7 @@ class moduleManager_fileManager extends mod_controller {
 
         file::get($oldName)->rename($newName);
 
-        mod::msg("Файл переименован");
+        app()->msg("Файл переименован");
 
         return file::get($p["old"])->up()->path();
     }

@@ -21,7 +21,12 @@ class Meta extends \Infuso\Core\Component {
 	}
     
     public function create() {
-        app()->msg(123);
+        $item = $this->component();
+        $hash = get_class($item).":".$item->id();
+        $meta = service("ar")->create("\\Infuso\\Cms\\Reflex\\Model\\Meta", array(
+            "hash" => get_class($item).":".$item->id(),
+        ));
+        app()->msg($meta->id());
     }
 
 }

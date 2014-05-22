@@ -30,12 +30,12 @@ class mod_json extends \infuso\core\controller {
 			// Если скрипт вывел что-нибудь в поток, выводим это как сообщение
 			$txt = ob_get_clean();
 			if($txt) {
-				mod::msg($txt,1);
+				app()->msg($txt,1);
 			}
 
 		} catch(Exception $ex) {
 
-			mod::msg("<b>Exception:</b> ".$ex->getMessage(),1);
+			app()->msg("<b>Exception:</b> ".$ex->getMessage(),1);
 
 		}
 

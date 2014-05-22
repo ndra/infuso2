@@ -44,7 +44,7 @@ class eshop_yandexGrabber_itemEditorBehaviour extends mod_behaviour {
 
 	    $size = file::get("/eshop/_tmp/$name")->size();
 	    if($size>1500000) {
-	        mod::msg("File is too large",1);
+	        app()->msg("File is too large",1);
 	        return;
 	    }
 

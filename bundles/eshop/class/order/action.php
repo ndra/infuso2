@@ -23,7 +23,7 @@ class eshop_order_action extends mod_controller {
         if(!$order->exists())
             $order = eshop_order::createOrderForActiveUser();
         if(!$order->editable()) {
-            mod::msg("You can't change items in this order",1);
+            app()->msg("You can't change items in this order",1);
             return;
         }
         $quantity = 1;
@@ -41,7 +41,7 @@ class eshop_order_action extends mod_controller {
         $item = eshop_order_item::get($p["itemID"]);
         $order = $item->order();
         if(!$order->editable()) {
-            mod::msg("You can't change items in this order",1);
+            app()->msg("You can't change items in this order",1);
             return;
         }
         $item->delete();
@@ -67,7 +67,7 @@ class eshop_order_action extends mod_controller {
             $item = eshop_order_item::get($p["orderItemID"]);
             $order = $item->order();
             if(!$order->editable()) {
-                mod::msg("You can't change items in this order",1);
+                app()->msg("You can't change items in this order",1);
                 return;
             }
             $item->setQuantity($n);
@@ -81,7 +81,7 @@ class eshop_order_action extends mod_controller {
     public static function post_fillInForm($p) {
         $order = eshop_order::get($p["orderID"]);
         if(!$order->editable()) {
-            mod::msg("You can't change items in this order",1);
+            app()->msg("You can't change items in this order",1);
             return;
         }
         $order->fillInForm($p);

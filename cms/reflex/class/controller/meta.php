@@ -33,7 +33,7 @@ class Meta extends \Infuso\Core\Controller {
 		$item = $editor->item()->metaObject();
 		
 		if(!$editor->beforeView()) {
-			mod::msg("У вас нет доступа для просмотра метаданных",1);
+			app()->msg("У вас нет доступа для просмотра метаданных",1);
 			return fasle;
 		}
 		
@@ -61,13 +61,13 @@ class Meta extends \Infuso\Core\Controller {
 	    $editor = reflex_editor::byHash($p["index"]);
 
 		if(!$editor->beforeEdit()) {
-		    mod::msg("Вы не можете редактировать метаданные этого объекта",1);
+		    app()->msg("Вы не можете редактировать метаданные этого объекта",1);
 		    return;
 		}
 
 		$editor->saveMeta($p["data"],$p["lang"]);
 
-		mod::msg("Мета: данные сохранены");
+		app()->msg("Мета: данные сохранены");
 	}
 
 	/**
@@ -78,13 +78,13 @@ class Meta extends \Infuso\Core\Controller {
 	    $editor = reflex_editor::byHash($p["index"]);
 
 		if(!$editor->beforeEdit()) {
-		    mod::msg("Вы не можете удалить метаданные этого объекта",1);
+		    app()->msg("Вы не можете удалить метаданные этого объекта",1);
 		    return;
 		}
 
 		$editor->deleteMeta($p["lang"]);
 		
-		mod::msg("Данные удалены");
+		app()->msg("Данные удалены");
 	}
 
 }

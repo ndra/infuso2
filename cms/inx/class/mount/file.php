@@ -160,7 +160,7 @@ class inx_mount_file extends mod_component {
 			try {
 				$this->compiled.= $conf["pack"] ? inx_JSMin::minify($this->fullCode()) : $this->fullCode();
 			} catch (Exception $ex) {
-			    mod::msg($this->path().": ".$ex->getMessage(),1);
+			    app()->msg($this->path().": ".$ex->getMessage(),1);
 			}
 		}
 		return $this->compiled;

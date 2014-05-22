@@ -68,11 +68,11 @@ class Console extends Controller {
 
 		            break;
 
-		        case "relink":
+		        case "relink":                    
 
 					$step = $_POST["step"];
-
-	                $done = mod::app()->deployStep($step);
+                                      
+	                $done = mod::app()->deployStep($step);      
 
 		            $messages = array();
 		            foreach(service("msg")->messages() as $msg) {

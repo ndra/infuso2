@@ -104,7 +104,7 @@ class Controller extends \Infuso\Core\Controller {
         $list = self::getListByP($p);
 
         if(!$list->editor()->beforeCreate(array())) {
-            mod::msg("У вас нет прав для создания объекта",1);
+            app()->msg("У вас нет прав для создания объекта",1);
             return;
         }
 
@@ -118,7 +118,7 @@ class Controller extends \Infuso\Core\Controller {
         ));
 
         if(!$ret) {
-            mod::msg("Создание объекта из файла недоступно. Попробуйте добавить объект.",1);
+            app()->msg("Создание объекта из файла недоступно. Попробуйте добавить объект.",1);
             $item->delete();
         }
 
@@ -142,13 +142,13 @@ class Controller extends \Infuso\Core\Controller {
         $name = $list->param("*priority");
 
         if(!$list->param("sort") || !$name) {
-            mod::msg("Сортировка этого списка не включена",1);
+            app()->msg("Сортировка этого списка не включена",1);
             return;
         }
 
         foreach($list as $item) {
             if(!$item->editor()->beforeEdit()) {
-                mod::msg("У вас нет прав для изменения объекта",1);
+                app()->msg("У вас нет прав для изменения объекта",1);
                 return;
             }
         }
@@ -175,7 +175,7 @@ class Controller extends \Infuso\Core\Controller {
         // Поле, по которому будет производиться сортировка
         $name = $collection->param("*priority");
         if(!$collection->param("sort") || !$name) {
-            mod::msg("Сортировка этого списка не включена",1);
+            app()->msg("Сортировка этого списка не включена",1);
             return;
         }
 
@@ -223,7 +223,7 @@ class Controller extends \Infuso\Core\Controller {
             if($editor->beforeEdit()) {
 
                 if(get_class($item)!=$list->itemClass()) {
-                    mod::msg("Выбранный объект нельзя вставить в этот список.",1);
+                    app()->msg("Выбранный объект нельзя вставить в этот список.",1);
                     return;
                 }
 
@@ -231,13 +231,13 @@ class Controller extends \Infuso\Core\Controller {
                     $item->data($key,$val);
 
                 if($item->testForParentsRecursion()) {
-                    mod::msg("Рекурсия",1);
+                    app()->msg("Рекурсия",1);
                     $item->revert();
                 }
 
             } else {
 
-                mod::msg("У вас нет прав для изменения объекта",1);
+                app()->msg("У вас нет прав для изменения объекта",1);
 
             }
         }
@@ -249,7 +249,7 @@ class Controller extends \Infuso\Core\Controller {
     public static function post_doAction($p) {
         $editor = self::get($p["id"]);
         if(!$editor->beforeEdit()) {
-            mod::msg("Вы не можете редактировать данный объект",1);
+            app()->msg("Вы не можете редактировать данный объект",1);
             return;
         }
         call_user_func(array($editor,"action_$p[action]"));

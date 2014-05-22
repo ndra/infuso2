@@ -11,7 +11,7 @@ class tmp_theme_init implements mod_handler {
 	 **/
 	public function deploy() {
 
-		mod::msg("Init themes");
+		app()->msg("Init themes");
 
 		// Очищаем карту тем
 		file::get(tmp_theme::mapFolder())->delete(1);

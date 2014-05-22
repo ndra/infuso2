@@ -61,14 +61,14 @@ class reflex_editor_fieldController extends mod_controller {
 
         $field = $sourceItem->field($p["name"]);
         if(!$field->exists()) {
-            mod::msg("reflex_type_link::post_getAll - sequence not found",1);
+            app()->msg("reflex_type_link::post_getAll - sequence not found",1);
             return array();
         }
         
         $items = $field->items()->limit(100);
         
         if(!$items->editor()->beforeCollectionView()) {
-            mod::msg("Ошибка доступа к просмосмотру списка ".get_class($items->editor()),1);
+            app()->msg("Ошибка доступа к просмосмотру списка ".get_class($items->editor()),1);
             return array();
         }
 
@@ -125,13 +125,13 @@ class reflex_editor_fieldController extends mod_controller {
         $sourceItem = $editor->item();
 
         if(!$sourceItem->editor()->beforeView()) {
-            mod::msg("Ошибка доступа",1);
+            app()->msg("Ошибка доступа",1);
             return array();
         }
 
         $field = $sourceItem->field($p["name"]);
         if(!$field->exists()) {
-            mod::msg("reflex_type_link::post_getAll - sequence not found",1);
+            app()->msg("reflex_type_link::post_getAll - sequence not found",1);
             return array();
         }
 

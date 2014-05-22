@@ -114,7 +114,7 @@ class Table {
         // Удаляем лишние поля
         foreach($this->realFields() as $field) {
             if(!$this->fieldExists($field)) {
-                mod::msg("Field ".$this->tableName().".".$field." not exists in model.", 1);
+                app()->msg("Field ".$this->tableName().".".$field." not exists in model.", 1);
                 $this->deleteField($field);
             }
         }
@@ -147,7 +147,7 @@ class Table {
         $format = $status["Row_format"];
         if($format!="Fixed") {
             $this->q[] = "ROW_FORMAT = FIXED";
-            mod::msg("change row format");
+            app()->msg("change row format");
         }
     }*/
 

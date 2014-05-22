@@ -40,7 +40,7 @@ class eshop_yandexGrabber_photo extends mod_controller {
 			$id = end(explode(":",$id));
 			$item = eshop::item($id);
 			if(!$item->editor()->beforeEdit()) {
-			    mod::msg("Вы не можете редактировать товар",1);
+			    app()->msg("Вы не можете редактировать товар",1);
 			    return;
 			}
 			foreach($p["images"] as $img)

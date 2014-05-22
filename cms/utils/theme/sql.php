@@ -42,7 +42,7 @@ admin::header();
             </table>
             
         } catch(Exception $ex) {
-            mod::msg($ex->getMessage(),1);
+            app()->msg($ex->getMessage(),1);
         }
     }
     

@@ -105,7 +105,7 @@ class moduleManager_templateManager extends mod_controller {
 				break;
 		}
 		
-		mod::msg("Шаблон сохранен");
+		app()->msg("Шаблон сохранен");
 	}
 
 	/**

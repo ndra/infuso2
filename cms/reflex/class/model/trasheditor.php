@@ -13,7 +13,7 @@ class reflex_editor_trash_editor extends reflex_editor {
 		    foreach($meta as $key=>$val)
 		        if($key!="id" && $key!="hash")
 		        $item->meta($key,$val);
-		    mod::msg("Объект восстановлен");
+		    app()->msg("Объект восстановлен");
 		}
 	}
 
