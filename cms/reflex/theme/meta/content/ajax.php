@@ -16,7 +16,9 @@ $metaObject = $item->plugin("meta")->metaObject();
         
     } else {
     
-        echo $metaObject->prefixedTableName();
+        //echo $metaObject->prefixedTableName();
+        
+        exec("/reflex/shared/form");
         
     
     }
