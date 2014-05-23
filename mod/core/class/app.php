@@ -327,8 +327,8 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
     public function deployStep($step) {
     
 		if($step==0) {
-            //$this->generateHtaccess();
-		   // classmap\builder::buildClassMap();
+			$this->generateHtaccess();
+			classmap\builder::buildClassMap();
 		    $next = true;
 		} else {
 			$event = mod::event("infusoDeploy");

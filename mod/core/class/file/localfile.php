@@ -95,7 +95,8 @@ class localFile extends file {
 
 	private static function scandir($dir,&$ret) {
 	
-		$files = @scandir(mod::root()."/".$dir);
+	    $localPath = app()->root()."/".$dir;
+		$files = @scandir($localPath);
 		if(!$files) return;
 		foreach($files as $file) {
 
@@ -114,7 +115,7 @@ class localFile extends file {
 		        continue;
 		    }
 
-			if(is_file(mod::root()."/".$dir."/".$file)) {
+			if(is_file(app()->root()."/".$dir."/".$file)) {
 				$ret[] = self::get($dir."/".$file);
 			} else {
 			    $ret[] = self::get($dir."/".$file);
@@ -129,7 +130,7 @@ class localFile extends file {
 	 * работает рекурсивно
 	 **/
 	public function search() {
-	
+
 		self::beginOperation("search",$this);
 	    $ret = array();
 	    self::scandir($this->path(),$ret);

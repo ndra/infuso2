@@ -72,7 +72,7 @@ class Console extends Controller {
 
 					$step = $_POST["step"];
                                       
-	                $done = mod::app()->deployStep($step);      
+	                $done = mod::app()->deployStep($step);
 
 		            $messages = array();
 		            foreach(service("msg")->messages() as $msg) {

@@ -102,7 +102,7 @@ class Builder {
 		$ret = array();
 		
 		$bundles = mod::service("bundle")->all();
-		
+
 		foreach($bundles as $bundle) {
 		    foreach($bundle->classPath()->search() as $file)
 		        if($file->ext()=="php") {
