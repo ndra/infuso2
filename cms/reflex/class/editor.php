@@ -332,5 +332,9 @@ abstract class Editor extends Core\Controller {
     public function metaEnabled() {
         return true;
     }
+    
+    public function setMeta($p) {
+        $this->item()->plugin("meta")->metaObject()->setData($p);
+    }
 
 }

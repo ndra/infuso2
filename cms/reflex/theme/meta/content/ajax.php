@@ -16,10 +16,26 @@ $metaObject = $item->plugin("meta")->metaObject();
         
     } else {
     
-        //echo $metaObject->prefixedTableName();
+
+
+        $id = get_class($editor).":".$editor->itemID();
+        <form class='meta-form' infuso:id='{$id}' >
         
-        exec("/reflex/shared/form");
-        
+            $metaEditor = \Infuso\CMS\Reflex\Editor::get("Infuso\\CMS\\Reflex\\Model\\MetaEditor:".$metaObject->id());
+            exec("/reflex/shared/form", array(
+                "editor" => $metaEditor,
+            ));
+            
+            <div style='padding-left:200px;' >
+                widget("\\infuso\\cms\\ui\\widgets\\button")
+                    ->text("Сохранить")
+                    ->attr("type", "submit")
+                    ->exec();
+            </div>
+            
+        </form>
+    
+
     
     }
     
