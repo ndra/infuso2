@@ -1,52 +1,5 @@
 .pp7cpa1wpc {
 
-    a {
-        text-decoration: none;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-    
-    .node {
-    
-        white-space: nowrap;
-        overflow: hidden;
-    
-        & > .expander {
-            cursor:pointer;
-            
-            &:hover {
-                background: #ededed;
-            }
-            
-            &:before {
-                content: " + "
-            }
-        }
-        
-        .node-title {
-            display: inline-block;
-            max-width: 300px;
-            text-overflow: ellipsis;
-            overflow:hidden;          
-        }
-        
-        .subdivisions {
-            padding-left: 20px;
-        }
-    
-    }    
-    
-    .node.expanded > .expander:before {
-        content: " - "
-    }
-    
-    .node.active {
-        background: @selection;
-        color: white;
-        a {
-            color: white;
-        }
-    }
+
     
 }

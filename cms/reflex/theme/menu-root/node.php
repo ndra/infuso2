@@ -23,8 +23,10 @@ if(trim($url,"/") == trim(\mod::url(tmp::param("url"))->path(),"/")) {
 }
 $h->begin();
 
-    <span class='expander' ></span>
-    <a class='node-title' href='{$url}' >{$title}</a>
+    <div class='node-body' >
+        <span class='expander' ></span>
+        <a class='node-title' href='{$url}' >{$title}</a>
+    </div>
     <div class='subdivisions' >
         if($nodeExpanded) {
             exec("/reflex/menu-root/subdivisions", array(

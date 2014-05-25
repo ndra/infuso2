@@ -1,0 +1,55 @@
+a {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.node {
+
+    white-space: nowrap;
+    overflow: hidden;
+
+    & > .node-body > .expander {
+    
+        cursor:pointer;
+        display: inline-block;
+        padding: 0 5px;
+        
+        &:before {
+            content: " + "
+        }
+    }
+    
+    .node-body {
+        padding: 3px;
+    }
+    
+    .node-body * {
+        vertical-align: middle;
+    }
+    
+    .node-title {
+        display: inline-block;
+        max-width: 300px;
+        text-overflow: ellipsis;
+        overflow:hidden;          
+    }
+    
+    .subdivisions {
+        padding-left: 20px;
+    }
+
+}    
+
+.node.expanded > .node-body > .expander:before {
+    content: " - "
+}
+
+.node.active > .node-body {
+    background: @selection;
+    color: white;
+    a {
+        color: white;
+    }
+}
