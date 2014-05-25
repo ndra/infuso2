@@ -51,17 +51,19 @@ $code = $collection->serialize();
                 ->exec();
             
             $w = widget("infuso\\cms\\ui\\widgets\\button")
-                ->icon("edit")
+                ->icon("view")
                 ->air()
                 ->exec();
                 
             $w = widget("infuso\\cms\\ui\\widgets\\button")
-                ->icon("edit")
+                ->icon("copy")
                 ->air()
                 ->exec();
                 
+            <span style='margin-right:20px;' ></span>
+                
             $w = widget("infuso\\cms\\ui\\widgets\\button")
-                ->icon("delete")
+                ->icon("trash")
                 ->addClass("delete")
                 ->air()
                 ->exec();
