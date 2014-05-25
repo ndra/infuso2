@@ -154,7 +154,7 @@ class App {
 	 * т.к. ошибка в стороннем классе может сделать невозможным использование консоли
 	 **/
 	public function eventsEnabled() {
-	    if($this->action() && preg_match("/^infuso\\\\core\\\\console/i",$this->action()->className())) {
+	    if(preg_match("/^infuso\\\\core\\\\console/i",$this->action()->className())) {
 	        return false;
 	    }
 	    return true;
@@ -233,7 +233,9 @@ class App {
 
         // Если события не заблокированы - вызываем событие
         if($this->eventsEnabled()) {
-        	mod::fire("infusoBeforeActionSYS");
+        	mod::fire("infuso/beforeActionSYS", array(
+                "action" => $this->action(),
+            ));
         	Profiler::addMilestone("before action sys");
         }
 

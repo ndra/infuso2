@@ -128,28 +128,6 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 	    }
 	}
 
-	/**
-	 * Вызывается до старта контроллера
-	 * Если вызван метод className::item класса, наследуемого от reflex,
-	 * то устанавливам текущий объект action::ar()
-	 * @todo сделать же чтобы работало да
-	 **/
-	public static function on_mod_beforeAction($p) {
 
-		$action = $p->param("action");
-	    if($action->action()=="item") {
-			$id = $action->param("id");
-			$obj = reflex::get($action->className(),$id);
-			$obj->addBehaviour("Infuso\\Cms\\Reflex\\recordBehaviour");
-			if($obj->published()) {
-			    $action->ar(get_class($obj)."/".$obj->id());
-			} else {
-			    mod_cmd::error(404);
-			}
-			
-		}
-
-		
-	}
 
 }

@@ -29,15 +29,10 @@ class Meta extends ActiveRecord\Record {
 				'editable' => '1',
 				'label' => 'Заголовок браузера &lt;title&gt;',
 		    ), array (
-				'name' => 'keywords',
-				'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
-				'editable' => '1',
-				'label' => 'Keywords',
-		    ), array (
-				'name' => 'description',
-				'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
-				'editable' => '1',
-				'label' => 'Description',
+				'name' => 'head',
+				'type' => 'textarea',
+				'editable' => true,
+				'label' => '&lt;HEAD&gt;',
 		    ), array (
 				'name' => 'noindex',
 				'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',

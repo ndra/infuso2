@@ -89,6 +89,45 @@ class Handler extends Core\Component implements Core\Handler {
         ));
 
 	}
+    
+    /**
+     * @handler = infuso/beforeActionSYS
+     **/         
+    public function addMeta() {
+        $ar = app()->action()->ar();
+        list($class,$id) = explode("/",$ar);
+        $record = service("ar")->get($class,$id);
+        $metaObject = $record->plugin("meta")->metaObject();
+        \tmp::param("head/title", $metaObject->data("title"));
+        \tmp::param("head/noindex", $metaObject->data("noindex"));
+        \tmp::param("head/insert", $metaObject->data("head"));
+    }
+    
+	/**
+	 * Вызывается до старта контроллера
+	 * Если вызван метод className::item класса, наследуемого от reflex,
+	 * то устанавливам текущий объект action::ar()
+	 * @todo сделать же чтобы работало да
+	 * @handler = infuso/beforeActionSYS  
+	 * @handlerPriority = -1        
+	 **/
+	public static function onbeforeActionSys($p) {
+
+		$action = $p->param("action");
+	    if($action->action()=="item") {
+			$id = $action->param("id");
+			$obj = service("ar")->get($action->className(),$id);
+			//$obj->addBehaviour("Infuso\\Cms\\Reflex\\recordBehaviour");
+			//if($obj->published()) {
+			$action->ar(get_class($obj)."/".$obj->id());
+			//} else {
+			//    mod_cmd::error(404);
+			//}
+			
+		}
+
+		
+	}
 
 	/**
 	 * Запускается как задача раз в день

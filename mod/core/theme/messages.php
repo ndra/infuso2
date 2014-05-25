@@ -2,7 +2,7 @@
 
 <div class='gveialugfd'> 
 
-    foreach(\infuso\core\log::messages() as $msg) {
+    foreach(service("msg")->messages() as $msg) {
     
         $class = $msg->error() ? "error" : "ok";
         

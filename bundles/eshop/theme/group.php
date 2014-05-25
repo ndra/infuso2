@@ -1,5 +1,6 @@
 <?
 
+/*
 tmp::add("center","eshop:group.description",$p1);
 
 if($p1->subgroups()->count()) {
@@ -19,6 +20,6 @@ if($p1->subgroups()->count()) {
     $tmp->add("center","eshop:group.items",$items);    
     $tmp->add("right","eshop:layout.subgroups",$p1->level0());
 
-}
+} */
 
 $tmp->exec("/eshop/layout");

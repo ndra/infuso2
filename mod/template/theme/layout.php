@@ -3,7 +3,7 @@
 tmp::header();
 tmp::reset();
 tmp::exec("header");
-\infuso\Template\Lib::components();
+//\infuso\Template\Lib::components();
 
 <table class='pwq3nk3agh' >
     <tr>
