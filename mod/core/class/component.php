@@ -382,6 +382,9 @@ class Component {
             case "meta":
                 return new \Infuso\Cms\Reflex\Plugin\Meta($this);
                 break;
+            case "editor":
+                return new \Infuso\Cms\Reflex\Plugin\Editor($this);
+                break;
         }
 
     }
