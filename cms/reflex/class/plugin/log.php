@@ -29,5 +29,9 @@ class Log extends \Infuso\Core\Component {
             ->collection("infuso\\cms\\log\\log")
             ->eq("index", get_class($this->component()).":".$this->component()->id());
     }
+    
+    public function factory() {
+        return $this;
+    }
 
 }

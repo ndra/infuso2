@@ -1,13 +1,11 @@
 <? 
 
 <div class='qm15c9g910' >
+    // Хлебные крошки
+    tmp::exec("breadcrumbs");       
     <table >
         <tr>
             <td >
-            
-                // Хлебные крошки
-                tmp::exec("breadcrumbs");                
-            
                 // Заголовок элемента
                 <div class='title' >{$editor->title()}</div>
                 

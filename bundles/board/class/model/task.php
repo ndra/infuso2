@@ -155,6 +155,11 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Возвращает родителя записи, т.е. проект
      **/
     public function recordParent() {
+    
+        if($this->pdata("epicParentTask")->exists()) {
+            return $this->pdata("epicParentTask");
+        }
+    
         return $this->project();
     }
 

@@ -107,26 +107,16 @@ class Handler extends Core\Component implements Core\Handler {
 	 * Вызывается до старта контроллера
 	 * Если вызван метод className::item класса, наследуемого от reflex,
 	 * то устанавливам текущий объект action::ar()
-	 * @todo сделать же чтобы работало да
 	 * @handler = infuso/beforeActionSYS  
 	 * @handlerPriority = -1        
 	 **/
-	public static function onbeforeActionSys($p) {
-
+	public static function onbeforeActionSys($p) { 
 		$action = $p->param("action");
 	    if($action->action()=="item") {
 			$id = $action->param("id");
 			$obj = service("ar")->get($action->className(),$id);
-			//$obj->addBehaviour("Infuso\\Cms\\Reflex\\recordBehaviour");
-			//if($obj->published()) {
 			$action->ar(get_class($obj)."/".$obj->id());
-			//} else {
-			//    mod_cmd::error(404);
-			//}
-			
-		}
-
-		
+		}		
 	}
 
 	/**

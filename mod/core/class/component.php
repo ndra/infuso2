@@ -377,15 +377,17 @@ class Component {
 
         switch($name) {
             case "log":
-                return new \Infuso\Cms\Reflex\Plugin\Log($this);
+                $plugin = new \Infuso\Cms\Reflex\Plugin\Log($this);
                 break;
             case "meta":
-                return new \Infuso\Cms\Reflex\Plugin\Meta($this);
+                $plugin = new \Infuso\Cms\Reflex\Plugin\Meta($this);
                 break;
             case "editor":
-                return new \Infuso\Cms\Reflex\Plugin\Editor($this);
+                $plugin = new \Infuso\Cms\Reflex\Plugin\Editor($this);
                 break;
         }
+        
+        return $plugin->factory();
 
     }
 }

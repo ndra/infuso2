@@ -28,5 +28,9 @@ class Meta extends \Infuso\Core\Component {
         ));
         app()->msg($meta->id());
     }
+    
+    public function factory() {
+        return $this;
+    }
 
 }
