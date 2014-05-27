@@ -1,4 +1,4 @@
-jQuery.fn.mod = function(param,p2) {
+jQuery.fn.mod = function(param,p2,p3) {
 
 	/**
 	 * Возвращает данные формы в виде массива ключ => значение
@@ -29,4 +29,11 @@ jQuery.fn.mod = function(param,p2) {
 	        }
         });
     };
+    
+    /**
+     * Подписка на глобальное событие
+     **/         
+    if(param === "on") {        
+        mod.on(p2,p3,$(this));  
+    }
 }

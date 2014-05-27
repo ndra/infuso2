@@ -29,11 +29,20 @@ mod.msg = function(text,error) {
 
 mod.handlers = {}
 
-mod.on = function(name,handler) {
+mod.on = function(name,handler, element) {
+
+    if(!element) {
+        element = $(document);
+    }
+
     if(!mod.handlers[name]) {
         mod.handlers[name] = [];
     }
-    mod.handlers[name].push(handler);
+    
+    mod.handlers[name].push({
+        fn: handler,
+        element: element
+    });
 }
 
 /**
@@ -42,8 +51,21 @@ mod.on = function(name,handler) {
 mod.fire = function(name,params) {
     var handlers = mod.handlers[name];
     if(handlers) {
-        for(var j in handlers) {
-            handlers[j](params);
+    
+        var handlers2 = handlers;
+        for(var i in handlers) {
+            var element = $(handlers[i].element);
+            if(element.length) {
+                handlers2.push(handlers[i])
+            } 
+        }
+        
+        handlers = handlers2;
+        mod.handlers[name] = handlers2;
+    
+        for(var i in handlers) {
+            var element = handlers[i].fn(params)
+            handlers[i].fn(params);
         }
     }
 }
@@ -164,10 +186,12 @@ mod.handleCmd = function(success,response,fn) {
 
 }
 
-mod.init = function(selector, fn) {
-
+mod.init = function(selector, fn) {   
     $(function() {
         $(selector).mod("init", fn);
-    });
-
+    });   
 }
+
+$(document).keydown(function(event) { 
+    mod.fire("keydown", event);
+});
