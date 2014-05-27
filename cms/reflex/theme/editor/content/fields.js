@@ -29,7 +29,7 @@ $(function() {
             submit();
         });
         
-        $(document).keydown(function(e) {
+        $(form).mod("on", "keydown", function(e) {
             if(e.keyCode == 83 && e.ctrlKey) {
                 e.preventDefault();
                 submit();

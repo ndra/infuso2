@@ -49,10 +49,11 @@ mod.on = function(name,handler, element) {
  * Вызывает событие name
  **/
 mod.fire = function(name,params) {
+
     var handlers = mod.handlers[name];
     if(handlers) {
     
-        var handlers2 = handlers;
+        var handlers2 = [];
         for(var i in handlers) {
             var element = $(handlers[i].element);
             if(element.length) {
@@ -62,9 +63,8 @@ mod.fire = function(name,params) {
         
         handlers = handlers2;
         mod.handlers[name] = handlers2;
-    
+   
         for(var i in handlers) {
-            var element = handlers[i].fn(params)
             handlers[i].fn(params);
         }
     }
@@ -192,6 +192,9 @@ mod.init = function(selector, fn) {
     });   
 }
 
-$(document).keydown(function(event) { 
-    mod.fire("keydown", event);
+
+mod.init(document,function() {
+    $(this).keydown(function(event) { 
+        mod.fire("keydown", event);
+    });
 });
