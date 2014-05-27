@@ -7,7 +7,9 @@ mod.init(".lonjnbmi8k", function() {
         mod.call({
             cmd:"infuso/cms/reflex/controller/meta/create",
             index: index
-        })
+        }, function() {
+            container.trigger("reflex/updateMeta");
+        });
     });
     
     

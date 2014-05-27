@@ -16,12 +16,17 @@ class Meta extends \Infuso\Core\Controller {
 		return \user::active()->checkAccess("admin:showInterface");
 	}
     
-    public function post_create($p) {
+    public function post_getMeta($p) {    
+        $editor = \Infuso\CMS\Reflex\Editor::get($p["index"]);
+        return \tmp::get("/reflex/meta/content/ajax", array(
+            "editor" => $editor,
+        ))->getContentForAjax();
+    }
     
+    public function post_create($p) {     
         $editor = \Infuso\CMS\Reflex\Editor::get($p["index"]);
         $item = $editor->item();
-        $item->plugin("meta")->create();
-    
+        $item->plugin("meta")->create();    
     }
     
     public function post_save($p) {

@@ -33,6 +33,8 @@ $metaObject = $item->plugin("meta")->metaObject();
                     ->exec();
             </div>
             
+            <div>Удалить метаданные</div>
+            
         </form>
     
 
