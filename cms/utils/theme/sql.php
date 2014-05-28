@@ -2,50 +2,20 @@
 
 admin::header();
 
-<form class='joe9zokei' method='post' >
+<div class='joe9zokei' >
 
-    <textarea name='query' >
-        echo e($_POST["query"]);
-    </textarea>
+    <table style='width:100%;' >
+        <tr>
+            <td style='width:70%;padding-right:30px;' >
+                exec("query");
+            </td>
+            <td>
+                exec("help");
+            <td>
+        </tr>
+    </table>
+    exec("result");
     
-    <input type='submit' value='Выполнить' />
-    
-    if($_POST["query"]) {
-        try {
-        
-            $result = \mod::service("db")->query($_POST["query"])->exec();
-            
-            <table class='result' >
-                
-                foreach($result->fetchAll() as $rowIndex => $row) {
-                
-                    // Заголовок таблицы
-                    if($rowIndex == 0) {
-                        <thead>
-                            <tr>
-                                foreach($row as $key => $val) {
-                                    <td>{$key}</td>
-                                }
-                            </tr>
-                        </thead>
-                    }
-                
-                    <tr>                
-                        foreach($row as $key => $val) {
-                            <td>
-                                echo \infuso\util\util::str($val)->esc();
-                            </td>        
-                        }
-                    </tr>
-                }
-                
-            </table>
-            
-        } catch(Exception $ex) {
-            app()->msg($ex->getMessage(),1);
-        }
-    }
-    
-</form>
+</div>
 
 admin::footer();

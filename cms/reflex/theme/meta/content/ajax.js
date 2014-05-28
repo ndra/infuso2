@@ -42,7 +42,16 @@ mod.init(".lonjnbmi8k", function() {
             submit();
         });
         
-        $(document).keydown(function(e) {
+        form.find(".remove").click(function() {
+            mod.call({
+                cmd:"infuso/cms/reflex/controller/meta/remove",
+                index: index
+            }, function() {
+                container.trigger("reflex/updateMeta");
+            });
+        });
+        
+        container.mod("on", "keydown", function(e) {
             if(e.keyCode == 83 && e.ctrlKey) {
                 e.preventDefault();
                 submit();

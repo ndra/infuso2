@@ -26,14 +26,24 @@ $metaObject = $item->plugin("meta")->metaObject();
                 "editor" => $metaEditor,
             ));
             
-            <div style='padding-left:200px;' >
-                widget("\\infuso\\cms\\ui\\widgets\\button")
-                    ->text("Сохранить")
-                    ->attr("type", "submit")
-                    ->exec();
-            </div>
-            
-            <div>Удалить метаданные</div>
+            <table>
+                <tr>
+                    <td style='padding-left:200px;' >
+                        widget("\\infuso\\cms\\ui\\widgets\\button")
+                            ->text("Сохранить")
+                            ->attr("type", "submit")
+                            ->exec();
+                    </td>
+                    <td style='padding-left:200px;' >
+                        widget("\\infuso\\cms\\ui\\widgets\\button")
+                            ->text("Удалить метаданные")
+                            ->air()
+                            ->addClass("remove")
+                            ->icon("trash")
+                            ->exec();
+                    </td>
+                </tr>
+            </table>
             
         </form>
     

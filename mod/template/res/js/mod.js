@@ -55,8 +55,8 @@ mod.fire = function(name,params) {
     
         var handlers2 = [];
         for(var i in handlers) {
-            var element = $(handlers[i].element);
-            if(element.length) {
+            var element = $(handlers[i].element).get(0);             
+            if(jQuery.contains(document, element)) {
                 handlers2.push(handlers[i])
             } 
         }

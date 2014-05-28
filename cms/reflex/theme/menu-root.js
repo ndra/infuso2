@@ -67,12 +67,12 @@ $(function() {
     
     initNodes();
     
-    var expanded = getExpandedNodes();
+    /*var expanded = getExpandedNodes();
     $(".pp7cpa1wpc .node").each(function() {
         var node = $(this);
         if($.inArray(node.attr("data:node-id"),expanded) != -1) {
             expandNode(node);
         }
-    });
+    }); */
 
 });

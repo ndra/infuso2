@@ -1,0 +1,13 @@
+.xularn5ng1 {
+
+    margin-top:20px;
+    
+    td {
+        border: 1px solid #ededed;
+        padding:5px;
+    }
+    
+    thead {
+        font-weight:bold;
+    }
+}
