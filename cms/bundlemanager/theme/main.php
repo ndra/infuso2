@@ -9,7 +9,7 @@ lib::modjs();
                 echo "main";
             </td>
             <td class='right' >
-                echo 1;
+                exec("2-right");
             </td>
             <td class='right' >
                 exec("bundles");

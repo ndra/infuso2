@@ -2,8 +2,19 @@
 
     padding: 10px;
     
-    .bundle {
-        padding: 3px 0;
+    .bundle-name, .files, .theme {
+        padding: 2px 0;
+    }
+    
+    .files, .theme {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+    .subdivisions {
+        padding-left: 20px;
     }
 
 }
