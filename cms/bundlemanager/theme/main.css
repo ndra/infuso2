@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+}
+
+.zdh71269gn {
+
+    width:100%;
+    table-layout: fixed;
+    
+    & > tbody > tr > .main {
+        width:100%;
+    }
+    
+    & > tbody > tr > .right {
+        width:250px;
+        border-left: 1px solid #ccc;
+    }    
+
+}
