@@ -15,6 +15,7 @@ class Files extends Core\Controller {
 	
 	public function post_right($p) {
         return \tmp::get("/bundlemanager/files-right")
+            ->param("bundle", service("bundle")->bundle($p["bundle"]))
             ->getContentForAjax();
 	}
 
