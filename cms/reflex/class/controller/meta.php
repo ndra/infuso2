@@ -37,8 +37,7 @@ class Meta extends \Infuso\Core\Controller {
     
     public function post_remove($p) {
         $editor = \Infuso\CMS\Reflex\Editor::get($p["index"]);
-        $editor->delete();
-        app()->msg($p);
+        $editor->deleteMeta();
         app()->msg("Метаданные удалены");
     }
     

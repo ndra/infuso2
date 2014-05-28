@@ -15,8 +15,6 @@ $metaObject = $item->plugin("meta")->metaObject();
             ->exec();
         
     } else {
-    
-
 
         $id = get_class($editor).":".$editor->itemID();
         <form class='meta-form' infuso:id='{$id}' >

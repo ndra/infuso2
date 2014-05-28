@@ -69,7 +69,7 @@ abstract class Editor extends Core\Controller {
      **/
     public function index_meta($p) {
         $class = get_called_class();
-        $editor = new $class($p["id"]);
+        $editor = new $class($p["id"]);   
         \Infuso\Template\Tmp::exec("/reflex/meta",array(
             "editor" => $editor,
         ));
@@ -85,7 +85,7 @@ abstract class Editor extends Core\Controller {
     public function __construct($itemID=null) {
         if(is_object($itemID)) {
             $this->item = $itemID;
-        } else {
+        } else {                                    
             $this->item = Core\Mod::service("ar")->get($this->itemClass(),$itemID);
         }
     }
@@ -335,6 +335,10 @@ abstract class Editor extends Core\Controller {
     
     public function setMeta($p) {
         $this->item()->plugin("meta")->metaObject()->setData($p);
+    }
+    
+    public function deleteMeta() {
+        $this->item()->plugin("meta")->metaObject()->delete();
     }
 
 }

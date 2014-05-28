@@ -43,6 +43,11 @@ mod.init(".lonjnbmi8k", function() {
         });
         
         form.find(".remove").click(function() {
+        
+            if(!window.confirm("Удалить метаданные?")) {
+                return;
+            }
+            
             mod.call({
                 cmd:"infuso/cms/reflex/controller/meta/remove",
                 index: index
