@@ -24,9 +24,10 @@
     </div>
 
     <div class='files' >
-        foreach(\file::get($bundle->path())->dir()->sort() as $file) {
-            <div>{$file->name()}</div>
-        }
+        $path = \file::get($bundle->path());
+        exec("nodes", array(
+            "path" => $path,
+        ));
     </div>
     
 </div>

@@ -2,6 +2,7 @@
 
 admin::header();
 lib::modjs();
+lib::modjsui();
     
     <table class='zdh71269gn' >
         <tr>

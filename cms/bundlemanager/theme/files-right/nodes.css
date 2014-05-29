@@ -1,0 +1,21 @@
+.zjvrux95g2 {
+
+    .body {
+        cursor: pointer;
+        padding: 2px;
+    }
+
+    .node:hover > .body > .name {
+        text-decoration: underline;        
+    }
+    
+    .body.selected {
+        background: #0099C6;
+        color: white;        
+    }
+
+    .subdivisions {
+        padding-left: 20px;
+    }
+
+}
