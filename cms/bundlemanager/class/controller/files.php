@@ -18,5 +18,11 @@ class Files extends Core\Controller {
             ->param("bundle", service("bundle")->bundle($p["bundle"]))
             ->getContentForAjax();
 	}
+    
+	public function post_list($p) {
+        return \tmp::get("/bundlemanager/files-right/nodes")
+            ->param("path", \file::get($p["path"]))
+            ->getContentForAjax();
+	}
 
 }

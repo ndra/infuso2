@@ -1,8 +1,11 @@
 .zjvrux95g2 {
 
     .body {
-        cursor: pointer;
         padding: 2px;
+    }
+    
+    .name {
+        cursor: pointer;
     }
 
     .node:hover > .body > .name {
@@ -16,6 +19,24 @@
 
     .subdivisions {
         padding-left: 20px;
+        display: none;
+    }
+    
+    .expanded > .subdivisions {
+        display: block;
+    }
+    
+    .expander {
+        padding: 0 6px;
+        cursor: pointer;
+    }
+    
+    .expander:before {
+        content: "+";
+    }
+    
+    .expanded > .body > .expander:before {
+        content: "-" !important;
     }
 
 }
