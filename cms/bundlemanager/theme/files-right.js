@@ -2,7 +2,7 @@ $(function() {
 
     var createList = function() {
         $(".i00sceaxx3").list({
-            selectHandle: ".name"
+           // selectHandle: ".name"
         });
     }
     

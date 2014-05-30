@@ -11,9 +11,7 @@
             </div>
             if($file->folder()) {
                 <div class='subdivisions' >
-                    /*exec("/bundlemanager/files-right/nodes", array(
-                        "path" => $file,
-                    ));*/
+                    // ajax here
                 </div>
             }
         </div>
