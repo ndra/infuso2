@@ -17,6 +17,7 @@ $(function() {
     
     updateHeight();
     setInterval(updateHeight,1000);
+    $(window).resize(updateHeight);
     
     // Управление табами
 
@@ -39,25 +40,37 @@ $(function() {
     // Добавляет табу
     
     var addTab = function(params) {
-        var id = makeid();
+    
+        if(!params.id) {
+            params.id = makeid();
+        }
         
-        var $tab = $("<div>")
-            .html(params.title)
-            .data("tab-id", id)
-            .appendTo($tabsHead)
-            .click(function() {
-                selectTab($tab);
-            });
-            
-        var $content = $("<div>")
-            .css({height:"100%"})
-            .html(params.title)
-            .data("tab-id", id)
-            .appendTo($tabsContainer);
-            
-        mod.call(params.loader, function(html) {
-            $content.html(html);
+        var $tab = $tabsHead.children().filter(function() {
+            return $(this).data("tab-id") == params.id;
         });
+        
+        if($tab.length == 0) {
+        
+            var $tab = $("<div>")
+                .html(params.title)
+                .data("tab-id", params.id)
+                .appendTo($tabsHead)
+                .click(function() {
+                    selectTab($tab);
+                });
+                
+            var $content = $("<div>")
+                .css({height:"100%"})
+                .data("tab-id", params.id)
+                .appendTo($tabsContainer);            
+                
+            mod.call(params.loader, function(html) {
+                $content.html(html);
+            });
+        
+        }
+        
+        new Sortable($tabsHead.get(0)); 
         
         selectTab($tab);
     }
@@ -86,7 +99,9 @@ $(function() {
             } else {
                 $e.hide();
             }
-        })
+        });
+        
+        $(".zdh71269gn").layout("update");
         
     }
    
@@ -94,6 +109,7 @@ $(function() {
                 
         addTab({
             title: event.path,
+            id: "file:"+event.path,
             loader: {
                 cmd: "infuso/cms/bundlemanager/controller/files/editor",
                 path: event.path

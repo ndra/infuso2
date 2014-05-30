@@ -45,5 +45,9 @@ class Lib {
     public function d3() {
         js("http://d3js.org/d3.v3.min.js");
     }
+    
+    public function sortable() {
+        tmp::js(self::path()."/js/sortable.min.js");
+    }
 
 }

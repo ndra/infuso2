@@ -5,9 +5,10 @@ mod.init(".y1esl75wqs", function() {
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/php");
     
-    // @todo переделать по человечески
-    setInterval(function() {
-        editor.resize();
-    }, 1000);
-
+    $(window).resize(function() {
+        setTimeout(function() {
+            editor.resize();
+        });
+    });
+    
 });
