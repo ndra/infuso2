@@ -4,10 +4,13 @@
 
     .body {
         padding: 2px;
+        background-repeat: no-repeat;
+        background-position: 20px 50%;
     }
     
     .name {
         cursor: pointer;
+        padding-left:20px;
     }
 
     .node:hover > .body > .name {
@@ -15,7 +18,7 @@
     }
     
     .body.selected {
-        background: #0099C6;
+        background: #0099C6 !important;
         color: white;        
     }
 
