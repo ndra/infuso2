@@ -104,7 +104,7 @@ class moduleManager_templateManager extends mod_controller {
 				\Infuso\Template\Render::clearRender();
 				break;
 		}
-		
+		        
 		app()->msg("Шаблон сохранен");
 	}
 

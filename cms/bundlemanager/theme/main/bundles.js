@@ -6,5 +6,12 @@ $(function() {
             bundle:bundle
         });
     });
+    
+    $(".erjk605ygl .theme").click(function() {
+        var theme = $(this).attr("data:theme");
+        mod.fire("bundlemanager/open-theme", {
+            theme:theme
+        });
+    });
 
 });

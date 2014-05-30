@@ -306,13 +306,13 @@ class Template extends Generic {
         }
 
         if(core\mod::debug()) {
-			echo "<!-- ".$this->template()." -->";
+		//	echo "<!-- ".$this->template()." -->";
         }
 
         include $this->file()->native();
 
         if(core\mod::debug()) {
-			echo "<!-- end of ".$this->template()." -->";
+		//	echo "<!-- end of ".$this->template()." -->";
         }
 
         self::$current = $__last__;

@@ -52,7 +52,13 @@ class tmp_theme_template extends mod_component {
 	public function depth() {
 	    return sizeof(util::splitAndTrim($this->name(),"/"));
 	}
-
+    
+	/**
+	 * Возвращает глубину шаблона относительно темы
+	 **/
+	public function themeDepth() {
+	    return sizeof(util::splitAndTrim($this->relName(),"/"));
+	}
 
 	/**
 	 * Возвращает список дочерних шаблонов

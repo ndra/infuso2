@@ -105,8 +105,7 @@ $(function() {
         
     }
    
-    $(".zdh71269gn").on("bundlemanager/openFile", function(event) {
-                
+    $(".zdh71269gn").on("bundlemanager/openFile", function(event) {                
         addTab({
             title: event.path,
             id: "file:"+event.path,
@@ -114,8 +113,19 @@ $(function() {
                 cmd: "infuso/cms/bundlemanager/controller/files/editor",
                 path: event.path
             }
-        });
-        
+        });        
+    });
+    
+    $(".zdh71269gn").on("bundlemanager/openTemplate", function(event) {                
+        addTab({
+            title: event.theme+":"+event.template,
+            id: "template:"+event.theme+":"+event.template,
+            loader: {
+                cmd: "infuso/cms/bundlemanager/controller/theme/editor",
+                theme: event.theme,
+                template: event.template,
+            }
+        });        
     });
 
 });

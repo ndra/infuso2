@@ -1,0 +1,27 @@
+.aivh9q8neu {
+
+    height: 100%;
+
+    .top {
+        padding: 0 10px 10px;
+        background: #ededed;
+        margin-right: 10px;
+        
+        div {
+            display: inline-block;
+            margin-right:10px;
+            cursor: pointer;
+        }
+        
+        .active {
+            font-weight: bold;
+        }
+        
+    }
+    
+    .editor {
+        width: 100%;
+        height: 100%;
+    }
+
+}
