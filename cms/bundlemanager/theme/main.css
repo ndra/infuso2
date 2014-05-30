@@ -4,16 +4,15 @@ html, body {
 
 .zdh71269gn {
 
-    width:100%;
-    table-layout: fixed;
-    
-    & > tbody > tr > .main {
-        width:100%;
+    .tabs-head {
+        background: #ededed;
+        padding: 10px;
     }
     
-    & > tbody > tr > .right {
+    & > .right {
         width:250px;
         border-left: 1px solid #ccc;
+        overflow: auto;
     }    
 
 }

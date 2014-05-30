@@ -39,6 +39,7 @@ class Lib {
         self::jq();
         tmp::js(self::path()."/js/mod.window.js");
         tmp::js(self::path()."/js/mod.list.js");
+        tmp::js(self::path()."/js/mod.layout.js");
     }
 
     public function d3() {
