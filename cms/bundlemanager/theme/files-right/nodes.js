@@ -23,8 +23,11 @@ mod.init(".zjvrux95g2 .node", function() {
         }
     });
     
-    container.dblclick(function(e) {
-        mod.msg(1111);
+    container.find(".body").dblclick(function(e) {
+        container.trigger({
+            type: "bundlemanager/openFile",
+            path: container.find(".body").attr("data:id")
+        });
         e.preventDefault();
     });
 

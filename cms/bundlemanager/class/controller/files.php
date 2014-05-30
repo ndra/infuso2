@@ -24,5 +24,11 @@ class Files extends Core\Controller {
             ->param("path", \file::get($p["path"]))
             ->getContentForAjax();
 	}
+    
+    public function post_editor($p) {
+        return \tmp::get("/bundlemanager/file-editor")
+            ->param("path", \file::get($p["path"]))
+            ->getContentForAjax();
+    }
 
 }
