@@ -10,7 +10,7 @@ mod.init(".aivh9q8neu", function() {
             if(i==n) {
                 $(this).addClass("active");
             } else {
-                $(this).removeClass("active")
+                $(this).removeClass("active");
             }
         });
         
@@ -22,7 +22,7 @@ mod.init(".aivh9q8neu", function() {
             }
         });
     
-    }
+    };
     
     selectTab(0);
     
@@ -36,8 +36,9 @@ mod.init(".aivh9q8neu", function() {
 
         var id = $(this).attr("id");
         var editor = ace.edit(id);
+        var $editor = $(this);
         editor.setTheme("ace/theme/monokai");
-        editor.getSession().setMode("ace/mode/php");
+        editor.getSession().setMode("ace/mode/" + $editor.attr("data:lang"));
         
         // При ресайзе окна запускаем отложенеый ресайз редактора
         // @todo переписать по-человечески
@@ -47,7 +48,7 @@ mod.init(".aivh9q8neu", function() {
             });
         });
         
-        var $editor = $(this);
+        
         
         $(this).mod("on","keydown", function(e) {
        

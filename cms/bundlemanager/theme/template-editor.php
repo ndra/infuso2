@@ -8,9 +8,9 @@
         <div>css</div>
     </div>
     <div class='center' >
-        <div id='x{\util::id()}' class='editor' data:type='php' >{e($template->contents("php"))}</div>
-        <div id='x{\util::id()}' class='editor' data:type='js' >{e($template->contents("js"))}</div>
-        <div id='x{\util::id()}' class='editor' data:type='css' >{e($template->contents("css"))}</div>
+        <div id='x{\util::id()}' class='editor' data:type='php' data:lang='php' >{e($template->contents("php"))}</div>
+        <div id='x{\util::id()}' class='editor' data:type='js'  data:lang='javascript' >{e($template->contents("js"))}</div>
+        <div id='x{\util::id()}' class='editor' data:type='css'  data:lang='css' >{e($template->contents("css"))}</div>
     </div>
 
 </div>
