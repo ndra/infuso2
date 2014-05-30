@@ -4,9 +4,20 @@ html, body {
 
 .zdh71269gn {
 
-    .tabs-head {
+    & > .main > .tabs > .tabs-head {
+    
         background: #ededed;
         padding: 10px;
+        
+        div {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        & > .active {
+            font-weight: bold;
+        }
+        
     }
     
     & > .right {
