@@ -2,7 +2,7 @@
 
 <div class='y1esl75wqs' >
 
-    <div id='editor' >
+    <div class='editor' id='x{\util::id()}' >
         echo e($path->data());
     </div>
 
