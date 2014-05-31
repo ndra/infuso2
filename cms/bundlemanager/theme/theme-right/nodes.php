@@ -14,9 +14,14 @@ if(!$path) {
 <div class='gdiqqd1vn4' >
     foreach($templates as $template) {
         <div class='node' >        
-            //$icon = \file::get("/")->preview(16,16);
+            $icon = $this->bundle()->path()."/res/img/icons16/template.gif";
+            $folder = sizeof($template->children());
             <div class='body list-item' data:theme='{get_class($template->theme())}' data:id='{$template->name()}' style='background-image:url({$icon})' >
-                <span class='expander' ></span>
+                if($folder) {
+                    <span class='expander' ></span>
+                } else {
+                    <span class='expander-spacer' ></span>
+                }
                 <span class='name' >{$template->lastName()}</span>
             </div>
             <div class='subdivisions' >
