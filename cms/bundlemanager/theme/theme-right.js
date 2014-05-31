@@ -33,7 +33,12 @@ mod.init(".mwf8wqyh3i", function() {
             parent: selection[0],
             name: name
         }, function(data) {
-            console.log(data);
+            $container.find(".node").each(function() {
+                if($(this).attr("data:id") == data.refresh) {
+                    $(this).trigger("expand");
+                    $(this).trigger("refresh");
+                }
+            })
         });
 
     });
