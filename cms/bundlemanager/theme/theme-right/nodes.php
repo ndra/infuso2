@@ -15,9 +15,9 @@ if(!$path) {
 
     // Выводим корень
     if(!$path) {
-        <div class='node' >   
+        <div class='node list-item' data:theme='{get_class($template->theme())}' data:id='/' >   
             $icon = $this->bundle()->path()."/res/img/icons16/template.gif";
-            <div class='body list-item' data:theme='{get_class($template->theme())}' data:id='/' style='background-image:url({$icon})' >
+            <div class='body' style='background-image:url({$icon})' >
                 <span class='expander-spacer' ></span>
                 <span class='name' >/</span>
             </div>
@@ -25,10 +25,10 @@ if(!$path) {
     }
 
     foreach($templates as $template) {
-        <div class='node' >        
+        <div class='node list-item' data:theme='{get_class($template->theme())}' data:id='{$template->name()}' >        
             $icon = $this->bundle()->path()."/res/img/icons16/template.gif";
             $folder = sizeof($template->children());
-            <div class='body list-item' data:theme='{get_class($template->theme())}' data:id='{$template->name()}' style='background-image:url({$icon})' >
+            <div class='body' style='background-image:url({$icon})' >
                 if($folder) {
                     <span class='expander' ></span>
                 } else {

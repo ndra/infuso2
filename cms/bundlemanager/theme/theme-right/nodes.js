@@ -1,37 +1,45 @@
 mod.init(".gdiqqd1vn4 .node", function() {
 
-    var container = $(this);
+    var $container = $(this);
     
-    container.find(" > .body > .expander").mousedown(function(e) {
+    $container.find(" > .body > .expander").mousedown(function(e) {
         e.preventDefault();
         e.stopPropagation();
     });
     
-    container.find(" > .body > .expander").click(function(e) {
+    // Клик по плюсику - разворачиваем / сворачиваем
     
-        var theme = container.find(".body").attr("data:theme");
-        var path = container.find(".body").attr("data:id");
-        container.toggleClass("expanded");
+    $container.find(" > .body > .expander").click(function(e) {
+    
+        var theme = $container.attr("data:theme");
+        var path = $container.attr("data:id");
+        $container.toggleClass("expanded");
         
-        if(container.hasClass("expanded")) {
+        if($container.hasClass("expanded")) {
             mod.call({
                 cmd: "infuso/cms/bundlemanager/controller/theme/list",
                 theme: theme,
                 path: path
             }, function(html) {
-                container.find(" > .subdivisions").html(html);
-                container.trigger("updateList");
+                $container.find(" > .subdivisions").html(html);
+                $container.trigger("updateList");
             });
         }
     });
     
-    container.find(".body").dblclick(function(e) {
-        container.trigger({
+    // Двойной клик на ноде - редактирование
+    
+    $container.find(".body").dblclick(function(e) {
+        $container.trigger({
             type: "bundlemanager/openTemplate",
-            theme: container.find(".body").attr("data:theme"),
-            template: container.find(".body").attr("data:id")
+            theme: $container.attr("data:theme"),
+            template: $container.attr("data:id")
         });
         e.preventDefault();
     });
+    
+    /*container.on("refresh", function() {
+        
+    });*/
 
 });

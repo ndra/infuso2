@@ -64,7 +64,10 @@ class Theme extends Core\Controller {
     
     public function post_addTemplate($p) {
 	    $tmp = self::getTheme($p["theme"])->template($p["parent"]);
-		$tmp->add($p["name"]);	
+		$tmp->add($p["name"]);
+		return array(
+		    "refresh" => $tmp->name(),
+		);
     }
     
 }

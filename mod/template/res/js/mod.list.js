@@ -49,6 +49,12 @@ jQuery.fn.list = function(param) {
 
         // Обрабатываем клик на элементе - выделение
         $e.find(".list-item").mousedown(function(event) {
+        
+			// Если элементы вложены один в другой (в дереве, например),
+			// то выделяем только первый элемент
+            if(event.originalEvent.listItemSelected) {
+                return;
+            }
 
             var item = $(this);
 
@@ -59,6 +65,9 @@ jQuery.fn.list = function(param) {
                 item.toggleClass("selected");
     			keepSelection();
                 triggerSelectionEvent();
+                
+				// Устанавливаем флаг того, что элемент был выделен
+                event.originalEvent.listItemSelected = true;
             }
         });
 

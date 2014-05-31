@@ -4,7 +4,9 @@ mod.init(".mwf8wqyh3i", function() {
     var $toolbar = $(this).find(".toolbar");
         
     var createList = function() {
-        $container.list();
+        $container.list({
+            selechHandle: ".body"
+        });
     }
     
     $container.on("updateList", function() {
@@ -13,6 +15,8 @@ mod.init(".mwf8wqyh3i", function() {
     
     createList();
     
+        // Добавление шаблона    
+        
     $toolbar.find(".add").click(function() {
         
         var name = prompt("Введите название шаблона");
@@ -28,8 +32,10 @@ mod.init(".mwf8wqyh3i", function() {
             theme: theme,
             parent: selection[0],
             name: name
+        }, function(data) {
+            console.log(data);
         });
-        
+
     });
     
 });

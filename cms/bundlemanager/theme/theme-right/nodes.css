@@ -18,7 +18,7 @@
         text-decoration: underline;        
     }
     
-    .body.selected {
+    .node.selected > .body {
         background-color: #0099C6;
         color: white;        
     }
