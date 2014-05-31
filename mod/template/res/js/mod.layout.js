@@ -14,6 +14,20 @@ jQuery.fn.layout.watchlist = [];
 
 jQuery.fn.layout.update = function() {
 
+    var elementLayoutHash = function(e) {
+        return $(e).width() + ":" + $(e).height();            
+    }
+
+    var updateElementStyle = function(e,css) {
+        var hash1 = elementLayoutHash(e);
+        $(e).css(css);
+        var hash2 = elementLayoutHash(e);
+        if(hash1 != hash2) {        
+            $(e).filter(".layout-change-listener").trigger("layoutchange");
+            $(e).find(".layout-change-listener").trigger("layoutchange");
+        }
+    }
+
     for(var i in jQuery.fn.layout.watchlist) {
     
         var $container = $(jQuery.fn.layout.watchlist[i]);
@@ -43,7 +57,7 @@ jQuery.fn.layout.update = function() {
         var height = $container.height();
         
         $top.each(function(n) {
-            $(this).css({
+            updateElementStyle(this, {
                 position: "absolute",
                 left: left,
                 top: top,
@@ -54,7 +68,7 @@ jQuery.fn.layout.update = function() {
         });
         
         $bottom.each(function(n) {
-            $(this).css({
+            updateElementStyle(this, {
                 position: "absolute",
                 left: left,
                 bottom: bottom,
@@ -65,7 +79,7 @@ jQuery.fn.layout.update = function() {
         });
         
         $left.each(function(n) {
-            $(this).css({
+            updateElementStyle(this, {
                 position: "absolute",
                 left: left,
                 top: top,
@@ -77,7 +91,7 @@ jQuery.fn.layout.update = function() {
         });
         
         $right.each(function(n) {
-            $(this).css({
+            updateElementStyle(this, {
                 position: "absolute",
                 right: right,
                 top: top,
@@ -89,7 +103,7 @@ jQuery.fn.layout.update = function() {
         });  
         
         $center.each(function() {
-            $(this).css({
+            updateElementStyle(this, {
                 position: "absolute",
                 left: left,
                 top: top,

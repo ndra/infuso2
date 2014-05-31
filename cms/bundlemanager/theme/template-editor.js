@@ -40,14 +40,10 @@ mod.init(".aivh9q8neu", function() {
         editor.setTheme("ace/theme/monokai");
         editor.getSession().setMode("ace/mode/" + $editor.attr("data:lang"));
         
-        // При ресайзе окна запускаем отложенеый ресайз редактора
-        // @todo переписать по-человечески
-        $(window).resize(function() {
-            setTimeout(function() {
-                editor.resize();
-            });
+
+        $editor.on("layoutchange", function() {
+            editor.resize();
         });
-        
         
         
         $(this).mod("on","keydown", function(e) {
