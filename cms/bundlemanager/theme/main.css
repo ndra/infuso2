@@ -9,7 +9,7 @@ html, body {
         background: #ededed;
         padding: 10px;
         
-        div {
+        & > div {
             display: inline-block;
             margin-right: 10px;
             cursor: pointer;
@@ -17,6 +17,10 @@ html, body {
         
         & > .active {
             font-weight: bold;
+        }
+        
+        .close {
+            margin-left:5px;
         }
         
     }

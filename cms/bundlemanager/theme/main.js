@@ -51,12 +51,21 @@ $(function() {
         
         if($tab.length == 0) {
         
-            var $tab = $("<div>")
+            $tab = $("<div>")
                 .html(params.title)
                 .data("tab-id", params.id)
                 .appendTo($tabsHead)
                 .click(function() {
                     selectTab($tab);
+                });
+                
+            // Закрывалка табы
+            $("<span>")
+                .html("x")
+                .addClass("close")
+                .appendTo($tab)
+                .click(function() {
+                    removeTab($tab);
                 });
                 
             var $content = $("<div>")
@@ -73,7 +82,33 @@ $(function() {
         new Sortable($tabsHead.get(0)); 
         
         selectTab($tab);
-    }
+    };
+    
+    /**
+     * Убирает табу
+     **/
+    var removeTab = function($tab) {
+        
+        var id = $tab.data("tab-id");
+        
+        // Подсвечиваем активную табу
+        $tabsHead.children().each(function() {
+            var $e = $(this);
+            if($e.data("tab-id") == id) {
+                $e.remove();
+            } 
+        })
+        
+        // Показываем ее контент
+        $tabsContainer.children().each(function() {
+            var $e = $(this);
+            if($e.data("tab-id") == id) {
+                $e.remove();
+            }
+        });
+        
+        $(".zdh71269gn").layout("update");        
+    };
     
     // Активирует табу
     
