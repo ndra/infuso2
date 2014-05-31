@@ -62,4 +62,9 @@ class Theme extends Core\Controller {
 		app()->msg("Шаблон сохранен");
     }   
     
+    public function post_addTemplate($p) {
+	    $tmp = self::getTheme($p["theme"])->template($p["parent"]);
+		$tmp->add($p["name"]);	
+    }
+    
 }

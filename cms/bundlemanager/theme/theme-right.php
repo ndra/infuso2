@@ -1,13 +1,13 @@
 <? 
 
-<div class='mwf8wqyh3i' >
+<div class='mwf8wqyh3i' data:theme='{e(get_class($theme))}' >
 
     <div class='toolbar' >
     
         $w = widget("infuso\\cms\\ui\\widgets\\button")
             ->icon("plus")
             ->air()
-            ->addClass(".refresh")
+            ->addClass("add")
             ->exec();
             
         $w = widget("infuso\\cms\\ui\\widgets\\button")
