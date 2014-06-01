@@ -24,9 +24,19 @@
     </div>
 
     <div class='files' >
-        exec("nodes", array(
-            "theme" => $theme,
-        ));
+    
+        <div class='node list-item' data:theme='{get_class($theme)}' data:id='/' >        
+            $icon = $this->bundle()->path()."/res/img/icons16/template.gif";
+            <div class='body' style='background-image:url({$icon})' >
+                <span class='expander' ></span>
+                <span class='name' >/</span>
+            </div>
+            <div class='subdivisions' style='display:block;' >
+                exec("nodes", array(
+                    "template" => $theme->template("/"),
+                ));
+            </div>
+        </div>
     </div>
     
 </div>

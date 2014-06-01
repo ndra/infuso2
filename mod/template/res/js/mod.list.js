@@ -7,6 +7,7 @@ jQuery.fn.list = function(param) {
 
     // Контейнер
     var $e = $(this);
+    var $list = $(this);
 
     var triggerSelectionEvent = function() {
         $e.trigger({
@@ -14,15 +15,39 @@ jQuery.fn.list = function(param) {
 		    selection: $e.list("selection")
 		});
     }
+    
+    var listItem = function($e) {
+        $e = $($e);
+        while($e.length) {
+            if($e.hasClass("list-item")) {
+                return $e;
+            }
+            $e = $e.parent();
+        }
+        return $("xxx");
+    } 
+    
+    var selectHandle = function($e) {
+        $e = $($e);
+        while($e.length) {
+            if($e.filter(param.selectHandle).length) {
+                return $e;
+            }
+            $e = $e.parent();
+        }
+        return $("xxx");
+    } 
 
     /**
      * Создаем список
      **/
     if(param === undefined || typeof(param) === "object" ) {
 
-        if(!param) {
-            param = {};
-        }
+    
+        var defaultParams = {
+            selectHandle: ".list-item"
+        };
+        param = $.extend({},defaultParams,param)
 
         // Сохраняет состояние выделения
         var keepSelection = function() {
@@ -47,28 +72,15 @@ jQuery.fn.list = function(param) {
             }
         }
 
-        // Обрабатываем клик на элементе - выделение
-        $e.find(".list-item").mousedown(function(event) {
-        
-			// Если элементы вложены один в другой (в дереве, например),
-			// то выделяем только первый элемент
-            if(event.originalEvent.listItemSelected) {
-                return;
+        $list.mousedown(function(event) {
+            var $handle = selectHandle(event.target);            
+            $item = listItem($handle);
+            if($item.length && !event.ctrlKey && !param.easyMultiselect) {
+                $list.find(".list-item.selected").removeClass("selected");  
             }
-
-            var item = $(this);
-
-            if(!param.selectHandle || $(event.target).is(item.find(param.selectHandle))) {
-                if(!event.ctrlKey && !param.easyMultiselect) {
-                    $e.find(".list-item.selected").removeClass("selected");
-                }
-                item.toggleClass("selected");
-    			keepSelection();
-                triggerSelectionEvent();
-                
-				// Устанавливаем флаг того, что элемент был выделен
-                event.originalEvent.listItemSelected = true;
-            }
+            $item.toggleClass("selected");
+            keepSelection();
+            triggerSelectionEvent();
         });
 
         // Добавляем контейнеру табиндекс чтобы он мог реагировать на нажатие

@@ -1,4 +1,5 @@
-mod.init(".gdiqqd1vn4 .node", function() {
+/*
+mod.init(".mwf8wqyh3i .node", function() {
 
     var $container = $(this);
     
@@ -7,14 +8,7 @@ mod.init(".gdiqqd1vn4 .node", function() {
         e.stopPropagation();
     });
     
-    // Клик по плюсику - разворачиваем / сворачиваем
-    
-    $container.find(" > .body > .expander").click(function(e) {
-        $container.toggleClass("expanded");
-        if($container.hasClass("expanded")) {
-            $container.trigger("refresh");
-        }
-    });
+
     
     // Двойной клик на ноде - редактирование
     
@@ -27,11 +21,7 @@ mod.init(".gdiqqd1vn4 .node", function() {
         e.preventDefault();
     });
     
-    $container.on("expand", function(event) {
-        event.stopPropagation();
-        $container.addClass("expanded");
-        $container.trigger("refresh");
-    });
+
     
     $container.on("refresh", function(event) {
         event.stopPropagation();
@@ -48,3 +38,5 @@ mod.init(".gdiqqd1vn4 .node", function() {
     });
 
 });
+
+*/

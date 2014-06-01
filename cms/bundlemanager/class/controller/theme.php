@@ -28,9 +28,9 @@ class Theme extends Core\Controller {
 	}
     
 	public function post_list($p) {
+        $template = self::getTheme($p["theme"])->template($p["path"]);
         return \tmp::get("/bundlemanager/theme-right/nodes")
-            ->param("theme", self::getTheme($p["theme"]))
-            ->param("path", $p["path"])
+            ->param("template", $template)
             ->getContentForAjax();
 	}
     
@@ -38,8 +38,7 @@ class Theme extends Core\Controller {
         return \tmp::get("/bundlemanager/template-editor")
             ->param("template", self::getTheme($p["theme"])->template($p["template"]))
             ->getContentForAjax();
-    }
-    
+    }        
         
     public function post_save($p) {
 		$tmp = self::getTheme($p["theme"])->template($p["template"]);
@@ -57,8 +56,7 @@ class Theme extends Core\Controller {
 				$tmp->setCSS($p["content"]);
 				\Infuso\Template\Render::clearRender();
 				break;
-		}
-		
+		}  		
 		app()->msg("Шаблон сохранен");
     }   
     

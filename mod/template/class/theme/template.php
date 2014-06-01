@@ -61,18 +61,27 @@ class tmp_theme_template extends mod_component {
 	}
 
 	/**
-	 * Возвращает список дочерних шаблонов
+	 * Возвращает список дочерних шаблонов относительно этого
+	 *      
 	 **/
 	public function children() {
+    
 	    $ret = array();
 	    $root = $this->name();
-	    if($root=="/") {
-	        $root = "";
+        
+        // Этот случай особый 
+        // Возвращаем список шаблонов верхнего уровня
+	    if($root === "/") {
+	        foreach($this->theme()->templates() as $tmp) {
+                if($tmp->themeDepth() == 1) {
+                    $ret[] = $tmp;
+                }
+            }
+            return $ret;
 		}
 	    
 	    foreach($this->theme()->templates() as $tmp) {
-
-	        if(substr($tmp->name(),0,strlen($root)+1)===$root."/") {
+	        if(substr($tmp->name(),0,strlen($root)+1) === $root."/") {
 	            if($tmp->depth()==$this->depth()+1) {
 	                $ret[] = $tmp;
 				}

@@ -2,18 +2,33 @@ mod.init(".mwf8wqyh3i", function() {
   
     var $container = $(this);
     var $toolbar = $(this).find(".toolbar");
-        
-    var createList = function() {
-        $container.list({
-            selechHandle: ".body"
-        });
-    }
     
-    $container.on("updateList", function() {
-        createList();    
+    $container.tree();
+        
+    $container.list({
+        selechHandle: ".body"
     });
     
-    createList();
+    var node = function($e) {
+        $e = $($e);
+        while($e.length) {
+            if($e.hasClass("node")) {
+                return $e;
+            }
+            $e = $e.parent();
+        }
+        return $("xxx");
+    }
+    
+    $container.on("dblclick", function(event) {
+        $node = node(event.target)
+        $container.trigger({
+            type: "bundlemanager/openTemplate",
+            theme: $node.attr("data:theme"),
+            template: $node.attr("data:id")
+        });
+    });
+
     
         // Добавление шаблона    
         
