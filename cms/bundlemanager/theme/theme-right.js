@@ -30,7 +30,7 @@ mod.init(".mwf8wqyh3i", function() {
     });
 
     
-        // Добавление шаблона    
+    // Добавление шаблона    
         
     $toolbar.find(".add").click(function() {
         
@@ -46,6 +46,33 @@ mod.init(".mwf8wqyh3i", function() {
             cmd: "infuso/cms/bundlemanager/controller/theme/addTemplate",
             theme: theme,
             parent: selection[0],
+            name: name
+        }, function(data) {
+            $container.find(".node").each(function() {
+                if($(this).attr("data:id") == data.refresh) {
+                    $(this).trigger("expand");
+                    $(this).trigger("refresh");
+                }
+            })
+        });
+
+    });
+    
+    // Добавление шаблона    
+        
+    $toolbar.find(".delete").click(function() {
+        
+        if(!confirm("Удалить шаблон?")) {
+            return;
+        }
+        
+        var selection = $container.list("selection");
+        var theme = $container.attr("data:theme");
+        
+        mod.call({
+            cmd: "infuso/cms/bundlemanager/controller/theme/deleteTemplate",
+            theme: theme,
+            templates: selection,
             name: name
         }, function(data) {
             $container.find(".node").each(function() {

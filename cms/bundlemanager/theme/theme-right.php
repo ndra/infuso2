@@ -13,7 +13,7 @@
         $w = widget("infuso\\cms\\ui\\widgets\\button")
             ->icon("trash")
             ->air()
-            ->addClass(".refresh")
+            ->addClass("delete")
             ->exec();
     
         $w = widget("infuso\\cms\\ui\\widgets\\button")
