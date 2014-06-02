@@ -20,7 +20,7 @@ switch(gettype($data)) {
         break;
         
     default:
-        echo util::str($data)->ellipsis(300);
+        echo \util::str($data)->ellipsis(300);
         break;
 
 }

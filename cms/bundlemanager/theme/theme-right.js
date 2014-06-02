@@ -58,7 +58,7 @@ mod.init(".mwf8wqyh3i", function() {
 
     });
     
-    // Добавление шаблона    
+    // Удаление шаблона    
         
     $toolbar.find(".delete").click(function() {
         
@@ -70,7 +70,7 @@ mod.init(".mwf8wqyh3i", function() {
         var theme = $container.attr("data:theme");
         
         mod.call({
-            cmd: "infuso/cms/bundlemanager/controller/theme/deleteTemplate",
+            cmd: "infuso/cms/bundlemanager/controller/theme/removeTemplates",
             theme: theme,
             templates: selection,
             name: name

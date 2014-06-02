@@ -62,7 +62,6 @@ class tmp_theme_template extends mod_component {
 
 	/**
 	 * Возвращает список дочерних шаблонов относительно этого
-	 *      
 	 **/
 	public function children() {
     

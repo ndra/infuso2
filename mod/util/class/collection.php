@@ -37,13 +37,6 @@ class Collection extends Core\Component implements \Iterator {
     }
 
     /**
-     * Возвращает массив (не класс)
-     **/
-    public function &asArray() {
-        return $this->data;
-    }
-
-    /**
      * Вызвано без параметров - возврашает данные
      * Вызвано с одним параметром - изменяет данные
      **/
@@ -124,6 +117,9 @@ class Collection extends Core\Component implements \Iterator {
         return array_key_exists($key,$this->data);
     }
 
+	/**
+	 * Добавляет в массив элемент
+	 **/
     public function push() {
 
         $a = &$this->data;
