@@ -11,13 +11,24 @@
         background: #ededed;
     }
     
+    tbody {
+        border-bottom:1px solid #ededed;
+    }
+    
     td {
         vertical-align: middle;
-        padding: 5px 10px;
+        padding: 7px 10px;
+        a {
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     }
     
     .links {
         font-size:11px;
+        padding-top: 0;
         a {
             color:gray;
             margin-right:10px;
