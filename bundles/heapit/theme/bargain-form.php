@@ -20,6 +20,7 @@
             <td>
                 $w = new \Infuso\Cms\UI\Widgets\Select();
                 $w->fieldName("source");
+                $w->value($bargain->data("source"));
                 $w->values(\Infuso\Heapit\Model\Bargain::enumSources());
                 $w->exec();        
             </td>

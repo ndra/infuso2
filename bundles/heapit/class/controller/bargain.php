@@ -22,6 +22,9 @@ class Bargain extends Base {
         return $bargain->url();
     }
     
+    /**
+     * Сохраняет данные о сделке
+     **/         
     public static function post_save($p) {
         $bargain = Model\Bargain::get($p["bargainId"]);
         $bargain->setData($p["data"]);
