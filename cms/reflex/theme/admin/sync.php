@@ -1,6 +1,6 @@
 <? 
 
-mod::coreJs();
+lib::modjs();
 
 admin::header("Синхронизация");
 <div class='x0f1k9gbr5c' style='padding:40px;' >

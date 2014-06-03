@@ -88,6 +88,16 @@ class Theme extends Core\Controller {
 		);
     }
     
+    /**
+     * Переименовывает шаблон
+     **/
+    public function post_renameTemplate($p) {
+        app()->msg($p);
+    }
+    
+    /**
+     * Контроллер удаления шаблона
+     **/         
     public function post_removeTemplates($p) {
     
 		$superFolder = function($strings) {

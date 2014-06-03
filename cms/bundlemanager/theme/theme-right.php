@@ -19,7 +19,13 @@
         $w = widget("infuso\\cms\\ui\\widgets\\button")
             ->icon("refresh")
             ->air()
-            ->addClass(".refresh")
+            ->addClass("refresh")
+            ->exec();
+            
+        $w = widget("infuso\\cms\\ui\\widgets\\button")
+            ->icon("rename")
+            ->air()
+            ->addClass("rename")
             ->exec();
     </div>
 

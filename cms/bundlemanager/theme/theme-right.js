@@ -82,7 +82,39 @@ mod.init(".mwf8wqyh3i", function() {
                 }
             })
         });
-
     });
+    
+    // Переименование шаблона
+    
+    $toolbar.find(".rename").click(function() {
+        
+        var selection = $container.list("selection");
+        var theme = $container.attr("data:theme");
+        
+        if(selection.length != 1) {
+            mod.msg("Должен быть выделен один элемент", 1);
+            return;
+        }
+        
+        var newName = prompt("Введите название шаблона", selection[0]);
+        if(!newName) {
+            return;
+        }
+        
+        mod.call({
+            cmd: "infuso/cms/bundlemanager/controller/theme/renameTemplate",
+            theme: theme,
+            oldName: selection[0],
+            newName: newName
+        }, function(data) {
+            $container.find(".node").each(function() {
+                if($(this).attr("data:id") == data.refresh) {
+                    $(this).trigger("expand");
+                    $(this).trigger("refresh");
+                }
+            })
+        });
+
+    });    
     
 });
