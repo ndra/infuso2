@@ -30,6 +30,10 @@
         background: #ededed;
     }
     
+    tbody {
+        border-bottom: 1px solid #ededed;
+    }
+    
     .id-head {
         width:50px;
     }

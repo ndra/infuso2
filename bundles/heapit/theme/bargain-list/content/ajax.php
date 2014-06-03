@@ -65,13 +65,10 @@
                 if($comment->exists()) {
                     <tr>
                         <td colspan=3>
-                        <td colspan='100' class='comment' >                
-                            
+                        <td colspan='100' class='comment' >   
                             $userpic = $comment->author()->userpic()->preview(16,16)->crop();
                             <img class='comment-author' src='{$userpic}' align='absmiddle' />
-                            
                             <span class='date' >{$comment->pdata("datetime")->left()}</span>
-                            
                             echo $comment->data("text");
                         </td>
                     </tr>
