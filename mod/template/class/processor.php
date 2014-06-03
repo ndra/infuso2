@@ -55,9 +55,11 @@ class Processor extends Core\Component {
 
         if(sizeof($arguments)==1) {
             $a = end($arguments);
-            if(is_array($a))
-                foreach($a as $key=>$val)
-                    $ret[$key] = $val;
+            if(is_array($a)) {
+                foreach($a as $key=>$val) {
+                    $ret[$key] = $val;     
+                }
+            }
         }
 
         return $ret;
@@ -247,6 +249,7 @@ class Processor extends Core\Component {
     
     /**
      * Подключает тему
+     * @todo переписать полностью, т.к. сейчас не работает     
      * @param $class php-класс или объект темы
      * Если такая тема уже была подключена, то она «всплывет» на самый верх списка
      **/

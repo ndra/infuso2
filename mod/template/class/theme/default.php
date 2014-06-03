@@ -6,7 +6,6 @@ use Infuso\Core;
 /**
  * Стандартная тема модуля tmp
  **/
-
 class defaultTheme extends Theme {
 
 	/**

@@ -1,6 +1,6 @@
 <? 
 
-<div class='aivh9q8neu' data:theme='{get_class($template->theme())}' data:template='{$template->name()}'>
+<div class='aivh9q8neu' data:theme='{get_class($template->theme())}' data:template='{$template->relName()}'>
 
     <div class='top' >
         <div>php</div>

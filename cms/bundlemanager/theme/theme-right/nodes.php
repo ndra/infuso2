@@ -5,7 +5,7 @@ $templates = $template->children();
 <div class='gdiqqd1vn4' >
 
     foreach($templates as $template) {
-        <div class='node list-item' data:theme='{get_class($template->theme())}' data:id='{$template->name()}' >        
+        <div class='node list-item' data:theme='{get_class($template->theme())}' data:id='{$template->relName()}' >        
             $icon = $this->bundle()->path()."/res/img/icons16/template.gif";
             $folder = sizeof($template->children());
             <div class='body' style='background-image:url({$icon})' >

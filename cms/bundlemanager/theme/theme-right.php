@@ -25,7 +25,7 @@
 
     <div class='files' >
     
-        <div class='node list-item' data:theme='{get_class($theme)}' data:id='/' >        
+        <div class='node list-item' data:theme='{get_class($theme)}' data:id='' >        
             $icon = $this->bundle()->path()."/res/img/icons16/template.gif";
             <div class='body' style='background-image:url({$icon})' >
                 <span class='expander' ></span>
