@@ -4,7 +4,7 @@
 
     $payment = new \Infuso\Heapit\Model\Payment();
     tmp::exec("/heapit/payment-form",array(
-        "payment" => $payment,
+        "payment" => $paymentToCopy,
     ));
 
 </form>

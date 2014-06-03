@@ -116,6 +116,9 @@
                 $w->text($payment->exists() ? "Сохранить" : "Создать");
                 $w->attr("type", "submit");
                 $w->exec();
+                
+                $action = action("infuso\\heapit\\controller\\payment","add", array("copy" => $payment->id()));
+                <a href='{$action}' >Скопировать</a>
                
             </td>
         </tr>

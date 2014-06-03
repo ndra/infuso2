@@ -10,8 +10,13 @@ class Payment extends Base {
         $this->app()->tmp()->exec("/heapit/payment-list");
     }
     
-    public function index_add() {
-        $this->app()->tmp()->exec("/heapit/payment-new");
+    public function index_add($p) {    
+        $copy = new Model\Payment();
+        $copy->setData(Model\Payment::get($p["copy"])->data());
+        $copy->data("date",\util::now());
+        $this->app()->tmp()->exec("/heapit/payment-new", array(
+            "paymentToCopy" => $copy,
+        ));
     }
     
     /**
