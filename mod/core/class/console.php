@@ -104,7 +104,7 @@ class Console extends Controller {
 						\Infuso\Update\Updater::update($mod);
 			            $messages = array();
 
-			            foreach(log::messages() as $msg) {
+			            foreach(service("msg")->messages() as $msg) {
 			            	$messages[] = array(
 								"text" => $msg->text(),
 								"error" => $msg->error()
