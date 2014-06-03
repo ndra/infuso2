@@ -77,6 +77,13 @@ class ThemeTemplate extends Core\COmponent {
         return $ret;
     }
     
+    public function parent() {
+        $name = explode("/",$this->relName());
+        array_pop($name);
+        $name = implode("/", $name);
+        return new self($this->theme(), $name);
+    }
+    
     /**
      * Возвращает исходнгый файл шаблона
      **/         
@@ -105,6 +112,17 @@ class ThemeTemplate extends Core\COmponent {
         $dest = Core\File::get($this->srcFile("php")->up()."/".$this->srcFile("php")->basename()."/".$name.".php");
         Core\File::mkdir($dest->up());
         $dest->put("<?\n\n");        
+    }
+    
+    /**
+     * Удаляет текущий шаблон
+     **/         
+    public function delete() {
+        $this->srcFile("php")->delete();
+        $this->srcFile("js")->delete();
+        $this->srcFile("css")->delete();        
+        $subfolder = Core\File::get($this->srcFile("php")->up()."/".$this->srcFile("php")->basename());
+        $subfolder->delete(true);
     }
     
 }

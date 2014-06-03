@@ -122,12 +122,20 @@ class Theme extends Core\Controller {
 	    $theme = self::getTheme($p["theme"]);
 	    
 	    $parents = array_map(function($a) use ($theme) {
-	        return $theme->template($a)->parent()->name();
+	        return $theme->template($a)->parent()->relName();
 		}, $p["templates"]);
 
 	    $parent = $superFolder($parents);
+        
+        foreach($p["templates"] as $relName) {
+            $theme->template($relName)->delete();
+        }
+        
+        $theme->compile();
 
-	    app()->msg($parent);
+	    return array(
+            "refresh" => $parent,
+        );
     }
     
 }
