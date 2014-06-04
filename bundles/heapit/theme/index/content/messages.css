@@ -4,20 +4,28 @@
         .g-header();
     }
     
-    table {
-        
-        td {
-            padding: 5px;
-            
-            .userName {
-                color: #777;    
-            }
-            
-            .date {
-                color: #777;
-                font-size: 12px;
-                margin-left: 10px;    
-            }
+    .comment {
+        margin-bottom:10px; 
+    }
+    
+    .user-date {
+        * {
+            vertical-align: middle;
+            font-size:12px;
+            color: gray;
         }
-    } 
+        img {
+            margin-right: 5px;
+        }
+        .time {
+            display:inline-block;
+            width: 40px;
+        }
+    }
+    
+    .date {
+        margin-bottom:10px;
+        font-weight: bold;
+    }
+     
 }

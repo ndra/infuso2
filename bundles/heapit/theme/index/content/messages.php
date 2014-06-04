@@ -6,22 +6,25 @@
     exec("/ui/shared");
     
     foreach(\Infuso\Heapit\Model\Comment::all() as $comment) {
+        
+        $date = $comment->pdata("datetime")->date()->text();
+        if($date != $lastDate) {
+            <div class='date' >{$date}</div>
+        }
+        $lastDate = $date;
+        
         $owner = $comment->pdata("author");
         $userpick = $owner->pdata("userpic")->preview(16,16)->crop();
-        <table class='item' data:id='{$comment->id()}' >
-            <tr>
-                <td><img src='$userpick'></td>
-                <td style="width:100%;">
-                    <span class="userName">{e($owner->title())}</span>
-                    <span class="date">{$comment->pdata("datetime")->num()}</span>
-                </td>
-                            
-            </tr>
-            <tr>
-                <td></td>
-                <td style="width:100%;">{e($comment->data("text"))}</td>
-            </tr>
-        </table>
+        <div class='comment' >
+            <div class='user-date' >
+                <span class="time" >{$comment->pdata("datetime")->format("H:i")}</span>
+                <img src='$userpick' />
+                <span class="user">{e($owner->title())}</span>
+            </div>
+            <div>
+                echo e($comment->data("text"));
+            </div>
+        </div>
     }
 
 </div>

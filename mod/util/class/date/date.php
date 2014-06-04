@@ -163,6 +163,10 @@ class Date extends Core\Component {
     public function standart() {
         return @date($this->timeEnabled() ? "Y-m-d H:i:s" : "Y-m-d", $this->stamp());
     }
+    
+    public function format($format) {
+        return @date($format, $this->stamp());
+    }
 
     /**
     * Возвращает год, четыре цифры
