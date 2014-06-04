@@ -21,6 +21,14 @@ $(function() {
     
     // F1 Разворачивает-сворачивает правую панель
     
+    $(window).keydown(function(e) {
+        if(e.which == 112) {
+            $(".zdh71269gn .right").toggle();
+            e.preventDefault();
+            $(".zdh71269gn").layout();
+        }
+    });
+    
     // Управление табами
 
     var $tabsHead = $(".zdh71269gn").find(".main > .tabs > .tabs-head");
