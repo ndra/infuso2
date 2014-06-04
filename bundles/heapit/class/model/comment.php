@@ -58,6 +58,18 @@ class Comment extends \Infuso\ActiveRecord\Record {
         return Bargain::get(0);
     }
     
+    public function recordParent() {
+        list($type,$id) = explode(":",$this->data("parent"));
+        switch($type) {
+            case "bargain":
+                return Bargain::get($id);
+                break;
+            case "org":
+                return Org::get($id);
+                break;
+        }
+    }
+    
     public function author() {
         return $this->pdata("author");
     }

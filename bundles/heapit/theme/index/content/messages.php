@@ -20,6 +20,8 @@
                 <span class="time" >{$comment->pdata("datetime")->format("H:i")}</span>
                 <img src='$userpick' />
                 <span class="user">{e($owner->title())}</span>
+                $parent = $comment->parent();
+                <a href='{$parent->url()}' >{\util::str($parent->title())->ellipsis(60)}</a>
             </div>
             <div>
                 echo e($comment->data("text"));

@@ -122,6 +122,10 @@ class Bargain extends \Infuso\ActiveRecord\Record {
         return Core\Mod::service("ar")->get(get_class(),$id);
     }
     
+    public function recordTitle() {
+        return $this->org()->title()." / ".$this->data("description");
+    }
+    
     public function org() {
         return $this->pdata("orgId");
     }

@@ -21,6 +21,9 @@
             display:inline-block;
             width: 40px;
         }
+        .user {
+            margin-right: 10px;
+        }
     }
     
     .date {
