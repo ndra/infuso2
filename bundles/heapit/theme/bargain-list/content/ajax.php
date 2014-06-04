@@ -47,7 +47,7 @@
                     </td>
                     
                     // Сумма
-                    <td>{$bargain->data("amount")}</td>
+                    <td>{\Infuso\Heapit\Utils::formatPrice($bargain->data("amount"))}</td>
                     
                     <td>
                         echo $bargain->pdata("status");

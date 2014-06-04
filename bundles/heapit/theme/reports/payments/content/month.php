@@ -66,7 +66,7 @@ $colors = array(
             ksort($data);            
             foreach($data as $key => $val) {
                 $k = $val / $max;
-                $percent = round($val / $sum * 100, 2);
+                $percent = $sum ? round($val / $sum * 100, 2) : 0;
                 $height = round($k * $maxHeight);
                 $h = helper("<div>");
                 $h->style("background", $colors[$key]);
