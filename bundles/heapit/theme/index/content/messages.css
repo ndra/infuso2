@@ -1,0 +1,23 @@
+.rj7v5kdbu {
+    
+    h2 {
+        .g-header();
+    }
+    
+    table {
+        
+        td {
+            padding: 5px;
+            
+            .userName {
+                color: #777;    
+            }
+            
+            .date {
+                color: #777;
+                font-size: 12px;
+                margin-left: 10px;    
+            }
+        }
+    } 
+}

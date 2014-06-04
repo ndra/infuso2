@@ -12,12 +12,14 @@ $(function() {
     
     }
     
-    $(".zdh71269gn").layout();
-    $(".zdh71269gn .tabs").layout();
-    
     updateHeight();
     setInterval(updateHeight,1000);
     $(window).resize(updateHeight);
+    
+    $(".zdh71269gn").layout();
+    $(".zdh71269gn .tabs").layout();
+    
+    // F1 Разворачивает-сворачивает правую панель
     
     // Управление табами
 

@@ -4,6 +4,10 @@
 
     $menu = array(
         array (
+            "url" => (string) action("infuso\\heapit\\controller\\main"),
+            "title" => "Сводка",
+            "code" => "main",
+        ), array (
             "url" => (string) action("infuso\\heapit\\controller\\org"),
             "title" => "Контрагенты",
             "code" => "orgs",

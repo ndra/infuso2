@@ -1,6 +1,6 @@
 <? 
 
-title("Контрагенты");
-tmp::param("main-menu","orgs");
-add("center","org-list");
+title("Сводка");
+tmp::param("main-menu","main");
+add("center","content");
 exec("/heapit/layout");

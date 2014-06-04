@@ -37,9 +37,6 @@ class manager extends \infuso\core\service {
 		
 	    $scan = function($path) use (&$scan, &$bundles, $manager, $exclude) {
 	    
-	        echo $path;
-	        echo "<br/>";
-	    
 	        if($path=="/.git") {
 	            return;
 	        }

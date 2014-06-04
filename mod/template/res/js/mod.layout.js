@@ -1,9 +1,14 @@
 jQuery.fn.layout = function(p1) {
 
     if(p1 === undefined) {
+    
+        // Добавляем элемент в watchlist
         jQuery.fn.layout.watchlist.push(this);
+        // Запускаем обновление верстки
+        jQuery.fn.layout.update();
     }
     
+	// @todo сделать чтобы вторым параметром передвалася объект, в котором надо обновить лайаут
     if(p1 === "update") {
         jQuery.fn.layout.update();
     }
@@ -102,18 +107,18 @@ jQuery.fn.layout.update = function() {
             width -= $(this).width();
         });  
         
-        $center.each(function() {
-            updateElementStyle(this, {
-                position: "absolute",
-                left: left,
-                top: top,
-                width: width,
-                height: height
-            });
-        });       
+		$center.each(function() {
+		    updateElementStyle(this, {
+		        position: "absolute",
+		        left: left,
+		        top: top,
+		        width: width,
+		        height: height
+		    });
+		});
     }
 
 }
            
 jQuery.fn.layout.update();
-setInterval(jQuery.fn.layout.update, 1000)
+setInterval(jQuery.fn.layout.update, 1000);

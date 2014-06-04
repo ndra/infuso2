@@ -6,11 +6,11 @@ use \Infuso\Core;
 class Org extends Base {
 
     public function index() {
-        $this->app()->tmp()->exec("/heapit/index");
+        $this->app()->tmp()->exec("/heapit/org-list");
     }
 
     public function index_test() {
-        $action = Core\Action::get("infuso\\heapit\\cOntroller\\org", "index");
+        $action = Core\Action::get("infuso\\heapit\\controller\\org", "index");
         echo service("route")->actionToUrlNocache($action);
     }
 
@@ -77,7 +77,7 @@ class Org extends Base {
         $items->eq("deleted",0);
         $items->desc("opened");
 
-        $html = \tmp::get("/heapit/index/org-list/ajax")
+        $html = \tmp::get("/heapit/org-list/org-list/ajax")
             ->param("orgs", $items)
             ->getContentForAjax();
         
