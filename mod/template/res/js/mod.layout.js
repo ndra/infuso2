@@ -41,11 +41,11 @@ jQuery.fn.layout.update = function() {
             position: "relative"
         });
         
-        var $left = $container.children(".left");
-        var $right = $container.children(".right");
-        var $top = $container.children(".top");
-        var $bottom = $container.children(".bottom");
-        var $center = $container.children(".center");
+        var $left = $container.children(".left:visible");
+        var $right = $container.children(".right:visible");
+        var $top = $container.children(".top:visible");
+        var $bottom = $container.children(".bottom:visible");
+        var $center = $container.children(".center:visible");
         
         $top.css("box-sizing", "border-box");
         $bottom.css("box-sizing", "border-box");
