@@ -3,18 +3,25 @@
     height: 100%;
 
     .top {
-        padding: 0 10px 10px;
-        background: #ededed;
-        margin-right: 10px;
         
-        div {
-            display: inline-block;
-            margin-right:10px;
-            cursor: pointer;
+        td {
+            padding: 0 10px 10px;
+            background: #ededed;
         }
         
-        .active {
-            font-weight: bold;
+        .tabs {
+            div {
+                display: inline-block;
+                margin-right:10px;
+                cursor: pointer;
+                &.active {
+                    font-weight: bold;
+                }
+            }
+        }
+        
+        .functions {
+            text-align: right;
         }
         
     }
