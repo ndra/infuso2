@@ -310,9 +310,15 @@ class localFile extends file {
 	public function bundle() {
 	
 	    $file = $this;
+	    
+	    if(!$file->folder()) {
+	        $file->up();
+	    }
+	    
 	    while($file->path() != "/" && !file::get($file->path()."/.infuso")->exists() ) {
 	        $file = $file->up();
 	    }
+	    
 	    return new \infuso\core\bundle\bundle($file);
 	}
 

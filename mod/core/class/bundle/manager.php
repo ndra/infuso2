@@ -34,8 +34,11 @@ class manager extends \infuso\core\service {
 			(string) \mod::app()->publicPath(),
 			(string) \mod::app()->confPath(),
 		);
-
+		
 	    $scan = function($path) use (&$scan, &$bundles, $manager, $exclude) {
+	    
+	        echo $path;
+	        echo "<br/>";
 	    
 	        if($path=="/.git") {
 	            return;
