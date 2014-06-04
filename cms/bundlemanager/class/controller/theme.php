@@ -92,7 +92,14 @@ class Theme extends Core\Controller {
      * Переименовывает шаблон
      **/
     public function post_renameTemplate($p) {
-        app()->msg($p);
+        $theme = self::getTheme($p["theme"]);
+	    $tmp = $theme->template($p["oldName"]);
+	    $tmp->rename($p["newName"]);
+	    $theme->compile();
+		return array(
+		    "refresh" => "",
+		);
+
     }
     
     /**

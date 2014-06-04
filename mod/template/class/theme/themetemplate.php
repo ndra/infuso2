@@ -108,10 +108,29 @@ class ThemeTemplate extends Core\COmponent {
         return $file->put($data);
     }
     
+    /**
+     * ДОбавляет дочерний шаблон в данный шаблон
+	 **/
     public function add($name) {     
         $dest = Core\File::get($this->srcFile("php")->up()."/".$this->srcFile("php")->basename()."/".$name.".php");
         Core\File::mkdir($dest->up());
         $dest->put("<?\n\n");        
+    }
+    
+    /**
+     * Переименовывает шаблон
+     **/
+    public function rename($newName) {
+        $newLastName = end(explode("/", $newName));
+        $newFolder = Core\File::get($this->theme()->path()."/".$newName)->up();
+        Core\File::mkdir($newFolder);
+        $this->srcFile("php")->rename($newFolder."/".$newLastName.".php");
+        $this->srcFile("js")->rename($newFolder."/".$newLastName.".js");
+        $this->srcFile("css")->rename($newFolder."/".$newLastName.".css");
+        
+        // Переименовываем
+        $folder = Core\File::get($this->theme()->path()."/".$this->relName());
+        $folder->rename($newFolder."/".$newLastName);
     }
     
     /**
