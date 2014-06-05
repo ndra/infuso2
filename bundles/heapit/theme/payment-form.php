@@ -31,11 +31,26 @@
             </td>
         </tr>
         <tr>
-            <td><label>Сумма</label></td>
+            <td>
+            
+                // Направление платежа ( 1 - приход,  -1 - расход)
+                $direction = $payment->data("income") - $payment->data("expenditure") >= 0 ? 1 : -1;
+            
+                $id = \util::id();
+                $inject = $direction > 0 ? "checked" : "";
+                <input name='direction' value='income' id='{$id}' type='radio' $inject >
+                <label for='{$id}' style='margin-right:10px;' >Приход</label>
+                
+                $inject = $direction < 0 ? "checked" : "";
+                $id = \util::id();
+                <input name='direction' value='expenditure' id='{$id}' type='radio' $inject >
+                <label for='{$id}' >Расход</label>
+            </td>
             <td>
                 $w = new \Infuso\Cms\UI\Widgets\Textfield();
                 $w->fieldName("amount");
                 $w->value($payment->data("income") + $payment->data("expenditure"));
+                $w->style("font-size", "24px");
                 $w->exec();
                 <span style='margin-left:20px;'>
                 $statuses = \Infuso\Heapit\Model\Payment::enumStatuses();
@@ -47,30 +62,10 @@
                 }
                 </span>
             </td>
-        </tr> 
-        
-        // Направление платежа ( 1 - приход,  -1 - расход)
-        $direction = $payment->data("income") - $payment->data("expenditure") >= 0 ? 1 : -1;
+        </tr>
         
         <tr>
-            <td></td>
-            <td>
-            
-                $id = \util::id();
-                $inject = $direction > 0 ? "checked" : "";
-                <input name='direction' value='income' id='{$id}' type='radio' $inject >
-                <label for='{$id}' style='margin-right:10px;' >Приход</label>
-                
-                $inject = $direction < 0 ? "checked" : "";
-                $id = \util::id();
-                <input name='direction' value='expenditure' id='{$id}' type='radio' $inject >
-                <label for='{$id}' >Расход</label>
-                
-            </td>
-        </tr>    
-        
-        <tr>
-            <td>Статья расходов / доходов</td>
+            <td>Статья</td>
             <td>
             
                 // Статьи додохдов

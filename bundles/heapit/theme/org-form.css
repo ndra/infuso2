@@ -25,4 +25,9 @@
         font-style: italic;
     }
     
+    .mailto {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    
 }

@@ -29,7 +29,10 @@
         </tr>
         <tr>
             <td>Электропочта</td>
-            <td><input type='text' name='email' value='{e($org->data("email"))}' class='g-input-long'></td>
+            <td>
+                <input type='text' name='email' value='{e($org->data("email"))}' class='g-input-long'>
+                <span class='mailto' >Написать</span>
+            </td>
         </tr>
         <tr>
             <td>ICQ</td>
