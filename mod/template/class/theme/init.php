@@ -22,6 +22,22 @@ class tmp_theme_init implements mod_handler {
 		foreach(mod::service("classmap")->classes("Infuso\\Template\\Theme") as $class) {
 	        $themes[] = new $class();
 		}
+        
+		foreach($themes as $theme) {
+		    $theme->compile();
+		}
+        
+        self::buildAutoload();
+
+	}
+    
+    public function buildAutoload() {
+    
+    	// Собираем список классов тем и сортируем их по приоритету
+    	$themes = array();
+		foreach(mod::service("classmap")->classes("Infuso\\Template\\Theme") as $class) {
+	        $themes[] = new $class();
+		}
 		usort($themes, function($a,$b) {
 			return $a->priority() - $b->priority();
 		});
@@ -29,14 +45,13 @@ class tmp_theme_init implements mod_handler {
 		$autoload = array();
 
 		foreach($themes as $theme) {
-		    $map = $theme->compile();
 		    if($theme->autoload()) {
-		        $autoload += $map;
+		        $autoload += $theme->map();
 			}
 		}
 
-		util::save_for_inclusion(tmp_theme::mapFolder()."/"."_autoload.php",$autoload);
-
-	}
+		util::save_for_inclusion(tmp_theme::mapFolder()."/"."_autoload.php",$autoload);    
+    
+    }
 
 }

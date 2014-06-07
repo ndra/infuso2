@@ -72,6 +72,7 @@ class Theme extends Core\Controller {
 				break;
 		}  		
         $theme->compile();
+        \tmp_theme_init::buildAutoload();
 		app()->msg("Шаблон сохранен");
     }   
     
@@ -83,6 +84,7 @@ class Theme extends Core\Controller {
 	    $tmp = $theme->template($p["parent"]);
 		$tmp->add($p["name"]);
         $theme->compile();
+        \tmp_theme_init::buildAutoload();
 		return array(
 		    "refresh" => $tmp->relName(),
 		);
@@ -96,6 +98,7 @@ class Theme extends Core\Controller {
 	    $tmp = $theme->template($p["oldName"]);
 	    $tmp->rename($p["newName"]);
 	    $theme->compile();
+        \tmp_theme_init::buildAutoload();
 		return array(
 		    "refresh" => "",
 		);
@@ -149,6 +152,7 @@ class Theme extends Core\Controller {
         }
         
         $theme->compile();
+        \tmp_theme_init::buildAutoload();
 
 	    return array(
             "refresh" => $parent,
