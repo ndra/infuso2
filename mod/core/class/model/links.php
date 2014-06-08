@@ -24,36 +24,16 @@ class Links extends Link {
         );
     }
 
-    public function editorInx() {
-        return array(
-            "type" => "inx.mod.reflex.fields.links",
-            "value" => $this->value(),
-        );
-    }
-
     public function pvalue() {
 
         $ids = array();
-        foreach(explode(" ",$this->value()) as $id)
+        foreach(explode(" ",$this->value()) as $id) {
             $ids[] = $id*1;
+        }
 
         $ret = $this->items()->eq("id",$ids);
         $ret->setPrioritySequence($ids);
         return $ret;
-    }
-
-    // Редактор поля в режиме "только чтение"
-    public function editorInxDisabled() {
-        /*$txt = $this->rvalue();
-        $item = $this->pvalue();
-        if($item->exists())
-            $txt = "<a href='{$item->editor()->url()}' >$txt</a>"; */
-
-        $txt = $this->value();
-        return array(
-            "type" => "inx.mod.reflex.fields.readonly",
-            "value" => $txt,
-        );
     }
 
     /**
@@ -61,27 +41,20 @@ class Links extends Link {
      **/
     public function rvalue() {
         $ret = array();
-        foreach($this->component()->pvalue() as $item)
+        foreach($this->component()->pvalue() as $item) {
             $ret[] = $item->title();
+        }
         return implode(", ",$ret);
-    }
-
-    public function tableRender() {
-        /*$ret = array();
-        foreach($this->pvalue() as $a)
-            $ret[] = $a->title();
-        return implode(",",$ret); */
-
-        return $this->value();
     }
 
     public function prepareValue($val) {
 
         // Если передана строка с json, преобразуем ее в массив (Для совместимости со старыми версиями)
-        if(is_string($val))
+        if(is_string($val)) {
             if(preg_match("/(\[)|(\{)/",$val)) {
                 $val = @json_decode($val,1);
             }
+        }
 
         // Строку преобразуем в массив
         if(is_string($val)) {

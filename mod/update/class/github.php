@@ -38,12 +38,8 @@ class GitHub extends \Infuso\Core\Component {
 		$contents = $file->contents();
 		$info = $file->info();
 		
-		if($info["http_code"] != 200 ) {
-		
-			$data = json_decode($contents,1);
-			
-			// $headers = $file->responseHeaders();
-
+		if($info["http_code"] != 200 ) {  		
+			$data = json_decode($contents,1); 
 		    if(is_array($data)) {
 				Throw new \Exception("Github code {$info['http_code']}: {$url} ".$data["message"]);
 			} elseif(is_string($json)) {

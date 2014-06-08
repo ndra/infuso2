@@ -49,16 +49,6 @@ class Link extends Field {
         return intval($val);
     }
 
-    public function tableRender() {
-    
-        $item = $this->pvalue();
-        if($item->exists())
-            return $item->title();
-            
-        return "";
-            
-    }
-
     public function items() {
 
         $fn = trim($this->param("collection"));
@@ -72,79 +62,15 @@ class Link extends Field {
         return $items;
     }
 
-    public function editorInx() {
-        return array(
-            "type" => "inx.mod.reflex.fields.link",
-            "value" => $this->value(),
-            "text" => $this->pvalue()->exists() ? $this->pvalue()->title() : "",
-            "className" => $this->itemClass(),
-        );
-    }
-
-    // Редактор поля в режиме "только чтение"
-    public function editorInxDisabled() {
-        $txt = $this->rvalue();
-        $item = $this->pvalue();
-        if($item->exists())
-            $txt = "<a href='{$item->editor()->url()}' >$txt</a>";
-        return array(
-            "type" => "inx.mod.reflex.fields.readonly",
-            "value" => $txt,
-        );
-    }
-
-    public function filterInx() {
-        return array(
-            "label" => $this->label(),
-            "name" => $this->fullName(),
-            "type" => "inx.combo",
-            "labelAlign" => "top",
-            "width" => 194,
-            "loader" => array(
-                "name" => $this->name(),
-                "cmd" => "reflex/editor/fieldController/getListItems",
-                "index" => get_class($this->reflexItem()).":0"
-            )
-        );
-    }
-
-    public function filterApply($list,$data) {
-        if($data)
-            $list->eq($this->fullName(),$data);
-    }
-
     /**
-     * Возвращает / устанавливает имя класса объектов
+     * Возвращает имя класса объектов
      **/
     public function itemClass($class=null) {
-
-        if(func_num_args()==0) {
-            return $this->param("class");
-        }
-
-        if(func_num_args()==1) {
-            $this->param("class",$class);
-            return $this;
-        }
+        return $this->param("class");
     }
 
     public function className() {
         return call_user_func_array(array($this,"itemClass"),func_get_args());
-    }
-
-    /**
-     * Возвращает / устанавливает метод, возвращающий заголовок элементов
-     **/
-    public function itemTitleMethod($method=null) {
-
-        if(func_num_args()==0) {
-            return $this->param("titleMethod");
-        }
-
-        if(func_num_args()==1) {
-            $this->param("titleMethod",$method);
-            return $this;
-        }
     }
 
 }
