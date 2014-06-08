@@ -32,7 +32,9 @@ class Link extends Field {
         }
     }
 
-    // возвращает имя поля внешнего ключа для связи, если оно не задано используется id
+    /**
+     * возвращает имя поля внешнего ключа для связи, если оно не задано используется id
+     **/     
     public function foreignKey() {
         if(trim($this->param("foreignKey"))){
             return trim($this->param("foreignKey"));
@@ -57,7 +59,7 @@ class Link extends Field {
             return $this->reflexItem()->$fn();
         }
 
-        $items = \reflex::get($this->itemClass())->limit(100);
+        $items = service("ar")->collection($this->itemClass())->limit(100);
         
         return $items;
     }

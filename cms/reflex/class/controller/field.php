@@ -14,7 +14,13 @@ class Field extends Core\Controller {
     }
     
     public function post_linksAdd($p) {
-        return var_export($p,1);
+        $editor = \Infuso\CMS\Reflex\Editor::get($p["editor"]);
+        $item = $editor->item();
+        $field = $item->field($p["field"]);
+        return \tmp::get("/reflex/fields/links/add/")
+            ->param("editor", $editor)
+            ->param("field", $field)
+            ->getCOntentForAjax();
     }
 
 }

@@ -8,6 +8,8 @@ mod.init(".QWQ2cWdbx", function() {
                 editor: $container.attr("data:editor"),
                 field: $container.attr("data:field"),
             }
+        }).on("links/select", function(event) {
+            mod.msg(event.itemID);
         });
     });
     

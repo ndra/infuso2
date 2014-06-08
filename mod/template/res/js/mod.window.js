@@ -1,7 +1,7 @@
 jQuery.fn.window = function(params) {
 
     if(params == "close") {
-        $(this).remove();
+        $(this).window().remove();
         return this;
     }
 
@@ -21,7 +21,7 @@ jQuery.window = function(params) {
 
     params = $.extend({},defaults,params);
 
-    var wnd = $("<div>").css({
+    var $wnd = $("<div>").css({
         position: "fixed",
         width: params.width,
         height: params.height,
@@ -30,19 +30,14 @@ jQuery.window = function(params) {
         zIndex:100
     }).addClass("5jfNUBs7a9zwHl");
 
-    // Навешиваем обработчики на окно
-    for(var name in params.events) {
-        wnd.on(name, params.events[name]);
-    }
-
     var header = $("<div>").css({
         position: "relative",
         height: 20,
         background: "#ededed"
-    }).appendTo(wnd);
+    }).appendTo($wnd);
 
     var close = function() {
-        wnd.remove();
+        $wnd.remove();
     }
 
     $("<div>").css({
@@ -57,23 +52,25 @@ jQuery.window = function(params) {
     var content = $("<div>").css({
         height: params.height - header.outerHeight(),
         overflow: "auto"
-    }).appendTo(wnd);
+    }).appendTo($wnd);
 
     // Ставит окно в центр экрана
     var centerWindow = function() {
-        var left = ($(window).width() - wnd.outerWidth()) / 2;
-        var top = ($(window).height() - wnd.outerHeight()) / 2;
-        wnd.css({
+        var left = ($(window).width() - $wnd.outerWidth()) / 2;
+        var top = ($(window).height() - $wnd.outerHeight()) / 2;
+        $wnd.css({
             left: left,
             top: top
         });
     }
 
-    wnd.appendTo("body");
+    $wnd.appendTo("body");
     centerWindow();
 
     mod.call(params.call,function(html) {
         content.html(html);
     });
+    
+    return $wnd;
 
 }
