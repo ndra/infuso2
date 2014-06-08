@@ -13,12 +13,30 @@ class Field extends Core\Controller {
         return \user::active()->checkAccess("admin:showInterface");
     }
     
+    /**
+     * Возвроащает html код для окна добавляения элекмента поля "Список ссылок"
+     **/         
     public function post_linksAdd($p) {
         $editor = \Infuso\CMS\Reflex\Editor::get($p["editor"]);
         $item = $editor->item();
         $field = $item->field($p["field"]);
         return \tmp::get("/reflex/fields/links/add/")
             ->param("editor", $editor)
+            ->param("field", $field)
+            ->getCOntentForAjax();
+    }
+    
+    /**
+     * Возвращает html списка элементов для поля "Список ссылок"
+     **/         
+    public function post_linksContent($p) {
+        $editor = \Infuso\CMS\Reflex\Editor::get($p["editor"]);
+        $class = get_class($editor->item());
+        $item = new $class;
+        $field = $item->field($p["field"]);
+        $field->value($p["value"]);
+        
+        return \tmp::get("/reflex/fields/links/ajax-items/")
             ->param("field", $field)
             ->getCOntentForAjax();
     }

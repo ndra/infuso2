@@ -47,7 +47,7 @@ class Links extends Link {
         return implode(", ",$ret);
     }
 
-    public function prepareValue($val) {
+    public function prepareValue($val) {        
 
         // Если передана строка с json, преобразуем ее в массив (Для совместимости со старыми версиями)
         if(is_string($val)) {
@@ -65,8 +65,9 @@ class Links extends Link {
         if(is_array($val)) {
             $ret = array();
             foreach($val as $b) {
-                if(!is_scalar($b))
+                if(!is_scalar($b)) {
                     continue;
+                }
                 $b*=1;
                 if($b>0) {
                     $b = str_pad($b,5,"0",STR_PAD_LEFT);

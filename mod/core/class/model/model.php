@@ -98,12 +98,10 @@ abstract class Model extends Core\Controller {
         }
 
         // Если два параметра - меняем значение
-        elseif(func_num_args()==2) {
-        
+        elseif(func_num_args()==2) {                            
             $field = $this->field($key);
             $preparedValue = $field->prepareValue($val);
-            
-            $this->changedData[$key] = $val;
+            $this->changedData[$key] = $preparedValue;
             $this->handleRecordDataChanged();
         }
     }
