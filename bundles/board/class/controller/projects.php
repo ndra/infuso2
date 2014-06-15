@@ -9,6 +9,10 @@ class Projects extends Base {
     public function index() {
         $this->app()->tmp()->exec("/board/projects");
     }
+    
+    public function index_new() {
+        $this->app()->tmp()->exec("/board/project-new");
+    }
 
     /**
      * Сохраняет данные проекта

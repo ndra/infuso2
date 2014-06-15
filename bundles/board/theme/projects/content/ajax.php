@@ -3,6 +3,9 @@
 $projects = \Infuso\Board\Model\Project::all()->limit(0);
 
 <div class='hek1b6stnl' >
+
+    <a href='{action("infuso\\board\\controller\\projects", "new")}' >Добавить проект</a>
+
     <table>
     
         <thead>
@@ -25,6 +28,7 @@ $projects = \Infuso\Board\Model\Project::all()->limit(0);
                     foreach($project->accesses() as $access) {
                         <span class='access' >{$access->user()->title()}</span>
                     }
+                </td>
             </tr>
         }
     </table>

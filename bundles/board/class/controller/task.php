@@ -82,6 +82,20 @@ class Task extends \Infuso\Core\Controller {
 			"taskURL" => $task->url(),
 		);
     }
+    
+    /**
+     * Создает новую задачу
+     **/         
+    public function post_newTask() {
+        $task = service("ar")->create("\\Infuso\\Board\\Model\\Task");
+        $html = \tmp::get("/board/task/content")
+            ->param("task", $task)
+            ->getContentForAjax();
+        return array(
+			"html" => $html,
+			"taskURL" => $task->url(),
+		);
+    }
 
     public function post_saveTask($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);

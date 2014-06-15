@@ -1,14 +1,13 @@
 .x55qv4lhb8m {
-
-    a {
-        color:white;
-        text-decoration:none;
-        display:inline-block;
-    }
     
     .item {
+        
         margin-right:5px;        
         padding:15px 3px;
+        text-decoration:none;
+        display:inline-block;
+        color: white;
+        cursor: pointer;
         
         &:first-child {
             padding-left:20px;

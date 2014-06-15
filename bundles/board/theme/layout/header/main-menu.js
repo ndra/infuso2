@@ -10,5 +10,9 @@ $(function() {
     $(".x55qv4lhb8m .item").on("drop", function(e) {
         mod.msg(e.originalEvent.dataTransfer.getData("task-id"));
     });
+    
+    $(".x55qv4lhb8m .new-task").click(function() {
+        mod.fire("newTask", "new");
+    })
 
 });

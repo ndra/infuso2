@@ -5,9 +5,9 @@ $(function() {
         $(".layout-slpod3n5sa").height(h);
         $(".task-container-slpod3n5sa")
             .css({
-                top:$(".tob-bar-sr3yrzht3j").outerHeight()
-            })
-            .height(h);
+                top:$(".tob-bar-sr3yrzht3j").outerHeight(),
+                height: h
+            });
     }
     
     resize();
@@ -32,17 +32,26 @@ $(function() {
         }
     });
     
+    var handleTask = function(data) {
+        window.history.pushState(null, null, data.taskURL);
+        $(".task-container-slpod3n5sa").show();
+        $(".task-container-slpod3n5sa").find(".ajax").html(data.html);            
+    };
+    
     // Открытие задачи
     mod.on("openTask", function(id) {
         mod.call({
             cmd:"infuso/board/controller/task/getTask",
             taskId: id
-        }, function(data) {
-            window.history.pushState(null, null, data.taskURL);
-            $(".task-container-slpod3n5sa").show();
-            $(".task-container-slpod3n5sa").find(".ajax").html(data.html);            
-        });    
+        }, handleTask);
+    });
     
+    // Создание задачи
+    mod.on("newTask", function(id) {
+        mod.call({
+            cmd:"infuso/board/controller/task/newTask",
+            taskId: id
+        }, handleTask);
     });
 
 });

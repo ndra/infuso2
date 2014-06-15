@@ -16,7 +16,7 @@
         ->exec();
         
     widget("infuso\\cms\\ui\\widgets\\button")
-        ->text("Сохранить")
+        ->text($task->exists() ? "Сохранить" : "Создать")
         ->attr("type", "submit")
         ->exec();
     

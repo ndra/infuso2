@@ -1,6 +1,6 @@
 <? 
 
-<div class='ddksfajhjz layout' data:task='{$task->id()}' style='height:100%;' >
+<div class='ddksfajhjz' data:task='{$task->id()}' style='height:100%;' >
 
     <div class='center' style='overflow:auto;padding: 30px;' >    
         exec("status");

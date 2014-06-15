@@ -26,7 +26,6 @@ exec("header");
 </table>
 
 <div class='task-container-slpod3n5sa' >
-    <div class='close' >закрыть</div>
     <div class='ajax'></div>
 </div>
 

@@ -1,6 +1,6 @@
 <? 
 
-<div class='rcog1oiaxe layout' style='height: 100%;' >
+<div class='rcog1oiaxe' style='height: 100%;' >
 
     <div class='top g-toolbar' >ололо!</div>    
 
