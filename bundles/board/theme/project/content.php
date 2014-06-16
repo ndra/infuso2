@@ -4,6 +4,8 @@
 
     <h1>{$project->title()}</h1>
     
+    exec("form");
+    
     foreach($project->accesses() as $access) {
         <div>
             echo $access->user()->title();

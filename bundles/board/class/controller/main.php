@@ -8,7 +8,7 @@ class Main extends Base {
 
     public  function index() {
         $this->app()->tmp()->exec("/board/main");
-    }
+    }              
 
 
 }

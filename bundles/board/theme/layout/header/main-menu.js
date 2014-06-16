@@ -12,7 +12,13 @@ $(function() {
     });
     
     $(".x55qv4lhb8m .new-task").click(function() {
-        mod.fire("newTask", "new");
+        mod.msg(11111);
+        // Создание задачи
+        mod.call({
+            cmd:"infuso/board/controller/task/newTask",
+        }, function(data) {
+            console.log(data);
+        });
     })
 
 });

@@ -1,6 +1,6 @@
 .task-list-rpu80rt4m0 {
-    position: relative;
-    height:100%;
+
+    height: 100%;
 
     & > .loader {
         display: none;
@@ -9,4 +9,9 @@
         margin-left: -110px;
         top: ~"calc(50% - 170px)";
     }
+    
+    & > .ajax-container {
+        overflow: auto;
+    }
+    
 }

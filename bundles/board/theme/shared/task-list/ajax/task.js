@@ -34,9 +34,9 @@ $(function() {
                 }
                 return;
             }
-        
             
-            mod.fire("openTask",id);
+            window.location.href = task.attr("data:url");
+            
         });
         
         // В начале перетаскивания добавляем в dataTransfer информацию о задача
@@ -46,14 +46,14 @@ $(function() {
      
         // При наведении мыши показываем панель функций
         $(this).mouseenter(function() {
-            $(this).find(".tools").animate({
+            $(this).find(".tools").stop(true).animate({
                 top: 0
             }, "fast");
         });
         
         // При уводе мыши скрываем панель функций
         $(this).mouseleave(function() {
-            $(this).find(".tools").animate({
+            $(this).find(".tools").stop(true).animate({
                 top: 45
             }, "fast");
         });

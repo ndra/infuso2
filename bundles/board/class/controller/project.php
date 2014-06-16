@@ -4,7 +4,7 @@ namespace Infuso\Board\Controller;
 use \Infuso\Core;
 use \Infuso\Board\Model;
 
-class Projects extends Base {
+class Project extends Base {
     
     public function index() {
         $this->app()->tmp()->exec("/board/projects");
@@ -21,6 +21,14 @@ class Projects extends Base {
         $project = Model\Project::get($p["projectId"]);
         $project->setData($p["data"]);
         app()->msg("Сохранено");
+    }
+    
+    /**
+     * Создает новый проект
+     **/         
+    public function post_new($p) {
+        $project = service("ar")->create(Model\Project::inspector()->className(), $p["data"]);
+        return $project->url();
     }
 
 }

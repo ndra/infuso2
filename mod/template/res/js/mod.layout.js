@@ -8,7 +8,7 @@ jQuery.fn.layout = function(p1) {
         jQuery.fn.layout.update();
     }
     
-	// @todo сделать чтобы вторым параметром передвалася объект, в котором надо обновить лайаут
+	// @todo сделать чтобы обновлялся только объект this
     if(p1 === "update") {
         jQuery.fn.layout.update();
     }
@@ -29,7 +29,7 @@ jQuery.fn.layout.update = function() {
         var hash2 = elementLayoutHash(e);
         if(hash1 != hash2) {        
             $(e).filter(".layout-change-listener").trigger("layoutchange");
-            $(e).find(".layout-change-listener").trigger("layoutchange");
+            $(e).find(".layout-change-listener").trigger("layoutchange");   
         }
     }
 
@@ -120,5 +120,8 @@ jQuery.fn.layout.update = function() {
 
 }
            
+$(window).resize(function() {
+    jQuery.fn.layout.update();
+});
 jQuery.fn.layout.update();
 setInterval(jQuery.fn.layout.update, 1000);

@@ -7,11 +7,11 @@ js($this->bundle()->path()."/res/js/sortable.min.js");
         exec("toolbar");
     }
     
-    <div class='ajax-container' >
+    <div class='ajax-container center' >
     </div>
     
     // Индикатор загрузки
     $loaderSrc = $this->bundle()->path()."/res/img/misc/loader.gif"; 
-    <img class="loader" src="{$loaderSrc}">
+    <img class="loader" src="{$loaderSrc}" />
     
 </div>

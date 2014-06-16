@@ -1,6 +1,6 @@
 <? 
 
-<div class='task i95bnu5fvm' data:id='{$task->id()}' >
+<div class='task i95bnu5fvm' data:id='{$task->id()}' data:url='{$task->url()}' >
     
     $h = helper("<div>");
     $h->addClass("sticker");

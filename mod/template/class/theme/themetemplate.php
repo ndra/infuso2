@@ -67,8 +67,12 @@ class ThemeTemplate extends Core\COmponent {
      **/         
     public function children() {   
         $ret = array(); 
+        $rel = $this->relName();
+        if($rel != "") {
+            $rel.= "/";
+        }
         foreach($this->theme()->templates() as $template) {
-            if(substr($template->relName(),0,strlen($this->relName())) == $this->relName()) {
+            if(substr($template->relName(),0,strlen($rel)) == $rel) {
                 if($template->depth() == $this->depth() + 1) {
                     $ret[] = $template;
                 }

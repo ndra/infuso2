@@ -6,24 +6,23 @@ modjs();
 
 lib::modJSUI();
 
-exec("header");
-   
-<table class='layout-slpod3n5sa' >
-    <tr>
-        <td class='left' >
-            <div style='height:100%;overflow:auto;' >           
-                region("center");
-            </div>
-        </td>
-        if(tmp::block("right")->count()) {
-            <td class='right' >
-                <div style='height:100%;overflow:auto;' > 
-                    region("right");
-                </div>
-            </td>
-        }
-    </tr>
-</table>
+<div class='layout-slpod3n5sa' >
+
+    <div class='top' >
+        exec("header");
+    </div>
+
+    <div class='center' >
+        region("center");
+    </div>
+    
+    if(tmp::block("right")->count()) {
+        <div class='right' >
+            region("right");
+        </div>
+    }
+    
+</div>
 
 <div class='task-container-slpod3n5sa' >
     <div class='ajax'></div>

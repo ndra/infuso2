@@ -1,22 +1,13 @@
 html,body {
+    height:100%;
 }
 
 .layout-slpod3n5sa {
-
-    width: 100%;
-    table-layout:fixed;
-
-    & > tbody > tr > td {
-        &.left {
-            width:100%;
-            height:100%;
-            
-        }
-        &.right {
-            width:470px;
-            height:100%;
-            border-left: 1px solid #ededed;
-        }
+    height:100%;
+    
+    & > .right {
+        width: 300px;
+        border-left: 1px solid #ccc;
     }
     
 }

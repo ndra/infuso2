@@ -13,7 +13,7 @@
         exec("files");            
     </div>
     
-    <div class='right' style='width:300px;' >
+    <div class='right' style='width:300px;border-left:1px solid #ccc;' >
         exec("comments");                
     </div>
                 

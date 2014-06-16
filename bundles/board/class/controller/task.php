@@ -7,17 +7,7 @@ use \Infuso\Core;
 /**
  * Контроллер для манипуляций с задачами
  **/
-class Task extends \Infuso\Core\Controller {
-
-    public function postTest() {
-        return \user::active()->exists();
-        return true;
-    }
-    
-    public function indexTest() {
-        return \user::active()->exists();
-        return true;
-    }
+class Task extends Base {
 
     /**
      * Контроллер списка задач
