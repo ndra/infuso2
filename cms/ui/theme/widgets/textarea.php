@@ -10,7 +10,7 @@ $containerStyles = array(
     "margin-bottom",
 );
 
-$container = helper("<span class='s9nh9b1znm' >");
+$container = helper("<div class='s9nh9b1znm' >");
 $container->begin();
 
     $input = helper("<textarea>");

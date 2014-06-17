@@ -1,0 +1,16 @@
+.TfFKQlQcVt {
+    
+    padding: 50px;
+    
+    .item {
+        
+        cursor: pointer;
+        margin-bottom: 3px;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+        
+    }
+    
+}

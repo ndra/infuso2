@@ -1,14 +1,12 @@
 .s9nh9b1znm {
-
-    position:relative;
-    display:inline-block;
-    margin-right: 10px;
     
     textarea {
         .g-input();
         width:400px;
         height:100px;
         resize: none;
+        box-sizing: border-box;
+        margin-right:0;
     }
     
     .clone {

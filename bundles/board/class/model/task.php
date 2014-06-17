@@ -68,7 +68,7 @@ class Task extends \Infuso\ActiveRecord\Record {
                     "default" => "now()",
                     "editable" => 2,
                 ), array (
-                    'name' => 'projectID',
+                    'name' => 'projectId',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
                     'class' => Project::inspector()->className(),
                     "label" => "Проект",
@@ -148,7 +148,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Возвращает проект
      **/
     public function project() {
-        return $this->pdata("projectID");
+        return $this->pdata("projectId");
     }
 
     /**
@@ -247,7 +247,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 
         // Если это подзадача, ставим проект как у эпика
         if($this->data("epicParentTask")) {
-            $this->data("projectID",$this->pdata("epicParentTask")->data("projectID"));
+            $this->data("projectId",$this->pdata("epicParentTask")->data("projectId"));
         }
 
         // Собираем список измененных полей

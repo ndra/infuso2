@@ -2,7 +2,7 @@
 
 <div class='x55qv4lhb8m' >
 
-    <span class='item new-task' href='#' >Новая задача</span>
+    <a class='item' href='{action("infuso\\board\\controller\\task","new")}' >Новая задача</a>
 
     foreach(\Infuso\Board\Model\TaskStatus::all() as $status) {
         if($status->id() != \Infuso\Board\Model\TaskStatus::STATUS_DRAFT) {

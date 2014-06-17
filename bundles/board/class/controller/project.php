@@ -30,5 +30,10 @@ class Project extends Base {
         $project = service("ar")->create(Model\Project::inspector()->className(), $p["data"]);
         return $project->url();
     }
+    
+    public function post_selectorWindowContent($p) {
+        return \tmp::get("/board/shared/project-selector")
+            ->getContentForAjax();
+    }
 
 }

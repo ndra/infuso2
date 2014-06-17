@@ -3,6 +3,7 @@
 header();
 tmp::reset();
 modjs();
+exec("/ui/shared");
 
 lib::modJSUI();
 

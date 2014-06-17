@@ -18,6 +18,10 @@ class Task extends Base {
         ));
     }
     
+    public function index_new() {
+        app()->tmp()->exec("/board/task-new");
+    }
+    
     /**
      * Возвращает html списка заадч
      **/
@@ -76,14 +80,13 @@ class Task extends Base {
     /**
      * Создает новую задачу
      **/         
-    public function post_newTask() {
-        $task = service("ar")->create("\\Infuso\\Board\\Model\\Task");
-        $html = \tmp::get("/board/task/content")
-            ->param("task", $task)
-            ->getContentForAjax();
+    public function post_newTask($p) {
+        $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", $p["data"]); 
+        
+        app()->msg($p);
+              
         return array(
-			"html" => $html,
-			"taskURL" => $task->url(),
+			"url" => $task->url(),
 		);
     }
 

@@ -41,16 +41,10 @@ jQuery.fn.layout.update = function() {
             position: "relative"
         });
         
-        var $left = $container.children(".left:visible");
-        var $right = $container.children(".right:visible");
-        var $top = $container.children(".top:visible");
-        var $bottom = $container.children(".bottom:visible");
         var $center = $container.children(".center:visible");
         
-        $top.css("box-sizing", "border-box");
-        $bottom.css("box-sizing", "border-box");
-        $left.css("box-sizing", "border-box");
-        $right.css("box-sizing", "border-box");            
+        var $side = $container.children(".left:visible, .right:visible, .top:visible, .bottom:visible");         
+        
         $center.css("box-sizing", "border-box");
         
         var left = 0;
@@ -61,51 +55,58 @@ jQuery.fn.layout.update = function() {
         var width = $container.width();
         var height = $container.height();
         
-        $top.each(function(n) {
-            updateElementStyle(this, {
-                position: "absolute",
-                left: left,
-                top: top,
-                width: width
-            });                
-            top += $(this).outerHeight();
-            height -= $(this).outerHeight();
-        });
+        $side.each(function(n) {
         
-        $bottom.each(function(n) {
-            updateElementStyle(this, {
-                position: "absolute",
-                left: left,
-                bottom: bottom,
-                width: width
-            });                
-            bottom += $(this).outerHeight();
-            height -= $(this).outerHeight();
-        });
-        
-        $left.each(function(n) {
-            updateElementStyle(this, {
-                position: "absolute",
-                left: left,
-                top: top,
-                height: height
-            });
+            var $item = $(this);
             
-            left += $(this).width();
-            width -= $(this).width();
-        });
+            $item.css("box-sizing", "border-box");
         
-        $right.each(function(n) {
-            updateElementStyle(this, {
-                position: "absolute",
-                right: right,
-                top: top,
-                height: height
-            });
-            
-            right += $(this).width();
-            width -= $(this).width();
-        });  
+            if($item.hasClass("top")) {                
+                updateElementStyle(this, {
+                    position: "absolute",
+                    left: left,
+                    top: top,
+                    width: width
+                });                
+                top += $(this).outerHeight();
+                height -= $(this).outerHeight();
+            }
+        
+            if($item.hasClass("bottom")) {                
+                updateElementStyle(this, {
+                    position: "absolute",
+                    left: left,
+                    bottom: bottom,
+                    width: width
+                });                
+                bottom += $(this).outerHeight();
+                height -= $(this).outerHeight();
+            }
+        
+            if($item.hasClass("left")) {
+                updateElementStyle(this, {
+                    position: "absolute",
+                    left: left,
+                    top: top,
+                    height: height
+                });
+                
+                left += $(this).width();
+                width -= $(this).width();
+            }
+        
+            if($item.hasClass("right")) {
+                updateElementStyle(this, {
+                    position: "absolute",
+                    right: right,
+                    top: top,
+                    height: height
+                });
+                
+                right += $(this).width();
+                width -= $(this).width();
+            } 
+        }); 
         
 		$center.each(function() {
 		    updateElementStyle(this, {
@@ -116,6 +117,7 @@ jQuery.fn.layout.update = function() {
 		        height: height
 		    });
 		});
+        
     }
 
 }
