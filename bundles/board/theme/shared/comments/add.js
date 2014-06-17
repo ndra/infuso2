@@ -1,7 +1,7 @@
 mod.init(".ynRXmfiIV4", function() {
     
-    $container = $(this);
-    $textarea = $container.find("textarea");
+    var $container = $(this);
+    var $textarea = $container.find("textarea");
     
     var send = function() {
         mod.call({
@@ -9,7 +9,7 @@ mod.init(".ynRXmfiIV4", function() {
             taskId: $container.attr("data:id"),
             text: $textarea.val()
         }, function(){
-            
+            $container.trigger("board/log-changed");
         });
         $textarea.val("");
     }
