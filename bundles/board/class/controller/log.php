@@ -13,13 +13,14 @@ class Log extends Base {
         )); 
     }
     
-    public function post_content($p) {
-    
+    /**
+     * Возвращает html-код комментариев и лога
+     **/         
+    public function post_content($p) {     
         $task = Model\Task::get($p["taskId"]);
         return app()->tmp()->template("/board/shared/comments/ajax", array(
             "task" => $task,
-        ))->getContentForAjax();
-    
+        ))->getContentForAjax();       
     }
         
 }

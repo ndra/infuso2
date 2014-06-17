@@ -88,7 +88,7 @@ class Log extends Record {
     public static function get($id) {
         return Record::get(get_class(),$id);
     }
-
+    
     /**
      * Возвращает задачу к которой относится запись в логе
      **/
@@ -129,6 +129,9 @@ class Log extends Record {
 
     public function afterStore() {
         $this->task()->updateTimeSpent();
+        \mod::fire("board/log-changed", array(
+            "deliverToClient" => true,
+        ));
     }
 
     public function afterDelete() {

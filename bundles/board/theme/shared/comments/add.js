@@ -8,8 +8,6 @@ mod.init(".ynRXmfiIV4", function() {
             cmd:"infuso/board/controller/log/send",
             taskId: $container.attr("data:id"),
             text: $textarea.val()
-        }, function(){
-            $container.trigger("board/log-changed");
         });
         $textarea.val("");
     }

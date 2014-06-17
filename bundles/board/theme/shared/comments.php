@@ -5,7 +5,7 @@
     //<div class='top g-toolbar' >ололо!</div>    
 
     <div class='center ajax' style='overflow: auto;padding:20px;' >
-        //exec("ajax");
+        exec("ajax");
     </div>
     
     <div class='bottom' style='background: #ccc;padding:10px;' >

@@ -3,10 +3,9 @@
 <div class='ddksfajhjz' data:task='{$task->id()}' style='height:100%;' >
 
     <div class='center' style='overflow:auto;' >  
-        
-        //exec("status");
-        exec("form");                
-        
+
+        exec("form");             
+
 
        // exec("timeline");
         //<br/>
@@ -18,7 +17,17 @@
     </div>
     
     <div class='top' style='padding:10px;background: #ededed;' >
-        exec("/board/shared/task-tools");
+        <table style='width:100%;table-layout:fixed;' >
+            <tr>
+                <td>
+                    exec("/board/shared/task-tools");           
+                </td>
+                <td style='width:300px;vertical-align:middle;text-align:right;padding-right:20px;' >
+                    exec("status");
+                </td>
+            </tr>
+        </table>
+        
     </div>
                 
 </div>
