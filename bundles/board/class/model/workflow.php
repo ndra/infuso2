@@ -8,11 +8,11 @@ use  \Infuso\Core;
 /**
  * Модель записи в логе
  **/
-class TaskTime extends ActiveRecord\Record {
+class WorkFlow extends ActiveRecord\Record {
 
     public static function recordTable() {
         return array (
-            'name' => "board_task_time",
+            'name' => "board_task_workflow",
             'fields' => array (
                 array (
                     'name' => 'id',
@@ -72,10 +72,6 @@ class TaskTime extends ActiveRecord\Record {
 
     public function recordParent() {
         return $this->task();
-    }
-
-    public function beforeCreate() {
-        $this->data("userId", \user::active()->id());
     }
 
     /**

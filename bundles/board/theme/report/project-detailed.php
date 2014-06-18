@@ -24,8 +24,7 @@ $to = util::date($params["to"])->date();
     $tasks = $project->tasks()
         ->desc("changed")
         ->geq("date(changed)",$from)
-        ->leq("date(changed)",$to)
-        ->eq("epicParentTask",0);
+        ->leq("date(changed)",$to);
 
     if(($tag = trim($params["tag"])) && $tag!="*") {
         $tasks->useTag($tag);

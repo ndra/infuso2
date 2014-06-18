@@ -5,9 +5,6 @@
     $h = helper("<div>");
     $h->addClass("sticker");
     $h->style("background", $task->data("color"));
-    if($task->paused()) {
-        $h->style("height", 80);
-    }
     $h->begin();
 
         <div class='title' >{$task->id()}. {$task->project()->title()}</div>

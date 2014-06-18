@@ -2,10 +2,6 @@
 
 $h = tmp::helper("<tr>");
 
-if($task->data("epicParentTask")) {
-    $h->addClass("subtask");
-}
-
 $h->begin();
 
     <td class='id' >{$task->id()}</td>

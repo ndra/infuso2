@@ -4,12 +4,20 @@
 
     <div class='center' style='overflow:auto;' >  
 
-        exec("form");             
-
-
+        exec("form");
+        
+        <div style='padding: 0 20px;' >
+            exec("files");  
+        </div>
+        
        // exec("timeline");
-        //<br/>
-        //exec("files");            
+        
+        /*<div style='padding:20px;' >
+            
+            <br/>
+            exec("timeline");
+        </div> */
+
     </div>
     
     <div class='right' style='width:300px;border-left:1px solid #ccc;' >

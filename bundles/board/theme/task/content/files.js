@@ -1,6 +1,6 @@
 mod.init(".hi31qru8zr", function() {
 
-    var container = $(this);
+    var $container = $(this);
     
     // Загружает список фотографий
     var load = function() {
@@ -8,10 +8,14 @@ mod.init(".hi31qru8zr", function() {
             cmd:"infuso/board/controller/attachment/getAttachments",
             taskId: container.attr("data:task")
         }, function(data) {
-            container.html(data.html);
+            $container.html(data.html);
         });   
     }
     
-    container.on("board/upload", load);
+    $container.on("board/upload", load);
+    
+    $container.list({
+        
+    });
     
 });

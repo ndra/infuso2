@@ -424,6 +424,10 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
     public function msg($message, $error = null) {
         service("msg")->msg($message, $error);
     }
+    
+    public function user() {
+        return \user::active();
+    }
 
 
 }

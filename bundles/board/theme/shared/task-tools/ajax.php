@@ -12,8 +12,8 @@
                     <input type='button' class='pause' title='Поставить задачу на паузу' />
                     break;
                 case "stop":
-                        <input type='button' class='stop' title='Остановить' />
-                        break;
+                    <input type='button' class='stop' title='Остановить' />
+                    break;
                 case "done":
                     <input type='button' class='done' title='Задача выполнена' />
                     break;

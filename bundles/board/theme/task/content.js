@@ -22,7 +22,7 @@ mod.init(".ddksfajhjz", function() {
         var file = e.originalEvent.dataTransfer.files[0];            
         mod.call({
             cmd:"infuso/board/controller/attachment/upload",
-            taskId: container.attr("data:task")
+            taskId: $container.attr("data:task")
         }, function() {        
             $container.find(".c-attachments").triggerHandler("board/upload");        
         }, {
@@ -30,7 +30,6 @@ mod.init(".ddksfajhjz", function() {
                 file: file
             }
         });
-        
     });
     
     $container.layout();

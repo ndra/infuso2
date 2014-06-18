@@ -36,10 +36,6 @@ class Task extends Base {
         $tasks = Model\Task::all()->orderByExpr($status->order())->limit($limit);
         $tasks->eq("status", $p["status"]);
             
-        if($p["status"] != Model\TaskStatus::STATUS_IN_PROGRESS) {
-            $tasks->eq("epicParentTask",0);
-        }
-
         // Учитываем поиск
         if($search = trim($p["search"])) {
             $tasks->search($search);
@@ -95,6 +91,14 @@ class Task extends Base {
         $task->setData($p["data"]);
         app()->msg("Задача изменена");
     }
+    
+    public function post_timeInputContent($p) {
+        $task = \Infuso\Board\Model\Task::get($p["taskId"]);
+        return app()->tmp()
+            ->template("/board/shared/task-tools/time-input-ajax")
+            ->param("task", $task)
+            ->getContentForAjax();
+    }
 
     /**
      * Взять задачу
@@ -109,13 +113,15 @@ class Task extends Base {
             app()->msg(\user::active()->errorText(),1);
             return;
         }
+        
+        $task->take(app()->user());
 
 		// Меняем статус задачи
-        $task->data("status",Model\TaskStatus::STATUS_IN_PROGRESS);
+        /*$task->data("status",Model\TaskStatus::STATUS_IN_PROGRESS);
         // Записываем изменения статуса в лог
         $task->logCustom(array(
             "type" => Model\Log::TYPE_TASK_TAKEN,
-        ));
+        ));  */
     }
 
     /**

@@ -1,16 +1,16 @@
 .wq01orrvbq {
-
+    
     .file {
     
-        width:200px;
+        width:150px;
         margin: 0 20px 20px 0;
         display:inline-block;
         position: relative;
     
         img {
             box-shadow: 0 0 10px rgba(0,0,0,.2);    
-            width:200px;
-            height:200px;
+            width:150px;
+            height:150px;
             display: block;
             margin-bottom: 10px;        
         }

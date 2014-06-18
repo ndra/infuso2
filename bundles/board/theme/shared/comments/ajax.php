@@ -4,7 +4,7 @@
 
     $lastDate = null;
         
-    foreach($task->getlogCustom() as $item) {
+    foreach($task->getlog() as $item) {
         
         $date = $item->pdata("created")->date()->text();
         

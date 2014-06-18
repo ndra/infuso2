@@ -2,7 +2,13 @@
 
 <div class='hhraxv0jki' >
 
-    echo "Потрачено ";
+    $timeLog = $task->timeLog();
+    foreach($timeLog as $item) {
+        var_export($item->data());
+        <br/>
+    }
+
+    /*echo "Потрачено ";
     echo $task->timeSpent();
     echo " + ";
     echo round($task->timeSpentProgress() / 3600, 2);
@@ -30,6 +36,6 @@
             $h->begin();
             $h->end();
         }
-    </div>
+    </div> */
 
 </div>

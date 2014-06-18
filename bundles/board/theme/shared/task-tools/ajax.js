@@ -23,10 +23,17 @@ $(function() {
                         });
                         break;
                     case "done":
+                        $.window({
+                            call: {
+                                cmd: "infuso/board/controller/task/timeInputContent",
+                                taskId:id
+                            }
+                        });
+                        /*return;
                         mod.call({
                             cmd:"infuso/board/controller/task/doneTask",
                             taskId:id
-                        });
+                        // }); */
                         break;
                     case "resume":
                         mod.call({

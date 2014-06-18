@@ -76,12 +76,6 @@ class board_handler implements \Infuso\Core\Handler {
         user_operation::create("board/getTaskTime","Получение времени, потраченного на задачу")
             ->appendTo("board/editTask");
 
-        user_operation::create("board/getEpicSubtasks","Получение списка подзадач эпика")
-            ->appendTo("board/viewTask");
-
-        user_operation::create("board/addEpicSubtask","Добавление подзадачи эпика")
-            ->appendTo("board/editTask");
-
         /*user_operation::create("board/changeTaskStatus","Изменение статуса задачи")
             ->addBusinessRule("if(\$status == board_task_status::STATUS_IN_PROGRESS && !\$task->subtasks()->void()) \$this->error('Нельзя взять эпик. Возьмите подзадачу.'); ")
             ->addBusinessRule("return true;")

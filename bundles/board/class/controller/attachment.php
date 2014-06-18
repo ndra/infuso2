@@ -24,7 +24,7 @@ class Attachment extends Core\Controller {
         if(!\user::active()->checkAccess("board/uploadFile",array(
             "task" => $task
         ))) {
-            app()->msg(user::active()->errorText(),1);
+            app()->msg(\user::active()->errorText(),1);
             return;
         }
 
