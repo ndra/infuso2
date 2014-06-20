@@ -1,9 +1,12 @@
 <?
 
-class eshop_group_editor extends \Infuso\Cms\Reflex\Editor {
+namespace Infuso\Eshop\Model;
+use Infuso\Core;
+
+class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 
 	public function itemClass() {
-	    return "eshop_group";
+	    return Group::inspector()->className();
 	}
 
 	public function actions() {
@@ -16,8 +19,8 @@ class eshop_group_editor extends \Infuso\Cms\Reflex\Editor {
 
 	public function filters() {
 	    return array(
-	        eshop_group::all()->title("Активные"),
-	        eshop_group::all()->inverse()->title("Неактивные"),
+	        Group::all()->title("Активные"),
+	        Group::all()->inverse()->title("Неактивные"),
 	    );
 	}
 
@@ -31,22 +34,11 @@ class eshop_group_editor extends \Infuso\Cms\Reflex\Editor {
 	 * @reflex-root = on
 	 **/
 	public function allGroups() {
-	    return eshop_group::allEvenHidden()
+	    return Group::all()
 			->eq("parent",0)
-			->title("Группы товаров")
-			->param("starred",true)
-			->param("tab","eshop");
+			->title("Группы товаров");
 	}
-	
-	/**
-	 * @reflex-root = on
-	 **/
-	public static function allGroupWithoutHierarchy() {
-	    return eshop_group::allEvenHidden()
-			->title("Группы товаров без иерархии")
-			->param("tab","eshop");
-	}
-	
+    
 	/**
 	 * @reflex-child = on
 	 **/
