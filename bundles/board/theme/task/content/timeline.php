@@ -2,7 +2,7 @@
 
 <div class='hhraxv0jki' >
 
-    $timeLog = $task->timeLog();
+    $timeLog = $task->workflow();
     foreach($timeLog as $item) {
         var_export($item->data());
         <br/>
