@@ -1,3 +1,7 @@
 <?
 
-echo 12121;
+admin::header();
+
+exec("/admin/hello");
+
+admin::footer();

@@ -46,10 +46,20 @@ class mod_route_default extends \Infuso\Core\Route {
 	}
 
 	public function actionToUrl($action) {
-		$ret = "/".strtr($action->className(),array("\\" => "/"))."/".$action->action()."/";
+	
+	    $controllers = mod::service("classmap")->classmap("controllers");
+	    $class = array_search($action->className(), $controllers);
+	
+		$ret = "/".strtr($class,array("\\" => "/"));
+		
+		if($action->action() != "index") {
+		    $ret.= "/".$action->action()."/";
+		}
+		
 		foreach($action->params() as $key => $val) {
 		    $ret.= "$key/$val/";
 		}
+		
 		return $ret;
 	}
 
