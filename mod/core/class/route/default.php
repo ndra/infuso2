@@ -11,15 +11,17 @@ class mod_route_default extends \Infuso\Core\Route {
 
 	public function urlToAction($url) {
 	
-		$segments = explode("/",trim($url->path(),"/"));
-		$classmap = mod::service("classmap");
+		$segments = explode("/",trim(strtolower($url->path()),"/"));
+		$controllers = mod::service("classmap")->classmap("controllers");
 		$rest = array();
 
 		do {
 
-			$class = implode("\\",$segments);
+			$controller = implode("/",$segments);
+			
+			$class = $controllers[$controller];
 		    
-		    if($classmap->testClass($class,"infuso\\core\\controller")) {
+		    if($class) {
 		    
 		        $action = array_shift($rest);
 		        if($action === null) {

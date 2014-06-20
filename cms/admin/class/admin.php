@@ -9,6 +9,10 @@ use Infuso\Core;
 class Admin extends Core\Controller {
 
 	private static $showLogin = true;
+	
+	public function controller() {
+	    return "admin";
+	}
 
 	/**
 	 * Эта веселая функция показывает форму авторизации и прекращает дальнейшую работу скрипта
@@ -24,13 +28,11 @@ class Admin extends Core\Controller {
 	}
 
 	public static function indexTest() {
-		return user::active()->checkAccess("admin:showInterface");
+		return \user::active()->checkAccess("admin:showInterface");
 	}
 
-	public static function index($p1=null) {
-		admin::header("Администрирование");
-		tmp::exec("admin:startPage");
-		tmp::exec("admin:footer");
+	public function index() {
+		\tmp::exec("/admin/index");
 	}
 
 	public static function indexFailed() {
@@ -41,9 +43,7 @@ class Admin extends Core\Controller {
 	 * Выводит шапку админки
 	 **/
 	public static function header($title="") {
-	
 	    $tmp = Core\Mod::app()->tmp();
-	
 	    $tmp->noindex();
 		$tmp->param("title",$title);
 		$tmp->param("back-end",1);

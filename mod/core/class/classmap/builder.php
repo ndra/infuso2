@@ -299,6 +299,16 @@ class Builder {
 		return $ret;
 	}
 	
+	public function buildControllers() {
+		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
+		foreach(mod::service("classmap")->classes("Infuso\\Core\\Controller") as $class) {
+		    $controller = new $class;
+			$ret[strtolower($controller->controller())] = $class;
+		}
+
+		return $ret;
+	}
+	
 	/**
 	 * Строит карту классов
 	 **/
@@ -326,6 +336,7 @@ class Builder {
 		$map["routes"] = self::getRoutes();
 		$map["services"] = self::services();
 		$map["fields"] = self::buildFields();
+		$map["controllers"] = self::buildControllers();
 
 		// Сохраняем карту классов в памяти, чтобы использовать ее уже в этом запуске скрипта
 		mod::service("classmap")->storeClassMap($map);

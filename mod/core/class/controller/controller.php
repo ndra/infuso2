@@ -5,6 +5,10 @@ namespace Infuso\Core;
 class Controller extends Component {
 
 	private $redirectUrl = null;
+	
+	public function controller() {
+	    return strtr(self::inspector()->className(),array("\\" => "/"));
+	}
 
 	public function defaultBehaviours() {
 		return array(
@@ -13,7 +17,6 @@ class Controller extends Component {
 	}
 	
 	public final function redirect($url) {
-	
 	    // Выполняем редирект только если есть экшн
 		if(action::current()) {
 		    $this->redirectUrl = $url;
