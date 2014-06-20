@@ -22,4 +22,5 @@ if($p1->subgroups()->count()) {
 
 } */
 
-$tmp->exec("/eshop/layout");
+add("center", "content");
+exec("/eshop/layout");

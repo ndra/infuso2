@@ -1,7 +1,5 @@
 <?
 
-tmp::jq();
-tmp::js("/mod/res/core.js");
+lib::jq();
 
-
-tmp::exec("tmp:layout");
+exec("/tmp/layout");

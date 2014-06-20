@@ -32,6 +32,6 @@ tmp::exec("header");
 
 //tmp::obj()->editor()->placeWidget();
 
-tmp::exec("footer");
+exec("footer");
 
-tmp::footer();
+footer();

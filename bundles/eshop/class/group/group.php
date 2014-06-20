@@ -5,161 +5,135 @@
  **/
 class eshop_group extends reflex {
 
-	
-
-public static function recordTable() {return array (
-  'name' => 'eshop_group',
-  'fields' =>
-  array (
-    array (
-      'id' => 'b7fabqfvb7yuiqk50nmvzt4usj8a6d',
-      'name' => 'id',
-      'type' => 'jft7-kef8-ccd6-kg85-iueh',
-      'editable' => '0',
-      'label' => 'Первичный ключ',
-      'group' => '',
-      'default' => '',
-      'indexEnabled' => '0',
-      'help' => '',
-    ), array (
-      'id' => 'd2qhdv2nduxijgjlg7b1imjciiugby',
-      'name' => 'depth',
-      'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
-      'editable' => '0',
-      'label' => 'Глубина',
-      'group' => '',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ), array (
-      'id' => 'y9r7m5iok5ixpe0oyebnc16qwebjyl',
-      'name' => 'priority',
-      'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
-      'editable' => '0',
-      'label' => 'Приоритет',
-      'group' => '',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ), array (
-      'id' => '8ahqc50tcgb3mg6dweijw5z3f1iowv',
-      'name' => 'parent',
-      'type' => 'pg03-cv07-y16t-kli7-fe6x',
-      'editable' => '0',
-      'label' => 'Родительская группа',
-      'group' => '',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-      'class' => 'eshop_group',
-      'collection' => '',
-      'titleMethod' => '',
-    ), array (
-      'id' => 'bdwg2jp1snye0d4vs7p50n41znp9bo',
-      'name' => 'title',
-      'type' => 'v324-89xr-24nk-0z30-r243',
-      'editable' => '1',
-      'label' => 'Название группы товаров',
-      'group' => 'Основные',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => 'Название товарной группы',
-      'length' => '',
-    ), array (
-      'id' => 'w56npv6dflzo8a03kvstcl67wvso89',
-      'name' => 'icon',
-      'type' => 'knh9-0kgy-csg9-1nv8-7go9',
-      'editable' => '1',
-      'label' => 'Изображение группы',
-      'group' => 'Основные',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ), array (
-      'id' => '0xpuz3yez3c1bn8lij8lr7mlbqkgzd',
-      'name' => 'active',
-      'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-      'editable' => '1',
-      'label' => 'Активна',
-      'group' => 'Основные',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ),
-    7 => 
-    array (
-      'id' => 'rxfe2jk5st4ghdk9btpuhqp5zqm5hn',
-      'name' => 'starred',
-      'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-      'editable' => '1',
-      'label' => 'Избранная группа',
-      'group' => 'Основные',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ),
-    8 => 
-    array (
-      'id' => 'kezdpvbdy167puijfvrdc5rqy1bx8a',
-      'name' => 'description',
-      'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
-      'editable' => '1',
-      'label' => 'Описание',
-      'group' => 'Основные',
-      'default' => '',
-      'indexEnabled' => '0',
-      'help' => '',
-    ),
-    9 => 
-    array (
-      'id' => '0dw90of56d4a0j492dw52q8v6qfehd',
-      'name' => 'createRight',
-      'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-      'editable' => '1',
-      'label' => 'Создать право для редактирования товаров в этой группе',
-      'group' => 'Дополнительно',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ),
-    10 => 
-    array (
-      'id' => '3k90jfgsx490x4lb3p5bjfv6tw5b3m',
-      'name' => 'extra',
-      'type' => 'puhj-w9sn-c10t-85bt-8e67',
-      'editable' => '1',
-      'label' => 'Дополнительно',
-      'group' => 'Дополнительно',
-      'default' => '',
-      'indexEnabled' => '0',
-      'help' => '',
-    ),
-    11 => 
-    array (
-      'id' => 'farnm50d8g2o8ubqmvhqf1soyuzo89',
-      'name' => 'numberOfSubgroups',
-      'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
-      'editable' => '2',
-      'label' => 'Количество подгрупп',
-      'group' => 'Дополнительно',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ),
-    12 => 
-    array (
-      'id' => '3y5bok52jfvr7cgr7wvz7yl6q4abnp',
-      'name' => 'numberOfItems',
-      'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
-      'editable' => '2',
-      'label' => 'Количество товаров',
-      'group' => 'Дополнительно',
-      'default' => '',
-      'indexEnabled' => '1',
-      'help' => '',
-    ),
-  ),
+	public static function recordTable() {return array (
+  		'name' => 'eshop_group',
+  		'fields' =>
+  			array (
+			    array (
+					'name' => 'id',
+					'type' => 'jft7-kef8-ccd6-kg85-iueh',
+					'label' => 'Первичный ключ',
+					'indexEnabled' => '0',
+				), array (
+					'name' => 'depth',
+					'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
+					'editable' => '0',
+					'label' => 'Глубина',
+					'group' => '',
+					'default' => '',
+					'indexEnabled' => '1',
+					'help' => '',
+				), array (
+				'name' => 'priority',
+				'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
+				'editable' => '0',
+				'label' => 'Приоритет',
+				'group' => '',
+				'default' => '',
+				'indexEnabled' => '1',
+				'help' => '',
+				), array (
+				'name' => 'parent',
+				'type' => 'pg03-cv07-y16t-kli7-fe6x',
+				'editable' => '0',
+				'label' => 'Родительская группа',
+				'group' => '',
+				'default' => '',
+				'indexEnabled' => '1',
+				'help' => '',
+				'class' => 'eshop_group',
+				'collection' => '',
+				'titleMethod' => '',
+				), array (
+				'name' => 'title',
+				'type' => 'v324-89xr-24nk-0z30-r243',
+				'editable' => '1',
+				'label' => 'Название группы товаров',
+				'group' => 'Основные',
+				'default' => '',
+				'indexEnabled' => '1',
+				'help' => 'Название товарной группы',
+				'length' => '',
+				), array (
+				'name' => 'icon',
+				'type' => 'knh9-0kgy-csg9-1nv8-7go9',
+				'editable' => '1',
+				'label' => 'Изображение группы',
+				'group' => 'Основные',
+				'default' => '',
+				'indexEnabled' => '1',
+				'help' => '',
+				), array (
+				'name' => 'active',
+				'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
+				'editable' => '1',
+				'label' => 'Активна',
+				'group' => 'Основные',
+				'default' => '',
+				'indexEnabled' => '1',
+				'help' => '',
+				), array (
+				'id' => 'rxfe2jk5st4ghdk9btpuhqp5zqm5hn',
+				'name' => 'starred',
+				'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
+				'editable' => '1',
+				'label' => 'Избранная группа',
+				'group' => 'Основные',
+				'default' => '',
+				'indexEnabled' => '1',
+				'help' => '',
+				), array (
+				'id' => 'kezdpvbdy167puijfvrdc5rqy1bx8a',
+				'name' => 'description',
+				'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
+				'editable' => '1',
+				'label' => 'Описание',
+				'group' => 'Основные',
+				'default' => '',
+				'indexEnabled' => '0',
+				'help' => '',
+				), array (
+				'id' => '0dw90of56d4a0j492dw52q8v6qfehd',
+				'name' => 'createRight',
+				'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
+				'editable' => '1',
+				'label' => 'Создать право для редактирования товаров в этой группе',
+				'group' => 'Дополнительно',
+				'default' => '',
+				'indexEnabled' => '1',
+				'help' => '',
+				), array (
+				'id' => '3k90jfgsx490x4lb3p5bjfv6tw5b3m',
+				'name' => 'extra',
+				'type' => 'puhj-w9sn-c10t-85bt-8e67',
+				'editable' => '1',
+				'label' => 'Дополнительно',
+				'group' => 'Дополнительно',
+				'indexEnabled' => '0',
+				'help' => '',
+				), array (
+				'id' => 'farnm50d8g2o8ubqmvhqf1soyuzo89',
+				'name' => 'numberOfSubgroups',
+				'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
+				'editable' => '2',
+				'label' => 'Количество подгрупп',
+				'group' => 'Дополнительно',
+				'indexEnabled' => '1',
+				), array (
+				'id' => '3y5bok52jfvr7cgr7wvz7yl6q4abnp',
+				'name' => 'numberOfItems',
+				'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
+				'editable' => '2',
+				'label' => 'Количество товаров',
+				'group' => 'Дополнительно',
+				'indexEnabled' => '1',
+				),
+),
 );}
+
+	public function controller() {
+	    return "eshop-group";
+	}
 
 	public function defaultBehaviours() {
 	    $ret = parent::defaultBehaviours();
@@ -171,10 +145,15 @@ public static function recordTable() {return array (
 	    return true;
 	}
 
+	/**
+	 * Контроллер страницы группы
+	 **/
 	public static function index_item($p) {
-	    $item  = self::get($p["id"]);
-	    tmp::param("activeGroupID",$item->id());
-	    tmp::exec("eshop:group",$item,$p);
+	    $group  = self::get($p["id"]);
+	    \tmp::param("activeGroupID",$group->id());
+	    \tmp::exec("eshop:group", array(
+	        "group" => $group,
+		));
 	}
 
 	/**
@@ -241,9 +220,11 @@ public static function recordTable() {return array (
 	 * Возвращает группу первого уровня
 	 **/
 	public function level0() {
-	    foreach($this->parents() as $parent)
-	        if(!$parent->parent()->exists())
+	    foreach($this->parents() as $parent) {
+	        if(!$parent->parent()->exists()) {
 	            return $parent;
+	        }
+	    }
 	    return $this;
 	}
 
@@ -251,9 +232,11 @@ public static function recordTable() {return array (
 	 * Возвращает группу заданного уровня
 	 **/
 	public function level($level=0) {
-	    foreach($this->parents() as $parent)
-	        if($parent->depth()==$level)
+	    foreach($this->parents() as $parent) {
+	        if($parent->depth()==$level) {
 	            return $parent;
+	        }
+		}
 	    return $this;
 	}
 
