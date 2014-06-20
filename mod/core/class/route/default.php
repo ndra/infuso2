@@ -20,7 +20,7 @@ class mod_route_default extends \Infuso\Core\Route {
 			$controller = implode("/",$segments);
 			
 			$class = $controllers[$controller];
-		    
+			
 		    if($class) {
 		    
 		        $action = array_shift($rest);
@@ -33,7 +33,7 @@ class mod_route_default extends \Infuso\Core\Route {
 				    list($key,$value) = array_splice($rest, 0, 2);
 				    $params[$key] = $value;
 				}
-
+				
 				return \infuso\core\action::get($class,$action,$params);
 
 		    }
@@ -52,9 +52,11 @@ class mod_route_default extends \Infuso\Core\Route {
 	
 		$ret = "/".strtr($class,array("\\" => "/"));
 		
-		if($action->action() != "index") {
-		    $ret.= "/".$action->action()."/";
+		if($action->action() != "index" || sizeof($action->params())) {
+		    $ret.= "/".$action->action();
 		}
+		
+		$ret.= "/";
 		
 		foreach($action->params() as $key => $val) {
 		    $ret.= "$key/$val/";
