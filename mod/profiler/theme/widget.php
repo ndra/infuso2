@@ -10,7 +10,7 @@
         tmp::exec("milestones");
 
         <table class='t1' >    
-            foreach(mod_profiler::log() as $group=>$items) {
+            foreach(\Infuso\Core\Profiler::log() as $group=>$items) {
                 <tr>
         
                     <td class='title'>$group</td>

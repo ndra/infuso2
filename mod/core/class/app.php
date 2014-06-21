@@ -136,10 +136,16 @@ class App {
 	    return $this->ar;
 	}
 
-	public function tmp() {
+	public function tmp($tmp = null) {
+    
+        if($tmp) {
+            return \tmp::get($tmp);
+        }
+    
 	    if(!$this->templateProcessor) {
 	        $this->templateProcessor = new \Infuso\Template\Processor();
 	    }
+        
 	    return $this->templateProcessor;
 	}
 

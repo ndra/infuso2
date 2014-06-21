@@ -424,6 +424,7 @@ class Template extends Generic {
      * Рекурсивно подключает все стили и скрипты шаблона и шаблонов внутри него
      **/
     public function incr() {
+        return;
         \tmp_theme::loadDefaults();
         foreach(tmp::templateMap() as $key=>$tmp) {
             if(strpos($key,$this->template())===0) {

@@ -16,15 +16,15 @@
         </td>
         
         <td>
-            echo "Page size : ".util::bytesToSize1000(mod_profiler::getVariable("contentSize"));
+            echo "Page size : ".\util::bytesToSize1000(\Infuso\Core\Profiler::getVariable("contentSize"));
         </td>
         
         <td>
-            echo "Peak memory: ".util::bytesToSize1000(memory_get_peak_usage())." / ".ini_get("memory_limit");
+            echo "Peak memory: ".\util::bytesToSize1000(memory_get_peak_usage())." / ".ini_get("memory_limit");
         </td>
         
         <td>
-        echo mod_action::current()->canonical();
+        echo app()->action()->canonical();
         
         /*$obj = tmp::obj();
         if($obj->exists()) {

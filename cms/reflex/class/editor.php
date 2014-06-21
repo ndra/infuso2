@@ -294,6 +294,7 @@ abstract class Editor extends Core\Controller {
                 $menu[] = array(
                     "href" => \mod::action(get_class($this),"child",array("id"=>$this->itemID(),"method" => $fn))->url(),
                     "title" => $collection->title(),
+                    "count" => $collection->count(),
                 );
             }
         }

@@ -11,7 +11,7 @@ $width = 1000;
 
     // Выводим майлстоуны на линию
     $last = 0;
-    foreach(mod_profiler::getMilestones() as $index => $s) {
+    foreach(\Infuso\Core\Profiler::getMilestones() as $index => $s) {
     
         $time = ($s[1] - $start) / $duration;
         $x = $width*($time - $last);
@@ -39,7 +39,7 @@ $width = 1000;
     }
     
     // Сортируем операции так, чтобы самые длинные были впереди
-    $ops = mod_profiler::$operations;
+    $ops = \Infuso\Core\Profiler::$operations;
     usort($ops,function($a,$b) { 
         if($a["d"] < $b["d"]) {
             return -1;
@@ -57,7 +57,7 @@ $width = 1000;
         $n++;
         $left = $item["s"] / $duration * $width;
         $w = $item["d"]  / $duration * $width;
-        $name = util::str($item["n"])->esc()." ".$item["d"];
+        $name = \util::str($item["n"])->esc()." ".$item["d"];
         $top = $item["d"]*1500;
         <div class='segment' style='left:{$left}px;width:{$w}px;top:{$top}px;' title='{$name}'>
         </div>

@@ -12,6 +12,9 @@
         
         $h->begin();
             echo $item["title"];
+            if($item["count"]) {
+                <sup>{$item["count"]}</sup>
+            }
         $h->end();
     }
 </div>

@@ -48,10 +48,11 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 	}
 	
 	/**
-	 * @reflex-child = off
+	 * @reflex-child = on
 	 **/
 	public function items() {
-		return $this->item()->items()
+		return $this->item()
+            ->items()
 			->param("title","Товары");
 	}
 	

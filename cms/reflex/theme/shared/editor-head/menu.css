@@ -15,5 +15,10 @@
         background: white;
         padding: 10px;
     }
+    
+    sup {
+        margin-left:5px;
+        opacity: .5;
+    }
 
 }
