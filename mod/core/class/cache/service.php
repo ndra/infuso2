@@ -1,11 +1,18 @@
 <?
 
-use infuso\core;
-namespace infuso\core\cache;
+namespace Infuso\Core\Cache;
+use Infuso\Core;
 
-class service extends \infuso\core\service {
+class Service extends Core\Service implements Core\Handler {
 
+    /**
+     * Объект драйвера кэша
+     **/         
     private static $driver = null;
+    
+    /**
+     * Массив для кэша в оперативной памяти
+     **/    
     private static $memoryCache = array();
     
     public function defaultService() {
@@ -57,10 +64,10 @@ class service extends \infuso\core\service {
      * Записывает переменную в кэш
      **/
     public static function set($key,$val,$ttl = null) {
-        \infuso\core\profiler::beginOperation("cache","write",$key);
+        \Infuso\Core\Profiler::beginOperation("cache","write",$key);
         self::driver()->set($key,$val,$ttl);
         self::$memoryCache[$key] = $val;
-        \infuso\core\profiler::endOperation();
+        \Infuso\Core\Profiler::endOperation();
     }
 
     public static function clear() {
@@ -69,6 +76,21 @@ class service extends \infuso\core\service {
     
     public static function clearByPrefix($prefix) {
         return self::driver()->clearByPrefix($prefix);
-    }
+    } 
 
+    /**
+     * Обработчик события Хартбит - теста системы
+     * @handler = Infuso/Admin/Heartbeat
+     **/
+    public function onHeartbeat($event) {
+    
+        $service = service("cache");
+    
+        if(get_class($service->driver()) == FileSystem::inspector()->className()) {
+            $event->warning("Используется кэш в файловой системе, это медленно.");
+        } else {        
+            $event->message("Кэш — ок");
+        }        
+    }
+    
 }

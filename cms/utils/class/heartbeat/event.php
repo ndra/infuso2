@@ -3,14 +3,20 @@
 namespace Infuso\Cms\Utils\Heartbeat;
 use Infuso\Core;
 
+/**
+ * Событие пульсометра
+ **/  
 class Event extends Core\Event {
 
-	private $messages = array();
-	
 	const TYPE_ERROR = 1;
 	const TYPE_WARNING = 2;
 	const TYPE_MESSAGE = 3;
 
+	private $messages = array();
+	
+    /**
+     * Добавляет сообщение об ошибке
+     **/         
 	public function error($message) {
 	    $this->messages[] = array(
 	        "class" => $this->handlerClass(),
@@ -20,7 +26,10 @@ class Event extends Core\Event {
 		);
 	}
 	
-	public function warning() {
+    /**
+     * Добавляет предупреждение
+     **/
+	public function warning($message) {
 	    $this->messages[] = array(
 			"class" => $this->handlerClass(),
 	        "method" => $this->handlerMethod(),
@@ -29,6 +38,9 @@ class Event extends Core\Event {
 		);
 	}
 	
+    /**
+     * Добавляет сообщение
+     **/
 	public function message($message) {
 	    $this->messages[] = array(
 			"class" => $this->handlerClass(),

@@ -11,12 +11,18 @@
         padding: 4px 10px 4px 0;
     }
     
+    .class, .method {
+        opacity: .5;
+    }
+
     .error {
-        color:red;
+        background: red;
+        color: white;
     }
     
-    .class, .method {
-        color:#ccc;
+    .warning {
+        background: yellow;
+        color: black;
     }
 
 }

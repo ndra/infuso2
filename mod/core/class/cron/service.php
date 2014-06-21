@@ -74,15 +74,13 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
             echo "</div>";
             
             \tmp::reset();
-           // \util::profiler();
+            \util::profiler();
             \tmp::footer();
 
             if(array_key_exists("loop",$_GET)) {
                 echo "<script>window.location.reload();</script>";
-            }
-
-        }
-
+            }                 
+        }    
     }
 
     /**
@@ -94,7 +92,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
         mod::fire("infuso/cron");
         $time = util::now()->stamp() - $begin;
         
-        mod::service("log")->log(array(
+        service("log")->log(array(
             "type" => "cron",
             "message" => "completed: {$time} s.",
             "p1" => $time,
@@ -115,19 +113,23 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
      **/
     public function onHeartbeat($event) {
     
-        $last = service("log")->all()->desc("datetime")->one();
+        $last = service("log")
+            ->all()
+            ->desc("datetime")
+            ->one();
         
         if(!$last->exists()) {
             $event->error("Крон не был запущен ни разу");
             return;
         }
         
-        if(util::now()->stamp() - $last->pdata("datetime")->stamp() > 3600 * 2) {
-            $event->error("Крон был запущен больше двух часов назад");
+        $d = util::now()->stamp() - $last->pdata("datetime")->stamp();
+        if($d > 3600) {
+            $event->error("Крон был запущен {$last->pdata('datetime')->num()} назад");
             return;
         }
     
-        $event->message("Последний запуск крона ".$last->pdata("datetime")->left());
+        $event->message("Последний запуск крона ".$last->pdata("datetime")->num());
     }
 
 }

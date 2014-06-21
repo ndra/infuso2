@@ -13,7 +13,9 @@ class Widget extends \Infuso\Core\Component {
         ));
         echo $fn;
 
-        \tmp::get("/infuso/profiler/widget")->incr();
+        \tmp::get("/infuso/profiler/widget")->inc();
+        \tmp::get("/infuso/profiler/widget/main")->inc();
+        \tmp::get("/infuso/profiler/widget/milestones")->inc();
         \tmp::jq();
 
     }

@@ -10,18 +10,23 @@ admin::header();
     $event->fire();
     
     <table>
-        foreach($event->getMessages() as $record) {        
+        foreach($event->getMessages() as $message) {        
         
-            $class = "message";                
+            $class = "message";  
+            
             if($message["type"] == \Infuso\Cms\Utils\Heartbeat\Event::TYPE_ERROR) {
                 $class = "error";
             }
-        
+            
+            if($message["type"] == \Infuso\Cms\Utils\Heartbeat\Event::TYPE_WARNING) {
+                $class = "warning";
+            }
+            
             <tr class='{$class}' >        
-                <td class='class' >{$record['class']}</td>
-                <td class='method' >{$record[method]}</td>
+                <td class='class' >{$message['class']}</td>
+                <td class='method' >{$message[method]}</td>
                 <td>
-                    echo $record["message"];                    
+                    echo $message["message"];                    
                 </td>                
             </tr>    
         }

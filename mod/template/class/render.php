@@ -15,7 +15,7 @@ class Render extends Core\Component {
 	
 	public function initialParams() {
 		return array(
-			"cache" => false,
+			"cache" => true,
 		);
 	}
 	
