@@ -155,10 +155,9 @@ class Item extends \Infuso\ActiveRecord\Record {
     /**
      * Экшн страницы товара
      **/
-    public static function index_item($p) {
+    public function index_item($p) {
         $item = self::get($p["id"]);
-        tmp::exec("/eshop/item", array(
-            "p1" => $item,
+        \tmp::exec("/eshop/item", array(
             "item" => $item
         ));
     }
@@ -208,7 +207,7 @@ class Item extends \Infuso\ActiveRecord\Record {
      * Возвращает товар по `id`
      **/
     public static function get($id) {
-        return reflex::get(get_class(), $id);
+        return service("ar")->get(get_class(), $id);
     }
 
     public function photos() {
