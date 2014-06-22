@@ -15,6 +15,9 @@ $(function() {
                 filename: $(this).attr("data:filename"),
                 preview150: $(this).attr("data:preview150")
             });
+            
+            mod.msg(12);
+            
         });
         
         $(this).list({

@@ -27,20 +27,23 @@ $(function() {
         // Окно выбора файлов
         
         dropzone.click(function() {
-            $.window({
+            var $wnd = $.window({
                 width:800,
                 height: 500,
                 call: {
                     cmd:"infuso/cms/reflex/controller/storage/getWindow",
                     editor: dropzone.attr("data:editor")
-                }, events: {
-                    "reflex/storage/file":function(event) {
-                        $(this).window("close");
-                        dropzone.find("input").val(event.filename);
-                        dropzone.find("img").attr("src",event.preview150);
-                    }
                 }
             });
+            
+            $wnd.on("reflex/storage/file", function(event) {
+                $wnd.window("close");
+                dropzone.find("input").val(event.filename);
+                dropzone.find("img").attr("src",event.preview150);
+            });
+            
+            
+            
         });
     
     });

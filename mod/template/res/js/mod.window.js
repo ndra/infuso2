@@ -6,7 +6,7 @@ jQuery.fn.window = function(params) {
     }
 
     if(params === undefined) {
-        return $(this).parents(".5jfNUBs7a9zwHl:first");
+        return $(this).parents(".5jfNUBs7a9zwHl:first").andSelf(".5jfNUBs7a9zwHl:first");
     }
 
 };
