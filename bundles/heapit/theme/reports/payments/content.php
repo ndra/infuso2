@@ -78,6 +78,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
     foreach($data as $yearData) {
         foreach($yearData as $monthData) {
             $max = max($monthData["income"] ? array_sum($monthData["income"]) : 0, $max);
+            $max = max($monthData["expenditure"] ? array_sum($monthData["expenditure"]) : 0, $max);
         }        
     }
     
@@ -120,7 +121,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
                     "month" => $monthNames[$month],
                     "data" => $monthData,
                     "max" => $max,
-                    "href" => action("infuso/heapit/controller/report", "paymentsMonth", array(
+                    "href" => action("infuso\\heapit\\controller\\report", "paymentsMonth", array(
                         "month" => $month,
                         "year" => $year,
                     )),
