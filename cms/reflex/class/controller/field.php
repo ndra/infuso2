@@ -23,7 +23,7 @@ class Field extends Core\Controller {
         return \tmp::get("/reflex/fields/links/add/")
             ->param("editor", $editor)
             ->param("field", $field)
-            ->getCOntentForAjax();
+            ->getContentForAjax();
     }
     
     /**

@@ -37,7 +37,7 @@ class Item extends \Infuso\ActiveRecord\Record {
                     'label' => 'Группа товаров',
                     'group' => 'Основные',
                     'indexEnabled' => '1',
-                    'class' => 'eshop_group'
+                    'class' => Group::inspector()->className(),
                 ), array(
                     'name' => 'price',
                     'type' => 'nmu2-78a6-tcl6-owus-t4vb',

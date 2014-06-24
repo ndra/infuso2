@@ -6,7 +6,8 @@ mod.init(".mQ2bn91Yw", function() {
         if(id) {
             $container.window().trigger({
                 type: "links/select",
-                itemID: id
+                itemID: id,
+                title: $(event.target).text()
             });
             $container.window("close");
         }

@@ -87,7 +87,7 @@ class Group extends \Infuso\ActiveRecord\Record {
 	public function items() {
 	    return service("ar")
             ->collection(Item::inspector()->className())
-            ->eq("parent",$this->id());
+            ->eq("groupId",$this->id());
 	}
 
 	public function recordParent() {
