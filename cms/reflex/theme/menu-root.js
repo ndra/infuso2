@@ -2,9 +2,9 @@ $(function() {
 
     var initNodes = function() {
         $(".pp7cpa1wpc .node").mod("init", function() {            
-            var node = $(this);
-            $(this).find(".expander").click(function() {
-                toggleNode(node);
+            var $node = $(this);
+            $node.find(".expander:first").click(function() {
+                toggleNode($node);
             });
         });
     }
@@ -35,12 +35,12 @@ $(function() {
         node.removeClass("expanded");
     }
     
-    // Разворачивает сворачивает ноду автлматически
-    var toggleNode = function(node) {
-        if(!node.hasClass("expanded")) {
-            expandNode(node);
+    // Разворачивает сворачивает ноду автоматически
+    var toggleNode = function($node) {
+        if(!$node.hasClass("expanded")) {
+            expandNode($node);
         } else {
-            collapseNode(node);
+            collapseNode($node);
         }        
         storeExpanded();
     }
@@ -66,13 +66,5 @@ $(function() {
     }
     
     initNodes();
-    
-    /*var expanded = getExpandedNodes();
-    $(".pp7cpa1wpc .node").each(function() {
-        var node = $(this);
-        if($.inArray(node.attr("data:node-id"),expanded) != -1) {
-            expandNode(node);
-        }
-    }); */
 
 });

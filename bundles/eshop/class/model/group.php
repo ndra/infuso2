@@ -35,6 +35,7 @@ class Group extends \Infuso\ActiveRecord\Record {
     				'editable' => '0',
     				'label' => 'Родительская группа',
        				'indexEnabled' => '1',
+                    "editable" => true,
     				'class' => self::inspector()->className(),
 				), array (
     				'name' => 'title',
