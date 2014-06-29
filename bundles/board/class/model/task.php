@@ -248,7 +248,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function getLog() {
-        return Log::all()->eq("taskID",$this->id());
+        return Log::all()->eq("taskId",$this->id());
     }
 
     public function log($params) {

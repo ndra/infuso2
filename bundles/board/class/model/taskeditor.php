@@ -8,24 +8,17 @@ class TaskEditor extends \Infuso\Cms\Reflex\Editor {
 	/**
 	 * @reflex-root = on
 	 **/
-	public function all() {
+	/*public function all() {
 	    return Task::all()->title("Задачи");
-	}
+	} */
 	
 	/**
 	 * @reflex-child = on
 	 **/
-	public function customLog() {
-	    return $this->item()->getLogCustom()->title("Затраченное время");
-	}
+	/*public function log() {
+	    return $this->item()->getLog()->title("Затраченное время");
+	}*/
 	
-	/**
-	 * @reflex-child = on
-	 **/
-	public function subtasks() {
-	    return $this->item()->subtasks()->title("Подзадачи");
-	}
-
 	public function itemClass() {
 	    return Task::inspector()->className();
 	}

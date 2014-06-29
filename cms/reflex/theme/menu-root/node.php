@@ -23,9 +23,16 @@ if(trim($url,"/") == trim(\mod::url(tmp::param("url"))->path(),"/")) {
 }
 $h->begin();
 
+    $count = \Infuso\CMS\Reflex\Controller\Menu::getSubdividionsByNodeId($nodeId, "count");
+
     <div class='node-body' >
-        <span class='expander' ></span>
+        if($count) {
+            <span class='expander' ></span>
+        }
         <a class='node-title' href='{$url}' >{$title}</a>
+        if($count) {
+            <span class='count' >{$count}</count>
+        }
     </div>
     <div class='subdivisions' >
         if($nodeExpanded) {

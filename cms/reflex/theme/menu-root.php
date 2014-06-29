@@ -17,5 +17,4 @@ exec("/reflex/layout/global");
         "expanded" => $expanded,
     ));
     
-
 </div>
