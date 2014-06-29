@@ -50,7 +50,7 @@ class BehaviourMap {
 		
 		Profiler::beginOperation("core","behaviour map",$class);
 	
-	    $key = "behaviours-map-".$class."-".$behavioursHash;
+	    $key = "system/behaviours-map-".$class."-".$behavioursHash;
 	    $data = Mod::service("cache")->get($key);
 	    
 	    Profiler::endOperation();

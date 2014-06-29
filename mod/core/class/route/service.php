@@ -9,16 +9,6 @@ class service extends \infuso\core\service {
 		return "route";
 	}
 
-	/**
-	 * Очищает кэш url
-	 **/
-	public function clearCache() {
-	    $ret = mod::service("cache")->clearByPrefix("action-url:");
-	    if(!$ret) {
-	        mod::service("cache")->clear();
-	    }
-	}
-
     public final function urlToActionNocache($url) {
 
         Core\profiler::beginOperation("url","forward",$url);
@@ -50,7 +40,7 @@ class service extends \infuso\core\service {
 	 **/
     public function urlToAction($url) {
 
-        $key = "action-to-url/".$url;
+        $key = "system/action-to-url/".$url;
         $serializedAction = Core\Mod::Service("cache")->get($key);
 
         if(!$serializedAction) {
@@ -93,7 +83,7 @@ class service extends \infuso\core\service {
         if(true) {
 
             // Урл кэшируются на день
-            $hash = "action-url:".$action->hash().ceil(time()/3600/24);
+            $hash = "system/action-url:".$action->hash().ceil(time()/3600/24);
 
             if($url = Core\Mod::service("cache")->get($hash)) {
                 Core\Profiler::endOperation();

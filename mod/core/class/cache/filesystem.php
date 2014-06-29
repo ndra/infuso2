@@ -53,7 +53,7 @@ class filesystem extends driver {
      * Удаляет папку /mod/cache/
      **/
     public function clearByPrefix($prefix) {
-        return false;
+        self::clear();
     }
 
 }
