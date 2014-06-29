@@ -1,12 +1,5 @@
 <? 
 
-/**
- * @param nodeId
- * @param title = "Название ноды",
- * @url = "/reflex/..."
- * @param @expanded = Array(),
- **/
- 
 if(!$expanded) {
     $expanded = array();
 }
@@ -28,6 +21,8 @@ $h->begin();
     <div class='node-body' >
         if($count) {
             <span class='expander' ></span>
+        } else {
+            <span class='expander-spacer' ></span>
         }
         <a class='node-title' href='{$url}' >{$title}</a>
         if($count) {

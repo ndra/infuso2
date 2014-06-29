@@ -14,11 +14,17 @@ a {
     
         cursor:pointer;
         display: inline-block;
-        padding: 0 5px;
+        width: 16px;
+        text-align: center;
         
         &:before {
             content: " + "
         }
+    }
+    
+    & > .node-body > .expander-spacer {
+        display: inline-block;
+        width: 16px;
     }
     
     .node-body {
