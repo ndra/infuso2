@@ -21,6 +21,7 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	
 	/**
 	 * @reflex-root = on
+	 * @reflex-tab = system
 	 **/
 	public function operations() {
 	    return User\Model\Operation::all()
@@ -29,6 +30,7 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	
 	/**
 	 * @reflex-root = on
+	 * @reflex-tab = system
 	 **/
 	public function allRoles() {
 	    return User\Model\Role::all()

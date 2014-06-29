@@ -10,16 +10,13 @@ class Editor extends Core\Service implements Core\Handler {
         return "reflex";
     }
 
-	public function root() {
+	public function root($tab) {
 	
 	    // Âûçûâàåì ñîáûòèå - ñáîğ ìåíş êàòàëîãå
 	    $event = new menuCollectEvent();
 	    $event->fire();
 	    
-	    // Ñîáèğàåì êîëëåêöèè èç reflexRoot()
-	    //$this->buildMap($event);
-
-	    return $event->items();
+	    return $event->items($tab);
 	}
 	
     /**
@@ -35,11 +32,10 @@ class Editor extends Core\Service implements Core\Handler {
             $a = $class::inspector()->annotations();
             foreach($a as $fn => $annotations) {
                 if($annotations["reflex-root"] == "on") {
-
                     $collection = new \Infuso\Cms\Reflex\Collection($class,$fn);
-
 	                $event->add(array(
 			            "template" => "/reflex/menu-root",
+			            "tab" => $annotations["reflex-tab"],
 			            "templateParams" => array(
 			                "class" => $class,
 							"method" => $fn,

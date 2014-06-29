@@ -12,6 +12,7 @@ class TaskEditor extends Reflex\Editor {
 
 	/**
 	 * @reflex-root = on
+	 * @reflex-tab = system
 	 **/
 	public function all() {
 	    return Task::all()->title("Задачи");

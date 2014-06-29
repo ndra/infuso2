@@ -10,11 +10,11 @@ class Handler extends Core\Component implements Core\Handler {
 
 	/**
 	 * @handler = infusoDeploy
-	 * @handlerpriority = -1
+	 * @handlerPriority = -1
 	 **/
 	public function removeRootTabs() {
 	    app()->msg("removing root tabs");
-        rootTab::removeAll();
+        Model\rootTab::removeAll();
 	}
 
 	/**
@@ -40,14 +40,14 @@ class Handler extends Core\Component implements Core\Handler {
 			->appendTo("admin");
 			
 		// Добавляем вкладки в каталоге
-        rootTab::create(array(
+        Model\rootTab::create(array(
             "title" => "Контент",
             "name" => "",
             "icon" => self::inspector()->bundle()->path()."/res/icons/48/content.png",
             "priority" => 1000,
 		));
 		
-        rootTab::create(array(
+        Model\rootTab::create(array(
             "title" => "Системные",
             "name" => "system",
             "icon" => self::inspector()->bundle()->path()."/res/icons/48/system.png",
@@ -82,7 +82,7 @@ class Handler extends Core\Component implements Core\Handler {
 		\user_operation::create("reflex:viewLog","Редактирование лога")
 			->appendTo("admin");
 
-        \mod::service("task")->add(array(
+        service("task")->add(array(
             "class" => get_class(),
             "method" => "cleanup",
             "crontab" => "0 0 * * *",

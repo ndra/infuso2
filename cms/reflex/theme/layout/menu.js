@@ -1,8 +1,10 @@
-$(function() {
+mod.init(".rfgwepfkds", function() {
+    
+    var $container = $(this);
 
     // Метод, сохраняющий контент левого меню в хранилище сессии
     var storeMenuHTML = function() {
-        var html = $(".rfgwepfkds").html();
+        var html = $container.html();
         sessionStorage.setItem("reflex/left-menu-html", html);
     }
     
@@ -13,13 +15,22 @@ $(function() {
     $(".rfgwepfkds").html(sessionStorage.getItem("reflex/left-menu-html"));
 
     // Делаем запрос сервер для получения контента меню
-    mod.call({
-        cmd:"infuso/cms/reflex/controller/menu/root",
-        stored: $(".rfgwepfkds").html(),
-        url: window.location.href
-    }, function(html) {
-        $(".rfgwepfkds").html(html);
-    });
+    var load = function() {
+        mod.call({
+            cmd:"infuso/cms/reflex/controller/menu/root",
+            stored: $container.html(),
+            url: window.location.href,
+            tab: sessionStorage.getItem("reflex/left-menu-tab")
+        }, function(html) {
+            $container.html(html);
+        });
+    };
     
+    load();
+    
+    $container.on("reflex/tab", function(event) {
+        sessionStorage.setItem("reflex/left-menu-tab", event.tab);
+        load();
+    });
     
 });

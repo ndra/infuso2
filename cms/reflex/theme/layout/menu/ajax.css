@@ -1,4 +1,28 @@
 .ddw7fs4b37 {
-    padding:20px;
-    overflow: auto;
+    
+    width:100%;
+    table-layout: fixed;
+    
+    & tbody > tr > .left {
+        
+        width:60px;
+        padding-top: 10px;
+        
+        .tab {
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            background-position: center center ! important;
+        }
+        
+        .active {
+            background: #ededed;    
+        }
+    }
+    
+    & tbody > tr > .right {
+        width: 100%;
+        padding: 10px;
+    }
+    
 }

@@ -16,6 +16,7 @@ class Menu extends Core\Controller {
 	
 	    $tmp = $this->app()->tmp()->template("/reflex/layout/menu/ajax", array(
             "stored" => $p["stored"],
+            "tab" => $p["tab"],
 		));
 
         // Пробрасываем url из ajax (это нужно для подсветки активного раздела)

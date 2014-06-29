@@ -16,6 +16,7 @@ class DomainEditor extends Reflex\Editor {
 
 	/**
 	 * @reflex-root = on
+	 * @reflex-tab = system
 	 **/
 	public function all() {
 	    return Domain::all()->title("Домены");

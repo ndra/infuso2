@@ -17,6 +17,7 @@ class LogEditor extends Reflex\Editor {
 
 	/**
 	 * @reflex-root = on
+	 * @reflex-tab = system
 	 **/
 	public function all() {
 	    return Log::all()->title("Лог");

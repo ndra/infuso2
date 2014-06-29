@@ -17,6 +17,7 @@ class ItemEditor extends \Infuso\Cms\Reflex\Editor {
 	
 	/**
 	 * @reflex-root = on
+	 * @reflex-tab = eshop
 	 **/
 	public function allItems() {
 	    return Item::all()

@@ -1,11 +1,16 @@
 <?
 
+use \Infuso\Core;
+
 /**
  * Обработчик событий модуля eshop
  **/
-class eshop_init extends \Infuso\Core\Component implements \mod_handler {
+class eshop_init extends \Infuso\Core\Component implements Core\Handler {
 
-	public function on_mod_init() {
+	/**
+	 * @handler = infusoDeploy
+	 **/
+	public function onDeploy() {
 	
 	    // Создаем роль "Администратор интернет-магазина"
 	    
@@ -63,7 +68,7 @@ class eshop_init extends \Infuso\Core\Component implements \mod_handler {
 	    	
         // Таб для каталога
 
-        \Infuso\Cms\Reflex\rootTab::create(array(
+        \Infuso\Cms\Reflex\Model\rootTab::create(array(
             "title" => "Магазин",
             "name" => "eshop",
             "icon" => self::inspector()->bundle()->path()."/res/icons/48/eshop.png",

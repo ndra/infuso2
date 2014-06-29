@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Cms\Reflex;
+namespace Infuso\Cms\Reflex\Model;
 
 use \Infuso\ActiveRecord\Record;
 use \mod;
@@ -63,16 +63,6 @@ class rootTab extends Record {
 	    return reflex::get(get_class(),$id);
 	}
 
-    public function roots() {
-        $ret = array();
-        foreach(mod::service("reflexEditor")->level0() as $root) {
-            if($root->tab()==$this->name()) {
-                $ret[] = $root;
-            }
-        }
-        return $ret;
-    }
-
     public function dataWrappers() {
         return array(
             "name" => "mixed/data",
@@ -85,7 +75,7 @@ class rootTab extends Record {
 	public static function create($p) {
 	    return Record::create(get_class(),$p);
 	}
-	
+
 	public function removeAll() {
 	    return self::all()->delete();
 	}

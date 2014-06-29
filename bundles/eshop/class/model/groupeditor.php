@@ -32,6 +32,7 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 
 	/**
 	 * @reflex-root = on
+	 * @reflex-tab = eshop
 	 **/
 	public function allGroups() {
 	    return Group::all()

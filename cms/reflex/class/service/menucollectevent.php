@@ -15,19 +15,27 @@ class menuCollectEvent extends Core\Event {
 	}
 
 	public function add($params) {
-	
-	    if(array_key_exists("template",$params)) {
-	        $item = \tmp::get($params["template"]);
-	        if(is_array($params["templateParams"])) {
-	            $item->params($params["templateParams"]);
-	        }
-			$this->menuItems[] = $item;
-	    }
-	    
+	    $this->menuItems[] = $params;
 	}
 	
-	public function items() {
-	    return $this->menuItems;
+	public function items($tab) {
+	
+	    $ret = array();
+
+		foreach($this->menuItems as $params) {
+		    if($params["tab"] == $tab) {
+				if(array_key_exists("template",$params)) {
+			        $item = \tmp::get($params["template"]);
+			        if(is_array($params["templateParams"])) {
+			            $item->params($params["templateParams"]);
+			        }
+					$ret[] = $item;
+			    }
+		    }
+	    }
+	    
+	    return $ret;
+	    
 	}
 
 }
