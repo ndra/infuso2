@@ -21,7 +21,7 @@ if($expandedNodes) {
     $nodeId = "root/{$class}/{$method}";
     
     exec("/reflex/menu-root/node", array(
-        "title" => (string) $title,
+        "title" => "<b style='font-size:18px;' >".$title."</b>",
         "url" => (string) $url,
         "nodeId" => $nodeId,
         "expanded" => $expanded,

@@ -76,4 +76,15 @@ class eshop_init extends \Infuso\Core\Component implements Core\Handler {
 		));
 	    
 	}
+	
+	/**
+	 * @handler = reflexMenu
+	 **/
+	public function onMenu($event) {
+	    $event->add(array(
+	        "template" => "/eshop/admin/menu-info",
+	        "tab" => "eshop",
+		));
+	}
+	
 }

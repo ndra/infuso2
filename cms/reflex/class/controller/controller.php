@@ -8,6 +8,10 @@ use \user, \admin, \mod, \inx;
  **/
 class Controller extends \Infuso\Core\Controller {
 
+	public function controller() {
+	    return "admin";
+	}
+	
     /**
      * Видимость для браузера
      **/

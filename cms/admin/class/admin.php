@@ -10,10 +10,6 @@ class Admin extends Core\Controller {
 
 	private static $showLogin = true;
 	
-	public function controller() {
-	    return "admin";
-	}
-
 	/**
 	 * Эта веселая функция показывает форму авторизации и прекращает дальнейшую работу скрипта
 	 * @todo wtf ::$showLogin
@@ -25,18 +21,6 @@ class Admin extends Core\Controller {
 		} else {
 			\mod::app()->httpError(404);
 		}
-	}
-
-	public static function indexTest() {
-		return \user::active()->checkAccess("admin:showInterface");
-	}
-
-	public function index() {
-		\tmp::exec("/admin/index");
-	}
-
-	public static function indexFailed() {
-		admin::fuckoff();
 	}
 
 	/**
