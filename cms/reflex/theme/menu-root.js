@@ -15,17 +15,14 @@ $(function() {
         node.addClass("expanded");
         var id = node.attr("data:node-id");
         
-        var expanded = getExpandedNodes();
-       
         mod.call({
             cmd:"Infuso/Cms/Reflex/Controller/Menu/subdivisions",
             nodeId: id,
-            url: window.location.href,
-            expanded: expanded
+            url: window.location.href
         }, function(html) {
             node.children(".subdivisions").show().html(html);
             initNodes();
-            storeExpanded();
+            //storeExpanded();
         });
     }
     
@@ -42,29 +39,8 @@ $(function() {
         } else {
             collapseNode($node);
         }        
-        storeExpanded();
-    }
-    
-    var getExpandedNodes = function() {
-        var data = sessionStorage.getItem("reflex/left-menu");
-        if(data) {
-            return data.split("|||");
-        }
-        return [];
-    }
-    
-    // Сохраняет список раскрытых нод
-    var storeExpanded = function() {
-        var nodes = $(".pp7cpa1wpc .node.expanded:visible");
-        var idList = [];
-        nodes.each(function() {
-            if($(this).find(".subdivisions *").length) {
-                idList.push($(this).attr("data:node-id"));
-            }
-        });
-        sessionStorage.setItem("reflex/left-menu",idList.join("|||"));
-    }
-    
+e    }
+
     initNodes();
 
 });

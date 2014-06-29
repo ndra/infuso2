@@ -38,6 +38,7 @@ $h->begin();
         if($nodeExpanded) {
             exec("/reflex/menu-root/subdivisions", array(
                 "nodeId" => $nodeId,
+                "expanded" => $expanded,
             ));
         }                    
     </div>

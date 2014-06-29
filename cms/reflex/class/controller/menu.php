@@ -13,9 +13,9 @@ class Menu extends Core\Controller {
 	 * Контроллер, возвращающий html левого меню
 	 **/
 	public function post_root($p) {
-
+	
 	    $tmp = $this->app()->tmp()->template("/reflex/layout/menu/ajax", array(
-            "expanded" => $p["expanded"],
+            "stored" => $p["stored"],
 		));
 
         // Пробрасываем url из ajax (это нужно для подсветки активного раздела)
@@ -31,7 +31,6 @@ class Menu extends Core\Controller {
 
 	    $tmp = $this->app()->tmp()->template("/reflex/menu-root/subdivisions", array(
 	        "nodeId" => $p["nodeId"],
-            "expanded" => $p["expanded"],
 		));
 
         // Пробрасываем url из ajax (это нужно для подсветки активного раздела)
