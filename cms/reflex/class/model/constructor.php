@@ -17,7 +17,6 @@ class Constructor extends ActiveRecord\Record {
 	  'fields' =>
 	  array (
 	    array (
-	      'id' => 'rjpurqk9rjc52dygh789zj45rop9zx',
 	      'name' => 'id',
 	      'type' => 'jft7-kef8-ccd6-kg85-iueh',
 	    ),array (
@@ -28,14 +27,12 @@ class Constructor extends ActiveRecord\Record {
 	      'indexEnabled' => '1',
 	    ), array (
 	      'editable' => 2,
-	      'id' => 'v2ofasnc9in8abxmeh3mg0jpv6qfvz',
 	      'name' => 'userID',
 	      'type' => 'pg03-cv07-y16t-kli7-fe6x',
 	      'label' => 'Пользователь',
 	      'indexEnabled' => 1,
 	      'class' => 'user',
 	    ), array (
-	      'id' => 'cgsxme2qf1sqpvr34v27me6dfarnm5',
 	      'name' => 'created',
 	      'type' => 'ler9-032r-c4t8-9739-e203',
 	      "default" => "now()",
@@ -43,7 +40,6 @@ class Constructor extends ActiveRecord\Record {
 	      'label' => 'Дата создания',
 	      'indexEnabled' => '1',
 	    ),array (
-	      'id' => 'a0jfa6tygrnmlsjku6nylh7ca2tcur',
 	      'name' => 'collection',
 	      'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
 	      'editable' => '2',

@@ -289,7 +289,7 @@ abstract class Editor extends Core\Controller {
         $a = $class::inspector()->annotations();
         foreach($a as $fn => $annotations) {
             if($annotations["reflex-child"] == "on") {
-                $editor = new $class;
+                $editor = $this;
                 $collection = $editor->$fn();
                 $menu[] = array(
                     "href" => \mod::action(get_class($this),"child",array("id"=>$this->itemID(),"method" => $fn))->url(),

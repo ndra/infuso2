@@ -98,7 +98,9 @@ class Collection extends Core\Component {
 	 **/
 	public function editor() {
 	    $class = $this->editorClass();
-	    return new $class;
+	    $editor = new $class;
+	    $editor->item()->setData($this->collection()->eqs());
+	    return $editor;
 	}
 	
     /**
