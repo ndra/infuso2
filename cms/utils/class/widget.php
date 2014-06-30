@@ -8,6 +8,9 @@ class Widget extends \Infuso\Cms\Admin\Widgets\Widget {
 	
 		$url = \infuso\core\action::get(Heartbeat\Controller::inspector()->classname())->url();
 		echo "<a href='{$url}' >Пульс</a> ";
+        
+		$url = \infuso\core\action::get(Conf::inspector()->classname())->url();
+		echo "<a href='{$url}' >Настройки</a> ";
 
 		$url = \infuso\core\action::get(Sql::inspector()->classname())->url();
 		echo "<a href='{$url}' >Консоль SQL</a> ";
