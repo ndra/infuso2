@@ -1,5 +1,5 @@
 <?
 
-lib::jq();
+lib::modjs();
 
 exec("/tmp/layout");
