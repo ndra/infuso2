@@ -28,12 +28,17 @@ class reflex_defaultBehaviour extends \Infuso\Core\Behaviour {
 	}
 
 	public function recordTitle() {
+	
         if(!$this->exists()) {
 			return "";
 		}
-        if($title = $this->data($this->recordTitleField())){
-            return $title;
-        }    
+		
+		if($field = $this->recordTitleField()) {
+        	if($title = $this->data($field)){
+	            return $title;
+	        }
+        }
+        
         return get_class($this).":".$this->id();
     }
 
