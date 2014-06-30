@@ -65,7 +65,8 @@ class Item extends \Infuso\ActiveRecord\Record {
                     'editable' => '2',
                     'label' => 'Дата создания',
                     'group' => 'Дополнительно',
-                    'indexEnabled' => '1'
+                    'indexEnabled' => '1',
+                    "default" => "now()",
                 )
             ),
         );
@@ -101,6 +102,10 @@ class Item extends \Infuso\ActiveRecord\Record {
     public final function group() {
         return $this->pdata("groupId");
     }
+    
+	public function photos() {
+	    return ItemPhoto::all()->eq("itemId", $this->id());
+	}
 
     /**
      * Возвращает коллекцию всех товаров, включая скрытые

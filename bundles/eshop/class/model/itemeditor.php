@@ -24,4 +24,13 @@ class ItemEditor extends \Infuso\Cms\Reflex\Editor {
 			->title("Товары");
 	}
 
+	/**
+	 * @reflex-child = on
+	 **/
+	public function photos() {
+	    return $this->item()
+			->photos()
+			->title("Фотографии");
+	}
+
 }
