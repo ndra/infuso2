@@ -1,20 +1,9 @@
-title:  Интернет-магазин
-
 public:
   - /res/
-  - /files/
-  - /yandex/
-  - /import/
 
-leave:
-  - files
-  - yandex
-  - import
-  - system
-
-mysql:
-  path: /tables/
-
-inx:
-  namespace: inx.mod.eshop
-  path: /inx.mod.eshop/
+update:
+  source: github
+  owner: ndra
+  repo: infuso2
+  branch: dev
+  path: /bundles/eshop/

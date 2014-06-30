@@ -8,6 +8,10 @@ use \Infuso\Core;
  **/  
 class Main extends Core\Controller {
 
+    public function controller() {
+        return "bundlemanager";
+    }
+
 	public function indexTest() {
 	    return true;
 	}
