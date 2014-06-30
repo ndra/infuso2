@@ -56,5 +56,13 @@ class Auth extends ActiveRecord\Record {
 	public function user() {
 		return User::get($this->data("userID"));
 	}
+    
+    public function recordParent() {
+        return $this->user();
+    }
+    
+    public function recordTitle() {
+        return "Вход ".$this->pdata("time")->num();
+    }
 
 }
