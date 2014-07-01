@@ -294,6 +294,11 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         }
         
     }
+    
+    public function unload() {
+        $this->itemsLoaded = false;
+        $this->items = array();
+    }
 
     public function select($select) {
 
@@ -529,6 +534,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function neq($key,$val) {
     
         $type = (is_array($key)?"a":"s").":".(is_array($val)?"a":"s");
+        $this->unload();
         
         switch($type) {
     
@@ -570,6 +576,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * Регистр не учитывается
      **/
     public function like($key,$val) {
+        $this->unload();
         $key = $this->normalizeColName($key);
         $val = "%".$val."%";
         $val = mod::service("db")->quote($val);
@@ -579,6 +586,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     }
 
     public function match($key,$val) {
+        $this->unload();
         $key = $this->normalizeColName($key);
         if(is_array($val)) {
             $val = implode(" ", $val);
@@ -589,6 +597,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     }
     
     public function eqMaterializedPath($key, $val) {
+        $this->unload();
         if(is_array($val)) {
             $mas = array();
             foreach($val as $item){
@@ -602,18 +611,21 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     } 
     
     public function isnull($key) {
+        $this->unload();
         $key = $this->normalizeColName($key);
         $this->where("$key is null");
         return $this;
     }
 
     public function notnull($key) {
+        $this->unload();
         $key = $this->normalizeColName($key);
         $this->where("$key is not null");
         return $this;
     }
 
     public function gt($key,$val) {
+        $this->unload();
         $key = $this->normalizeColName($key);
         $val = mod::service("db")->quote($val);
         $this->where("{$key} > {$val}",$key);
@@ -621,6 +633,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     }
 
     public function geq($key,$val) {
+        $this->unload();
         $key = $this->normalizeColName($key);
         $val = mod::service("db")->quote($val);
         $this->where("{$key} >= {$val}",$key);
@@ -628,13 +641,15 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     }
 
     public function lt($key,$val) {
+        $this->unload();
         $key = $this->normalizeColName($key);
-        $val = reflex_mysql::escape($val);
-        $this->where("$key<'$val'",$key);
+        $val = mod::service("db")->quote($val);
+        $this->where("{$key} < {$val}",$key);
         return $this;
     }
 
     public function leq($key,$val) {
+        $this->unload();
         $key = $this->normalizeColName($key);
         $val = mod::service("db")->quote($val);
         $this->where("{$key} <= {$val}",$key);
@@ -649,6 +664,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * Добавляет условие принодлежности точки в поле $key многоугольнику
      **/
     public final function inPolygon($key,$a) {
+        $this->unload();
         $txt = "";
         $txt.= "MBRContains(GeomFromText('Polygon((";
         $points = array();
@@ -666,6 +682,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * Добавляет условие чтобы поле $key лежало в прямоугольнике, образованном четырьмя координатами
      **/
     public final function inRect($key,$x1,$y1,$x2,$y2) {
+        $this->unload();
         $this->inPolygon($key,array(
             array($x1,$y1),
             array($x2,$y1),
@@ -682,6 +699,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * (ситуацию осложняет то что при переходе через долготу 180 или -180 край прямоугольника должен появиться с противоположной стороны карты)
      **/
     public final function inGeographicalRect($key,$x1,$y1,$x2,$y2) {
+        $this->unload();
         if($x1>$x2) {
             $this->inRect($key,$x1,$y1,180,$y2)
                 ->orr()
@@ -698,6 +716,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      **/
     public function orderByDistance($key,$point) {
 
+        $this->unload();
         $coords = mod::field("point")->value($point)->mysqlValue();
 
         $this->orderByExpr("GLength(
@@ -717,6 +736,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      **/
     public function where($where=null,$key=null) {
 
+        $this->unload();
         if(func_num_args()==0) {
             return $this->whereQuery();
         }
@@ -728,8 +748,9 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 "key" => $key,
             );
 
-            if($this->orMode)
+            if($this->orMode) {
                 $w["or"] = true;
+            }
 
             $this->whereParts[] = $w;
 
@@ -740,12 +761,13 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     }
 
     public function having($having=0) {
-
+    
         if(func_num_args()==0) {
             return $this->having;
         }
 
         if(func_num_args()==1) {
+            $this->unload();
             $this->having = $having;
             return $this;
         }

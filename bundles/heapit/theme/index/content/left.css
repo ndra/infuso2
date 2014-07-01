@@ -1,0 +1,19 @@
+.TsOdtTz4LT {
+    
+    td {
+        padding: 4px 10px;
+    }
+    
+    .income {
+        .price {
+            color: green;
+        }
+    }
+    
+    .expenditure {
+        .price {
+            color: red;
+        }
+    }
+    
+}
