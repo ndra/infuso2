@@ -1,11 +1,15 @@
 <?
 
+$payments = \Infuso\Heapit\Model\Payment::all()
+    ->eq("status", array(\Infuso\Heapit\Model\Payment::STATUS_PLAN, \Infuso\Heapit\Model\Payment::STATUS_PUSHED))
+    ->lt("date", \util::now()->date());
+    
+if(!$payments->count()) {
+    return;
+}
+
 <div class='TsOdtTz4LT' >
     
-    $payments = \Infuso\Heapit\Model\Payment::all()
-        ->eq("status", array(\Infuso\Heapit\Model\Payment::STATUS_PLAN, \Infuso\Heapit\Model\Payment::STATUS_PUSHED))
-        ->lt("date", \util::now()->date());
-        
     if(!$payments->void()) {
         <h2>Просроченные платежи:</h2>
         <table>

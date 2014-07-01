@@ -1,0 +1,36 @@
+.h5LHKZDLp1 {
+    
+    .day {
+        width:20px;
+        display: inline-block;
+        position: relative;
+        height:220px;
+        margin-right: 1px;
+        
+        .income {
+            width:100%;
+            left: 0;
+            bottom:20px;
+            position: absolute;
+            background:rgba(0,255,0,.5);
+        }
+        
+        .expenditure {
+            width:100%;
+            left: 0;
+            bottom:20px;
+            position: absolute;
+            background:rgba(255,0,0,.5);
+        }
+        
+        .number {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            text-align: center;
+            font-size: 11px;
+        }
+        
+    }
+    
+}
