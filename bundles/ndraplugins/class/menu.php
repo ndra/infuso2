@@ -3,7 +3,6 @@
 namespace NDRA\Plugins;
 use \Infuso\Core;
 
-
 class Menu extends Core\Component {
 
     private $menu,$submenu;
