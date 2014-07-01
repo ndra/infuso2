@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Plugins;
+namespace NDRA\Plugins;
 use \Infuso\Core;
 
 

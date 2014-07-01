@@ -4,7 +4,31 @@
     
     .item {
         font-size: 22px;
-        margin-bottom: 10px;
+        //margin-bottom: 10px;
+    }
+    
+    .sales-funnel {
+        display: block;
+        background:url("@{bundle}res/img/icons48/funnel.png") left center no-repeat;
+        height: 48px;
+        box-sizing: content-box;
+        padding: 20px 0 0 50px;
+    }
+    
+    .payments {
+        display: block;
+        background:url("@{bundle}res/img/icons48/payments.png") left center no-repeat;
+        height: 48px;
+        box-sizing: content-box;
+        padding: 20px 0 0 50px;
+    }
+    
+    .clients {
+        display: block;
+        background:url("@{bundle}res/img/icons48/clients.png") left center no-repeat;
+        height: 48px;
+        box-sizing: content-box;
+        padding: 20px 0 0 50px;
     }
 
 }
