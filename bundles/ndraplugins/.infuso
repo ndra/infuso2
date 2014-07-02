@@ -6,4 +6,4 @@ update:
   owner: ndra
   repo: infuso2
   branch: dev
-  path: /bundles/plugins/
+  path: /bundles/ndraplugins/
