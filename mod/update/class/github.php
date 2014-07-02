@@ -25,6 +25,10 @@ class GitHub extends \Infuso\Core\Component {
 		}
 	
 	    $url = "https://api.github.com/repos/:owner/:repo/:format/:branch";
+        
+        if($params["token"]) {
+            $url.= "?access_token=".$params["token"];
+        }
 	
 	    $params["format"] = "zipball";
 
