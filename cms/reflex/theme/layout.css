@@ -1,8 +1,16 @@
 html, body {
     height: 100%;
+    overflow: hidden;
 }
 
 .x0h4tfwmhnn {
-    table-layout:fixed;
-    width:100%;   
+    
+    & > .left {
+        border-right: 1px solid #ededed;
+    }
+    
+    & > .center {
+        overflow: auto;
+    }
+    
 }
