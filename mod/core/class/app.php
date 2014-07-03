@@ -431,6 +431,10 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
         service("msg")->msg($message, $error);
     }
     
+    public function fire($event) {
+        \mod::fire($event);
+    }
+    
     public function user() {
         return \user::active();
     }

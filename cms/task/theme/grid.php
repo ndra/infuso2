@@ -10,6 +10,7 @@
                         <td style='width:{$field->colWidth()}px;' >{$field->field()->label()}</td>
                     }
                 }
+                <td></td>
             </tr>
         </thead>
     
@@ -21,6 +22,14 @@
                         <td>{$field->rvalue()}</td>
                     }
                 }
+                <td>
+                    widget("infuso\\cms\\ui\\widgets\\button")
+                        ->air()
+                        ->icon("play")
+                        ->attr("data:task", $editor->item()->id())
+                        ->addClass("exec")
+                        ->exec();
+                </td>
             </tr>
         }
     </table>

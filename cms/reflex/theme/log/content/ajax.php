@@ -7,7 +7,7 @@
         foreach($items as $item) {
             <tr>
                 <td>{$item->pdata("datetime")->num()}</div>
-                <td>{$item->text()}</div>
+                <td>{$item->message()}</div>
             </tr>
         }
     </table>

@@ -18,7 +18,7 @@ $code = $collection->serialize();
         $w = widget("infuso\\cms\\ui\\widgets\\button")
             ->icon("refresh")
             ->air()
-            ->addClass(".refresh")
+            ->addClass("refresh")
             ->exec();
                 
         // Режим отображения
@@ -48,10 +48,12 @@ $code = $collection->serialize();
             $w = widget("infuso\\cms\\ui\\widgets\\button")
                 ->icon("edit")
                 ->air()
+                ->addClass("edit")
                 ->exec();
             
             $w = widget("infuso\\cms\\ui\\widgets\\button")
                 ->icon("view")
+                ->addClass("view")
                 ->air()
                 ->exec();
                 

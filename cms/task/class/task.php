@@ -105,7 +105,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
      * Возвращает задачу по id
      **/
     public static function get($id) {
-        return reflex::get(get_class(),$id);
+        return service("ar")->get(get_class(),$id);
     }
 
 	/**
@@ -207,12 +207,13 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 	        call_user_func($callback, $params, $this);
 
 			$this->data("counter",$this->data("counter")+1);
-	        $this->log("Выполняем");
+	        $this->plugin("log")->log("Выполняем");
 	        
 		} catch (\Exception $ex) {
-		
-		    $this->data("lastErrorDate",util::now());
-			$this->log("Exception: ".$ex->getMessage());
+
+			app()->msg($ex->getMessage());
+		    $this->data("lastErrorDate", \util::now());
+			$this->plugin("log")->log("Exception: ".$ex->getMessage());
 		    
 		}
 	        

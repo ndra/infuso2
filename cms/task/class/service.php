@@ -91,7 +91,7 @@ class Service extends Core\Service {
             ->eq($params)
             ->one();
 
-		$params["origin"] = Handler::$origin;
+		$params["origin"] = Handler::getOrigin();
 
         if(!$item->exists()) {
             $item = \reflex::create(Task::inspector()->className(),$params);
@@ -112,8 +112,8 @@ class Service extends Core\Service {
         $tasks = $this->tasksToLaunch();
         $total = $tasks->count();
 
-        if($total==0) {
-            return;
+        if($total == 0) {
+            return false;
         }
 
         // $n - хранится в кэше и увеличивается на 1 с каждым запуском крона
@@ -129,14 +129,20 @@ class Service extends Core\Service {
         service("cache")->set("01h1b4yw6kbz2l9y6orj",$n+1);
 
         $task->exec();
+        return true;
     }
     
-    
+    /**
+     * Выполняет задачи
+     * Ограничивается временем, указанном в настройках.
+     **/
 	public function runTasks() {
         $start = microtime(true);
         while(microtime(true) - $start < $this->param("timeout")) {
-            $this->execOne();
-            \mod::fire("cleanup");
+            if(!$this->execOne()) {
+                break;
+            }
+            app()->fire("cleanup");
         }        
     }
     

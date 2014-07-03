@@ -17,9 +17,9 @@ class Log extends \Infuso\Core\Component {
     public function addToClass() {
     }
 
-    public function log($text) {
+    public function log($message) {
         service("ar")->create("infuso\\cms\\log\\log", array(
-            "text" => $text,
+            "message" => $message,
             "index" => get_class($this->component()).":".$this->component()->id(),
         ));
     }

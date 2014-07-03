@@ -5,8 +5,6 @@ use Infuso\Core;
 
 class Handler implements Core\Handler {
 
-    public static $origin = null;
-
     /**
      * @handler = infuso/cron
      **/         
@@ -14,55 +12,29 @@ class Handler implements Core\Handler {
         service("task")->runTasks();     
     }
     
-    public function on_mod_beforeInit() {
-        self::$origin = util::id();
+	/**
+     * @handler = infusoDeploy
+     * @handlerPriority = -1;
+     **/
+    public function onDeployStart() {
+        service("cache")->set("task-origin-xIIqYM4rBT", \util::id());
+    }
+    
+    public function getOrigin() {
+        return service("cache")->get("task-origin-xIIqYM4rBT");
     }
     
     /**
-    * Грохает задачи кототыре были добавлены в предущий mod_init
+     * Грохает задачи кототыре были добавлены в предущий infusoDeploy
+     * @handler = infusoDeploy
+     * @handlerPriority = 1000;
     **/
-    public function on_mod_afterInit() {
-        reflex_task::all()
+    public function onDeployEnd() {
+        \Infuso\Cms\Task\Task::all()
             ->eq("completed",0)
             ->neq("origin","")
-            ->neq("origin",self::$origin)
+            ->neq("origin",self::getOrigin())
             ->data("completed",1);
     }
     
-    /**
-     * Возвращает список задач, которые уже могут быть выполнены
-     **/
-    public static function tasksToLaunch() {
-        return reflex_task::all()
-            ->leq("nextLaunch",util::now())
-            ->eq("completed",0);
-    }
-    
-    /**
-     * Выполняет одно задание
-     **/
-    /*public static function execOne() {
-
-        $tasks = self::tasksToLaunch();
-        $total = $tasks->count();
-
-        if($total == 0) {
-            return;
-        }
-
-        // $n - хранится в кэше и увеличивается на 1 с каждым запуском крона
-        $n = mod_cache::get("01h1b4yw6kbz2l9y6orj");
-        if(!$n) {
-            $n = 0;
-        }
-
-        // Выбираем задачу в зависимости от $n
-        // Т.о. каждый на запуск крона задачи будут поочередно вызываны
-        $task = $tasks->limit(1)->page($n%$total+1)->one();
-
-        mod_cache::set("01h1b4yw6kbz2l9y6orj",$n+1);
-
-        $task->exec();
-    }     */
-
 }

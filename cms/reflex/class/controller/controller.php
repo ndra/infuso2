@@ -40,11 +40,6 @@ class Controller extends \Infuso\Core\Controller {
         admin::fuckoff();
     }
 
-    public function index_test() {
-        $user = \infuso\user\model\user::get(124);
-        $user->plugin("log")->log(rand());
-    }
-    
     /**
      * Контроллер, возвращающий список элементов для ajax-запроса
      **/
@@ -247,16 +242,28 @@ class Controller extends \Infuso\Core\Controller {
         }
     }
 
-    /**
-     * Контроллер выполнения экшна
-     **/
-    public static function post_doAction($p) {
-        $editor = self::get($p["id"]);
-        if(!$editor->beforeEdit()) {
-            app()->msg("Вы не можете редактировать данный объект",1);
-            return;
-        }
-        call_user_func(array($editor,"action_$p[action]"));
-    }
+	/**
+	 * Возвращает массив url для редактирования переданного массива элементов
+	 **/
+	public function post_getEditUrls($p) {
+	    $ret = array();
+	    foreach($p["items"] as $editor) {
+	        $editor = Editor::get($editor);
+	        $ret[] = $editor->url();
+	    }
+	    return $ret;
+	}
+	
+	/**
+	 * Возвращает массив url для просмотра переданного массива элементов
+	 **/
+	public function post_getViewUrls($p) {
+	    $ret = array();
+	    foreach($p["items"] as $editor) {
+	        $editor = Editor::get($editor);
+	        $ret[] = $editor->item()->url();
+	    }
+	    return $ret;
+	}
 
 }
