@@ -27,6 +27,7 @@
                         ->air()
                         ->icon("play")
                         ->attr("data:task", $editor->item()->id())
+                        ->attr("title", "Выполнить")
                         ->addClass("exec")
                         ->exec();
                 </td>

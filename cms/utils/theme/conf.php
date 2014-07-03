@@ -10,6 +10,14 @@ js("http://cdn.jsdelivr.net/ace/1.1.3/min/ace.js");
     <div class='editor' id='x{\util::id()}' >
         echo e($data);
     </div>
+    
+    <br/>
+    
+    widget("infuso\\cms\\ui\\widgets\\button")
+        ->text("Сохранить")
+        ->addClass("save")
+        ->exec();
+    
 </div>
 
 admin::footer();
