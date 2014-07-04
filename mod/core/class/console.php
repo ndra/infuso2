@@ -101,7 +101,8 @@ class Console extends Controller {
 		            $ret = array();
 		            if($mod = $mods[$_POST["mod"]]) {
 
-						\Infuso\Update\Updater::update($mod);
+						$updater = new \Infuso\Update\Updater;
+						$updater->update($mod);
 			            $messages = array();
 
 			            foreach(service("msg")->messages() as $msg) {

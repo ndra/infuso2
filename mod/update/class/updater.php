@@ -11,7 +11,6 @@ class Updater extends Core\Component {
 	public function update($bundleName) {
     
         $skip = $this->param("skip") ?: array();
-        app()->msg($this->params());
         foreach($skip as $skip) {
             if(trim($skip, "/ ") == trim($bundleName, "/ ")) {
                 app()->msg("skip {$bundleName} - disabled");
@@ -23,11 +22,6 @@ class Updater extends Core\Component {
 		$conf = $bundle->conf();
 		
 		if($conf["update"]) {
-        
-            app()->msg($bundleName);
-            return;
-		
-		    app()->msg("Updating {$bundle->path()}");
 		
 		    $params = $conf["update"];
 		    $tmpFolder = Core\File::tmp();
@@ -39,7 +33,7 @@ class Updater extends Core\Component {
 			$tmpFolder->rename($bundle->path());
 		    
 		} else {
-		    app()->msg("skip {$bundle->path()} - no update info");
+		    app()->msg("{$bundle->path()} - skip");
 		}
 	}
 

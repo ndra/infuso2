@@ -9,4 +9,9 @@ class Main extends Base {
         $this->app()->tmp()->exec("/heapit/index");
     }
 
+    public function index_test() {
+        $u = new \Infuso\Update\Updater();
+        var_export($u->params());
+    }
+
 }
