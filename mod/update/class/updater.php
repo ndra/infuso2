@@ -1,20 +1,21 @@
 <?
 
-namespace Infuso\Update;
-
+namespace Infuso\Update;                          
 use Infuso\Core;
 
 /**
  * Класс для обновления модулей
  **/
-class Updater extends \Infuso\Core\Component {
+class Updater extends Core\Component {
 
 	public function update($bundleName) {
     
         $skip = $this->param("skip") ?: array();
-        foreach($skip as $key => $val) {
-            if(trim($skip, "/") == trim($bundleName, "/")) {
+        app()->msg($this->params());
+        foreach($skip as $skip) {
+            if(trim($skip, "/ ") == trim($bundleName, "/ ")) {
                 app()->msg("skip {$bundleName} - disabled");
+                return;
             }
         }
 	
