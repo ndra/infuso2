@@ -13,7 +13,7 @@ class Updater extends Core\Component {
         $skip = $this->param("skip") ?: array();
         foreach($skip as $skip) {
             if(trim($skip, "/ ") == trim($bundleName, "/ ")) {
-                app()->msg("skip {$bundleName} - disabled");
+                app()->msg("{$bundleName} - disabled");
                 return;
             }
         }
@@ -31,6 +31,7 @@ class Updater extends Core\Component {
 			
 			Core\File::get($bundle->path())->delete(true);
 			$tmpFolder->rename($bundle->path());
+			app()->msg("{$bundle->path()} - update");
 		    
 		} else {
 		    app()->msg("{$bundle->path()} - skip");
