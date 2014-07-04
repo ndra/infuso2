@@ -10,11 +10,21 @@ use Infuso\Core;
 class Updater extends \Infuso\Core\Component {
 
 	public function update($bundleName) {
+    
+        $skip = $this->param("skip") ?: array();
+        foreach($skip as $key => $val) {
+            if(trim($skip, "/") == trim($bundleName, "/")) {
+                app()->msg("skip {$bundleName} - disabled");
+            }
+        }
 	
 		$bundle = Core\Mod::service("bundle")->bundle($bundleName);
 		$conf = $bundle->conf();
 		
 		if($conf["update"]) {
+        
+            app()->msg($bundleName);
+            return;
 		
 		    app()->msg("Updating {$bundle->path()}");
 		
@@ -28,7 +38,7 @@ class Updater extends \Infuso\Core\Component {
 			$tmpFolder->rename($bundle->path());
 		    
 		} else {
-		    app()->msg("skip {$bundle->path()}");
+		    app()->msg("skip {$bundle->path()} - no update info");
 		}
 	}
 
