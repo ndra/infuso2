@@ -136,7 +136,10 @@ class App {
 	    return $this->ar;
 	}
 
-	public function tmp($tmp = null) {
+    /**
+     * Возвращает прощессор щаблонов
+     **/         
+	public function tm($tmp = null) {
     
         if($tmp) {
             return \tmp::get($tmp);

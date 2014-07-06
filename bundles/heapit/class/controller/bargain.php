@@ -7,11 +7,11 @@ use \Infuso\Heapit\Model;
 class Bargain extends Base {
 
     public function index() {
-        $this->app()->tmp()->exec("/heapit/bargain-list");
+        $this->app()->tm()->exec("/heapit/bargain-list");
     }
     
     public function index_add() {
-        $this->app()->tmp()->exec("/heapit/bargain-new");
+        $this->app()->tm()->exec("/heapit/bargain-new");
     }
     
     /**

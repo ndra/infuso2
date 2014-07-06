@@ -17,7 +17,7 @@ class Main extends Core\Controller {
     }
     
     public function index() {
-        app()->tmp("/eshop/index")->exec();
+        app()->tm("/eshop/index")->exec();
     }
 
 }

@@ -69,7 +69,7 @@ class Payment extends \Infuso\ActiveRecord\Record {
     
     public function index_item($p) {
         $payment = self::get($p["id"]);
-        $this->app()->tmp()->exec("/heapit/payment",array(
+        $this->app()->tm()->exec("/heapit/payment",array(
             "payment" => $payment,
         ));
     }

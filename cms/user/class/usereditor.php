@@ -58,7 +58,7 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	 **/
 	public function index_manage($p) {
 	    $editor = \Infuso\Cms\Reflex\Editor::get("Infuso\\Cms\\User\\UserEditor:".$p["id"]);
-		$this->app()->tmp()->exec("/user/editor/manage", array(
+		$this->app()->tm()->exec("/user/editor/manage", array(
 		    "editor" => $editor,
 		));
 	}

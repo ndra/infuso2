@@ -28,7 +28,7 @@ class Cart extends Core\Controller {
     }
     
     public function index() {
-        app()->tmp("/eshop/cart")->exec();
+        app()->tm("/eshop/cart")->exec();
     }
 
 }

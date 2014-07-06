@@ -20,7 +20,7 @@ class Datepicker extends Input {
     
     public function execWidget() {
 
-        $this->app()->tmp()
+        $this->app()->tm()
             ->exec("/ui/widgets/datepicker",array (
                 "widget" => $this,
             ));

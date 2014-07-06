@@ -70,7 +70,7 @@ class Group extends \Infuso\ActiveRecord\Record {
 	 **/
 	public static function index_item($p) {
 	    $group  = self::get($p["id"]);
-	    app()->tmp("eshop:group")
+	    app()->tm("eshop:group")
             ->param("group", $group)
             ->exec();
 	}

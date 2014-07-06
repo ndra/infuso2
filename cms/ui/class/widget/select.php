@@ -14,7 +14,7 @@ class Select extends Input {
     }
 
     public function execWidget() {
-        $this->app()->tmp()
+        $this->app()->tm()
             ->exec("/ui/widgets/select",array (
                 "widget" => $this,
             ));

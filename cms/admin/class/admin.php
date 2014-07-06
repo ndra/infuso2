@@ -27,7 +27,7 @@ class Admin extends Core\Controller {
 	 * Выводит шапку админки
 	 **/
 	public static function header($title="") {
-	    $tmp = Core\Mod::app()->tmp();
+	    $tmp = Core\Mod::app()->tm();
 	    $tmp->noindex();
 		$tmp->param("title",$title);
 		$tmp->param("back-end",1);
@@ -38,7 +38,7 @@ class Admin extends Core\Controller {
 	 * Выводит подвал админки
 	 **/
 	public static function footer() {
-		Core\Mod::app()->tmp()->exec("/admin/footer");
+		Core\Mod::app()->tm()->exec("/admin/footer");
 	}
 
 	/**

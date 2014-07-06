@@ -11,7 +11,7 @@ abstract class Base extends Core\Controller {
     }
     
     public final function indexFailed() {
-        $this->app()->tmp()->exec("/board/login");
+        $this->app()->tm()->exec("/board/login");
     }
     
     public final function postTest() {

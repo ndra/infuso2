@@ -7,14 +7,14 @@ use \Infuso\Heapit\Model;
 class Payment extends Base {
 
     public function index() {
-        $this->app()->tmp()->exec("/heapit/payment-list");
+        $this->app()->tm()->exec("/heapit/payment-list");
     }
     
     public function index_add($p) {    
         $copy = new Model\Payment();
         $copy->setData(Model\Payment::get($p["copy"])->data());
         $copy->data("date",\util::now());
-        $this->app()->tmp()->exec("/heapit/payment-new", array(
+        $this->app()->tm()->exec("/heapit/payment-new", array(
             "paymentToCopy" => $copy,
         ));
     }

@@ -361,5 +361,9 @@ class localFile extends file {
 	public function time() {
 		return \util::date(@filemtime ($this->native()));
 	}
+    
+    public function cd($path) {
+        return File::get($this."/".$path);
+    }
 
 }

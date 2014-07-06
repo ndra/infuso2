@@ -9,7 +9,7 @@ class User extends Base {
 
         $user = \User::get($p["id"]);
 
-        $this->app()->tmp()->exec("/board/user", array(
+        $this->app()->tm()->exec("/board/user", array(
             "user" => $user,
         ));
     }

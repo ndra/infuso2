@@ -4,7 +4,7 @@
     
     $h = helper("<div>");
     $h->addClass("sticker");
-    $h->style("background", \Infuso\Board\Color::get($task->id()));
+    $h->style("background", \Infuso\Board\Color::get($task->project()->id()));
     $h->begin();
 
         <div class='title' >{$task->id()}. {$task->project()->title()}</div>

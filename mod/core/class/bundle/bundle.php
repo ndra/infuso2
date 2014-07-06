@@ -16,7 +16,7 @@ class Bundle extends \Infuso\Core\Component {
 	}
 
 	public function path() {
-	    return (string) $this->path;
+	    return File::get($this->path);
 	}
 
 	/**

@@ -18,7 +18,7 @@ class Log extends Base {
      **/         
     public function post_content($p) {     
         $task = Model\Task::get($p["taskId"]);
-        return app()->tmp()->template("/board/shared/comments/ajax", array(
+        return app()->tm()->template("/board/shared/comments/ajax", array(
             "task" => $task,
         ))->getContentForAjax();       
     }

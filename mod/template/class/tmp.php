@@ -39,7 +39,7 @@ class Tmp implements Core\Handler {
 		    throw new \Exception("tmp::{$xmethod} not found");
 		}
     
-        $processor = Core\Mod::app()->tmp();
+        $processor = Core\Mod::app()->tm();
         
         return call_user_func_array(array(
             $processor,$method

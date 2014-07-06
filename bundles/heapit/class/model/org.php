@@ -99,7 +99,7 @@ class Org extends \Infuso\ActiveRecord\Record {
     public function index_item($p) {
         $org = self::get($p["id"]);
         $org->registerView();
-        $this->app()->tmp()->exec("/heapit/org",array(
+        $this->app()->tm()->exec("/heapit/org",array(
             "org" => $org,
         ));
     }

@@ -13,13 +13,13 @@ class Task extends Base {
      * Контроллер списка задач
      **/
     public function index_listTasks($p) {
-        $this->app()->tmp()->exec("/board/task-list",array(
+        $this->app()->tm()->exec("/board/task-list",array(
             "status" => $p["status"],
         ));
     }
     
     public function index_new() {
-        app()->tmp()->exec("/board/task-new");
+        app()->tm()->exec("/board/task-new");
     }
     
     /**
@@ -94,7 +94,7 @@ class Task extends Base {
     
     public function post_timeInputContent($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
-        return app()->tmp()
+        return app()->tm()
             ->template("/board/shared/task-tools/time-input-ajax")
             ->param("task", $task)
             ->getContentForAjax();
