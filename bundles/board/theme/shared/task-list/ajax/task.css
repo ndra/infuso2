@@ -31,7 +31,7 @@
     
     .text {
         overflow: hidden;
-        padding: 4px;
+        padding: 0 4px 4px;
     }
     
     .title {
