@@ -18,20 +18,20 @@ class Conf extends ActiveRecord\Record {
 		return array (
 			'name' => 'reflex_conf',
 			'fields' => array (
-			  array (
-			    'name' => 'id',
-			    'type' => 'jft7-kef8-ccd6-kg85-iueh',
-			  ), array (
-			    'name' => 'title',
-			    'type' => 'v324-89xr-24nk-0z30-r243',
-			    'editable' => '1',
-			    'label' => 'Название (рус.)',
-			  ), array (
-			    'id' => 'bigint',
-			    'name' => 'priority',
-			    'editable' => 1,
-			    'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
-			  ),
+				array (
+					'name' => 'id',
+					'type' => 'jft7-kef8-ccd6-kg85-iueh',
+				), array (
+					'name' => 'title',
+					'type' => 'v324-89xr-24nk-0z30-r243',
+					'editable' => '1',
+					'label' => 'Название (рус.)',
+				), array (
+					'id' => 'bigint',
+					'name' => 'priority',
+					'editable' => 1,
+					'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
+				),
 			),
 		);
 	}

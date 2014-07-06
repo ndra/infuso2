@@ -4,14 +4,24 @@
     
     $h = helper("<div>");
     $h->addClass("sticker");
-    $h->style("background", $task->data("color"));
+    $h->style("background", \Infuso\Board\Color::get($task->id()));
     $h->begin();
 
         <div class='title' >{$task->id()}. {$task->project()->title()}</div>
         
         exec("files");
+        
+        $size = 10;
+        if(mb_strlen($task->data("text"),"utf-8") < 80) {
+            $size = 14;
+        }
+        if(mb_strlen($task->data("text"),"utf-8") < 40) {
+            $size = 18;
+        }
+        
+        
     
-        <div class='text' >
+        <div class='text' style='font-size:{$size}px;' >
             echo \util::str($task->data("text"))->hyphenize();
         </div>
        
