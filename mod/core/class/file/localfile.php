@@ -365,5 +365,5 @@ class localFile extends file {
     public function cd($path) {
         return File::get($this."/".$path);
     }
-
+    
 }

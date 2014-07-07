@@ -80,6 +80,19 @@ class WorkFlow extends ActiveRecord\Record {
     public function user() {
         return $this->pdata("userId");
     }
+    
+    public function beforeCreate() {
+
+        $otherFlows = self::all()
+            ->eq("userId", $this->data("userId"))
+            ->isnull("end");
+            
+        foreach($otherFlows as $item) {
+            $item->data("end", \util::now());
+        }
+
+
+    }
 
 
 }

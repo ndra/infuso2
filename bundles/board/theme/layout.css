@@ -13,26 +13,6 @@ html,body {
     
 }
 
-.task-container-slpod3n5sa {
-    position: absolute;
-    width:100%;
-    left:0;
-    top:0;
-    background: white;
-    display: none;
-    
-    & > .close {
-        position:absolute;
-        right: 10px;
-        top: 10px;
-    }
-    
-    & > .ajax {
-        height:100%;
-    }
-    
-}
-
 a {
     color: #1e0fbe;
 }
@@ -59,4 +39,19 @@ a {
 
 .g-input-long {
     width: 400px !important;
+}
+
+.task-container-slpod3n5sa {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width:100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+    overflow: auto;
+    
+    .ajax {
+        box-shadow: 0 0 25px rgba(0,0,0,.5);
+    }
+    
 }

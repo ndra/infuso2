@@ -2,7 +2,7 @@
 
 <div class='x8l0puejxv8' >
     
-    foreach($task->collaborators() as $user) {
+    foreach($task->activeCollaborators() as $user) {
         <div>{$user->title()}</div>
     }
     

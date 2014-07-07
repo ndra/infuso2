@@ -9,6 +9,7 @@
             ->placeholder("Описание задачи")
             ->style("width", "100%")
             ->style("border", "none")
+            ->style("font-family", "Arial")
             ->style("border-radius", 0)
             ->exec();
     </div>

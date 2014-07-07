@@ -172,7 +172,7 @@ abstract class Theme extends Core\Component {
 		    $name = preg_replace("/[\:\.\/]+/","/",$name);
 		    $ext = $file->ext();
 		    $map[$name][$ext] = $renderPath;
-		    $map[$name]["bundle"] = $file->bundle()->path();
+		    $map[$name]["bundle"] = (string) $file->bundle()->path();
 		}
 
 		\util::save_for_inclusion($this->mapFile(),$map);

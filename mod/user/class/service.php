@@ -34,6 +34,10 @@ class Service extends Core\Service {
         return user::all();  
     }
     
+    public function get($id) {
+        return Model\User::get($id);
+    }
+    
     /**
      * Возвращает список юзверов c неподвержедной почтой
      **/

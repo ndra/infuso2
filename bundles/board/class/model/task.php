@@ -319,6 +319,7 @@ class Task extends \Infuso\ActiveRecord\Record {
                 } else {
                     $tools["main"][] = "resume";
                 } */
+                $tools["main"][] = "take";  
                 $tools["main"][] = "done";
 
                 $tools["additional"][] = "stop";
@@ -387,13 +388,9 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
     
     /**
-     * Взять задачу    
+     * Взять задачу от имени пользователя $user   
      **/     
     public function take($user) {
-    
-        /*$this->workflow()->create(array(
-            "userId" => $user->id(),
-        )); */
         
         app()->msg("Берем задачу ".$this->id());
         
@@ -411,6 +408,14 @@ class Task extends \Infuso\ActiveRecord\Record {
      **/         
     public function collaborators() {
         $userIdList = $this->workflow()->distinct("userId");
+        return \Infuso\User\Model\User::all()->eq("id",$userIdList);
+    }
+    
+    /**
+     * Возвращает список участников задачи
+     **/         
+    public function activeCollaborators() {
+        $userIdList = $this->workflow()->isnull("end")->distinct("userId");
         return \Infuso\User\Model\User::all()->eq("id",$userIdList);
     }
 

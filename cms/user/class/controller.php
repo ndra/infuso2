@@ -42,5 +42,11 @@ class Controller extends \Infuso\Core\Controller {
             ->param("user", \user::get($p["userId"]))
             ->getContentForAjax();
     }
+    
+    public function post_loginAs($p) {
+        $user = service("user")->get($p["userId"]);
+        $user->activate();
+        app()->msg("Вы вошли как ".$user->title());
+    }
 
 }

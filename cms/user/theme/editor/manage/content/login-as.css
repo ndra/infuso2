@@ -1,0 +1,13 @@
+.v1rP7KWp0y {
+
+    padding: 20px;
+    
+    h2 {
+        .g-header();
+    }
+    
+    .change-form {
+        display:none;
+    }
+
+}

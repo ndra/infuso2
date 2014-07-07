@@ -18,4 +18,8 @@ $user = $editor->item();
         "user" => $user,
     ));
     
+    exec("login-as", array(
+        "user" => $user,
+    ));
+    
 </div>

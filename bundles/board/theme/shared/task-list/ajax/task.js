@@ -35,7 +35,11 @@ $(function() {
                 return;
             }
             
-            window.location.href = task.attr("data:url");
+            //window.location.href = task.attr("data:url");
+            $(this).trigger({
+                type: "board/openTask",
+                taskId: id
+            })
             
         });
         
