@@ -3,7 +3,7 @@
 namespace Infuso\Core\Model;
 use infuso\util\util;
 
-class fieldType extends Field {
+class FieldType extends Select {
 
 	public function typeID() {
 		return "z34g-rtfv-i7fl-zjyv-iome";
@@ -25,14 +25,14 @@ class fieldType extends Field {
 		return trim($val);
 	}
 
-	public function editorInx() {
-		return array(
-		    "type" => "inx.select",
-		    "value" => $this->value(),
-		    "loader" => array(
-				"cmd" => "reflex_editor_fieldController:getFieldTypes",
-			),
-		);
+	public function options() {
+	    $options = array();
+	    $classes = service("classmap")->map("infuso\\core\\model\\field");
+	    foreach($classes as $class) {
+	        $field = new $class;
+	        $options[$class] = $field->typeName();
+	    }
+	    return $options;
 	}
 
 	public function pvalue() {

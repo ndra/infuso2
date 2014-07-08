@@ -27,10 +27,25 @@ class Conf extends ActiveRecord\Record {
 					'editable' => '1',
 					'label' => 'Название (рус.)',
 				), array (
-					'id' => 'bigint',
+					'name' => 'name',
+					'type' => 'string',
+					'editable' => '1',
+					'label' => 'Ключ',
+				), array (
 					'name' => 'priority',
+					'label' => "Приоритет",
 					'editable' => 1,
-					'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
+					'type' => 'bigint',
+				), array (
+					'name' => 'type',
+					'label' => "Тип",
+					'editable' => 1,
+					'type' => 'z34g-rtfv-i7fl-zjyv-iome',
+				), array (
+					'name' => 'value',
+					'editable' => 1,
+					'label' => "Значение",
+					'type' => 'textarea',
 				),
 			),
 		);
