@@ -22,13 +22,11 @@
         exec("files");  
     </div>
     
-    exec("timeline");
+    //exec("timeline");
 
     
-    <div class='right' style='width:300px;border-left:1px solid #ccc;' >
+    /*<div class='right' style='width:300px;border-left:1px solid #ccc;' >
         exec("/board/shared/comments");                
-    </div>
-    
-
+    </div> */
                 
 </div>

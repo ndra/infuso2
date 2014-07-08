@@ -15,10 +15,11 @@
     </div>
     
     <div style='padding: 20px;' >
-        widget("infuso\\cms\\ui\\widgets\\textfield")
+    
+        /*widget("infuso\\cms\\ui\\widgets\\textfield")
             ->value($task->data("timePlanned"))
             ->fieldName("timePlanned")
-            ->exec();
+            ->exec(); */
             
         widget("infuso\\cms\\ui\\widgets\\button")
             ->text($task->exists() ? "Сохранить" : "Создать")

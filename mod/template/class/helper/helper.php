@@ -68,6 +68,7 @@ class Helper extends Widget {
                 $units = array(
                     "width" => "px",
                     "height" => "px",
+                    "margin" => "px",
                     "margin-left" => "px",
                     "margin-right" => "px",
                     "margin-top" => "px",
@@ -76,6 +77,7 @@ class Helper extends Widget {
                     "right" => "px",
                     "top" => "px",
                     "bottom" => "px",
+                    "padding" => "px",
                     "padding-left" => "px",
                     "padding-right" => "px",
                     "padding-top" => "px",

@@ -2,9 +2,11 @@
 
     display: inline-block;
     width: 120px;
-    margin: 5px;
+    margin: 0 10px 10px 0;
+    white-space: normal;
     
     .sticker {
+        width: 120px;
         height: 120px;        
         font-size: 11px;
         line-height: 1.1;

@@ -47,7 +47,7 @@ class Task extends Base {
 
         $tasks->page($p["page"]);
         
-        $html = \tmp::get("/board/shared/task-list/ajax")
+        $html = \tmp::get("/board/widget/task-list/ajax")
             ->param("tasks", $tasks)
             ->getContentForAjax();
         

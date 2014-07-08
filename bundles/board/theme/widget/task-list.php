@@ -1,7 +1,17 @@
 <?
 
 js($this->bundle()->path()."/res/js/sortable.min.js");
-<div class="task-list-rpu80rt4m0" data:status='{$status}' >
+
+$h = helper("<div>");
+foreach($widget->attr() as $key => $val) {
+    $h->attr($key,$val);
+}
+foreach($widget->style() as $key => $val) {
+    $h->style($key, $val);
+}
+$h->addClass("task-list-rpu80rt4m0");
+$h->attr("data:status", $status);
+$h->begin();
 
     if($enbaleToolbar) {
         exec("toolbar");
@@ -13,5 +23,5 @@ js($this->bundle()->path()."/res/js/sortable.min.js");
     // Индикатор загрузки
     $loaderSrc = $this->bundle()->path()."/res/img/misc/loader.gif"; 
     <img class="loader" src="{$loaderSrc}" />
-    
-</div>
+
+$h->end();
