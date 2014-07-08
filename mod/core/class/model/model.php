@@ -9,22 +9,20 @@ use Infuso\Core;
 abstract class Model extends Core\Controller {
 
 	/**
-	 * Данные модели
+	 * Начальные данные модели
 	 **/
     private $initialData = array();
     
+	/**
+	 * Измененные данные
+	 **/
     private $changedData = array();
     
     /**
      * Поля модели (массив)
      **/
     private $fields = null;
-    
-    /**
-     * Набор полей (объект класса Model\Fieldset)
-     **/
-    private $fieldset = array();
-    
+
     public function __construct($initialData) {
         $this->initialData = $initialData;
     }
