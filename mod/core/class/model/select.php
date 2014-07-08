@@ -37,8 +37,9 @@ class Select extends Field {
 	public function pvalue() {
 		$values = $this->options();
 		$ret = $values[$this->value()];
-		if($ret===null)
+		if($ret===null) {
 			$ret = "";
+		}
 		return $ret;
 	}
 
@@ -56,7 +57,7 @@ class Select extends Field {
 	
 			// Вызов метода
 			if($fn = $this->param("method")) {
-			    return call_user_func(array($this->reflexItem(),$fn));
+			    return call_user_func(array($this->model(),$fn));
 			}
 			
             $options = $this->param("values");
