@@ -6,7 +6,7 @@ use \Infuso\Core;
 /**
  * Базовый класс для форм
  **/
-class Form extends Core\Model\Model {
+abstract class Form extends Core\Model\Model {
 
     public function fieldFactory($name) {
 		$model = $this->recordTable();
