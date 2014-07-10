@@ -23,8 +23,10 @@ class Cart extends Core\Controller {
     /**
      * Контроллер добавления товара в корзину
      **/
-    public function post_add($p) {
-        app()->msg($p);
+    public function post_add($p) {        
+        $event = new \Infuso\Eshop\Handler\CartEvent("eshop/add");
+        $event->setItem($p["itemId"]);
+        $event->fire();
     }
     
     public function index() {

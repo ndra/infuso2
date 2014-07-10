@@ -11,7 +11,8 @@ class Event extends component {
 
     private $name = null;
     
-    private $handlerClass = null,$handlerMethod = null;
+    private $handlerClass = null;
+    private $handlerMethod = null;
 
     public function __construct($name,$params=array()) {
         $this->name = $name;
@@ -28,7 +29,7 @@ class Event extends component {
     /**
      * Возвращает массив классов, которые могут реагировать на данное событие
      **/
-    public function handlers() {
+    public final function handlers() {
         $handlers = mod::service("classmap")->classmap("handlers");
         $handlers = $handlers[$this->name()];
         if(!$handlers) {
@@ -40,7 +41,7 @@ class Event extends component {
     /**
      * Возвращает кэллбэков для данного события
      **/
-    public function callbacks() {
+    public final function callbacks() {
         $callbacks = array();
         foreach($this->handlers() as $handler) {
             $callbacks[] = explode("::",$handler);
@@ -51,7 +52,7 @@ class Event extends component {
     /**
      * Вызывает данное событие и запускает обработчики
      **/
-    public function fire() {
+    public final function fire() {
     
         $n = 0;
         while($this->firePartial($n)) {
@@ -66,7 +67,7 @@ class Event extends component {
     /**
      * Метод разработан для вызова одного события в несколько подходов
      **/
-    public function firePartial($from) {
+    public final function firePartial($from) {
     
         $callbacks = $this->callbacks();
         $callback = $callbacks[$from];
@@ -90,7 +91,7 @@ class Event extends component {
     /**
      * Возвращает класс, который обрабатывает событие в данный момент
      **/
-    public function handlerClass() {
+    public final function handlerClass() {
         return $this->handlerClass;
     }
     

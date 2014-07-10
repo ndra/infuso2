@@ -496,7 +496,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
         $id = mod::service("db")->query($query)->exec()->lastInsertId();
         
         // Заносим id в данные объекта
-        $initialData = $this->initialData();
+        $initialData = $this->data();
         $initialData["id"] = $id;
         $this->setInitialData($initialData);
         $this->id = $id;
