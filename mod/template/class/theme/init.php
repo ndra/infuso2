@@ -46,11 +46,13 @@ class tmp_theme_init implements mod_handler {
 
 		foreach($themes as $theme) {
 		    if($theme->autoload()) {
-		        $autoload += $theme->map();
+		        foreach($theme->map() as $key => $val) {
+		        	$autoload[$key] += $val;
+		        }
 			}
 		}
 
-		util::save_for_inclusion(tmp_theme::mapFolder()."/"."_autoload.php",$autoload);    
+		util::save_for_inclusion(tmp_theme::mapFolder()."/"."_autoload.php",$autoload);
     
     }
 
