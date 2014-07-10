@@ -47,7 +47,7 @@ class tmp_theme_init implements mod_handler {
 		foreach($themes as $theme) {
 		    if($theme->autoload()) {
 		        foreach($theme->map() as $key => $val) {
-		        	$autoload[$key] += $val;
+		        	$autoload[$key] = $val;
 		        }
 			}
 		}
