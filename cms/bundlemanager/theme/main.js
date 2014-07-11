@@ -172,5 +172,15 @@ $(function() {
             }
         });        
     });
+	
+	//Окно предупреждения выхода/обновления страницы
+	window.onbeforeunload = function(e) {
+        var msg = 'false';
+        if(typeof e == "undefined")
+            e = window.event;
+        if(e)
+            e.returnValue = msg;
+        return msg;
+    }
 
 });
