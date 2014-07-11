@@ -1,6 +1,8 @@
 <? 
 
 <div class='task i95bnu5fvm' data:id='{$task->id()}' data:url='{$task->url()}' >
+
+    //<div class='extra' ></div>
     
     $h = helper("<div>");
     $h->addClass("sticker");
@@ -24,8 +26,10 @@
         <div class='text' style='font-size:{$size}px;' >
             echo \util::str($task->data("text"))->hyphenize();
         </div>
+        
+
        
-        <div class='tools-wrapper' >
+        /*<div class='tools-wrapper' >
             <div class='tools' >
                 $tools = $task->tools();
                 foreach($tools as $section) {
@@ -56,7 +60,7 @@
                     }
                 }
             </div>
-        </div>
+        </div> */
         
     $h->end();
     

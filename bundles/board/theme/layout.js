@@ -1,25 +1,37 @@
 $(function() {
+    
+    var $container = $(".layout-slpod3n5sa");
 
-    $(".layout-slpod3n5sa").layout();
+    $container.layout();
     
-    // Открываеи задачу
-    
-    $(".layout-slpod3n5sa").on("board/openTask", function(event) {
+    // Разворачивает левую панель
+    var expandLeft = function() {
         
-        $(".task-container-slpod3n5sa").show();
-        $(".task-container-slpod3n5sa .ajax").html("");
+        
+    }
+    
+    // Сворачивает левую панель
+    var collapseLeft = function() {
+        
+    }
+    
+    // Открываем задачу
+    $container.on("board/openTask", function(event) {
+        
+        
+        $(".layout-slpod3n5sa  > .left").html("");
     
         mod.call({
             cmd: "infuso/board/controller/task/getTask",
             taskId: event.taskId
         }, function(data) {
-            $(".task-container-slpod3n5sa .ajax").html(data.html);
+            $(".layout-slpod3n5sa > .left").html(data.html);
         });
     
     });
     
     var close = function() {
-        $(".task-container-slpod3n5sa").hide();
+        $(".layout-slpod3n5sa  > .left").hide();
     }
     
     $(document).keydown(function(event) {

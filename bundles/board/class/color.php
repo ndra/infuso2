@@ -37,7 +37,13 @@ class Color extends Core\Component {
 		$color = $colors[$n];
 		
 		$color = self::hex2RGB($color);
-		$color = "rgba(".$color["red"].",".$color["green"].",".$color["blue"].",.5)";
+		
+		$k = .5;
+		$color["red"] = round($color["red"] * $k + 255 * (1 - $k));
+		$color["green"] = round($color["green"] * $k + 255 * (1 - $k));
+		$color["blue"] = round($color["blue"] * $k + 255 * (1 - $k));
+		
+		$color = "rgb(".$color["red"].",".$color["green"].",".$color["blue"].")";
 		
 		return $color;
 		

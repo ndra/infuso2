@@ -6,9 +6,9 @@ html,body {
 .layout-slpod3n5sa {
     height:100%;
     
-    & > .right {
-        width: 300px;
-        border-left: 4px solid #ccc;
+    & > .left {
+        border-right: 4px solid #ccc;
+        overflow: auto;
     }
     
 }

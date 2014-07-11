@@ -2,7 +2,7 @@
 
 <div class='K1CczQm2Ul' >
 
-    <h2>Помочь друзьям:</h1>
+    <h2>Выполняется:</h1>
     <div style='height:160px;margin-bottom:30px;' >
         /*exec("/board/shared/task-list", array(
             "status" => 1,
@@ -10,6 +10,7 @@
         widget("infuso\\board\\widget\\tasklist")
             ->status(1)
             ->style("height", 150)
+            ->singleline()
             ->exec();
     </div>
 
@@ -21,5 +22,8 @@
             ->singleline()
             ->exec();
     </div>
+    
+    <h2>За сегодня</h1>
+    exec("timeline");
 
 </div>

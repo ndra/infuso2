@@ -17,12 +17,10 @@ lib::modJSUI();
         region("center");
     </div>
     
-    if(tmp::block("right")->count()) {
-        <div class='right' >
-            region("right");
-        </div>
-    }
-    
+    <div class='left' style='width:800px;' >
+        echo 112121;
+    </div>
+
 </div>
 
 <div class='task-container-slpod3n5sa' style='display:none;' >
