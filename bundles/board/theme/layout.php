@@ -17,8 +17,7 @@ lib::modJSUI();
         region("center");
     </div>
     
-    <div class='left' style='width:800px;' >
-        echo 112121;
+    <div class='left' style='width:1px;' >
     </div>
 
 </div>

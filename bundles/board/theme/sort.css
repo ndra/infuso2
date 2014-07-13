@@ -1,0 +1,41 @@
+.ogtvEmHlon {
+    
+    .item {
+        
+        width:200px;
+        height:200px;
+        display:inline-block;
+        margin: 10px;
+        border:1px solid #ccc;
+        font-size:50px;
+        position: relative;
+        
+        .prev {
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            width: 60px;
+            height: 220px;
+            background: rgba(255,0,0,.3);
+        }
+        
+        .next {
+            position: absolute;
+            right: -10px;
+            top: -10px;
+            width: 60px;
+            height: 220px;
+            background: rgba(255,0,0,.3);
+        }
+        
+        .here {
+            position: absolute;
+            left: 50px;
+            right:50px;
+            top: 0px;
+            height: 200px;
+            background: rgba(255,0,0,.3);
+        }
+        
+    }
+}

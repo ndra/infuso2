@@ -1,37 +1,66 @@
 $(function() {
     
     var $container = $(".layout-slpod3n5sa");
+    var $style = null;
 
     $container.layout();
     
     // Разворачивает левую панель
     var expandLeft = function() {
         
-        
+        $container.children(".left")
+            .animate({
+                width: 500
+            }, {
+                duration: 300,
+                progress: function() {
+                    $container.layout("update");
+                }, complete: function() {
+                    $container.layout("update");
+                }
+            });        
     }
     
     // Сворачивает левую панель
     var collapseLeft = function() {
+        
+        $container.children(".left")
+            .animate({
+                width: 1
+            }, {
+                duration: 300,
+                progress: function() {
+                    $container.layout("update");
+                }, complete: function() {
+                    $container.layout("update");
+                }
+            });      
         
     }
     
     // Открываем задачу
     $container.on("board/openTask", function(event) {
         
-        
-        $(".layout-slpod3n5sa  > .left").html("");
+        //$container.children(".left").html("");
+        expandLeft();
     
         mod.call({
             cmd: "infuso/board/controller/task/getTask",
             taskId: event.taskId
         }, function(data) {
-            $(".layout-slpod3n5sa > .left").html(data.html);
+            $container.children(".left").html(data.html);
         });
-    
+        
+        if(!$style) {
+            $style = $("<style>").appendTo("head");
+        }
+        
+        $style.html(".task-" + event.taskId + " .sticker { outline:3px solid blue; }");
+
     });
     
     var close = function() {
-        $(".layout-slpod3n5sa  > .left").hide();
+        collapseLeft();
     }
     
     $(document).keydown(function(event) {

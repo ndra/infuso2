@@ -4,10 +4,11 @@
     
     <div style='border-bottom: 1px solid #ccc;' >
         widget("infuso\\cms\\ui\\widgets\\textarea")
-            ->value($task->data("text"))
+            ->value(trim($task->data("text")))
             ->fieldName("text")
             ->placeholder("Описание задачи")
             ->style("width", "100%")
+            ->style("display", "block")
             ->style("border", "none")
             ->style("font-family", "Arial")
             ->style("border-radius", 0)
