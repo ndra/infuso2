@@ -187,6 +187,8 @@ class Builder {
 		foreach(mod::service("classmap")->classes("Infuso\Core\Behaviour") as $class) {
 		    $obj = new $class;
 		    if($for = $obj->addToClass()) {
+                $for = trim($for,"\\");
+                $for = strtolower($for);
 		        $ret[$for][] = $class;
 		    }
 		}
