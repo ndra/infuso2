@@ -58,6 +58,23 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	 * Если функция возвращает символ @, то в качестве таблицы используется имя класса
 	 **/
 	abstract public static function recordTable();
+    
+    /**
+     * Описание таблицы записи с учетом поведений
+     * @todo сделать кэширование     
+     **/         
+    public function recordTableExtended() {
+        $ret = $this->recordTable();
+        foreach($this->behaviourMethods("recordTable") as $method) {
+            $data = $method();
+            if(array_key_exists("fields", $data)) {
+                foreach($data["fields"] as $fieldData) {
+                    $ret["fields"][] = $fieldData;
+                }
+            }
+        } 
+        return $ret;
+    }
 
     /**
      * Фабрика полей
@@ -65,7 +82,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * @todo сделать кэширвоанеи работы
      **/
     public function fieldFactory($name) {
-		$model = $this->recordTable();
+		$model = $this->recordTableExtended();
 		$ret = null;
 		foreach($model["fields"] as $fieldDescr) {
 		    if($fieldDescr["name"] == $name) {
@@ -81,7 +98,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      **/
     public function fieldNames() {
         $names = array();
-        $model = $this->recordTable();
+        $model = $this->recordTableExtended();
         
         if(!is_array($model["fields"])) {
             throw new \Exception("Model[fields] must be Array in ".get_class($this));
@@ -205,7 +222,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
     
     public final function prefixedTableName() {
-        $ret = $this->recordTable();
+        $ret = $this->recordTableExtended();
         return "infuso_".$ret["name"];
     }
     

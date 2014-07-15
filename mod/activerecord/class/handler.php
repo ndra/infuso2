@@ -30,7 +30,7 @@ class Handler implements \Infuso\Core\Handler {
 
 		    try {
 				$record = new $class();
-				$table = $record->recordTable();
+				$table = $record->recordTableExtended();
 				if($table) {
 					$migration = new Migration\Table($table);
 					$migration->migrateUp();
