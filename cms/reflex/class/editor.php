@@ -317,6 +317,10 @@ abstract class Editor extends Core\Controller {
         ));
     }
     
+    public function templateEditBeforeForm() {
+        return \Infuso\Template\Tmp::get("/reflex/noop");
+    }
+    
     /**
      * Возвращает массив объектов fieldView - представлений полей
      **/         

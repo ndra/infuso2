@@ -18,4 +18,9 @@ class CartEditor extends \Infuso\Cms\Reflex\Editor {
 			->title("Заказы");
 	}
     
+    public function templateEditBeforeForm() {
+        return app()->tm("/eshop/admin/cart-items")
+            ->param("editor", $this);    
+    }
+    
 }

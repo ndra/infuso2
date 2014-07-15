@@ -182,5 +182,12 @@ class Cart extends \Infuso\ActiveRecord\Record {
         }
         return $cart;
     }
+    
+    /**
+     * Возвращает элементы в засаде
+     **/         
+    public function items() {
+        return CartItem::all()->eq("cartId", $this->id());
+    }
 
 }

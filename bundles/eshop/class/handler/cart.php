@@ -16,7 +16,9 @@ class Cart implements Core\Handler {
     public function handleAdd($event) {
         $cart = Model\Cart::getActiveCreateIfNotExists(); 
         $event->setCart($cart->id()); 
-        app()->msg($event->cart()->id()); 
+        $cart->items()->create(array(
+            "itemId" => $event->item()->id(),
+        )); 
     }
 
 }
