@@ -10,7 +10,9 @@ class BehaviourMap {
 	/**
 	 * Возвращает список поведений, прикрепленных к данному классу
 	 **/
-	private function getList($class,$addBehaviours) {
+	public function getList($class,$addBehaviours) {
+    
+        $class = strtolower($class);
 	
         $behaviours = array();
 

@@ -41,7 +41,24 @@ class inspector {
 	
 	    $class = new \ReflectionClass($this->className());
 	    $ret = array();
-	    
+       
+        // Аннотации поведений
+        if(service("classmap")->testClass($this->className(), "infuso\\core\\component")) {
+        
+            foreach(\Infuso\Core\BehaviourMap::getList($this->className(),array()) as $behaviour) {                        
+                $behaviour = new \ReflectionClass($behaviour);
+        	    foreach($behaviour->getMethods() as $method) {
+        	        $comments = $method->getDocComment();                    
+        	        if(preg_match_all("/\*\s*\@([a-z0-9\_\-]+)\s*=\s*(.*)/iu",$comments,$matches,PREG_SET_ORDER )) {
+        	            foreach($matches as $match) {                            
+        	                $ret[$method->getName()][$match[1]] = trim($match[2]);
+        	            }
+        	        }
+        	    }
+            }
+        }
+        
+        // Аннотации собственно класса          
 	    foreach($class->getMethods() as $method) {
 	        $comments = $method->getDocComment();
 	        if(preg_match_all("/\*\s*\@([a-z0-9\_\-]+)\s*=\s*(.*)/iu",$comments,$matches,PREG_SET_ORDER )) {
@@ -50,7 +67,7 @@ class inspector {
 	            }
 	        }
 	    }
-	    
+
 	    return $ret;
 	
 	}
