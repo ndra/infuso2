@@ -1,12 +1,23 @@
-$(function() {
-   
-    $(".task-list-zjnu1r2ofp").mod("init", function() {
-        new Sortable(this, {
-            draggable: ".task",
-            onUpdate: function() {
-                mod.msg("sort complete");
-            }
-        }); 
-    });
-
+mod.init(".task-list-zjnu1r2ofp", function() {
+    
+    var $container = $(this);
+    
+    new Sortable($container[0], {
+        draggable: ".task",
+        onStart: function(event) {
+            window.sortProcessing = true;
+        }, onEnd: function(event) {
+            window.sortProcessing = false;
+        }, onUpdate: function() {
+            var priority = [];
+            $container.find(".task").each(function() {
+                priority.push($(this).attr("data:id"));
+            });
+            mod.call({
+                cmd: "infuso/board/controller/task/savePriority",
+                priority: priority
+            });
+        }
+    }); 
+    
 });

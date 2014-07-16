@@ -434,12 +434,22 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
         service("msg")->msg($message, $error);
     }
     
-    public function fire($event) {
-        \mod::fire($event);
+    public function fire($event, $params = array()) {
+        if($this->eventsSuspended) {
+            return;
+        }
+        \mod::fire($event, $params);
     }
     
     public function user() {
         return \user::active();
+    }
+    
+    public function suspendEvents() {
+        $this->eventsSuspended = true;
+    }
+    
+	public function unsuspendEvents() {
     }
 
 

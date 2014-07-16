@@ -92,6 +92,19 @@ class Task extends Base {
         app()->msg("Задача изменена");
     }
     
+    /**
+     * Сохраняет приорите списка задач. Используется при сортировке
+     **/
+    public function post_savePriority($p) {
+        app()->suspendEvents();
+        $n = 0;
+        foreach($p["priority"] as $taskId) {
+            $task = Model\Task::get($taskId);
+            $task->data("priority", $n);
+            $n++;
+        }
+    }
+    
     public function post_timeInputContent($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         return app()->tm()

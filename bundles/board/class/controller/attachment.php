@@ -17,21 +17,20 @@ class Attachment extends Core\Controller {
 	 * Закачивает файл в задачу
 	 **/
     public function post_upload($p) {
-
+    
         $task = Model\Task::get($p["taskId"]);
 
         // Параметры задачи
-        if(!\user::active()->checkAccess("board/uploadFile",array(
+        if(!app()->user()->checkAccess("board/uploadFile",array(
             "task" => $task
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(),1);
             return;
         }
 
         $file = $_FILES["file"];
         $path = $p["sessionHash"] ? "/log/".$p["sessionHash"] : "/";
         $task->storage()->setPath($path)->addUploaded($file["tmp_name"],$file["name"]);
-        $task->uploadFilesCount();
 
     }
     
