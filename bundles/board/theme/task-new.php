@@ -1,4 +1,3 @@
 <?
 
-add("center", "content");
-exec("/board/layout");
+exec("content");

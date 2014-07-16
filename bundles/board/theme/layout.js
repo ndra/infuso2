@@ -59,6 +59,18 @@ $(function() {
 
     });
     
+    // Открываем задачу
+    $container.on("board/newTask", function(event) {
+        
+        expandLeft();
+        mod.call({
+            cmd: "infuso/board/controller/task/newTaskWindow"
+        }, function(data) {
+            $container.children(".left").html(data.html);
+        });
+        
+    });
+    
     var close = function() {
         collapseLeft();
     }

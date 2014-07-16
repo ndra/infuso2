@@ -7,7 +7,10 @@ mod.init(".sdqg1isQGi", function() {
                 projectId: event.projectId
             }
         }, function(data) {
-            window.location.href = data.url;
+            $container.trigger({
+                type: "board/openTask",
+                taskId: data.taskId
+            })
         });
     });
     
