@@ -97,7 +97,12 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
                     'label' => 'Количество файлов',
                     'editable' => 2,
-                )
+                ), array (
+                    'name' => 'group',
+                    'type' => 'checkbox',
+                    'label' => 'Это граппа задач',
+                    'editable' => 2,
+                ),
             ),
         );
     }
@@ -221,7 +226,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function updateTimeSpent() {
-        $this->data("timeSpent",$this->getLogCustom()->sum("timeSpent"));
+        $this->data("timeSpent",$this->getLog()->sum("timeSpent"));
     }
 
     /**
@@ -252,7 +257,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function log($params) {
-        $this->getLogCustom()->create(array(
+        $this->getLog()->create(array(
             "taskId" => $this->id(),
             "type" => $params["type"],
             "text" => $params["text"],

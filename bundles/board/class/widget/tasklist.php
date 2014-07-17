@@ -13,8 +13,13 @@ class TaskList extends \Infuso\Template\Helper {
         return $this;
     }
     
-    public function singleLine() {
-        $this->addClass("singleline");
+    public function toolbar() {
+        $this->param("toolbar", true);
+        return $this;
+    }
+    
+	public function sortable() {
+        $this->param("sortable", true);
         return $this;
     }
     

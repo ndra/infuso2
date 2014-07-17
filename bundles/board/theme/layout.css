@@ -11,6 +11,10 @@ html,body {
         overflow: auto;
     }
     
+    & > .center {
+        overflow: auto;
+    }
+    
 }
 
 a {

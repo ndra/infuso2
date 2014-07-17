@@ -1,0 +1,19 @@
+.MhpEuDh2NX {
+    
+    .status-list-wrapper {
+        height:30px;
+    }
+    
+    .status-list {
+        
+        position:fixed;
+        padding: 10px 20px;
+
+        span {
+            font-size: 22px;
+            margin-right: 20px;
+        }
+        
+    }
+    
+}

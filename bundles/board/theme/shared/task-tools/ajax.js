@@ -47,6 +47,12 @@ $(function() {
                             taskId:id
                         });
                         break;
+                    case "cancel":
+                        mod.call({
+                            cmd:"infuso/board/controller/task/cancelTask",
+                            taskId:id
+                        });
+                        break;
                 }
                 return;
             }

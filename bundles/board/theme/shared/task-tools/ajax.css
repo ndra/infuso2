@@ -38,8 +38,9 @@
         box-sizing: border-box;
         margin-right:10px;
         border: none;
+        cursor: pointer;
         &:hover {
-            background-color: #ededed;
+            background-color: #ccc;
             border-radius: 5px;
         }
     } 

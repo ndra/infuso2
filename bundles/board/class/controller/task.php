@@ -84,6 +84,19 @@ class Task extends Base {
 			"taskId" => $task->id(),
 		);
     }
+    
+    /**
+     * Создает новую группу задач
+     **/
+    public function post_createGroup($p) {
+        $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", array(
+            "text" => $p["text"],
+            "group" => true,
+		));
+        return array(
+			"taskId" => $task->id(),
+		);
+    }
 
     public function post_saveTask($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
@@ -175,6 +188,31 @@ class Task extends Base {
             "text" => $p["comment"],
             "time" => $time,
             "type" => Model\Log::TYPE_TASK_STOPPED,
+        ));
+
+        return true;
+    }
+    
+    /**
+     * Отменяет задачу
+     **/
+    public function post_cancelTask($p) {
+
+        $task = Model\Task::get($p["taskId"]);
+        $time = $p["time"];
+
+        if(!\user::active()->checkAccess("board/cancelTask",array(
+            "task" => $task,
+        ))) {
+            app()->msg(\user::active()->errorText(),1);
+            return;
+        }
+
+        $task->data("status",Model\TaskStatus::STATUS_CANCELLED);
+        $task->log(array(
+            "text" => $p["comment"],
+            "time" => $time,
+            "type" => Model\Log::TYPE_TASK_CANCELLED,
         ));
 
         return true;
