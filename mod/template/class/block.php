@@ -24,10 +24,12 @@ class Block {
 
 	/**
 	 * Возвращает блок по его имени.
+	 * @todo рефакторить     
 	 **/
 	public function get($name) {
-		if(!self::$buffer[$name])
+		if(!self::$buffer[$name]) {
 		    self::$buffer[$name] = new self($name);
+        }
 		return self::$buffer[$name];
 	}
 
@@ -59,7 +61,7 @@ class Block {
 	/**
 	 * Выводит содержимое блока
 	 **/
-	public function exec($prefix,$suffix) {
+	public function exec($prefix = "", $suffix = "") {
 	    foreach($this->templates as $template) {
 	        $r = $template->rexec();
 	        if(trim($r)) {

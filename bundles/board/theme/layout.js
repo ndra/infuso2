@@ -23,7 +23,6 @@ $(function() {
     
     // Сворачивает левую панель
     var collapseLeft = function() {
-        
         $container.children(".left")
             .animate({
                 width: 1
@@ -34,8 +33,21 @@ $(function() {
                 }, complete: function() {
                     $container.layout("update");
                 }
-            });      
-        
+            }); 
+        deselectTask();
+    }
+    
+    var selectTask = function(taskId) {
+        if(!$style) {
+            $style = $("<style>").appendTo("head");
+        }
+        $style.html(".task-" + taskId + " .sticker { outline:3px solid blue; }");
+    }
+    
+    var deselectTask = function() {
+        if($style) {
+            $style.html("");
+        }
     }
     
     // Открываем задачу
@@ -51,24 +63,19 @@ $(function() {
             $container.children(".left").html(data.html);
         });
         
-        if(!$style) {
-            $style = $("<style>").appendTo("head");
-        }
-        
-        $style.html(".task-" + event.taskId + " .sticker { outline:3px solid blue; }");
+        selectTask(event.taskId);
 
     });
     
     // Открываем задачу
     $container.on("board/newTask", function(event) {
-        
         expandLeft();
         mod.call({
             cmd: "infuso/board/controller/task/newTaskWindow"
         }, function(data) {
             $container.children(".left").html(data.html);
         });
-        
+        deselectTask();
     });
     
     var close = function() {

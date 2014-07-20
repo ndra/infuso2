@@ -24,7 +24,7 @@ class Theme extends Core\Controller {
      **/
 	public function post_right($p) {
         $theme = self::getTheme($p["theme"]);
-        return \tmp::get("/bundlemanager/theme-right")
+        return app()->tm("/bundlemanager/theme-right")
             ->param("theme", $theme)
             ->getContentForAjax();
 	}
@@ -34,7 +34,7 @@ class Theme extends Core\Controller {
      **/
 	public function post_list($p) {
         $template = self::getTheme($p["theme"])->template($p["path"]);
-        return \tmp::get("/bundlemanager/theme-right/nodes")
+        return app()->tm("/bundlemanager/theme-right/nodes")
             ->param("template", $template)
             ->getContentForAjax();
 	}
@@ -43,7 +43,7 @@ class Theme extends Core\Controller {
      * Возвращает html редактора элемента
      **/
     public function post_editor($p) {
-        return \tmp::get("/bundlemanager/template-editor")
+        return app()->tm("/bundlemanager/template-editor")
             ->param("template", self::getTheme($p["theme"])->template($p["template"]))
             ->getContentForAjax();
     }        

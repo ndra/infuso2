@@ -216,7 +216,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         app()->fire("board/taskChanged",array(
             "deliverToClient" => true,
             "taskId" => $this->id(),
-            "toolbarLarge" => \tmp::get("/board/shared/task-tools")->param("task", $this)->getContentForAjax(),
+            "toolbarLarge" => app()->tm("/board/shared/task-tools")->param("task", $this)->getContentForAjax(),
             "statusText" => $this->statusText(),
         ));
     }
@@ -226,7 +226,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function updateTimeSpent() {
-        $this->data("timeSpent",$this->getLog()->sum("timeSpent"));
+        $this->data("timeSpent",$this->workflow()->sum("duration"));
     }
 
     /**
@@ -241,8 +241,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         }
 
         // Предыдущие интервалы
-        $a = $this->workFlow()->eq("charged",0)->notnull("end")->select("SUM(TIMESTAMPDIFF(SECOND,`begin`,`end`))");
-        $a = end(end($a))*1;
+        $a = $this->workFlow()->eq("charged",0)->sum("duration");
 
         // Текущий интервал
         $b = $this->workFlow()->eq("charged",0)->isnull("end")->select("SUM(TIMESTAMPDIFF(SECOND,`begin`,now()))");
@@ -260,8 +259,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         $this->getLog()->create(array(
             "taskId" => $this->id(),
             "type" => $params["type"],
-            "text" => $params["text"],
-            "timeSpent" => $params["time"],
+            "text" => $params["text"], 
             "files" => $params["files"],
         ));
     }
@@ -324,8 +322,12 @@ class Task extends \Infuso\ActiveRecord\Record {
                 } else {
                     $tools["main"][] = "resume";
                 } */
-                $tools["main"][] = "take";  
-                $tools["main"][] = "done";
+                
+                if($this->activeCollaborators()->eq("id",app()->user()->id())->void()) {
+                    $tools["main"][] = "take";  
+                } else {
+                    $tools["main"][] = "done";
+                }
 
                 $tools["additional"][] = "stop";
                 $tools["additional"][] = "problems";
@@ -395,12 +397,9 @@ class Task extends \Infuso\ActiveRecord\Record {
     /**
      * Взять задачу от имени пользователя $user   
      **/     
-    public function take($user) {
-        
-        app()->msg("Берем задачу ".$this->id());
-        
-        $this->data("status", TaskStatus::STATUS_IN_PROGRESS);
-        
+    public function take($user) {         
+        app()->msg("Берем задачу ".$this->id());          
+        $this->data("status", TaskStatus::STATUS_IN_PROGRESS);         
         $this->workflow()->create(array(
             "taskId" => $this->id(),
             "userId" => $user->id(),

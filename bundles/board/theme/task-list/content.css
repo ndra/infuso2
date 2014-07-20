@@ -2,6 +2,14 @@
     
     .status-list-wrapper {
         height:30px;
+        
+        span {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        
     }
     
     .status-list {

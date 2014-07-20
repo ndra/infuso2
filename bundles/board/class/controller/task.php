@@ -43,7 +43,7 @@ class Task extends Base {
 
         $tasks->page($p["page"]);
         
-        $html = \tmp::get("/board/widget/task-list/ajax")
+        $html = app()->tm("/board/widget/task-list/ajax")
             ->param("tasks", $tasks)
             ->getContentForAjax();
         
@@ -60,7 +60,7 @@ class Task extends Base {
      **/
     public function post_getTask($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
-        $html = \tmp::get("/board/task/content")
+        $html = app()->tm("/board/task/content")
             ->param("task", $task)
             ->getContentForAjax();
         return array(

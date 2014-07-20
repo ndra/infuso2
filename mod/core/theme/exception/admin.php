@@ -1,7 +1,7 @@
 <? 
 
-tmp::header();
-tmp::reset();
+header();
+lib::reset();
 
 <div class='ggbl9buyfa' >
     <h1>У нас проблемы!</h1>
@@ -29,4 +29,4 @@ tmp::reset();
     
 </div>
 
-tmp::footer();
+footer();

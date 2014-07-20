@@ -156,7 +156,7 @@ class Helper extends Widget {
             $this->param("attributes",array());
         }
 
-        \tmp::exec("/tmp/helper/html",$this->params());
+        exec("/tmp/helper/html",$this->params());
     }
 
 }

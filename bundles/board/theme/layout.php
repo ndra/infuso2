@@ -1,7 +1,7 @@
 <? 
 
 header();
-tmp::reset();
+Lib::reset();
 modjs();
 exec("/ui/shared");
 

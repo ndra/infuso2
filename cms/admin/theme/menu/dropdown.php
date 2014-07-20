@@ -1,6 +1,6 @@
 <?
 
-if(!tmp::param("fixed-menu")) {
+if(!param("fixed-menu")) {
     $inject = " id='raub2v07e-menu' ";
 }   
 
@@ -21,6 +21,6 @@ foreach(\infuso\cms\admin\widgets\widget::all() as $widget) {
 echo "</div>";
 
 echo "</div></div>";
-if(!tmp::param("fixed-menu"))
+if(!param("fixed-menu"))
     echo "<div style='height:30px;background:url(/admin/res/menu-bottom.png)' ></div>";
 echo "</div>";

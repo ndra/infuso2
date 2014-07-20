@@ -9,11 +9,11 @@ use Infuso\Core;
 class Lib {
 
     public function path() {
-        return \mod::service("classmap")->getClassBundle(get_class())->path()."/res/";
+        return service("classmap")->getClassBundle(get_class())->path()."/res/";
     }
 
     public function jq() {
-        tmp::singleJS(self::path()."/js/jquery-2.1.0.min.js",-1000);
+        app()->tm()->singleJS(self::path()."/js/jquery-2.1.0.min.js",-1000);
     }
 
     /**
@@ -21,26 +21,26 @@ class Lib {
      **/
     public function jqui() {
         self::jq();
-        tmp::js("http://yandex.st/jquery-ui/1.10.4/jquery-ui.min.js");
-        tmp::css("http://yandex.st/jquery-ui/1.10.4/themes/base/jquery-ui.min.css");
+        app()->tm()->js("http://yandex.st/jquery-ui/1.10.4/jquery-ui.min.js");
+        app()->tm()->css("http://yandex.st/jquery-ui/1.10.4/themes/base/jquery-ui.min.css");
     }
     
     public function reset() {
-        tmp::css(self::path()."/css/reset.css",-1000);
+        app()->tm()->css(self::path()."/css/reset.css",-1000);
     }
     
     public function modjs() {
         self::jq();
-        tmp::js(self::path()."/js/mod.js",-900);
-        tmp::js(self::path()."/js/mod.jquery.js",-900);
+        app()->tm()->js(self::path()."/js/mod.js",-900);
+        app()->tm()->js(self::path()."/js/mod.jquery.js",-900);
     }
     
     public function modJSUI() {
         self::jq();
-        tmp::js(self::path()."/js/mod.window.js");
-        tmp::js(self::path()."/js/mod.list.js");
-        tmp::js(self::path()."/js/mod.tree.js");
-        tmp::js(self::path()."/js/mod.layout.js");
+        app()->tm()->js(self::path()."/js/mod.window.js");
+        app()->tm()->js(self::path()."/js/mod.list.js");
+        app()->tm()->js(self::path()."/js/mod.tree.js");
+        app()->tm()->js(self::path()."/js/mod.layout.js");
     }
 
     public function d3() {
@@ -48,7 +48,7 @@ class Lib {
     }
     
     public function sortable() {
-        tmp::js(self::path()."/js/sortable.min.js");
+        js(self::path()."/js/sortable.min.js");
     }
 
 }

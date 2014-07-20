@@ -1,5 +1,5 @@
 <?
 
-tmp::jq();
-tmp::exec("bar");
-tmp::exec("dropdown");
+lib::jq();
+exec("bar");
+exec("dropdown");

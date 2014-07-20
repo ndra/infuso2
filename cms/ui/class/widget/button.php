@@ -16,9 +16,9 @@ class Button extends \Infuso\Template\Helper {
     **/
     public function execWidget() {
 
-        \tmp::exec("/ui/widgets/button", array(
-            "widget" => $this,
-        ));
+        app()->tm("/ui/widgets/button")
+            ->param("widget", $this)
+            ->exec();
     }  
     
     public function text($text) {

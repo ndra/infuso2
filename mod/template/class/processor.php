@@ -81,6 +81,14 @@ class Processor extends Core\Component {
     
     }
     
+    public function block($name) {
+        return Block::get($name);
+    }
+
+    public function region($name) {
+        Block::get($name)->exec();
+    }
+    
     /**
      * Добавляет шаблон $name в блок $block
      **/
@@ -309,6 +317,20 @@ class Processor extends Core\Component {
      **/
     public function noindex() {
         $this->param("meta:noindex",true);
+    }
+    
+	/**
+	 * Статический метод для добавляния в хэдер заголовков метаданных
+	 * @Вынести меты в шаблон tmp/header
+	 **/
+    public static function headInsert() {
+
+        $head = "";
+
+        $head.= app()->tm()->conveyor()->exec();
+
+        echo $head;
+
     }
 
 

@@ -1,5 +1,5 @@
 <?
 
-tmp::header();
-tmp::reset();
+header();
+lib::reset();
 \admin::menu(1);

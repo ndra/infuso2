@@ -11,7 +11,7 @@ class Delayed implements Core\Handler {
 	//public static $size = 0;
 
 	public function add($params) {
-	    return tmp::conveyor()->addDelayedFunction($params);
+	    return app()->tm()->conveyor()->addDelayedFunction($params);
 	}
 	
 	/**
@@ -27,7 +27,7 @@ class Delayed implements Core\Handler {
 	    	$content = self::insertMessages($content);
 	    }
 	    
-	    $content = tmp::conveyor()->processDelayed($content);
+	    $content = app()->tm()->conveyor()->processDelayed($content);
   		
   		$event->param("content",$content);
   		

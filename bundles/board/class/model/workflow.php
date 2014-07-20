@@ -29,6 +29,11 @@ class WorkFlow extends ActiveRecord\Record {
                     'editable' => 1,
                     'label' => 'Конец',
                 ), array (
+                    'name' => 'duration',
+                    'type' => 'bigint',
+                    'editable' => 1,
+                    'label' => 'Время',
+                ), array (
                     'name' => 'charged',
                     'type' => 'checkbox',
                     'label' => 'Учтено',
@@ -89,9 +94,15 @@ class WorkFlow extends ActiveRecord\Record {
             
         foreach($otherFlows as $item) {
             $item->data("end", \util::now());
+        } 
+
+    }
+    
+    public function beforeStore() {
+        if($this->data("end")) {
+            $d = $this->pdata("end")->stamp() - $this->pdata("begin")->stamp();
+            $this->data("duration", $d);
         }
-
-
     }
 
 

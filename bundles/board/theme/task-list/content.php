@@ -22,7 +22,6 @@
             <td style='width:33.33%;' >
                 widget("infuso\\board\\widget\\tasklist")
                     ->status(1)
-                    ->toolbar()
                     ->style("padding", 20)
                     ->exec();
             </td>

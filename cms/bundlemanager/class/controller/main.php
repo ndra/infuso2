@@ -17,7 +17,7 @@ class Main extends Core\Controller {
 	}
 	
 	public function index() {
-		\tmp::exec("/bundlemanager/main");
+		app()->tm("/bundlemanager/main")->exec();
 	}
     
     public function index_test() {

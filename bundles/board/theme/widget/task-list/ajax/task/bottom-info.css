@@ -1,12 +1,13 @@
 .x8l0puejxv8 {
 
-    font-size:11px;
-    color:gray;
+    font-size: 11px;
+    color: gray;
     position: relative;
+    padding-top: 5px;
     
     .time {
-        position:absolute;
-        right:0;
+        position: absolute;
+        right: 0;
     }
 
 }

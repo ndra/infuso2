@@ -1,6 +1,6 @@
 <? 
 
-tmp::jq();
+lib::jq();
 exec("../../shared");
 
 $helper = \Infuso\Template\Helper("<input>");

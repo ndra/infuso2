@@ -15,11 +15,11 @@ class Admin extends Core\Controller {
 	 * @todo wtf ::$showLogin
 	 **/
 	public static function fuckoff() {
-	    \tmp::noindex();
+	    app()->tm()->noindex();
 		if(self::$showLogin) {
-            \tmp::exec("admin:not_logged_in");
+            app()->tm("admin:not_logged_in")->exec();
 		} else {
-			\mod::app()->httpError(404);
+			app()->httpError(404);
 		}
 	}
 
@@ -27,7 +27,7 @@ class Admin extends Core\Controller {
 	 * Выводит шапку админки
 	 **/
 	public static function header($title="") {
-	    $tmp = Core\Mod::app()->tm();
+	    $tmp = app()->tm();
 	    $tmp->noindex();
 		$tmp->param("title",$title);
 		$tmp->param("back-end",1);
@@ -38,15 +38,15 @@ class Admin extends Core\Controller {
 	 * Выводит подвал админки
 	 **/
 	public static function footer() {
-		Core\Mod::app()->tm()->exec("/admin/footer");
+		app()->tm()->exec("/admin/footer");
 	}
 
 	/**
 	 * Вызывает виджет горизонтального администраторского меню
 	 **/
 	public static function menu() {
-		\tmp::exec("admin:menu");
-		\tmp::param("admin-header",true);
+		app()->tm("admin:menu")->exec();
+		app()->tm()->param("admin-header",true);
 	}
 
 }

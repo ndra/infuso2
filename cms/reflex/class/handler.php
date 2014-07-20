@@ -98,9 +98,9 @@ class Handler extends Core\Component implements Core\Handler {
         list($class,$id) = explode("/",$ar);
         $record = service("ar")->get($class,$id);
         $metaObject = $record->plugin("meta")->metaObject();
-        \tmp::param("head/title", $metaObject->data("title"));
-        \tmp::param("head/noindex", $metaObject->data("noindex"));
-        \tmp::param("head/insert", $metaObject->data("head"));
+        app()->tm()->param("head/title", $metaObject->data("title"));
+        app()->tm()->param("head/noindex", $metaObject->data("noindex"));
+        app()->tm()->param("head/insert", $metaObject->data("head"));
     }
     
 	/**

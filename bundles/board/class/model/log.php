@@ -53,11 +53,6 @@ class Log extends Record {
                   'label' => 'Текст',
                   'indexEnabled' => '0',
                 ), array (
-                  'name' => 'timeSpent',
-                  'type' => 'yvbj-cgin-m90o-cez7-mv2j',
-                  'editable' => '1',
-                  'label' => 'Потрачено времени',
-                ), array (
                     'name' => 'type',
                     'type' => 'select',
                     'editable' => '1',
@@ -104,38 +99,10 @@ class Log extends Record {
         $this->data("userId",\user::active()->id());
     }
 
-    public function afterCreate() {
-
-        if($this->data("type") == self::TYPE_COMMENT) {
-
-            $task = $this->task();
-            $users = array($task->responsibleUser()->id(),$task->pdata("creator")->id());
-            $users = array_unique($users);
-
-            // Рассылаем комментарий ответственному лицу и автору
-            foreach($users as $userID) {
-                if($userID != $this->user()->id()) {
-                    $user = \user::get($userID);
-                    $taskText = util::str($this->task()->text())->ellipsis(100);
-                    $taskURL = $this->task()->url();
-                    $comment = $this->text();
-                    $user->mailer()
-                        ->subject("Пользователь {$this->user()->title()} прокомментировал задачу <a href='{$taskURL}' >«{$taskText}»</a>: {$comment}")
-            			->send();
-                }
-            }
-        }
-    }
-
     public function afterStore() {
-        $this->task()->updateTimeSpent();
-        \mod::fire("board/log-changed", array(
+        app()->fire("board/log-changed", array(
             "deliverToClient" => true,
         ));
-    }
-
-    public function afterDelete() {
-        $this->task()->updateTimeSpent();
     }
 
     /**
@@ -167,18 +134,10 @@ class Log extends Record {
     }
 
     /**
-     * Возвращает потраченное время
-     **/
-    public function timeSpent() {
-        return $this->data("timeSpent");
-    }
-
-    /**
      * Возвращает список файлов, прикрепелнных к записи лога
      * (не путать с файлами задачи)
      **/
-    public function files() {
-
+    public function files() {     
         if($this->data("files")) {
             return $this->task()->storage()->setPath("/log/".$this->data("files"))->files();
         } else {
@@ -223,8 +182,7 @@ class Log extends Record {
 		        break;
         }
         
-        return self::inspector()->bundle()->path()."/res/img/icons16/{$icon}.png";
-        
+        return self::inspector()->bundle()->path()."/res/img/icons16/{$icon}.png";                    
     }
 
 }

@@ -142,7 +142,7 @@ class App {
 	public function tm($tmp = null) {
     
         if($tmp) {
-            return \tmp::get($tmp);
+            return new \Infuso\Template\Template($tmp);
         }
     
 	    if(!$this->templateProcessor) {
@@ -196,9 +196,9 @@ class App {
 				// Сбрасываем процессор шаблонов
 		        $this->clearTmp();
 
-			    \tmp::exec("/mod/exception", array(
-				    "exception" => $exception,
-				));
+			    $this->tm("/mod/exception")
+                    ->param("exception", $exception)
+                    ->exec();
 
 		    } catch(\Exception $ex2) {
 		        throw $exception;
@@ -261,7 +261,7 @@ class App {
 
 	public function httpError() {
         header("Status: 404 Not Found");
-		\tmp::exec("/mod/404");
+		$this->tm("/mod/404")->exec();
 	}
 
 	public function generateHtaccess() {

@@ -5,35 +5,45 @@ use \Infuso\Core;
 
 function exec() {
 	$args = func_get_args();
-	call_user_func_array(array("tmp","exec"),$args);
+	call_user_func_array(array(app()->tm(),"exec"),$args);
 }
 
 function region() {
 	$args = func_get_args();
-	call_user_func_array(array("tmp","region"),$args);
+	call_user_func_array(array(app()->tm(),"region"),$args);
 }
 
 function add() {
 	$args = func_get_args();
-	call_user_func_array(array("tmp","add"),$args);
+	call_user_func_array(array(app()->tm(),"add"),$args);
 }
 
 function header() {
-	tmp::header();
+	app()->tm()->header();
 }
 
 function footer() {
-	tmp::footer();
+	app()->tm()->footer();
 }
 
 function js() {
 	$args = func_get_args();
-	call_user_func_array(array("tmp","js"),$args);
+	call_user_func_array(array(app()->tm(),"js"),$args);
 }
 
 function css() {
 	$args = func_get_args();
-	call_user_func_array(array("tmp","css"),$args);
+	call_user_func_array(array(app()->tm(),"css"),$args);
+}
+
+function param() {
+	$args = func_get_args();
+	call_user_func_array(array(app()->tm(),"param"),$args);
+}
+
+function head() {
+	$args = func_get_args();
+	call_user_func_array(array(app()->tm(),"head"),$args);
 }
 
 function action() {
@@ -62,11 +72,11 @@ function esc($str) {
 }
 
 function helper($str) {
-	return tmp::helper($str);
+	return Helper::fromHTML($str);
 }
 
 function title($title) {
-	tmp::param("head/title", $title);
+	app()->tm()->param("head/title", $title);
 }
 
 

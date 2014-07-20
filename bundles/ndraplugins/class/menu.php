@@ -29,10 +29,10 @@ class Menu extends Core\Component {
      **/
     public function exec() {
         \Infuso\Template\Lib::jq();
-        \tmp::js(\mod::service("classmap")->getClassBundle(get_class())->path()."/res/menu/menu.js");
-        \tmp::head("<style>{$this->submenu} {display:none}</style>");
+        app()->tm()->js(\mod::service("classmap")->getClassBundle(get_class())->path()."/res/menu/menu.js");
+        app()->tm()->head("<style>{$this->submenu} {display:none}</style>");
         $p = json_encode($this->params());
-        \tmp::head("<script>$(function() { ndra.menu('{$this->menu}','{$this->submenu}',$p) })</script>");
+        app()->tm()->head("<script>$(function() { ndra.menu('{$this->menu}','{$this->submenu}',$p) })</script>");
     }
 
 }
