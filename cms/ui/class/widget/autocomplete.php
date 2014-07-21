@@ -28,10 +28,8 @@ class Autocomplete extends Input {
     }
     
     
-    public function execWidget() {
-        \tmp::exec("/ui/widgets/autocomplete", array (
-            "widget" => $this,
-         ));    
+    public function execWidget() { 
+		 app()->tm("/ui/widgets/autocomplete")->param("widget",$this)->exec();
     }
         
 }

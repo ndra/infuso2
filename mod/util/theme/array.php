@@ -10,9 +10,7 @@ switch(gettype($data)) {
                         <div style='min-width:50px;' >{$key} => </div>
                     </td>
                     <td>                        
-                        tmp::exec("../array",array(
-                            "data" => $val
-                        ));
+						app()->tm("../array")->param("data",$val)->exec();
                     </td>
                 </tr>    
             </table>

@@ -19,18 +19,14 @@
     $spent = 0;
 
     foreach($tasks->limit(0) as $task) {        
-        
-        tmp::exec("row",array (
-            "task" => $task,
-        ));
+
+		app()->tm("row")->param("task", $task)->exec();
         
         $planned += $task->timeScheduled();
         $spent += $task->timeSpent();
         
         foreach($task->subtasks()->limit(0) as $subtask) {        
-            tmp::exec("row",array (
-                "task" => $subtask,
-            ));
+			app()->tm("row")->param("task",$subtask)->exec();
         }  
         
     }

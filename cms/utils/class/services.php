@@ -12,7 +12,7 @@ class Services extends \Infuso\Core\Controller {
 	}
 	
 	public function index() {
-        \tmp::exec("/admin/utils/services");
+		app()->tm("/admin/utils/services")->exec();
 	}
 	
 }

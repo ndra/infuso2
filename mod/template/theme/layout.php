@@ -1,8 +1,8 @@
 <?
 
-tmp::header();
-tmp::reset();
-tmp::exec("header");
+header();
+lib::reset();
+exec("header");
 //\infuso\Template\Lib::components();
 
 <table class='pwq3nk3agh' >
@@ -11,19 +11,19 @@ tmp::exec("header");
         // Левая часть
         <td class='left' >
             <div>
-                tmp::region("left");
+                region("left");
             </div>
         </td>
         
         // Центральная часть
         <td class='center' >
-            tmp::region("center");
+            region("center");
         </td>
         
         // Правая часть
         <td class='right' >
             <div>
-                tmp::region("right");
+                region("right");
             </div>
         </td>
     

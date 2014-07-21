@@ -1,7 +1,7 @@
 <? 
 
-tmp::header();
-tmp::reset();
+header();
+lib::reset();
 
 <div style='padding:20px;' >
 
@@ -87,11 +87,12 @@ tmp::reset();
     </table>
     
     <br/><br/>
-    tmp::exec("../contributors",array(
-        "from" => $from,
+
+	app()->tm("../contributors")->param(array(
+		"from" => $from,
         "to" => $to,
-    ));
+	))->exec();
     
 </div>
 
-tmp::footer();
+footer();

@@ -21,7 +21,7 @@ class Conf extends Core\Controller implements Core\Handler {
 	}
 	
 	public function index() {
-	    \tmp::exec("/admin/utils/conf");
+		app()->tm("/admin/utils/conf")->exec();
 	}
 	
 	public function post_save($p) {

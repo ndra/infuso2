@@ -12,7 +12,7 @@ class Sql extends \Infuso\Core\Controller {
 	}
 	
 	public function index() {
-	    \tmp::exec("/admin/utils/sql");
+		app()->tm("/admin/utils/sql")->exec();
 	}
 	
 }

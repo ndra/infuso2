@@ -21,17 +21,13 @@
     </div>
     
     <form method='post'>
-        tmp::exec("/pay/button",array (            
-            "text" => "Отмена",
-        ));
+		app()->tm("/pay/button")->param( "text","Отмена")->exec();
         <input type='hidden' name='invoiceId' value='{$invoice->id()}' />
         <input type='hidden' name='cmd' value='pay:vendors:account:payDecline' />
     </form>
     
     <form method='post'>
-        tmp::exec("/pay/button",array (            
-            "text" => "Оплатить",            
-        ));
+		app()->tm("/pay/button")->param( "text","Оплатить")->exec();
         <input type='hidden' name='invoiceId' value='{$invoice->id()}' />
         <input type='hidden' name='cmd' value='pay:vendors:account:payAccept' />
     </form>

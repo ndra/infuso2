@@ -34,10 +34,10 @@
     
     if($r = $invoice->redirectURL()) {
         <div class='buttons' >
-            tmp::exec("/pay/button",array(
-                "text" => "Далее",
+			app()->tm("/pay/button")->param(array(
+				"text" => "Далее",
                 "href" => $r,
-            ));
+			))->exec();	
         </div>
     }
 

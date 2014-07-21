@@ -27,7 +27,7 @@ class Widget extends \Infuso\Core\Component {
         }
 
 		\Infuso\Core\Profiler::stop();
-        \tmp::exec("/infuso/profiler/widget");
+        exec("/infuso/profiler/widget");
 
     }
 

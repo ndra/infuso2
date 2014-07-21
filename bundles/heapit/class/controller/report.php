@@ -6,22 +6,22 @@ use \Infuso\Core;
 class Report extends Base {
 
     public function index_salesFunnel() {
-        \tmp::exec("/heapit/reports/sales-funnel");
+		app()->tm("/heapit/reports/sales-funnel")->exec();
     }
     
     public function index_payments() {
-        \tmp::exec("/heapit/reports/payments");
+		app()->tm("/heapit/reports/payments")->exec();
     }
 
-    public function index_paymentsMonth($p) {
-        \tmp::exec("/heapit/reports/payments-month", array(
-            "year" => $p["year"],
+    public function index_paymentsMonth($p) {		
+		app()->tm("/heapit/reports/payments-month")->param(array(
+			"year" => $p["year"],
             "month" => $p["month"],
-        ));
+		))->exec();
     }
 
     public function index_clients() {
-        \tmp::exec("/heapit/reports/clients");
+		app()->tm("/heapit/reports/clients")->exec();
     }
 
     /**
@@ -72,7 +72,7 @@ class Report extends Base {
     }
     
     public function index() {
-        \tmp::exec("/heapit/reports");
+		app()->tm("/heapit/reports")->exec();
     }
         
 }

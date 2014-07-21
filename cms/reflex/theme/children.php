@@ -1,6 +1,6 @@
 <? 
 
-tmp::add("left","/reflex/layout/menu");
-tmp::add("top","/reflex/shared/editor-head");
-tmp::add("center","content");
-tmp::exec("/reflex/layout");
+add("left","/reflex/layout/menu");
+add("top","/reflex/shared/editor-head");
+add("center","content");
+exec("/reflex/layout");

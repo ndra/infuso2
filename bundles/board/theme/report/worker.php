@@ -1,7 +1,7 @@
 <? 
 
-tmp::header();
+header();
 
-tmp::exec("timeline");
+exec("timeline");
 
-tmp::footer();
+footer();

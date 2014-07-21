@@ -6,8 +6,8 @@
 
     <div class='glass' >
 
-        tmp::exec("main");
-        tmp::exec("milestones");
+        exec("main");
+        exec("milestones");
 
         <table class='t1' >    
             foreach(\Infuso\Core\Profiler::log() as $group=>$items) {

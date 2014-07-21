@@ -2,9 +2,9 @@
 
 <div class='od655esqwh' >
 
-    tmp::exec("toolbar");
+    exec("toolbar");
     
-    tmp::exec("stat");
+    exec("stat");
     
     <div class='items' >
     </div>

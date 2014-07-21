@@ -184,9 +184,7 @@ public static function recordTable() {return array (
             die();
         }
 
-        tmp::exec("/pay/invoice",array(
-            "invoice" => $invoice,
-        ));
+		app()->tm("/pay/invoice")->param("invoice", $invoice)->exec();
     }
 
     /**

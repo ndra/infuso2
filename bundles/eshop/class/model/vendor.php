@@ -106,7 +106,7 @@ public static function recordTable() {return array (
 	 * Экшн списка товаров
 	 **/
 	public static function index() {
-	    tmp::exec("eshop:vendors");
+		app()->tm("eshop:vendors")->exec();
 	}
 
 	/**

@@ -31,9 +31,7 @@ class Sync extends \Infuso\Core\Controller {
     }
 
     public function index() {
-        \tmp::exec("/reflex/admin/sync", array(
-            "classes" => $this->getClassList(),
-        ));
+		app()->tm("/reflex/admin/sync")->param("classes",$this->getClassList())->exec();
     }
 
     /**

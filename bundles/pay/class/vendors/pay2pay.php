@@ -251,10 +251,10 @@ class pay_vendors_pay2pay extends pay_vendors {
     * @return void
     **/
     public function index_redirect() {
-        tmp::exec("/pay/vendors/pay2pay", array(
-            "xml_encode" => $_GET["xml"],
+		app()->tm("/pay/vendors/pay2pay")->param(array(
+			"xml_encode" => $_GET["xml"],
             "sign_encode" => $_GET["sign"],
-            ));
+		))->exec();
     }
 	
 } //END CLASS

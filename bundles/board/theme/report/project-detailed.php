@@ -1,7 +1,7 @@
 <? 
 
-tmp::header();
-tmp::reset();
+header();
+lib::reset();
 mod::coreJS();
 
 $from = util::date($params["from"])->date();
@@ -33,19 +33,17 @@ $to = util::date($params["to"])->date();
     <table>
         <tr>
             <td>
-                tmp::exec("tasks",array(
-                    "tasks" => $tasks,
-                ));
+				app()->tm("tasks")->param("tasks",$tasks)->exec();
             </td>
             <td style='padding-left:20px;' >
-                tmp::exec("../contributors",array(
-                    "from" => $from,
+				app()->tm("../contributors")->param(array(
+					"from" => $from,
                     "to" => $to,
                     "project" => $project,
-                ));
+				))->exec();
             </td>
         <tr>        
     </table>
 </div>
 
-tmp::footer();
+footer();

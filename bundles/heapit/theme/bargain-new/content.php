@@ -3,8 +3,6 @@
 <form class='ms3hpuzlzi' >
 
     $bargain = new \Infuso\Heapit\Model\Bargain();
-    tmp::exec("/heapit/bargain-form",array(
-        "bargain" => $bargain,
-    ));
+	app()->tm("/heapit/bargain-form")->param("bargain",$bargain)->exec();
 
 </form>

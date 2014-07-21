@@ -3,8 +3,5 @@
 <form class='aqzdqv7jjr' >
 
     $payment = new \Infuso\Heapit\Model\Payment();
-    tmp::exec("/heapit/payment-form",array(
-        "payment" => $paymentToCopy,
-    ));
-
+	app()->tm("/heapit/payment-form")->param("payment",$paymentToCopy)->exec();
 </form>

@@ -4,7 +4,7 @@ admin::header();
 
 <div style='padding:40px;' >
 
-    tmp::exec("../menu");
+    exec("../menu");
     
     $confSet = mod_conf::general();
     
@@ -36,11 +36,11 @@ admin::header();
                         $type = $matches[2];
                         $title = $matches[3];
                         
-                        tmp::exec("field",array(
-                            "keys" => $keys2,
+						app()->tm("field")->param(array(
+							"keys" => $keys2,
                             "title" => $title,                        
-                            "type" => $type,                        
-                        ));
+                            "type" => $type,   
+						))->exec();
                     
                     </div>
                 }    

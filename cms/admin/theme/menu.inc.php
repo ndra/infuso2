@@ -1,10 +1,10 @@
 <?
 
-tmp::jq();
-tmp::js("/admin/res/admin.js");
+lib::jq();
+js("/admin/res/admin.js");
 
-tmp::exec("bar");
-tmp::exec("dropdown");
+exec("bar");
+exec("dropdown");
 
 /*css:
 .gveialugfd-error {background:#cc0000;2px solid white;padding:20px;color:white;margin:0px 0px 10px 0px;border-radius: 10px;}

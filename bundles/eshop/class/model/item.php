@@ -84,9 +84,7 @@ class Item extends \Infuso\ActiveRecord\Record {
      **/
     public function index_item($p) {
         $item = self::get($p["id"]);
-        \tmp::exec("/eshop/item", array(
-            "item" => $item
-        ));
+		app()->tm("/eshop/item")->param("item",$item)->exec();
     }
 
     /**

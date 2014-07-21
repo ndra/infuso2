@@ -183,10 +183,12 @@ class pay_vendors_qiwi extends pay_vendors {
         if (!$invoice->my())
             throw new Exception("QIWI: вы не являетесь владельцем счета");
         
-        tmp::exec("/pay/vendors/qiwi", array(
-            "id" => $p["id"],
+		
+		app()->tm("/pay/vendors/qiwi")->param(array(
+			"id" => $p["id"],
             "number" => $_POST["number"]
-        ));
+		))->exec();
+		
     }
     
     /**
@@ -283,7 +285,8 @@ EOF;
         }
         
         $responseCodeText = self::$errors[$responseCode];
-        tmp::param("pay-vendors-qiwi-error", "Код ответа: " . " ($responseCode) " . $responseCodeText);
+		app()->tm()->param("pay-vendors-qiwi-error", "Код ответа: " . " ($responseCode) " . $responseCodeText);
+		
     }
     
     /**

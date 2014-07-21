@@ -19,7 +19,7 @@ class pay_admin extends mod_controller {
             throw new Exception("Просмотр отчета недоступен");
         }
     
-        tmp::exec("/pay/admin/reportInvoices");
+        exec("/pay/admin/reportInvoices");
     }
     
     public function post_addFunds($p) {

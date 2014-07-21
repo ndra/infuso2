@@ -14,7 +14,7 @@
                 "id" => $user->id(),
             ));
             <div><a href='{$url}' >{$user->title()}</a></div>
-            tmp::exec("snippet");
+            exec("snippet");
         
         </td>
         <td>

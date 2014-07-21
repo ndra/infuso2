@@ -11,7 +11,7 @@ class eshop_order_action extends mod_controller {
     }
     
     public function index_history() {
-        tmp::exec("eshop:myOrders");
+		app()->tm("eshop:myOrders")->exec();
     }
     
     /**

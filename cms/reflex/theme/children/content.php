@@ -1,3 +1,3 @@
 <? 
 
-tmp::exec("/reflex/shared/collection");
+exec("/reflex/shared/collection");

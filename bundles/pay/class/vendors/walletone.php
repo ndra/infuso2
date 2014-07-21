@@ -283,10 +283,10 @@ class pay_vendors_walletone extends pay_vendors {
             throw new Exception("Единая касса: вы не являетесь владельцем счета");
         }
 
-        tmp::exec("/pay/vendors/walletone", array(
-            "invoice" => $invoice,
+		app()->tm("/pay/vendors/walletone")->param(array(
+			"invoice" => $invoice,
             "login" => self::$login
-        ));
+		))->exec();
     }
 
 }

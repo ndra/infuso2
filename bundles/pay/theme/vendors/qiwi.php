@@ -1,5 +1,5 @@
 <?
 
-tmp::add("center","content");
-tmp::exec("/tmp/layout");
+add("center","content");
+exec("/tmp/layout");
 

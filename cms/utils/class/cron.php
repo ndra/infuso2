@@ -17,7 +17,7 @@ class Cron extends Core\Controller implements Core\Handler {
 	}
 	
 	public function index() {
-	    \tmp::exec("/admin/utils/cron");
+		app()->tm("/admin/utils/cron")->exec();
 	}
 
 }

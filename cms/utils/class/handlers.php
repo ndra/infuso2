@@ -12,7 +12,7 @@ class Handlers extends \Infuso\Core\Controller {
 	}
 	
 	public function index() {
-	    \tmp::exec("/admin/utils/handlers");
+		app()->tm("/admin/utils/handlers")->exec();
 	}
 	
 }

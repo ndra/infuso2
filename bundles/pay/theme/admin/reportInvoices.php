@@ -2,8 +2,8 @@
 
 admin::header("Счета (отчет)");
 
-tmp::exec("invoices");
-tmp::exec("acount");
-tmp::exec("lastAccountOperations");
+exec("invoices");
+exec("acount");
+exec("lastAccountOperations");
 
 admin::footer();

@@ -56,9 +56,7 @@ class Collection extends Core\Component implements \Iterator {
      * Использует шаблон /util/array
      **/
     public function prettyPrint() {
-        tmp::exec("/util/array",array(
-            "data" => $this->asArray()
-        ));
+		app()->tm("/util/array")->param("data",$this->asArray())->exec();
     }
 
     /**

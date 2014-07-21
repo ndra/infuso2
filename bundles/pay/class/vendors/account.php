@@ -28,9 +28,7 @@ class pay_vendors_account extends pay_vendors {
     public function index_history() {
         $user = user::active();
         $items = $user->payAccountOperationLog();
-        tmp::exec("/pay/account/history",array(
-            "items" => $items,
-        ));
+		app()->tm("/pay/account/history")->param("items", $items)->exec();
     }
     
     /**
@@ -41,10 +39,8 @@ class pay_vendors_account extends pay_vendors {
         $invoice = pay_invoice::get(intval($p["id"]));
         
         $invoice->driver("account")->checkInvoicePayAvailable();
-        
-        tmp::exec("/pay/account/payConfirmation", array(
-            "invoice" => $invoice,
-        ));
+
+		app()->tm("/pay/account/payConfirmation")->param("invoice",$invoice)->exec();
     }
     
     /**

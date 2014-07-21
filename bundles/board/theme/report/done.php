@@ -31,9 +31,7 @@ $to = util::date($params["to"])->date();
     
         foreach($tasks->limit(0) as $task) {        
             
-            tmp::exec("row",array (
-                "task" => $task,
-            ));
+			app()->tm("row")->param("task",$task)->exec();
             
         }
     </table>

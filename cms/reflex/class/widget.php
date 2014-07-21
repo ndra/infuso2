@@ -15,10 +15,8 @@ class editorWidget extends \Infuso\Template\widget {
 		if(!$item->editor()->beforeEdit()) {
 		    return;
 		}
-    
-		tmp::exec("/reflex/admin/editWidget",array(
-		    "item" => $item,
-		));
+		
+		app()->tm("/reflex/admin/editWidget")->param("item",$item)->exec();
 	}
 
 }

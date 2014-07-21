@@ -1,17 +1,15 @@
 <? 
 
-tmp::header();
+header();
 
-tmp::reset();
+lib::reset();
 
 <div style='padding:20px;' >
    
     foreach(user::all()->like("roles","boardUser") as $user) {
-        tmp::exec("user",array(
-            "user" => $user,
-        ));
+		app()->tm("user")->param("user",$user)->exec();
     }
 
 </div>
 
-tmp::footer();
+footer();

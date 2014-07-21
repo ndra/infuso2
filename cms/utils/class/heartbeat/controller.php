@@ -10,7 +10,7 @@ class Controller extends Core\Controller {
 	}
 	
 	public function index() {
-	    \tmp::exec("/admin/utils/heartbeat");
+		app()->tm("/admin/utils/heartbeat")->exec();
 	}
 
 }

@@ -4,7 +4,7 @@ admin::header("Настройка компонентов");
 
 <form class='gfpkv491' method='post' >
 
-    tmp::exec("../menu");
+    exec("../menu");
 
     <textarea name='conf' >
         echo util::str($conf)->esc();
