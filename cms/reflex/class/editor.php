@@ -30,10 +30,10 @@ abstract class Editor extends Core\Controller {
     public function index_root($p) {
         $code = get_class($this).":".$p["method"];
         $collection = Collection::unserialize($code);
-        \Infuso\Template\Tmp::exec("/reflex/root",array(
+        app()->tm("/reflex/root",array(
             "editor" => $this,
             "collection" => $collection,
-        ));
+        ))->exec();
     }
     
     /**
