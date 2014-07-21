@@ -7,13 +7,13 @@ lib::modjsui();
 
 <div class='x0h4tfwmhnn' >
     <div style='width:300px;' class='left' >
-        tmp::region("left");
+        region("left");
     </div>
     <div class='top' >
-        tmp::region("top");
+        region("top");
     </div>
     <div class='center' >
-        tmp::region("center");
+        region("center");
     </div>
 </div>
 
