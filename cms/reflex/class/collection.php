@@ -128,7 +128,7 @@ class Collection extends Core\Component {
 	    $modes = $this->editor()->viewModes();
 	    $tmp = $modes[$this->param("viewMode")];
 
-		$tmp = \Infuso\Template\Tmp::get($tmp);
+		$tmp = app()->tm($tmp);
         $tmp->param("collection",$this);
         return $tmp;
 	}
