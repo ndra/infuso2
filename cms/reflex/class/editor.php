@@ -30,8 +30,8 @@ abstract class Editor extends Core\Controller {
     public function index_root($p) {
         $code = get_class($this).":".$p["method"];
         $collection = Collection::unserialize($code);
-        app()->tm("/reflex/root",array(
-            "editor" => $this,
+        app()->tm("/reflex/root")->param(array(
+            "editor" => $editor,
             "collection" => $collection,
         ))->exec();
     }
@@ -40,17 +40,14 @@ abstract class Editor extends Core\Controller {
      * Контроллер списка дочерних страниц
      **/
     public function index_child($p) {
-    
         $class = get_called_class();
         $editor = new $class($p["id"]);
-    
         $code = get_class($this).":".$p["method"].":".$editor->itemID();
         $collection = Collection::unserialize($code);
-        
-        \Infuso\Template\Tmp::exec("/reflex/children",array(
+		app()->tm("/reflex/children")->param(array(
             "editor" => $editor,
             "collection" => $collection,
-        ));
+        ))->exec();
     }
 
     /**
@@ -59,9 +56,9 @@ abstract class Editor extends Core\Controller {
     public function index_log($p) {
         $class = get_called_class();
         $editor = new $class($p["id"]);
-        \Infuso\Template\Tmp::exec("/reflex/log",array(
+		app()->tm("/reflex/log")->param(array(
             "editor" => $editor,
-        ));
+        ))->exec();
     }
     
     /**
@@ -70,9 +67,9 @@ abstract class Editor extends Core\Controller {
     public function index_meta($p) {
         $class = get_called_class();
         $editor = new $class($p["id"]);   
-        \Infuso\Template\Tmp::exec("/reflex/meta",array(
+		app()->tm("/reflex/meta")->param(array(
             "editor" => $editor,
-        ));
+        ))->exec();
     }
     
     public function title() {
