@@ -9,7 +9,7 @@ class ArrayField extends View {
 	 * Должна вернуть объект шаблона для редактирования поля
 	 **/
 	public function template() {
-		$tmp = \Infuso\Template\Tmp::get("/reflex/fields/array");
+		$tmp = app()->tm("/reflex/fields/array");
 		$tmp->param("field", $this->field);
 		return $tmp;
 	}

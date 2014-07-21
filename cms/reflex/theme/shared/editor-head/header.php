@@ -2,7 +2,7 @@
 
 <div class='qm15c9g910' >
     // Хлебные крошки
-    tmp::exec("breadcrumbs");       
+    exec("breadcrumbs");       
     <table >
         <tr>
             <td >

@@ -1,4 +1,4 @@
 <? 
 
-tmp::exec("header");
-tmp::exec("menu");
+exec("header");
+exec("menu");

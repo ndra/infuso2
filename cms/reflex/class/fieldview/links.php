@@ -9,7 +9,7 @@ class Links extends View {
 	 * Должна вернуть объект шаблона для редактирования поля
 	 **/
 	public function template() {
-		$tmp = \Infuso\Template\Tmp::get("/reflex/fields/links");
+		$tmp = app()->tm("/reflex/fields/links");
 		$tmp->param("field", $this->field);
         $tmp->param("editor", $this->editor());
 		return $tmp;

@@ -9,7 +9,7 @@ class Checkbox extends View {
 	 * Доолжна вернуть объект шаблона для редактирования поля
 	 **/
 	public function template() {
-		$tmp = \Infuso\Template\Tmp::get("/reflex/fields/checkbox");
+		$tmp = app()->tm("/reflex/fields/checkbox");
 		$tmp->param("field", $this->field);
 		return $tmp;
 	}

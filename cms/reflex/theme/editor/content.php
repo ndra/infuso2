@@ -1,5 +1,5 @@
 <? 
 
-tmp::exec("/reflex/shared/editor-head");
-tmp::exec("fields");
+exec("/reflex/shared/editor-head");
+exec("fields");
 

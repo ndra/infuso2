@@ -9,7 +9,7 @@ class NumberView extends View {
 	 * Должна вернуть объект шаблона для редактирования поля
 	 **/
 	public function template() {
-		$tmp = \Infuso\Template\Tmp::get("/reflex/fields/integer");
+		$tmp = app()->tm("/reflex/fields/integer");
 		$tmp->param("field", $this->field);
 		return $tmp;
 	}

@@ -10,7 +10,7 @@ class Str extends View {
 	 * Доолжна вернуть объект шаблона для редактирования поля
 	 **/
 	public function template() {
-		$tmp = \Infuso\Template\Tmp::get("/reflex/fields/textfield");
+		$tmp = app()->tm("/reflex/fields/textfield");
 		$tmp->param("field", $this->field);
 		return $tmp;
 	}

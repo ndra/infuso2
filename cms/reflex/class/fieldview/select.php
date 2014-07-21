@@ -9,7 +9,7 @@ class Select extends View {
 	 * Должна вернуть объект шаблона для редактирования поля
 	 **/
 	public function template() {
-		$tmp = \Infuso\Template\Tmp::get("/reflex/fields/select");
+		$tmp = app()->tm("/reflex/fields/select");
 		$tmp->param("field", $this->field);
 		return $tmp;
 	}
