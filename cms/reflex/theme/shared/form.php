@@ -5,11 +5,11 @@ foreach($editor->item()->fields() as $field) {
        
         $view = \Infuso\Cms\Reflex\FieldView\View::get($field);
         $view->setEditor($editor);
-        
-        tmp::exec("/reflex/fields/field-layout", array(
+
+		app()->tm("/reflex/fields/field-layout")->param(array(
             "label" => $field->label(),
             "view" => $view,
-        ));    
+        ))->exec();		
         
     }
 }   

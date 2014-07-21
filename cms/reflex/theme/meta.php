@@ -1,7 +1,7 @@
 <? 
 
-tmp::add("left","/reflex/layout/menu");
-tmp::add("center","/reflex/shared/editor-head");
-tmp::add("center","url");
-tmp::add("center","content");
-tmp::exec("/reflex/layout");
+add("left","/reflex/layout/menu");
+add("center","/reflex/shared/editor-head");
+add("center","url");
+add("center","content");
+app()->tm("/reflex/layout")->exec();

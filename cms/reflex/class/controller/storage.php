@@ -17,7 +17,7 @@ class Storage extends Core\Controller {
 	 **/
 	public function post_getWindow($p) {
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
-	    $tmp = \Infuso\Template\Tmp::get("/reflex/storage");
+	    $tmp = app()->tm("/reflex/storage");
 	    $tmp->param("editor",$editor);
 	    return $tmp->getContentForAjax();
 	}
@@ -26,7 +26,7 @@ class Storage extends Core\Controller {
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
         $storage = $editor->item()->storage();
         $storage->setPath($p["path"]);
-        $tmp = \Infuso\Template\Tmp::get("/reflex/storage/files-ajax");
+        $tmp = app()->tm("/reflex/storage/files-ajax");
 	    $tmp->param("storage",$storage);
 	    return array(
 	        "html" => $tmp->getContentForAjax(),

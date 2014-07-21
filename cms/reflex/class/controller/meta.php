@@ -18,9 +18,7 @@ class Meta extends \Infuso\Core\Controller {
     
     public function post_getMeta($p) {    
         $editor = \Infuso\CMS\Reflex\Editor::get($p["index"]);
-        return \tmp::get("/reflex/meta/content/ajax", array(
-            "editor" => $editor,
-        ))->getContentForAjax();
+		return app()->tm("/reflex/meta/content/ajax")->param("editor",$editor)->getContentForAjax();
     }
     
     public function post_create($p) {     
