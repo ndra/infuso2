@@ -7,9 +7,8 @@ $users = \Infuso\User\Model\User::all()->eq("id",$users);
     <table>
         foreach($users as $user) {
             <tr>
-                $flows = $task->workflow()->eq("userId", $user->id());
-                $time = $flows->select("sum(`end` - `begin`) as `time` ");
-                $time = $time[0]["time"];
+                
+                $time = $task->timeSpentProgress($user->id());
                 
                 <td>{$user->title()}</td>
                 <td>

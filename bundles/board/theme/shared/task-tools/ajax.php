@@ -3,6 +3,7 @@
 <div class='ttbuu8389u' data:task='{$task->id()}' >
 
     $tools = $task->tools();
+    
     foreach($tools as $section) {
         foreach($section as $item) {
             switch($item) {

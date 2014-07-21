@@ -234,17 +234,23 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Если вы делавете задачу уже два часа, но еще не сделали, timeSpent() вернет 2 * 3600
      * Время возвращается в секундах
      **/
-    public function timeSpentProgress() {
+    public function timeSpentProgress($userId = null) {
     
         if($this->status()->id() != TaskStatus::STATUS_IN_PROGRESS) {
             return 0;
         }
+        
+        $workflow = $this->workFlow();
+        
+        if($userId) {
+            $workflow->eq("userId", $userId);
+        }
 
         // Предыдущие интервалы
-        $a = $this->workFlow()->eq("charged",0)->sum("duration");
+        $a = $workflow->copy()->eq("charged",0)->sum("duration");
 
         // Текущий интервал
-        $b = $this->workFlow()->eq("charged",0)->isnull("end")->select("SUM(TIMESTAMPDIFF(SECOND,`begin`,now()))");
+        $b = $workflow->copy()->eq("charged",0)->isnull("end")->select("SUM(TIMESTAMPDIFF(SECOND,`begin`,now()))");
         $b = end(end($b))*1;
 
         return $a + $b;

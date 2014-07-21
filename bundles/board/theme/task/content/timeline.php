@@ -2,8 +2,6 @@
 
 <div class='hhraxv0jki' >
 
-    echo \util::now()->txt();
-
     $timeLog = $task->workflow();
     foreach($timeLog as $item) {
         var_export($item->data("duration"));
