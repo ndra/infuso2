@@ -20,7 +20,7 @@ class Menu extends Core\Controller {
 		));
 
         // Пробрасываем url из ajax (это нужно для подсветки активного раздела)
-        \tmp::param("url", $p["url"]);
+        app()->tm()->param("url", $p["url"]);
 
 		return $tmp->getContentForAjax();
 	}
@@ -35,7 +35,7 @@ class Menu extends Core\Controller {
 		));
 
         // Пробрасываем url из ajax (это нужно для подсветки активного раздела)
-        \tmp::param("url", $p["url"]);
+        app()->tm()->param("url", $p["url"]);
 
 		return $tmp->getContentForAjax();
 	}
