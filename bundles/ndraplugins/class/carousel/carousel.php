@@ -117,15 +117,15 @@ class Builder extends Core\Component {
     
         if(!self::$included) {
             \infuso\template\lib::modjs();
-            \tmp::jq();
-            \tmp::js(self::inspector()->bundle()->path()."/res/js/carousel.js");
+            \infuso\template\lib::jq();
+            app()->tm()->js(self::inspector()->bundle()->path()."/res/js/carousel.js");
             self::$included = true;
         }
         
         $params = json_encode($this->params());
-        \tmp::script("$(function(){ ndra.carousel.create('{$this->selector}',$params) });");
-        \tmp::head("<style>".$this->selector."{opacity:0;}</style>");
-        \tmp::script("\$(function() {\$('{$this->selector}').animate({opacity:1},500);})");
+        app()->tm()->script("$(function(){ ndra.carousel.create('{$this->selector}',$params) });");
+        app()->tm()->head("<style>".$this->selector."{opacity:0;}</style>");
+        app()->tm()->script("\$(function() {\$('{$this->selector}').animate({opacity:1},500);})");
     }
 
 }
