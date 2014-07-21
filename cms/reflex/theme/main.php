@@ -1,4 +1,4 @@
 <? 
 
-tmp::add("left","/reflex/layout/menu");
-tmp::exec("/reflex/layout");
+add("left","/reflex/layout/menu");
+app()->tm("/reflex/layout")->exec();
