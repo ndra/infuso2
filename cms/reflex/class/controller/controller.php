@@ -30,7 +30,7 @@ class Controller extends \Infuso\Core\Controller {
      * Основной контроллер каталога
      **/
     public static function index($p) {
-    	\Infuso\Template\Tmp::exec("/reflex/main");
+    	app()->tm("/reflex/main")->exec();
     }
     
     /**
