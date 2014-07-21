@@ -186,7 +186,6 @@ class classmapService extends service {
 	    "mod_field" => "infuso\\core\\model\\field",
 	    "mod_behaviour" => "infuso\\core\\behaviour",
 	    "mod_handler" => "infuso\\core\\handler",
-	    "tmp" => "\\infuso\\template\\tmp",
 	    "tmp_widget" => "\\infuso\\template\\widget",
 	    "tmp_template" => "\\infuso\\template\\template",
 	    "tmp_theme" => "\\infuso\\template\\theme",
