@@ -56,9 +56,7 @@ abstract class Editor extends Core\Controller {
     public function index_log($p) {
         $class = get_called_class();
         $editor = new $class($p["id"]);
-		app()->tm("/reflex/log")->param(array(
-            "editor" => $editor,
-        ))->exec();
+		app()->tm("/reflex/log")->param("editor",$editor)->exec();
     }
     
     /**
@@ -67,9 +65,7 @@ abstract class Editor extends Core\Controller {
     public function index_meta($p) {
         $class = get_called_class();
         $editor = new $class($p["id"]);   
-		app()->tm("/reflex/meta")->param(array(
-            "editor" => $editor,
-        ))->exec();
+		app()->tm("/reflex/meta")->param("editor",$editor)->exec();
     }
     
     public function title() {
@@ -253,7 +249,7 @@ abstract class Editor extends Core\Controller {
     }
     
     public function listItemTemplate() {
-        return \tmp::get("/reflex/shared/collection/items/list-ajax/item")
+        return app()->tm("/reflex/shared/collection/items/list-ajax/item")
             ->param("editor", $this);
     }
     
@@ -300,22 +296,18 @@ abstract class Editor extends Core\Controller {
     }
     
     public function templateMain() {
-        return \Infuso\Template\Tmp::get("/reflex/editor",array(
-            "editor" => $this,
-        ));
+		return app()->tm("/reflex/editor")->param("editor", $this);
     }
     
     /**
      * Возвращает шаблон формы редактирования элемента
      **/
     public function templateEditForm() {
-        return \Infuso\Template\Tmp::get("/reflex/editor/content/fields/form",array(
-            "editor" => $this,
-        ));
+		return app()->tm("/reflex/editor/content/fields/form")->param("editor",$this);
     }
     
     public function templateEditBeforeForm() {
-        return \Infuso\Template\Tmp::get("/reflex/noop");
+        return app()->tm("/reflex/noop");
     }
     
     /**

@@ -1,6 +1,6 @@
 <? 
 
 // Стандартный редактор элемента
-tmp::add("left","../layout/menu");
-tmp::add("center","content");
-tmp::exec("../layout");
+add("left","../layout/menu");
+add("center","content");
+app()->tm("../layout")->exec();
