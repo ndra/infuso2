@@ -11,7 +11,7 @@ if($nodeExpanded) {
     $h->AddClass("expanded");
 }
 $h->attr("data:node-id", $nodeId);
-if(trim($url,"/") == trim(\mod::url(tmp::param("url"))->path(),"/")) {
+if(trim($url,"/") == trim(\mod::url(app()->tm()->param("url"))->path(),"/")) {
     $h->addClass("active");
 }
 $h->begin();
