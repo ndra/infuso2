@@ -12,9 +12,7 @@ class ConstructorEditor extends Reflex\Editor {
 	}
 	
     public function templateMain() {
-        return \Infuso\Template\Tmp::get("/reflex/constructor",array(
-            "editor" => $this,
-		));
+		return app()->tm("/reflex/constructor")->param("editor",$this);
 	}
 
 }
