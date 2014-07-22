@@ -47,7 +47,7 @@ class Delayed implements Core\Handler {
     public function insertMessagesCallback($str) {
     
         try {
-        	$tmp = tmp::get("/mod/messages");
+        	$tmp = app()->tm("/mod/messages");
         	return $str[0].$tmp->rexec();
         } catch (\Exception $ex) {
 			echo $ex->getMessage();
