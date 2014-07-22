@@ -4,7 +4,7 @@
 
     $timeLog = $task->workflow();
     foreach($timeLog as $item) {
-        var_export($item->data("duration"));
+        echo $item->data("duration") / 3600;
         <br/>
     }
 
