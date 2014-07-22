@@ -20,10 +20,10 @@ class Field extends Core\Controller {
         $editor = \Infuso\CMS\Reflex\Editor::get($p["editor"]);
         $item = $editor->item();
         $field = $item->field($p["field"]);
-        return \tmp::get("/reflex/fields/links/add/")
-            ->param("editor", $editor)
-            ->param("field", $field)
-            ->getContentForAjax();
+		return app()->tm("/reflex/fields/links/add/")->param(array(
+            "editor" => $editor,
+            "field" => $field,  
+        ))->getContentForAjax();
     }
     
     /**
