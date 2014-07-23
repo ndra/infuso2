@@ -10,6 +10,10 @@ use  \Infuso\Core;
  **/
 class WorkFlow extends ActiveRecord\Record {
 
+    const STATUS_DRAFT = 0;
+    const STATUS_AUTO = 1;
+    const STATUS_MANUAL = 2;
+
     public static function recordTable() {
         return array (
             'name' => "board_task_workflow",
@@ -34,9 +38,14 @@ class WorkFlow extends ActiveRecord\Record {
                     'editable' => 1,
                     'label' => 'Время',
                 ), array (
-                    'name' => 'charged',
-                    'type' => 'checkbox',
-                    'label' => 'Учтено',
+                    'name' => 'status',
+                    'type' => 'select',
+                    'label' => 'Статус',
+                    'values' => array(
+                        self::STATUS_DRAFT => "Черновик",
+                        self::STATUS_AUTO => "Учтено автоматически",
+                        self::STATUS_MANUAL => "Учтено вручную"
+                    ),
                 ), array (
                     'name' => 'userId',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
@@ -49,7 +58,7 @@ class WorkFlow extends ActiveRecord\Record {
                     'editable' => '2',
                     'label' => 'Задача',
                     'class' => Task::inspector()->className(),
-                ),
+                ), 
             ),
         );
     }

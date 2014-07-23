@@ -10,15 +10,6 @@ use \Infuso\Core;
 class Task extends Base {
 
     /**
-     * Контроллер списка задач
-     **/
-    public function index_listTasks($p) {
-        $this->app()->tm()->exec("/board/task-list",array(
-            "status" => $p["status"],
-        ));
-    }
-    
-    /**
      * Возвращает html списка заадч
      **/
     public function post_getTasks($p) {
@@ -124,6 +115,14 @@ class Task extends Base {
             ->param("task", $task)
             ->getContentForAjax();
     }
+    
+    public function post_revisionDlgContent($p) {
+        $task = \Infuso\Board\Model\Task::get($p["taskId"]);
+        return app()->tm()
+            ->template("/board/shared/task-tools/revision-dlg-ajax")
+            ->param("task", $task)
+            ->getContentForAjax();
+    }
 
     /**
      * Взять задачу
@@ -219,12 +218,34 @@ class Task extends Base {
     }
     
     /**
+     * Отправляет задачу на доработку
+     **/
+    public function post_revisionTask($p) {
+
+        $task = Model\Task::get($p["taskId"]);
+
+        if(!\user::active()->checkAccess("board/revisionTaskToBacklog",array(
+            "task" => $task,
+        ))) {
+            app()->msg(\user::active()->errorText(),1);
+            return;
+        }
+
+        $task->data("status",Model\TaskStatus::STATUS_BACKLOG);
+        $task->log(array(
+            "text" => $p["comment"],
+            "type" => Model\Log::TYPE_TASK_REVISED,
+        ));
+
+        return true;
+    }
+    
+    /**
      * Задача выполнена
      **/
     public function post_doneTask($p) {
 
         $task = Model\Task::get($p["taskId"]);
-        $time = $p["time"];
 
         if(!\user::active()->checkAccess("board/doneTask",array(
             "task" => $task,
@@ -233,12 +254,17 @@ class Task extends Base {
             return;
         }
 
-        $task->data("status",Model\taskStatus::STATUS_DONE);
-        $task->logCustom(array(
+        $task->data("status", Model\taskStatus::STATUS_CHECKOUT);
+        $task->log(array(
             "text" => $p["comment"],
-            "time" => $time,
             "type" => Model\Log::TYPE_TASK_DONE,
         ));
+        
+        $time = $p["time"];
+        $time = array_map(function($item) {
+            return $item * 3600;
+        }, $p["time"]);
+        $task->chargeTime($time);
 
         return true;
     }

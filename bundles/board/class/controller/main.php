@@ -10,11 +10,7 @@ class Main extends Base {
     }
 
     public  function index() {
-        $this->app()->tm()->exec("/board/worker");
-    }
-
-    public  function index_sorttest() {
-        $this->app()->tm()->exec("/board/sort");
+        $this->app()->tm()->exec("/board/task-list");
     }
 
 }

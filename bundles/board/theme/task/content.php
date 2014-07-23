@@ -12,11 +12,8 @@
         exec("files");  
     </div>
     
+    exec("/board/shared/comments");   
+    
     exec("timeline");
 
-    
-    /*<div class='right' style='width:300px;border-left:1px solid #ccc;' >
-        exec("/board/shared/comments");                
-    </div> */
-                
 </div>

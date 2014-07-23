@@ -226,7 +226,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function updateTimeSpent() {
-        $this->data("timeSpent",$this->workflow()->sum("duration"));
+        $this->data("timeSpent",$this->workflow()->eq("status",Workflow::STATUS_MANUAL)->sum("duration"));
     }
 
     /**
@@ -247,14 +247,27 @@ class Task extends \Infuso\ActiveRecord\Record {
         }
 
         // Предыдущие интервалы
-        $a = $workflow->copy()->eq("charged",0)->sum("duration");
+        $a = $workflow->copy()->eq("status",Workflow::STATUS_DRAFT)->sum("duration");
 
         // Текущий интервал
-        $b = $workflow->copy()->eq("charged",0)->isnull("end")->select("SUM(TIMESTAMPDIFF(SECOND,`begin`,now()))");
+        $b = $workflow->copy()->eq("status",Workflow::STATUS_DRAFT)->isnull("end")->select("SUM(TIMESTAMPDIFF(SECOND,`begin`,now()))");
         $b = end(end($b))*1;
 
         return $a + $b;
 
+    }
+    
+    public function chargeTime($users) {
+        foreach($users as $user => $duration) {
+            $x = $this->workflow()->create(array(
+                "userId" => $user,
+                "begin" => \util::now()->shift(-$duration),
+                "end" => \util::now(),
+                "status" => Workflow::STATUS_MANUAL,
+            ));
+        }
+        $this->workflow()->eq("status",Workflow::STATUS_DRAFT)->data("status",Workflow::STATUS_AUTO);
+        $this->updateTimeSpent();
     }
 
     public function getLog() {

@@ -22,6 +22,9 @@
                 case "resume":
                     <input type='button' class='resume' title='Возобновить задачу' />
                     break;
+                case "revision":
+                    <input type='button' class='revision' title='Отправить на доработку' />
+                    break;
                 case "problems":
                     <input type='button' class='problems' title='Сообщить о проблеме' />
                     break;

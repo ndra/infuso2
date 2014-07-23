@@ -2,9 +2,10 @@
 
 header();
 Lib::reset();
-modjs();
+
 exec("/ui/shared");
 
+modjs();
 lib::modJSUI();
 
 <div class='layout-slpod3n5sa' >

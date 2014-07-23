@@ -3,7 +3,7 @@
 $users = $task->workflow()->distinct("userId");
 $users = \Infuso\User\Model\User::all()->eq("id",$users);
 
-<form class='w3T2t7XKGU' >
+<form class='w3T2t7XKGU' data:task='{$task->id()}' >
 
     <table>
         foreach($users as $user) {

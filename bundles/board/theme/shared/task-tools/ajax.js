@@ -53,6 +53,14 @@ $(function() {
                             taskId:id
                         });
                         break;
+                    case "revision":
+                        $.window({
+                            call: {
+                                cmd: "infuso/board/controller/task/revisionDlgContent",
+                                taskId:id
+                            }
+                        });
+                        break;
                 }
                 return;
             }

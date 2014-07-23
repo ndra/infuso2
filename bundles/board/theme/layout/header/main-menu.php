@@ -2,18 +2,7 @@
 
 <div class='x55qv4lhb8m' >
 
-    <a class='item' href='{action("infuso\\board\\controller\\task", "listtasks")}' >Доска</a>
-
-    /*foreach(\Infuso\Board\Model\TaskStatus::all() as $status) {
-        if($status->id() != \Infuso\Board\Model\TaskStatus::STATUS_DRAFT) {
-            $url = action("infuso\\board\\controller\\task","listtasks")->param("status", $status->id())->url();
-            <a class='item' href='{$url}' >
-                echo $status->title();
-                $n = $status->visibleTasks()->count();
-                <span class='count' >{$n}</span>
-            </a>
-        }
-    } */
+    <a class='item' href='{action("infuso\\board\\controller\\main")}' >Доска</a>
     <i>
         <a href='#' menu:id='reports' class='item' >Отчеты</a>
         <a href='#' menu:id='conf' class='item' >Настройки</a>        

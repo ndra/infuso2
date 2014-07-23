@@ -22,6 +22,10 @@
             background: url("@{bundle}res/img/@{pack}/cancel.png") center center no-repeat;
         }
         
+        .revision {
+            background: url("@{bundle}res/img/@{pack}/revision.png") center center no-repeat;
+        }
+        
         .stop {
             background: url("@{bundle}res/img/@{pack}/stop.png") center center no-repeat;
         }
