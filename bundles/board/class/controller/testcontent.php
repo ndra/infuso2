@@ -32,11 +32,13 @@ class TestContent extends Core\Controller {
         $testTasks = self::inspector()->bundle()->path()->cd("testcontent/task.txt")->data();
         $testTasks = explode("\n", $testTasks);     
            
-        foreach($testTasks as $taskText) {
-            Model\Task::all()->create(array(
-                "text" => $taskText,
-                "projectId" => Model\Project::all()->rand()->id(),
-            ));
+        for($i=0;$i<5;$i++) {
+            foreach($testTasks as $taskText) {
+                Model\Task::all()->create(array(
+                    "text" => $taskText,
+                    "projectId" => Model\Project::all()->rand()->id(),
+                ));
+            }
         }
         
         app()->tm()->footer();

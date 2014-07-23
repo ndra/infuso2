@@ -1,21 +1,15 @@
 .MhpEuDh2NX {
     
-    .status-list-wrapper {
-        height:30px;
-        
-        span {
-            cursor: pointer;
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-        
-    }
-    
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+
     .status-list {
         
-        position:fixed;
+        position: fixed;
+        z-index: 1;
         padding: 10px 20px;
+        background: white;
 
         span {
             font-size: 22px;

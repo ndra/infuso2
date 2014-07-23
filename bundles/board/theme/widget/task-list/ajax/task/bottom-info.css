@@ -4,6 +4,7 @@
     color: gray;
     position: relative;
     padding-top: 5px;
+    height: 12px;
     
     .time {
         position: absolute;

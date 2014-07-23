@@ -29,7 +29,13 @@ mod.msg = function(text,error) {
 
 mod.handlers = {}
 
-mod.on = function(name,handler, element) {
+/**
+ * Подписывает на событие
+ * name - имя события
+ * handler - функция-обработчик
+ * element - элемент, в контексте которого будет выполнятся обработчик   
+ **/ 
+mod.on = function(name, handler, element) {
 
     if(!element) {
         element = $(document);
@@ -197,4 +203,11 @@ mod.init(document,function() {
     $(this).keydown(function(event) { 
         mod.fire("keydown", event);
     });
+    $(this).mousemove(function(event) { 
+        mod.fire("mousemove", event);
+    });
+    $(this).mouseup(function(event) { 
+        mod.fire("mouseup", event);
+    });
 });
+
