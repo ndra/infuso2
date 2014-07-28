@@ -31,15 +31,32 @@ class Attachment extends Core\Controller {
         $file = $_FILES["file"];
         $path = $p["sessionHash"] ? "/log/".$p["sessionHash"] : "/";
         $task->storage()->setPath($path)->addUploaded($file["tmp_name"],$file["name"]);
+        
+        app()->fire("board/task/attachments-changed", array(
+            "taskId" => $task->id(),
+            "deliverToClient" => true,
+		));
 
+    }
+    
+    /**
+     * Удаляет файл из задачи
+     **/
+    public function post_delete($p) {
+		$task = Model\Task::get($p["taskId"]);
+        $task->storage()->delete($p["path"]);
+        app()->fire("board/task/attachments-changed", array(
+            "taskId" => $task->id(),
+            "deliverToClient" => true,
+		));
     }
     
     /**
      * Возвращает html списка прикрепленных файлов для страницы задачи.
      **/
     public function post_getAttachments($p) {
-        $task = \Infuso\Board\Model\Task::get($p["taskId"]);
-        $html = \tmp::get("/board/task/content/files/ajax")
+        $task = Model\Task::get($p["taskId"]);
+        $html = app()->tm("/board/task/content/files/ajax")
             ->param("task", $task)
             ->getContentForAjax();
         return array(

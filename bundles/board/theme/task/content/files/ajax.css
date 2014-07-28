@@ -6,7 +6,7 @@
         margin: 0 20px 20px 0;
         display:inline-block;
         position: relative;
-    
+        
         img {
             box-shadow: 0 0 10px rgba(0,0,0,.2);    
             width:150px;
@@ -21,7 +21,14 @@
             right:0;
             width: 32px;
             height: 32px;
-            background: red;
+            background: url("@{bundle}res/img/icons24/cancel.png") center center no-repeat;
+            opacity: .4;
+            
+            &:hover {
+                opacity: 1;
+                background: red url("@{bundle}res/img/icons24inverse/cancel.png") center center no-repeat;
+            }
+            
         }
         
         .name {
