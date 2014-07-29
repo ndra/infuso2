@@ -3,19 +3,22 @@
     height: 100%;
     width: 100%;
     overflow: auto;
-
-    .status-list {
-        
-        position: fixed;
-        z-index: 1;
-        padding: 10px 20px;
-        background: white;
-
-        span {
-            font-size: 22px;
-            margin-right: 20px;
-        }
-        
+    white-space: nowrap;
+    
+    h2 {
+        font-size: 18px;
+        font-weight: normal;
+        margin: 0 0 10px;
+        opacity: .5;
     }
     
+    .list-wrapper {
+        display: inline-block;
+        white-space: normal;
+        box-sizing: border-box;
+        width: 1px;
+        height: 100%;
+        padding: 20px;
+    }
+
 }

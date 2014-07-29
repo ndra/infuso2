@@ -3,7 +3,7 @@ mod.init(".MhpEuDh2NX", function() {
     var $container = $(this);
     
     // Перемотка 
-    var $tabs = $container.find("> .status-list-wrapper > .status-list span");
+    /*var $tabs = $container.find("> .status-list span");
     var $tabsData = $container.find("> table > tbody > tr > td");
     $tabs.each(function(n) {
         $(this).click(function() {
@@ -13,7 +13,7 @@ mod.init(".MhpEuDh2NX", function() {
                 scrollLeft: offset
             }, 500);
         })
-    });
+    }); */
     
     var drag = false;
     var sx = 0;
@@ -46,5 +46,26 @@ mod.init(".MhpEuDh2NX", function() {
     mod.on("mouseup", function() {
         drag = false;
     }, $container);
+    
+    // Скролл колесиком
+    $(document).on("mousewheel", function(event) {
+        var d = event.originalEvent.wheelDelta;
+        $container.scrollLeft($container.scrollLeft() + d);
+    })
+    
+    // Растягивание списка задач по горизонтали
+    $container.find(".list-wrapper").each(function() {
+        var $e = $(this);
+        $e.width(120*2 + 20);
+        /*setInterval(function() {
+            var h1 = $e.get(0).scrollHeight;
+            var h2 = $e.outerHeight();
+            if(h1 > h2) {
+                $e.width($e.width() + 50);
+            }
+        }, 100);*/
+        
+        //$e.width(120 * 3 + 10 * 2 + 20 * 2)
+    });
     
 });

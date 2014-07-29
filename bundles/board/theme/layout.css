@@ -7,8 +7,9 @@ html,body {
     height:100%;
     
     & > .left {
-        border-right: 4px solid #ccc;
+        //border-right: 4px solid #ccc;
         overflow: auto;
+        box-shadow: 0 0 20px rgba(0,0,0,.3);
     }
     
     & > .center {

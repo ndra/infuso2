@@ -10,10 +10,8 @@
         height: 120px;        
         font-size: 11px;
         line-height: 1.1;
-        //margin-bottom: 5px;
         cursor: pointer;
         border:1px solid rgba(0,0,0,.1);
-        //padding: 6px;
         position: relative;
         box-shadow: 0 0 2px rgba(0,0,0,.2);
         overflow: hidden;

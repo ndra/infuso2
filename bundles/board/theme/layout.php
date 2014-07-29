@@ -23,9 +23,4 @@ lib::modJSUI();
 
 </div>
 
-<div class='task-container-slpod3n5sa' style='display:none;' >
-    <div style='width:800px;margin: 0 auto; background: white;' class='ajax' >
-    </div>
-</div>
-
 footer();
