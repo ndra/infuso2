@@ -9,6 +9,7 @@
     $h->style("background", \Infuso\Board\Color::get($task->project()->id()));
     if($task->data("group")) {
         $h->style("border-radius", "40px");
+        $h->addClass("group");
     }
     $h->begin();
 

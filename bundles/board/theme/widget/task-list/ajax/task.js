@@ -7,10 +7,20 @@ mod.init(".i95bnu5fvm", function() {
  
     // Нажатие на задачу
     $task.click(function(event) {
-        $(this).trigger({
-            type: "board/openTask",
-            taskId: id
-        });
+        
+        if($task.find(".sticker").hasClass("group")) {
+            $(this).trigger({
+                type: "board/openGroup",
+                groupId: id
+            });    
+        } else {
+            $(this).trigger({
+                type: "board/openTask",
+                taskId: id
+            });    
+        }
+        
+        
     });
     
     // В начале перетаскивания добавляем в dataTransfer информацию о задача

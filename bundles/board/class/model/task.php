@@ -102,6 +102,12 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'type' => 'checkbox',
                     'label' => 'Это граппа задач',
                     'editable' => 2,
+                ), array (
+                    'name' => 'parent',
+                    'type' => 'link',
+                    "class" => get_class(),
+                    'label' => 'Группа',
+                    'editable' => 2,
                 ),
             ),
         );

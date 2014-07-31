@@ -27,10 +27,10 @@ class Task extends Base {
         if($search = trim($p["search"])) {
             $tasks->search($search);
         }
-        
-        if(($tag = trim($p["tag"])) && $tag!="*") {
-            $tasks->useTag($tag);
-        }
+
+		if($groupId = $p["groupId"]) {
+		    $tasks->eq("parent", $groupId);
+		}
 
         $tasks->page($p["page"]);
         

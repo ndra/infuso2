@@ -1,6 +1,8 @@
 mod.init(".task-list-rpu80rt4m0", function() {
     
     var $container = $(this);
+    
+    var groupId = 0;
 
     // Загружает список задач
     var load = function() {
@@ -12,7 +14,8 @@ mod.init(".task-list-rpu80rt4m0", function() {
         
         var callData = {
             cmd: "Infuso/Board/Controller/Task/getTasks",
-            status: $container.attr("data:status")
+            status: $container.attr("data:status"),
+            groupId: groupId
         };
         
         $container.find(".c-toolbar").triggerHandler({
@@ -34,6 +37,11 @@ mod.init(".task-list-rpu80rt4m0", function() {
     
     // Запускаем загрузку с задержкой, чтобы сработали обработчики событий
     setTimeout(load,0);
+    
+    $container.on("board/openGroup", function(event) {
+        groupId = event.groupId;
+        load();
+    });
     
     // При нажатии на F5 перегружаем список задач            
     $(document).keydown(function(event) {
@@ -58,7 +66,9 @@ mod.init(".task-list-rpu80rt4m0", function() {
         var height = $container.height() - 50;
         var itemHeight = 140;
         var itemWidth = 130;
-        var n = $container.find(".ajax-container .task").length;
+        // Число стикеров
+        // +1 т.к. у нас есть кнопка добавления задачи
+        var n = $container.find(".ajax-container .task").length + 1;
         var nv = Math.floor(height / itemHeight);
         var nh = Math.ceil(n / nv);
         $container.width(nh * itemWidth);
