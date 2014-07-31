@@ -17,7 +17,7 @@ $h->begin();
         exec("toolbar");
     }
     
-    <div class='ajax-container center' >
+    <div class='ajax-container' >
     </div>
     
     // Индикатор загрузки

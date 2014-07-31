@@ -12,12 +12,12 @@
         opacity: .5;
     }
     
-    .list-wrapper {
+    .task-list {
         display: inline-block;
         white-space: normal;
         box-sizing: border-box;
-        width: 1px;
         height: 100%;
+        overflow: hidden;
         padding: 20px;
     }
 

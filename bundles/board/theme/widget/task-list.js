@@ -27,7 +27,7 @@ mod.init(".task-list-rpu80rt4m0", function() {
                 type:"task/load",
                 ajaxData: data
             });
-           // $container.layout("update");
+            resize();
         });
     
     }
@@ -54,6 +54,16 @@ mod.init(".task-list-rpu80rt4m0", function() {
     
     $(window).focus(load);
     
-    //$container.layout();
+    var resize = function() {
+        var height = $container.height() - 50;
+        var itemHeight = 140;
+        var itemWidth = 130;
+        var n = $container.find(".ajax-container .task").length;
+        var nv = Math.floor(height / itemHeight);
+        var nh = Math.ceil(n / nv);
+        $container.width(nh * itemWidth);
+    }
+    
+    setInterval(resize, 1000);
     
 });

@@ -2,19 +2,6 @@ mod.init(".MhpEuDh2NX", function() {
     
     var $container = $(this);
     
-    // Перемотка 
-    /*var $tabs = $container.find("> .status-list span");
-    var $tabsData = $container.find("> table > tbody > tr > td");
-    $tabs.each(function(n) {
-        $(this).click(function() {
-            var $data = $tabsData.eq(n);
-            var offset = $data.position().left + $container.scrollLeft();
-            $container.animate({
-                scrollLeft: offset
-            }, 500);
-        })
-    }); */
-    
     var drag = false;
     var sx = 0;
     var sy = 0;
@@ -51,21 +38,6 @@ mod.init(".MhpEuDh2NX", function() {
     $(document).on("mousewheel", function(event) {
         var d = event.originalEvent.wheelDelta;
         $container.scrollLeft($container.scrollLeft() + d);
-    })
-    
-    // Растягивание списка задач по горизонтали
-    $container.find(".list-wrapper").each(function() {
-        var $e = $(this);
-        $e.width(120*2 + 20);
-        /*setInterval(function() {
-            var h1 = $e.get(0).scrollHeight;
-            var h2 = $e.outerHeight();
-            if(h1 > h2) {
-                $e.width($e.width() + 50);
-            }
-        }, 100);*/
-        
-        //$e.width(120 * 3 + 10 * 2 + 20 * 2)
     });
     
 });
