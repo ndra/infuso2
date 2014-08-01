@@ -9,37 +9,48 @@ class mod_json extends \infuso\core\controller {
 	    return true;
 	}
 	
-	public function index() {
-
-		ob_start();
-
+	public function index() { 
+		
 		header("Content-type: text/plain; charset=utf-8");
-		header("Content-Disposition: inline; filename=result.txt");
+        
+		$data = $_POST["data"];
+		$data = json_decode($data,1);   
+        
+        $results = array();      
+        
+        // Обрабатываем пачку команд
+        $n = 0;
+        foreach($data["requests"] as $request) {
 
-		try {
-
-			$data = $_POST["data"];
-			$data = json_decode($data,1);
-
-			$jret = \infuso\core\post::process(
-				$data,
-				$_FILES,
-				$status
-			);
-
-			// Если скрипт вывел что-нибудь в поток, выводим это как сообщение
-			$txt = ob_get_clean();
-			if($txt) {
-				app()->msg($txt,1);
-			}
-
-		} catch(Exception $ex) {
-
-			app()->msg("<b>Exception:</b> ".$ex->getMessage(),1);
-
-		}
-
-        \Infuso\Core\Defer::callDeferedFunctions();
+    		try {
+            
+               ob_start();
+                
+                $result = \infuso\core\post::process(
+    				$request,
+    				$_FILES,
+    				$success
+    			);
+    
+    			$results[$n] = array(
+                    "data" => $result,
+                    "success" => $success 
+                );
+    
+    			// Если скрипт вывел что-нибудь в поток, выводим это как сообщение 			
+    			if($txt = ob_get_clean()) {
+    				app()->msg($txt,1);
+    			}  
+                
+                \Infuso\Core\Defer::callDeferedFunctions();   
+    
+    		} catch(Exception $ex) { 
+    			app()->msg("<b>Exception:</b> ".$ex->getMessage(),1);
+    		}
+            
+            $n++;
+            
+        }
 
 		// Собираем массив сообщений
 		$messages = array();
@@ -62,8 +73,7 @@ class mod_json extends \infuso\core\controller {
 		$ret = array(
 			"messages" => $messages,
 			"events" => $events,
-			"data" => $jret,
-			"completed" => !!$status,
+			"results" => $results,
 		);
 
 

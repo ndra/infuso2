@@ -76,69 +76,105 @@ mod.fire = function(name,params) {
     }
 }
 
-mod.uniqueCalls = {};
+mod.uniqueCalls = {};               
 
+mod.requests = [];
+
+mod.call = function(params, onSuccess, conf) {
+
+    mod.requests.push({
+        params: params,
+        onSuccess: onSuccess
+    })
+
+};
 
 /**
  * Отправляет команду на сервер
  **/
-mod.call = function(params,fn,conf) {
+mod.send = function() {
+
+    if(!mod.requests.length) {
+        return;
+    }
 
     if (!window.JSON) {
         return;
-    }
+    }    
     
-    if(!conf) {
-        conf = {}
-    }
+    var requests = [];
+    var onSuccess = [];
+    
+    for(var i in mod.requests) {
+        requests[i] = mod.requests[i].params;
+        onSuccess[i] = mod.requests[i].onSuccess;
+    }    
+    
+    mod.requests = [];
     
     var fdata = new FormData();
-    fdata.append("data", JSON.stringify(params));   
-    
-    if(conf.files) {
-
-        if(conf.files.constructor === Object) {
-
-            for(var i in conf.files) {
-                fdata.append(i, conf.files[i]);
-            }
-
-        } else {
-            $(conf.files).find("input[type=file]").each(function() {
-                fdata.append(this.name, this.files[0]);
-            });
-        }
-    }
-    
-    // Если зазад уникальный id запроса, удаляем предыдущие запросы с таким id
-    if(conf.unique) {
-        var xhr = this.uniqueCalls[conf.unique];
-        if(xhr) {
-            xhr.abort();
-        }
-	}
-    
+    fdata.append("data", JSON.stringify({
+        requests: requests
+    })); 
+   
     var xhr = $.ajax({
-        url: "/mod_json/?cmd=" + params.cmd, // Добавляем команду к get-запросу (для логов)
+        url: "/mod_json/",
         data: fdata,
         contentType: false,
         processData: false,        
-        type:"POST",
-        success:function(d){
-            mod.handleCmd(true,d,fn);
+        type: "POST",
+        success: function(d) {
+            mod.handleCmd(d, onSuccess);
         },
         error:function(r) {
-            if(r.readyState!=0) {
+            if(r.readyState != 0) {
                 mod.handleCmd(false,r.responseText);
             }
         }
     });
     
-    if(conf.unique) {
-        this.uniqueCalls[conf.unique] = xhr;
+};
+
+setInterval(mod.send, 50);
+
+mod.handleCmd = function(response, onSuccess) {
+
+    // Пробуем разобрать ответ от сервера
+    try{
+        eval("var data="+response);
+    } catch(ex) {
+        mod.msg("Failed parse JSON", 1);
     }
     
-},
+    // Выводим сообщения
+    for(var i = 0; i < data.messages.length; i++) {
+        var msg = data.messages[i];
+        mod.msg(msg.text, msg.error);
+    }      
+    
+    // Обрабатываем события
+    for(var i = 0; i < data.events.length; i++) {
+        var event = data.events[i];
+        mod.fire(event.name, event.params);
+    }
+    
+    for(var i in data.results) {
+    
+        var result = data.results[i];
+
+        // При ошибке разбора показываем уведомление
+        if(!result.success) {
+            mod.msg(ret.text,1);
+            return;
+        }
+    
+        if(onSuccess[i]) {                
+            onSuccess[i](result.data);
+        }
+    
+    }
+
+}
 
 mod.parseCmd = function(str) {
 
@@ -158,38 +194,12 @@ mod.parseCmd = function(str) {
     }      
     
     // Обрабатываем события
-    for(var i=0;i<data.events.length;i++) {
+    for(var i = 0; i < data.events.length; i++) {
         var event = data.events[i];
-        mod.fire(event.name,event.params);
+        mod.fire(event.name, event.params);
     }
     
-    return {
-        success:data.completed,
-        data:data.data,
-        meta:data.meta
-    }
-}
-
-mod.handleCmd = function(success,response,fn) {
-
-    // Если сам запрос к серверу не увенчался успехом
-    if(!success) {
-        mod.msg(response,1);
-        return;
-    }
-
-    // Пробуем разобрать ответ от сервера
-    var ret = mod.parseCmd(response);
-
-    // При ошибке разбора показываем уведомление
-    if(!ret.success) {
-        mod.msg(ret.text,1);
-        return;
-    }
-
-    if(fn)
-        fn(ret.data);
-
+    return data.results;
 }
 
 mod.init = function(selector, fn) {   

@@ -5,6 +5,7 @@
     overflow: auto;
     white-space: nowrap;
     
+    
     h2 {
         font-size: 18px;
         font-weight: normal;
@@ -16,8 +17,8 @@
         display: inline-block;
         white-space: normal;
         box-sizing: border-box;
-        height: 100%;
-        overflow: hidden;
+        min-height: 100%;
+        overflow: auto;
         padding: 20px;
     }
 

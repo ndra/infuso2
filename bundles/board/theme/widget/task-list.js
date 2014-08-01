@@ -63,7 +63,7 @@ mod.init(".task-list-rpu80rt4m0", function() {
     $(window).focus(load);
     
     var resize = function() {
-        var height = $container.height() - 50;
+        var height = $(window).height() - 200;
         var itemHeight = 140;
         var itemWidth = 130;
         // Число стикеров
@@ -71,7 +71,8 @@ mod.init(".task-list-rpu80rt4m0", function() {
         var n = $container.find(".ajax-container .task").length + 1;
         var nv = Math.floor(height / itemHeight);
         var nh = Math.ceil(n / nv);
-        $container.width(nh * itemWidth);
+        var maxWidth = $(window).width() * 0.9; 
+        $container.width(Math.min(maxWidth,nh * itemWidth));
     }
     
     setInterval(resize, 1000);
