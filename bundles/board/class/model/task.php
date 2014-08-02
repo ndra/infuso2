@@ -28,9 +28,6 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
                 ), array (
-                    'name' => 'dataHash',
-                    'type' => 'string',
-                ), array (
                     'name' => 'text',
                     'label' => "Описание задачи",
                     'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
@@ -163,8 +160,6 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Триггер перед сохранением хадачи
      **/
     public function beforeStore() {
-
-        $this->data("dataHash",\util::id());
 
         // Устанавливаем новую дату изменения только если задача активна
         // Иначе мы можем влезть в статистику по прошлому периоду

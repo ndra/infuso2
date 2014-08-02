@@ -449,13 +449,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
 
     /**
-     * Добавляет новую запись в базу
-     **/
-    public static function create($class, $data = array(), $keepID = false) {
-		return mod::service("ar")->create($class,$data,$keepID);
-    }
-
-    /**
      * Создает для данного объекта запись в базе
      * @todo вернуть триггеры
      **/
@@ -489,7 +482,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * Сохраняет созданный объект в базу
      * @todo сделать сохранение объектов в буффер
      **/
-    private final function storeCreated($keepID = false) {
+    private final function storeCreated() {
     
 		$event = new event("beforeStore",array(
 		    "item" => $this,
@@ -504,9 +497,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
         // Вставляем в таблицу
         $data = array();
         foreach($this->fields() as $field) {
-            if($field->name()!="id" || $keepID) {
-                $data[$this->normalizeColName($field->name(),$table)] = $field->mysqlValue();
-            }
+            $data[$this->normalizeColName($field->name(),$table)] = $field->mysqlValue();
         }
         $insert = " (".implode(",",array_keys($data)).") values (".implode(",",$data).") ";
         $query = "insert into `$table` $insert ";

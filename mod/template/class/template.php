@@ -230,12 +230,12 @@ class Template extends Generic {
             $hash = $this->file().":".$this->cache.":".serialize($p);
             
             // Пробуем достать данные их кэша
-            $cached = mod_cache::get($hash);
+            $cached = service("cache")->get($hash);
 
             // Если в кэше еще нет шаблона
             if(!$cached || $this->recache) {
 
-                core\profiler::beginOperation("tmp","cached miss",$this->template());
+                Core\profiler::beginOperation("tmp","cached miss",$this->template());
 
                 $this->processor()->pushConveyor();
                 ob_start();
@@ -245,24 +245,24 @@ class Template extends Generic {
                 
                 
                 if(!$conveyor->preventCaching()) {
-                    mod_cache::set($hash,$cached, $this->ttl);
-                    mod_cache::set($hash.":conveyor",$conveyor->serialize(), $this->ttl);
+                    service("cache")->set($hash,$cached, $this->ttl);
+                    service("cache")->set($hash.":conveyor",$conveyor->serialize(), $this->ttl);
                 }
 
-                core\profiler::endOperation();
+                Core\profiler::endOperation();
 
 
             // Если шаблон в кэше
             } else {
 
-                core\profiler::beginOperation("tmp","cached hit",$this->template());
+                Core\profiler::beginOperation("tmp","cached hit",$this->template());
 
                 // Выводим содержимое из кэша
                 echo $cached;
 
                 // Загружаем и выполняем конвеер из кэша (подключенные скрипты, тили и т.п.)
-                $conveyorData = mod_cache::get($hash.":conveyor");
-                $conveyor = tmp_conveyor::unserialize($conveyorData);
+                $conveyorData = service("cache")->get($hash.":conveyor");
+                $conveyor = Conveyor::unserialize($conveyorData);
 
                 $this->processor()->conveyor()->mergeWith($conveyor);
 

@@ -274,10 +274,9 @@ class User extends ActiveRecord\Record {
      **/
     public final function setVerification() {
         if(!$this->data("email")) {
-            return this;
+            return $this;
         }
         $this->data("verified",1);
-        $this->log("Адрес электронной почты подтвержден");
         return $this;
     }
 
