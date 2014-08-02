@@ -1,9 +1,9 @@
 .RR83prEY3c {
     
     display: inline-block;
-    margin: 20px;
     width: 300px;
     border: 1px solid #ccc;
+    overflow: hidden;
     
     .day {
         
@@ -21,13 +21,14 @@
         
         .workflow-item {
             position: absolute;
-            top: 0;
-            height: 20px;
+            height: 15px;
             &.status-1 {
                 background: rgba(255, 0, 0, .5);
+                top: 0;
             }
             &.status-2 {
                 background: rgba(0, 255, 0, .5);
+                top: 15px;
             }
         }
         

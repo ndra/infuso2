@@ -2,7 +2,7 @@
 
 <div class='dg13nhbck2' >
 
-    echo $user->title();
+    <h2>{$user->title()}</h2>
     
     <table> 
         <tr>
