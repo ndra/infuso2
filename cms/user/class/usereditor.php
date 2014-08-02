@@ -64,7 +64,7 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	}
 	
 	public function listItemTemplate() {
-	    return \tmp::get("/user/list-item")
+	    return app()->tm("/user/list-item")
 			->param("editor", $this);
 	}
 

@@ -34,10 +34,8 @@ mod.init(".MhpEuDh2NX", function() {
         drag = false;
     }, $container);
     
-    // Скролл колесиком
-    $(document).on("mousewheel", function(event) {
-        var d = event.originalEvent.wheelDelta;
-        $container.scrollLeft($container.scrollLeft() + d);
+    $container.on("scrollToElement", function() {
+        mod.msg("scroll to element");
     });
     
 });

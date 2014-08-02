@@ -10,8 +10,10 @@
         display: none;
         position: absolute;
         left: 50%;
-        margin-left: -110px;
-        top: 50px;
+        top: 300px;
+        background: rgba(255,255,255, .5);
+        z-index: 1;
+        padding: 10px;
     }
     
     & > .ajax-container {

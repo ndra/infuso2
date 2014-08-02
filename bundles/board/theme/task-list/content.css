@@ -3,9 +3,7 @@
     height: 100%;
     width: 100%;
     overflow: auto;
-    white-space: nowrap;
-    
-    
+
     h2 {
         font-size: 18px;
         font-weight: normal;
@@ -14,12 +12,9 @@
     }
     
     .task-list {
-        display: inline-block;
-        white-space: normal;
         box-sizing: border-box;
-        min-height: 100%;
-        overflow: auto;
         padding: 20px;
+        width: 800px;
     }
 
 }

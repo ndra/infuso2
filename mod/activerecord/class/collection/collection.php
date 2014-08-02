@@ -924,7 +924,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->callBeforeQuery();
         $key = $this->normalizeColName($key);
         $q = "select sum($key) from {$this->from()} where {$this->whereQuery()} ";
-        return mod::service("db")->query($q)->exec()->fetchScalar();
+        return (double) mod::service("db")->query($q)->exec()->fetchScalar();
     }
 
     /**

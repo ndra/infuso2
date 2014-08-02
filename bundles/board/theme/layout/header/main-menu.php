@@ -12,13 +12,14 @@
 // Субменю
 <div class='x55qv4lhb8m-submenu' style='position:absolute;z-index:100;' >
     <div class='submenu' menu:id='reports' >
+
+        if(user::active()->checkAccess("board/showReportUsers")) {
+            <a class='item' href='{action("infuso\\board\\controller\\report","users")}' >Пользователи</a>
+        }
+    
         <a class='item' href='#report-done' >Сделано сегодня</a>
         <a class='item' href='#report-projects' >Проекты</a>
         
-        if(user::active()->checkAccess("board/showReportUsers")) {
-            <a class='item' href='#report-workers' >Пользователи</a>
-        }
-
         if(user::active()->checkAccess("board/showReportVote")) {
             <a class='item' href='#report-vote' >Голоса</a>
         }

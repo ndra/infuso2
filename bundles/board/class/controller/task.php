@@ -139,13 +139,6 @@ class Task extends Base {
         }
         
         $task->take(app()->user());
-
-		// Меняем статус задачи
-        /*$task->data("status",Model\TaskStatus::STATUS_IN_PROGRESS);
-        // Записываем изменения статуса в лог
-        $task->logCustom(array(
-            "type" => Model\Log::TYPE_TASK_TAKEN,
-        ));  */
     }
 
     /**

@@ -10,13 +10,14 @@
                     ->addClass("task-list")
                     ->toolbar()
                     ->exec();
-                    
+            </td>
+            <td style='background: #ededed;' >        
                 widget("infuso\\board\\widget\\tasklist")
                     ->status(1)
                     ->addClass("task-list")
-                    ->style("background", "#ededed")
                     ->exec();
-                    
+            </td>
+            <td>    
                 widget("infuso\\board\\widget\\tasklist")
                     ->status(2)
                     ->addClass("task-list")

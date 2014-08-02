@@ -143,7 +143,7 @@ mod.handleCmd = function(response, onSuccess) {
     try{
         eval("var data="+response);
     } catch(ex) {
-        mod.msg("Failed parse JSON", 1);
+        mod.msg("Failed parse JSON: " + response, 1);
     }
     
     // Выводим сообщения

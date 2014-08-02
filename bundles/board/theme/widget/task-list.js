@@ -1,14 +1,12 @@
 mod.init(".task-list-rpu80rt4m0", function() {
     
     var $container = $(this);
-    
+    var $ajaxContainer = $container.find(".ajax-container");
+    var $loader =  $container.find(".loader");    
     var groupId = 0;
 
     // Загружает список задач
     var load = function() {
-        
-        var $ajaxContainer = $container.find(".ajax-container");
-        var $loader =  $container.find(".loader");
         
         $loader.show();
         
@@ -30,10 +28,22 @@ mod.init(".task-list-rpu80rt4m0", function() {
                 type:"task/load",
                 ajaxData: data
             });
-            resize();
+            
+            saveHTML(data.html);
         });
     
     }
+    
+    var saveHTML = function(html) {
+        window.sessionStorage.setItem("bSUJTR4lWH" + $container.attr("data:status"), html);
+    }
+    
+    var restoreHTML = function() {
+        var html = window.sessionStorage.getItem("bSUJTR4lWH" + $container.attr("data:status"));
+        $ajaxContainer.html(html);
+    }
+    
+    restoreHTML();
     
     // Запускаем загрузку с задержкой, чтобы сработали обработчики событий
     setTimeout(load,0);
@@ -61,20 +71,5 @@ mod.init(".task-list-rpu80rt4m0", function() {
     });
     
     $(window).focus(load);
-    
-    var resize = function() {
-        var height = $(window).height() - 200;
-        var itemHeight = 140;
-        var itemWidth = 130;
-        // Число стикеров
-        // +1 т.к. у нас есть кнопка добавления задачи
-        var n = $container.find(".ajax-container .task").length + 1;
-        var nv = Math.floor(height / itemHeight);
-        var nh = Math.ceil(n / nv);
-        var maxWidth = $(window).width() * 0.9; 
-        $container.width(Math.min(maxWidth,nh * itemWidth));
-    }
-    
-    setInterval(resize, 1000);
     
 });

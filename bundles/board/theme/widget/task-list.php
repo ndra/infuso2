@@ -22,6 +22,6 @@ $h->begin();
     
     // Индикатор загрузки
     $loaderSrc = $this->bundle()->path()."/res/img/misc/loader.gif"; 
-    <img class="loader" src="{$loaderSrc}" />
+    <div class="loader" >Загрузка...</div>
 
 $h->end();

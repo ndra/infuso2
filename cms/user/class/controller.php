@@ -38,7 +38,7 @@ class Controller extends \Infuso\Core\Controller {
     }
 
     public function post_getRolesAjax($p) {
-        return \tmp::get("/user/editor/manage/content/roles/ajax")
+        return app()->tm("/user/editor/manage/content/roles/ajax")
             ->param("user", \user::get($p["userId"]))
             ->getContentForAjax();
     }
