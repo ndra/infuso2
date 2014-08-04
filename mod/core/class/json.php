@@ -9,8 +9,8 @@ class mod_json extends \infuso\core\controller {
 	    return true;
 	}
 	
-	public function index() { 
-		
+	public function index() {
+
 		header("Content-type: text/plain; charset=utf-8");
         
 		$data = $_POST["data"];
@@ -18,9 +18,19 @@ class mod_json extends \infuso\core\controller {
         
         $results = array();      
         
+        $xfiles = $_FILES;
+        
         // Обрабатываем пачку команд
         $n = 0;
         foreach($data["requests"] as $request) {
+        
+            $_FILES = array();
+            foreach($xfiles as $key => $file) {
+                if(preg_match("/^{$n}\//",$key)) {
+                    $newKey = preg_replace("/^{$n}\//", "", $key);
+                    $_FILES[$newKey] = $xfiles[$key];
+                }
+            }
 
     		try {
             

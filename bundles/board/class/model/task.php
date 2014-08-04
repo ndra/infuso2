@@ -350,7 +350,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      **/
     public function tools() {
 
-        if(!user::active()->checkAccess("board/updateTaskParams",array(
+        if(!user::active()->checkAccess("board/editTask",array(
             "task" => $this,
         ))) {
             return array();

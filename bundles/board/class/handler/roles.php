@@ -31,7 +31,10 @@ class Roles implements Core\Handler {
 		user_operation::create("board/viewTask", "Просмотр задачи")
             ->appendTo("board/worker")
             ->appendTo("board/manager");
-            
+
+		user_operation::create("board/editTask", "Редактирование задачи")
+            ->appendTo("board/worker")
+            ->appendTo("board/manager");
         
     }
     

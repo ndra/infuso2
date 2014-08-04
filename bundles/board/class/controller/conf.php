@@ -23,8 +23,6 @@ class Conf extends Base {
      **/
     public function post_userpic($p, $files) {
     
-        app()->msg($_FILES);
-    
         $name = $_FILES["file"]["name"];
         $ext = Core\File::get($name)->ext();
         $ext = strtolower($ext);
@@ -38,7 +36,7 @@ class Conf extends Base {
         $file = $user->storage()->addUploaded($_FILES["file"]["tmp_name"], "userpic.jpg");
         $user->data("userpic", $file);
 
-        return \tmp::get("/board/conf/content/userpic/ajax")
+        return app()->tm("/board/conf/content/userpic/ajax")
             ->getContentForAjax();
     }
         

@@ -80,9 +80,14 @@ mod.requests = [];
 
 mod.call = function(params, onSuccess, conf) {
 
+	if(!conf) {
+	    conf = {};
+	}
+
     mod.requests.push({
         params: params,
-        onSuccess: onSuccess
+        onSuccess: onSuccess,
+        conf: conf
     })
 
 };
@@ -104,14 +109,28 @@ mod.send = function() {
     var onSuccess = [];
     
     var fdata = new FormData();
-    fdata.append("data", JSON.stringify({
-        requests: requests
-    }));
     
     for(var i in mod.requests) {
         requests[i] = mod.requests[i].params;
         onSuccess[i] = mod.requests[i].onSuccess;
-    }    
+        
+		var files = mod.requests[i].conf.files;
+		if(files) {
+	        if(files.constructor === Object) {
+	            for(var ii in files) {
+	                fdata.append(i + "/" + ii, files[ii]);
+	            }
+	        } else {
+	            $(files).find("input[type=file]").each(function() {
+	                fdata.append(i + "/" + this.name, this.files[0]);
+	            });
+	        }
+    	}
+    }
+
+    fdata.append("data", JSON.stringify({
+        requests: requests
+    }));
     
     mod.requests = [];
     
