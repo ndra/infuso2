@@ -18,6 +18,11 @@
         
     }
     
+    .comment {
+        background: red;
+        color: white;
+    }
+    
     &:hover {
         .sticker {
             border: 1px solid blue;

@@ -2,21 +2,37 @@
 
 namespace Infuso\Board\Handler;
 use \Infuso\Core;
+use \user_operation;
+use \user_role;
 
 
 class Roles implements Core\Handler { 
     
-    /**
-    * @handler = infusoDeploy
-    **/
-    public function createRoles() {
-        $role = \Infuso\User\Model\Role::create("boardUser", "Пользователь доски");  
-         
-        $o = \Infuso\User\Model\Operation::create("board:viewAllProjects");
-        $o->appendTo("boardUser");
+	/**
+	 * @handler = infusoDeploy
+	 **/
+    public function init() {
+
+        // Создаем роли
+        $role = user_role::create("board/worker");
+        $role->data("title","Пользователь доски");
         
-        \Infuso\User\Model\Operation::create("board/showReportUsers","Просмотр отчета по пользователям")
-            ->appendTo("boardUser");              
-    } 
+        $role = user_role::create("board/manager");
+        $role->data("title","Менеджер доски");
+        
+        $role = user_role::create("board/client");
+        $role->data("title","Клиент доски");
+        
+        user_operation::create("board/showTaskList", "Просмотр списка задач")
+            ->appendTo("board/worker")
+            ->appendTo("board/manager")
+            ->appendTo("board/client");
+            
+		user_operation::create("board/viewTask", "Просмотр задачи")
+            ->appendTo("board/worker")
+            ->appendTo("board/manager");
+            
+        
+    }
     
 }

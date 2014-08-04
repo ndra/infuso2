@@ -13,6 +13,11 @@ class Task extends Base {
      * Возвращает html списка заадч
      **/
     public function post_getTasks($p) {
+    
+        if(!app()->user()->checkAccess("board/showTaskList")) {
+            app()->msg(app()->user()->errorText(),1);
+            return;
+        }
 
         $limit = 40; 
         
@@ -65,7 +70,14 @@ class Task extends Base {
      * Используется в диалоге, который открывается если кликнуть на карточку задачи.
      **/
     public function post_getTask($p) {
+    
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
+        
+        if(!app()->user()->checkAccess("board/viewTask", array("task" => $task))) {
+            app()->msg(app()->user()->errorText(),1);
+            return;
+        }
+        
         $html = app()->tm("/board/task/content")
             ->param("task", $task)
             ->getContentForAjax();
@@ -75,6 +87,9 @@ class Task extends Base {
 		);
     }
     
+    /**
+     * Возвращает контент окна создания задачи
+     **/
     public function post_newTaskWindow() {
         return array(
 			"html" => app()->tm("/board/task-new")->getContentForAjax(),

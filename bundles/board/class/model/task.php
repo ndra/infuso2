@@ -413,6 +413,11 @@ class Task extends \Infuso\ActiveRecord\Record {
 
                 $tools["additional"][] = "revision";
                 break;
+                
+            case self::STATUS_CANCELLED:
+
+                $tools["additional"][] = "revision";
+                break;
 
         }
 

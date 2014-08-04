@@ -8,11 +8,17 @@
     }
     
     <span class='time' >
+    
         echo round($task->timeSpent() / 3600, 2);
-        echo " + ";
-        echo round($task->timeSpentProgress() / 3600, 2);
+        
+        if($task->data("status") == \Infuso\Board\Model\Task::STATUS_IN_PROGRESS) {
+            echo " + ";
+            echo round($task->timeSpentProgress() / 3600, 2);
+        }
+        
         echo " / ";
         echo $task->timeScheduled();
+        
     </span>
 
 </div>

@@ -33,8 +33,16 @@
             $size = 18;
         }
         
+        $comment = null;
+        $logItem = $task->getLog()->eq("type", \Infuso\Board\Model\Log::TYPE_TASK_REVISED)->one();
+        if($logItem->exists()) {
+            $comment = $logItem->data("text");
+        }
     
         <div class='text' style='font-size:{$size}px;' >
+            if($comment) {
+                <span class='comment' >{$comment}</span>
+            }
             echo \util::str($task->data("text"))->hyphenize();
         </div>
         

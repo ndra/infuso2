@@ -50,5 +50,10 @@ class Lib {
     public function sortable() {
         js(self::path()."/js/sortable.min.js");
     }
+    
+	public function jsplumb() {
+        self::jq();
+        app()->tm()->js(self::path()."/js/jquery.jsPlumb-1.3.16-all-min.js");
+    }
 
 }

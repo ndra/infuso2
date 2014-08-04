@@ -1,8 +1,16 @@
 .sze6eaja0l {
+    
+    padding: 20px;
 
     td {
-        padding: 5px 10px;
+        padding: 5px 150px 5px 0;
         vertical-align: middle;
+    }
+    
+    .node {
+        display: inline-block;
+        padding: 4px 8px;
+        border: 1px solid #ccc;
     }
 
 }

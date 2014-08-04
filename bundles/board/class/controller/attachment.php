@@ -18,6 +18,8 @@ class Attachment extends Core\Controller {
 	 **/
     public function post_upload($p) {
     
+        app()->msg($p);
+    
         $task = Model\Task::get($p["taskId"]);
 
         // Параметры задачи
