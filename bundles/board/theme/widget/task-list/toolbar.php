@@ -4,14 +4,17 @@
 
     <h2>Бэклог</h2>
 
-    widget("\\infuso\\cms\\ui\\widgets\\textfield")
-        ->addClass("quicksearch")
-        ->clearButton()
-        ->exec();
-    
-    widget("\\infuso\\cms\\ui\\widgets\\pager")
-        ->fieldName("pager")
-        ->addClass("pager")
-        ->exec();   
+    if($status == "0" || $status == "check") {
+        
+        widget("\\infuso\\cms\\ui\\widgets\\textfield")
+            ->addClass("quicksearch")
+            ->clearButton()
+            ->exec();
+        
+        widget("\\infuso\\cms\\ui\\widgets\\pager")
+            ->fieldName("pager")
+            ->addClass("pager")
+            ->exec();
+    }
     
 </div>

@@ -76,8 +76,6 @@ mod.fire = function(name,params) {
     }
 }
 
-mod.uniqueCalls = {};               
-
 mod.requests = [];
 
 mod.call = function(params, onSuccess, conf) {
