@@ -1,7 +1,7 @@
 <?
 
-tmp::header();
-tmp::reset();
+header();
+lib::reset();
 lib::modjs();
 
 <div class='lPRf9GbGAu' >
@@ -21,4 +21,4 @@ lib::modjs();
 
 </div>
 
-tmp::footer();
+footer();
