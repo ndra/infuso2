@@ -21,7 +21,9 @@ class Conf extends Base {
     /**
      * Контроллер сохранения юзерпика
      **/
-    public function post_userpic($p) {
+    public function post_userpic($p, $files) {
+    
+        app()->msg($_FILES);
     
         $name = $_FILES["file"]["name"];
         $ext = Core\File::get($name)->ext();

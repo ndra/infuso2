@@ -103,6 +103,11 @@ mod.send = function() {
     var requests = [];
     var onSuccess = [];
     
+    var fdata = new FormData();
+    fdata.append("data", JSON.stringify({
+        requests: requests
+    }));
+    
     for(var i in mod.requests) {
         requests[i] = mod.requests[i].params;
         onSuccess[i] = mod.requests[i].onSuccess;
@@ -110,11 +115,6 @@ mod.send = function() {
     
     mod.requests = [];
     
-    var fdata = new FormData();
-    fdata.append("data", JSON.stringify({
-        requests: requests
-    })); 
-   
     var xhr = $.ajax({
         url: "/mod_json/",
         data: fdata,
