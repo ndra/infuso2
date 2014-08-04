@@ -4,12 +4,12 @@
 
     //<div class='top g-toolbar' >ололо!</div>    
 
-    <div class='center ajax' style='overflow: auto;padding:20px;' >
+    <div class='ajax' style='overflow: auto;padding:20px;' >
         exec("ajax");
     </div>
     
-    <div class='bottom' style='background: #ccc;padding:10px;' >
+    /*<div class='bottom' style='background: #ccc;padding:10px;' >
         exec("add");
-    </div>    
+    </div> */
     
 </div>

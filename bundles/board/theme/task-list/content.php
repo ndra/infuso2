@@ -2,29 +2,27 @@
 
 <div class='MhpEuDh2NX' >
 
-    <table style='height:100%;' >
-        <tr>
-            <td>
-                widget("infuso\\board\\widget\\tasklist")
-                    ->status(0)
-                    ->addClass("task-list")
-                    ->toolbar()
-                    ->exec();
-            </td>
-            <td style='background: #ededed;' >        
-                widget("infuso\\board\\widget\\tasklist")
-                    ->status(1)
-                    ->addClass("task-list")
-                    ->exec();
-            </td>
-            <td>    
-                widget("infuso\\board\\widget\\tasklist")
-                    ->status(2)
-                    ->addClass("task-list")
-                    ->toolbar()
-                    ->exec();
-            </td>
-        </tr>
-    </table>
+    widget("infuso\\board\\widget\\tasklist")
+        ->status(1)
+        ->addClass("task-list")
+        ->style("background", "#ededed")
+        ->exec();
+
+    widget("infuso\\board\\widget\\tasklist")
+        ->status(0)
+        ->addClass("task-list")
+        ->style("border-bottom", "1px solid #ccc")
+        ->toolbar()
+        ->exec();
+            
+    widget("infuso\\board\\widget\\tasklist")
+        ->status("check")
+        ->addClass("task-list")
+        ->toolbar()
+        ->exec();
+        
+    <div class='right-toolbar' >
+        exec("toolbar");
+    </div>
 
 </div>

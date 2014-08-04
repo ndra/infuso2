@@ -33,6 +33,11 @@
         .done {
             background: url("@{bundle}res/img/@{pack}/done.png") center center no-repeat;
         }
+        
+        .complete {
+            background: url("@{bundle}res/img/@{pack}/complete.png") center center no-repeat;
+        }
+        
     }    
     
     input {

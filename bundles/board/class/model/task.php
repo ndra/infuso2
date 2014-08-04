@@ -8,6 +8,15 @@ use Infuso\Core;
 
 class Task extends \Infuso\ActiveRecord\Record {
 
+    const STATUS_DEMAND = 200;
+    const STATUS_NEW = 0;
+    const STATUS_BACKLOG = 0;
+    const STATUS_IN_PROGRESS = 1;
+    const STATUS_CHECKOUT = 2;
+    const STATUS_COMPLETED = 3;
+    const STATUS_DRAFT = 10;
+    const STATUS_CANCELLED = 100;
+
     public function indexTest() {
         return true;
     }
@@ -28,6 +37,9 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
                 ), array (
+                    'name' => 'unique',
+                    'type' => 'string',
+                ), array (
                     'name' => 'text',
                     'label' => "Описание задачи",
                     'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
@@ -35,7 +47,8 @@ class Task extends \Infuso\ActiveRecord\Record {
                 ), array (
                     'label' => "Статус задачи",
                     'name' => 'status',
-                    'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
+                    'type' => 'select',
+                    'options' => self::enumStatuses(),
                     'editable' => '1',
                 ), array (
                     'name' => 'priority',
@@ -110,6 +123,19 @@ class Task extends \Infuso\ActiveRecord\Record {
         );
     }
 
+	public static function enumStatuses() {
+	    return [
+	        self::STATUS_DEMAND => "Заявка",
+		    self::STATUS_NEW => "Новая",
+		    self::STATUS_BACKLOG => "Бэклог",
+		    self::STATUS_IN_PROGRESS => "Выполняется",
+		    self::STATUS_CHECKOUT => "На проепрке",
+		    self::STATUS_COMPLETED => "Выполнено",
+		    self::STATUS_DRAFT => "Черновик",
+		    self::STATUS_CANCELLED => "Отменено",
+	    ];
+	}
+
     /**
      * Возвращает список всех задач
      **/
@@ -154,32 +180,37 @@ class Task extends \Infuso\ActiveRecord\Record {
 
     public function beforeCreate() {
         $this->data("creator",user::active()->id());
+        $this->sentToBeginning();
+    }
+    
+    public function sentToBeginning() {
+        if($this->data("status") == self::STATUS_BACKLOG) {
+            $min = Task::all()->eq("status",self::STATUS_BACKLOG)->min("priority");
+            $this->data("priority",$min - 1);
+        }
     }
 
     /**
      * Триггер перед сохранением хадачи
      **/
     public function beforeStore() {
+    
+        $this->updateUnique();
 
         // Устанавливаем новую дату изменения только если задача активна
         // Иначе мы можем влезть в статистику по прошлому периоду
         if($this->field("status")->changed()) {
         
-            if($this->status()->active()) {
-                $this->data("changed",util::now());
-            }
-            
+            $this->data("changed",util::now());
+
             // При переходи задачи в статус к исполнению она ставится на первое место
-            if($this->data("status") == TaskStatus::STATUS_NEW) {
-                $min = Task::all()->eq("status",TaskStatus::STATUS_IN_PROGRESS)->min("priority");
-                $this->data("priority",$min - 1);
-            }
+            $this->sentToBeginning();
 
         }
 
         // Если статус задачи "к исполнению", ответственным лицом становится текущий пользователь.
         // Если были выполняющиеся задачи, они ставятся на паузу
-        if($this->field("status")->changed() && $this->status()->id()==1) {
+        if($this->field("status")->changed() && $this->data("status") == 1) {
 
             // Назначаем ответственного пользователя
             $this->data("responsibleUser",user::active()->id());
@@ -196,11 +227,15 @@ class Task extends \Infuso\ActiveRecord\Record {
 
     }
     
+    public function updateUnique() {
+		$this->data("unique", \util::id());
+    }
+    
     /**
      * Возвращает текст статуса задачи
      **/
     public function statusText() {
-        return $this->status()->title();
+        return $this->pdata("status");
     }
     
     /**
@@ -237,7 +272,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      **/
     public function timeSpentProgress($userId = null) {
     
-        if($this->status()->id() != TaskStatus::STATUS_IN_PROGRESS) {
+        if($this->data("status") != self::STATUS_IN_PROGRESS) {
             return 0;
         }
         
@@ -304,13 +339,6 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     /**
-     * Возвращает статус задача (объект)
-     **/
-    public function status() {
-        return TaskStatus::get($this->data("status"));
-    }
-
-    /**
      * Возвращает число, показывающее сколько дней задача не меняла статус
      **/
     public function hangDays() {
@@ -333,9 +361,9 @@ class Task extends \Infuso\ActiveRecord\Record {
             "additional" => array(),
         );
 
-        switch($this->status()->id()) {
+        switch($this->data("status")) {
 
-            case TaskStatus::STATUS_IN_PROGRESS:
+            case self::STATUS_IN_PROGRESS:
 
                 /*if(!$this->paused()) {
                     $tools["main"][] = "pause";
@@ -350,38 +378,38 @@ class Task extends \Infuso\ActiveRecord\Record {
                 }
 
                 $tools["additional"][] = "stop";
-                $tools["additional"][] = "problems";
+                //$tools["additional"][] = "problems";
                 $tools["additional"][] = "cancel";
 
                 break;
 
-            case TaskStatus::STATUS_BACKLOG:
+            case self::STATUS_BACKLOG:
   
                 $tools["main"][] = "take";  
-                $tools["additional"][] = "problems";
+                //$tools["additional"][] = "problems";
                 $tools["additional"][] = "cancel";
 
                 break;
 
-            case TaskStatus::STATUS_DEMAND:
+            case self::STATUS_DEMAND:
 
                 $tools["main"][] = "add";
                 $tools["main"][] = "take";
 
-                $tools["additional"][] = "problems";
+                //$tools["additional"][] = "problems";
                 $tools["additional"][] = "cancel";
 
                 break;
 
-            case TaskStatus::STATUS_CHECKOUT:
+            case self::STATUS_CHECKOUT:
 
                 $tools["main"][] = "complete";
                 $tools["main"][] = "revision";
-                $tools["additional"][] = "problems";
+                //$tools["additional"][] = "problems";
                 $tools["additional"][] = "cancel";
                 break;
 
-            case TaskStatus::STATUS_COMPLETED:
+            case self::STATUS_COMPLETED:
 
                 $tools["additional"][] = "revision";
                 break;
@@ -419,7 +447,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      **/     
     public function take($user) {         
         app()->msg("Берем задачу ".$this->id());          
-        $this->data("status", TaskStatus::STATUS_IN_PROGRESS);         
+        $this->data("status", self::STATUS_IN_PROGRESS);
         $this->workflow()->create(array(
             "taskId" => $this->id(),
             "userId" => $user->id(),

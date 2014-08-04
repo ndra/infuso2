@@ -113,6 +113,10 @@ class WorkFlow extends ActiveRecord\Record {
             $this->data("duration", $d);
         }
     }
+    
+    public function afterStore() {
+        $this->task()->updateUnique();
+    }
 
 
 }

@@ -1,8 +1,6 @@
 .MhpEuDh2NX {
     
-    height: 100%;
-    width: 100%;
-    overflow: auto;
+    position: relative;
 
     h2 {
         font-size: 18px;
@@ -14,7 +12,15 @@
     .task-list {
         box-sizing: border-box;
         padding: 20px;
-        width: 800px;
+    }
+    
+    .right-toolbar {
+        width:100px;
+        right: 12px;
+        top: 50px;
+        position: fixed;
+        background: rgba(0,0,0,.2);
+        height: 100%;
     }
 
 }

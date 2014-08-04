@@ -16,12 +16,26 @@ class Task extends Base {
 
         $limit = 40; 
         
-        // Статус для которого мы смотрим задачи
-        $status = Model\TaskStatus::get($p["status"]);
-
         // Полный список задач
-        $tasks = Model\Task::all()->orderByExpr($status->order())->limit($limit);
-        $tasks->eq("status", $p["status"]);
+        $tasks = Model\Task::all()->visible()->limit($limit);
+        
+        switch($p["status"]) {
+        
+            default:
+        		$tasks->eq("status", $p["status"]);
+        		$tasks->asc("priority");
+        		break;
+        		
+			case "check":
+			    $tasks->desc("changed");
+        		$tasks->eq("status", array(
+					Model\Task::STATUS_CHECKOUT,
+					Model\Task::STATUS_COMPLETED,
+					Model\Task::STATUS_CANCELLED,
+				));
+        		break;
+        		
+        }
             
         // Учитываем поиск
         if($search = trim($p["search"])) {
@@ -36,6 +50,7 @@ class Task extends Base {
         
         $html = app()->tm("/board/widget/task-list/ajax")
             ->param("tasks", $tasks)
+            ->param("status", $p["status"])
             ->getContentForAjax();
         
         return array(
@@ -108,10 +123,18 @@ class Task extends Base {
         }
     }
     
-    public function post_timeInputContent($p) {
+    public function post_doneDlgContent($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         return app()->tm()
-            ->template("/board/shared/task-tools/time-input-ajax")
+            ->template("/board/shared/task-tools/done-dlg-ajax")
+            ->param("task", $task)
+            ->getContentForAjax();
+    }
+    
+    public function post_stopDlgContent($p) {
+        $task = \Infuso\Board\Model\Task::get($p["taskId"]);
+        return app()->tm()
+            ->template("/board/shared/task-tools/stop-dlg-ajax")
             ->param("task", $task)
             ->getContentForAjax();
     }
@@ -174,11 +197,16 @@ class Task extends Base {
             app()->msg(\user::active()->errorText(),1);
             return;
         }
+        
+        $time = $p["time"];
+        $time = array_map(function($item) {
+            return $item * 3600;
+        }, $p["time"]);
+        $task->chargeTime($time);
 
-        $task->data("status",Model\taskStatus::STATUS_BACKLOG);
-        $task->logCustom(array(
+        $task->data("status",Model\Task::STATUS_BACKLOG);
+        $task->log(array(
             "text" => $p["comment"],
-            "time" => $time,
             "type" => Model\Log::TYPE_TASK_STOPPED,
         ));
 
@@ -200,11 +228,34 @@ class Task extends Base {
             return;
         }
 
-        $task->data("status",Model\TaskStatus::STATUS_CANCELLED);
+        $task->data("status",Model\Task::STATUS_CANCELLED);
         $task->log(array(
             "text" => $p["comment"],
-            "time" => $time,
             "type" => Model\Log::TYPE_TASK_CANCELLED,
+        ));
+
+        return true;
+    }
+    
+    /**
+     * Задача выполнена
+     **/
+    public function post_completeTask($p) {
+
+        $task = Model\Task::get($p["taskId"]);
+        $time = $p["time"];
+
+        if(!\user::active()->checkAccess("board/completeTask",array(
+            "task" => $task,
+        ))) {
+            app()->msg(\user::active()->errorText(),1);
+            return;
+        }
+
+        $task->data("status",Model\Task::STATUS_COMPLETED);
+        $task->log(array(
+            "text" => $p["comment"],
+            "type" => Model\Log::TYPE_TASK_COMPLETED,
         ));
 
         return true;
@@ -224,7 +275,7 @@ class Task extends Base {
             return;
         }
 
-        $task->data("status",Model\TaskStatus::STATUS_BACKLOG);
+        $task->data("status",Model\Task::STATUS_BACKLOG);
         $task->log(array(
             "text" => $p["comment"],
             "type" => Model\Log::TYPE_TASK_REVISED,
@@ -247,7 +298,7 @@ class Task extends Base {
             return;
         }
 
-        $task->data("status", Model\taskStatus::STATUS_CHECKOUT);
+        $task->data("status", Model\Task::STATUS_CHECKOUT);
         $task->log(array(
             "text" => $p["comment"],
             "type" => Model\Log::TYPE_TASK_DONE,

@@ -12,8 +12,8 @@
         exec("files");  
     </div>
     
-    //exec("/board/shared/comments");   
+    exec("/board/shared/comments");   
     
-    exec("timeline");
+    //exec("timeline");
 
 </div>

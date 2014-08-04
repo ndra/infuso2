@@ -1,5 +1,5 @@
 <?
 
 <div class='Y54PCKLOIE' >
-    echo "plus";
+    echo "+";
 </div>

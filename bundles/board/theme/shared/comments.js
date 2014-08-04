@@ -11,8 +11,6 @@ mod.init(".rcog1oiaxe", function() {
         });
     }
     
-    $container.layout();
-    
     mod.on("board/log-changed", load);
     
 });

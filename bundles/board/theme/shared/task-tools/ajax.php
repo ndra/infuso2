@@ -31,8 +31,11 @@
                 case "cancel":
                     <input type='button' class='cancel' title='Отменить задачу' />
                     break;
+                case "complete":
+                    <input type='button' class='complete' title='$item' />
+                    break;
                 default:
-                    <input type='button' class='take' title='$item' />
+                    Throw new \Exception("Unknown button!");
                     break;
             }
         }

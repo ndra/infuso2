@@ -24,16 +24,12 @@ $(function() {
                         break;
                     case "done":
                         $.window({
+                            width: 800,
                             call: {
-                                cmd: "infuso/board/controller/task/timeInputContent",
+                                cmd: "infuso/board/controller/task/doneDlgContent",
                                 taskId:id
                             }
                         });
-                        /*return;
-                        mod.call({
-                            cmd:"infuso/board/controller/task/doneTask",
-                            taskId:id
-                        // }); */
                         break;
                     case "resume":
                         mod.call({
@@ -42,14 +38,23 @@ $(function() {
                         });
                         break;
                     case "stop":
-                        mod.call({
-                            cmd:"infuso/board/controller/task/stopTask",
-                            taskId:id
+                        $.window({
+                            width: 800,
+                            call: {
+                                cmd: "infuso/board/controller/task/stopDlgContent",
+                                taskId:id
+                            }
                         });
                         break;
                     case "cancel":
                         mod.call({
                             cmd:"infuso/board/controller/task/cancelTask",
+                            taskId:id
+                        });
+                        break;
+                    case "complete":
+                        mod.call({
+                            cmd:"infuso/board/controller/task/completeTask",
                             taskId:id
                         });
                         break;

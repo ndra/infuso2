@@ -12,6 +12,14 @@
         $h->addClass("group");
     }
     $h->begin();
+    
+        if($task->data("status") == \Infuso\Board\Model\Task::STATUS_CANCELLED) {
+            <div style='position: absolute; left: 0; top: 0; width: 100%; height: 100%;font-size:150px;line-height:.8;text-align: center;' >&times;</div>
+        }
+        
+        if($task->data("status") == \Infuso\Board\Model\Task::STATUS_COMPLETED) {
+            <div style='position: absolute; left: 0; top: 0; width: 100%; height: 100%;font-size:150px;line-height:.8;text-align: center;' >&#10003;</div>
+        }
 
         <div class='title' >{$task->id()}. {$task->project()->title()}</div>
         
