@@ -73,7 +73,7 @@ class rootTab extends Record {
 	 * Создает новую вкладку
 	 **/
 	public static function create($p) {
-	    return Record::create(get_class(),$p);
+	    return service("ar")->create(get_class(),$p);
 	}
 
 	public function removeAll() {

@@ -109,7 +109,7 @@ class Operation extends ActiveRecord\Record {
      * Создает новую операцию
      **/
     public static function create($code,$title="") {
-        return \reflex::create(get_class(),array(
+        return service("ar")->create(get_class(),array(
             "code" => $code,
             "title" => $title,
         ));
