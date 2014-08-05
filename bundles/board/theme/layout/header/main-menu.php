@@ -13,29 +13,19 @@
 <div class='x55qv4lhb8m-submenu' style='position:absolute;z-index:100;' >
     <div class='submenu' menu:id='reports' >
 
-        if(user::active()->checkAccess("board/showReportUsers")) {
-            <a class='item' href='{action("infuso\\board\\controller\\report","users")}' >Пользователи</a>
-        }
-    
-        <a class='item' href='#report-done' >Сделано сегодня</a>
-        <a class='item' href='#report-projects' >Проекты</a>
-        
-        if(user::active()->checkAccess("board/showReportVote")) {
-            <a class='item' href='#report-vote' >Голоса</a>
-        }
-        
-        if(user::active()->checkAccess("board/showReportGallery")) {
-            <a class='item' href='#report-gallery' >Галерея</a>
-        }
-        
+        <a class='item' href='{action("infuso\\board\\controller\\report","users")}' >Пользователи</a>
+
     </div>
     <div class='submenu' menu:id='conf' >
     
-        $url = action("infuso\\board\\controller\\project")->url();
-        <a class='item' href='{$url}' >Проекты</a>
+        if(user::active()->checkAccess("board/manager")) {
+            $url = action("infuso\\board\\controller\\project")->url();
+            <a class='item' href='{$url}' >Проекты</a>
+        }
         
-        if(user::active()->checkAccess("board/showAccessList")) {
-            <a class='item' href='#conf-access' >Доступ</a>
+        if(user::active()->checkAccess("board/manager")) {
+            $url = action("infuso\\board\\controller\\access")->url();
+            <a class='item' href='{$url}' >Доступ</a>
         }
         
         $url = action("infuso\\board\\controller\\conf")->url();

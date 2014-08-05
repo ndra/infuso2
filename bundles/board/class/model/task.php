@@ -365,12 +365,6 @@ class Task extends \Infuso\ActiveRecord\Record {
 
             case self::STATUS_IN_PROGRESS:
 
-                /*if(!$this->paused()) {
-                    $tools["main"][] = "pause";
-                } else {
-                    $tools["main"][] = "resume";
-                } */
-                
                 if($this->activeCollaborators()->eq("id",app()->user()->id())->void()) {
                     $tools["main"][] = "take";  
                 } else {
@@ -378,7 +372,6 @@ class Task extends \Infuso\ActiveRecord\Record {
                 }
 
                 $tools["additional"][] = "stop";
-                //$tools["additional"][] = "problems";
                 $tools["additional"][] = "cancel";
 
                 break;
@@ -386,7 +379,6 @@ class Task extends \Infuso\ActiveRecord\Record {
             case self::STATUS_BACKLOG:
   
                 $tools["main"][] = "take";  
-                //$tools["additional"][] = "problems";
                 $tools["additional"][] = "cancel";
 
                 break;
@@ -396,7 +388,6 @@ class Task extends \Infuso\ActiveRecord\Record {
                 $tools["main"][] = "add";
                 $tools["main"][] = "take";
 
-                //$tools["additional"][] = "problems";
                 $tools["additional"][] = "cancel";
 
                 break;
@@ -405,7 +396,6 @@ class Task extends \Infuso\ActiveRecord\Record {
 
                 $tools["main"][] = "complete";
                 $tools["main"][] = "revision";
-                //$tools["additional"][] = "problems";
                 $tools["additional"][] = "cancel";
                 break;
 

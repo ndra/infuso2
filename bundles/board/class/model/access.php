@@ -21,20 +21,6 @@ class Access extends \Infuso\ActiveRecord\Record {
                     'name' => 'projectId',
                     'type' => 'link',
                     'class' => Project::inspector()->className(),
-                ), array (
-                    'name' => 'showComments',
-                    'type' => 'checkbox',
-                ), array (
-                    'name' => 'showSpentTime',
-                    'type' => 'checkbox',
-                ), array (
-                    'name' => 'editTasks',
-                    'type' => 'checkbox',
-                    "label" => "Редактирование задач"
-                ), array (
-                    'name' => 'editTags',
-                    'type' => 'checkbox',
-                    "label" => "Редактирование тэгов и заметок"
                 ),
             ),
         );
