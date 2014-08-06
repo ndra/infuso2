@@ -56,6 +56,7 @@ class Task extends Base {
         $html = app()->tm("/board/widget/task-list/ajax")
             ->param("tasks", $tasks)
             ->param("status", $p["status"])
+			->param("group", Model\Task::get($p["groupId"]))
             ->getContentForAjax();
         
         return array(
@@ -90,9 +91,13 @@ class Task extends Base {
     /**
      * Возвращает контент окна создания задачи
      **/
-    public function post_newTaskWindow() {
+    public function post_newTaskWindow($p) {
+        $html = app()
+			->tm("/board/task-new")
+			->param("group", Model\Task::get($p["groupId"]))
+			->getContentForAjax();
         return array(
-			"html" => app()->tm("/board/task-new")->getContentForAjax(),
+			"html" => $html,
 		);
     }
     
@@ -236,7 +241,7 @@ class Task extends Base {
         $task = Model\Task::get($p["taskId"]);
         $time = $p["time"];
 
-        if(!\user::active()->checkAccess("board/cancelTask",array(
+        if(!\user::active()->checkAccess("board/editTask",array(
             "task" => $task,
         ))) {
             app()->msg(\user::active()->errorText(),1);
@@ -283,7 +288,7 @@ class Task extends Base {
 
         $task = Model\Task::get($p["taskId"]);
 
-        if(!\user::active()->checkAccess("board/revisionTaskToBacklog",array(
+        if(!\user::active()->checkAccess("board/editTask",array(
             "task" => $task,
         ))) {
             app()->msg(\user::active()->errorText(),1);

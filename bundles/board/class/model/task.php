@@ -465,5 +465,9 @@ class Task extends \Infuso\ActiveRecord\Record {
         $userIdList = $this->workflow()->isnull("end")->distinct("userId");
         return \Infuso\User\Model\User::all()->eq("id",$userIdList);
     }
+    
+    public function subtasks() {
+        return self::all()->eq("parent", $this->id());
+    }
 
 }

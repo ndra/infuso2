@@ -15,6 +15,5 @@ class Access extends Base {
 	 **/
     public function index($p) {
         app()->tm("board/access")->exec();
-
     }
 }

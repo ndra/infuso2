@@ -2,7 +2,7 @@
 
 <div class='c-toolbar task-toolbar-s88w4h5tpq' >
 
-    switch($status) {
+    /* switch($status) {
         case "0":
             $title = "Бэклог";
             break;
@@ -12,7 +12,7 @@
         case "check":
             $title = "Выполнено / Отменено";
             break;
-    }
+    } */
 
     <h2>{$title}</h2>
 

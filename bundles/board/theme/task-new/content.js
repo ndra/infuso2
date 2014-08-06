@@ -15,7 +15,8 @@ mod.init(".sdqg1isQGi", function() {
         mod.call({
             cmd:"infuso/board/controller/task/newTask",
             data: {
-                projectId: event.projectId
+                projectId: event.projectId,
+                parent: $container.attr("data:group")
             }
         }, function(data) {
             $container.trigger({

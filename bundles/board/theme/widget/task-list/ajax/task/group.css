@@ -1,0 +1,118 @@
+.mcGSvrqQ3m {
+    
+    position: relative;
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    margin: 0 10px 10px 0;
+    white-space: normal;
+    cursor: pointer;
+
+    @width: 120px;
+    @height: 120px;
+    
+    .content {
+        position: absolute;
+        width: 110px;
+        left: 5px;
+        top: 20px;
+        
+        .subtask {
+            width:15px;
+            height: 15px;
+            background: rgba(0,0,0,.7);
+            display: inline-block;
+            margin: 0 2px 2px 0;
+        }
+    }
+    
+    .folder {
+
+        -webkit-perspective: 800px;
+        -moz-perspective: 800px;
+        perspective: 800px;
+    
+        width: @width;
+        height: @height;
+    }
+    
+    .folder div {
+        
+        width: @width;
+        height: @height;
+    
+        background-color:#93bad8;
+    
+        /* Enabling 3d space for the transforms */
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    
+        /* Enabling a smooth animated transition */
+        -webkit-transition:0.5s;
+        -moz-transition:0.5s;
+        transition:0.5s;
+    
+        /* Disable text seleltion on the folder */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    
+        position:absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .folder .front{
+        border-radius:5px 5px 0 0;
+    
+        -moz-transform:rotateX(-30deg);
+        -webkit-transform:rotateX(-30deg);
+        transform:rotateX(-30deg);
+    
+        -moz-transform-origin:50% 100%;
+        -webkit-transform-origin:50% 100%;
+        transform-origin:50% 100%;
+    
+        background-image: -moz-linear-gradient(top, #93bad8 0%, #6c9dc0 85%, #628faf 100%);
+        background-image: -webkit-linear-gradient(top, #93bad8 0%, #6c9dc0 85%, #628faf 100%);
+        background-image: linear-gradient(top, #93bad8 0%, #6c9dc0 85%, #628faf 100%);
+    
+        box-shadow:0 -2px 2px rgba(0,0,0,0.1), 0 1px rgba(255,255,255,0.35) inset;
+    }
+
+    .folder .back{
+        background-image: -webkit-linear-gradient(top, #93bad8 0%, #89afcc 10%, #5985a5 60%);
+        background-image: -moz-linear-gradient(top, #93bad8 0%, #89afcc 10%, #5985a5 60%);
+        background-image: linear-gradient(top, #93bad8 0%, #89afcc 10%, #5985a5 60%);
+    
+        border-radius:0 5px 0 0;
+        box-shadow:0 -1px 1px rgba(0,0,0,0.15);
+    }
+    
+    /* The top part */
+    .folder .back:before{
+        content:'';
+        width:60%;
+        height:10px;
+        border-radius:4px 4px 0 0;
+        background-color:#93bad8;
+        position:absolute;
+        top:-10px;
+        left:0px;
+        box-shadow:0 -1px 1px rgba(0,0,0,0.15);
+    }
+    
+    /* The shadow */
+    .folder .back:after{
+        content:'';
+        width:100%;
+        height:4px;
+        border-radius:5px;
+        position:absolute;
+        bottom:5px;
+        left:0px;
+        box-shadow:0 4px 8px #333;
+    }
+    
+}

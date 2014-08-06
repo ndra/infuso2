@@ -71,7 +71,8 @@ $(function() {
     $container.on("board/newTask", function(event) {
         expandLeft();
         mod.call({
-            cmd: "infuso/board/controller/task/newTaskWindow"
+            cmd: "infuso/board/controller/task/newTaskWindow",
+            groupId: event.groupId
         }, function(data) {
             $container.children(".left").html(data.html);
         });
