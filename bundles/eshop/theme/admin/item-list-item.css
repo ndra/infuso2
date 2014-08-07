@@ -1,0 +1,15 @@
+.a5mJFdwVMY {
+    
+    padding:5px 10px;
+    border-bottom: 1px solid #ededed;
+    font-size: 18px;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    img {
+        margin-right: 10px;
+    }
+    
+}

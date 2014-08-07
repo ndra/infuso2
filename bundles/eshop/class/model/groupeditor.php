@@ -45,4 +45,9 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 		);
 	}
 	
+    public function listItemTemplate() {
+        return app()->tm("/eshop/admin/group-list-item")
+            ->param("editor", $this);
+    }
+	
 }

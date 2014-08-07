@@ -39,5 +39,10 @@ class ItemEditor extends \Infuso\Cms\Reflex\Editor {
 	        "collection:photos",
 		);
 	}
+	
+    public function listItemTemplate() {
+        return app()->tm("/eshop/admin/item-list-item")
+            ->param("editor", $this);
+    }
 
 }

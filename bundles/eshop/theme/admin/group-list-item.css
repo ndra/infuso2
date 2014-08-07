@@ -1,0 +1,17 @@
+.Q82FyMUhhH {
+    
+    padding:5px 10px;
+    border-bottom: 1px solid #ededed;
+    font-size: 18px;
+    
+    &:last-child {
+        border-bottom: none;
+    }
+    
+    .subgroup {
+        font-size: 11px;
+        margin-right: 5px;
+        opacity: .5;
+    }
+    
+}
