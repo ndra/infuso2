@@ -1,6 +1,6 @@
 <? 
 
-exec("/reflex/shared/editor-head");
+//exec("/reflex/shared/editor-head");
 
 $user = $editor->item();
 

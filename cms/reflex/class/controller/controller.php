@@ -74,6 +74,7 @@ class Controller extends \Infuso\Core\Controller {
         // Создаем конструктор элемента
         $item = mod::service("ar")->create(Model\Constructor::inspector()->className(),array(
             "collection" => $collection->serialize(),
+            "redirect" => $p["redirect"],
         ));
 
 		$editor = new Model\ConstructorEditor($item->id());
@@ -91,7 +92,7 @@ class Controller extends \Infuso\Core\Controller {
 		$editor = $constructor->item()->createItem($p["data"]);
 		
 		if($editor->item()->exists()) {
-        	return $editor->url();
+        	return $constructor->item()->data("redirect");
 		}
 
     }

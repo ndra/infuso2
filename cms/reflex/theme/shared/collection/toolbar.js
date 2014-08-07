@@ -29,6 +29,7 @@ mod.init(".qoi8w451jl", function() {
         var collection = $container.attr("infuso:collection");
         mod.call({
             cmd: "infuso/cms/reflex/controller/create",
+            redirect: window.location.href,
             collection: collection
         }, function(url) {
             window.location.href = url;
@@ -45,14 +46,11 @@ mod.init(".qoi8w451jl", function() {
             $(this).find(".selection-info").html("Выбрано: " + e.selection.length);
         }
         
-        var $container = $(this).find(".functions");
-        var $hint = $(this).find(".hint");
+        var $withSelected = $container.find(".with-selected");
         if(e.selection.length > 0) {
-            $container.animate({opacity:1});
-            $hint.animate({opacity:0});
+            $withSelected.fadeIn("fast");
         } else {
-            $container.animate({opacity:0});
-            $hint.animate({opacity:1});
+            $withSelected.fadeOut("fast");
         }
         sel = e.selection;
     });

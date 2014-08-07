@@ -7,6 +7,7 @@
         ->text("Просмотреть")
         ->addClass("view")
         ->attr("data:url", $editor->item()->url())
+        ->style("color", "white")
         ->exec();
         
     <span style='margin-right: 20px;' ></span>

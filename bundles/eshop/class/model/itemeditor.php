@@ -32,5 +32,12 @@ class ItemEditor extends \Infuso\Cms\Reflex\Editor {
 			->photos()
 			->title("Фотографии");
 	}
+	
+	public function layout() {
+	    return array(
+	        "form",
+	        "collection:photos",
+		);
+	}
 
 }

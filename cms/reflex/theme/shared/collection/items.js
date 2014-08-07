@@ -1,22 +1,24 @@
-$(function() {
+mod.init(".cjoesz8swu", function() {
+
+    var $container = $(this);
 
     // Загружает список элементов и выводит их на страницу
     var load = function() {
     
-        var collection = $(".cjoesz8swu").attr("infuso:collection");
+        var collection = $container.attr("infuso:collection");
     
         var params = {
             cmd:"infuso/cms/reflex/controller/getItems",
             collection:collection
         };
         
-        $(".cjoesz8swu > .loader").show();
+        $container.find(" > .loader").show();
     
         mod.fire("reflex/beforeLoad",params);
         
         mod.call(params, function(ret) {
-            $(".cjoesz8swu .ajax").html(ret.html);
-            $(".cjoesz8swu > .loader").hide();
+            $container.find(".ajax").html(ret.html);
+            $container.find(" > .loader").hide();
         }, {
             unique: "ui7605fvbl"
         });
@@ -24,9 +26,9 @@ $(function() {
     
     load();
     
-    $(".cjoesz8swu").on("reflex/refresh", load);
+    $container.on("reflex/refresh", load);
     
-    $(".cjoesz8swu").on("reflex/deselect", function() {
+    $container.on("reflex/deselect", function() {
         $(this).list("deselect");
     });
     

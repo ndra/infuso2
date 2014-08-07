@@ -13,10 +13,10 @@ class Widget extends \Infuso\Core\Component {
         ));
         echo $fn;
 
-        \tmp::get("/infuso/profiler/widget")->inc();
-        \tmp::get("/infuso/profiler/widget/main")->inc();
-        \tmp::get("/infuso/profiler/widget/milestones")->inc();
-        \tmp::jq();
+        app()->tm("/infuso/profiler/widget")->inc();
+        app()->tm("/infuso/profiler/widget/main")->inc();
+        app()->tm("/infuso/profiler/widget/milestones")->inc();
+        \Infuso\Template\Lib::jq();
 
     }
 

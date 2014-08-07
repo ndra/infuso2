@@ -9,27 +9,6 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 	    return Group::inspector()->className();
 	}
 
-	public function actions() {
-	    return $this->callBehaviours("actions");
-	}
-
-	public function icon() {
-	    return "folder";
-	}
-
-	public function filters() {
-	    return array(
-	        Group::all()->title("Активные"),
-	        Group::all()->inverse()->title("Неактивные"),
-	    );
-	}
-
-	public function beforeEdit() {
-	    return user::active()->checkAccess("eshop:editGroup",array(
-	        "group" => $this->item(),
-		));
-	}
-
 	/**
 	 * @reflex-root = on
 	 * @reflex-tab = eshop
@@ -55,6 +34,15 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 		return $this->item()
             ->items()
 			->param("title","Товары");
+	}
+	
+	public function layout() {
+	    return array(
+			"collection:items",
+			"collection:subgroups",
+			"<div style='border-bottom: 3px solid #ccc;' ></div>",
+			"form",
+		);
 	}
 	
 }

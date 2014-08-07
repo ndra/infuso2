@@ -1,5 +1,13 @@
 <?
 
 lib::modjs();
+lib::reset();
 
-exec("/tmp/layout");
+header();
+exec("header");
+
+<div style='width:1000px; margin: 20px auto;' >
+    region("center");
+</div>
+
+footer();

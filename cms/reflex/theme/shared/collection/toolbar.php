@@ -3,11 +3,10 @@
 $code = $collection->serialize();
 <div class='qoi8w451jl c-toolbar' infuso:collection='{$code}' >    
 
-    <div class='a' >
-    
-        <h1 class='g-header' >{$collection->collection()->title()}</h1>
+    <h1 class='g-header' >{$collection->collection()->title()}</h1>
 
-        // Быстрый поиск
+    // Быстрый поиск
+    <div style='display:none' >
         widget("\\Infuso\\Cms\\UI\\Widgets\\Textfield")
             ->placeholder("Быстрый поиск")
             ->style("width", 120)
@@ -28,49 +27,45 @@ $code = $collection->serialize();
             }
         </select>
         
-        <span class='spacer' ></span>    
+        <span class='spacer' ></span>
+    </div>
+    
+    $w = widget("infuso\\cms\\ui\\widgets\\button")
+        ->icon("plus")
+        ->air()
+        ->addClass("create")
+        ->exec();
+        
+    <div class='with-selected' style='display: none;' >
+    
+        <span class='selection-info' ></span>
+        <span class='deselect' >Отменить</span>
         
         $w = widget("infuso\\cms\\ui\\widgets\\button")
-            ->icon("plus")
-            ->text("Создать")
+            ->icon("edit")
             ->air()
-            ->addClass("create")
+            ->addClass("edit")
             ->exec();
-    
-    </div>
-    
-    <div class='with-selected' >
-        <span class='hint' >Выделите один или несколько элементов для выполнения операций</span>
-        <div class='functions' >
-            <span class='selection-info' ></span>
-            <span class='deselect' >Отменить</span>
+        
+        $w = widget("infuso\\cms\\ui\\widgets\\button")
+            ->icon("view")
+            ->addClass("view")
+            ->air()
+            ->exec();
             
-            $w = widget("infuso\\cms\\ui\\widgets\\button")
-                ->icon("edit")
-                ->air()
-                ->addClass("edit")
-                ->exec();
+        $w = widget("infuso\\cms\\ui\\widgets\\button")
+            ->icon("copy")
+            ->air()
+            ->exec();
             
-            $w = widget("infuso\\cms\\ui\\widgets\\button")
-                ->icon("view")
-                ->addClass("view")
-                ->air()
-                ->exec();
-                
-            $w = widget("infuso\\cms\\ui\\widgets\\button")
-                ->icon("copy")
-                ->air()
-                ->exec();
-                
-            <span style='margin-right:20px;' ></span>
-                
-            $w = widget("infuso\\cms\\ui\\widgets\\button")
-                ->icon("trash")
-                ->addClass("delete")
-                ->air()
-                ->exec();
+        <span style='margin-right:20px;' ></span>
+            
+        $w = widget("infuso\\cms\\ui\\widgets\\button")
+            ->icon("trash")
+            ->addClass("delete")
+            ->air()
+            ->exec();
                    
-        </div>
     </div>
-
+    
 </div>

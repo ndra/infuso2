@@ -2,6 +2,8 @@
 
     .item {
         margin-right:20px;
+        color: white;
+        opacity: .5;
     }
 
 }

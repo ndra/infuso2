@@ -1,6 +1,8 @@
 .x2s6mdnq7sy {
 
-    height: 100%;
+    &.layout {
+        height: 100%;
+    }
     
     & > .center {
         box-shadow: inset  0  8px 8px -8px rgba(0,0,0,.2);

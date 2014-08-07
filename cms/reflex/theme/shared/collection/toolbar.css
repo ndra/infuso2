@@ -1,15 +1,15 @@
 .qoi8w451jl {
+    
+    background: #f5f5ea;
+    padding: 10px 10px 10px 20px;
+    
+    & > * {
+        vertical-align: middle;
+    }
 
     h1 {
         display: inline-block;
         margin: 0 20px 0 0;
-    }
-    
-    .a {
-        padding: 10px 10px 0 20px;
-        & > * {
-            vertical-align: middle;
-        }
     }
     
     .spacer {
@@ -30,12 +30,18 @@
     
     .with-selected {
     
-        position:relative;        
-        height:32px;
-        padding: 10px;
-       
+        width: 400px;
+        display: inline-block;
+        position: relative;  
+        border-left: 1px solid #ccc;
+        padding-left: 20px;
+        
+        & > * {
+            vertical-align: middle;
+        }
+
         .selection-info {
-            margin-right:10px;
+            margin-right: 10px;
         }
         
         .deselect {
@@ -44,30 +50,6 @@
             cursor: pointer;
         }
         
-        .functions {
-
-            width: 100%;
-            box-sizing: border-box;
-            //background: #ffff99;
-            opacity: 0;
-            padding: 10px 20px;
-            position: absolute;
-            left:0px;
-            top:0px;
-            
-            & > * {
-                vertical-align: middle;
-            }
-            
-        }
-        
-        .hint {
-            position: absolute;
-            left:20px;
-            top:19px;
-            font-style: italic;
-            color: gray;
-        }
     }
 
 }

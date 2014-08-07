@@ -2,9 +2,9 @@
 
 add("left","/reflex/layout/menu");
 
-add("center","/reflex/shared/collection",array(
+add("center","/reflex/shared/collection", array (
     "collection" => $collection,
-    "editor" => $editor,
+    "layout" => true,
 ));
 
 exec("/reflex/layout");

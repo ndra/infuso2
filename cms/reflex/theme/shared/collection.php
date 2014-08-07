@@ -1,6 +1,6 @@
 <? 
 
-<div class='x2s6mdnq7sy' >
+<div class='x2s6mdnq7sy {$layout ? "layout" : ""}' >
     <div class='top' style='overflow:hidden'>
         exec("toolbar");
     </div>

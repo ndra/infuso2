@@ -44,23 +44,12 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	    return $this->item()->authorizations()->title("Авторизации");
 	}
 	
-	public function menu() {
-	    $menu = parent::menu();
-		$menu[] = array(
-            "href" => \mod::action(get_class($this),"manage",array("id"=>$this->itemID()))->url(),
-            "title" => "Управление",
-        );
-	    return $menu;
-	}
-	
-	/**
-	 * Контроллер управления пользователем: изменение email и пароля
-	 **/
-	public function index_manage($p) {
-	    $editor = \Infuso\Cms\Reflex\Editor::get("Infuso\\Cms\\User\\UserEditor:".$p["id"]);
-		$this->app()->tm()->exec("/user/editor/manage", array(
-		    "editor" => $editor,
-		));
+	public function layout() {
+	    return array(
+	        "tmp:/user/editor/manage/content",
+	        "<div style='border-bottom: 3px solid #ccc' ></div>",
+	        "form",
+		);
 	}
 	
 	public function listItemTemplate() {

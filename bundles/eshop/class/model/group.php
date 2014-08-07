@@ -91,19 +91,34 @@ class Group extends \Infuso\ActiveRecord\Record {
             ->eq("groupId",$this->id());
 	}
 
+	/**
+	 * Возвращает родителя - родительскую группу
+	 **/
 	public function recordParent() {
 	    return self::get($this->data("parent"));
 	}
 
+	/**
+	 * Возвращает коллекцию всех групп
+	 **/
 	public static function all() {
 	    return service("ar")
             ->collection(get_class())
             ->asc("priority");
 	}
 
-
+	/**
+	 * Возвращает группу по id
+	 **/
 	public static function get($id) {
 	    return service("ar")->get(get_class(),$id);
+	}
+	
+	/**
+	 * Возвращает количество товаров
+	 **/
+	public function numberOfItems() {
+	    return $this->items()->count();
 	}
 
 }

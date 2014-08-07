@@ -25,6 +25,19 @@ abstract class Editor extends Core\Controller {
     }
     
     /**
+     * Задает элементы, которые будут отображены на странице редактирования
+     * Возможные варианты
+     * form - стандартная форма редактирования
+     * collection:method - коллекция, заданная методом method
+     * Также можно написать строку с произвольным html-кодом, которая будет выведена «как есть»
+     **/
+	public function layout() {
+	    return array(
+			"form",
+		);
+	}
+    
+    /**
      * Контроллер начального списка
      **/
     public function index_root($p) {
