@@ -14,4 +14,8 @@ class ItemPhotoEditor extends \Infuso\Cms\Reflex\Editor {
 	        "item" => $this->item(),
 		));
 	}
+    
+    public function availlableViewModes() {
+        return array("thumbnail");
+    }
 }

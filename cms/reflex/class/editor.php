@@ -84,6 +84,16 @@ abstract class Editor extends Core\Controller {
     public function title() {
         return $this->item()->title();
     }
+    
+    public function image() {
+        // перебираем поля до первого поля типа файл
+        foreach($this->fields() as $field) {
+            if($field->typeID() == "knh9-0kgy-csg9-1nv8-7go9") {
+                return $field->field()->pvalue();
+            }
+        }
+        return Core\File::nonExistent();
+    }
 
     /**
      * Конструктор
@@ -254,10 +264,22 @@ abstract class Editor extends Core\Controller {
     /**
      * Возвращает список режимов отображения
      **/
-    public function _viewModes() {
+    public function _viewModes() {      
+        $ret = [];            
+        if(in_array("list", $this->availlableViewModes())) {
+            $ret[] = "/reflex/shared/collection/items/list-ajax";
+        }             
+        if(in_array("thumbnail", $this->availlableViewModes())) {
+            $ret[] = "/reflex/shared/collection/items/preview-ajax";
+        }           
+        return $ret;
+    }
+    
+    public function availlableViewModes() {
         return array(
-            "Список" => "/reflex/shared/collection/items/list-ajax",
-            "Превью" => "/reflex/shared/collection/items/preview-ajax",
+            "list",
+            "thumbnail",
+            "grid"
         );
     }
     

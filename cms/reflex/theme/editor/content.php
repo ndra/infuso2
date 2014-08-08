@@ -19,6 +19,3 @@ foreach($editor->layout() as $item) {
     }
 
 }
-
-//
-
