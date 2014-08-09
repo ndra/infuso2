@@ -6,14 +6,57 @@
     
         .item {
         
-            display:inline-block;
-            width:200px;
+            display: inline-block;
+            position: relative;
+            width: 120px;
+            margin: 10px;
+            padding:10px;
        
             &:hover {
                 background:#ededed;
             }
             
+            &.selected {
+                background: @selection;
+                &, * {
+                    color: white;
+                }
+                .select-handle {
+                    opacity: 1 !important;
+                }
+            }
+            
+            img {
+                border: 1px solid #ededed;
+                display:block;
+                margin-bottom: 5px;
+            }
+            
+            .name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .select-handle {
+                width:50px;
+                height: 50px;
+                position: absolute;
+                right: 0;
+                top: 0;
+                opacity: 0;
+                background: @selection center center no-repeat;     
+                .icon24i("ok");            
+            }
+            
+            &:hover {
+                .select-handle {
+                    opacity: .5;
+                }
+            }
+            
         }
+        
+        
     
     }
     

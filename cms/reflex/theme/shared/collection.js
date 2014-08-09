@@ -1,6 +1,6 @@
 mod.init(".x2s6mdnq7sy", function() {
 
-    $container = $(this);
+    var $container = $(this);
 
     // При изменении выделения в коллекции, передаем эту информацию тулбару
     $container.on("list/select",function(event) {
@@ -18,5 +18,5 @@ mod.init(".x2s6mdnq7sy", function() {
     if($container.hasClass("layout")) {
         $(".x2s6mdnq7sy").layout();
     }
-
+    
 });

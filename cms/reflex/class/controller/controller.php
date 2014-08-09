@@ -96,6 +96,15 @@ class Controller extends \Infuso\Core\Controller {
 		}
 
     }
+    
+    public function post_uploadCreate($p) {
+        $collection = Collection::unserialize($p["collection"]);
+        $item = $collection->collection()->create();
+        $editor = $item->plugin("editor");
+        $field = $editor->fileField();
+        $file = $item->storage()->addUploaded($_FILES["file"]["tmp_name"], $_FILES["file"]["name"]);
+        $item->data($field, $file);
+    }
 
     /**
      * Контроллер закачивания файла

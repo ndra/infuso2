@@ -85,14 +85,22 @@ abstract class Editor extends Core\Controller {
         return $this->item()->title();
     }
     
-    public function image() {
+    public function _image() {
+        // перебираем поля до первого поля типа файл
+        $name = $this->fileField();
+        if($name) {
+            return $this->item()->pdata($name);
+        }
+        return Core\File::nonExistent();
+    }
+    
+    public function _fileField() {
         // перебираем поля до первого поля типа файл
         foreach($this->fields() as $field) {
             if($field->typeID() == "knh9-0kgy-csg9-1nv8-7go9") {
-                return $field->field()->pvalue();
+                return $field->field()->name();
             }
         }
-        return Core\File::nonExistent();
     }
 
     /**

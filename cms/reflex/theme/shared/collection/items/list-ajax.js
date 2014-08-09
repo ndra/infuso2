@@ -1,9 +1,5 @@
-$(function() {
-
-    $(".x1arvpu0c38").mod("init", function() {
+mod.init(".x1arvpu0c38", function() {
     
-        $(this).list();
-    
-    });
+    $(this).list();
 
 });

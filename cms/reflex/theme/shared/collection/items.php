@@ -6,5 +6,9 @@ $code = $collection->serialize();
 
     <div class='loader' >Загрузка...</div>
     <div class='ajax'></div>
+    
+    <div class='drag-splash' >
+        <div class='text' >Перетащите файлы сюда</div>
+    </div>
  
 </div>
