@@ -8,6 +8,11 @@ use Infuso\Core;
  **/
 class Group extends \Infuso\ActiveRecord\Record {
 
+    const STATUS_VOID = 100;
+    const STATUS_USER_DISABLED = 200;
+    const STATUS_DETACHED = 400;
+    const STATUS_ACTIVE = 500;
+
 	public static function recordTable() {
         return array (
       		'name' => 'eshop_group',
@@ -52,6 +57,15 @@ class Group extends \Infuso\ActiveRecord\Record {
     				'label' => 'Описание',
     				'group' => 'Основные',
     				'indexEnabled' => '0',
+				), array (
+    				'name' => 'status',
+    				'type' => "select",
+    				'options' => array(
+                        self::STATUS_VOID => "Пустая",
+                        self::STATUS_USER_DISABLED => "Отключена пользователем",
+                        self::STATUS_DETACHED => "Без родителя",
+                        self::STATUS_ACTIVE => "Активна",                        
+                    ),
 				),
             ),
         );
@@ -120,5 +134,8 @@ class Group extends \Infuso\ActiveRecord\Record {
 	public function numberOfItems() {
 	    return $this->items()->count();
 	}
+    
+    public function update() {
+    }
 
 }

@@ -3,6 +3,19 @@ html, body {
     overflow: hidden;
 }
 
+* {
+
+    ::-webkit-scrollbar {
+        height: 12px;
+        width: 12px;
+    }    
+    
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0,0,0,.4);
+    }
+
+}
+
 .x0h4tfwmhnn {
     
     & > .left {
