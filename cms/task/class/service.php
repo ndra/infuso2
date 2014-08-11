@@ -94,7 +94,7 @@ class Service extends Core\Service {
 		$params["origin"] = Handler::getOrigin();
 
         if(!$item->exists()) {
-            $item = \reflex::create(Task::inspector()->className(),$params);
+            $item = service("ar")->create(Task::inspector()->className(),$params);
         } else {
             if($params["origin"]) {
             	$item->data("origin",$params["origin"]);

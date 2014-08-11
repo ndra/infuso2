@@ -24,6 +24,8 @@ $.fn.draghover = function(options) {
 mod.init(".cjoesz8swu", function() {
 
     var $container = $(this);
+    
+    var filter = 0;
 
     // Загружает список элементов и выводит их на страницу
     var load = function() {
@@ -32,12 +34,13 @@ mod.init(".cjoesz8swu", function() {
     
         var params = {
             cmd:"infuso/cms/reflex/controller/getItems",
-            collection:collection
+            collection:collection,
+            filter: filter
         };
         
         $container.find(" > .loader").show();
     
-        mod.fire("reflex/beforeLoad",params);
+        mod.fire("reflex/beforeLoad", params);
         
         mod.call(params, function(ret) {
             $container.find(".ajax").html(ret.html);
@@ -53,6 +56,11 @@ mod.init(".cjoesz8swu", function() {
     
     $container.on("reflex/deselect", function() {
         $(this).list("deselect");
+    });
+    
+    $container.on("reflex/setFilter", function(event) {
+        filter = event.filter;
+        load();
     });
     
     // Перезагрузка по F5

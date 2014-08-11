@@ -2,40 +2,41 @@
 
     padding: 20px;
     
-    & > table {
-        width:100%;
-        table-layout: fixed;
-    }
-    
-    tr {
+    .list-item {
+        
+        padding: 5px;
         cursor: pointer;
-    }
-    
-    td {
-        padding: 10px;
-        width: 100px;
-        overflow: hidden;
-        white-space: nowrap;
-        vertical-align: middle;
-    }
-    
-    thead {
+        
+        &.selected {
+            background: @selection;
+            color: white;
+        }
+        
         td {
-            color:gray;
-            font-style: italic;
-            border-bottom: 1px solid #ededed;
-            vertical-align:bottom;
+            vertical-align: middle;    
+            padding: 4px 10px;
+        }
+        
+        .title {
+            font-size: 18px;
+        }
+        
+        &.completed {
+            .title {
+                text-decoration: line-through;
+            }
+        }
+        
+    }
+    
+
+    .info {
+        font-size: 11px;
+        opacity: .7;
+        
+        span {
+            margin-right: 10px;
         }
     }
-   
-    tr:hover {        
-        background: #ededed;       
-    }
-    
-    .selected {
-        td {
-            background: rgba(0,100,255,.2);
-        }
-    }    
     
 }

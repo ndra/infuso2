@@ -377,5 +377,13 @@ abstract class Editor extends Core\Controller {
     public function deleteMeta() {
         $this->item()->plugin("meta")->metaObject()->delete();
     }
+    
+    public function filters($collection) {
+        return array (
+            "Все элементы" => $collection->copy(),
+            "Активные" => $collection->copy()->eq("completed", 0),
+            "Выполненные" => $collection->copy()->eq("completed", 1),
+        );
+    }
 
 }

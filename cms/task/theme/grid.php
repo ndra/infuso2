@@ -1,37 +1,52 @@
 <? 
 
+exec("/reflex/layout/global");
+
 <div class='x0kf50uz479' >
-    <table>
-    
-        <thead>
+
+    foreach($collection->editors() as $editor) {
+        
+        $item = $editor->item();
+        
+        $class = "";
+        if($item->data("completed")) {
+            $class.= " completed";
+        }
+        
+        <table class='list-item $class' data:id='{$editor->id()}'>
+        
             <tr>
-                foreach($collection->editor()->fields() as $field) {
-                    if($field->field()->visible()) {
-                        <td style='width:{$field->colWidth()}px;' >{$field->field()->label()}</td>
-                    }
-                }
-                <td></td>
-            </tr>
-        </thead>
-    
-        foreach($collection->editors() as $editor) {
-            $item = $editor->item();
-            <tr class='list-item' data:id='{$editor->id()}' >
-                foreach($item->fields() as $field) {
-                    if($field->visible()) {
-                        <td>{$field->rvalue()}</td>
-                    }
-                }
                 <td>
                     widget("infuso\\cms\\ui\\widgets\\button")
                         ->air()
                         ->icon("play")
                         ->attr("data:task", $editor->item()->id())
-                        ->attr("title", "Выполнить")
+                        ->attr("title", "Выполнить сейчас")
                         ->addClass("exec")
                         ->exec();
                 </td>
+                <td>
+                    exec("timeline", array(
+                        "task" => $item,
+                    ));
+                </td>
+                <td>
+                    $title = $item->data("class")."::".$item->data("method");
+                    <div class='title' >{$title}</div>
+                </td>
             </tr>
-        }
-    </table>
+            <tr>
+                <td></td>
+                <td colspan='100' style='padding-top:0;' >
+                    <div class='info' >
+                        <span>Crontab: {$item->data("crontab")}</span>
+                        <span>Запущено: {$item->pdata("called")->num()}</span>
+                        <span>Следующий запуск: {$item->pdata("nextLaunch")->num()}</span>
+                    </div>
+                </td>
+            </tr>
+            
+        </table>
+    }
+
 </div>

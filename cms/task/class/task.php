@@ -148,7 +148,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
             
         // Пустая строка
         } elseif(trim($this->data("crontab"))=="") {
-            $this->data("nextLaunch",util::now());
+            $this->data("nextLaunch", \util::now());
             
 		// Прочее - кронтаб
         } else {

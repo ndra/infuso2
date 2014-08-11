@@ -1,7 +1,7 @@
 <? 
 
 <div class='p3sldjrnyq' >    
-    $items = $editor->item()->plugin("log")->getLog();
+    $items = $editor->item()->plugin("log")->all();
     
     <table>
         foreach($items as $item) {

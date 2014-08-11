@@ -47,8 +47,12 @@ class Controller extends \Infuso\Core\Controller {
     
         $collection = Collection::unserialize($p["collection"]);
         $collection->applyParams($p);
-        $tmp = $collection->itemsTemplate();
+        
+        $tmp = $collection->filterTemplate();
         $html = $tmp->getContentForAjax();
+        
+        $tmp = $collection->itemsTemplate();
+        $html.= $tmp->getContentForAjax();
         
         return array(
             "html" => $html,

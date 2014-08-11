@@ -22,13 +22,17 @@ class Collection extends Core\Component {
 	public function collection() {
 		$editor = Editor::get($this->className.":".$this->id);
 		$fn = $this->method;
-		$collection = $editor->$fn();
+		$collection = $editor->$fn();     
+        
+        $class = $this->editorClass();
+        $virtual = new $class;
 
         if($q = $this->param("query")) {
-            $class = $this->editorClass();
-            $virtual = new $class;
             $virtual->applyQuickSearch($collection, $q);
-        }
+        }   
+        
+        $filters = array_values($virtual->filters($collection->copy()));
+        $collection = $filters[$this->param("filter")];
 
         return $collection;
 	}
@@ -63,6 +67,8 @@ class Collection extends Core\Component {
         if($query = trim($params["query"])) {
             $this->param("query", $query);
         }
+        
+        $this->param("filter", $params["filter"]);
 
 	}
 	
@@ -133,5 +139,10 @@ class Collection extends Core\Component {
         return $tmp;
 	}
 	
+    public function filterTemplate() {
+		$tmp = app()->tm("/reflex/shared/collection/items/filters-ajax");
+        $tmp->param("collection",$this);
+        return $tmp;
+    }
 
 }

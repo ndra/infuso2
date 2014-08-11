@@ -30,11 +30,14 @@ class Handler implements Core\Handler {
      * @handlerPriority = 1000;
     **/
     public function onDeployEnd() {
+    
         \Infuso\Cms\Task\Task::all()
             ->eq("completed",0)
             ->neq("origin","")
             ->neq("origin",self::getOrigin())
-            ->data("completed",1);
+            ->data("completed",1); 
+                                      
+        service("cache")->set("task-origin-xIIqYM4rBT", "");
     }
     
 }

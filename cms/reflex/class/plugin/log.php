@@ -24,7 +24,7 @@ class Log extends \Infuso\Core\Component {
         ));
     }
 
-    public function getLog() {
+    public function all() {
         return service("ar")
             ->collection("infuso\\cms\\log\\log")
             ->eq("index", get_class($this->component()).":".$this->component()->id());

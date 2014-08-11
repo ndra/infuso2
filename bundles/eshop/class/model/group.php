@@ -135,7 +135,20 @@ class Group extends \Infuso\ActiveRecord\Record {
 	    return $this->items()->count();
 	}
     
+    /**
+     * Обновляет статус группы
+     **/         
     public function update() {
+    
+        $status = $this->data("active") ? self::STATUS_ACTIVE : self::STATUS_USER_DISABLED;
+    
+        foreach($this->parents() as $parent) {
+            if(!$parent->data("active")) {
+                $status = self::STATUS_USER_DISABLED;
+            }
+        }
+    
+    
     }
 
 }
