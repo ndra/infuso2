@@ -27,8 +27,9 @@ class TaskEditor extends Reflex\Editor {
     public function filters($collection) {
         return array (
             "Активные" => $collection->copy()->eq("completed", 0),
-            "Все элементы" => $collection->copy(),            
             "Выполненные" => $collection->copy()->eq("completed", 1),
+            "Все задачи" => $collection->copy(),           
+            
         );
     }
 

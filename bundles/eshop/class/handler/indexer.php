@@ -28,8 +28,21 @@ class Indexer implements Core\Handler {
     }
     
     public static function indexStep($params, $task) {
+    
         $iterator = $task->data("iterator");
-        app()->msg($iterator);
+        $group = Model\Group::all()->gt("id", $iterator)->asc("id")->one();
+        
+        $userEnabled = $group->data("active");
+    
+        foreach($group->parents() as $parent) {
+            if(!$parent->data("active")) {
+                $userEnabled = false;
+                break;
+            }
+        }    
+        
+        $group->data("user-enabled", $userEnabled);   
+        
     }
 
 }
