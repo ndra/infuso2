@@ -2,7 +2,7 @@
 
 <form method='post' >
 
-    <input type='hidden' name='cmd' value='infuso/user/controller/login' />
+    <input type='hidden' name='cmd' value='infuso/core/superadmin/login' />
 
     widget("Infuso\\CMS\\UI\\Widgets\\textfield")
         ->placeholder("Технический пароль")

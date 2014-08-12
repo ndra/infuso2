@@ -1,5 +1,4 @@
 <?
-
 /**
  * Контроллер крона
  **/
@@ -67,15 +66,15 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
 
         // Выводим инфу
         if(\mod_superadmin::check()) {            
-            \tmp::header();
+            \infuso\cms\admin\admin::header();
             
             echo "<div style='padding:100px;' >";
             echo "Time to next launch ".$left." sec.";
             echo "</div>";
             
-            \tmp::reset();
+            \infuso\template\lib::reset();
             \util::profiler();
-            \tmp::footer();
+            \infuso\cms\admin\admin::footer();
 
             if(array_key_exists("loop",$_GET)) {
                 echo "<script>window.location.reload();</script>";

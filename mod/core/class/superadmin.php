@@ -73,7 +73,7 @@ class Superadmin extends Controller {
     }
 
     public static function post_login($p) {
-		self::login($p["password"]);
+		self::login($p["superadmin"]);
 	}
 
     public static function login($password) {
