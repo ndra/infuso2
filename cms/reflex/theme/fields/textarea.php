@@ -1,6 +1,6 @@
 <? 
 
-<div class='f0rw8hlkvh' >
+<div class='f0rw8hlkvh' data:editor='{$view->editor()->id()}' >
 
     $w = widget("\\infuso\\cms\\ui\\widgets\\textarea")
         ->value($field->value())        
@@ -12,5 +12,12 @@
     }
     
     $w->exec();
+    
+    <div class='toolbar' >
+        <span class='bold' ><b>Жирный</b></span> 
+        <span class='italic' ><i>Наклонный</i></span> 
+        <span class='image' >Изображение</span> 
+        <span class='file' >Файл</span> 
+    </div>
 
 </div>
