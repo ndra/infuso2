@@ -23,5 +23,13 @@ class TaskEditor extends Reflex\Editor {
             "Таблица" => "/task/grid",
         );
     }
+    
+    public function filters($collection) {
+        return array (
+            "Активные" => $collection->copy()->eq("completed", 0),
+            "Все элементы" => $collection->copy(),            
+            "Выполненные" => $collection->copy()->eq("completed", 1),
+        );
+    }
 
 }

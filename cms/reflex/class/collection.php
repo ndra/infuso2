@@ -33,6 +33,9 @@ class Collection extends Core\Component {
         
         $filters = array_values($virtual->filters($collection->copy()));
         $collection = $filters[$this->param("filter")];
+        if(!$collection) {
+            $collection = $filters[0];
+        }
 
         return $collection;
 	}
