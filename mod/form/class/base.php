@@ -1,12 +1,12 @@
 <?
 
-namespace Infuso\Core;
+namespace Infuso\Form;
 use \Infuso\Core;
 
 /**
  * Базовый класс для форм
  **/
-abstract class Form extends Core\Model\Model {
+abstract class Base extends Core\Model\Model {
 
     public function fieldFactory($name) {
 		$model = $this->recordTable();
@@ -23,6 +23,10 @@ abstract class Form extends Core\Model\Model {
     }
     
     public function handleRecordDataChanged() {
+    }
+    
+    public function builder() {
+        return new Builder($this);
     }
 
 }
