@@ -1,6 +1,6 @@
 <?
 
-$groups = \Infuso\Eshop\Model\Group::all()->eq("parent", 0);
+$groups = \Infuso\Eshop\Model\Group::all()->eq("parent", 0)->active();
 
 <div class='mTDIBqStxW' >
     foreach($groups as $group) {
@@ -9,7 +9,7 @@ $groups = \Infuso\Eshop\Model\Group::all()->eq("parent", 0);
                 <a href='{$group->url()}' >{$group->title()}</a>
             </div>
             <div class='subgroups' >
-                foreach($group->subgroups() as $subgroup) {
+                foreach($group->subgroups()->active() as $subgroup) {
                     <a href='{$subgroup->url()}' >{$subgroup->title()}</a> 
                     <span class='n' >{$subgroup->numberOfItems()}<span>
                 }

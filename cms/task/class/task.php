@@ -31,8 +31,13 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 					'name' => 'params',
 					'type' => 'array',
 					'editable' => '1',
-					'label' => 'Доп. параметры',
+					'label' => 'Параметры',
 				), array (
+					'name' => 'internalParams',
+					'type' => 'array',
+					'editable' => '1',
+					'label' => 'Дополнительные параметры',
+                ), array (
 					'name' => 'iterator',
 					'type' => 'bigint',
 					'editable' => '2',

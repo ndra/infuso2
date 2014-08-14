@@ -9,6 +9,9 @@ use Infuso\Eshop\Model;
  **/
 class Indexer implements Core\Handler {
 
+    const TYPE_GROUP = 0;
+    const TYPE_ITEM = 1;
+    
     /**
      * @handler = infusoDeploy    
      **/         
@@ -30,19 +33,114 @@ class Indexer implements Core\Handler {
     public static function indexStep($params, $task) {
     
         $iterator = $task->data("iterator");
-        $group = Model\Group::all()->gt("id", $iterator)->asc("id")->one();
         
-        $userEnabled = $group->data("active");
-    
-        foreach($group->parents() as $parent) {
-            if(!$parent->data("active")) {
-                $userEnabled = false;
+        switch($task->pdata("internalParams")["phase"]) {
+        
+            // Отмечаем отключенные пользователем группы
+            default:
+            
+                if($iterator == 0) {
+                    service("ar")
+                        ->collection(Model\Index::inspector()->className())
+                        ->delete();
+                }
+            
+                $group = Model\Group::all()->gt("id", $iterator)->asc("id")->one();
+                
+                if(!$group->exists()) {
+                    $params = $task->pdata("internalParams");
+                    $params["phase"] = "activate-items";
+                    $task->data("internalParams", $params);
+                    $task->data("iterator", 0);
+                    return;
+                }
+                
+                $status = $group->data("active") ? Model\Group::STATUS_ACTIVE : Model\Group::STATUS_USER_DISABLED;
+            
+                foreach($group->parents() as $parent) {
+                    if(!$parent->data("active")) {
+                        $status = Model\Group::STATUS_USER_DISABLED;
+                        break;
+                    }
+                }   
+                
+                service("ar")->create(Model\Index::inspector()->className(), array(
+                    "itemId" => $group->id(),
+                    "type" => self::TYPE_GROUP,
+                    "status" => $status
+                ));
+                
+                $iterator = $group->id();
+                $task->data("iterator", $iterator); 
                 break;
-            }
-        }    
-        
-        $group->data("user-enabled", $userEnabled);   
-        
+
+            // Обновляем статус товаров
+            case "activate-items":
+            
+                $item = Model\Item::all()->gt("id", $iterator)->asc("id")->one();
+                
+                if(!$item->exists()) {
+                    $params = $task->pdata("internalParams");
+                    $params["phase"] = "count-items";
+                    $task->data("internalParams", $params);
+                    $task->data("iterator", 0);
+                    return;
+                }
+                                                   
+                $groupIndex = Model\Index::all()
+                    ->eq("type", self::TYPE_GROUP)
+                    ->eq("itemId", $item->data("groupId"))
+                    ->one();
+                    
+                $status = $item->data("active") ? Model\Item::STATUS_ACTIVE : Model\Item::STATUS_USER_DISABLED;        
+                                   
+                if(!$item->group()->exists()) {
+                    $status = Model\Item::STATUS_DETACHED;
+                } elseif($groupIndex->data("status") != Model\Group::STATUS_ACTIVE) {
+                    $status = $groupIndex->data("status");
+                }
+                
+                $item->data("status", $status);
+                
+                $iterator = $item->id();
+                $task->data("iterator", $iterator); 
+                
+                break;
+                
+            case "count-items":
+            
+                $group = Model\Group::all()->gt("id", $iterator)->asc("id")->one();
+                
+                $groupIndex = Model\Index::all()
+                    ->eq("type", self::TYPE_GROUP)
+                    ->eq("itemId", $group->id())
+                    ->one();
+                
+                if(!$group->exists()) {
+                    $task->data("completed", 1);
+                    return;
+                }   
+                
+                $status = $groupIndex->data("status");
+                
+                $count = $group->itemsRecursive()
+                    ->joinByField("groupId")
+                    ->eq("status", Model\Item::STATUS_ACTIVE)
+                    ->count();
+                    
+                $group->data("numberOfItems", $count);
+                
+                if($count == 0) {
+                    $status = Model\Group::STATUS_VOID;
+                } 
+                
+                $group->data("status", $status);
+                                                             
+                $iterator = $group->id();
+                $task->data("iterator", $iterator);   
+                                                 
+                break;          
+        }
     }
 
 }

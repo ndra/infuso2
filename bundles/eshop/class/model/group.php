@@ -8,10 +8,10 @@ use Infuso\Core;
  **/
 class Group extends \Infuso\ActiveRecord\Record {
 
-    const STATUS_VOID = 100;
-    const STATUS_USER_DISABLED = 200;
-    const STATUS_DETACHED = 400;
-    const STATUS_ACTIVE = 500;
+    const STATUS_VOID = 0;
+    const STATUS_USER_DISABLED = 1;
+    const STATUS_DETACHED = 2;
+    const STATUS_ACTIVE = 3;
 
 	public static function recordTable() {
         return array (
@@ -58,14 +58,25 @@ class Group extends \Infuso\ActiveRecord\Record {
     				'group' => 'Основные',
     				'indexEnabled' => '0',
 				), array (
+    				'name' => 'active',
+    				'type' => 'checkbox',
+    				'editable' => '1',
+    				'label' => 'Активна',
+				), array (
     				'name' => 'status',
     				'type' => "select",
-    				'options' => array(
+                    "editable" => 2,
+    				'values' => array(
                         self::STATUS_VOID => "Пустая",
                         self::STATUS_USER_DISABLED => "Отключена пользователем",
                         self::STATUS_DETACHED => "Без родителя",
                         self::STATUS_ACTIVE => "Активна",                        
                     ),
+				), array (
+    				'name' => 'numberOfItems',
+    				'type' => "bigint",
+                    'editable' => 2,
+                    "title" => "Количество активных товаров",
 				),
             ),
         );
@@ -104,6 +115,30 @@ class Group extends \Infuso\ActiveRecord\Record {
             ->collection(Item::inspector()->className())
             ->eq("groupId",$this->id());
 	}
+    
+    /**
+     * Возвращает товары в самой группе и в подгруппах
+     **/         
+    public function itemsRecursive() {
+    
+        $id = array();
+        
+        $scan = function($group) use (&$id, &$scan, &$n) {
+        
+            if(in_array($group->id(), $id)) {
+                return;
+            }
+        
+            $id[] = $group->id();
+            foreach($group->subgroups() as $subgroup) {
+                $scan($subgroup);
+            }            
+        };
+        
+        $scan($this);
+        
+        return Item::all()->eq("groupId", $id);    
+    }
 
 	/**
 	 * Возвращает родителя - родительскую группу
@@ -118,7 +153,8 @@ class Group extends \Infuso\ActiveRecord\Record {
 	public static function all() {
 	    return service("ar")
             ->collection(get_class())
-            ->asc("priority");
+            ->asc("priority")
+            ->addBehaviour("infuso\\eshop\\model\\groupcollection");
 	}
 
 	/**

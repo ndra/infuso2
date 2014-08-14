@@ -1,9 +1,17 @@
 <?
 
-<h1>{$group->title()}</h1>
+<div class='IY8rTwBxKh' >
 
-foreach($group->items() as $item) {
-    <div>
-        <a href='{$item->url()}' >{$item->title()}</a>
-    </div>
-}
+    <h1>{$group->title()}</h1>
+    
+    foreach($group->items() as $item) {
+        <div class='item' >
+            <a href='{$item->url()}' >
+                $preview = $item->photos()->one()->pdata("photo")->preview(200,200);
+                <img src='{$preview}' />
+                <div class='title' >{$item->title()}</div>
+            </a>
+        </div>
+    }
+
+</div>

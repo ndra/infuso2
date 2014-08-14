@@ -42,6 +42,7 @@ exec("/reflex/layout/global");
                         <span>Crontab: {$item->data("crontab")}</span>
                         <span>Запущено: {$item->pdata("called")->num()}</span>
                         <span>Следующий запуск: {$item->pdata("nextLaunch")->num()}</span>
+                        <span>Итерация: {$item->data("iterator")}</span>
                     </div>
                 </td>
             </tr>
