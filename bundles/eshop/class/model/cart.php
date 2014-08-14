@@ -82,23 +82,6 @@ class Cart extends \Infuso\ActiveRecord\Record {
         return $user;
     }
 
-   /* public static function on_mod_beforeAction() {
-    
-        $user = user::active();
-        
-        if(!$user->exists()) {
-            return;
-        }
-            
-        $s = \util::splitAndTrim($_COOKIE[self::$cookieMyOrders],",");
-        
-        foreach($s as $id) {
-            reflex::get(get_class())->eq("security",$id)->eq("userID",0)->one()->data("userID",$user->id());
-        }
-        
-        setcookie(self::$cookieMyOrders,false,-1,"/");
-    } */
-
     /**
      * Вернет активный заказ (Корзину)
      **/

@@ -54,4 +54,8 @@ class CartItem extends \Infuso\ActiveRecord\Record {
         return $this->pdata("cartId");
     }
     
+    public function price() {
+        return $this->item()->data("price");
+    }
+    
 }

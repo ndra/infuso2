@@ -1,7 +1,8 @@
 <?
 
 namespace Infuso\Eshop\Controller;
-use Infuso\Core;
+use \Infuso\Core;
+use \Infuso\Eshop\Model;
 
 /**
  * Контроллер для управления заказом
@@ -30,7 +31,12 @@ class Cart extends Core\Controller {
     }
     
     public function index() {
-        app()->tm("/eshop/cart")->exec();
+        $cart = Model\Cart::active();
+        app()->tm("/eshop/cart")->param("cart", $cart)->exec();
+    }
+    
+    public function index_form() {
+        echo "form";
     }
 
 }
