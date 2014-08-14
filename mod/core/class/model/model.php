@@ -22,8 +22,14 @@ abstract class Model extends Core\Controller {
      * Поля модели (массив)
      **/
     private $fields = null;
+    
+    /**
+     * Массив с ошибками валидации
+     * Будет заполнен при вызове метода validate, если взоникнут ошибки
+     **/        
+    private $validationErrors = array();
 
-    public function __construct($initialData) {
+    public function __construct($initialData = array()) {
         $this->initialData = $initialData;
     }
 
@@ -165,6 +171,39 @@ abstract class Model extends Core\Controller {
      **/
     public final function rdata($key) {
         return $this->field($key)->rvalue();
+    }
+
+    /**
+     * Добавляет ошибку валидации
+     **/         
+    public function validationError($fieldName, $errorText) {
+        $this->validationErrors[] = array(
+            "name" => $fieldName,
+            "text" => $errorText,
+        );
+    }
+    
+    /**
+     * Возврашает массив с ошибками валидации
+     **/         
+    public final function getValidationErrors() {
+        return $this->validationErrors;
+    }
+    
+    /**
+     * Проверяет данные на валидность
+     **/         
+    public final function validate($data) {
+    
+        foreach($this->fields() as $field) {
+            if(!$field->validate($data[$field->name()])) {
+                $this->validationError($field->name(), $field->validationErrorText());
+                return false;
+            }
+        }
+        
+        return true;        
+    
     }
 
 }

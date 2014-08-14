@@ -12,8 +12,16 @@ class Controller extends Core\Controller {
         return true;
     }
 
-    public function post_validate() {
-        app()->msg("validate");
+    public function post_validate($p) {
+        $formName = $p["form"];
+        $form = new $formName();
+        $valid = $form->validate($p["data"]);
+        $errors = $form->getValidationErrors();
+        
+        return array(
+            "valid" => $valid,
+            "errors" => $errors, 
+        );
     }
 
 }

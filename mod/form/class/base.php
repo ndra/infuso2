@@ -8,21 +8,31 @@ use \Infuso\Core;
  **/
 abstract class Base extends Core\Model\Model {
 
+    abstract public function formFields();
+
     public function fieldFactory($name) {
-		$model = $this->recordTable();
 		$ret = null;
-		foreach($model["fields"] as $fieldDescr) {
+		foreach($this->formFields() as $fieldDescr) {
 		    if($fieldDescr["name"] == $name) {
-		        $ret = Model\Field::get($fieldDescr);
+		        $ret = Core\Model\Field::get($fieldDescr);
 		    }
 		}
 		return $ret;
     }
     
     public function fieldNames() {
+    
+        $model = $this->formFields();        
+       
+		foreach($model as $fieldDescr) {
+		    $names[] = $fieldDescr["name"];
+		}
+        
+		return $names;
     }
     
     public function handleRecordDataChanged() {
+        // do nothing;
     }
     
     public function builder() {

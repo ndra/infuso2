@@ -301,5 +301,28 @@ abstract class Field extends Core\Component {
         $this->param("editable",self::READ_ONLY);
         return $this;
     }
+    
+    public function validate($val) {           
+      
+        $min = $this->param("min");
+        if($min > 0 && mb_strlen($val) < $min) {
+            return false;
+        }
+        
+        $max = $this->param("max");
+        if($max > 0 && mb_strlen($val) > $max) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public function validationErrorText() {
+        $error = trim($this->param("error"));
+        if(!$error) {
+            $error = "Поле заполнено неверно";
+        }
+        return $error;
+    }
 
 }
