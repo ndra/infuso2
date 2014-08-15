@@ -62,6 +62,7 @@ class Group extends \Infuso\ActiveRecord\Record {
     				'type' => 'checkbox',
     				'editable' => '1',
     				'label' => 'Активна',
+    				"default" => 1,
 				), array (
     				'name' => 'status',
     				'type' => "select",

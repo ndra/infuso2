@@ -40,6 +40,7 @@ class Item extends \Infuso\ActiveRecord\Record {
                     'type' => 'checkbox',
                     'editable' => '1',
                     'label' => 'Товар активен',
+                    "default" => 1,
                 ), array (
                     'name' => 'groupId',
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',

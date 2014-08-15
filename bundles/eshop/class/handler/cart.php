@@ -20,5 +20,16 @@ class Cart implements Core\Handler {
             "itemId" => $event->item()->id(),
         )); 
     }
+    
+    /**
+     * @handler = eshop/add
+     * @handlerPriority = 99999999
+     **/
+    public function afterAdd($event) {
+        app()->fire("eshop/cart-changed", array(
+            "deliverToClient" => true,
+            "minicart" => app()->tm("/eshop/minicart")->getContentForAjax(),
+		));
+    }
 
 }

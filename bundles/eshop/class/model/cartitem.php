@@ -32,6 +32,7 @@ class CartItem extends \Infuso\ActiveRecord\Record {
 					'type' => 'bigint',
 					'label' => 'Количество',
                     "editable" => 1,
+                    "default" => 1,
 				),
             ),
         );
@@ -46,6 +47,9 @@ class CartItem extends \Infuso\ActiveRecord\Record {
 	    return service("ar")->get(get_class(),$id);
 	}
     
+	/**
+	 * Возвращает объект товара
+	 **/
     public function item() {
         return $this->pdata("itemId");
     }
@@ -53,9 +57,26 @@ class CartItem extends \Infuso\ActiveRecord\Record {
     public function recordParent() {
         return $this->pdata("cartId");
     }
-    
-    public function price() {
+
+    /**
+     * Возвращает цену адиницы товара
+	 **/
+    public function itemPrice() {
         return $this->item()->data("price");
+    }
+
+    /**
+     * Возвращает сумму по строке (цена * количество)
+	 **/
+    public function totalPrice() {
+        return $this->item()->data("price") * $this->quantity();
+    }
+    
+    /**
+     * Возвращает количество товаров
+	 **/
+    public function quantity() {
+        return $this->data("quantity");
     }
     
 }

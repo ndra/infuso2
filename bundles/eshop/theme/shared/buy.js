@@ -1,6 +1,8 @@
 mod.init(".RKuqSeaR2V", function() {
-    $container = $(this);
-    $button = $container.find("input[type=button]");
+    
+    var $container = $(this);
+    var $button = $container.find("input[type=button]");
+    
     $button.click(function() {
         var itemId = $(this).attr("data:id");
         mod.call({

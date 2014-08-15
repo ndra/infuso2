@@ -1,5 +1,7 @@
 <?
 
 <div class='ToHNLAy098' >
-    exec("ajax");
+    <div class='ajax-container' >
+        exec("ajax");   
+    </div>
 </div>

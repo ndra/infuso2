@@ -59,7 +59,7 @@ class Event extends component {
             $n++;
         }
         
-        if($this->deliverToClient()) {
+        if($this->param("deliverToClient")) {
         	self::$firedEvents[] = $this;
         }
     }
@@ -117,11 +117,5 @@ class Event extends component {
     public static function all() {
         return self::$firedEvents;
     }
-    
-    public function dataWrappers() {
-        return array(
-            "deliverToClient" => "mixed",
-		);
-	}
 
 }

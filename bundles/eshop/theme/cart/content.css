@@ -10,4 +10,11 @@
         border: 1px solid #ccc;
     }
     
+    .quantity {
+        input {
+            width: 50px;
+            padding: 5px;
+        }
+    }
+    
 }

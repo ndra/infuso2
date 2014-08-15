@@ -1,6 +1,10 @@
 <?
 
-echo "Корзина";
+<a href='/cart' >
 
-$cart = \Infuso\Eshop\Model\Cart::active();
-echo $cart->items()->count();
+    echo "Корзина";
+    
+    $cart = \Infuso\Eshop\Model\Cart::active();
+    echo $cart->items()->count();
+
+</a>
