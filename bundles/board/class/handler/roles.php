@@ -39,7 +39,7 @@ class Roles implements Core\Handler {
 		user_operation::create("board/takeTask", "Взять задачу")
             ->appendTo("board/worker");
             
-		user_operation::create("board/doneTask", "Взять задачу")
+		user_operation::create("board/doneTask", "Выполнить задачу")
             ->appendTo("board/worker");
         
     }

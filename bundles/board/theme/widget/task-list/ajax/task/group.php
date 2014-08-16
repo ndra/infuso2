@@ -8,9 +8,14 @@
     </div>
     
     <div class='content' >
+    
+        <div class='title' >{$task->data("text")}</div>
+    
         for($i = 0; $i < $task->subtasks()->count(); $i ++ ) {
             <div class='subtask' ></div>
         }
     </div>
+    
+    <div class='edit' ></div>
     
 </div>

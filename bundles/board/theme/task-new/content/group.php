@@ -1,6 +1,6 @@
 <?
 
-<form class='XodEbnBfVK' >
+<form class='XodEbnBfVK' data:group='{$group->id()}'>
 
     <h2 class='g-header' >Введите название группы</h2>
     

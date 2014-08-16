@@ -180,7 +180,6 @@ class Task extends \Infuso\ActiveRecord\Record {
 
     public function beforeCreate() {
         $this->data("creator",user::active()->id());
-        $this->sentToBeginning();
     }
     
     public function sentToBeginning() {

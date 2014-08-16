@@ -2,8 +2,6 @@
 
 <div class='sdqg1isQGi' data:group='{$group->id()}' >
 
-    echo $group->id();
-
     <div class='tabs-head' >
         <div class='tab selected' >Создать задачу</div>
         <div class='tab' >Создать группу</div>

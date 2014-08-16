@@ -21,6 +21,7 @@ $(function() {
         
         container.on("task/load", function(event) {
             container.find(".pager").pager("total", event.ajaxData.pages);
+            container.find(".title-ajax").html(event.ajaxData.title);
         });
 
     });

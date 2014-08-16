@@ -6,7 +6,11 @@
     
     $h = helper("<div>");
     $h->addClass("sticker");
-    $h->style("background", \Infuso\Board\Color::get($task->project()->id()));
+    
+    $color1 = \Infuso\Board\Color::get($task->project()->id());
+    $color2 = "white";
+    
+    $h->style("background", "rgba(255,255,255,.5");
     $h->begin();
     
         if($task->data("status") == \Infuso\Board\Model\Task::STATUS_CANCELLED) {
@@ -41,6 +45,12 @@
             }
             echo \util::str($task->data("text"))->hyphenize();
         </div>
+        
+        $days = (\util::now()->date()->stamp() - $task->pdata("changed")->date()->stamp()) / 3600 / 24;
+        $days = round($days);
+        if($days > 3) {
+            <div class='hang' >{$days}</div>
+        }
         
     $h->end();
     

@@ -26,6 +26,19 @@
         }
     }
     
+    .edit {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        width: 16px;
+        height: 16px;
+        background: url("@{bundle}res/img/icons16/edit.png");
+        opacity: .7;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    
     .folder {
 
         -webkit-perspective: 800px;

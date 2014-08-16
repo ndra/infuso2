@@ -9,4 +9,8 @@
         padding-right:10px;
     }
     
+    td {
+        vertical-align: middle;
+    }
+    
 }

@@ -49,7 +49,9 @@ class Task extends Base {
 
 		if($groupId = $p["groupId"]) {
 		    $tasks->eq("parent", $groupId);
-		}
+		} else {
+            $tasks->eq("parent", 0);
+        }
 
         $tasks->page($p["page"]);
         
@@ -58,9 +60,16 @@ class Task extends Base {
             ->param("status", $p["status"])
 			->param("group", Model\Task::get($p["groupId"]))
             ->getContentForAjax();
+            
+        $title = app()->tm("/board/widget/task-list/ajax-title")
+            ->param("tasks", $tasks)
+            ->param("status", $p["status"])
+			->param("group", Model\Task::get($p["groupId"]))
+            ->getContentForAjax();
         
         return array(
             "html" => $html,
+            "title" => $title,
             "pages" => $tasks->pages(),
         );
                   
@@ -104,10 +113,12 @@ class Task extends Base {
     /**
      * Создает новую задачу
      **/         
-    public function post_newTask($p) {
+    public function post_newTask($p) {     
+    
+        $p["data"]["status"] = Model\Task::STATUS_DRAFT;
         $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", $p["data"]); 
         return array(
-			"taskId" => $task->id(),
+			"taskId" => $task->id(),            
 		);
     }
     
@@ -115,18 +126,31 @@ class Task extends Base {
      * Создает новую группу задач
      **/
     public function post_createGroup($p) {
+    
         $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", array(
             "text" => $p["text"],
             "group" => true,
+            "parent" => $p["parent"],
+            "status" => Model\Task::STATUS_BACKLOG,
 		));
+    
+        $task->sentToBeginning();    
+        
         return array(
 			"taskId" => $task->id(),
 		);
     }
 
     public function post_saveTask($p) {
+    
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         $task->setData($p["data"]);
+        
+        if($task->data("status") == Model\Task::STATUS_DRAFT) {
+            $task->data("status", Model\Task::STATUS_BACKLOG);
+            $task->sentToBeginning();
+        }
+        
         app()->msg("Задача изменена");
     }
     

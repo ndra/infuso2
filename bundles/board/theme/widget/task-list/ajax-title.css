@@ -1,0 +1,18 @@
+.YkELjC2q38 {
+    
+    h2 {
+        display: inline-block;
+        margin-right: 20px;
+        font-size: 24px;
+        opacity: 1;
+    }
+    
+    .back {
+        color: gray;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+}

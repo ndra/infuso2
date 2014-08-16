@@ -2,19 +2,7 @@
 
 <div class='c-toolbar task-toolbar-s88w4h5tpq' >
 
-    /* switch($status) {
-        case "0":
-            $title = "Бэклог";
-            break;
-        case "1":
-            $title = "Выполняется";
-            break;
-        case "check":
-            $title = "Выполнено / Отменено";
-            break;
-    } */
-
-    <h2>{$title}</h2>
+    <div class='title-ajax' ></div>
 
     if($status == "0" || $status == "check") {
         

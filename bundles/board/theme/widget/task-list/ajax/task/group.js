@@ -4,13 +4,24 @@ mod.init(".mcGSvrqQ3m", function() {
     
     // id задачи
     var id = $(this).attr("data:id");
- 
+    
     // Нажатие на задачу
     $task.click(function(event) {
-        $(this).trigger({
-            type: "board/openGroup",
-            groupId: id
-        });    
+        
+        mod.msg($(event.target).parents(".edit").length);
+        
+        if($(event.target).filter(".edit").length) {
+            $(this).trigger({
+                type: "board/openTask",
+                taskId: id
+            });              
+        } else {
+            $(this).trigger({
+                type: "board/openGroup",
+                groupId: id
+            });                
+        }
+  
     });
     
 });
