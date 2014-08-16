@@ -66,7 +66,7 @@ mod.init(".task-list-rpu80rt4m0", function() {
     });
     
     mod.on("board/taskChanged", function(data) {
-        load();
+        setTimeout(load, 10);
     });
     
     $(window).focus(load);

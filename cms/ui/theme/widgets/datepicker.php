@@ -1,6 +1,7 @@
 <? 
 
 \Infuso\Template\Lib::jqui(); 
+
 $date = "";
 $value = $widget->param("value");
 if($value) {
@@ -46,7 +47,6 @@ $container->begin();
             $tomorrow = \util::date($date)->num(); 
             <span class='fast-date' >$title<input type='hidden' class="fast-date-val" value='{$tomorrow}'></span>    
         }
-    }     
+    }
     
-         
 $container->end();

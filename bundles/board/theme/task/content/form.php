@@ -17,10 +17,16 @@
     
     <div style='padding: 20px;' >
     
-        /*widget("infuso\\cms\\ui\\widgets\\textfield")
+        <span class='deadline' >
+            $id = "x".\util::id();
+            <input type='checkbox' id='{$id}' />
+            <label for='{$id}' >Дэдлайн</label>
+        </span>
+    
+        widget("infuso\\cms\\ui\\widgets\\datepicker")
             ->value($task->data("timePlanned"))
             ->fieldName("timePlanned")
-            ->exec(); */
+            ->exec();
             
         widget("infuso\\cms\\ui\\widgets\\button")
             ->text($task->exists() ? "Сохранить" : "Создать")

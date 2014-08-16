@@ -16,6 +16,8 @@ class Task extends \Infuso\ActiveRecord\Record {
     const STATUS_COMPLETED = 3;
     const STATUS_DRAFT = 10;
     const STATUS_CANCELLED = 100;
+    
+    private $touchedStatus = array();
 
     public function indexTest() {
         return true;
@@ -209,20 +211,13 @@ class Task extends \Infuso\ActiveRecord\Record {
 
         // Если статус задачи "к исполнению", ответственным лицом становится текущий пользователь.
         // Если были выполняющиеся задачи, они ставятся на паузу
-        if($this->field("status")->changed() && $this->data("status") == 1) {
-
+        if($this->field("status")->changed() && $this->data("status") == 1) {   
             // Назначаем ответственного пользователя
             $this->data("responsibleUser",user::active()->id());
-
-            // Ставим на паузу выполняющиеся задачи
-            /*$xtasks = Task::all()
-                ->eq("responsibleUser",user::active()->id())
-                ->eq("status",TaskStatus::STATUS_IN_PROGRESS)
-                ->neq("id",$this->id());
-            foreach($xtasks as $xtask) {
-                $xtask->pause();
-            } */
         }
+        
+        $status = $this->field("status")->initialValue();
+        $this->touchedStatus[] = $status;
 
     }
     
@@ -248,11 +243,18 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Вызывает сообщение об изменении задачи
      **/
     public function fireChangedEventDefer() {
+    
+        $status = $this->touchedStatus;
+        $status[] = $this->data("status");      
+        $status = array_unique($status);
+        app()->msg($status);
+    
         app()->fire("board/taskChanged",array(
             "deliverToClient" => true,
             "taskId" => $this->id(),
             "toolbarLarge" => app()->tm("/board/shared/task-tools")->param("task", $this)->getContentForAjax(),
             "statusText" => $this->statusText(),
+            "touchedStatus" => $status,
         ));
     }
 

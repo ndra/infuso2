@@ -2,6 +2,7 @@
 
 header();
 Lib::reset();
+\Infuso\Template\Lib::jqui(); 
 
 exec("/ui/shared");
 
