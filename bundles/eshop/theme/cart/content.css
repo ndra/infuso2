@@ -5,6 +5,11 @@
         vertical-align: middle;
     }
     
+    thead td {
+        opacity: .5;
+        font-style: italic;
+    }
+    
     img {
         display: block;
         border: 1px solid #ccc;

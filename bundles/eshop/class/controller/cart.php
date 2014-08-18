@@ -30,13 +30,20 @@ class Cart extends Core\Controller {
         $event->fire();
     }
     
+    public function post_delete($p) {
+        $cart = Model\Cart::active();
+        $cartItem = $cart->items()->eq("id", $p["itemId"]);
+        $cartItem->delete();
+    }
+        
     public function index() {
         $cart = Model\Cart::active();
         app()->tm("/eshop/cart")->param("cart", $cart)->exec();
     }
     
     public function index_form() {
-        echo "form";
+        $cart = Model\Cart::active();
+        app()->tm("/eshop/cart-form")->param("cart", $cart)->exec();
     }
 
 }

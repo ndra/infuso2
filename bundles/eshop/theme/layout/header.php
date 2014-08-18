@@ -1,5 +1,14 @@
 <?
 
 <div class='dQ345iyKKb' >
-    exec("/eshop/minicart");
+    <table>
+        <tr>
+            <td>
+                <a href='/eshop' >Магазин</a>
+            </td>
+            <td>
+                exec("/eshop/minicart");
+            </td>
+        </tr>
+    </table>
 </div>
