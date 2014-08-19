@@ -24,16 +24,36 @@ class Cart extends Core\Controller {
     /**
      * Контроллер добавления товара в корзину
      **/
-    public function post_add($p) {        
-        $event = new \Infuso\Eshop\Handler\CartEvent("eshop/add");
-        $event->setItem($p["itemId"]);
-        $event->fire();
+    public function post_add($p) {
+
+		$items = $p["items"];
+    
+        if(!is_array($items)) {
+            throw new \Exception("\$_POST['items'] must be array");
+        }
+        
+        foreach($items as $itemData) {
+            $event = new \Infuso\Eshop\Handler\CartEvent("eshop/add");
+	        $event->setItem($itemData["id"]);
+	        $event->fire();
+        }
     }
     
+	/**
+     * Удаление элемента из корзины
+     **/
     public function post_delete($p) {
         $cart = Model\Cart::active();
         $cartItem = $cart->items()->eq("id", $p["itemId"]);
         $cartItem->delete();
+    }
+    
+    /**
+     * Очистка корзины
+     **/
+    public function post_clear($p) {
+        $cart = Model\Cart::active();
+        $cart->items()->delete();
     }
         
     public function index() {

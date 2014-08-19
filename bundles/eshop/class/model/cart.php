@@ -173,4 +173,16 @@ class Cart extends \Infuso\ActiveRecord\Record {
         return CartItem::all()->eq("cartId", $this->id());
     }
 
+	public function total() {
+	
+	    $ret = 0;
+	    
+	    foreach($this->items()->limit(0) as $item) {
+	        $ret += $item->totalPrice();
+	    }
+	    
+	    return $ret;
+	
+	}
+
 }

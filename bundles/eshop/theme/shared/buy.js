@@ -7,7 +7,9 @@ mod.init(".RKuqSeaR2V", function() {
         var itemId = $(this).attr("data:id");
         mod.call({
             cmd: "infuso/eshop/controller/cart/add",
-            itemId: itemId
+            items: [{
+                id: itemId
+            }]
         })
     });
 })

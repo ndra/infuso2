@@ -22,4 +22,14 @@
         }
     }
     
+    .actions {
+        width: 100%;
+        
+        .clear {
+            border-bottom: 1px dotted gray;
+            cursor: pointer;
+        }
+        
+    }
+    
 }

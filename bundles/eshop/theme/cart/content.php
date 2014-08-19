@@ -3,6 +3,7 @@
 <div class='LzMqPQSsHk' >
     <table>
     
+        // Заголовок таблицы
         <thead>
             <tr>
                 <td></td>
@@ -13,7 +14,8 @@
             </tr>
         </thead>
     
-        foreach($cart->items() as $item) {
+        // Товары
+        foreach($cart->items()->limit(0) as $item) {
             <tr>
                 <td>
                     <input type='checkbox' />
@@ -31,5 +33,25 @@
                 </td>
             </tr>
         }
+        
+        // Итого
+        <tr>
+            <td colspan='4' ></td>
+            <td>Итого</td>
+            <td>{$cart->total()}</td>
+        </tr>
+        
     </table>
+    
+    <table class='actions' >
+        <tr>
+            <td>
+                <a href='{action("infuso\\eshop\\controller\\cart", "form")}' >Оформить заказ</a>
+            </td>
+            <td style='text-align: right;' >
+                <span class='clear' >Очистить корзину</span>
+            </td>
+        </tr>
+    </table>
+    
 </div>

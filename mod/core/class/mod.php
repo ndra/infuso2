@@ -8,8 +8,6 @@ namespace Infuso\Core;
 class Mod extends \Infuso\Core\Component {
 
 	private static $debug = null;
-	
-
 
 	/**
 	 * Включен ли режим отладки
