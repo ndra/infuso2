@@ -194,16 +194,13 @@ abstract class Model extends Core\Controller {
      * Проверяет данные на валидность
      **/         
     public final function validate($data) {
-    
         foreach($this->fields() as $field) {
             if(!$field->validate($data[$field->name()])) {
                 $this->validationError($field->name(), $field->validationErrorText());
                 return false;
             }
         }
-        
-        return true;        
-    
+        return true;
     }
 
 }

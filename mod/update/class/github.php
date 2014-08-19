@@ -53,9 +53,18 @@ class GitHub extends \Infuso\Core\Component {
 			}
 		}
 		
+		// Сохраняем данные, полученные по api в zip-файл
 		$zip = Core\File::tmp()."/1.zip";
 		Core\File::get($zip)->put($contents);
-		$this->extract($zip,$params["dest"],$params["path"]);
+		
+		// Распаковываем zip в целевую папку
+		$this->extract($zip, $params["dest"], $params["path"]);
+		
+		// Проверяем, модуль ли это
+		$infuso = Core\File::get($params["dest"]."/.infuso");
+		if(!$infuso->exists()) {
+		    Throw new Exception("То что мы скачали с гитхаба и распаковали не является бандлом (отсутствует файл .infuso)");
+		}
 		
 	}
 	

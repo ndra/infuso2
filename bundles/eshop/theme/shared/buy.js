@@ -9,7 +9,6 @@ mod.init(".RKuqSeaR2V", function() {
             cmd: "infuso/eshop/controller/cart/add",
             items: [{
                 id: itemId,
-                xxxx: 34343
             }]
         });
     });

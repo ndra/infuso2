@@ -9,6 +9,7 @@ use Infuso\Core;
 class Fieldset implements \Iterator {
 
 	private $fields;
+	
 	private $model;
 
 	public function __construct($model,$fields) {
@@ -49,10 +50,14 @@ class Fieldset implements \Iterator {
 		return $this->current() !== false;
 	}
 	
+	public function model() {
+	    return $this->model;
+	}
+	
 	public function changed() {
 	
 	    $fields = array();
-	    $model = $this->model;
+	    $model = $this->model();
 	    
 	    foreach($this->fields as $name) {
 		    if($model->isFieldChanged($name)) {
@@ -60,6 +65,20 @@ class Fieldset implements \Iterator {
 		    }
 	    }
 	    
+	    return new self($model,$fields);
+	}
+
+	public function editable() {
+
+	    $fields = array();
+	    $model = $this->model();
+
+	    foreach($this->fields as $name) {
+		    if($model->field($name)->editable()) {
+		        $fields[] = $name;
+		    }
+	    }
+
 	    return new self($model,$fields);
 	}
 	

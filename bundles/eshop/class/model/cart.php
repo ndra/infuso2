@@ -31,7 +31,7 @@ class Cart extends \Infuso\ActiveRecord\Record {
 					'name' => 'security',
 					'type' => 'string',
 					'label' => 'Секретный код',
-					'editable' => '1',
+					'editable' => 0,
 				),
             ),
         );
@@ -58,35 +58,42 @@ class Cart extends \Infuso\ActiveRecord\Record {
             array(
                 "name" => "firstName",
                 "type" => "string",
-                "title" => "Имя",
+                "label" => "Имя",
+                "editable" => 1,
 			), array(
                 "name" => "lastName",
                 "type" => "string",
-                "title" => "Фамилия",
+                "label" => "Фамилия",
+                "editable" => 1,
 			), array(
                 "name" => "email",
                 "type" => "string",
-                "title" => "Электронная почта",
+                "label" => "Электронная почта",
+                "editable" => 1,
 			), array(
                 "name" => "phone",
                 "type" => "string",
-                "title" => "Телефон",
+                "label" => "Телефон",
+                "editable" => 1,
 			), array(
                 "name" => "country",
                 "type" => "string",
-                "title" => "Страна",
+                "label" => "Страна",
+                "editable" => 1,
 			), array(
                 "name" => "city",
                 "type" => "string",
-                "title" => "Город",
+                "label" => "Город",
 			), array(
                 "name" => "building",
                 "type" => "string",
-                "title" => "Дом",
+                "label" => "Дом",
+                "editable" => 1,
 			), array(
                 "name" => "flat",
                 "type" => "string",
-                "title" => "Квартира",
+                "label" => "Квартира",
+                "editable" => 1,
 			),
 		);
     }

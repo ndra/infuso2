@@ -6,9 +6,19 @@ use \Infuso\Core;
 /**
  * Формбилдер
  **/
-class Builder extends Core\Component {
+class Builder extends \Infuso\Template\Widget {
 
     private $form = null;
+    
+    public function name() {
+        return "Стандартная форма";
+    }
+    
+	public function execWidget() {
+	    app()->tm("/form/builder")
+			->param("builder", $this)
+			->exec();
+	}
 
     public function __construct($form) {
         $this->form = $form;

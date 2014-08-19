@@ -2,9 +2,7 @@
 
 <div class='x2eDLtE4nnj' >
 
-    <table>
-        <tr>
-        </tr>
-    </table>
+    $form = new \Infuso\Eshop\Form\Cart();
+    $form->builder()->exec();
 
 </div>

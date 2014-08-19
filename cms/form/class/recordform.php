@@ -12,10 +12,15 @@ abstract class RecordForm extends Base {
 
     public function formFields() {
     
-        //$item = new self::recordClass();
-        foreach($item->fields() as $field) {
+        $class = $this->recordClass();
+        $item = new $class;
         
+        $data = array();
+        foreach($item->fields() as $field) {
+            $data[] = $field->params();
         }
+        
+        return $data;
     
     }
 
