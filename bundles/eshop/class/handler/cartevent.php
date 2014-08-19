@@ -120,5 +120,42 @@ class CartEvent extends Core\Event {
         }
 
     }
+    
+    /**
+     * Метод доступа к данным запроса
+     **/
+    public final function requestData($key=null, $val=null) {
+
+        if(func_num_args()==0) {
+            return $this->requestData;
+        }
+
+        if(func_num_args()==1) {
+
+            if(is_array($key)) {
+                foreach($key as $a=>$b) {
+                    $this->requestData($a,$b);
+                }
+                return $this;
+            }
+
+            // Мы возвращаем значение по ссылке
+            // Если возвращать по ссылке несуществующие элементы массива, php создает их на лету
+            // и записывает в них нули
+            // Чтобы этого не произошло - проверяем наличие ключа у массива
+            if(array_key_exists($key,$this->requestData)) {
+                return $this->requestData[$key];
+            } else {
+                return null;
+            }
+
+        }
+
+        if(func_num_args()==2) {
+            $this->requestData[$key] = $val;
+            return $this;
+        }
+
+    }
 
 }

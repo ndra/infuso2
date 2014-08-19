@@ -34,6 +34,9 @@ class Cart extends Core\Controller {
         
         foreach($items as $itemData) {
             $event = new \Infuso\Eshop\Handler\CartEvent("eshop/add");
+			foreach($itemData as $key => $val) {
+			    $event->requestData($key, $val);
+			}
 	        $event->setItem($itemData["id"]);
 	        $event->fire();
         }

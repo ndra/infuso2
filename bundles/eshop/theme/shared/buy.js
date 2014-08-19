@@ -8,8 +8,10 @@ mod.init(".RKuqSeaR2V", function() {
         mod.call({
             cmd: "infuso/eshop/controller/cart/add",
             items: [{
-                id: itemId
+                id: itemId,
+                xxxx: 34343
             }]
-        })
+        });
     });
-})
+    
+});
