@@ -51,7 +51,7 @@ class Cart implements Core\Handler {
     
         app()->fire("eshop/cart-changed", array(
             "deliverToClient" => true,
-            "minicart" => app()->tm("/eshop/minicart")->getContentForAjax(),
+            "minicart" => app()->tm("/eshop/minicart/ajax")->getContentForAjax(),
 		));
     }
 
