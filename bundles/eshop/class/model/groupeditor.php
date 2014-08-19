@@ -36,7 +36,7 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 			->param("title","Товары");
 	}
 	
-	public function layout() {
+	public function _layout() {
 	    return array(
 			"collection:items",
 			"collection:subgroups",

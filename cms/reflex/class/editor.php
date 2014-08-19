@@ -31,7 +31,7 @@ abstract class Editor extends Core\Controller {
      * collection:method - коллекция, заданная методом method
      * Также можно написать строку с произвольным html-кодом, которая будет выведена «как есть»
      **/
-	public function layout() {
+	public function _layout() {
 	    return array(
 			"form",
 		);

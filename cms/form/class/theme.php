@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Form;
+namespace Infuso\CMS\Form;
 use \Infuso\Core;
 
 /**

@@ -46,7 +46,7 @@
     <table class='actions' >
         <tr>
             <td>
-                <a href='{action("infuso\\eshop\\controller\\cart", "form")}' >Оформить заказ</a>
+                <a class='submit' href='{action("infuso\\eshop\\controller\\cart", "form")}' >Оформить заказ</a>
             </td>
             <td style='text-align: right;' >
                 <span class='clear' >Очистить корзину</span>

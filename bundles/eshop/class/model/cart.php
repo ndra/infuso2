@@ -19,7 +19,7 @@ class Cart extends \Infuso\ActiveRecord\Record {
     private static $cookieMyOrders = "fubqw5rd";
 
 	public static function recordTable() {
-        return array (
+        $data = array (
       		'name' => 'eshop_cart',
       		'fields' => array (
 			    array (
@@ -35,6 +35,60 @@ class Cart extends \Infuso\ActiveRecord\Record {
 				),
             ),
         );
+        
+        foreach(self::deliveryFields() as $field) {
+            $data["fields"][] = $field;
+		}
+		
+		$data["scenarios"] = array(
+		    "submit" => array(
+		        array(
+		            "name" => "firstName",
+		            "editable" => true,
+				),
+			),
+		);
+        
+        return $data;
+        
+    }
+    
+    private static function deliveryFields() {
+        return array(
+            array(
+                "name" => "firstName",
+                "type" => "string",
+                "title" => "Имя",
+			), array(
+                "name" => "lastName",
+                "type" => "string",
+                "title" => "Фамилия",
+			), array(
+                "name" => "email",
+                "type" => "string",
+                "title" => "Электронная почта",
+			), array(
+                "name" => "phone",
+                "type" => "string",
+                "title" => "Телефон",
+			), array(
+                "name" => "country",
+                "type" => "string",
+                "title" => "Страна",
+			), array(
+                "name" => "city",
+                "type" => "string",
+                "title" => "Город",
+			), array(
+                "name" => "building",
+                "type" => "string",
+                "title" => "Дом",
+			), array(
+                "name" => "flat",
+                "type" => "string",
+                "title" => "Квартира",
+			),
+		);
     }
 
 	public static function all() {
