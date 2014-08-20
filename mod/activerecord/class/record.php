@@ -81,15 +81,13 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * Возвращает поле по его имени
      * @todo сделать кэширвоанеи работы
      **/
-    public function fieldFactory($name) {
+    public function fieldParams($name) {
 		$model = $this->recordTableExtended();
-		$ret = null;
 		foreach($model["fields"] as $fieldDescr) {
 		    if($fieldDescr["name"] == $name) {
-		        $ret = Model\Field::get($fieldDescr);
+		        return $fieldDescr;
 		    }
 		}
-		return $ret;
     }
     
     /**
@@ -110,7 +108,10 @@ abstract class Record extends \Infuso\Core\Model\Model {
 		return $names;
     }
     
-    public function handleRecordDataChanged() {
+    /**
+     * При изменении данных модели, меняем ее статус и сообщаем службе ar об изменениях
+	 **/
+    public function handleModelDataChanged() {
     	if(in_array($this->recordStatus(), array(self::STATUS_SYNC, self::STATUS_CHANGED))) {
 			Core\Mod::service("ar")->registerChanges(get_class($this),$this->id());
 			$this->setRecordStatus(self::STATUS_CHANGED);

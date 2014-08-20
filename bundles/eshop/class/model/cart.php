@@ -36,24 +36,21 @@ class Cart extends \Infuso\ActiveRecord\Record {
             ),
         );
         
-        foreach(self::deliveryFields() as $field) {
+        foreach(self::submitFields() as $field) {
             $data["fields"][] = $field;
 		}
 		
-		$data["scenarios"] = array(
-		    "submit" => array(
-		        array(
-		            "name" => "firstName",
-		            "editable" => true,
-				),
+		$data["scenarios"]["submit"] = array(
+		    array(
+		        "name" => "firstName",
+		        "editable" => false,
 			),
 		);
-        
+
         return $data;
-        
     }
     
-    private static function deliveryFields() {
+    private static function submitFields() {
         return array(
             array(
                 "name" => "firstName",

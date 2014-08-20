@@ -10,28 +10,29 @@ abstract class Base extends Core\Model\Model {
 
     abstract public function formFields();
 
-    public function fieldFactory($name) {
-		$ret = null;
+    public function fieldParams($name) {
 		foreach($this->formFields() as $fieldDescr) {
 		    if($fieldDescr["name"] == $name) {
-		        $ret = Core\Model\Field::get($fieldDescr);
+		        return $fieldDescr;
 		    }
 		}
-		return $ret;
     }
     
+    /**
+     * Возвращает массив с именами полей
+     **/
     public function fieldNames() {
-    
-        $model = $this->formFields();        
-       
+        $model = $this->formFields();
 		foreach($model as $fieldDescr) {
 		    $names[] = $fieldDescr["name"];
 		}
-        
 		return $names;
     }
     
-    public function handleRecordDataChanged() {
+    /**
+     * Метод выполняется при изменении данных модели
+     **/
+    public function handleModelDataChanged() {
         // do nothing;
     }
     

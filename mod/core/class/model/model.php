@@ -45,9 +45,11 @@ abstract class Model extends Core\Controller {
      * @return Возвращает поле по имени
      **/
     public final function field($name) {
-        $ret = $this->fieldFactory($name);
-        if(!$ret) {
-            $ret = Field::getNonExistent();
+        $fieldData = $this->fieldParams($name);
+        if($fieldData) {
+            $ret = Field::get($fieldData);
+        } else {
+			$ret = Field::getNonExistent();
         }
         $ret->setModel($this);
         return $ret;
@@ -57,7 +59,7 @@ abstract class Model extends Core\Controller {
       * Фабрика полей
       * Метод должен быть определен в дочернем классе
       **/
-     abstract protected function fieldFactory($name);
+     abstract protected function fieldParams($name);
      
      /**
       * Возвращает массив с именами полей
@@ -106,11 +108,11 @@ abstract class Model extends Core\Controller {
             $field = $this->field($key);
             $preparedValue = $field->prepareValue($val);
             $this->changedData[$key] = $preparedValue;
-            $this->handleRecordDataChanged();
+            $this->handleModelDataChanged();
         }
     }
     
-    abstract function handleRecordDataChanged();
+    abstract function handleModelDataChanged();
 
     /**
      * Передает в модель массив данных
@@ -201,6 +203,13 @@ abstract class Model extends Core\Controller {
             }
         }
         return true;
+    }
+    
+    /**
+     * Устанавливает сценарий
+     **/
+    public function scenario($scenario) {
+        $this->scenario = $scenario;
     }
 
 }
