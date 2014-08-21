@@ -14,7 +14,7 @@ class Domain extends ActiveRecord\Record {
 	 **/
 	private static $active = null;
 
-	public static function recordTable() {
+	public static function model() {
 		return array (
 			'name' => 'reflex_domain',
 			'fields' => array (

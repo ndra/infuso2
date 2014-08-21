@@ -14,7 +14,7 @@ class WorkFlow extends ActiveRecord\Record {
     const STATUS_AUTO = 1;
     const STATUS_MANUAL = 2;
 
-    public static function recordTable() {
+    public static function model() {
         return array (
             'name' => "board_task_workflow",
             'fields' => array (

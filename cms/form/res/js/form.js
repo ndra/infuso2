@@ -1,4 +1,4 @@
-var form = function(selector, formx) {
+var form = function(selector, formx, scenario) {
 
     $(selector).submit(function(e) {
 
@@ -20,9 +20,10 @@ var form = function(selector, formx) {
         delete data.cmd;
 
         mod.call({
-            cmd: "infuso/form/controller/validate",
+            cmd: "infuso/cms/form/controller/validate",
             data: data,
-            form: formx
+            form: formx,
+            scenario: scenario
         },function(d) {
 
             form.find(".lbdmv238az").hide("fast");

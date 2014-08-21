@@ -40,33 +40,92 @@ abstract class Model extends Core\Controller {
 		$fieldset = new Fieldset($this,$this->fieldNames());
 		return $fieldset;
     }
+    
+    /**
+     * Описание таблицы записи с учетом поведений
+     * @todo сделать кэширование
+     **/
+    public function modelExtended() {
+        $ret = $this->model();
+        foreach($this->behaviourMethods("model") as $method) {
+            $data = $method();
+            if(array_key_exists("fields", $data)) {
+                foreach($data["fields"] as $fieldData) {
+                    $ret["fields"][] = $fieldData;
+                }
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     * Фабрика полей
+     * Возвращает поле по его имени
+     * @todo сделать кэширвоанеи работы
+     **/
+    public function fieldParams($name) {
+		$model = $this->modelExtended();
+		foreach($model["fields"] as $fieldDescr) {
+		    if($fieldDescr["name"] == $name) {
+		        return $fieldDescr;
+		    }
+		}
+    }
 
     /**
      * @return Возвращает поле по имени
      **/
     public final function field($name) {
+    
         $fieldData = $this->fieldParams($name);
         if($fieldData) {
-            $ret = Field::get($fieldData);
+
+			// Учитываем сценарии
+	        if($scenario = $this->scenario()) {
+
+	            $found = false;
+	            foreach($this->scenarioData() as $scenarioFieldData) {
+	                if($scenarioFieldData["name"] == $name) {
+	                    foreach($scenarioFieldData as $key => $val) {
+	                        $fieldData[$key] = $val;
+	                    }
+		                $found = true;
+		                break;
+	                }
+	            }
+	            if(!$found) {
+	                $fieldData["editable"] = false;
+	            }
+	        }
+	        
+	        $ret = Field::get($fieldData);
+        
         } else {
 			$ret = Field::getNonExistent();
         }
+        
         $ret->setModel($this);
         return $ret;
 	}
+	
+    /**
+     * Возвращает массив имен полей модели
+     * @todo сделать кэширвоанеи работы
+     **/
+    public function fieldNames() {
+        $names = array();
+        $model = $this->modelExtended();
 
-     /**
-      * Фабрика полей
-      * Метод должен быть определен в дочернем классе
-      **/
-     abstract protected function fieldParams($name);
-     
-     /**
-      * Возвращает массив с именами полей
-      * Метод должен быть определен в дочернем классе
-      **/
-     abstract protected function fieldNames();
+        if(!is_array($model["fields"])) {
+            throw new \Exception("Model[fields] must be Array in ".get_class($this));
+        }
 
+		foreach($model["fields"] as $fieldDescr) {
+		    $names[] = $fieldDescr["name"];
+		}
+		return $names;
+    }
+    
     /**
      * Враппер для доступа к даным
      * @todo рефакторить скорость для дефолтных полей
@@ -111,6 +170,8 @@ abstract class Model extends Core\Controller {
             $this->handleModelDataChanged();
         }
     }
+    
+    abstract public static function model();
     
     abstract function handleModelDataChanged();
 
@@ -206,10 +267,45 @@ abstract class Model extends Core\Controller {
     }
     
     /**
-     * Устанавливает сценарий
+     * Возвращает / устанавливает сценарий
      **/
-    public function scenario($scenario) {
-        $this->scenario = $scenario;
+    public function scenario($scenario = null) {
+        if(func_num_args() == 0) {
+        	return $this->scenario;
+        } elseif(func_num_args() == 1) {
+            $this->scenario = $scenario;
+            return $this;
+        }
+        throw new \Exception("Model::scenario wrong arguments number");
     }
+    
+    /**
+     * Возвращает массив данных активного сценария
+     **/
+	public function scenarioData() {
+	    $scenario = $this->scenario();
+	    $model = $this->model();
+		$scenarioData = $model["scenarios"][$scenario];
+		return $scenarioData;
+	}
+	
+	/**
+	 * заполняет данные модели из массива $data
+	 * Данные предварительно валидируются в соответствии с активнм сценарием
+	 * Будут заполнены только те поля, которые отмечены как редактируемые в сценарии
+	 **/
+	public function fill($data) {
+	
+		if(!$this->validate($data)) {
+		    throw new \Exception("Model::fill() validation failed");
+		}
+		
+		foreach($this->fields()->editable() as $field) {
+		    $this->data($field->name(),$data[$field->name()]);
+		}
+		
+		return $this;
+	
+	}
 
 }

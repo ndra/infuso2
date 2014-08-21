@@ -20,7 +20,7 @@ class Log extends Record {
     const TYPE_TASK_CANCELLED = 11;
     const TYPE_TASK_MOVED_TO_BACKLOG = 12;
 
-    public static function recordTable() {
+    public static function model() {
         return array (
             'name' => 'board_task_log',
             'fields' => array (

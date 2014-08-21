@@ -8,7 +8,7 @@ use Infuso\Core;
  **/
 class ItemPhoto extends \Infuso\ActiveRecord\Record {
 
-    public static function recordTable() {
+    public static function model() {
         return array(
             'name' => 'eshop_item_photo',
             'fields' => array(

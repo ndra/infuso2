@@ -8,7 +8,7 @@ use Infuso\Core;
  **/
 class Index extends \Infuso\ActiveRecord\Record {
 
-	public static function recordTable() {
+	public static function model() {
         return array (
       		'name' => get_class($this),
       		'fields' => array (

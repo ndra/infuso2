@@ -5,7 +5,7 @@ use \Infuso\Core;
 
 class PaymentGroup extends \Infuso\ActiveRecord\Record {
 
-    public static function recordTable() {
+    public static function model() {
         return array(
             'name' => 'HeapitPaymentGroup',
             'fields' => array(

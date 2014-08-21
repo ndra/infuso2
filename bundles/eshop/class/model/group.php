@@ -13,7 +13,7 @@ class Group extends \Infuso\ActiveRecord\Record {
     const STATUS_DETACHED = 2;
     const STATUS_ACTIVE = 3;
 
-	public static function recordTable() {
+	public static function model() {
         return array (
       		'name' => 'eshop_group',
       		'fields' => array (

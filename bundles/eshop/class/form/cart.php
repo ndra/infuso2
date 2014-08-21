@@ -9,6 +9,10 @@ use Infuso\Eshop\Model;
  **/
 class Cart extends \Infuso\CMS\Form\RecordForm {
 
+	public static function model() {
+	    return Model\Cart::model();
+	}
+
 	public function recordClass() {
 	    return Model\Cart::inspector()->className();
 	}

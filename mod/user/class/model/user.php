@@ -15,7 +15,7 @@ class User extends ActiveRecord\Record {
 
     private $errorText = "";
     
-    public static function recordTable() {
+    public static function model() {
     
         return array(
             'name' => 'user_list',

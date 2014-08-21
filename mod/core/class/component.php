@@ -99,12 +99,12 @@ class Component {
         if(method_exists($this,$fn3)) {
             return call_user_func_array(array($this,$fn3),$params);
         }
-
-        // Пытаемся вызвать дата-врапперы
+        
+		// Пытаемся вызвать дата-врапперы
         $wrappers = $this->dataWrappers();
 
         if(array_key_exists($fn,$wrappers)) {
-        
+
 			$split = function($str) {
 		        $ret = array();
 		        foreach(explode(",",$str) as $part) {
@@ -143,6 +143,21 @@ class Component {
         // (для обработки методов, которых нет в компоненте и в поведениях)
         // По умолчанию componentCall выбросить исключение.
         return $this->componentCall($fn,$params);
+    }
+    
+    public final static function __callStatic($fn,$params) {
+
+        $behaviourClass = BehaviourMap::routeMethod(get_called_class(),$fn,array(),"");
+        if($behaviourClass) {
+            return call_user_func_array(array($behaviourClass, $fn),$params);
+        }
+
+        // Пытаемся вызвать метод _fn
+        $_fn = "_".$fn;
+        
+        if(method_exists(get_called_class(),$_fn)) {
+            return call_user_func_array(array(get_called_class(),$_fn),$params);
+        }
 
     }
 

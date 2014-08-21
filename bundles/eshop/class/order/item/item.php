@@ -7,7 +7,7 @@ class eshop_order_item extends reflex {
 
 	
 
-public static function recordTable() {return array (
+public static function model() {return array (
   'name' => 'eshop_order_item',
   'fields' => 
   array (

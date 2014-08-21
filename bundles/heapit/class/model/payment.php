@@ -11,7 +11,7 @@ class Payment extends \Infuso\ActiveRecord\Record {
     const STATUS_PAID = 200;
     const STATUS_DELETED = 300;
     
-    public static function recordTable() {
+    public static function model() {
         return array(
             'name' => 'heapitPayment',
             'fields' => array(

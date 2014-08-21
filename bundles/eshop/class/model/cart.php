@@ -18,7 +18,7 @@ class Cart extends \Infuso\ActiveRecord\Record {
      **/
     private static $cookieMyOrders = "fubqw5rd";
 
-	public static function recordTable() {
+	public static function model() {
         $data = array (
       		'name' => 'eshop_cart',
       		'fields' => array (
@@ -40,57 +40,55 @@ class Cart extends \Infuso\ActiveRecord\Record {
             $data["fields"][] = $field;
 		}
 		
-		$data["scenarios"]["submit"] = array(
-		    array(
-		        "name" => "firstName",
-		        "editable" => false,
-			),
-		);
+		$data["scenarios"]["submit"] = array();
+		
+		foreach(self::submitFields() as $field) {
+		    $data["scenarios"]["submit"][] = array(
+		        "name" => $field["name"],
+		        "editable" => true,
+			);
+		}
 
         return $data;
     }
     
-    private static function submitFields() {
+    public static function _submitFields() {
         return array(
             array(
                 "name" => "firstName",
                 "type" => "string",
                 "label" => "Имя",
+                "min" => 3,
                 "editable" => 1,
 			), array(
                 "name" => "lastName",
                 "type" => "string",
                 "label" => "Фамилия",
-                "editable" => 1,
+                "min" => 3,
 			), array(
                 "name" => "email",
                 "type" => "string",
                 "label" => "Электронная почта",
-                "editable" => 1,
+                "min" => 3,
 			), array(
                 "name" => "phone",
                 "type" => "string",
                 "label" => "Телефон",
-                "editable" => 1,
-			), array(
-                "name" => "country",
-                "type" => "string",
-                "label" => "Страна",
-                "editable" => 1,
+                "min" => 6,
 			), array(
                 "name" => "city",
                 "type" => "string",
                 "label" => "Город",
+                "min" => 3,
 			), array(
                 "name" => "building",
                 "type" => "string",
                 "label" => "Дом",
-                "editable" => 1,
+                "min" => 1,
 			), array(
                 "name" => "flat",
                 "type" => "string",
                 "label" => "Квартира",
-                "editable" => 1,
 			),
 		);
     }

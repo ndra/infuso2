@@ -9,7 +9,7 @@ use Infuso\ActiveRecord;
  **/
 class Task extends ActiveRecord\Record implements Core\Handler {
 
-	public static function recordTable() {
+	public static function model() {
 	
 		return array (
 			'name' => 'reflex_task',

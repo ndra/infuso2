@@ -10,7 +10,7 @@ use Infuso\Cms\Reflex;
  **/
 class Route extends ActiveRecord\Record {
 
-	public static function recordTable() {
+	public static function model() {
 		return array (
 		  'name' => 'reflex_route_item',
 		  'fields' => 

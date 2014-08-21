@@ -9,7 +9,7 @@ use Infuso\ActiveRecord;
  **/
 class Meta extends ActiveRecord\Record {
 
-	public static function recordTable() {
+	public static function model() {
 		return array (
 		  'name' => get_class(),
 		  'fields' =>

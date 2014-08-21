@@ -12,7 +12,7 @@ class Operation extends ActiveRecord\Record {
 
     private $parents = null;
 
-	public static function recordTable() {
+	public static function model() {
 		return array(
 			'name' => 'user_operation',
 			'fields' => array(

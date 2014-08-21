@@ -53,61 +53,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	 **/
 	protected $recordStatus = 0;
 
-	/**
-	 * @return Функция должна вернуть таблицу mysql, связанную с классом
-	 * Если функция возвращает символ @, то в качестве таблицы используется имя класса
-	 **/
-	abstract public static function recordTable();
-    
-    /**
-     * Описание таблицы записи с учетом поведений
-     * @todo сделать кэширование     
-     **/         
-    public function recordTableExtended() {
-        $ret = $this->recordTable();
-        foreach($this->behaviourMethods("recordTable") as $method) {
-            $data = $method();
-            if(array_key_exists("fields", $data)) {
-                foreach($data["fields"] as $fieldData) {
-                    $ret["fields"][] = $fieldData;
-                }
-            }
-        } 
-        return $ret;
-    }
-
-    /**
-     * Фабрика полей
-     * Возвращает поле по его имени
-     * @todo сделать кэширвоанеи работы
-     **/
-    public function fieldParams($name) {
-		$model = $this->recordTableExtended();
-		foreach($model["fields"] as $fieldDescr) {
-		    if($fieldDescr["name"] == $name) {
-		        return $fieldDescr;
-		    }
-		}
-    }
-    
-    /**
-     * Возвращает массив имен полей модели
-     * @todo сделать кэширвоанеи работы
-     **/
-    public function fieldNames() {
-        $names = array();
-        $model = $this->recordTableExtended();
-        
-        if(!is_array($model["fields"])) {
-            throw new \Exception("Model[fields] must be Array in ".get_class($this));
-        }
-        
-		foreach($model["fields"] as $fieldDescr) {
-		    $names[] = $fieldDescr["name"];
-		}
-		return $names;
-    }
-    
     /**
      * При изменении данных модели, меняем ее статус и сообщаем службе ar об изменениях
 	 **/
@@ -223,7 +168,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
     
     public final function prefixedTableName() {
-        $ret = $this->recordTableExtended();
+        $ret = $this->modelExtended();
         return "infuso_".$ret["name"];
     }
     

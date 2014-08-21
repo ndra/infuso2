@@ -16,7 +16,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
     const STATUS_HOLD = 500;
     const STATUS_DELETED = 1000;
     
-    public static function recordTable() {
+    public static function model() {
         return array(
             'name' => 'heapitBargain',
             'fields' => array(

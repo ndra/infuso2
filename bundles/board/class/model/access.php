@@ -5,7 +5,7 @@ use \Infuso\Core;
 
 class Access extends \Infuso\ActiveRecord\Record {
 
-    public static function recordTable() {
+    public static function model() {
 
         return array(
             'name' => 'board_access',

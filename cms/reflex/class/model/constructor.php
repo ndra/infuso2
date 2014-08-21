@@ -12,7 +12,7 @@ use Infuso\ActiveRecord;
  **/ 
 class Constructor extends ActiveRecord\Record {
 	
-	public static function recordTable() {
+	public static function model() {
 		return array (
 			'name' => 'reflex_editor_constructor',
 			'fields' => array (

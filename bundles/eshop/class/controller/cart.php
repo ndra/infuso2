@@ -58,6 +58,11 @@ class Cart extends Core\Controller {
         $cart = Model\Cart::active();
         $cart->items()->delete();
     }
+    
+    public function post_submit($p) {
+        $cart = Model\Cart::active();
+        $cart->fill($p);
+    }
         
     public function index() {
         $cart = Model\Cart::active();

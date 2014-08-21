@@ -9,7 +9,7 @@ use \Infuso\Core;
  **/
 class Occupation extends \Infuso\ActiveRecord\Record {
     
-    public static function recordTable() {
+    public static function model() {
         return array(
             'name' => 'heapitOccupation',
             'fields' => array(

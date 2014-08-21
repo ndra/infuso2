@@ -35,9 +35,15 @@ class Builder extends \Infuso\Template\Widget {
         app()->tm()->js($js);
         
         $form = get_class($this->form());  
-        $form = addslashes($form);      
+        $form = addslashes($form);
+
+		$scenario = $this->form()->scenario();
         
-        app()->tm()->script("$(function() { form('$selector','$form') });");
+        app()->tm()->script("$(function() { form('$selector','$form', '$scenario') });");
+    }
+    
+    public function append($html) {
+		$this->param("after", $this->param("after").$html);
     }
 
 }

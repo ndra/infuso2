@@ -13,7 +13,7 @@ class Item extends \Infuso\ActiveRecord\Record {
     const STATUS_DETACHED  = Group::STATUS_DETACHED;
     const STATUS_ACTIVE  = Group::STATUS_ACTIVE;
 
-    public static function recordTable() {
+    public static function model() {
         return array(
             'name' => 'eshop_item',
             'fields' => array(

@@ -7,7 +7,7 @@ class eshop_vendor extends reflex {
 
 	
 
-public static function recordTable() {return array (
+public static function model() {return array (
   'name' => 'eshop_vendor',
   'parent' => '',
   'fields' => 

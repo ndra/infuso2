@@ -4,7 +4,7 @@ class pay_rate extends reflex {
 
     
 
-public static function recordTable() {return array (
+public static function model() {return array (
   'name' => 'pay_rate',
   'fields' => 
   array (
