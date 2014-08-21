@@ -65,30 +65,36 @@ class Cart extends \Infuso\ActiveRecord\Record {
                 "type" => "string",
                 "label" => "Фамилия",
                 "min" => 3,
+                "editable" => 1,
 			), array(
                 "name" => "email",
                 "type" => "string",
                 "label" => "Электронная почта",
                 "min" => 3,
+                "editable" => 1,
 			), array(
                 "name" => "phone",
                 "type" => "string",
                 "label" => "Телефон",
                 "min" => 6,
+                "editable" => 1,
 			), array(
                 "name" => "city",
                 "type" => "string",
                 "label" => "Город",
                 "min" => 3,
+                "editable" => 1,
 			), array(
                 "name" => "building",
                 "type" => "string",
                 "label" => "Дом",
                 "min" => 1,
+                "editable" => 1,
 			), array(
                 "name" => "flat",
                 "type" => "string",
                 "label" => "Квартира",
+                "editable" => 1,
 			),
 		);
     }

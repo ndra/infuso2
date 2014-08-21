@@ -59,8 +59,12 @@ class Cart extends Core\Controller {
         $cart->items()->delete();
     }
     
+	/**
+	 * Сохрвняет данные пользователя
+	 **/
     public function post_submit($p) {
         $cart = Model\Cart::active();
+        $cart->scenario("submit");
         $cart->fill($p);
     }
         
