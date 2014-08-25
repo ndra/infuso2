@@ -302,7 +302,7 @@ class Component {
     }
 
     /**
-     * При вызове без параметров выозвращает
+     * При вызове без параметров выбросит исключение
      **/
     public final function params($params=null) {
 
@@ -338,7 +338,7 @@ class Component {
 	 **/
     public function getComponentID() {
         if(!$this->componentID) {
-            $this->componentID = Mod::id();
+            $this->componentID = \Mod::id();
         }
         return $this->componentID;
     }

@@ -163,8 +163,9 @@ class mod_mailer extends \infuso\core\service {
             $multipart[] = "Content-Type: application/octet-stream; name=\"" . $filename . "\""; //image/jpeg
             $multipart[] = "Content-Transfer-Encoding: base64";
             
-            if ($cid != null && $cid != "")
+            if ($cid != null && $cid != "") {
                 $multipart[] = "Content-ID: <" . $cid . ">";
+            }
             
             $multipart[] = "Content-Disposition: attachment; filename=\"" . $filename . "\"";
             $multipart[] = "";
