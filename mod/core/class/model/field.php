@@ -320,7 +320,7 @@ abstract class Field extends Core\Component {
         }
 
         $eq = $this->param("eq");
-        if($eq && $eq !=  mb_strlen($val)){
+        if($eq && $eq !=  $val){
             return false;
         }
 
