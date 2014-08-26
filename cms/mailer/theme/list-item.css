@@ -1,0 +1,33 @@
+.QAehUBY6Cw {
+    
+    padding: 4px;
+    
+    table {
+        table-layout: fixed;
+        width: 100%;
+    }
+    
+    td {
+        padding: 0 10px 0 0;
+    }
+    
+    .to {
+        width: 200px;
+    }
+    
+    .subject {
+        width: 200px;
+        font-weight: bold;
+    }
+    
+    .message {
+        width: 100%
+    }
+    
+    .date {
+        width: 100px;
+        opacity: .5;
+        font-style: italic;
+    }
+    
+}

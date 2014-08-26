@@ -65,5 +65,8 @@ class Template extends ActiveRecord\Record {
     public function emails() {
         return Mail::all()->eq("code", $this->data("code"));
     }
+    
+    public function applyTo($mail) {
+    }
 
 }

@@ -35,6 +35,38 @@ class Mail extends ActiveRecord\Record {
                     'length' => 50,
 					'label' => 'Код шаблона',
 					"editable" => 2,
+		    	), array (
+					'name' => 'type',
+					'type' => 'string',
+                    'length' => 50,
+					'label' => 'Тип',
+					"default" => "text",
+					"editable" => 2,
+		    	), array (
+					'name' => 'message',
+					'type' => 'textfield',
+					'label' => 'Сообщение',
+					"editable" => 2,
+		    	), array (
+					'name' => 'subject',
+					'type' => 'string',
+					'label' => 'Тема',
+					"editable" => 2,
+		    	), array (
+					'name' => 'to',
+					'type' => 'string',
+					'label' => 'Кому',
+					"editable" => 2,
+		    	), array (
+					'name' => 'sentDatetime',
+					'type' => 'datetime',
+					'label' => 'Дата и время отправки',
+					"editable" => 2,
+		    	), array (
+					'name' => 'sent',
+					'type' => 'checkbox',
+					'label' => 'Сообщение отправлено',
+					"editable" => 2,
 		    	),
 			),
 		);
@@ -122,12 +154,20 @@ class Mail extends ActiveRecord\Record {
 
         $subject = '=?UTF-8?B?' . base64_encode($this->subject()) . '?=';
 
-        return mail (
+        $ret = mail (
             $this->to(),
             $subject,
             implode("\n", $multipart),
             implode("\n", $headers)
         );
+        
+        if($ret) {
+            $this->data("sent", true);
+            $this->data("sentDatetime", \Util::now());
+        }
+        
+        return $ret;
+        
     }
     
     /**
@@ -140,10 +180,27 @@ class Mail extends ActiveRecord\Record {
     /**
      * Возвращает шаблон (на основании $this->data("code"))
      **/
-     public function template() {
-        return Template::all()->eq("code", $this->data("code"));
-     } 
-     
+	public function template() {
+    	return Template::all()->eq("code", $this->data("code"))->one();
+	}
+	
+	/**
+	 * Возвращает массив вложений
+	 **/
+	public function attachments() {
+	    return array();
+	}
+
+	public function dataWrappers() {
+	    return array(
+	        "message" => "mixed/data",
+	        "headers" => "mixed/data",
+	        "from" => "mixed/data",
+	        "type" => "mixed/data",
+	        "subject" => "mixed/data",
+	        "to" => "mixed/data",
+		);
+	}
 
     /**
      * Правильное форматирование utf-8 email адресов

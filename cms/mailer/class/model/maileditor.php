@@ -19,5 +19,12 @@ class MailEditor extends \Infuso\CMS\Reflex\Editor {
     public static function all() {
         return Mail::all()->title("Письма");
     }
+    
+    /**
+     * Возвращает список режимов отображения
+     **/
+    public function listItemTemplate() {
+        return app()->tm("/mailer/list-item")->param("editor", $this);
+    }
 
 }
