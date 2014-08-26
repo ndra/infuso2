@@ -302,8 +302,13 @@ abstract class Field extends Core\Component {
         return $this;
     }
     
-    public function validate($val) {           
-      
+    public function validate($val) {
+
+        $validateIf = $this->param("validateIf");
+        if(!$this->model()->data($validateIf)){
+            return false;
+        }
+
         $min = $this->param("min");
         if($min > 0 && mb_strlen($val) < $min) {
             return false;
@@ -313,7 +318,12 @@ abstract class Field extends Core\Component {
         if($max > 0 && mb_strlen($val) > $max) {
             return false;
         }
-        
+
+        $eq = $this->param("eq");
+        if($eq !=  mb_strlen($val)){
+            return false;
+        }
+
         return true;
     }
     
