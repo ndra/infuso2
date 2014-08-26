@@ -22,5 +22,9 @@ class LogEditor extends Reflex\Editor {
 	public function all() {
 	    return Log::all()->title("Лог");
 	}
+	
+	public function listItemTemplate() {
+	    return app()->tm("/log/list-item")->param("editor", $this);
+	}
 
 }

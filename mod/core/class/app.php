@@ -189,7 +189,7 @@ class App {
 		    ob_start();
 
 		    // Трейсим ошибки
-		    mod::trace($_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage());
+		    $this->trace($_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage(), "exception");
 
 		    try {
 
@@ -432,6 +432,16 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
      **/         
     public function msg($message, $error = null) {
         service("msg")->msg($message, $error);
+    }
+    
+    /**
+     * Отправляет пользователю сообщение
+     **/
+    public function trace($message, $type = null) {
+        $this->fire("infuso/trace", array(
+            "message" => $message,
+            "type" => $type,
+        ));
     }
     
     public function fire($event, $params = array()) {
