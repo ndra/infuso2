@@ -305,8 +305,8 @@ abstract class Field extends Core\Component {
     public function validate($val) {
 
         $validateIf = $this->param("validateIf");
-        if(!$this->model()->data($validateIf)){
-            return false;
+        if($validateIf && !$this->model()->data($validateIf)){
+            return true;
         }
 
         $min = $this->param("min");
@@ -320,7 +320,7 @@ abstract class Field extends Core\Component {
         }
 
         $eq = $this->param("eq");
-        if($eq !=  mb_strlen($val)){
+        if($eq && $eq !=  mb_strlen($val)){
             return false;
         }
 
