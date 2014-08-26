@@ -7,14 +7,10 @@ use Infuso\Eshop\Model;
 /**
  * Модель группы для интернет-магазина
  **/
-class Cart extends \Infuso\CMS\Form\RecordForm {
+class Cart extends \Infuso\CMS\Form\Base {
 
 	public static function model() {
 	    return Model\Cart::model();
-	}
-
-	public function recordClass() {
-	    return Model\Cart::inspector()->className();
 	}
 
 }

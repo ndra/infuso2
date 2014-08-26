@@ -23,4 +23,21 @@ class CartEditor extends \Infuso\Cms\Reflex\Editor {
             ->param("editor", $this);    
     }
     
+    public function listItemtemplate() {
+        return app()->tm("/eshop/admin/cart-list-item")
+			->param("editor", $this);
+    }
+    
+    /**
+     * Возвращает массив фильтров для коллекции заказов.
+     * Фильтры соответствуют статусам заказа
+     **/
+    public function filters($collection) {
+        $ret = array();
+        foreach(Cart::statusList() as $status => $name) {
+            $ret[$name] = $collection->copy()->eq("status", $status);
+        }
+        return $ret;
+    }
+    
 }

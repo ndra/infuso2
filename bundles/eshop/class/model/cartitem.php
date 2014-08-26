@@ -79,4 +79,8 @@ class CartItem extends \Infuso\ActiveRecord\Record {
         return $this->data("quantity");
     }
     
+    public function recordTitle() {
+        return $this->item()->title();
+    }
+    
 }

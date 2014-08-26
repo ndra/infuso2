@@ -8,6 +8,11 @@ use Infuso\Core;
  **/
 class Cart extends \Infuso\ActiveRecord\Record {
 
+	const STATUS_DRAFT = 0;
+	const STATUS_ACTIVE = 1;
+	const STATUS_COMPLETED = 2;
+	const STATUS_CANCELLED = 3;
+
     /**
      * Имя куки с номером корзины
      **/         
@@ -17,7 +22,27 @@ class Cart extends \Infuso\ActiveRecord\Record {
      * Имя куки с ключами моих заказов
      **/
     private static $cookieMyOrders = "fubqw5rd";
-
+    
+    public function indexTest($p) {
+        $cart = self::get($p["id"]);
+        if(!$cart->my()) {
+            return false;
+        }
+        return true;
+    }
+    
+	public function index_item($p) {
+	    $cart = self::get($p["id"]);
+	    app()->tm("/eshop/order")
+	        ->param("order", $cart)
+			->param("cart", $cart)
+			->exec();
+    }
+    
+	public function controller() {
+	    return "order";
+    }
+    
 	public static function model() {
         $data = array (
       		'name' => 'eshop_cart',
@@ -32,6 +57,17 @@ class Cart extends \Infuso\ActiveRecord\Record {
 					'type' => 'string',
 					'label' => 'Секретный код',
 					'editable' => 0,
+				), array (
+					'name' => 'status',
+					'type' => 'select',
+					'label' => 'Статус',
+					'values' => self::statusList(),
+					'editable' => 1,
+				), array (
+					'name' => 'submitDatetime',
+					'type' => 'datetime',
+					'label' => 'Дата и время отправки',
+					'editable' => 2,
 				),
             ),
         );
@@ -40,8 +76,8 @@ class Cart extends \Infuso\ActiveRecord\Record {
             $data["fields"][] = $field;
 		}
 		
+		// Создаем сценарий submit на основе полей из self::submitFields()
 		$data["scenarios"]["submit"] = array();
-		
 		foreach(self::submitFields() as $field) {
 		    $data["scenarios"]["submit"][] = array(
 		        "name" => $field["name"],
@@ -50,6 +86,19 @@ class Cart extends \Infuso\ActiveRecord\Record {
 		}
 
         return $data;
+    }
+    
+    /**
+     * Возвращает список статусов заказа
+     * Этот метод можно переопределить поведением
+     **/
+    public static function _statusList() {
+        return array(
+            self::STATUS_ACTIVE => "Активный",
+            self::STATUS_DRAFT => "Черновик",
+            self::STATUS_COMPLETED => "Завершен",
+            self::STATUS_CANCELLED => "Отменен",
+		);
     }
     
     public static function _submitFields() {
@@ -101,12 +150,14 @@ class Cart extends \Infuso\ActiveRecord\Record {
 
 	public static function all() {
 	    return service("ar")
-            ->collection(get_class());
+            ->collection(get_class())
+			->desc("submitDatetime");
 	}
     
 	public static function drafts() {
 	    return service("ar")
-            ->collection(get_class());
+            ->collection(get_class())
+			->eq("status", self::STATUS_DRAFT);
 	}
 
 	public static function get($id) {

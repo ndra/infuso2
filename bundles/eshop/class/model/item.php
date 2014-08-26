@@ -142,5 +142,9 @@ class Item extends \Infuso\ActiveRecord\Record {
     public static function get($id) {
         return service("ar")->get(get_class(), $id);
     }
+    
+    public function _photo() {
+        return $this->photos()->one()->pdata("photo");
+    }
 
 }

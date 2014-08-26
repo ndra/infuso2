@@ -28,8 +28,7 @@ class TaskEditor extends Reflex\Editor {
         return array (
             "Активные" => $collection->copy()->eq("completed", 0),
             "Выполненные" => $collection->copy()->eq("completed", 1),
-            "Все задачи" => $collection->copy(),           
-            
+            "Все задачи" => $collection->copy(),
         );
     }
 

@@ -63,9 +63,21 @@ class Cart extends Core\Controller {
 	 * Сохрвняет данные пользователя
 	 **/
     public function post_submit($p) {
+    
         $cart = Model\Cart::active();
+        
+        if(!$cart->exists()) {
+            throw new \Exception("Попытка отправить несуществующий заказ");
+        }
+        
         $cart->scenario("submit");
         $cart->fill($p);
+        $cart->data("status", Model\Cart::STATUS_ACTIVE);
+        $cart->data("submitDatetime", \util::now());
+        app()->redirect($cart->url());
+        app()->fire("eshop/submit", array(
+            "cart" => $cart,
+		));
     }
         
     public function index() {
@@ -77,5 +89,5 @@ class Cart extends Core\Controller {
         $cart = Model\Cart::active();
         app()->tm("/eshop/cart-form")->param("cart", $cart)->exec();
     }
-
+    
 }

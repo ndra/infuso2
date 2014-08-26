@@ -2,19 +2,26 @@
     
     padding: 20px 10px 0 20px;
     
-    span {
+    .filter {
         margin-right: 10px;
         cursor: pointer;
     }
     
-    span.active {
+    .filter.active {
         background: #ccc;
         padding: 4px 8px;
         border-radius: 5px;
     }
     
-    span:hover {
+    .filter:hover {
         text-decoration: underline;
+    }
+    
+    .count {
+        font-size: 10px;
+        position: relative;
+        top: -5px;
+        opacity: .5;
     }
     
 }

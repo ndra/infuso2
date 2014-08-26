@@ -27,10 +27,12 @@ class Collection extends Core\Component {
         $class = $this->editorClass();
         $virtual = new $class;
 
+		// Учитываем поиск
         if($q = $this->param("query")) {
             $virtual->applyQuickSearch($collection, $q);
         }   
         
+        // Учитываем фильтры
         $filters = array_values($virtual->filters($collection->copy()));
         $collection = $filters[$this->param("filter")];
         if(!$collection) {

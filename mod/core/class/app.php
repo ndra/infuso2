@@ -24,6 +24,11 @@ class App {
 	 * Текущий экземпляр объекта приложения
 	 **/
 	private static $current;
+	
+	/**
+	 * url редиректа.
+	 **/
+	private $redirect = false;
 
 	/**
 	 * Возвращает текущий экземпляр объекта приложерия
@@ -236,6 +241,11 @@ class App {
 
 	    Defer::callDeferedFunctions();
 	    Profiler::addMilestone("defered functions");
+	    
+	    if($this->redirect()) {
+	        header("Location: ".$this->redirect());
+	        die();
+		}
 
 		// Выполняем экшн
 	    $action = $this->action();
@@ -435,7 +445,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
     }
     
     /**
-     * Отправляет пользователю сообщение
+     * Записывает сообщение в лог
      **/
     public function trace($message, $type = null) {
         $this->fire("infuso/trace", array(
@@ -461,6 +471,19 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
     
 	public function unsuspendEvents() {
     }
-
+    
+    /**
+     * 1 параметр - перенаправляет прользователя на адрес $url
+     * Без параметров - вернет адрес текущего редиректа или null
+     **/
+	public function redirect($url = null) {
+	    if(func_num_args() == 0) {
+	        return $this->redirect;
+	    } elseif(func_num_args() == 1) {
+	        $this->redirect = $url;
+	        return $this;
+	    }
+	    throw new \Exception("app::redirect() wrong arguments number");
+	}
 
 }

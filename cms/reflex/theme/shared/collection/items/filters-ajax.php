@@ -1,6 +1,6 @@
 <?
 
-$filters = $collection->editor()->filters($collection->collection());
+$filters = $collection->editor()->filters($collection->collectionWithoutRestrictions());
 if(sizeof($filters) == 1) {
     return;
 }
@@ -11,7 +11,9 @@ if(sizeof($filters) == 1) {
         
         $class = $n == $collection->param("filter") ? "active" : "";
         
-        <span data:filter='{$n}' class='{$class}' >{$name}</span>
+        $count = $filter->copy()->count();
+
+        <span data:filter='{$n}' class='filter {$class}' >{$name} <span class='count' >{$count}</span></span>
         $n++;
     }
 </div>

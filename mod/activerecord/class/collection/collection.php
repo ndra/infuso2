@@ -292,12 +292,12 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         if($this->priorityArray) {
             usort($this->items,array($this,"sortItemsUsingArray"));
         }
-        
     }
     
     public function unload() {
         $this->itemsLoaded = false;
         $this->items = array();
+        return $this;
     }
 
     public function select($select) {
