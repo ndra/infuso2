@@ -191,7 +191,7 @@ class User extends ActiveRecord\Record {
      **/
     public static function create($p) {
 
-        // Удаляем пробельные символы вокруг логина и пароля
+         // Удаляем пробельные символы вокруг логина и пароля
         if(!$p["password"] = self::checkAbstractPassword($p["password"])) {
             return user::get(0);
         }
@@ -209,7 +209,7 @@ class User extends ActiveRecord\Record {
         }
 
         self::$password = $p["password"];
-        $p["password"] = mod_crypt::hash($p["password"]);
+        $p["password"] = \Infuso\Core\Crypt::hash($p["password"]);
 
         foreach(user::virtual()->fields() as $field) {
             if($field->editable()) {
@@ -219,9 +219,9 @@ class User extends ActiveRecord\Record {
                 
         $insert["password"] = $p["password"];
         $insert["email"] = $p["email"];
-        $insert["registrationTime"] = util::now()."";
+        $insert["registrationTime"] = \Infuso\Util\Date::now()."";
 
-        $user = reflex::create("user",$insert);
+        $user = service("ar")->create(get_class(),$insert);
 
         return $user;
     }
