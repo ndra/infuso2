@@ -33,5 +33,15 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
         $this->joinByField("projectID",$projects);
         return $this;
     }
+    
+    /**
+     * Показвает задачи с моим участием, свежие - на первом месте
+     **/         
+    public function withMyParticipation() {
+        $this->join(Workflow::inspector()->className(), "`infuso\\board\\model\\workflow`.`taskId` = `infuso\\board\\model\\task`.`id`" );
+        $this->eq("infuso\\board\\model\\workflow.userId", app()->user()->id());
+        $this->groupBy("id");
+        return $this;
+    }
 
 }

@@ -10,7 +10,7 @@
         
         default:
             foreach($tasks as $task) {
-                exec("task", array(
+                exec("/board/shared/task-sticker", array(
                     "task" => $task,
                     "unique" => $task->data("unique"),
                 ));
@@ -38,7 +38,7 @@
             });
             
             foreach($taskList as $task) {
-                exec("task", array(
+                exec("/board/shared/task-sticker", array(
                     "task" => $task,
                     "unique" => $task->data("unique"),
                 ));
@@ -54,7 +54,7 @@
                     <div class='date' >{$date}</div>
                     $last = $date;
                 }
-                exec("task", array (
+                exec("/board/shared/task-sticker", array (
                     "task" => $task,
                     "unique" => $task->data("unique"),
                 ));

@@ -15,11 +15,11 @@
         ->toolbar()
         ->exec();
             
-    widget("infuso\\board\\widget\\tasklist")
+    /*widget("infuso\\board\\widget\\tasklist")
         ->status("check")
         ->addClass("task-list")
         ->toolbar()
-        ->exec();
+        ->exec(); */
         
     <div class='right-toolbar' >
         exec("toolbar");

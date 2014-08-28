@@ -3,11 +3,13 @@ if(!window.ndra)
 
 ndra.menu = function(menu,submenu,p) {
 
-    if(!p)
+    if(!p) {
 		p = {};
+    }
     
-    if(!p.offset)
+    if(!p.offset) {
 		p.offset = 0;
+    }
     
     /**
      * Возвращает элемент меню
@@ -49,8 +51,9 @@ ndra.menu = function(menu,submenu,p) {
         // Активный элемент субменю
         var subitem = getSubitem(n);
         
-        if(!subitem.length)
+        if(!subitem.length) {
             return;
+        }
             
         subitems.css({
 			display:"none"
@@ -77,17 +80,23 @@ ndra.menu = function(menu,submenu,p) {
 		
 		// Насколько субменю вылезло за правй край экрана
 		var right = left + subitem.outerWidth() + 10 - $("body").width();
-		if(right<0)
+		if(right<0) {
 		    right = 0;
+        }
 		
 		left-= right;
 		left-= submenuOffset;
 		
         subitem.css({
             position:"absolute",
-            display:"block",
-			left:left
+            display:"block"
 		});
+        
+        if(!subitem.hasClass("no-position")) {
+            subitem.css({
+                left: left,
+    		});
+        }
     }
     
     var hide = function() {

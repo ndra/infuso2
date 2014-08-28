@@ -11,4 +11,16 @@ $(function() {
         mod.msg(e.originalEvent.dataTransfer.getData("task-id"));
     });
     
+    // Подсветка активного пункта меню
+    var check = function() {
+    
+        $(".tob-bar-sr3yrzht3j a").each(function() {
+            if($(this).attr("href") != "#" && this.href == window.location.href) {
+                $(this).addClass("active");
+            }
+        })
+    
+    }
+    check();
+    
 });

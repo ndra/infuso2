@@ -28,7 +28,7 @@
 
 .x55qv4lhb8m-submenu {
 
-    .submenu {
+    .dropdown {
     
         padding:10px;
         background:#ccc;
@@ -49,6 +49,12 @@
         }
         
         border-radius:0px 10px 10px 10px;
+    }
+    
+    .my {
+        width: 100% !important;
+        background: white;
+        height: 150px;
     }
 
 }
