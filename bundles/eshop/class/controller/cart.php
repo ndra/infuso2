@@ -51,6 +51,25 @@ class Cart extends Core\Controller {
         $cartItem->delete();
     }
     
+    
+    /**
+     * Изменение количества элемента в корзине
+     **/
+    public function post_setQuantity($p) {
+        $items = $p["items"];
+        $ret = [];
+        $cart = Model\Cart::active();
+        if($cart->exists()){
+            foreach($items as $itemData){
+                $item = $cart->items()->eq("id", $itemData["itemId"])->one();
+                $item->data("quantity",$itemData["quantity"]);
+                $ret["prices"][$itemData["itemId"]] = $item->totalPrice();
+            }
+            $ret["total"] = $cart->total();
+            return $ret;
+        }
+    }
+    
     /**
      * Очистка корзины
      **/
