@@ -77,11 +77,21 @@
     font-weight: normal;    
 }
 
+.icon16(@name) {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("@{bundle}res/img/icons16/@{name}.png");
+}
+
 .icon24(@name) {
+    background-repeat: no-repeat;
+    background-position: center center;
     background-image: url("@{bundle}res/img/icons24/@{name}.png");
 }
 
 .icon24i(@name) {
+    background-repeat: no-repeat;
+    background-position: center center;
     background-image: url("@{bundle}res/img/icons24i/@{name}.png");
 }
 

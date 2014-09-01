@@ -20,4 +20,11 @@
         text-align: right;
     }
     
+    .sort-handle {
+        width: 30px;
+        .icon16("sort");
+        opacity: .3;
+        cursor: pointer;
+    }
+    
 }

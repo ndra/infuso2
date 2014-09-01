@@ -1,6 +1,8 @@
 <? 
 
 exec("/reflex/layout/global");
+exec("/ui/shared");
+js($this->bundle()->path()."/res/js/sortable.min.js");
 
 <div class='x1arvpu0c38' >
 

@@ -4,6 +4,10 @@
     border-bottom: 1px solid #ededed;
     font-size: 18px;
     
+    td {
+        vertical-align: middle;
+    }
+    
     &:last-child {
         border-bottom: none;
     }
@@ -20,6 +24,13 @@
         font-size: 11px;
         font-style: italic;
         text-align: right;
+    }
+    
+    .sort-handle {
+        width: 30px;
+        .icon16("sort");
+        opacity: .3;
+        cursor: pointer;
     }
     
 }

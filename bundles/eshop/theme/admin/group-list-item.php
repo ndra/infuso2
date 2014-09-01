@@ -6,6 +6,8 @@ $group = $editor->item();
 
     <table style='width:100%;table-layout:fixed;' >
         <tr>
+            <td class='sort-handle' >
+            </td>
             <td style='width:100%;' >
                 <div>
                     <a href='{$editor->url()}' >

@@ -71,35 +71,60 @@ mod.init(".cjoesz8swu", function() {
         }
     });
     
-    // Перетаскивание файлов в браузер
-    $container.draghover().on({
-        'draghoverstart': function(event) {
-            $(this).addClass("drag-enter");
-        },
-        'draghoverend': function(event) {
-            $(this).removeClass("drag-enter");
-        }
+    var dropFiles = true;
+    var sortProcessing = false;
+    
+    mod.on("reflex/sort-begin", function() {
+        sortProcessing = true;
     });
     
-    // Нужно сделать превент этому событию, иначе 
-    // события drop не будет
-    $container.on("dragover", function(e) {
-        e.preventDefault();
+    mod.on("reflex/sort-end", function() {
+        sortProcessing = false;
     });
     
-    $container.on("drop", function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        var file = e.originalEvent.dataTransfer.files[0];            
-        mod.call({
-            cmd: "infuso/cms/reflex/controller/uploadCreate",
-            collection: $container.attr("infuso:collection")
-        }, load, {
-            files: {
-                file: file
+    if(dropFiles) {
+    
+        // Перетаскивание файлов в браузер
+        $container.draghover().on({
+            'draghoverstart': function(event) {
+                if(!sortProcessing) {
+                    $(this).addClass("drag-enter");
+                }
+            },
+            'draghoverend': function(event) {
+                if(!sortProcessing) {
+                    $(this).removeClass("drag-enter");
+                }
             }
         });
         
-    });
+        // Нужно сделать превент этому событию, иначе 
+        // события drop не будет
+        $container.on("dragover", function(e) {
+            if(!sortProcessing) {
+                e.preventDefault();
+                console.log(e);
+            }
+        });
+        
+        $container.on("drop", function(e) {
+            if(!sortProcessing) { 
+                e.stopPropagation();
+                e.preventDefault();
+                var file = e.originalEvent.dataTransfer.files[0];  
+                if(file) {
+                    mod.call({
+                        cmd: "infuso/cms/reflex/controller/uploadCreate",
+                        collection: $container.attr("infuso:collection")
+                    }, load, {
+                        files: {
+                            file: file
+                        }
+                    });
+                }
+            }
+        });
+    
+    }
 
 });

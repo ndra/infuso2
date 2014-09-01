@@ -16,6 +16,7 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 	public function allGroups() {
 	    return Group::all()
 			->eq("parent",0)
+			->param("sort", true)
 			->title("Группы товаров");
 	}
     
@@ -24,6 +25,7 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 	 **/
 	public function subgroups() {
 	    return $this->item()->subgroups()
+	        ->param("sort", true)
 			->param("title","Подгруппы");
 	}
 	

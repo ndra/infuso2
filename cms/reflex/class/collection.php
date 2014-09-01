@@ -149,5 +149,12 @@ class Collection extends Core\Component {
         $tmp->param("collection",$this);
         return $tmp;
     }
+    
+    /**
+     * Возвращает флаг сортируемости коллекции
+     **/
+    public function sortable() {
+        return $this->collection()->param("sort");
+	}
 
 }

@@ -19,6 +19,9 @@ $user = $editor->item();
                     echo implode(", ", $roles);
                 </div>
             </td>
+            <td class='sort-handle' >
+                echo 1111;
+            </td>
         </tr>
     </table>
 </div>

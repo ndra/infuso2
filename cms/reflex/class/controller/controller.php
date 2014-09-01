@@ -180,7 +180,10 @@ class Controller extends \Infuso\Core\Controller {
      * Контроллер сохранения сортировки элементов
      * Вызывается после перетаскивания объектов в каталоге
      **/
-    public static function post_sortItems($p) {
+    public static function post_savePriority($p) {
+    
+        app()->msg($p);
+        return;
 
         $collection = self::getListByP($p);
         $pages = $collection->pages();
