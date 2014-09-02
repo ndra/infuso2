@@ -17,7 +17,7 @@ $collection = $collection->collection();
         for($i = $page - 10; $i <= $page + 10; $i++)
             if($i >= 1 & $i <= $pages) {
                 if($page==$i) {
-                    <span style='color:red;' data:page='{$i}' >$i</span>
+                    <span class='active' data:page='{$i}' >$i</span>
                 } else {
                     <span data:page='{$i}' >{$i}</span>
                 }

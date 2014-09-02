@@ -26,6 +26,8 @@ mod.init(".cjoesz8swu", function() {
     var $container = $(this);
     
     var filter = 0;
+    
+    var page = 1;
 
     // Загружает список элементов и выводит их на страницу
     var load = function() {
@@ -35,7 +37,8 @@ mod.init(".cjoesz8swu", function() {
         var params = {
             cmd:"infuso/cms/reflex/controller/getItems",
             collection:collection,
-            filter: filter
+            filter: filter,
+            page: page
         };
         
         $container.find(" > .loader").show();
@@ -53,6 +56,11 @@ mod.init(".cjoesz8swu", function() {
     load();
     
     $container.on("reflex/refresh", load);
+    
+    $container.on("reflex/setPage", function(event) {
+        page = event.page;
+        load();
+    });
     
     $container.on("reflex/deselect", function() {
         $(this).list("deselect");

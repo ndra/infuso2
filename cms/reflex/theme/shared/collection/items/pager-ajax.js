@@ -4,7 +4,10 @@ mod.init(".F32KKaOgV7", function() {
     
     $container.find("span").click(function() {
         var page = $(this).attr("data:page")
-        mod.msg(page);
+        $(this).trigger({
+            type: "reflex/setPage",
+            page: page
+        })
     });
     
     

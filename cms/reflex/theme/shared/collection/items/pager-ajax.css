@@ -3,9 +3,19 @@
     padding: 20px;
     
     span {
-        margin: 0 10px 0 0;
         vertical-align: middle;
         cursor: pointer;
+        padding: 4px 7px;
+        border-radius: 5px;
+        &:hover {
+            background: #ccc;
+        }
+    }
+    
+    .active {
+        background: gray !important;
+        padding: 4px 7px;
+        color: white;
     }
     
 }

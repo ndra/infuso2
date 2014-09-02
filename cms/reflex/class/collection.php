@@ -38,6 +38,8 @@ class Collection extends Core\Component {
         if(!$collection) {
             $collection = $filters[0];
         }
+        
+        $collection->page($this->param("page"));
 
         return $collection;
 	}
@@ -74,6 +76,8 @@ class Collection extends Core\Component {
         }
         
         $this->param("filter", $params["filter"]);
+        
+        $this->param("page", $params["page"]);
 
 	}
 	
