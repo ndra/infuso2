@@ -124,7 +124,7 @@ class Item extends \Infuso\ActiveRecord\Record {
     }
     
 	public function photos() {
-	    return ItemPhoto::all()->eq("itemId", $this->id());
+	    return ItemPhoto::all()->eq("itemId", $this->id())->asc("priority");
 	}
 
     /**

@@ -30,6 +30,7 @@ class ItemEditor extends \Infuso\Cms\Reflex\Editor {
 	public function photos() {
 	    return $this->item()
 			->photos()
+			->param("sort", true)
 			->title("Фотографии");
 	}
 	

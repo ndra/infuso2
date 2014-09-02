@@ -182,10 +182,7 @@ class Controller extends \Infuso\Core\Controller {
      **/
     public static function post_savePriority($p) {
     
-        app()->msg($p);
-        return;
-
-        $collection = self::getListByP($p);
+        $collection = Collection::unserialize($p["collection"])->collection();
         $pages = $collection->pages();
 
         // Поле, по которому будет производиться сортировка
@@ -199,27 +196,29 @@ class Controller extends \Infuso\Core\Controller {
 
         $idList = array();
         foreach($p["priority"] as $editorParam) {
-            $editor = self::get($editorParam);
+            $editor = Editor::get($editorParam);
             $idList[] = $editor->itemID();
         }
-
+        
         // Проходим по всем страницам коллекции
         // и назначаем элементам приоритет в том порядке в котором они встретились нам
         // Если мы на странице, которую отсортировал пользователь,
         // Назначаем коллекции приоритет элементам методом setPrioritySequence
-        for($i=1;$i<=$pages;$i++) {
+        for($i = 1; $i <= $pages; $i++) {
 
             $collectionPage = $collection->copy()->page($i);
 
-            if($i==$p["page"]) {
+            if($i == $p["page"]) {
                 $collectionPage->setPrioritySequence($idList);
             }
 
-            foreach($collectionPage->editors() as $editor) {
-                $editor->item()->data($name,$n);
+            foreach($collectionPage as $item) {
+                $item->data($name,$n);
                 $n++;
             }
         }
+        
+        app()->msg("Сортировка изменена");
 
     }
 

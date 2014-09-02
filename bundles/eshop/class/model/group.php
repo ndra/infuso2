@@ -114,6 +114,7 @@ class Group extends \Infuso\ActiveRecord\Record {
 	public function items() {
 	    return service("ar")
             ->collection(Item::inspector()->className())
+            ->asc("priority")
             ->eq("groupId",$this->id());
 	}
     

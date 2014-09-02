@@ -18,6 +18,8 @@ mod.init(".x1arvpu0c38", function() {
             });
             mod.call({
                 cmd: "infuso/cms/reflex/controller/savePriority",
+                collection: $container.attr("data:collection"),
+                page: 1,
                 priority: priority
             });
         }

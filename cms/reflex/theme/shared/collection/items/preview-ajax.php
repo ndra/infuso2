@@ -2,8 +2,9 @@
 
 exec("/reflex/layout/global");
 exec("/ui/shared");
+js($this->bundle()->path()."/res/js/sortable.min.js");
 
-<div class='yy0l0qu78b' >
+<div class='yy0l0qu78b' data:collection='{$collection->serialize()}' >
 
     $n = 0;
     <div class='items' >
@@ -14,6 +15,7 @@ exec("/ui/shared");
                     <img src='{$preview}' />
                     <div class='name' >{$editor->title()}</div>
                 </a>
+                <span class='sort-handle' ></span>
                 <div class='select-handle' ></div>
             </div>
             $n++;
