@@ -54,6 +54,9 @@ class Controller extends \Infuso\Core\Controller {
         $tmp = $collection->itemsTemplate();
         $html.= $tmp->getContentForAjax();
         
+        $tmp = $collection->pagerTemplate();
+        $html.= $tmp->getContentForAjax();
+
         return array(
             "html" => $html,
 		);
@@ -100,7 +103,11 @@ class Controller extends \Infuso\Core\Controller {
 		}
 
     }
-    
+
+    /**
+     * Контроллер закачивания файла
+     * @todo какой-то из контроллеров лишний
+     **/
     public function post_uploadCreate($p) {
         $collection = Collection::unserialize($p["collection"]);
         $item = $collection->collection()->create();
@@ -112,6 +119,7 @@ class Controller extends \Infuso\Core\Controller {
 
     /**
      * Контроллер закачивания файла
+     * @todo какой-то из контроллеров лишний
      **/
     public static function post_upload($p,$files) {
         $list = self::getListByP($p);

@@ -150,6 +150,12 @@ class Collection extends Core\Component {
         return $tmp;
     }
     
+    public function pagerTemplate() {
+		$tmp = app()->tm("/reflex/shared/collection/items/pager-ajax");
+        $tmp->param("collection",$this);
+        return $tmp;
+    }
+    
     /**
      * Возвращает флаг сортируемости коллекции
      **/
