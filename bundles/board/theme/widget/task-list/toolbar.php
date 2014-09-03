@@ -6,10 +6,10 @@
 
     if($status == "0" || $status == "check") {
         
-        widget("\\infuso\\cms\\ui\\widgets\\textfield")
+        /*widget("\\infuso\\cms\\ui\\widgets\\textfield")
             ->addClass("quicksearch")
             ->clearButton()
-            ->exec();
+            ->exec(); */
         
         widget("\\infuso\\cms\\ui\\widgets\\pager")
             ->fieldName("pager")

@@ -3,8 +3,8 @@
 <div class='x8l0puejxv8' >
     
     foreach($task->activeCollaborators() as $user) {
-        $userpic = $user->userpic()->preview(16,16)->crop();
-        <img src='{$userpic}' title='{$user->title()}' />
+        $userpic = $user->userpic()->preview(48,48)->crop();
+        <img class='worker' src='{$userpic}' title='{$user->title()}' />
     }
     
     <span class='time' >

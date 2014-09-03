@@ -4,12 +4,13 @@
     display: inline-block;
     width: 120px;
     height: 120px;
-    margin: 0 10px 10px 0;
+    margin: 0 30px 30px 0;
     white-space: normal;
     cursor: pointer;
 
     @width: 120px;
     @height: 120px;
+    @border-color: #888;
     
     .content {
         position: absolute;
@@ -54,22 +55,7 @@
         width: @width;
         height: @height;
     
-        background-color:#93bad8;
-    
-        /* Enabling 3d space for the transforms */
-        -webkit-transform-style: preserve-3d;
-        -moz-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-    
-        /* Enabling a smooth animated transition */
-        -webkit-transition:0.5s;
-        -moz-transition:0.5s;
-        transition:0.5s;
-    
-        /* Disable text seleltion on the folder */
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
+        border: 1px solid @border-color;
     
         position:absolute;
         top: 0;
@@ -87,18 +73,11 @@
         -webkit-transform-origin:50% 100%;
         transform-origin:50% 100%;
     
-        background-image: -moz-linear-gradient(top, #93bad8 0%, #6c9dc0 85%, #628faf 100%);
-        background-image: -webkit-linear-gradient(top, #93bad8 0%, #6c9dc0 85%, #628faf 100%);
-        background-image: linear-gradient(top, #93bad8 0%, #6c9dc0 85%, #628faf 100%);
-    
-        box-shadow:0 -2px 2px rgba(0,0,0,0.1), 0 1px rgba(255,255,255,0.35) inset;
+        background: white;
     }
 
     .folder .back{
-        background-image: -webkit-linear-gradient(top, #93bad8 0%, #89afcc 10%, #5985a5 60%);
-        background-image: -moz-linear-gradient(top, #93bad8 0%, #89afcc 10%, #5985a5 60%);
-        background-image: linear-gradient(top, #93bad8 0%, #89afcc 10%, #5985a5 60%);
-    
+        background: white;
         border-radius:0 5px 0 0;
         box-shadow:0 -1px 1px rgba(0,0,0,0.15);
     }
@@ -109,23 +88,13 @@
         width:60%;
         height:10px;
         border-radius:4px 4px 0 0;
-        background-color:#93bad8;
+        background: white;
         position:absolute;
         top:-10px;
         left:0px;
-        box-shadow:0 -1px 1px rgba(0,0,0,0.15);
-    }
-    
-    /* The shadow */
-    .folder .back:after{
-        content:'';
-        width:100%;
-        height:4px;
-        border-radius:5px;
-        position:absolute;
-        bottom:5px;
-        left:0px;
-        box-shadow:0 4px 8px #333;
+        border-top: 1px solid @border-color;
+        border-left: 1px solid @border-color;
+        border-right: 1px solid @border-color;
     }
     
 }

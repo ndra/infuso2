@@ -21,8 +21,8 @@
         ->toolbar()
         ->exec(); */
         
-    <div class='right-toolbar' >
+    /*<div class='right-toolbar' >
         exec("toolbar");
-    </div>
+    </div> */
 
 </div>
