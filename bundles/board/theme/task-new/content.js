@@ -2,12 +2,20 @@ mod.init(".sdqg1isQGi", function() {
     
     var $container = $(this);
     
+    var select = function(n) {
+        $container.find(".tabs-head .tab")
+            .removeClass("selected")
+            .eq(n)
+            .addClass("selected");
+        $container.find(".tabs .tab").hide();
+        $container.find(".tabs .tab").eq(n).show();        
+    }
+    
+    select(0);
+    
     $container.find(".tabs-head .tab").each(function(n) {
         $(this).click(function() {
-            $container.find(".tabs-head .tab").removeClass("selected");
-            $(this).addClass("selected");
-            $container.find(".tabs .tab").hide();
-            $container.find(".tabs .tab").eq(n).show();
+            select(n);
         })
     });
     

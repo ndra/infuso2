@@ -47,10 +47,12 @@ class Task extends Base {
             $tasks->search($search);
         }
 
-		if($groupId = $p["groupId"]) {
-		    $tasks->eq("parent", $groupId);
-		} else {
-            $tasks->eq("parent", 0);
+        if($p["status"] == "0") {
+    		if($groupId = $p["groupId"]) {
+    		    $tasks->eq("parent", $groupId);
+    		} else {
+                $tasks->eq("parent", 0);
+            }
         }
 
         $tasks->page($p["page"]);
@@ -115,8 +117,17 @@ class Task extends Base {
      **/         
     public function post_newTask($p) {     
     
-        $p["data"]["status"] = Model\Task::STATUS_DRAFT;
-        $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", $p["data"]); 
+        if($p["cloneTask"]) {
+            $task = \Infuso\Board\Model\Task::get($p["cloneTask"]);
+            $data = array(
+                "projectId" => $task->data("propjectId"),
+                "parent" => $task->data("parent"),
+            );
+        } else {
+            $data = $p["data"];
+        }        
+        $data["status"] = Model\Task::STATUS_DRAFT;
+        $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", $data); 
         return array(
 			"taskId" => $task->id(),            
 		);

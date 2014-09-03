@@ -2,9 +2,12 @@ mod.init(".ddksfajhjz", function() {
 
     var $container = $(this);
     
+    var taskId = $container.attr("data:task");
+    
     $container.find(".add-task").click(function() {
         $(this).trigger({
-            type: "board/newTask"
+            type: "board/newTask",
+            cloneTask: taskId
         });
     });
 

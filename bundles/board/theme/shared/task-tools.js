@@ -1,12 +1,11 @@
-$(function() {
-
-    $(".g5zzd98up9").mod("init", function() {
+mod.init(".g5zzd98up9", function() {
     
-        var container = $(this);
-        mod.on("board/taskChanged", function(data) {
-            container.html(data.toolbarLarge);
-        });
+    var $container = $(this);
     
+    mod.on("board/taskChanged", function(data) {
+        if(data.taskId == $container.attr("data:task")) {
+            $container.html(data.toolbarLarge);
+        }
     });
         
 });

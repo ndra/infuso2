@@ -2,8 +2,12 @@ mod.init(".task-list-rpu80rt4m0", function() {
     
     var $container = $(this);
     var $ajaxContainer = $container.find(".ajax-container");
-    var $loader =  $container.find(".loader");    
+    var $loader =  $container.find(".loader"); 
+    
     var groupId = localStorage.getItem("board/groupId") || 0;
+    if($container.attr("data:status") != "0") {
+        groupId = 0;
+    }
 
     // Загружает список задач
     var load = function() {

@@ -70,13 +70,25 @@ $(function() {
     // Открываем задачу
     $container.on("board/newTask", function(event) {
         expandLeft();
-        mod.call({
-            cmd: "infuso/board/controller/task/newTaskWindow",
-            groupId: event.groupId
-        }, function(data) {
-            $container.children(".left").html(data.html);
-        });
-        deselectTask();
+        if(event.cloneTask) {
+            mod.call({
+                cmd:"infuso/board/controller/task/newTask",
+                cloneTask: event.cloneTask
+            }, function(data) {
+                $container.trigger({
+                    type: "board/openTask",
+                    taskId: data.taskId
+                })
+            });
+        } else {
+            mod.call({
+                cmd: "infuso/board/controller/task/newTaskWindow",
+                groupId: event.groupId
+            }, function(data) {
+                $container.children(".left").html(data.html);
+            });
+            deselectTask();
+        }
     });
     
     var close = function() {

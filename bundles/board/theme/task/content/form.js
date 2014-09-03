@@ -2,6 +2,8 @@ mod.init(".ybslv95net", function() {
 
     var $container = $(this);
     
+    $container.find("textarea").focus();
+    
     var save = function() {
         var data = $container.mod("formData");
         mod.call({
