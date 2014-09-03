@@ -1,6 +1,12 @@
 mod.init(".ddksfajhjz", function() {
 
     var $container = $(this);
+    
+    $container.find(".add-task").click(function() {
+        $(this).trigger({
+            type: "board/newTask"
+        });
+    });
 
     // Перетаскивание файлов в браузер
     $container.on("dragover", function(e) {
@@ -32,6 +38,5 @@ mod.init(".ddksfajhjz", function() {
         });
     });
     
-   // $container.layout();
 
 });

@@ -11,7 +11,7 @@
     widget("infuso\\board\\widget\\tasklist")
         ->status(0)
         ->addClass("task-list")
-        ->style("border-bottom", "1px solid #ccc")
+        //->style("border-bottom", "1px solid #ccc")
         ->toolbar()
         ->exec();
             

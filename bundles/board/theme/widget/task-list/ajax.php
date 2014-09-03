@@ -2,6 +2,10 @@
 
 <div class="task-list-zjnu1r2ofp" data:sortable='{$status == "0" ? 1 : 0}' >
 
+    if($status == "0") {
+        exec("groups");
+    }
+
     if($status == "0" || $status == "1") {
         exec("plus");
     }

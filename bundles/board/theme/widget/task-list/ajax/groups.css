@@ -1,0 +1,14 @@
+.hSPlyiV6sp {
+    
+    overflow: hidden;
+    margin-bottom: 20px;    
+    
+    span {
+        margin-right: 10px;
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    
+}

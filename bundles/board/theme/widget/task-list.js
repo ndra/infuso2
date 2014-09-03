@@ -3,7 +3,7 @@ mod.init(".task-list-rpu80rt4m0", function() {
     var $container = $(this);
     var $ajaxContainer = $container.find(".ajax-container");
     var $loader =  $container.find(".loader");    
-    var groupId = 0;
+    var groupId = localStorage.getItem("board/groupId") || 0;
 
     // Загружает список задач
     var load = function() {
@@ -49,6 +49,7 @@ mod.init(".task-list-rpu80rt4m0", function() {
     
     $container.on("board/openGroup", function(event) {
         groupId = event.groupId;
+        localStorage.setItem("board/groupId", groupId);
         load();
     });
     
