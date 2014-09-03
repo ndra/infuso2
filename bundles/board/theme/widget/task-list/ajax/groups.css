@@ -3,12 +3,19 @@
     overflow: hidden;
     margin-bottom: 20px;    
     
-    span {
+    .group {
         margin-right: 10px;
         cursor: pointer;
         &:hover {
             text-decoration: underline;
         }
+        
+        .count {
+            font-size: 11px;
+            position: relative;
+            top: -7px;
+        }
+        
     }
     
 }

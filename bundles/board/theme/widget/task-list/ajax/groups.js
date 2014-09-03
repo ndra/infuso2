@@ -2,7 +2,7 @@ mod.init(".hSPlyiV6sp", function() {
 
     var $container = $(this);
     
-    $container.find("span").click(function() {
+    $container.find(".group").click(function() {
     
         $(this).trigger({
             type: "board/openGroup",

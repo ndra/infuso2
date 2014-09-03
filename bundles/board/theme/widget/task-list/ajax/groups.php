@@ -9,7 +9,18 @@
         ->eq("group", 1);
         
     foreach($groups as $group) {
-        <span data:group='{$group->id()}' >{$group->title()}</span>
+        
+        $n = $group->subtasks()
+            ->eq("status", \Infuso\Board\Model\Task::STATUS_BACKLOG)
+            ->count();
+            
+        <span class='group' data:group='{$group->id()}' >{$group->title()}
+        
+        if($n) {
+            <span class='count'>{$n}</span>            
+        }
+        
+        </span>
     }
     
     
