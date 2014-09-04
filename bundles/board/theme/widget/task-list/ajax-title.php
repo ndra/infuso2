@@ -18,10 +18,10 @@
         <h2>
             <span class='back' >{$title}</span>
             <span> / </span>
-            <span>{$group->title()}</span>
+            <span class='title' >{$group->title()}</span>
         </h2>
     } else {
-        <h2>{$title}</h2>
+        <h2 class='title' >{$title}</h2>
     }
 
 </div>

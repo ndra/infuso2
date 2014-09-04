@@ -1,11 +1,17 @@
 mod.init(".YkELjC2q38", function() {
     
+    var $container = $(this);
+    
     // Нажатие на задачу
-    $(this).find(".back").click(function(event) {
+    $container.find(".back").click(function(event) {
         $(this).trigger({
             type: "board/openGroup",
             groupId: 0
         });    
+    });
+    
+    $container.find(".title").click(function() {
+        $(this).trigger("board/toggleTaskList");
     });
     
 });

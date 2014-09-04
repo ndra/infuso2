@@ -2,7 +2,13 @@ mod.init(".task-list-rpu80rt4m0", function() {
     
     var $container = $(this);
     var $ajaxContainer = $container.find(".ajax-container");
-    var $loader =  $container.find(".loader"); 
+    var $loader =  $container.find(".loader");
+    
+    var status = $container.attr("data:status");
+    
+    var firstLoad = true;
+    
+    var taskListVisible = true;
     
     var groupId = localStorage.getItem("board/groupId") || 0;
     if($container.attr("data:status") != "0") {
@@ -11,8 +17,6 @@ mod.init(".task-list-rpu80rt4m0", function() {
 
     // Загружает список задач
     var load = function() {
-        
-        $loader.show();
         
         var callData = {
             cmd: "Infuso/Board/Controller/Task/getTasks",
@@ -24,32 +28,80 @@ mod.init(".task-list-rpu80rt4m0", function() {
             type: "task/beforeLoad",
             callData: callData
         });
-    
-        mod.call(callData, function(data) {                
+        
+        var storeData = function(data) {
+            data = JSON.stringify(data);
+            window.sessionStorage.setItem("bSUJTR4lWH" + status, data);
+        }
+        
+        var restoreData = function() {
+            var data = window.sessionStorage.getItem("bSUJTR4lWH" + status);
+            data = JSON.parse(data);
+            return data;
+        }
+        
+        var handler = function(data) {                
             $loader.hide();
             $ajaxContainer.html(data.html);
             $container.find(".c-toolbar").triggerHandler({
                 type:"task/load",
                 ajaxData: data
             });
-            saveHTML(data.html);
-        });
+            storeData(data);
+        };
+    
+        mod.call(callData, handler);
+        
+        if(firstLoad) {
+            var storedData = restoreData();
+            if(storedData) {
+                handler(storedData);
+            }
+            firstLoad = false;
+        }
+        
+        $loader.show();
     
     }
-    
-    var saveHTML = function(html) {
-        window.sessionStorage.setItem("bSUJTR4lWH" + $container.attr("data:status"), html);
+
+    /**
+     * Разворачивает список задач
+     **/
+    var expandTaskList = function() {
+        $ajaxContainer.slideDown();
+        taskListVisible = true;
+        window.localStorage.setItem("9a21aQbwcP" + status, 1);
     }
     
-    var restoreHTML = function() {
-        var html = window.sessionStorage.getItem("bSUJTR4lWH" + $container.attr("data:status"));
-        $ajaxContainer.html(html);
+    /**
+     * Сворачивает список задач
+     **/
+    var collapseTaskList = function() {
+        $ajaxContainer.slideUp();
+        taskListVisible = false;
+        window.localStorage.setItem("9a21aQbwcP" + status, 0);
     }
     
-    restoreHTML();
+    var restoreVisibility = function() {
+        taskListVisible = window.localStorage.getItem("9a21aQbwcP" + status) * 1;
+        $ajaxContainer.css("display", taskListVisible ? "block" : "none");
+    }
+    
+    restoreVisibility();
+    
+    /**
+     * Сворачивает/разворачивает список задач
+     **/
+    $container.on("board/toggleTaskList", function() {
+        if(taskListVisible) {
+            collapseTaskList();
+        } else {
+            expandTaskList();
+        }
+    });
     
     // Запускаем загрузку с задержкой, чтобы сработали обработчики событий
-    setTimeout(load,0);
+    setTimeout(load, 0);
     
     $container.on("board/openGroup", function(event) {
         groupId = event.groupId;
@@ -65,15 +117,17 @@ mod.init(".task-list-rpu80rt4m0", function() {
         }
     });
     
+    // При изменении фильтра, перезагружаем
     $container.on("task/filter-changed", function(e) {
-        e.preventDefault();
         load();
     });
     
+    // При изменении задачи, перезагружаем
     mod.on("board/taskChanged", function(data) {
         setTimeout(load, 10);
     });
     
+    // При установке фокуса на окно, перезагружаем
     $(window).focus(load);
     
 });
