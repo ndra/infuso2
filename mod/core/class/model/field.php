@@ -302,10 +302,10 @@ abstract class Field extends Core\Component {
         return $this;
     }
     
-    public function validate($val) {
+    public function validate($val, $data) {
 
         $validateIf = $this->param("validateIf");
-        if($validateIf && !$this->model()->data($validateIf)){
+        if($validateIf && !$data[$validateIf]){
             return true;
         }
 
