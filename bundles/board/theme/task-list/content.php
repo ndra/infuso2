@@ -3,13 +3,13 @@
 <div class='MhpEuDh2NX' >
 
     widget("infuso\\board\\widget\\tasklist")
-        ->status(1)
+        ->status("inprogress")
         ->addClass("task-list")
         ->style("background", "#ededed")
         ->exec();
 
     widget("infuso\\board\\widget\\tasklist")
-        ->status(0)
+        ->status("backlog")
         ->addClass("task-list")
         //->style("border-bottom", "1px solid #ccc")
         ->toolbar()

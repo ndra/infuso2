@@ -3,10 +3,10 @@
 <div class='YkELjC2q38' >
 
     switch($status) {
-        case "0":
+        case "backlog":
             $title = "Бэклог";
             break;
-        case "1":
+        case "inprogress":
             $title = "Выполняется";
             break;
         case "check":

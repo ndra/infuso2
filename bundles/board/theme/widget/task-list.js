@@ -11,7 +11,7 @@ mod.init(".task-list-rpu80rt4m0", function() {
     var taskListVisible = true;
     
     var groupId = localStorage.getItem("board/groupId") || 0;
-    if($container.attr("data:status") != "0") {
+    if($container.attr("data:status") != "backlog") {
         groupId = 0;
     }
 

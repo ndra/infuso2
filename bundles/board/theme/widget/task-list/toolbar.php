@@ -4,7 +4,7 @@
 
     <div class='title-ajax' ></div>
 
-    if($status == "0" || $status == "check") {
+    if($status == "backlog" || $status == "check") {
         
         /*widget("\\infuso\\cms\\ui\\widgets\\textfield")
             ->addClass("quicksearch")

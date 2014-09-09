@@ -29,9 +29,28 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
      * Оставляет только видимые для текущего пользователя задачи
      **/
     public function visible() {
-        $projects = Project::visible();
-        $this->joinByField("projectID",$projects);
+        //$projects = Project::visible();
+        //$this->joinByField("projectID",$projects);
         return $this;
+    }
+    
+    /**
+     * Оставляет только задачи верхнего уровня
+     * Для менеджеров доски и исполнителей - это реальный верзний уровень
+     * Для клиентов - это группа, к которой предоставлен доступ      
+     **/         
+    public function root() {
+    
+        if(app()->user()->checkAccess("board/selectAllTasks")) {
+            return $this;
+        } {
+            $access = Access::all()->eq("userId", app()->user()->id());
+            $projects = $access->distinct("projectId");
+            $groups = Task::all()
+                ->eq("group", 1)
+                ->eq("singleProject", $projects);
+            return $this->eq("is", $groups->one()->id());
+        }
     }
     
     /**

@@ -467,8 +467,18 @@ class Task extends \Infuso\ActiveRecord\Record {
         return \Infuso\User\Model\User::all()->eq("id",$userIdList);
     }
     
+    /**
+     * Возвращает все подзадачи в группе
+     **/         
     public function subtasks() {
         return self::all()->eq("parent", $this->id());
+    }
+    
+    /**
+     * Возвращает коллекцию объектов доступа, связанных с этой группой
+     **/         
+    public function access() {  
+        return Access::all()->eq("groupId", $this->id());
     }
 
 }

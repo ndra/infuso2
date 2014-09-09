@@ -23,6 +23,11 @@ class Roles implements Core\Handler {
         $role = user_role::create("board/client");
         $role->data("title","Клиент доски");
         
+        user_operation::create("board/showInterface", "Просмотр интерфейса доски")
+            ->appendTo("board/worker")
+            ->appendTo("board/manager")
+            ->appendTo("board/client");
+        
         user_operation::create("board/showTaskList", "Просмотр списка задач")
             ->appendTo("board/worker")
             ->appendTo("board/manager")

@@ -26,9 +26,21 @@ class Task extends Base {
         
         switch($p["status"]) {
         
-            default:
-        		$tasks->eq("status", $p["status"]);
+            case "backlog":
+        		$tasks->eq("status", Model\Task::STATUS_BACKLOG);
         		$tasks->asc("priority");
+                
+        		if($groupId = $p["groupId"]) {
+        		    $tasks->eq("parent", $groupId);
+        		} else {
+                    $tasks->root();
+                }
+                
+        		break;
+                
+            case "inprogress":
+        		$tasks->eq("status", Model\Task::STATUS_IN_PROGRESS);
+        		$tasks->asc("id");
         		break;
         		
 			case "check":
@@ -39,20 +51,15 @@ class Task extends Base {
 					Model\Task::STATUS_CANCELLED,
 				));
         		break;
+                
+            default:
+                throw new \Exception("Unknown status");
         		
         }
             
         // Учитываем поиск
         if($search = trim($p["search"])) {
             $tasks->search($search);
-        }
-
-        if($p["status"] == "0") {
-    		if($groupId = $p["groupId"]) {
-    		    $tasks->eq("parent", $groupId);
-    		} else {
-                $tasks->eq("parent", 0);
-            }
         }
 
         $tasks->page($p["page"]);
@@ -90,9 +97,10 @@ class Task extends Base {
             return;
         }
         
-        $html = app()->tm("/board/task/content")
+        $html = app()->tm($task->data("group") ? "/board/task/content-group" : "/board/task/content-task")
             ->param("task", $task)
             ->getContentForAjax();
+            
         return array(
 			"html" => $html,
 			"taskURL" => $task->url(),
