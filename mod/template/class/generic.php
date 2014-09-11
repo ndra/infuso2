@@ -34,7 +34,7 @@ abstract class Generic extends Core\Component {
         $params["*delayed"] = false;
     
         return \tmp_delayed::add(array(
-            "class" => "tmp_generic",
+            "class" => "infuso\\template\\generic",
             "method" => "execStatic",
             "arguments" => array(
                 get_class($this),  

@@ -11,7 +11,7 @@ abstract class Widget extends Generic {
 	/**
 	 * @return Возвращает объект виджета
 	 */
-	public final function get($name) {
+	public final static function get($name) {
 	
     	$classmap = Core\Mod::service("classmap");
     	
@@ -20,16 +20,24 @@ abstract class Widget extends Generic {
     	}
     
     	$name = strtolower($name);
-    	$current = Template::current();
-    
-    	foreach($classmap->classes(Widget::inspector()->classname()) as $class) {
+
+    	/*foreach($classmap->classes(Widget::inspector()->classname()) as $class) {
     	    if($class::inspector()->bundle()->path() == $current->bundle()->path()) {
     	        $reflect = new \ReflectionClass($class);
     			if (strtolower($reflect->getShortName()) === $name) {
     			    return new $class;
                 }
     	    }
+    	} */
+    	
+    	foreach($classmap->classes(Widget::inspector()->classname()) as $class) {
+    	    if($class::alias() == $name) {
+    	        return new $class;
+    	    }
     	}
+    	
+    	throw new \Exception("Cannot nind widget '{$name}'");
+    	
 	}
 
 	/**
@@ -43,6 +51,10 @@ abstract class Widget extends Generic {
 	 * Вы должны определить этот метод
 	 **/
 	abstract public function execWidget();
+	
+	public function alias() {
+		return "";
+	}
 
 	/**
 	 * @return array Возвращает массив с виджетами
