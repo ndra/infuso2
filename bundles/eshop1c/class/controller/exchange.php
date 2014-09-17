@@ -53,19 +53,17 @@ class Exchange extends Core\Controller {
 
         if($user!=$_user || $password!=$_password) {
             service("log")->log(array(
-				"message" => "Логин и пароль ($user:$password), переданные 1С не совпадают с указанными на сайте.",
+				"message" => "Логин и пароль, переданные 1С ($user:$password) не совпадают с указанными в настройках сайта ($_user:$_password).",
 				"type" => "1c/exchange"
 			));
             return;
         }
 
         service("log")->log(array(
-			"message" => "Логин и пароль ($user:$password), переданные 1С не совпадают с указанными на сайте.",
+			"message" => $cmd,
 			"type" => "1c/exchange"
 		));
 		
-        mod::trace("$cmd");
-
         switch($cmd) {
 
             case "sale:checkauth":
