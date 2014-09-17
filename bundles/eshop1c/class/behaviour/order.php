@@ -1,9 +1,13 @@
 <?
 
+namespace Infuso\Eshop1C\Behaviour;
+use \Infuso\Core;
+use \Infuso\Eshop1C;
+
 /**
  * Поведение для заказа, содержащее все необходимое для интеграции с 1С
- **/ 
-class eshop_1c_behaviourOrder extends mod_behaviour {
+ **/
+class Order extends Core\Behaviour {
 
     public function addToClass() {
         return "infuso\\eshop\\model\\order";
@@ -13,11 +17,11 @@ class eshop_1c_behaviourOrder extends mod_behaviour {
         return -1;
     }
     
-    public function fields() {
+    /*public function fields() {
         return array(
             mod::field("checkbox")->name("1CExportCompleted")->label("Выгружен в 1С")->group("1C"),
         );
-    }
+    } */
     
     /**
     * Медод, генерирующий xml для экспорта заказа

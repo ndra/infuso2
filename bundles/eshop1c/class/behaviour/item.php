@@ -20,13 +20,13 @@ class Item extends Core\Behaviour {
     /**
      * Дополнительные поля для управления импортом
      **/
-    public function fields() {
+    /*public function fields() {
         return array(
             mod_field::get("textfield")->name("importKey")->disable()->label("1С: Внешний ключ")->group("1C"),
             //mod_field::get("datetime")->name("importTime")->disable()->label("1С: Время испорта")->group("1C"),
             //mod_field::get("textfield")->name("importCycle")->disable()->label("1С: Цикл импорта")->group("1C"),
         );
-    }
+    } */
 
     /**
      * Метод, обрабатывающий товар из файла import.xml
