@@ -82,14 +82,14 @@ class Exchange extends Core\Controller {
 
             // Прием файла
             case "catalog:file":
-                $str = file_get_contents("php://input");
-                $file = file::get("$dir/$_GET[filename]");
-                file::mkdir($file->up());
+                $str = Core\File_get_contents("php://input");
+                $file = Core\File::get("$dir/$_GET[filename]");
+                Core\File::mkdir($file->up());
                 $file->put($str);
 
                 // Сохраняем имя последнего переданного файла
                 // Это понадобится нам позже чтобы определить когда закончить выгрузку
-                file::get("{$dir}/last-import-file.txt")->put($_GET["filename"]);
+                Core\File:get("{$dir}/last-import-file.txt")->put($_GET["filename"]);
 
                 echo "success";
                 break;
@@ -192,11 +192,11 @@ class Exchange extends Core\Controller {
 
         $vitem = reflex::virtual("eshop_item");
 
-        $xml = simplexml_load_file(file::get(self::$dir."/".$filename)->native());
+        $xml = simplexml_load_file(Core\File::get(self::$dir."/".$filename)->native());
         $items = $xml->xpath("//Каталог/Товары/Товар");
         $count = sizeof($items);
         $from = self::from();
-        $to = $from+self::$step;
+        $to = $from + self::$step;
         $items = $xml->xpath("//Каталог/Товары/Товар[position()>=$from and position()<=$to]");
 
         foreach($items as $towar) {
@@ -204,7 +204,7 @@ class Exchange extends Core\Controller {
         }
 
         self::from($to);
-        if($to>=$count) {
+        if($to >= $count) {
             self::from(0);
             return true;
         }
