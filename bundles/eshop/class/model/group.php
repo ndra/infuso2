@@ -98,6 +98,7 @@ class Group extends \Infuso\ActiveRecord\Record {
 	    $group  = self::get($p["id"]);
 	    app()->tm("eshop:group")
             ->param("group", $group)
+            ->param("queryParams", $p)
             ->exec();
 	}
 
