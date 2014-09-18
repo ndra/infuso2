@@ -193,7 +193,7 @@ class Exchange extends Core\Controller {
      **/         
     public static function importCatalog($filename = "import.xml") {
 
-        $vitem = reflex::virtual("eshop_item");
+        $vitem = service("ar")->virtual("eshop_item");
 
         $xml = simplexml_load_file(Core\File::get(self::exchangeDir()."/".$filename)->native());
         $items = $xml->xpath("//Каталог/Товары/Товар");
