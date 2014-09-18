@@ -9,11 +9,6 @@ use \Infuso\Core;
  **/
 class Exchange extends Core\Controller {
 
-	/**
-	 * Каталог, к оторый будут записываться файлы импорта
-	 **/
-    private static $dir = "/eshop/import/";
-    
     /**
      * Количество позиций, испортируемых за один шаг
      **/
@@ -29,6 +24,13 @@ class Exchange extends Core\Controller {
     public function controller() {
         return "1c";
     }
+    
+	/**
+	 * Каталог, к оторый будут записываться файлы импорта
+	 **/
+    private static function exchangeDir() {
+        return self::inspector()->bundle()->path()."/import/";
+    }
 
     /**
      * Единый контроллер обмена с 1С
@@ -37,7 +39,7 @@ class Exchange extends Core\Controller {
     
         $cmd = "$_GET[type]:$_GET[mode]";
 
-        $dir = self::$dir;
+        $dir = self::exchangeDir();
         $user = $_SERVER["PHP_AUTH_USER"];
         $password = $_SERVER["PHP_AUTH_PW"];
         $_user = $this->param("login");
@@ -82,25 +84,22 @@ class Exchange extends Core\Controller {
 
             // Прием файла
             case "catalog:file":
-                $str = Core\File_get_contents("php://input");
+                $str = file_get_contents("php://input");
                 $file = Core\File::get("$dir/$_GET[filename]");
                 Core\File::mkdir($file->up());
                 $file->put($str);
 
                 // Сохраняем имя последнего переданного файла
                 // Это понадобится нам позже чтобы определить когда закончить выгрузку
-                Core\File:get("{$dir}/last-import-file.txt")->put($_GET["filename"]);
+                Core\File::get("{$dir}/last-import-file.txt")->put($_GET["filename"]);
 
                 echo "success";
                 break;
 
             // Разбор файла
-            case "catalog:import":
-
-                $filename = $_GET["filename"];
-
-                if(preg_match("/import/",$filename)) {
-
+            case "catalog:import":                 
+                $filename = $_GET["filename"];   
+                if(preg_match("/import/",$filename)) {    
                     if(self::importCatalog($filename)) {
                         echo "success";
                         die();
@@ -159,6 +158,7 @@ class Exchange extends Core\Controller {
      * Этот xml будет отправлен в 1C
      **/
     public function saleXML() {
+    
         $xml = simplexml_load_string("<КоммерческаяИнформация ВерсияСхемы='2.03' ДатаФормирования='".util::now()->notime()."' />");
         $parent = $xml;
 
@@ -180,19 +180,22 @@ class Exchange extends Core\Controller {
     public static function from($from = 0) {
 
         if(func_num_args()==0) {
-            return file::get(self::$dir."/step.txt")->data();
+            return file::get(self::exchangeDir()."/step.txt")->data();
         }
 
         if(func_num_args()==1){
-            return file::get(self::$dir."/step.txt")->put($from);
+            return file::get(self::exchangeDir()."/step.txt")->put($from);
         }
     }
 
+    /** 
+     * Выполняет один шаг обработки файла inport.xml
+     **/         
     public static function importCatalog($filename = "import.xml") {
 
         $vitem = reflex::virtual("eshop_item");
 
-        $xml = simplexml_load_file(Core\File::get(self::$dir."/".$filename)->native());
+        $xml = simplexml_load_file(Core\File::get(self::exchangeDir()."/".$filename)->native());
         $items = $xml->xpath("//Каталог/Товары/Товар");
         $count = sizeof($items);
         $from = self::from();
@@ -210,11 +213,14 @@ class Exchange extends Core\Controller {
         }
     }
 
+    /** 
+     * Выполняет один шаг обработки файла offers.xml
+     **/         
     public static function importOffers($filename = "offers.xml") {
 
         $vitem = reflex::virtual("eshop_item");
 
-        $xml = simplexml_load_file(file::get(self::$dir."/".$filename)->native());
+        $xml = simplexml_load_file(file::get(self::exchangeDir()."/".$filename)->native());
         $items = $xml->xpath("//Предложение");
         $count = sizeof($items);
         $from = self::from();
