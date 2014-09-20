@@ -113,7 +113,7 @@ class Exchange extends Core\Controller {
                 if(preg_match("/offers/",$filename)) {
                     if(self::importOffers($filename)) {
 
-                        if($filename == file::get("{$dir}/last-import-file.txt")->data()) {
+                        if($filename == Core\File::get("{$dir}/last-import-file.txt")->data()) {
                             Eshop1C\Utils::importComplete();
                             mod::trace("1c export done");
                         }
