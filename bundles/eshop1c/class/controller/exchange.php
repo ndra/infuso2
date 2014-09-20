@@ -29,7 +29,7 @@ class Exchange extends Core\Controller {
 	/**
 	 * Каталог, к оторый будут записываться файлы импорта
 	 **/
-    private static function exchangeDir() {
+    public static function exchangeDir() {
         return app()->varPath()."/1c-import/";
     }
 
