@@ -2,6 +2,7 @@
 
 namespace Infuso\Eshop1C\Controller;
 use \Infuso\Core;
+use \Infuso\Eshop1C;
 
 /**
  * Контроллер импорта товаров
@@ -115,7 +116,10 @@ class Exchange extends Core\Controller {
 
                         if($filename == Core\File::get("{$dir}/last-import-file.txt")->data()) {
                             Eshop1C\Utils::importComplete();
-                            mod::trace("1c export done");
+                            service("log")->log(array(
+                    			"message" => "Import completed",
+                    			"type" => "1c/exchange"
+                    		));
                         }
 
                         echo "success";
