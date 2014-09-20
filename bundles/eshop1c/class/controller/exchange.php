@@ -76,7 +76,7 @@ class Exchange extends Core\Controller {
 
             // Начало выгрузки на сайт
             case "catalog:init":
-                file::mkdir($dir);
+                Core\File::mkdir($dir);
                 Eshop1C\Utils::importBegin();
                 self::from(0);
                 echo "zip=no\n";
