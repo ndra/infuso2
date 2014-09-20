@@ -148,7 +148,10 @@ class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Sea
     }
     
     public function searchContent() {
-        return $this->title();
+        return array(
+            "content" => $this->title(),
+            "snippet" => "/eshop/search/item-snippet",
+        );
     }
 
 }

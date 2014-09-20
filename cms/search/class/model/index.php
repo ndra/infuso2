@@ -56,5 +56,19 @@ class Index extends \Infuso\ActiveRecord\Record {
         list($class,$id) = explode(":", $this->data("key"));
         return service("ar")->get($class,$id);
     }
+    
+    public function snippet() {
+    
+        $template = "/search/snippet";
+    
+        $params = $this->item()->searchContent();
+        if(is_array($params) && array_key_exists("snippet", $params)) {
+            $template = $params["snippet"];
+        }
+    
+        return app()->tm($template)
+            ->param("index", $this)
+            ->param("item", $this->item());
+    }
 
 }

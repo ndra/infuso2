@@ -6,7 +6,6 @@ use \Infuso\Core;
 /**
  * Стандартная тема модуля search
  **/
-
 class Main extends Core\Controller {
 
     public function controller() {
@@ -18,8 +17,12 @@ class Main extends Core\Controller {
     }
     
     public function index($p) {
-        app()->tm("/search/index")
+    
+        $results = service("search")->query($p["query"]);
+    
+        return app()->tm("/search/index")
             ->param("query", $p["query"])
+            ->param("results", $results)
             ->exec();
     }
 
