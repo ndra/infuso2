@@ -29,7 +29,7 @@ class Exchange extends Core\Controller {
 	 * Каталог, к оторый будут записываться файлы импорта
 	 **/
     private static function exchangeDir() {
-        return self::inspector()->bundle()->path()."/import/";
+        return app()->varPath()."/1c-import/";
     }
 
     /**
@@ -76,7 +76,7 @@ class Exchange extends Core\Controller {
             // Начало выгрузки на сайт
             case "catalog:init":
                 file::mkdir($dir);
-                eshop_1c_utils::importBegin();
+                Eshop1C\Utils::importBegin();
                 self::from(0);
                 echo "zip=no\n";
                 echo "file_limit=0\n";
@@ -114,7 +114,7 @@ class Exchange extends Core\Controller {
                     if(self::importOffers($filename)) {
 
                         if($filename == file::get("{$dir}/last-import-file.txt")->data()) {
-                            eshop_1c_utils::importComplete();
+                            Eshop1C\Utils::importComplete();
                             mod::trace("1c export done");
                         }
 
@@ -172,19 +172,17 @@ class Exchange extends Core\Controller {
             $order->data("1CExportCompleted",true);
         }
 
-
-
         return $xml;
     }
 
     public static function from($from = 0) {
 
         if(func_num_args()==0) {
-            return file::get(self::exchangeDir()."/step.txt")->data();
+            return Core\File::get(self::exchangeDir()."/step.txt")->data();
         }
 
         if(func_num_args()==1){
-            return file::get(self::exchangeDir()."/step.txt")->put($from);
+            return Core\File::get(self::exchangeDir()."/step.txt")->put($from);
         }
     }
 
@@ -193,7 +191,7 @@ class Exchange extends Core\Controller {
      **/         
     public static function importCatalog($filename = "import.xml") {
 
-        $vitem = service("ar")->virtual("eshop_item");
+        $vitem = service("ar")->virtual("infuso\\eshop\\model\\item");
 
         $xml = simplexml_load_file(Core\File::get(self::exchangeDir()."/".$filename)->native());
         $items = $xml->xpath("//Каталог/Товары/Товар");
@@ -211,6 +209,9 @@ class Exchange extends Core\Controller {
             self::from(0);
             return true;
         }
+        
+        return false;
+        
     }
 
     /** 
@@ -218,19 +219,19 @@ class Exchange extends Core\Controller {
      **/         
     public static function importOffers($filename = "offers.xml") {
 
-        $vitem = reflex::virtual("eshop_item");
+        $vitem = service("ar")->virtual("infuso\\eshop\\model\\item");
 
-        $xml = simplexml_load_file(file::get(self::exchangeDir()."/".$filename)->native());
+        $xml = simplexml_load_file(Core\File::get(self::exchangeDir()."/".$filename)->native());
         $items = $xml->xpath("//Предложение");
         $count = sizeof($items);
         $from = self::from();
-        $to = $from+self::$step;
+        $to = $from + self::$step;
         $items = $xml->xpath("//Предложение[position()>=$from and position()<=$to]");
         foreach($items as $offer) {
             $vitem->processOffersXML($offer,$xml);
         }
         self::from($to);
-        if($to>=$count) {
+        if($to >= $count) {
             self::from(0);
             return true;
         }

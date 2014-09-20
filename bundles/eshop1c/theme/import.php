@@ -1,9 +1,11 @@
 <?
 
 admin::header();
+lib::modjs();
 
-<div style='padding: 40px;' >
-    echo 1212;
+<div class='doa3wGMQ2r' >
+    <div class='log' ></div>
+    <input type='button' value='Загрузить данные из файлов' class='begin' />
 </div>
 
 admin::footer();

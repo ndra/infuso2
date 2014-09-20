@@ -22,18 +22,16 @@ class Utils extends Core\Component {
         }
             
         $p["importCycle"] = self::importCycle();
-        $item = eshop_item::allEvenHidden()->eq("importKey",$p["importKey"])->one();
+        $item = \Infuso\Eshop\Model\Item::all()->eq("importKey",$p["importKey"])->one();
         
         if(!$item->exists()) {
-            $item = reflex::create("eshop_item",$p);
-            if(!isset($p["order"])) $p["order"] = true;
+            $item = service("ar")->create("infuso\\eshop\\model\\item",$p);
         }
         
         foreach($p as $key => $val) {
             $item->data($key,$val);
         }
             
-        $item->data("importTime",util::now());
         return $item;
     }
 
@@ -49,10 +47,10 @@ class Utils extends Core\Component {
         }
             
         $p["importCycle"] = self::importCycle();
-        $group = eshop_group::allEvenHidden()->eq("importKey",$p["importKey"])->one();
+        $group = \Infuso\Eshop\Model\Group::all()->eq("importKey",$p["importKey"])->one();
         
         if(!$group->exists()) {
-            $group = reflex::create("eshop_group",$p);
+            $group = service("ar")->create("infuso\\eshop\\model\\group",$p);
         }
             
         foreach($p as $key=>$val) {
@@ -106,7 +104,7 @@ class Utils extends Core\Component {
      **/
     public static function importCycle() {
         if(!self::$importCycle) {
-            self::$importCycle = file::get("/eshop/system/import.txt")->data();
+            self::$importCycle = Core\File::get("/eshop/system/import.txt")->data();
         }
         return self::$importCycle;
     }

@@ -10,7 +10,7 @@ use \Infuso\Eshop1C;
 class Item extends Core\Behaviour {
 
     public function addToClass() {
-        return "infuso\\eshop\\item";
+        return "infuso\\eshop\\model\\item";
     }
 
     public function behaviourPriority() {
@@ -20,13 +20,18 @@ class Item extends Core\Behaviour {
     /**
      * Дополнительные поля для управления импортом
      **/
-    /*public function fields() {
+    public function model() {
         return array(
-            mod_field::get("textfield")->name("importKey")->disable()->label("1С: Внешний ключ")->group("1C"),
-            //mod_field::get("datetime")->name("importTime")->disable()->label("1С: Время испорта")->group("1C"),
-            //mod_field::get("textfield")->name("importCycle")->disable()->label("1С: Цикл импорта")->group("1C"),
+            "fields" => array(
+                array(
+                    "name" => "importKey",
+                    "type" => "string",
+                    "editable" => 2,
+                    "label" => "Ключ 1С",
+                ),
+            ),
         );
-    } */
+    }
 
     /**
      * Метод, обрабатывающий товар из файла import.xml
@@ -40,7 +45,6 @@ class Item extends Core\Behaviour {
             "importKey" => $importKey,
             "article" => $towar->Артикул."",
             "description" => $towar->Описание."",
-            "order" => true,
         );
         
         // Загружаем группу
@@ -48,9 +52,9 @@ class Item extends Core\Behaviour {
         $groupXML = end($xml->xpath("//Классификатор/Группы/descendant::Группа[Ид='$groupID']"));
         
         if($groupXML) {
-	        $vgroup = service("ar")->virtual("eshop_group");
+	        $vgroup = service("ar")->virtual("infuso\\eshop\\model\\group");
 	        $group = $vgroup->processCatalogXML($groupXML,$xml);
-	        $data["parent"] = $group->id();
+	        $data["groupId"] = $group->id();
 		}
         
         $item = Eshop1C\Utils::importItem($data);

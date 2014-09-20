@@ -2,6 +2,7 @@
 
 namespace Infuso\Eshop1C\Controller;
 use \Infuso\Core;
+use \Infuso\Eshop1C;
 
 /**
  * Контроллер ручного режима импорта товаров
@@ -25,24 +26,24 @@ class Import extends Core\Controller {
 	}
 
 	public static function post_importXML($p) {
-	    $done = eshop_1c_exchange::importCatalog();
+	    $done = Exchange::importCatalog();
 	    if($done) {
-	        eshop_1c_exchange::from(0);
+	        Exchange::from(0);
         }
 	    return array(
 	        "done" => $done,
-	        "log" => "Импортировано товаров: ".eshop_1c_exchange::from(),
+	        "log" => "Импортировано товаров: ".Exchange::from(),
 	    );
 	}
 
 	public static function post_offersXML($p) {
-	    $done = eshop_1c_exchange::importOffers();
+	    $done = Exchange::importOffers();
 	    if($done) {
-	        eshop_1c_utils::importComplete();
+	        Urils::importComplete();
         }
 	    return array(
 	        "done" => $done,
-	        "log" => "Импортировано предложений: ".eshop_1c_exchange::from(),
+	        "log" => "Импортировано предложений: ".Exchange::from(),
 	    );
 	}
 

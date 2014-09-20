@@ -13,16 +13,16 @@ class Group extends Core\Behaviour {
         return "infuso\\eshop\\model\\group";
     }
     
-    /*public function fields() {
+    public function model() {
         return array(
-            mod_field::get("textfield")->name("importKey")->disable()->label("1С: Внешний ключ")->group("1C"),
-            mod_field::get("datetime")->name("importTime")->disable()->label("1С: Время испорта")->group("1C"),
-            mod_field::get("textfield")->name("importCycle")->disable()->label("1С: Цикл импорта")->group("1C"),
-            mod_field::get("checkbox")->name("skipImport")->label("1С: Не менять данные товара при импорте")->group("1C"),
-            mod_field::get("checkbox")->name("skipImportSys")->disable()->group("1C"),
-            mod_field::get("checkbox")->name("skipImportChildren")->label("1С: Не менять содержимое при импорте")->group("1C"),
+            "fields" => array(
+                array(
+                    "name" => "importKey",
+                    "type" => "string",
+                ),
+            ),
         );
-    }*/
+    }
     
 	/**
 	 * Обрабатывает XML группы товаров
@@ -40,7 +40,7 @@ class Group extends Core\Behaviour {
             $group["parent"] = $parent->id();
         }
         
-        return eshop_1c_utils::importGroup($group);
+        return Eshop1C\Utils::importGroup($group);
         
     }
 
