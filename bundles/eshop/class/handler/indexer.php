@@ -13,7 +13,7 @@ class Indexer implements Core\Handler {
     const TYPE_ITEM = 1;
     
     /**
-     * @handler = infusoDeploy    
+     * @handler = infuso/deploy    
      **/         
     public static function onDeploy() {
         service("task")->add(array(

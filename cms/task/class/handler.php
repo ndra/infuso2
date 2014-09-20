@@ -13,7 +13,7 @@ class Handler implements Core\Handler {
     }
     
 	/**
-     * @handler = infusoDeploy
+     * @handler = infuso/deploy
      * @handlerPriority = -1;
      **/
     public function onDeployStart() {
@@ -25,8 +25,8 @@ class Handler implements Core\Handler {
     }
     
     /**
-     * Грохает задачи кототыре были добавлены в предущий infusoDeploy
-     * @handler = infusoDeploy
+     * Грохает задачи кототыре были добавлены в предущий infuso/deploy
+     * @handler = infuso/deploy
      * @handlerPriority = 1000;
     **/
     public function onDeployEnd() {

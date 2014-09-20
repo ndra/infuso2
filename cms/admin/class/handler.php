@@ -8,7 +8,7 @@ namespace Infuso\Cms\Admin;
 class Handler implements \Infuso\Core\Handler {
 
 	/** 
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 **/	 	
     public function onDeploy() {
     

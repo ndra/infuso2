@@ -20,5 +20,21 @@ class Handler implements Core\Handler {
             "type" => $event->param("type"),
         ));
     }
+    
+    /**
+     * @handler = infuso/deploy
+     **/        
+    public function onDeploy() {
+        service("task")->add(array(
+            "class" => get_class(),
+            "method" => "cleanup",
+            "crontab" => "0 0 * * *",
+        ));
+    }
+    
+    public static function cleanup() {
+        service("log")->all()
+            ->lt("datetime", \util::now()->shiftDay(-14))->delete();    
+    }
 
 }

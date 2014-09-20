@@ -6,7 +6,7 @@ use Infuso\Core;
 class Handler implements Core\Handler {
 
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 **/
 	public function onDeploy() {
 	    app()->msg("clear css and js render");

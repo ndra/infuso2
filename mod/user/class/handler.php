@@ -22,7 +22,7 @@ class Handler implements Core\Handler {
     
     /**
      * Метод, в котором реализуется бизнес-логика инициализации
-     * @handler = infusoDeploy
+     * @handler = infuso/deploy
      * @handlerPriority = -1
      **/
     public static function onDeploy() {

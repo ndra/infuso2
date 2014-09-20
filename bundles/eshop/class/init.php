@@ -8,7 +8,7 @@ use \Infuso\Core;
 class eshop_init extends \Infuso\Core\Component implements Core\Handler {
 
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 **/
 	public function onDeploy() {
 	

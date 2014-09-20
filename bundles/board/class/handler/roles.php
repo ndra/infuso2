@@ -9,7 +9,7 @@ use \user_role;
 class Roles implements Core\Handler { 
     
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 **/
     public function init() {
 

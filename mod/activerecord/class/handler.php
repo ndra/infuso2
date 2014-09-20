@@ -8,7 +8,7 @@ use Infuso\Core\Mod;
 class Handler implements \Infuso\Core\Handler {
 
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 * @handlerPriority = -1000
 	 * При инициализации приводим таблицы в БД в соответствии с макетами
 	 **/

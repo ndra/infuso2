@@ -9,7 +9,7 @@ use Infuso\Core;
 class Handler extends Core\Component implements Core\Handler {
 
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 * @handlerPriority = -1
 	 **/
 	public function removeRootTabs() {
@@ -18,7 +18,7 @@ class Handler extends Core\Component implements Core\Handler {
 	}
 
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 **/
 	public function initReflex() {
 	
@@ -72,7 +72,7 @@ class Handler extends Core\Component implements Core\Handler {
 	}
 	
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 **/
 	public function onDeploy() {
 

@@ -3,7 +3,7 @@
 class board_handler_autocomplete implements \Infuso\Core\Handler {
 
 	/**
-	 * @handler = infusoDeploy
+	 * @handler = infuso/deploy
 	 **/
     public function deploy() {
         service("task")->add(array(
