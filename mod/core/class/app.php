@@ -95,6 +95,7 @@ class App {
    			$this->configureIni();
    			$this->setErrorLevel();
 			$this->includeCoreClasses();
+            $this->createFatalErrorHandler();
 
 			// Регистрируем загрузчик классов
 			spl_autoload_register(array($this,"loadClass"));
@@ -485,5 +486,39 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 	    }
 	    throw new \Exception("app::redirect() wrong arguments number");
 	}
+    
+    public function createFatalErrorHandler() {
+    
+        register_shutdown_function(function() {
+        
+            $errfile = "unknown file";
+            $errstr  = "shutdown";
+            $errno   = E_CORE_ERROR;
+            $errline = 0;
+            
+            $error = error_get_last();
+            
+            $errors = array(
+                E_ERROR,
+                E_PARSE,
+                E_CORE_ERROR,
+                E_COMPILE_ERROR,
+                E_USER_ERROR,
+            );
+            
+            if( $error !== NULL) {
+            
+                if(in_array($error["type"], $errors)) {
+            
+                    $errno   = $error["type"];
+                    $errfile = $error["file"];
+                    $errline = $error["line"];
+                    $errstr  = $error["message"];
+                    $this->trace(var_export($error,1), "error");
+                
+                }
+            }
+        });        
+    }
 
 }

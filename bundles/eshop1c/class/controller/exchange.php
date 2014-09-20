@@ -98,7 +98,8 @@ class Exchange extends Core\Controller {
                 break;
 
             // Разбор файла
-            case "catalog:import":                 
+            case "catalog:import":       
+                      
                 $filename = $_GET["filename"];   
                 if(preg_match("/import/",$filename)) {    
                     if(self::importCatalog($filename)) {
