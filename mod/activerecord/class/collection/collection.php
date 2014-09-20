@@ -591,8 +591,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         if(is_array($val)) {
             $val = implode(" ", $val);
         } 
-        $str = reflex_mysql::escape($val);
-        $this->where("match($key) against ('$str' in boolean mode) ");
+        $str = service("db")->quote($val);
+        $this->where("match($key) against ($str in boolean mode) ");
         return $this;
     }
     

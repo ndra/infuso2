@@ -1,10 +1,9 @@
 <?
 
-namespace infuso\dao;
-
+namespace infuso\dao;  
 use Infuso\Core;
 
-class connection extends \infuso\core\service {
+class Connection extends Core\Service {
 
 	/**
 	 * Объект класса PDO, создающийся при соедниении

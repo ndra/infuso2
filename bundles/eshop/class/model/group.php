@@ -6,7 +6,7 @@ use Infuso\Core;
 /**
  * Модель группы для интернет-магазина
  **/
-class Group extends \Infuso\ActiveRecord\Record {
+class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Searchable {
 
     const STATUS_VOID = 0;
     const STATUS_USER_DISABLED = 1;
@@ -173,4 +173,7 @@ class Group extends \Infuso\ActiveRecord\Record {
 	public function numberOfItems() {
 	    return $this->items()->count();
 	}
+    
+    public function searchContent() {
+    }
 }

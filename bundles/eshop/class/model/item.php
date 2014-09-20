@@ -6,7 +6,7 @@ use Infuso\Core;
 /**
  * Модель товара
  **/
-class Item extends \Infuso\ActiveRecord\Record {
+class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Searchable  {
 
     const STATUS_USER_DISABLED = 1000;
     const STATUS_GROUP_DISABLED = Group::STATUS_USER_DISABLED;
@@ -145,6 +145,10 @@ class Item extends \Infuso\ActiveRecord\Record {
     
     public function _photo() {
         return $this->photos()->one()->pdata("photo");
+    }
+    
+    public function searchContent() {
+        return $this->title();
     }
 
 }

@@ -112,7 +112,7 @@ class Service extends Core\Service {
 	public function virtual($class, $data=array()) {
 
 		if(!is_string($class)) {
-            throw new Exception ("reflex::create() first argument must be string, have ".gettype($class));
+            throw new \Exception ("reflex::create() first argument must be string, have ".gettype($class));
         }
 
         $class = self::getItemClass($class);

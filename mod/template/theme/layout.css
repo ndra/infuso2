@@ -32,6 +32,7 @@ h1 {
     
     > tbody > tr > .center  {
         width:100%;
+        padding: 20px 0;
     }
     
     > tbody > tr > td.right > div {
