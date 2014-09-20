@@ -28,6 +28,11 @@ class Item extends Core\Behaviour {
                     "type" => "string",
                     "editable" => 2,
                     "label" => "Ключ 1С",
+                ), array(
+                    "name" => "importCycle",
+                    "type" => "string",
+                    "editable" => 2,
+                    "label" => "Цикл импорта",
                 ),
             ),
         );

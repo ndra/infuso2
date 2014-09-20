@@ -7,9 +7,17 @@ mod.init(".doa3wGMQ2r", function() {
     var mode = "import";
     
     $begin.click(function() {
-        mode = "import";
-        step();
+        start();
     });
+    
+    var start = function() {
+        mod.call({
+            cmd: "infuso/eshop1c/controller/import/start"    
+        }, function(data) {
+            mode = "import";
+            step();
+        });        
+    }
     
     var step = function() {
     

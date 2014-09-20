@@ -88,8 +88,8 @@ class Utils extends Core\Component {
      * Используется через роутер
      **/
     private static function newImportCycle() {
-        file::mkdir("/eshop/system/");
-        file::get("/eshop/system/import.txt")->put(util::id());
+        $file = Core\File::get(Controller\Exchange::exchangeDir()."/cycle.txt");
+        $file->put(\util::id());
     }
 
     /**
@@ -104,7 +104,7 @@ class Utils extends Core\Component {
      **/
     public static function importCycle() {
         if(!self::$importCycle) {
-            self::$importCycle = Core\File::get("/eshop/system/import.txt")->data();
+            self::$importCycle = Core\File::get(Controller\Exchange::exchangeDir()."/cycle.txt")->data();
         }
         return self::$importCycle;
     }
@@ -114,16 +114,19 @@ class Utils extends Core\Component {
      * Скрывает все элементы, которые не затронул импорт
      **/
     public static function importComplete() {
-        reflex::storeAll();
+    
+        service("ar")->storeAll();
         
         // Прячем все товары, которые не были импортированы
-        eshop_item::allEvenHidden()->neq("importCycle",self::importCycle())->neq("skipImportSys",1)->data("active",0)->data("activeSys",0);
+        \Infuso\Eshop\Model\Item::all()
+            ->neq("importCycle", self::importCycle())
+            ->data("active", 0);
         
         // Прячем все группы, которые не были импортированы
-        eshop_group::allEvenHidden()->neq("importCycle",self::importCycle())->neq("skipImportSys",1)->data("active",0);
+        \Infuso\Eshop\Model\Group::all()
+            ->neq("importCycle",self::importCycle())
+            ->data("active", 0);
         
-        // Прячем всех вендоров, которые не были импортированы
-        eshop_vendor::allEvenHidden()->neq("importCycle",self::importCycle())->data("active",0);
     }
 
 }

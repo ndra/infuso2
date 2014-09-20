@@ -39,7 +39,7 @@ class Import extends Core\Controller {
 	public static function post_offersXML($p) {
 	    $done = Exchange::importOffers();
 	    if($done) {
-	        Urils::importComplete();
+	        Eshop1C\Utils::importComplete();
         }
 	    return array(
 	        "done" => $done,
@@ -48,8 +48,8 @@ class Import extends Core\Controller {
 	}
 
 	public static function post_start($p) {
-	    eshop_1c_exchange::from(0);
-	    eshop_1c_utils::importBegin();
+	    Exchange::from(0);
+	    Eshop1C\Utils::importBegin();
 	}
 
 }

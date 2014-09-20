@@ -164,13 +164,13 @@ class Exchange extends Core\Controller {
 
         // Выгружаем заказы за последние 90 дней
         $days = 90;
-        $orders = eshop_order::all()->neq("status",0)->eq("1CExportCompleted",0)->limit(20);
+        /*$orders = eshop_order::all()->neq("status",0)->eq("1CExportCompleted",0)->limit(20);
 
         foreach($orders as $order) {
             $document = $parent->addChild("Документ");
             $order->export1CXML($document);
             $order->data("1CExportCompleted",true);
-        }
+        } */
 
         return $xml;
     }

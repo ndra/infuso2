@@ -14,14 +14,7 @@ class Group extends Core\Behaviour {
     }
     
     public function model() {
-        return array(
-            "fields" => array(
-                array(
-                    "name" => "importKey",
-                    "type" => "string",
-                ),
-            ),
-        );
+        return Item::model();
     }
     
 	/**
