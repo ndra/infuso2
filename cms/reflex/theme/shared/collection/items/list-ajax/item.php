@@ -9,7 +9,7 @@
 					echo $editor->title();
 				</a>
 			</td>
-		<tr>
+		</tr>
 	</table>
                     
 </div>
