@@ -1,3 +1,10 @@
 .c6qy5izk5s {
     padding:5px 10px;
+	
+	.sort-handle {
+        width: 30px;
+        .icon16("sort");
+        opacity: .3;
+        cursor: pointer;
+    }
 }
