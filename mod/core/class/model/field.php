@@ -324,9 +324,15 @@ abstract class Field extends Core\Component {
             return false;
         }
 
-        $checkEmail = $this->param("checkEmail");
+        $checkEmail = $this->param("email");
         if($checkEmail && !preg_match("/^[\S]+@[\S]+\.[\S]+$/",$val)){
             return false;
+        }
+
+        $method = $this->param("method");
+        $model = $this->model();
+        if($method && method_exists($model,$method)){
+            return $this->model()->$method();
         }
 
         return true;
