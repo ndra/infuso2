@@ -33,7 +33,7 @@ class Theme extends Core\Controller {
      * Возвращает html списка шаблонов (для дерева)
      **/
 	public function post_list($p) {
-        $template = self::getTheme($p["theme"])->template($p["path"]);
+        $template = self::getTheme($p["theme"])->template($p["id"]);
         return app()->tm("/bundlemanager/theme-right/nodes")
             ->param("template", $template)
             ->getContentForAjax();

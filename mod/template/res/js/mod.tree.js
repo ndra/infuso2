@@ -13,8 +13,7 @@ jQuery.fn.tree = function(params) {
         return $("xxx");
     }
     
-    // Клик по плюсику - разворачиваем / сворачиваем
-    
+    // Клик по плюсику - разворачиваем / сворачиваем    
     $tree.click(function(e) {
         $expander = $(e.target).filter(".expander");
         if($expander.length) {
@@ -43,13 +42,18 @@ jQuery.fn.tree = function(params) {
     $tree.on("refresh", function(event) {
         event.stopPropagation();
         $node = node(event.target);
-        var theme = $node.attr("data:theme");
-        var path = $node.attr("data:id");
-        mod.call({
-            cmd: "infuso/cms/bundlemanager/controller/theme/list",
-            theme: theme,
-            path: path
-        }, function(html) {
+
+        var loader = mod.deepCopy(params.loader);
+        
+        var data = {};
+        var attr = $node.get(0).attributes;
+        for(var i = 0; i < attr.length; i++) {
+            if(attr[i].nodeName.match(/^data\:/)) {
+                loader[attr[i].name.replace(/^data\:/, "")] = attr[i].value;
+            }
+        }
+        
+        mod.call(loader, function(html) {
             $node.find(" > .subdivisions").html(html);
         });
     });

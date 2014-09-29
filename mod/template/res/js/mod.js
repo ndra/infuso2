@@ -238,3 +238,32 @@ mod.init(document,function() {
     });
 });
 
+/**
+ * Делает копию переданного объекта рекурсивно
+ **/ 
+mod.deepCopy = function(obj) {
+
+    if(obj instanceof Array) {
+        var clone = [];
+    } else {
+        var clone = {};
+    }
+    
+    for(var i in obj) {
+        if(typeof(obj[i])=="object") { 
+            // Простые объекты (массивы) мы клонируем
+            if(obj[i] && (obj[i].constructor==({}).constructor || obj[i].constructor==([]).constructor )) {        
+                clone[i] = inx.deepCopy(obj[i]);     
+            }            
+            //  Объекты с прототипами (Объекты jquery, inx :) и т.п. - оставляем как есть)       
+            else {
+                clone[i] = obj[i];
+            } 
+        } else {
+            clone[i] = obj[i];
+        }
+    }
+    return clone;
+
+}
+

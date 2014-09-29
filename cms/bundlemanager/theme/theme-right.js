@@ -3,7 +3,11 @@ mod.init(".mwf8wqyh3i", function() {
     var $container = $(this);
     var $toolbar = $(this).find(".toolbar");
     
-    $container.tree();
+    $container.tree({
+        loader: {
+            cmd: "infuso/cms/bundlemanager/controller/theme/list"
+        }
+    });
         
     $container.list({
         selechHandle: ".body"

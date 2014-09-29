@@ -4,7 +4,7 @@
 
     <div class='toolbar' >
     
-        $w = widget("infuso\\cms\\ui\\widgets\\button")
+        /*$w = widget("infuso\\cms\\ui\\widgets\\button")
             ->icon("plus")
             ->air()
             ->addClass(".refresh")
@@ -20,7 +20,7 @@
             ->icon("refresh")
             ->air()
             ->addClass(".refresh")
-            ->exec();
+            ->exec(); */
     </div>
 
     <div class='files' >
