@@ -40,7 +40,7 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 	/**
 	 * url => action
 	 **/
-	public function urlToAction($url) {
+	public function urlToAction($url) {   
 
         // Пытаемся найти роут прямым запросом в базу
         

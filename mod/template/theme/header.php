@@ -6,17 +6,17 @@
         <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
         
         // Добавляем <title>
-        $title = e(param("head/title"));
+        $title = e(app()->tm()->param("head/title"));
         head("<title>{$title}</title>");
         
         // Добавляем noindex
-        if(param("head/noindex")) {
+        if(app()->tm()->param("head/noindex")) {
             head("<meta name='ROBOTS' content='NOINDEX,NOFOLLOW' >");
         }
         
-        // Добавляем noindex
-        if(param("head/insert")) {
-            head(tmp::param("head/insert"));
+        // Добавляем хэд
+        if(app()->tm()->param("head/insert")) {
+            head(app()->tm()->param("head/insert"));
         }
         
         echo \tmp_delayed::add(array(

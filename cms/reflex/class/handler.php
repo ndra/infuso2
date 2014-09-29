@@ -93,7 +93,7 @@ class Handler extends Core\Component implements Core\Handler {
     /**
      * @handler = infuso/beforeActionSYS
      **/         
-    public function addMeta() {
+    public function addMeta() {   
         $ar = app()->action()->ar();
         list($class,$id) = explode("/",$ar);
         $record = service("ar")->get($class,$id);
