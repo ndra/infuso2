@@ -54,7 +54,7 @@ class Exchange extends Core\Controller {
             return;
         }
 
-        if($user!=$_user || $password!=$_password) {
+        if($user!=$_user || $password != $_password) {
             service("log")->log(array(
 				"message" => "Логин и пароль, переданные 1С ($user:$password) не совпадают с указанными в настройках сайта ($_user:$_password).",
 				"type" => "1c/exchange"
@@ -63,7 +63,7 @@ class Exchange extends Core\Controller {
         }
 
         service("log")->log(array(
-			"message" => $cmd,
+			"message" => $cmd." ".var_export($_GET,1)." ".Eshop1C\Utils::importCycle(),
 			"type" => "1c/exchange"
 		));
 		
@@ -104,17 +104,16 @@ class Exchange extends Core\Controller {
                 if(preg_match("/import/",$filename)) {    
                     if(self::importCatalog($filename)) {
                         echo "success";
-                        die();
+                        return;
                     } else {
                         echo "progress\n";
                         echo self::from();
-                        die();
+                        return;
                     }
                 }
 
                 if(preg_match("/offers/",$filename)) {
-                    if(self::importOffers($filename)) {
-
+                    if(self::importOffers($filename)) { 
                         if($filename == Core\File::get("{$dir}/last-import-file.txt")->data()) {
                             Eshop1C\Utils::importComplete();
                             service("log")->log(array(
@@ -122,13 +121,12 @@ class Exchange extends Core\Controller {
                     			"type" => "1c/exchange"
                     		));
                         }
-
                         echo "success";
-                        die();
+                        return;
                     } else {
                         echo "progress\n";
                         echo self::from();
-                        die();
+                        return;
                     }
                 }
 
