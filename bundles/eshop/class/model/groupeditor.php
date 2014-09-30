@@ -30,13 +30,21 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 	}
 	
 	/**
-	 * @reflex-child = on
+	 * Этот метод сделан для того, чтобы можно было переопределить items() поведением     
 	 **/
-	public function items() {
+	public function _items() {
 		return $this->item()
             ->items()
             ->param("sort", true)
 			->param("title","Товары");
+	}
+
+	/**
+	 * @reflex-child = on
+	 * Этот метод сделан для того, чтобы можно было переопределить items() поведением     
+	 **/	
+	public function xitems() {
+	    return $this->items();
 	}
 	
 	public function _layout() {
