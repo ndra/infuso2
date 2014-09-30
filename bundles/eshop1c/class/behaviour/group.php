@@ -31,6 +31,8 @@ class Group extends Core\Behaviour {
         if($parentXML) {
             $parent = $this->processCatalogXML($parentXML,$xml);
             $group["parent"] = $parent->id();
+        } else {
+            $group["parent"] = 0;
         }
         
         return Eshop1C\Utils::importGroup($group);
