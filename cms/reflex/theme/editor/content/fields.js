@@ -1,41 +1,37 @@
-$(function() {
+mod.init(".svfo38b38d", function() {
+    
+    var $form = $(this);
 
-    $(".svfo38b38d").each(function() {
+    //  Сохраняет данные формы
+    var submit = function() {
     
-        var form = $(this);
-    
-        //  Сохраняет данные формы
-        var submit = function() {
-        
-            // Собираем данные формы
-            var serialized = form.serializeArray();
-            var formData = {};
-            for(var i in serialized) {
-                formData[serialized[i].name] = serialized[i].value;
-            }
-            
-            // Отправляем на сервер команду сохранения
-            mod.call({
-                cmd:"infuso/cms/reflex/controller/save",
-                index:form.attr("infuso:id"),
-                data:formData
-            });
-            
+        // Собираем данные формы
+        var serialized = $form.serializeArray();
+        var formData = {};
+        for(var i in serialized) {
+            formData[serialized[i].name] = serialized[i].value;
         }
-    
-        $(this).submit(function(e) {
-            // Предотвращаем отправку формы
-            e.preventDefault();
-            submit();
+        
+        // Отправляем на сервер команду сохранения
+        mod.call({
+            cmd: "infuso/cms/reflex/controller/save",
+            index: $form.attr("infuso:id"),
+            data: formData
         });
         
-        $(form).mod("on", "keydown", function(e) {
-            if(e.keyCode == 83 && e.ctrlKey) {
-                e.preventDefault();
-                submit();
-            }
-        });
+    }
+
+    $form.submit(function(event) {
+        // Предотвращаем отправку формы
+        event.preventDefault();
+        submit();
+    });
     
+    mod.on("keydown", function(event) {
+        if(event.keyCode == 83 && event.ctrlKey) {
+            event.preventDefault();
+            submit();
+        }
     });
 
 })
