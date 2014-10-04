@@ -114,6 +114,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
     
         $last = service("log")
             ->all()
+            ->eq("type", "cron")
             ->desc("datetime")
             ->one();
         
