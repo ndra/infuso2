@@ -1,7 +1,7 @@
 <? 
 
 header();
-tmp::reset();
+lib::reset();
 modjs();
 
 lib::modJSUI();
@@ -15,7 +15,7 @@ exec("menu");
                 region("center");
             </div>
         </td>
-        if(tmp::block("right")->count()) {
+        if(app()->tm()->block("right")->count()) {
             <td class='right' >
                 <div style='height:100%;overflow:auto;' > 
                     region("right");

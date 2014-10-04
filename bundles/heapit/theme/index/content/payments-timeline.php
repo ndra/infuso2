@@ -25,8 +25,10 @@ $days = cal_days_in_month(CAL_GREGORIAN, $month, $year); // 31
         
         <div class='day' >
         
-            <div class='income' style='height:{$income / $max * $height}px;' ></div>
-            <div class='expenditure' style='height:{$expenditure / $max * $height}px;' ></div>
+            if($max) {
+                <div class='income' style='height:{$income / $max * $height}px;' ></div>
+                <div class='expenditure' style='height:{$expenditure / $max * $height}px;' ></div>
+            }
             <div class='number' >{$day}</div>
         
         </div>

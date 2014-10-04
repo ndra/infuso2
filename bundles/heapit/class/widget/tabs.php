@@ -15,6 +15,10 @@ class Tabs extends Widget {
         return "Табы";
     }
     
+    public function alias() {
+        return "tabs";
+    }
+    
     public function tab($name) {
         $this->closeTab();
         $this->tabName = $name;
@@ -35,7 +39,7 @@ class Tabs extends Widget {
 	public function execWidget() {
 	    $this->closeTab();
 	    $this->param("tabs", $this->tabs);
-        \tmp::exec("/heapit/widgets/tabs", $this->params());
+        app()->tm("/heapit/widgets/tabs")->params($this->params())->exec();
     }
 
 }

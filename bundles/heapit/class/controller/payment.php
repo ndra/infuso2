@@ -130,7 +130,7 @@ class Payment extends Base {
         // Учитываем поиск
         $payments->search($p["search"]);
 
-        $ret = \tmp::get("/heapit/shared/payment-list/ajax")
+        $ret = app()->tm("/heapit/shared/payment-list/ajax")
             ->param("payments", $payments)
             ->getContentForAjax();
 

@@ -1,5 +1,5 @@
 <?
-tmp::jq();
+lib::jq();
 \Infuso\Template\Lib::jqui(); 
 
 exec("../../shared");

@@ -20,6 +20,8 @@ class UserChooser extends Widget {
     }
      
     public function execWidget() {
-        \tmp::exec("/heapit/widgets/userchooser",$this->params());          
+        app()->tm("/heapit/widgets/userchooser")
+            ->params($this->params())
+            ->exec();          
     }    
 }

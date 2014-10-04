@@ -39,7 +39,7 @@ class Comments extends Base {
         // Учитываем поиск
         $comments->search($p["search"]);
 
-        $ret = \tmp::get("/heapit/comments/ajax")
+        $ret = app()->tm("/heapit/comments/ajax")
             ->param("comments", $comments)
             ->getContentForAjax();
 

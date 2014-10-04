@@ -56,7 +56,7 @@
         } else {    
             $h = helper("<a class='item' href='{$item[url]}' >");
             $h->param("content", $item["title"]);
-            if(tmp::param("main-menu") == $item["code"]) {
+            if(param("main-menu") == $item["code"]) {
                 $h->addClass("active");
             }
             
