@@ -449,10 +449,15 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
      * Записывает сообщение в лог
      **/
     public function trace($message, $type = null) {
-        $this->fire("infuso/trace", array(
-            "message" => $message,
-            "type" => $type,
-        ));
+    
+        if(!is_array($message)) {
+            $message = array(
+                "message" => $message,
+                "type" => $type,
+            );
+        }
+    
+        $this->fire("infuso/trace", $message);
     }
     
     public function fire($event, $params = array()) {

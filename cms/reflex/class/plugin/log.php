@@ -18,10 +18,16 @@ class Log extends \Infuso\Core\Component {
     }
 
     public function log($message) {
-        service("ar")->create("infuso\\cms\\log\\log", array(
-            "message" => $message,
-            "index" => get_class($this->component()).":".$this->component()->id(),
-        ));
+    
+        if(!is_array($message)) {
+            $message = array(
+                "message" => $message,
+            );
+        }
+        
+        $message["index"] = get_class($this->component()).":".$this->component()->id();
+    
+        app()->trace($message);
     }
 
     public function all() {
