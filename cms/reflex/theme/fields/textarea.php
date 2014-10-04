@@ -13,11 +13,13 @@
     
     $w->exec();
     
-    <div class='toolbar' >
-        <span class='bold' ><b>Жирный</b></span> 
-        <span class='italic' ><i>Наклонный</i></span> 
-        <span class='image' >Изображение</span> 
-        <span class='file' >Файл</span> 
-    </div>
+    if($field->editable()) {
+        <div class='toolbar' >
+            <span class='bold' ><b>Жирный</b></span> 
+            <span class='italic' ><i>Наклонный</i></span> 
+            <span class='image' >Изображение</span> 
+            <span class='file' >Файл</span> 
+        </div>
+    }
 
 </div>
