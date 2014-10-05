@@ -103,6 +103,15 @@
             </td>
         </tr> 
         <tr>
+            <td><label>Ответственный</label></td>
+            <td>
+                $w = new \Infuso\Heapit\Widget\UserChooser;
+                $w->fieldName("userId");
+                $w->value($payment->data("userId"));
+                $w->exec();
+            </td>
+        </tr>
+        <tr>
             <td></td>
             <td>
                 <br/>

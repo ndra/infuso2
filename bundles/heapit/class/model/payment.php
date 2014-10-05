@@ -58,6 +58,12 @@ class Payment extends \Infuso\ActiveRecord\Record {
                     'editable' => '1',
                     'label' => 'Статья доходов / расходов',
                     'class' => PaymentGroup::inspector()->className(),
+                ), array(
+                    'name' => 'userId',
+                    'type' => 'link',
+                    'editable' => '1',
+                    'label' => 'Ответственный',
+                    'class' => \user::inspector()->className(),
                 ),
              ),
         );

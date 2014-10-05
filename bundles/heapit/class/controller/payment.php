@@ -20,14 +20,15 @@ class Payment extends Base {
     }
     
     /**
-     * Создает сделки
+     * Создает платеж
      **/
     public static function post_new($p) {
 
-        if(!$p["data"]["orgId"]) {
+        // Ради эксперимента разрешим делать платежи без указания контрагента
+        /*if(!$p["data"]["orgId"]) {
             app()->msg("id контранета не указано",1);
             return false;
-        }
+        }*/
 
         $amount = (int) $p["data"]["amount"];
 
@@ -54,6 +55,7 @@ class Payment extends Base {
         $data["date"] = $p["data"]["date"];
         $data["group"] = $p["data"]["group"];
         $data["status"] = $p["data"]["status"];
+        $data["userId"] = $p["data"]["userId"];
         
         $payment = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Payment", $data);
         return $payment->url();
