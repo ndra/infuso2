@@ -1,0 +1,11 @@
+.u8fWiE6rDe {
+    
+    padding: 5px;
+    color: white;
+    background: green;
+    
+    span, a {
+        margin-right:5px;
+        color: white;
+    }
+}

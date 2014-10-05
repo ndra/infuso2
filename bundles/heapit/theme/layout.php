@@ -6,8 +6,12 @@ modjs();
 
 lib::modJSUI();
 
+exec("/heapit/shared/user-bar", array(
+    "user" => app()->user(),
+));
+
 exec("menu");
-   
+
 <table class='layout-slpod3n5sa' >
     <tr>
         <td class='left' >

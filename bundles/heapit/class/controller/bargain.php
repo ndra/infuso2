@@ -7,18 +7,19 @@ use \Infuso\Heapit\Model;
 class Bargain extends Base {
 
     public function index() {
-        $this->app()->tm()->exec("/heapit/bargain-list");
+        app()->tm("/heapit/bargain-list")->exec();
     }
     
     public function index_add() {
-        $this->app()->tm()->exec("/heapit/bargain-new");
+        app()->tm("/heapit/bargain-new")->exec();
     }
     
     /**
      * Создает сделки
      **/
     public static function post_new($p) {
-        $bargain = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Bargain", $p["data"]);
+        $bargain = Core\Mod::service("ar")
+            ->create("Infuso\\Heapit\\Model\\Bargain", $p["data"]);
         return $bargain->url();
     }
     
@@ -38,7 +39,7 @@ class Bargain extends Base {
 
         $bargains = \Infuso\Heapit\Model\Bargain::all();
         $bargains->page($p["page"]);
-        $bargains->asc("statusPriority");
+        $bargains->orderByExpr("status not in (0, 200, 500)");
         $bargains->asc("callTime", true);
 
         // Учитываем поиск
@@ -52,7 +53,7 @@ class Bargain extends Base {
             $bargains->eq("status", $p["status"]);
         }
 
-        $ret = \tmp::get("/heapit/bargain-list/content/ajax")
+        $ret = app()->tm("/heapit/bargain-list/content/ajax")
             ->param("bargains", $bargains)
             ->getContentForAjax();
 
