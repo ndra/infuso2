@@ -35,6 +35,11 @@
             "code" => "payment-add",
             "newtab" => true,
         ), array (
+            "url" => (string) action("infuso\\heapit\\controller\\payment", "add", array("expend" => 1)),
+            "title" => "-",
+            "code" => "payment-add",
+            "newtab" => true,
+        ), array (
             "spacer" => true,
         ), array (
             "url" => (string) action("infuso\\heapit\\controller\\report"),

@@ -11,9 +11,17 @@ class Payment extends Base {
     }
     
     public function index_add($p) {    
+    
         $copy = new Model\Payment();
         $copy->setData(Model\Payment::get($p["copy"])->data());
         $copy->data("date",\util::now());
+        if(!$p["copy"]) {
+            $copy->data("userId",app()->user()->id());
+        }         
+        if($p["expend"]) {
+            $copy->data("expenditure", 1);
+        }
+        
         $this->app()->tm()->exec("/heapit/payment-new", array(
             "paymentToCopy" => $copy,
         ));
@@ -64,11 +72,6 @@ class Payment extends Base {
     // Вносит изменения в карточку
     public static function post_save($p) {
 
-        if(!$p["data"]["orgId"]) {
-            app()->msg("id контранета не указано",1);
-            return false;
-        }
-        
         if(!$p["paymentId"]){
             app()->msg("id платежа не указано",1);
             return false;    
@@ -80,6 +83,7 @@ class Payment extends Base {
         $payment->data("date", $p["data"]["date"]);
         $payment->data("group", $p["data"]["group"]);
         $payment->data("status", $p["data"]["status"]);    
+        $payment->data("userId", $p["data"]["userId"]);    
         $amount = (int) $p["data"]["amount"];
 
         if(!$amount) {

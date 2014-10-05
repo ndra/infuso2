@@ -31,12 +31,12 @@ class Payment extends \Infuso\ActiveRecord\Record {
                     'label' => 'Описание',
                 ), array(
                     'name' => 'income',
-                    'type' => 'currency',
+                    'type' => 'cost',
                     'editable' => '1',
                     'label' => 'Приход',
                 ), array(
                     'name' => 'expenditure',
-                    'type' => 'currency',
+                    'type' => 'cost',
                     'editable' => '1',
                     'label' => 'Приход',
                 ), array(

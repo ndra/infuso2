@@ -13,6 +13,7 @@
                 <td>Назначение платежа</td>
                 <td>Группа</td>
                 <td>Статус</td>
+                <td></td>
             </tr>
         </thead>
         foreach($payments as $payment) {
@@ -25,6 +26,7 @@
                 <td><a href='{$payment->url()}' target='_blank' >{$payment->data("description")}</a></td>                
                 <td class='group' ><a href='{$payment->url()}' target='_blank' >{$payment->group()->title()}</a></td>
                 <td class="status paymentStatus-{$payment->data(status)}"><a href='{$payment->url()}' target='_blank' >{$payment->pdata("status")}</a></td>
+                <td><img title='{$payment->pdata("userId")->title()}' src='{$payment->pdata("userId")->userpic()->preview(16,16)->crop()}' /></td>
             </tr>
            
         }

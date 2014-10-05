@@ -38,8 +38,4 @@ class Decimal extends Bigint {
 		return $val;
 	}
 
-	public function tableCol() { return array(
-	    width=>50,
-	); }
-
 }
