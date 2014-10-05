@@ -1,7 +1,7 @@
 <?
 
 $w = helper("<div>");
-$w->addClass("u8fWiE6rDe");
+$w->addClass("u8fWiE6rDe user-bar");
 $w->begin();
 
     $url = action("infuso\\heapit\\controller\\bargain");
