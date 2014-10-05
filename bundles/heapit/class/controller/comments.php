@@ -6,14 +6,6 @@ use Infuso\Heapit\Model;
 
 class Comments extends Base {
     
-    public function post_list($p) {
-        $comments = Model\Comment::all()->eq("parent", $p["parent"]);
-        $tmp = \tmp::get("/heapit/comments/ajax");
-        $tmp->param("comments", $comments);
-        return $tmp->getContentForAjax();
-    } 
-    
-    
     public function post_addComment($p) {
         $data = array("text" => $p["text"], "author" => $p["userId"], "parent" => $p["parent"]);
         $item = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Comment", $data);
@@ -23,8 +15,10 @@ class Comments extends Base {
     }   
 
     public function post_get($p) {
-        app()->msg($p);
-        return 12;
+        $comment = Model\Comment::get($p["id"]);
+        return app()->tm("/heapit/comments/editor")
+            ->param("comment", $comment)
+            ->getContentForAjax();
     }
     
     /**
@@ -48,6 +42,12 @@ class Comments extends Base {
             "total" => $comments->pages(),
         );
 
+    }
+    
+    public function post_save($p) {
+        $comment = Model\Comment::get($p["commentId"]);
+        $comment->data("text", $p["data"]["text"]);
+        app()->msg("Комментарий сохранен");
     }
         
 }

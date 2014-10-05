@@ -1,8 +1,17 @@
 .comments-nni5vez0qz {
+    
+    img {
+        display: block;
+    }
+    
     table {
         
+        margin-bottom: 10px;
+        
         td {
-            padding: 5px;
+            
+            padding: 0 5px;
+            vertical-align: middle;
             
             .userName {
                 color: #777;    
@@ -14,5 +23,19 @@
                 margin-left: 10px;    
             }
         }
-    }    
+        
+        &:hover .edit {
+            opacity: 1;
+        }
+        
+    }   
+    
+    .edit {
+        .icon16("edit");
+        width: 16px;
+        height: 16px;
+        opacity: .1;
+        cursor: pointer;
+    }
+    
 }

@@ -1,9 +1,10 @@
 $(function() {
     
+    var $container =  $(".comments-ckvopjhgwq");
+    
     var load = function() {
         var loader = $(".comments-ckvopjhgwq .loader");
         var itemsList = $(".comments-ckvopjhgwq .items");
-        itemsList.html("");
         loader.show();
         var data = {};
         mod.fire("beforeLoadComments", data);
