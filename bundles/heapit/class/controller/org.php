@@ -77,7 +77,7 @@ class Org extends Base {
         $items->eq("deleted",0);
         $items->desc("opened");
 
-        $html = \tmp::get("/heapit/org-list/org-list/ajax")
+        $html = app()->tm("/heapit/org-list/org-list/ajax")
             ->param("orgs", $items)
             ->getContentForAjax();
         
