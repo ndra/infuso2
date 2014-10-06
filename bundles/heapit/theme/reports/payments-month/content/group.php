@@ -35,11 +35,13 @@ if($inverse) {
                 <tbody>
                     <tr>
                         <td class='date' >{$payment->pdata("date")->num()}</td>
+                        $preview = $payment->pdata("userId")->userpic()->preview(16,16)->crop();
+                        <td class='user' ><img src='{$preview}' /></td>
                         <td>
                             <a href='{$payment->url()}' >{$payment->org()->title()}</a>
                             <span class='status' >{$payment->pdata("status")}</span>
                         </td>
-                        <td>{max($payment->data("income"),$payment->data("expenditure"))} р.</td>
+                        <td class='sum' >{max($payment->data("income"),$payment->data("expenditure"))} р.</td>
                     </tr>
                     <tr>
                         <td></td>

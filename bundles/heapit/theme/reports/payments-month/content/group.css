@@ -9,6 +9,10 @@
         }
     }
     
+    img {
+        display: block;
+    }
+    
     &.inverse {
         color: white;
         a {
@@ -52,6 +56,14 @@
         .date {
             font-size:12px;
             opacity:.5;
+        }
+        
+        .sum {
+            white-space: nowrap;
+        }
+        
+        .user {
+            padding-right: 5px;
         }
         
         tbody:hover tr {

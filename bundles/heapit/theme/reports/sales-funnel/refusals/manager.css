@@ -1,0 +1,43 @@
+.obnfaiu50c {
+    
+    display: inline-block;
+    width:300px;
+    white-space: nowrap;
+
+    .row {
+        height: 20px;
+        width: 200px;
+        position: relative;
+        margin-bottom: 1px;
+    }
+    
+    .rowdata {
+        position: absolute;
+        height: 20px;
+        left: 80px;
+        top: 0;
+        white-space: nowrap;
+        font-size: 12px;
+        box-sizing: border-box;
+        padding: 4px;
+    }
+    
+    .sum {
+        position: absolute;
+        left: 40px;
+        top: 4px;
+        font-size: 12px;
+        width:35px;
+        text-align: right;
+    }
+    
+    .count {
+        position: absolute;
+        left: 0;
+        top: 4px;
+        font-size: 12px;
+        width:35px;
+        text-align: right;
+    }
+    
+}
