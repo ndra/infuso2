@@ -5,8 +5,9 @@
     <table>
         <tr>
             <td style='width:50%;padding-right:20px;' >
-                exec("payments-timeline");
+                exec("missed");
                 exec("outstanding-payments");
+                exec("payments-timeline");
             </td>
             <td style='width:50%;padding-left:20px;'>
                 exec("messages");

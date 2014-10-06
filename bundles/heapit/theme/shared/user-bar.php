@@ -65,7 +65,7 @@ if($red) {
 }
 
 if(!$red && !$green) {
-    //$w->style("display", "none");
+    $w->style("display", "none");
 }
 
 $w->end();
