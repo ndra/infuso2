@@ -24,10 +24,10 @@ exec("/ui/shared");
     $data = array();
 
     foreach($payments->copy()->eq("status",200) as $payment) {
-        if((double)$payment->data("income")) {
+        if((double) $payment->data("income")) {
             $data["income"][$payment->data("group")][] = $payment;
         }
-        if((double)$payment->data("expenditure")) {
+        if((double) $payment->data("expenditure")) {
             $data["expenditure"][$payment->data("group")][] = $payment;
         }
     }

@@ -7,7 +7,8 @@ if($inverse) {
 
 <div class='{$class}' style='background:{$bgcolor}' >    
 
-    // Расчитываем и выводим сумму
+    // Расчитываем сумму
+    
     $sum = 0;
     if($payments) {
         foreach($payments as $payment) {
@@ -21,6 +22,17 @@ if($inverse) {
             }
         }
     }
+    
+    // Распределяем платежи по организациям
+    if($payments) {
+        $payments2 = $payments;
+        $payments = array();
+        foreach($payments2 as $payment) {
+            $payments[$payment->org()->id()][] = $payment;
+        }
+    }
+    
+    // Выводим сумму
 
     <table class='header' >
         <tr>
@@ -30,30 +42,42 @@ if($inverse) {
     </table>
     
     if($payments) {
-        <table class='payment' >
-            foreach($payments as $payment) {
-                <tbody>
-                    <tr>
+        <table class='payments' >
+            foreach($payments as $orgId => $orgPayments) {
+                
+                $org = \Infuso\Heapit\Model\Org::get($orgId);
+                
+                $sum = 0;
+                foreach($orgPayments as $payment) {
+                    $sum += max($payment->data("income"),$payment->data("expenditure"));
+                }
+                
+                <tr class='org' >
+                    <td colspan='2' ></td>
+                    <td>
+                        <a href='{$org->url()}' >{$org->title()}</a>
+                    </td>
+                    <td class='sum' >{$sum} р.</td>
+                </tr>
+                
+                foreach($orgPayments as $payment) {
+                    <tr class='payment' >
                         <td class='date' >{$payment->pdata("date")->num()}</td>
                         $preview = $payment->pdata("userId")->userpic()->preview(16,16)->crop();
                         <td class='user' ><img src='{$preview}' /></td>
-                        <td>
-                            <a href='{$payment->url()}' >{$payment->org()->title()}</a>
+                        <td class='description' >
+                            <a href='{$payment->url()}' >{$payment->data("description")}</a>
                             <span class='status' >{$payment->pdata("status")}</span>
                         </td>
-                        <td class='sum' >{max($payment->data("income"),$payment->data("expenditure"))} р.</td>
+                        <td class='sum' >{(int)max($payment->data("income"),$payment->data("expenditure"))} р.</td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td class='description' colspan='2' >{$payment->data("description")}</td>
-                    </tr>
-                </tbody>
+                }
             }
         </table>
     }
     
     if($bargains) {
-        <table class='payment'  >
+        <table class='bargains'  >
             foreach($bargains as $bargain) {
                 $inject = $bargain->data("invoiced") ? "style='text-decoration:line-through;'" : "";
                 <tbody {$inject}>
