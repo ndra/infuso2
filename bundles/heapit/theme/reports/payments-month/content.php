@@ -20,19 +20,19 @@ exec("/ui/shared");
         ->limit(0);
 
     
-    // Сюда юудем складывать данные
+    // Сюда будем складывать данные
     $data = array();
 
     foreach($payments->copy()->eq("status",200) as $payment) {
-        if($payment->data("income")) {
+        if((double)$payment->data("income")) {
             $data["income"][$payment->data("group")][] = $payment;
         }
-        if($payment->data("expenditure")) {
+        if((double)$payment->data("expenditure")) {
             $data["expenditure"][$payment->data("group")][] = $payment;
         }
     }
     
-    // Функциф рендера столбца данных
+    // Функция рендера столбца данных
     
     $fn = function($data) {    
         foreach($data as $groupId => $payments) {        
@@ -42,7 +42,7 @@ exec("/ui/shared");
                 "title" => $group->title(),
                 "payments" => $payments,
                 "inverse" => true,
-            ));            
+            ));        
         }    
     };
     
