@@ -33,53 +33,86 @@
             padding: 10px;
             font-size:24px;
         }
-        
-        .sum {
-            //text-align:right;
-        }
     
     }
     
-    .payment {
+    .bargains {
+        
         width:100%;
         
-        td {
-            padding: 5px 10px 3px 10px;
-        }
-        
-        .description {
-            font-size:12px;
-            opacity:.5;
-            padding-top:0;
-        }
-        
-        .date {
-            font-size:12px;
-            opacity:.5;
-        }
-        
-        .sum {
-            white-space: nowrap;
-        }
-        
-        .user {
-            padding-right: 5px;
-        }
-        
-        tbody:hover tr {
+        tr:hover {
             background: rgba(0,0,0,.2);
         }
         
-        tbody:last-child tr:last-child td {
-            padding-bottom: 20px;
+        td {
+            padding: 5px 10px 3px 10px;
+            vertical-align: middle;
+        }
+        
+        .description {
+            padding-top: 0;
+            font-size: 12px;
+            opacity: .7;
+            opacity:.7;
         }
         
         .status {
             font-size:11px;
             margin-left: 10px;
-            opacity:.5;
             font-style:italic;
         }
+        
     }
-
+    
+    .payments {
+        
+        width:100%;
+        
+        tr:hover {
+            background: rgba(0,0,0,.2);
+        }
+        
+        td {
+            padding: 2px 10px 2px 10px;
+            vertical-align: middle;
+        }
+        
+        .org {
+            .sum {
+                font-weight: bold;
+            }
+        }
+    
+        .payment {
+            
+            font-size:12px;
+            
+            .description {
+                opacity:.7;
+            }
+            
+            .date {
+                opacity:.5;
+            }
+            
+            .sum {
+                white-space: nowrap;
+                opacity: .7;
+            }
+            
+            .user {
+                padding-right: 5px;
+            }
+            
+            tbody:last-child tr:last-child td {
+                padding-bottom: 20px;
+            }
+            
+            .status {
+                font-size:11px;
+                margin-left: 10px;
+                font-style:italic;
+            }
+        }
+    }
 }
