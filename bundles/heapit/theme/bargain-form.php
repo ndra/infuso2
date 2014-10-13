@@ -92,25 +92,28 @@
                 </select>
             </td>
         </tr>
-        <tr>
-            <td><label>Когда связаться</label></td>
-            <td>
-            
-                $w = new \Infuso\Cms\UI\Widgets\Datepicker;
-                $w->fieldName("callTime");
+        
+        if(!$bargain->exists()) {
+            <tr>
+                <td><label>Когда связаться</label></td>
+                <td>
                 
-                $w->fastDayShifts(array(
-                    \util::now()->stamp() => "Сегодня",
-                    \util::now()->shiftDay(1)->stamp() => "Завтра",
-                    \util::date(strtotime("monday"))->stamp() => "В понедельник",
-                    \util::now()->shiftDay(14)->stamp() => "Через две недели",
-                ));
-                
-                $w->clearButton();
-                $w->value($bargain->data("callTime"));
-                $w->exec();
-            </td>
-        </tr>
+                    $w = new \Infuso\Cms\UI\Widgets\Datepicker;
+                    $w->fieldName("callTime");
+                    
+                    $w->fastDayShifts(array(
+                        \util::now()->stamp() => "Сегодня",
+                        \util::now()->shiftDay(1)->stamp() => "Завтра",
+                        \util::date(strtotime("monday"))->stamp() => "В понедельник",
+                        \util::now()->shiftDay(14)->stamp() => "Через две недели",
+                    ));
+                    
+                    $w->clearButton();
+                    $w->value($bargain->data("callTime"));
+                    $w->exec();
+                </td>
+            </tr>
+        }
         <tr >
             <td><label>Ответственный</label></td>
             <td>

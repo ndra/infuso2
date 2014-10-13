@@ -33,6 +33,42 @@ class Bargain extends Base {
     }
     
     /**
+     * Изменяет дату созвона
+     **/
+    public function post_updateCallTime($p) {
+        $callTime = $p["data"]["callTime"];
+        $comment = trim($p["data"]["comment"]);
+        
+        if(\util::str($comment)->length() < 3) {
+            app()->msg("Укажите причину переноса даты", 1);
+			return false;
+        }
+        
+        $bargain = Model\Bargain::get($p["bargainId"]);
+        if(!$bargain->exists()) {
+			app()->msg("Несуществующая сделка, обратитесь к программистам.", 1);
+			return false;
+        }
+        
+		$bargain->data("callTime", $callTime);
+		$bargain->comments()->create(array(
+		    "text" => "Связаться ".(\util::date($callTime)->date()->text())." Причина: $comment",
+		));
+		return true;
+        
+    }
+    
+    /**
+     * Изменяет дату созвона
+     **/
+    public function post_callTimeContent($p) {
+        $bargain = Model\Bargain::get($p["bargainId"]);
+		return app()->tm("/heapit/bargain/content/contact/editor")
+		    ->param("bargain", $bargain)
+		    ->getContentForAjax();
+    }
+
+    /**
      * Возвращает html-код списка сделок
      **/
     public function post_search($p) {

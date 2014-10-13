@@ -15,7 +15,6 @@ class Button extends \Infuso\Template\Helper {
     * Рендер виджета
     **/
     public function execWidget() {
-
         app()->tm("/ui/widgets/button")
             ->param("widget", $this)
             ->exec();
@@ -34,6 +33,11 @@ class Button extends \Infuso\Template\Helper {
     
     public function air() {
         $this->param("air", true);
+        return $this;
+    }
+    
+    public function submit() {
+        $this->attr("type", "submit");
         return $this;
     }
     
