@@ -7,7 +7,11 @@ use Infuso\Heapit\Model;
 class Comments extends Base {
     
     public function post_addComment($p) {
-        $data = array("text" => $p["text"], "author" => $p["userId"], "parent" => $p["parent"]);
+        $data = array(
+			"text" => $p["text"],
+			"author" => $p["userId"],
+			"parent" => $p["parent"],
+		);
         $item = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Comment", $data);
         if($item->exists()){
             return true;     

@@ -53,6 +53,7 @@ class Bargain extends Base {
 		$bargain->data("callTime", $callTime);
 		$bargain->comments()->create(array(
 		    "text" => "Связаться ".(\util::date($callTime)->date()->text())." Причина: $comment",
+		    "author" => app()->user()->id(),
 		));
 		return true;
         
