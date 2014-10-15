@@ -15,10 +15,10 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
 		);
 	}
 	
-	public function confDescription() {
+	public static function confDescription() {
 	    return array(
 	        "components" => array(
-	            get_called_class() => array(
+	            get_class() => array(
 	                "params" => array(
 	                    "minDelay" => "Минимальная задержка между вызовами",
 	                    "delayMultiplier" => "На сколько секунд увеличивать задержку при увеличении времени запуска на 1 секунду",

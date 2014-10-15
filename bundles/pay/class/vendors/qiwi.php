@@ -95,7 +95,7 @@ class pay_vendors_qiwi extends pay_vendors {
         );
     }
     
-	public function confDescription() {
+	public static function confDescription() {
 	    return array(
 	        "components" => array(
 	            get_called_class() => array(

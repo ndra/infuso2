@@ -66,10 +66,10 @@ class file_preview extends mod_component {
         );
     }
 
-	public function confDescription() {
+	public static function confDescription() {
 	    return array(
 	        "components" => array(
-	            "file_preview" => array(
+	            get_class() => array(
 	                "params" => array(
 	                    "maxWidth" => "Максимальная ширина превьюшки",
 	                    "maxHeight" => "Максимальная высота превьюшки",

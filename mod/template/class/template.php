@@ -58,10 +58,10 @@ class Template extends Generic {
         return $this->templateProcessor;
     }
     
-	public function confDescription() {
+	public static function confDescription() {
 	    return array(
 	        "components" => array(
-	            get_called_class() => array(
+	            strtolower(get_class()) => array(
                     "cache" => "[yaml]Кэшировать эти шаблоны",
                     "delayed" => "[yaml]Вызвать в отложенных функциях",
 				),

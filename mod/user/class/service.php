@@ -15,10 +15,10 @@ class Service extends Core\Service {
         );
     }
 
-	public function confDescription() {
+	public static function confDescription() {
 	    return array(
 	        "components" => array(
-	            get_called_class() => array(
+	            strtolower(get_class()) => array(
 	                "params" => array(
 	                    "deleteUnverfiedUserDays" => "Через сколько дней удалять пользователей, не подтвердивших почту",
 					),

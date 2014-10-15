@@ -1,21 +1,35 @@
 <?
 
-namespace infuso\dao;  
+namespace Infuso\Dao;  
 use Infuso\Core;
 
 class Connection extends Core\Service {
 
 	/**
-	 * Îáúåêò êëàññà PDO, ñîçäàþùèéñÿ ïðè ñîåäíèåíèè
+	 * ÐžÐ±ÑŠÐµÐºÑ‚ ÐºÐ»Ð°ÑÑÐ° PDO, ÑÐ¾Ð·Ð´Ð°ÑŽÑ‰Ð¸Ð¹ÑÑ Ð¿Ñ€Ð¸ ÑÐ¾ÐµÐ´Ð½Ð¸ÐµÐ½Ð¸Ð¸
 	 **/
 	private $dbh;
 	
 	/**
-	 * Ôëàã òîãî, ÷òî ñîåäèíåíèå ñ ÁÄ óñòàíîâëåíî
+	 * Ð¤Ð»Ð°Ð³ Ñ‚Ð¾Ð³Ð¾, Ñ‡Ñ‚Ð¾ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ñ Ð‘Ð” ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¾
 	 **/
 	private $connected = false;
 	
 	private static $connection;
+    
+    public static function confDescription() {
+        return array(
+            "components" => array(
+                strtolower(get_class()) => array(
+                    "params" => array(
+                        "dsn" => "dsn",
+                        "user" => "user",
+                        "password" => "password",
+    				),
+    			),
+    		),
+    	);
+    }
 	
 	public static function serviceFactory() {
 	    if(!self::$connection) {
@@ -33,7 +47,7 @@ class Connection extends Core\Service {
 	}
 	
 	/**
-	 * Óñòàíàâëèâàåò ñîåäèíåíèå ñ áàçîé äàííûõ
+	 * Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÑ‚ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ñ Ð±Ð°Ð·Ð¾Ð¹ Ð´Ð°Ð½Ð½Ñ‹Ñ…
 	 **/
 	public function connect() {
 	
@@ -48,7 +62,7 @@ class Connection extends Core\Service {
 		
 	    $this->dbh = new \PDO($dsn, $user, $password);
 	    
-	    // Óñòàíàâëèâàåì êîäèðîâêó
+	    // Ð£ÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ ÐºÐ¾Ð´Ð¸Ñ€Ð¾Ð²ÐºÑƒ
 	    $this->dbh->exec("set names utf8");
 	}
 	
@@ -65,8 +79,8 @@ class Connection extends Core\Service {
 	}
 	
 	/**
-	 * Ñîçäàåò ñîåäèíåíèå (åñëè îíî åùå íå áûëî ñîçäàíî)
-	 * Âîçâðàùàåò îáúåêò êëàññà PDO, ñîçäàþùèéñÿ ïðè ñîåäíèåíèè
+	 * Ð¡Ð¾Ð·Ð´Ð°ÐµÑ‚ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ (ÐµÑÐ»Ð¸ Ð¾Ð½Ð¾ ÐµÑ‰Ðµ Ð½Ðµ Ð±Ñ‹Ð»Ð¾ ÑÐ¾Ð·Ð´Ð°Ð½Ð¾)
+	 * Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ð¾Ð±ÑŠÐµÐºÑ‚ ÐºÐ»Ð°ÑÑÐ° PDO, ÑÐ¾Ð·Ð´Ð°ÑŽÑ‰Ð¸Ð¹ÑÑ Ð¿Ñ€Ð¸ ÑÐ¾ÐµÐ´Ð½Ð¸ÐµÐ½Ð¸Ð¸
 	 **/
 	public function dbh() {
 	    $this->connect();

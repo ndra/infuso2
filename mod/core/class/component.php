@@ -373,7 +373,7 @@ class Component {
         return eval(func_get_arg(0));
     }
     
-	public function confDescription() {
+	public static function confDescription() {
 		return array();
 	}
 	

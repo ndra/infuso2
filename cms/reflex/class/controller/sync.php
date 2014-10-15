@@ -8,10 +8,10 @@ use \Infuso\Core;
  **/
 class Sync extends \Infuso\Core\Controller {
 
-	public function confDescription() {
+	public static function confDescription() {
 	    return array(
 	        "components" => array(
-	            get_called_class() => array(
+	            strtolower(get_class()) => array(
 	                "params" => array(
 	                    "remoteToken" => "Токен удаленной машины",
 	                    "remoteHost" => "Хост удаленной машины",

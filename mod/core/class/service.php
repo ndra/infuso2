@@ -5,7 +5,7 @@ namespace Infuso\Core;
 /**
  * Базовый класс для служб
  **/
-class Service extends Controller {
+class Service extends Component {
 
     private static $serviceInstance = null;
 
