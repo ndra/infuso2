@@ -64,13 +64,14 @@ class Sync extends \Infuso\Core\Controller {
 
         $token = trim($this->param("token"));
         if(!$token) {
-            throw new Exception("Token not set");
+            throw new \Exception("Token not set");
         }
 
         if($token != $p["token"]) {
-            throw new Exception("Bad token");
+            throw new \Exception("Bad token");
         }
 
+        // Сюда будем складывать данные
         $data = array(
             "rows" => array(),
         );
@@ -94,15 +95,24 @@ class Sync extends \Infuso\Core\Controller {
             $n = 0;
             foreach($items as $item) {
 
+                // Собираем данные
                 $itemData = $item->data();
-                foreach($itemData as $key=>$val) {
+                foreach($itemData as $key => $val) {
                     $itemData[$key] = base64_encode($val);
                 }
+                
+                foreach($item->storage()->allFiles() as $file) {
+                    $files[] = array(
+                        "rel" -> $file->rel($item->storage()->root()),
+                        "url" -> $file->url(),
+                    );
+                }
 
-                $data["rows"][] = $itemData;
-
+                $data["rows"][] = array(
+                    "data" => $itemData,
+                    "files" => $files,
+                );
                 $data["nextId"] = $item->id();
-                //$this->app()->service("ar")->freeAll();
                 $n++;
             }
 
@@ -117,6 +127,7 @@ class Sync extends \Infuso\Core\Controller {
 
         }
 
+        // Отправляем данные
         header("content-type:application/json");
         $data = json_encode($data);
         $data = gzcompress($data);
@@ -166,8 +177,7 @@ class Sync extends \Infuso\Core\Controller {
 
         $data = json_decode($data,1);
         if($data === null) {
-            app()->msg("Json decode failed",1);
-            return;
+            throw new \Exception("Json decode failed");
         }
 
         if($data["completed"]) {
@@ -184,28 +194,28 @@ class Sync extends \Infuso\Core\Controller {
         $table = $v->prefixedTableName();
 
 		// Если индекс нулевой - очищаем таблицу
-        if($p["fromId"]==0) {
+        if($p["fromId"] == 0) {
             $q = "truncate table `$table` ";
-            Core\Mod::service("db")->query($q)->exec();
+            service("db")->query($q)->exec();
         }
 
         foreach($data["rows"] as $row) {
 
-            foreach($row as $key=>$val) {
-                unset($row[$key]);
+            $insert = array();
+            foreach($row["data"] as $key => $val) {
 
                 // Не забываем разкодировать данные из base64
                 $val = base64_decode($val);
 
-                $row["`".$key."`"] = '"'.mysql_real_escape_string($val).'"';
+                $nsert["`".$key."`"] = service("db")->quote($val);
             }
 
             // Вставляем в таблицу
             $itemData = array();
             $insert = " (".implode(",",array_keys($row)).") values (".implode(",",$row).") ";
             $query = "insert into `$table` $insert ";
-            core\mod::trace($query);
-            Core\Mod::service("db")->query($query)->exec();
+            app()->trace($query);
+            service("db")->query($query)->exec();
         }
 
         return array(
