@@ -103,8 +103,8 @@ class Sync extends \Infuso\Core\Controller {
                 
                 foreach($item->storage()->allFiles() as $file) {
                     $files[] = array(
-                        "rel" -> $file->rel($item->storage()->root()),
-                        "url" -> $file->url(),
+                        "rel" => $file->rel($item->storage()->root()),
+                        "url" => $file->url(),
                     );
                 }
 
