@@ -16,6 +16,8 @@ class Sync extends \Infuso\Core\Controller {
 	                    "remoteToken" => "Токен удаленной машины",
 	                    "remoteHost" => "Хост удаленной машины",
 	                    "skip" => "[yaml] Пропустить модули",
+	                    "remoteLimit" => "Сколько строк скачивать за раз",
+	                    "syncFiles" => "Синхронизировать файлы",
 					),
 				),
 			),
@@ -75,7 +77,7 @@ class Sync extends \Infuso\Core\Controller {
         $data = array(
             "rows" => array(),
         );
-        
+
         $class = $p["class"];
 
         $limit = $p["limit"] * 1;
@@ -100,7 +102,8 @@ class Sync extends \Infuso\Core\Controller {
                 foreach($itemData as $key => $val) {
                     $itemData[$key] = base64_encode($val);
                 }
-                
+
+                $files = array();
                 foreach($item->storage()->allFiles() as $file) {
                     $files[] = array(
                         "rel" => $file->rel($item->storage()->root()),
@@ -153,7 +156,7 @@ class Sync extends \Infuso\Core\Controller {
         $limit = $this->param("remoteLimit");
 
         if(!$limit) {
-            $limit = 500;
+            $limit = 50;
         }
 
         $url = Core\Mod::url("http://$host/infuso/cms/reflex/controller/sync/get");
@@ -170,7 +173,7 @@ class Sync extends \Infuso\Core\Controller {
         }
 
         $data = @gzuncompress($data);
-        
+
         if(!$data) {
             throw new \Exception("Data received but unzip failed. Possible wrong format.");
         }
@@ -215,7 +218,20 @@ class Sync extends \Infuso\Core\Controller {
             $insert = " (".implode(",",array_keys($insert)).") values (".implode(",",$insert).") ";
             $query = "insert into `$table` $insert ";
             app()->trace($query);
-            service("db")->query($query)->exec();
+            $id = service("db")->query($query)->exec()->lastInsertId();
+
+			if($this->param("syncFiles")) {
+	            $item = service("ar")->get($class, $id);
+	            if($row["files"]) {
+		            foreach($row["files"] as $file) {
+		                $dest = $item->storage()->path()."/".$file["rel"];
+		                $content = Core\File::http("http://$host/".$file["url"])->data();
+		                Core\File::mkdir(Core\File::get($dest)->up());
+						Core\File::get($dest)->put($content);
+		            }
+	            }
+            }
+
         }
 
         return array(
