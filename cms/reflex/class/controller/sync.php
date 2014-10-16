@@ -212,7 +212,7 @@ class Sync extends \Infuso\Core\Controller {
 
             // Вставляем в таблицу
             $itemData = array();
-            $insert = " (".implode(",",array_keys($row)).") values (".implode(",",$row).") ";
+            $insert = " (".implode(",",array_keys($insert)).") values (".implode(",",$insert).") ";
             $query = "insert into `$table` $insert ";
             app()->trace($query);
             service("db")->query($query)->exec();

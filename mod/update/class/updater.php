@@ -8,6 +8,18 @@ use Infuso\Core;
  **/
 class Updater extends Core\Component {
 
+    public static function confDescription() {
+        return array(
+            "components" => array(
+                strtolower(get_class()) => array(
+                    "params" => array(
+                        "skip" => "[array]Не обновлять модули",
+    				),
+    			),
+    		),
+    	);
+    }
+
 	public function update($bundleName) {
     
         $skip = $this->param("skip") ?: array();
