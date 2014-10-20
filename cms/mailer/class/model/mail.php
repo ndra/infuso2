@@ -87,6 +87,15 @@ class Mail extends ActiveRecord\Record {
             ->collection(get_class())
             ->desc("datetime");
     }
+	
+	 /**
+     * Задает тип письма как html
+     *
+     */
+    public function html() {
+        $this->type("text/html");
+        return $this;
+    }
 
     /**
      * Возвращает пользователя, сделавшего запись
