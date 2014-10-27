@@ -229,8 +229,11 @@ class Route extends ActiveRecord\Record {
 	    $this->normalizeUrl();
 
 	    if($this->data("hash")) {
-	        $this->data("controller",get_class($this->item())."/item");
-	        $this->data("params",array("id"=>$this->item()->id()));
+	        $this->data("className", strtolower(get_class($this->item())));
+            $this->data("action", "item"); 
+	        $this->data("params",array(
+                "id" => $this->item()->id()
+            ));
 	       // $this->data("domain",$this->item()->domain()->id());
 	        $this->data("hash",get_class($this->item()).":".$this->item()->id());
 	        $this->data("priority",-10);

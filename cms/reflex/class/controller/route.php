@@ -18,6 +18,7 @@ class Route extends \Infuso\Core\Controller {
 
     /**
      * Контроллер создания мета-объекта
+     * @todo проверка безопасности     
      **/
     public function post_create($p) {
         $editor = Reflex\Editor::get($p["editor"]);
@@ -26,6 +27,16 @@ class Route extends \Infuso\Core\Controller {
         $this->service("ar")->create(Reflex\Model\Route::inspector()->className(),array(
             "hash" => $id,
 		));
+    }
+    
+    /**
+     * @todo проверка безопасности
+     **/         
+    public function post_save($p) {
+        $editor = Reflex\Editor::get($p["editor"]);
+        $route = \Infuso\Cms\Reflex\Model\Route::get($editor->item());
+        $route->data("url", $p["url"]);
+        service("cache")->clearByPrefix("system/url");
     }
 
 

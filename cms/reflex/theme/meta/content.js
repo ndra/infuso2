@@ -12,6 +12,6 @@ mod.init(".r410k2bcoa", function() {
     };
     
     container.on("reflex/updateMeta", load);
-    load();
+    //load();
 
 });

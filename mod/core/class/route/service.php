@@ -40,7 +40,7 @@ class service extends \infuso\core\service {
 	 **/
     public function urlToAction($url) {
 
-        $key = "system/action-to-url/".$url;
+        $key = "system/url/url-to-action/".$url;
         $serializedAction = Core\Mod::Service("cache")->get($key);
 
         if(!$serializedAction) {
@@ -83,7 +83,7 @@ class service extends \infuso\core\service {
         if(true) {
 
             // Урл кэшируются на день
-            $hash = "system/action-url:".$action->hash().ceil(time()/3600/24);
+            $hash = "system/url/action-to-url:".$action->hash().ceil(time()/3600/24);
 
             if($url = Core\Mod::service("cache")->get($hash)) {
                 Core\Profiler::endOperation();
@@ -95,7 +95,7 @@ class service extends \infuso\core\service {
         $url = $this->actionToUrlNocache($action);
 
         if(true) {
-            Core\Mod::service("cache")->set($hash,$url);
+            service("cache")->set($hash,$url);
         }
 
         Core\Profiler::endOperation();
@@ -110,7 +110,7 @@ class service extends \infuso\core\service {
      **/
     public function actionToUrlNocache($action) {
 
-        $routes = Core\Mod::service("classmap")->classmap("routes");
+        $routes = service("classmap")->classmap("routes");
         foreach($routes as $router) {
             if($url = call_user_func(array($router,"actionToUrl"),$action)) {
                 return $url;
