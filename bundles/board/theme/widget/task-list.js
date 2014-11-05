@@ -30,14 +30,14 @@ mod.init(".task-list-rpu80rt4m0", function() {
         });
         
         var storeData = function(data) {
-            data = JSON.stringify(data);
-            window.sessionStorage.setItem("bSUJTR4lWH" + status, data);
+           // data = JSON.stringify(data);
+            //window.sessionStorage.setItem("bSUJTR4lWH" + status, data);
         }
         
         var restoreData = function() {
-            var data = window.sessionStorage.getItem("bSUJTR4lWH" + status);
-            data = JSON.parse(data);
-            return data;
+          //  var data = window.sessionStorage.getItem("bSUJTR4lWH" + status);
+          //  data = JSON.parse(data);
+           // return data;
         }
         
         var handler = function(data) {                

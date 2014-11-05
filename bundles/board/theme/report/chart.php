@@ -1,6 +1,6 @@
 <? 
 
-$project = board_project::get($params["projectID"]);
+$project = board_project::get($params["projectId"]);
 $group = $params["group"];
 $current = util::date($params["from"])->date();
 $to = util::date($params["to"])->date();
@@ -26,14 +26,14 @@ tmp::header();
     }
     
     $time = board_task_time::all()
-        ->joinByField("taskID")
-        ->eq("board_task.projectID",$params["projectID"]);
+        ->joinByField("taskId")
+        ->eq("board_task.projectId",$params["projectId"]);
         
     $log = board_task_log::all()
-        ->joinByField("taskID")
-        ->eq("board_task.projectID",$params["projectID"]);
+        ->joinByField("taskId")
+        ->eq("board_task.projectId",$params["projectId"]);
         
-    $users = $time->distinct("userID");
+    $users = $time->distinct("userId");
         
     $data = array();
     

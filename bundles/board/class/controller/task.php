@@ -30,11 +30,11 @@ class Task extends Base {
         		$tasks->eq("status", Model\Task::STATUS_BACKLOG);
         		$tasks->asc("priority");
                 
-        		if($groupId = $p["groupId"]) {
+        		/*if($groupId = $p["groupId"]) {
         		    $tasks->eq("parent", $groupId);
         		} else {
                     $tasks->root();
-                }
+                } */
                 
         		break;
                 

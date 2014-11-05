@@ -6,7 +6,7 @@ $spentAllUsers = board_task_log::all()
     ->leq("date(created)",$to);
     
 if($project) {
-    $spentAllUsers->eq("board_task.projectID",$project->id());
+    $spentAllUsers->eq("board_task.projectId",$project->id());
 }
     
 $userList = $spentAllUsers->distinct("userID");

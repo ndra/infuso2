@@ -77,7 +77,7 @@ class Attachment extends Core\Controller {
             return;
         }
         
-        $html = app()->tm("/board/task/content/files/ajax")
+        $html = app()->tm("/board/task/content-task/files/ajax")
             ->param("task", $task)
             ->getContentForAjax();
         return array(

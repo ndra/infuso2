@@ -1,41 +1,25 @@
 mod.init(".MhpEuDh2NX", function() {
     
     var $container = $(this);
+    $container.layout();
     
-    var drag = false;
-    var sx = 0;
-    var sy = 0;
-    var dx = 0;
-    var dy = 0;
+    var $pager = $container.find(".top .tab");
+    var $tabs = $container.find(".center .tab");
+    var $center = $container.find(".center");
     
-    $container.on("mousedown", function(event) {
-        
-        if($(event.target).parents().andSelf().filter(".task, input, .disable-pan").length) {
-            return;
-        }
-        
-        event.preventDefault();
-        drag = true;
-        sx = event.pageX;
-        sy = event.pageY;
-        dx = $container.scrollLeft();
-        dy = $container.scrollTop();
+    $pager.each(function(n) {
+        $(this).click(function() {
+            selectTab(n);
+        });
     });
     
-    mod.on("mousemove", function() {
-        if(drag) {
-            event.preventDefault();
-            $container.scrollLeft(dx - event.pageX + sx);
-            $container.scrollTop(dy - event.pageY + sy);
-        }
-    }, $container);
+    var selectTab = function(n) {
+        $center.find(".roller").animate({
+            left: - (n * 100) + "%"    
+        },"fast");
+    };
     
-    mod.on("mouseup", function() {
-        drag = false;
-    }, $container);
     
-    $container.on("scrollToElement", function() {
-        mod.msg("scroll to element");
-    });
+
     
 });

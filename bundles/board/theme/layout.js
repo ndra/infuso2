@@ -41,7 +41,7 @@ $(function() {
         if(!$style) {
             $style = $("<style>").appendTo("head");
         }
-        $style.html(".task-" + taskId + " .sticker { outline:3px solid blue; }");
+        $style.html(".task-" + taskId + " { outline:3px solid blue; }");
     }
     
     var deselectTask = function() {

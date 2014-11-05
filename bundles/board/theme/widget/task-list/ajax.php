@@ -6,15 +6,15 @@
         exec("groups");
     }
 
-    if($status == "backlog") {
-        exec("plus");
-    }
+   /* if($status == "backlog") {
+      //  exec("plus");
+    }  */
 
     switch($status) {
         
         default:
             foreach($tasks as $task) {
-                exec("/board/shared/task-sticker", array(
+                exec("task", array(
                     "task" => $task,
                     "unique" => $task->data("unique"),
                 ));

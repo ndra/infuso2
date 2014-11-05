@@ -3,7 +3,6 @@
 <div class='x55qv4lhb8m' >
 
     <a class='item' href='{action("infuso\\board\\controller\\main")}' >Доска</a>
-    <a class='item' menu:id='my' ='#' >Мое</a>
     <i>
         <a href='#' menu:id='reports' class='item' >Отчеты</a>
         <a href='#' menu:id='conf' class='item' >Настройки</a>        
@@ -32,10 +31,6 @@
         $url = action("infuso\\board\\controller\\conf")->url();
         <a class='item' href='{$url}' >Профиль</a>
         
-    </div>
-    
-    <div menu:id='my' class='submenu my no-position' >
-        exec("my");
     </div>
     
 </div>

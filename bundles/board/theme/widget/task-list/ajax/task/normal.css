@@ -1,0 +1,25 @@
+.i95bnu5fvm {
+
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    padding: 5px;
+    
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }   
+    
+    .project {
+        width: 90px;
+        font-size: 11px;
+    }
+    
+    .id {
+        width: 50px;
+        font-size: 11px;
+    }
+    
+    .text {
+        width: 100%;
+    }
+
+}

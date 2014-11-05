@@ -18,7 +18,7 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
      **/
     public function search($query) {
         $query2 = \util::str($query)->switchLayout();
-        $this->joinByField("projectID");
+        $this->joinByField("projectId");
         $this->like("text", $query)
             //->orr()->like("Infuso\\Board\\Model\\Project.title", $query)
             ->orr()->like("text", $query2);
@@ -49,7 +49,7 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
             $groups = Task::all()
                 ->eq("group", 1)
                 ->eq("singleProject", $projects);
-            return $this->eq("is", $groups->one()->id());
+            return $this->eq("id", $groups->one()->id());
         }
     }
     

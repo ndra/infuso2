@@ -77,25 +77,6 @@ class Project extends \Infuso\ActiveRecord\Record {
 	    return !user::active()->subscriptions()->eq("key",$subscriptionKey)->void();
 	}
 
-	/**
-	 * Возвращает список проектов, видимых для активного пользователя
-	 **/	 	
-	public static function visible() {
-
-		if(\user::active()->checkAccess("board:viewAllProjects")) {
-			$projects = Project::all();
-        } else {
-
-            $access = Access::all()
-                ->eq("userID",\user::active()->id())
-                ->neq("userID",0);
-
-			$projects = Project::all()->eq("id",$access->distinct("projectID"));
-        }
-
-		return $projects;
-	}
-
     /**
      * Возвращает коллекцию задач в проекте
      **/

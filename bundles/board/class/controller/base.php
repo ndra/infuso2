@@ -6,11 +6,7 @@ use \Infuso\Core;
 abstract class Base extends Core\Controller {
 
     public final function indexTest() {
-        //return \Infuso\User\Model\User::active()->exists();
-        //return true;
-        
-        return app()->user()->checkAccess("board/showInterface");
-        
+        return app()->user()->checkAccess("board/showInterface");        
     }
     
     public final function indexFailed() {
@@ -18,6 +14,6 @@ abstract class Base extends Core\Controller {
     }
     
     public final function postTest() {
-        return \Infuso\User\Model\User::active()->exists();
+        return app()->user()->checkAccess("board/showInterface");  
     }
 }

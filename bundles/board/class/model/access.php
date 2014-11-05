@@ -22,6 +22,11 @@ class Access extends \Infuso\ActiveRecord\Record {
                     'type' => 'link',
                     'label' => "ID группы",
                     'class' => Task::inspector()->className(),
+                ), array (
+                    'name' => 'projectId',
+                    'type' => 'link',
+                    'label' => "ID Проекта",
+                    'class' => Project::inspector()->className(),
                 ),
             ),
         );
