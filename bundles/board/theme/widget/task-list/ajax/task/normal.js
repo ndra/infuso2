@@ -15,7 +15,7 @@ mod.init(".i95bnu5fvm", function() {
         
     });
     
-    // В начале перетаскивания добавляем в dataTransfer информацию о задача
+    // В начале перетаскивания добавляем в dataTransfer информацию о задаче
     $task.on("dragstart", function(e) {
         e.originalEvent.dataTransfer.setData("task-id", $(this).attr("data:id"));
     });

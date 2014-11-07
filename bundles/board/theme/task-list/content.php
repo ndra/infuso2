@@ -1,15 +1,7 @@
 <?
 
-<div class='MhpEuDh2NX' >
+<div class='MhpEuDh2NX c-board' >
 
-    <div class='top tabs' >
-        <div class='new-task' >Новая задача</div>
-        <div class='tab' >Бэклог</div>
-        <div class='tab' >Выполняется</div>
-        <div class='tab' >Проверить</div>
-        <div class='tab' >Архив</div>
-    </div>
-    
     <div class='center' >
         <div class='roller' >
             <div class='tab' style='left: 0;' >

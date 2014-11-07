@@ -2,10 +2,11 @@
 
 <div class='x55qv4lhb8m' >
 
-    <a class='item task-list' href='{action("infuso\\board\\controller\\main")}' >Бэклог</a>
-    <a class='item task-list' href='{action("infuso\\board\\controller\\main")}' >Выполняется</a>
-    <a class='item task-list' href='{action("infuso\\board\\controller\\main")}' >Проверить</a>
-    <a class='item task-list' href='{action("infuso\\board\\controller\\main")}' >Архив</a>
+    <a class='item new-task' href='{action("infuso\\board\\controller\\main")}' >Новая задача</a>
+    <a class='item task-list' data:status='0' href='{action("infuso\\board\\controller\\main")}' >Бэклог</a>
+    <a class='item task-list' data:status='1' href='{action("infuso\\board\\controller\\main")}' >Выполняется</a>
+    <a class='item task-list' data:status='2' href='{action("infuso\\board\\controller\\main")}' >Проверить</a>
+    <a class='item task-list' data:status='3' href='{action("infuso\\board\\controller\\main")}' >Архив</a>
     <i>
         <a href='#' menu:id='reports' class='item' >Отчеты</a>
         <a href='#' menu:id='conf' class='item' >Настройки</a>        

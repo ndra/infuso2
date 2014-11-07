@@ -2,8 +2,6 @@
 
 <div class="task-list-zjnu1r2ofp" data:sortable='{$status == "backlog" ? 1 : 0}' >
 
-    echo 121212121;
-
     switch($status) {
         
         default:

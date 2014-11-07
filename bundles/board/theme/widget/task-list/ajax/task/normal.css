@@ -3,6 +3,21 @@
     border-bottom: 1px solid rgba(0,0,0,.2);
     padding: 5px;
     
+    a {
+        text-decoration: none;
+        &: hover {
+            text-decoration: underline;
+        }
+    }
+    
+    td {
+        vertical-align: middle;
+    }
+    
+    &:hover {
+        background: #ededed;
+    }
+    
     table {
         width: 100%;
         table-layout: fixed;
@@ -11,11 +26,22 @@
     .project {
         width: 90px;
         font-size: 11px;
+        padding-left: 10px;
     }
     
     .id {
         width: 50px;
         font-size: 11px;
+    }
+    
+    .files {
+        img {
+            display: block;
+        }
+        div {
+            display: inline-block;
+            margin-right: 5px;
+        }
     }
     
     .text {

@@ -7,11 +7,7 @@ use \Infuso\Core;
 /**
  * Контроллер для операций с вложениями в задачи
  **/
-class Attachment extends Core\Controller {
-
-    public function postTest() {
-        return \User::active()->exists();
-    }
+class Attachment extends Base {
 
 	/**
 	 * Закачивает файл в задачу
