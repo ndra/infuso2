@@ -18,11 +18,6 @@ class Access extends \Infuso\ActiveRecord\Record {
                     'type' => 'link',
                     'class' => \user::inspector()->className(),
                 ), array (
-                    'name' => 'groupId',
-                    'type' => 'link',
-                    'label' => "ID группы",
-                    'class' => Task::inspector()->className(),
-                ), array (
                     'name' => 'projectId',
                     'type' => 'link',
                     'label' => "ID Проекта",
@@ -53,5 +48,9 @@ class Access extends \Infuso\ActiveRecord\Record {
     public function group() {
         return $this->pdata("groupId");
     }
-	
+    
+	public function project() {
+	    return $this->pdata("projectId");
+	}
+
 }

@@ -3,6 +3,7 @@
 <div class='x55qv4lhb8m' >
 
     <a class='item new-task' href='{action("infuso\\board\\controller\\main")}' >Новая задача</a>
+    <a class='item task-list' data:status='request' href='{action("infuso\\board\\controller\\main")}' >Заявки</a>
     <a class='item task-list' data:status='0' href='{action("infuso\\board\\controller\\main")}' >Бэклог</a>
     <a class='item task-list' data:status='1' href='{action("infuso\\board\\controller\\main")}' >Выполняется</a>
     <a class='item task-list' data:status='2' href='{action("infuso\\board\\controller\\main")}' >Проверить</a>
