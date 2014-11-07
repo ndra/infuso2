@@ -70,15 +70,15 @@ class Task extends Base {
 			->param("group", Model\Task::get($p["groupId"]))
             ->getContentForAjax();
             
-        $title = app()->tm("/board/widget/task-list/ajax-title")
+        /*$title = app()->tm("/board/widget/task-list/ajax-title")
             ->param("tasks", $tasks)
             ->param("status", $p["status"])
 			->param("group", Model\Task::get($p["groupId"]))
-            ->getContentForAjax();
+            ->getContentForAjax(); */
         
         return array(
             "html" => $html,
-            "title" => $title,
+            //"title" => $title,
             "pages" => $tasks->pages(),
         );
                   

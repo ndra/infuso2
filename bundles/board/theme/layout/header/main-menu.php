@@ -2,11 +2,15 @@
 
 <div class='x55qv4lhb8m' >
 
-    <a class='item' href='{action("infuso\\board\\controller\\main")}' >Доска</a>
+    <a class='item task-list' href='{action("infuso\\board\\controller\\main")}' >Бэклог</a>
+    <a class='item task-list' href='{action("infuso\\board\\controller\\main")}' >Выполняется</a>
+    <a class='item task-list' href='{action("infuso\\board\\controller\\main")}' >Проверить</a>
+    <a class='item task-list' href='{action("infuso\\board\\controller\\main")}' >Архив</a>
     <i>
         <a href='#' menu:id='reports' class='item' >Отчеты</a>
         <a href='#' menu:id='conf' class='item' >Настройки</a>        
     </i>
+    
 </div>
     
 // Субменю

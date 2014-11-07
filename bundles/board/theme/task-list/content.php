@@ -3,6 +3,7 @@
 <div class='MhpEuDh2NX' >
 
     <div class='top tabs' >
+        <div class='new-task' >Новая задача</div>
         <div class='tab' >Бэклог</div>
         <div class='tab' >Выполняется</div>
         <div class='tab' >Проверить</div>

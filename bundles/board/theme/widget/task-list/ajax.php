@@ -2,13 +2,7 @@
 
 <div class="task-list-zjnu1r2ofp" data:sortable='{$status == "backlog" ? 1 : 0}' >
 
-    if($status == "0") {
-        exec("groups");
-    }
-
-   /* if($status == "backlog") {
-      //  exec("plus");
-    }  */
+    echo 121212121;
 
     switch($status) {
         

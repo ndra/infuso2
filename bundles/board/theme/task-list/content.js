@@ -19,7 +19,12 @@ mod.init(".MhpEuDh2NX", function() {
         },"fast");
     };
     
-    
+    $container.find(".new-task").click(function() {
+        $(this).trigger({
+            type: "board/newTask",
+            groupId: $container.attr("data:group")
+        });
+    });
 
     
 });
