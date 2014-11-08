@@ -132,6 +132,7 @@ jQuery.fn.list = function(param, param2) {
         triggerSelectionEvent();
     }
     
+    // Выделяет следующий элемент
     if(param === "next") {
         var selection = $list.list("selection");
         if(!selection.length) {
@@ -144,9 +145,19 @@ jQuery.fn.list = function(param, param2) {
             $e.list("select", next); 
         }        
     }
-
+    
+    // Выделяет предыдущий элемент
     if(param === "prev") {
-        mod.msg("prev");
+        var selection = $list.list("selection");
+        if(!selection.length) {
+            $e.list("selectFirst");
+        } else {
+            var prev = $e.find(".list-item.selected:first").prev(".list-item").attr("data:id");
+            if(prev === undefined) {
+                prev = $e.find(".list-item:first").attr("data:id");
+            }
+            $e.list("select", prev); 
+        }        
     }
     
     if(param=="selectFirst") {

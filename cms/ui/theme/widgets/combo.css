@@ -1,0 +1,27 @@
+.xaayzmpe0W {
+    
+    input[type=text] {
+        .g-input();
+    }
+    
+    .list {
+        width: 400px;
+        border: 1px solid #ededed;
+        padding: 10px;
+        display: none;
+    }
+    
+    .item {
+        padding: 2px;
+        cursor: pointer;
+        &:hover {
+            background: #ededed;
+        }
+    }
+
+    .selected {
+        background: blue;
+        color: white;
+    }
+    
+}
