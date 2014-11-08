@@ -31,7 +31,11 @@ class Service extends Core\Service {
      * Возвращает список юзверов
      **/
     public function users() {
-        return user::all();  
+        return Model\User::all();  
+    }
+    
+    public function all() {
+        return Model\User::all(); 
     }
     
     public function get($id) {

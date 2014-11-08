@@ -4,9 +4,9 @@
     <tr>
         <td>Пользователь</td>
         <td>
-            widget("Infuso\\CMS\\Ui\\Widgets\\Textfield")
-                ->fieldName("title")
-                ->value($access->data("userId"))
+            widget("Infuso\\Board\\Widget\\UserSelector")
+                ->fieldName("userId")
+                ->value($access->data("projectId"))
                 ->exec();
         </td>
     </tr>
@@ -14,7 +14,7 @@
         <td>Проект</td>
         <td>
             widget("Infuso\\Board\\Widget\\ProjectSelector")
-                ->fieldName("url")
+                ->fieldName("projectId")
                 ->value($access->data("projectId"))
                 ->exec();
         </td>

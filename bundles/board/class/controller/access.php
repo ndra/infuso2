@@ -23,4 +23,11 @@ class Access extends Base {
             ->exec();
     }
     
+    public function post_new($p) {
+        service("ar")->create("infuso\\board\\model\\access", array(
+            "projectId" => $p["projectId"],
+            "userId" => $p["userId"],
+        ));
+    }
+    
 }
