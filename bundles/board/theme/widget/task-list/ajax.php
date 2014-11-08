@@ -13,10 +13,13 @@
             }
             break;
             
+        case "request":
+            exec("request-projects");
+            break;
+            
         case "check":
             $last = null;
             foreach($tasks as $task) {
-                
                 $date = $task->pdata("changed")->date()->txt();
                 if($last === null || $last != $date) {
                     <div class='date' >{$date}</div>

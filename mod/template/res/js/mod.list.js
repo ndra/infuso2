@@ -3,7 +3,7 @@
  * - Позволяет выделят один или несколько элементов списка.
  * - Получаеть массив id выделенных элементов
  **/
-jQuery.fn.list = function(param) {
+jQuery.fn.list = function(param, param2) {
 
     // Контейнер
     var $e = $(this);
@@ -110,9 +110,48 @@ jQuery.fn.list = function(param) {
         $e.find(".list-item").removeClass("selected");
         triggerSelectionEvent();
     }
+    
+    if(param === "deselect") {
+        $e.find(".list-item").removeClass("selected");
+        triggerSelectionEvent();
+    }
+    
+    // Выделяет элементы
+    if(param === "select") {        
+        var selection = param2;
+        if(typeof selection != "array") {
+            selection = [selection];
+        }
+        $e.find(".list-item").each(function() {
+            if($.inArray($(this).attr("data:id"), selection) != -1) {
+                $(this).addClass("selected");            
+            } else {
+                $(this).removeClass("selected");
+            }
+        });
+        triggerSelectionEvent();
+    }
+    
+    if(param === "next") {
+        var selection = $list.list("selection");
+        if(!selection.length) {
+            $e.list("selectFirst");
+        } else {
+            var next = $e.find(".list-item.selected:last").next(".list-item").attr("data:id");
+            if(next === undefined) {
+                next = $e.find(".list-item:last").attr("data:id");
+            }
+            $e.list("select", next); 
+        }        
+    }
 
     if(param === "prev") {
         mod.msg("prev");
+    }
+    
+    if(param=="selectFirst") {
+        var id = $e.find(".list-item:first").attr("data:id");
+        $e.list("select", id);
     }
 
 }

@@ -18,7 +18,9 @@ class Access extends Base {
     }
     
     public function index_new() {
-        app()->tm("board/access-new")->exec();
+        app()->tm("board/access-new")
+            ->param("access", new Model\Access())
+            ->exec();
     }
     
 }

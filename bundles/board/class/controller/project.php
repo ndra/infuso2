@@ -31,9 +31,26 @@ class Project extends Base {
         return $project->url();
     }
     
+    /**
+     * Контент для окна выбора проекта
+     **/         
     public function post_selectorWindowContent($p) {
         return \tmp::get("/board/shared/project-selector")
             ->getContentForAjax();
+    }
+    
+    public function post_listProjects($p) {
+        $ret = array(
+            "items" => array(),
+        );
+        $projects = Model\Project::all()->like("title", $p["query"]);
+        foreach($projects as $project) {
+            $ret["items"][] = array(
+                "id" => $project->id(),
+                "title" => $project->title(), 
+            );
+        }
+        return $ret;
     }
 
 }

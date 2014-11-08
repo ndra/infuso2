@@ -6,29 +6,17 @@
         <td>
             widget("Infuso\\CMS\\Ui\\Widgets\\Textfield")
                 ->fieldName("title")
-                //->value($project->data("title"))
+                ->value($access->data("userId"))
                 ->exec();
         </td>
     </tr>
     <tr>
         <td>Проект</td>
         <td>
-            widget("Infuso\\CMS\\Ui\\Widgets\\Textfield")
+            widget("Infuso\\Board\\Widget\\ProjectSelector")
                 ->fieldName("url")
-                //->value($project->data("url"))
+                ->value($access->data("projectId"))
                 ->exec();
-        </td>
-    </tr>
-    <tr>
-        <td>Автоматически закрывать задачи через</td>
-        <td>
-            widget("Infuso\\CMS\\Ui\\Widgets\\Textfield")
-                ->style("width", 50)
-                ->fieldName("completeAfter")
-                //->value($project->data("completeAfter"))
-                ->exec();
-                
-            <span style='font-style:italic; color: gray;' >дней</span>
         </td>
     </tr>
     <tr>

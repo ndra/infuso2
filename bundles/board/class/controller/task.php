@@ -52,6 +52,9 @@ class Task extends Base {
 				));
         		break;
                 
+			case "request":
+        		break;
+                
             default:
                 throw new \Exception("Unknown status");
         		
