@@ -9,6 +9,14 @@ class Access extends Base {
 	public function controller() {
 	    return "board/access";
 	}
+    
+    public function indexTest() {
+        return app()->user()->checkAccess("board/manageAccess");
+    }
+    
+    public function postTest() {
+        return app()->user()->checkAccess("board/manageAccess");
+    }
 
 	/**
 	 * Основной контроллер управления доступом

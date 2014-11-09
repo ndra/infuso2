@@ -1,10 +1,22 @@
 <?
 
-$projects = \Infuso\Board\Model\Project::all()
-    ->join("Infuso\Board\Model\Access", "`Infuso\Board\Model\Access`.`projectId` = `Infuso\Board\Model\Project`.`id`");
+use \Infuso\Board\Model;
 
-foreach($projects as $project) {
-    <div>
-        echo $project->title();
-    </div>
-}
+<div class='OhFHTNdpem' >
+
+    $projects = Model\Project::all()
+        ->visible()
+        ->join("Infuso\Board\Model\Access", "`Infuso\Board\Model\Access`.`projectId` = `Infuso\Board\Model\Project`.`id`");
+    
+    foreach($projects as $project) {
+        <div>
+            echo $project->title();
+            $count = Model\Task::all()
+                ->eq("projectId", $project->id())
+                ->eq("status", Model\Task::STATUS_REQUEST)
+                ->count();
+            echo " ($count)";
+        </div>
+    }
+
+</div>

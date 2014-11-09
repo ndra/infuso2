@@ -12,12 +12,12 @@ class User extends Base {
         ));
     }
     
-    public function post_listUsers() {
+    public function post_listUsers($p) {
     
         $ret = array(
             "items" => array(),
         );
-        $projects = service("user")->all();
+        $projects = service("user")->all()->like("email", $p["query"]);
         foreach($projects as $project) {
             $ret["items"][] = array(
                 "id" => $project->id(),

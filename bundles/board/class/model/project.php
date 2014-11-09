@@ -66,6 +66,7 @@ class Project extends \Infuso\ActiveRecord\Record {
 	 **/
 	public static function all() {
 		return \Infuso\ActiveRecord\Record::get(get_class())
+            ->addBehaviour("infuso\\board\\model\\projectcollection")
 			->desc("priority");
 	}
     

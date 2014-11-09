@@ -35,7 +35,7 @@
                     <input type='button' class='complete' title='$item' />
                     break;
                 default:
-                    Throw new \Exception("Unknown button!");
+                    Throw new \Exception("Task tools: unknown button $item!");
                     break;
             }
         }

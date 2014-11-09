@@ -96,7 +96,7 @@ class Task extends Base {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         
         if(!app()->user()->checkAccess("board/viewTask", array("task" => $task))) {
-            app()->msg(app()->user()->errorText(),1);
+            app()->msg(app()->user()->errorText(),1);   
             return;
         }
         
@@ -168,8 +168,12 @@ class Task extends Base {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         $task->setData($p["data"]);
         
-        if($task->data("status") == Model\Task::STATUS_DRAFT) {
-            $task->data("status", Model\Task::STATUS_BACKLOG);
+        if($task->data("status") == Model\Task::STATUS_DRAFT) { 
+            if(app()->user()->checkAccess("board/writeToBacklog")) {
+                $task->data("status", Model\Task::STATUS_BACKLOG);
+            } else {
+                $task->data("status", Model\Task::STATUS_REQUEST);
+            }
             $task->sentToBeginning();
         }
         

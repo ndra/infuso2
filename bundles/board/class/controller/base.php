@@ -5,15 +5,15 @@ use \Infuso\Core;
 
 abstract class Base extends Core\Controller {
 
-    public final function indexTest() {
+    public function indexTest() {
         return app()->user()->checkAccess("board/showInterface");        
     }
     
-    public final function indexFailed() {
+    public function indexFailed() {
         $this->app()->tm()->exec("/board/login");
     }
     
-    public final function postTest() {
+    public function postTest() {
         return app()->user()->checkAccess("board/showInterface");  
     }
 }

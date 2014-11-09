@@ -9,6 +9,7 @@ use Infuso\Core;
 class Task extends \Infuso\ActiveRecord\Record {
 
     const STATUS_DEMAND = 200;
+    const STATUS_REQUEST = 200;
     const STATUS_NEW = 0;
     const STATUS_BACKLOG = 0;
     const STATUS_IN_PROGRESS = 1;
@@ -386,9 +387,8 @@ class Task extends \Infuso\ActiveRecord\Record {
 
             case self::STATUS_DEMAND:
 
-                $tools["main"][] = "add";
+                //$tools["main"][] = "add";
                 $tools["main"][] = "take";
-
                 $tools["additional"][] = "cancel";
 
                 break;
