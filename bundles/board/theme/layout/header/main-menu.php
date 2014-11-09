@@ -4,10 +4,11 @@
 
     <a class='item new-task' href='{action("infuso\\board\\controller\\main")}' >Новая задача</a>
     <a class='item task-list' data:status='request' href='{action("infuso\\board\\controller\\main")}' >Заявки</a>
-    <a class='item task-list' data:status='0' href='{action("infuso\\board\\controller\\main")}' >Бэклог</a>
-    <a class='item task-list' data:status='1' href='{action("infuso\\board\\controller\\main")}' >Выполняется</a>
-    <a class='item task-list' data:status='2' href='{action("infuso\\board\\controller\\main")}' >Проверить</a>
-    <a class='item task-list' data:status='3' href='{action("infuso\\board\\controller\\main")}' >Архив</a>
+    <a class='item task-list' data:status='backlog' href='{action("infuso\\board\\controller\\main")}' >Бэклог</a>
+    <a class='item task-list' data:status='inprogress' href='{action("infuso\\board\\controller\\main")}' >Выполняется</a>
+    <a class='item task-list' data:status='check' href='{action("infuso\\board\\controller\\main")}' >Проверить</a>
+    <a class='item task-list' data:status='done' href='{action("infuso\\board\\controller\\main")}' >Архив</a>
+    <a class='item task-list' data:status='cancelled' href='{action("infuso\\board\\controller\\main")}' >Отменено</a>
     <i>
         <a href='#' menu:id='reports' class='item' >Отчеты</a>
         <a href='#' menu:id='conf' class='item' >Настройки</a>        

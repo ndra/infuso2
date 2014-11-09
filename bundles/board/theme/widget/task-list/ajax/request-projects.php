@@ -9,7 +9,7 @@ use \Infuso\Board\Model;
         ->join("Infuso\Board\Model\Access", "`Infuso\Board\Model\Access`.`projectId` = `Infuso\Board\Model\Project`.`id`");
     
     foreach($projects as $project) {
-        <div>
+        <div class='project' data:path='{$project->id()}' >
             echo $project->title();
             $count = Model\Task::all()
                 ->eq("projectId", $project->id())

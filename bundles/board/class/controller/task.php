@@ -18,6 +18,8 @@ class Task extends Base {
             app()->msg(app()->user()->errorText(),1);
             return;
         }
+        
+        $path = $p["path"];
 
         $limit = 40; 
         
@@ -53,6 +55,8 @@ class Task extends Base {
         		break;
                 
 			case "request":
+			    $tasks->eq("status", Model\Task::STATUS_REQUEST);
+			    $tasks->eq("projectId", $path);
         		break;
                 
             default:
@@ -70,7 +74,7 @@ class Task extends Base {
         $html = app()->tm("/board/widget/task-list/ajax")
             ->param("tasks", $tasks)
             ->param("status", $p["status"])
-			->param("group", Model\Task::get($p["groupId"]))
+			->param("path", $path)
             ->getContentForAjax();
             
         /*$title = app()->tm("/board/widget/task-list/ajax-title")

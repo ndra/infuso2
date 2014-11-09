@@ -6,7 +6,7 @@ mod.init(".task-list-rpu80rt4m0", function() {
     
     var status = $container.attr("data:status");
     
-    var groupId = 0;
+    var path = 0;
 
     // Загружает список задач
     var load = function() {
@@ -14,7 +14,7 @@ mod.init(".task-list-rpu80rt4m0", function() {
         var callData = {
             cmd: "Infuso/Board/Controller/Task/getTasks",
             status: $container.attr("data:status"),
-            groupId: groupId
+            path: path
         };
         
         $container.find(".c-toolbar").triggerHandler({
@@ -41,9 +41,8 @@ mod.init(".task-list-rpu80rt4m0", function() {
     // Запускаем загрузку с задержкой, чтобы сработали обработчики событий
     setTimeout(load, 0);
     
-    $container.on("board/openGroup", function(event) {
-        groupId = event.groupId;
-        localStorage.setItem("board/groupId", groupId);
+    $container.on("board/setPath", function(event) {
+        path = event.path;
         load();
     });
     

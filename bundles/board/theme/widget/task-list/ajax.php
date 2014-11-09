@@ -14,7 +14,16 @@
             break;
             
         case "request":
-            exec("request-projects");
+            if(!$path) {
+                exec("request-projects");
+            } else {
+                foreach($tasks as $task) {
+                    exec("task", array(
+                        "task" => $task,
+                        "unique" => $task->data("unique"),
+                    ));
+                }
+            }
             break;
             
         case "check":

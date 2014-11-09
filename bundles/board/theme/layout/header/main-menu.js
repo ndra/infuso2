@@ -12,9 +12,7 @@ mod.init(".x55qv4lhb8m", function() {
     });
     
     $container.find(".new-task").click(function(event) {
-        //if(this.href == window.location.href) {
-            event.preventDefault();
-       // }
+        event.preventDefault();
         $(this).trigger({
             type: "board/newTask",
             groupId: $container.attr("data:group")
