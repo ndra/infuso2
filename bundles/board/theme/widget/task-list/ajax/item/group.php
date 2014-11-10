@@ -1,5 +1,7 @@
 <?
 
 <div class='mcGSvrqQ3m' data:id='{$item->id()}' >
-    <div class='title' >{$item->title()}</div>
+    $n = $item->count();
+    $n = $n ? "($n)" : "";
+    <div class='title' >{$item->title()} $n</div>
 </div>

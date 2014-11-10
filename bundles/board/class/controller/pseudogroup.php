@@ -179,10 +179,16 @@ class PseudoGroup extends Core\Component {
 				}
 				break;
 		    case "backlog":
-				$ret[] = new self("backlog");
+		        if($id) {
+					$ret[] = new self("backlog");
+				}
 				break;
 		}
 		return $ret;
+	}
+	
+	public function count() {
+	    return sizeof($this->subgroups());
 	}
 
 }

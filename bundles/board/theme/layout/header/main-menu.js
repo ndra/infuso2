@@ -15,7 +15,7 @@ mod.init(".x55qv4lhb8m", function() {
         for(var i in ajaxPath) {
             if(href == ajaxPath[i]) {
                 event.preventDefault();
-                window.history.replaceState(null, "Ололо!", $(this).attr("href"));
+                window.history.replaceState(null, null, $(this).attr("href"));
             }
         }
         mod.fire("board/show-status", {
