@@ -1,46 +1,20 @@
 <? 
 
+use \Infuso\Board\Model;
+use \Infuso\Board\Controller;
+
 <div class="task-list-zjnu1r2ofp" data:sortable='{$status == "backlog" ? 1 : 0}' >
 
-    switch($status) {
-        
-        default:
-            foreach($tasks as $task) {
-                exec("task", array(
-                    "task" => $task,
-                    "unique" => $task->data("unique"),
-                ));
-            }
-            break;
-            
-        case "request":
-            if(!$path) {
-                exec("request-projects");
-            } else {
-                foreach($tasks as $task) {
-                    exec("task", array(
-                        "task" => $task,
-                        "unique" => $task->data("unique"),
-                    ));
-                }
-            }
-            break;
-            
-        case "check":
-            $last = null;
-            foreach($tasks as $task) {
-                $date = $task->pdata("changed")->date()->txt();
-                if($last === null || $last != $date) {
-                    <div class='date' >{$date}</div>
-                    $last = $date;
-                }
-                exec("/board/shared/task-sticker", array (
-                    "task" => $task,
-                    "unique" => $task->data("unique"),
-                ));
-            }
-            break;
-            
+    <h2>{$group->title()}</h2>
+    
+    foreach($group->subgroups() as $subgroup) {
+        <div class='group' data:id='{$subgroup->id()}' >{$subgroup->title()}</div>
     }
     
+    foreach($group->tasks() as $task) {
+        exec("task", array(
+            "task" => $task,
+        ));
+    }
+
 </div>

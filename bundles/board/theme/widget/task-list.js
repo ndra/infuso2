@@ -4,17 +4,14 @@ mod.init(".task-list-rpu80rt4m0", function() {
     var $ajaxContainer = $container.find(".ajax-container");
     var $loader =  $container.find(".loader");
     
-    var status = $container.attr("data:status");
-    
-    var path = 0;
+    var group = $container.attr("data:status");
 
     // Загружает список задач
     var load = function() {
         
         var callData = {
             cmd: "Infuso/Board/Controller/Task/getTasks",
-            status: $container.attr("data:status"),
-            path: path
+            group: group
         };
         
         $container.find(".c-toolbar").triggerHandler({
@@ -37,12 +34,11 @@ mod.init(".task-list-rpu80rt4m0", function() {
     
     }
 
-
     // Запускаем загрузку с задержкой, чтобы сработали обработчики событий
     setTimeout(load, 0);
     
-    $container.on("board/setPath", function(event) {
-        path = event.path;
+    $container.on("board/setGroup", function(event) {
+        group = event.group;
         load();
     });
     

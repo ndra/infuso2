@@ -19,74 +19,15 @@ class Task extends Base {
             return;
         }
         
-        $path = $p["path"];
+        $group = new PseudoGroup($p["group"]);
 
-        $limit = 40; 
-        
-        // Полный список задач
-        $tasks = Model\Task::all()->visible()->limit($limit);
-        
-        switch($p["status"]) {
-        
-            case "backlog":
-        		$tasks->eq("status", Model\Task::STATUS_BACKLOG);
-        		$tasks->asc("priority");
-                
-        		/*if($groupId = $p["groupId"]) {
-        		    $tasks->eq("parent", $groupId);
-        		} else {
-                    $tasks->root();
-                } */
-                
-        		break;
-                
-            case "inprogress":
-        		$tasks->eq("status", Model\Task::STATUS_IN_PROGRESS);
-        		$tasks->asc("id");
-        		break;
-        		
-			case "check":
-			    $tasks->desc("changed");
-        		$tasks->eq("status", array(
-					Model\Task::STATUS_CHECKOUT,
-					Model\Task::STATUS_COMPLETED,
-					Model\Task::STATUS_CANCELLED,
-				));
-        		break;
-                
-			case "request":
-			    $tasks->eq("status", Model\Task::STATUS_REQUEST);
-			    $tasks->eq("projectId", $path);
-        		break;
-                
-            default:
-                throw new \Exception("Unknown status");
-        		
-        }
-            
-        // Учитываем поиск
-        if($search = trim($p["search"])) {
-            $tasks->search($search);
-        }
-
-        $tasks->page($p["page"]);
-        
         $html = app()->tm("/board/widget/task-list/ajax")
-            ->param("tasks", $tasks)
-            ->param("status", $p["status"])
-			->param("path", $path)
+            ->param("group", $group)
             ->getContentForAjax();
-            
-        /*$title = app()->tm("/board/widget/task-list/ajax-title")
-            ->param("tasks", $tasks)
-            ->param("status", $p["status"])
-			->param("group", Model\Task::get($p["groupId"]))
-            ->getContentForAjax(); */
-        
+
+
         return array(
             "html" => $html,
-            //"title" => $title,
-            "pages" => $tasks->pages(),
         );
                   
     }

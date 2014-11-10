@@ -2,6 +2,7 @@ mod.init(".task-list-zjnu1r2ofp", function() {
     
     var $container = $(this);
     
+    // Сортировка
     if($container.attr("data:sortable") == 1) {
         new Sortable($container[0], {
             draggable: ".task",
@@ -21,5 +22,12 @@ mod.init(".task-list-zjnu1r2ofp", function() {
             }
         });
     }
+    
+    $container.find(".group").click(function() {
+        $(this).trigger({
+            type: "board/setGroup",
+            group: $(this).attr("data:id")
+        });
+    });
     
 });
