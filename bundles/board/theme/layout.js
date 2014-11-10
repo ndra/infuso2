@@ -67,7 +67,7 @@ $(function() {
 
     });
     
-    // Открываем задачу
+    // Открываем диалог с новой задачей
     $container.on("board/newTask", function(event) {
         expandLeft();
         if(event.cloneTask) {

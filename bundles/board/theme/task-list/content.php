@@ -1,27 +1,22 @@
 <?
 
-<div class='MhpEuDh2NX c-board' >
+<div class='MhpEuDh2NX c-board' data:status='{$status}' >
+
+    $tabs = array(
+        "request",
+        "backlog",
+        "inprogress",
+    );
 
     <div class='center' >
         <div class='roller' >
-            <div class='tab' style='left: 0;' data:id='request' >
-                widget("infuso\\board\\widget\\tasklist")
-                ->status("request")
-                ->exec();
-            </div>
-            <div class='tab' style='left: 100%;' data:id='backlog' >
-                widget("infuso\\board\\widget\\tasklist")
-                ->status("backlog")
-                ->exec();
-            </div>
-            <div class='tab' style='left: 200%;' >
-                widget("infuso\\board\\widget\\tasklist")
-                ->status("inprogress")
-                ->exec();
-            </div>
-            <div class='tab' style='left: 300%;' >
-                echo 121212;
-            </div>
+            foreach($tabs as $n => $tab) {
+                <div class='tab' style='left: {$n * 100}%;' data:id='{$tab}' >
+                    widget("infuso\\board\\widget\\tasklist")
+                    ->status($tab)
+                    ->exec();
+                </div>
+            }
         </div>
     </div>
 

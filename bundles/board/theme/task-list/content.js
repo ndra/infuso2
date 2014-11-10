@@ -25,6 +25,8 @@ mod.init(".MhpEuDh2NX", function() {
     mod.on("board/show-status", function(data) {
         selectTab(data.status);
     });
+    
+    selectTab($container.attr("data:status"));
 
     
 });
