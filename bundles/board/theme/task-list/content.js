@@ -7,9 +7,18 @@ mod.init(".MhpEuDh2NX", function() {
     var $tabs = $container.find(".center .tab");
     var $center = $container.find(".center");
     
-    var selectTab = function(n) {
+    var selectTab = function(status) {
+        
+        var num = 0;
+
+        $center.find(".roller .tab").each(function(n) {
+            if($(this).attr("data:id") == status) {
+                num = n;
+            }
+        });
+
         $center.find(".roller").animate({
-            left: - (n * 100) + "%"    
+            left: - (num * 100) + "%"    
         },"fast");
     };
 

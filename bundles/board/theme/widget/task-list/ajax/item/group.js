@@ -5,8 +5,15 @@ mod.init(".mcGSvrqQ3m", function() {
     // id задачи
     var id = $(this).attr("data:id");
     
+    $task.click(function() {
+        $(this).trigger({
+            type: "board/setGroup",
+            group: id
+        });
+    });
+    
     // Нажатие на задачу
-    $task.click(function(event) {
+    /*$task.click(function(event) {
         
         mod.msg($(event.target).parents(".edit").length);
         
@@ -22,6 +29,6 @@ mod.init(".mcGSvrqQ3m", function() {
             });                
         }
   
-    });
+    }); */
     
 });

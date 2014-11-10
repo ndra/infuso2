@@ -23,7 +23,7 @@ mod.init(".task-list-zjnu1r2ofp", function() {
         });
     }
     
-    $container.find(".group").click(function() {
+    $container.children(".group").click(function() {
         $(this).trigger({
             type: "board/setGroup",
             group: $(this).attr("data:id")

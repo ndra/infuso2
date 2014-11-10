@@ -4,12 +4,12 @@
 
     <div class='center' >
         <div class='roller' >
-            <div class='tab' style='left: 0;' data:status='request' >
+            <div class='tab' style='left: 0;' data:id='request' >
                 widget("infuso\\board\\widget\\tasklist")
                 ->status("request")
                 ->exec();
             </div>
-            <div class='tab' style='left: 100%;' data:status='backlog' >
+            <div class='tab' style='left: 100%;' data:id='backlog' >
                 widget("infuso\\board\\widget\\tasklist")
                 ->status("backlog")
                 ->exec();

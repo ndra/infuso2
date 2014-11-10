@@ -1,6 +1,6 @@
 <?
 
-if($task->data("group")) {
+if($item->isGroup()) {
     exec("group");
 } else {
     exec("normal");
