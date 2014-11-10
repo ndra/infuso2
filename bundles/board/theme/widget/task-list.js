@@ -33,10 +33,9 @@ mod.init(".task-list-rpu80rt4m0", function() {
         $loader.show();
     
     }
-
-    // Запускаем загрузку с задержкой, чтобы сработали обработчики событий
-    setTimeout(load, 0);
     
+    $container.on("board/load", load);
+
     $container.on("board/setGroup", function(event) {
         group = event.group;
         load();
@@ -44,23 +43,26 @@ mod.init(".task-list-rpu80rt4m0", function() {
     
     // При нажатии на F5 перегружаем список задач            
     $(document).keydown(function(event) {
-        if(event.which === 116 && !event.ctrlKey) {
-            load();
-            event.preventDefault();
+        if($container.is(":visible")) {
+            if(event.which === 116 && !event.ctrlKey) {
+                load();
+                event.preventDefault();
+            }
         }
-    });
-    
-    // При изменении фильтра, перезагружаем
-    $container.on("task/filter-changed", function(e) {
-        load();
     });
     
     // При изменении задачи, перезагружаем
     mod.on("board/taskChanged", function(data) {
-        setTimeout(load, 10);
+        if($container.is(":visible")) {
+            setTimeout(load, 10);
+        }
     });
-    
+
     // При установке фокуса на окно, перезагружаем
-    $(window).focus(load);
+    $(window).focus(function() {
+        if($container.is(":visible")) {
+            load();
+        }
+    });
     
 });

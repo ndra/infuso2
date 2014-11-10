@@ -32,6 +32,23 @@ class Main extends Base {
             ->param("status", "inprogress")
 			->exec();
     }
-
+    
+    public function index_checkout() {
+        $this->app()->tm("/board/task-list")
+            ->param("status", "checkout")
+			->exec();
+    }
+    
+    public function index_completed() {
+        $this->app()->tm("/board/task-list")
+            ->param("status", "completed")
+			->exec();
+    }
+    
+    public function index_cancelled() {
+        $this->app()->tm("/board/task-list")
+            ->param("status", "cancelled")
+			->exec();
+    }
 
 }

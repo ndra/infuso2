@@ -9,12 +9,10 @@ foreach($widget->attr() as $key => $val) {
 foreach($widget->style() as $key => $val) {
     $h->style($key, $val);
 }
-$h->addClass("task-list-rpu80rt4m0");
+$h->addClass("task-list-rpu80rt4m0 c-task-list");
 $h->attr("data:status", $status);
 $h->begin();
 
-    /*exec("toolbar");
- */
     <div class='ajax-container' >
     </div>
     

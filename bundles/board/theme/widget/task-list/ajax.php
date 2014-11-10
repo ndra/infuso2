@@ -10,12 +10,7 @@ use \Infuso\Board\Controller;
         <div class='group' data:id='{$subgroup->id()}' >{$subgroup->title()}</div>
     }
 
-    <h2>{$group->title()} {$group->id()}</h2>
-    
-    // Подгруппы
-    //foreach($group->subgroups() as $subgroup) {
-    //    <div class='group' data:id='{$subgroup->id()}' >{$subgroup->title()}</div>
-    //}
+    <h2>{$group->title()}</h2>
     
     // Список задач
     foreach($group->subgroups() as $item) {

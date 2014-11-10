@@ -2,18 +2,13 @@
 
 <div class='MhpEuDh2NX c-board' data:status='{$status}' >
 
-    $tabs = array(
-        "request",
-        "backlog",
-        "inprogress",
-    );
-
     <div class='center' >
         <div class='roller' >
-            foreach($tabs as $n => $tab) {
-                <div class='tab' style='left: {$n * 100}%;' data:id='{$tab}' >
+            $group = new \Infuso\Board\Controller\Pseudogroup("");
+            foreach($group->subgroups() as $n => $sub) {
+                <div class='tab' style='left: {$n * 100}%; display: none;' data:id='{$sub->id()}' >
                     widget("infuso\\board\\widget\\tasklist")
-                    ->status($tab)
+                    ->status($sub->id())
                     ->exec();
                 </div>
             }

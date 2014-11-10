@@ -28,6 +28,16 @@ class PseudoGroup extends Core\Component {
 		$ret = array();
 		
 		switch($status) {
+		
+		    case "":
+		        $ret[] = new self("request");
+		        $ret[] = new self("backlog");
+		        $ret[] = new self("inprogress");
+		        $ret[] = new self("checkout");
+		        $ret[] = new self("completed");
+		        $ret[] = new self("cancelled");
+		        break;
+		
 		    case "request":
 				if($id) {
 				    $tasks = Model\Task::all()
@@ -57,6 +67,38 @@ class PseudoGroup extends Core\Component {
 			        } else {
 			            $ret[] = new self("task/".$task->id());
 			        }
+			    }
+			    break;
+		    case "inprogress":
+			    $tasks = Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_IN_PROGRESS);
+			    foreach($tasks as $task) {
+			        $ret[] = new self("task/".$task->id());
+			    }
+			    break;
+		    case "checkout":
+			    $tasks = Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_CHECKOUT);
+			    foreach($tasks as $task) {
+			        $ret[] = new self("task/".$task->id());
+			    }
+			    break;
+		    case "completed":
+			    $tasks = Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_COMPLETED);
+			    foreach($tasks as $task) {
+			        $ret[] = new self("task/".$task->id());
+			    }
+			    break;
+		    case "cancelled":
+			    $tasks = Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_CANCELLED);
+			    foreach($tasks as $task) {
+			        $ret[] = new self("task/".$task->id());
 			    }
 			    break;
 			case "task":
@@ -97,6 +139,14 @@ class PseudoGroup extends Core\Component {
 		        } else {
 					return "Бэклог";
 				}
+			case "inprogress":
+			    return "Выполняется";
+			case "checkout":
+			    return "Проверить";
+			case "completed":
+			    return "Архив";
+			case "cancelled":
+			    return "Отменено";
 		    case "task":
 		        return $this->task()->title();
 		}

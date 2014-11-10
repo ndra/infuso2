@@ -4,10 +4,11 @@ mod.init(".x55qv4lhb8m", function() {
     
     var ajaxPath = [
         "/board/",
-        "/board/backlog/",
-        "/board/request/",
-        "/board/inprogress/",
     ];
+    
+    $container.find(".task-list").each(function() {
+        ajaxPath.push($(this).attr("href"));
+    })
     
     $container.find(".task-list").click(function(event) {
         var href = window.location.pathname;
