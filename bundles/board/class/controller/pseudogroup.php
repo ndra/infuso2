@@ -188,7 +188,56 @@ class PseudoGroup extends Core\Component {
 	}
 	
 	public function count() {
-	    return sizeof($this->subgroups());
+		list($status, $id) = explode("/", $this->id);
+		$ret = array();
+		switch($status) {
+		    case "request":
+				if($id) {
+				    return Model\Task::all()
+				        ->visible()
+				        ->eq("status", Model\Task::STATUS_REQUEST)
+						->eq("projectId", $id)
+						->count();
+			    } else {
+				    return Model\Project::all()
+				        ->visible()
+				        ->join("Infuso\Board\Model\Access", "`Infuso\Board\Model\Access`.`projectId` = `Infuso\Board\Model\Project`.`id`")
+						->count();
+			    }
+			    
+		    case "backlog":
+			    return Model\Task::all()
+			        ->visible()
+			        ->eq("parent", $id)
+			        ->eq("status", Model\Task::STATUS_BACKLOG)
+					->count();
+
+		    case "inprogress":
+			    return Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_IN_PROGRESS)
+					->count();
+					
+		    case "checkout":
+			    return Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_CHECKOUT)
+					->count();
+					
+		    case "completed":
+			    return Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_COMPLETED)
+			        ->count();
+
+		    case "cancelled":
+			    return Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_CANCELLED)
+					->count();
+		}
+
+		return 0;
 	}
 
 }

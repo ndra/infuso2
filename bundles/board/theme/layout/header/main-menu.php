@@ -6,7 +6,12 @@
     
     $group = new \Infuso\Board\Controller\Pseudogroup("");
     foreach($group->subgroups() as $sub) {
-        <a class='item task-list' data:status='{$sub->id()}' href='{action("infuso\\board\\controller\\main", $sub->id())}' >{$sub->title()}</a>
+        <a class='item task-list' data:status='{$sub->id()}' href='{action("infuso\\board\\controller\\main", $sub->id())}' >
+            echo $sub->title();
+            if($count = $sub->count()) {
+                <span class='count' >{$count}</span>
+            }
+        </a>
     }
 
     <i>

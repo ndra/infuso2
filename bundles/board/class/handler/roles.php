@@ -59,6 +59,8 @@ class Roles implements Core\Handler {
             ->appendTo("board/manager");
             
 		user_operation::create("board/takeTask", "Взять задачу")
+		    ->addBusinessRule('if(!app()->user()->exists()) $this->error("Нельзя взять задачу без пользователя"); ')
+			->addBusinessRule('return true;')
             ->appendTo("board/worker");
             
 		user_operation::create("board/doneTask", "Выполнить задачу")

@@ -21,7 +21,16 @@
     table {
         width: 100%;
         table-layout: fixed;
-    }   
+    } 
+    
+    .users {
+        width: 100px;
+    }
+    
+    .time {
+        width: 100px;
+        font-size: 11px;
+    }
     
     .project {
         width: 90px;

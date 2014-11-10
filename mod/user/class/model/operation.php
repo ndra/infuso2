@@ -159,7 +159,7 @@ class Operation extends ActiveRecord\Record {
      * Если вызвано в бизнес-правиле, вызывает ошибку проверки права
      **/
     public function error($errorText) {
-        throw New Exception($errorText);
+        throw New \Exception($errorText);
     }
     
     /**

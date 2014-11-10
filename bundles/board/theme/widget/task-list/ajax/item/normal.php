@@ -6,6 +6,13 @@ $task = $item->task();
 
     <table>
         <tr>
+        
+            <td class='users' >
+                foreach($task->activeCollaborators() as $user) {
+                    <span>{$user->title()}</span>
+                }
+            </td>
+        
             <td class='project' ><a href='{$task->project()->url()}' >{$task->project()->title()}</a></td>
             <td class='id' >{$task->id()}</td>
             
@@ -19,6 +26,7 @@ $task = $item->task();
             </td>
             
             <td class='text'>{$task->text()}</td>
+            <td class='time'>{$task->timeSpent()} + {$task->timeSpentProgress()} / {$task->timeScheduled()}</td>
         </tr>
     </table>
     
