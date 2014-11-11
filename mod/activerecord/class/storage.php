@@ -191,7 +191,6 @@ class Storage extends \Infuso\Core\Controller {
 	    }
 	    
 	    file::get($src)->copy($dest);
-	    $this->reflex()->reflex_afterStorage();
 	    return file::get($dest)->path();
 	}
 
