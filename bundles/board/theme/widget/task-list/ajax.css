@@ -1,12 +1,31 @@
 .task-list-zjnu1r2ofp {
     
-    & > .title {
-        font-size: 22px;
-        padding: 0 10px;
+    & > .toolbar {
         
-        .group {
-            cursor: pointer;
-            text-decoration: underline;
+        padding: 10px 0;
+        
+        .title {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 30px;
+            font-size: 22px;
+            padding: 0 10px;
+            
+            .group {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+        
+        .view-mode {
+            vertical-align: middle;
+            display: inline-block;
+            margin-right: 30px;
+        }
+        
+        .pager {
+            vertical-align: middle;
+            display: inline-block;
         }
         
     }
