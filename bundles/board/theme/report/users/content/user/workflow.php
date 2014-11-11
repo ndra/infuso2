@@ -14,6 +14,7 @@
                 ->eq("userId", $user->id())
                 ->eq("date(begin)", $day)
                 ->limit(0);
+                
             foreach($workflow as $item) {
                 
                 $left = ($item->pdata("begin")->stamp() - $day->stamp()) / 3600 / 24 * 100;

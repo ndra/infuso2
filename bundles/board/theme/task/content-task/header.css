@@ -1,0 +1,21 @@
+.tf92Pms9UG {
+    
+    background: #ededed;
+    
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+    
+    .left {
+        padding: 10px;
+        width: 100%;
+    }
+    
+    .right {
+        padding: 10px;
+        width: 50px;
+        vertical-align: middle;
+    }
+    
+}

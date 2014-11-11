@@ -11,7 +11,7 @@ $workHours = $workDays * 8;
 
 <div class='BDibMuP4fa' >
     <table>
-        foreach(user::all()->withRole("boardUser") as $user) {
+        foreach(user::all()->withRole("board/worker") as $user) {
             
             $timeSpent = \Infuso\Board\Model\Workflow::all()
                 ->eq("userId", $user->id())

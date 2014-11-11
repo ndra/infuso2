@@ -26,7 +26,13 @@ $task = $item->task();
             </td>
             
             <td class='text'>{$task->text()}</td>
-            <td class='time'>{$task->timeSpent()} + {$task->timeSpentProgress()} / {$task->timeScheduled()}</td>
+            <td class='time'>
+                echo $task->timeSpent();
+                if($progress = $task->timeSpentProgress()) {
+                    echo " + ".round($progress / 3600, 2);
+                }
+                echo " / ".$task->timeScheduled();
+            </td>
         </tr>
     </table>
     

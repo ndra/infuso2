@@ -43,6 +43,7 @@ class PseudoGroup extends Core\Component {
 				    $tasks = Model\Task::all()
 				        ->visible()
 				        ->eq("status", Model\Task::STATUS_REQUEST)
+                        ->asc("priority")
 						->eq("projectId", $id);
 				    foreach($tasks as $task) {
 				        $ret[] = new self("task/".$task->id());
@@ -60,6 +61,8 @@ class PseudoGroup extends Core\Component {
 			    $tasks = Model\Task::all()
 			        ->visible()
 			        ->eq("parent", $id)
+                    ->asc("priority")
+                    ->limit(50)
 			        ->eq("status", Model\Task::STATUS_BACKLOG);
 			    foreach($tasks as $task) {
 			        if($task->data("group")) {

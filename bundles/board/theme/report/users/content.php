@@ -14,7 +14,7 @@ lib::reset();
                 </div>
             </td>
             <td>
-                foreach(user::all()->withRole("boardUser") as $user) {
+                foreach(user::all()->withRole("board/worker") as $user) {
             		exec("user", [
             		    "user" => $user,
             		]);

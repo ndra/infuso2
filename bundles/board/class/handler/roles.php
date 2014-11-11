@@ -15,13 +15,13 @@ class Roles implements Core\Handler {
 
         // Создаем роли
         $role = user_role::create("board/worker");
-        $role->data("title","Пользователь доски");
+        $role->data("title","Доска / исполнитель");
         
         $role = user_role::create("board/manager");
-        $role->data("title","Менеджер доски");
+        $role->data("title","Доска / менеджер");
         
         $role = user_role::create("board/client");
-        $role->data("title","Клиент доски");
+        $role->data("title","Доска / клиент");
         
         // ---------------------------------------------------------------------
         // Общие операции
