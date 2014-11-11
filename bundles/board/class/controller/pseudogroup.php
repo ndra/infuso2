@@ -242,5 +242,16 @@ class PseudoGroup extends Core\Component {
 
 		return 0;
 	}
+	
+	public function depth() {
+		list($status, $id) = explode("/", $this->id);
+		if(!$status) {
+		    return 0;
+		} elseif(!$id) {
+		    return 1;
+		}
+		return 2;
+		
+	}
 
 }

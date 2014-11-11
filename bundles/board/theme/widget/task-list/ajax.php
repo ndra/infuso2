@@ -3,14 +3,18 @@
 use \Infuso\Board\Model;
 use \Infuso\Board\Controller;
 
-<div class="task-list-zjnu1r2ofp" data:sortable='{$status == "backlog" ? 1 : 0}' >
+<div class="task-list-zjnu1r2ofp" data:sortable='1' >
 
-    // Подгруппы
-    foreach($group->path() as $subgroup) {
-        <div class='group' data:id='{$subgroup->id()}' >{$subgroup->title()}</div>
+    // Хлебные крошки и заголовок
+    if($group->depth() > 1) {
+        <div class='title' >
+            foreach($group->path() as $subgroup) {
+                <span class='group' data:id='{$subgroup->id()}' >{$subgroup->title()}</span>
+            }
+            echo " / ";
+            <span>{$group->title()}</span>
+        </div>
     }
-
-    <h2>{$group->title()}</h2>
     
     // Список задач
     foreach($group->subgroups() as $item) {
