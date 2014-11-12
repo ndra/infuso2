@@ -31,7 +31,9 @@ class PseudoGroup extends Core\Component {
 		
 		    case "":
 		        $ret[] = new self("request");
-		        $ret[] = new self("backlog");
+                if(app()->user()->checkAccess("board/showBacklog")) {
+                    $ret[] = new self("backlog");
+                }
 		        $ret[] = new self("inprogress");
 		        $ret[] = new self("checkout");
 		        $ret[] = new self("completed");
@@ -202,10 +204,10 @@ class PseudoGroup extends Core\Component {
 						->eq("projectId", $id)
 						->count();
 			    } else {
-				    return Model\Project::all()
+                    return Model\Task::all()
 				        ->visible()
-				        ->join("Infuso\Board\Model\Access", "`Infuso\Board\Model\Access`.`projectId` = `Infuso\Board\Model\Project`.`id`")
-						->count();
+				        ->eq("status", Model\Task::STATUS_REQUEST)
+                        ->count();
 			    }
 			    
 		    case "backlog":

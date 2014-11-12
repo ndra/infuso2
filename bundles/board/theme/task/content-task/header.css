@@ -1,6 +1,7 @@
 .tf92Pms9UG {
     
     background: #ededed;
+    padding: 10px;
     
     table {
         width: 100%;
@@ -8,12 +9,10 @@
     }
     
     .left {
-        padding: 10px;
         width: 100%;
     }
     
     .right {
-        padding: 10px;
         width: 50px;
         vertical-align: middle;
     }

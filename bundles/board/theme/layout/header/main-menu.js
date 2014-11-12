@@ -31,4 +31,11 @@ mod.init(".x55qv4lhb8m", function() {
         });
     });
     
+    mod.on("board/groupsChanged", function(data) {
+        $container.find(".task-list").each(function() {
+            var id = $(this).attr("data:status");
+            $(this).find(".count").html(data.groups[id]);
+        })
+    });
+    
 })

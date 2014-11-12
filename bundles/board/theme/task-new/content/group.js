@@ -8,6 +8,8 @@ mod.init(".XodEbnBfVK", function() {
             cmd: "infuso/board/controller/task/createGroup",
             parent: $container.attr("data:group"),
             text: $container.find("[name=text]").val()
+        }, function() {
+            $container.trigger("board/collapseLeft");
         });
     })
 

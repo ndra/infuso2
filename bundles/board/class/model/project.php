@@ -5,10 +5,13 @@ namespace Infuso\Board\Model;
 class Project extends \Infuso\ActiveRecord\Record {
 
 	public function indexTest() {
-	    return true;
+        if(!app()->user()->checkAccess("board/editProject")) {
+            return false;
+        }     
+        return true;
 	}
 	
-	public function index_item($p) {
+	public function index_item($p) {  
 	    $project = self::get($p["id"]);
 		$this->app()->tm()->exec("/board/project", array(
 		    "project" => $project,
@@ -23,7 +26,7 @@ class Project extends \Infuso\ActiveRecord\Record {
                 array (
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
-                ),array (
+                ), array (
                     'name' => 'title',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',

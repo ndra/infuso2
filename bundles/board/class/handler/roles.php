@@ -16,12 +16,15 @@ class Roles implements Core\Handler {
         // Создаем роли
         $role = user_role::create("board/worker");
         $role->data("title","Доска / исполнитель");
+        $role->data("superadmin", false);
         
         $role = user_role::create("board/manager");
         $role->data("title","Доска / менеджер");
+        $role->data("superadmin", false);
         
         $role = user_role::create("board/client");
         $role->data("title","Доска / клиент");
+        $role->data("superadmin", false);
         
         // ---------------------------------------------------------------------
         // Общие операции
@@ -39,24 +42,20 @@ class Roles implements Core\Handler {
             ->appendTo("board/manager")
             ->appendTo("board/client");
             
-		user_operation::create("board/viewTask", "Просмотр задачи")
-            ->appendTo("board/viewAllTasks")
-            ->appendTo("board/viewTaskByAccess");
-            
-		user_operation::create("board/viewAllTasks", "Просмотр всех задач")
-            ->appendTo("board/worker")
-            ->appendTo("board/manager");
-            
-		user_operation::create("board/viewTasksByAccess", "Возможность просмотра задач на основе доступа")
-            ->appendTo("board/client");
-            
-		user_operation::create("board/viewTaskByAccess", "Просмотр задачи на основе доступа")
-            ->appendTo("board/viewTasksByAccess")
-            ->addBusinessRule('return !\\infuso\\board\\model\\task::all()->visible()->eq("id", $task->id())->void();');
-
 		user_operation::create("board/editTask", "Редактирование задачи")
+            ->appendTo("board/editAnyTask")
+            ->appendTo("board/editTaskByAccess");
+            
+		user_operation::create("board/editAnyTask", "Редактирование любой задачи")
             ->appendTo("board/worker")
             ->appendTo("board/manager");
+            
+		user_operation::create("board/editTaskByAccess", "Редактирование задачи на основе доступа")
+            ->addBusinessRule('return !\\infuso\\board\\model\\task::all()->visible()->eq("id", $task->id())->void();')
+            ->appendTo("board/client");
+
+		user_operation::create("board/viewTask", "Просмотр задачи")
+            ->appendTo("board/editTask");
             
 		user_operation::create("board/takeTask", "Взять задачу")
 		    ->addBusinessRule('if(!app()->user()->exists()) $this->error("Нельзя взять задачу без пользователя"); ')
@@ -65,6 +64,10 @@ class Roles implements Core\Handler {
             
 		user_operation::create("board/doneTask", "Выполнить задачу")
             ->appendTo("board/worker");
+            
+		user_operation::create("board/completeTask", "Проверить задачу")
+            ->appendTo("board/editTaskByAccess")
+            ->appendTo("board/manager");
             
         //----------------------------------------------------------------------
         // Проекты

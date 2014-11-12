@@ -8,9 +8,7 @@
     foreach($group->subgroups() as $sub) {
         <a class='item task-list' data:status='{$sub->id()}' href='{action("infuso\\board\\controller\\main", $sub->id())}' >
             echo $sub->title();
-            if($count = $sub->count()) {
-                <span class='count' >{$count}</span>
-            }
+            <span class='count' >{$sub->count() ?: ""}</span>
         </a>
     }
 
@@ -25,7 +23,9 @@
 <div class='x55qv4lhb8m-submenu' style='position:absolute;z-index:100;width:100%;' >
     <div class='submenu dropdown' menu:id='reports' >
 
-        <a class='item' href='{action("infuso\\board\\controller\\report","users")}' >Пользователи</a>
+        if(user::active()->checkAccess("board/manager")) {
+            <a class='item' href='{action("infuso\\board\\controller\\report","users")}' >Пользователи</a>
+        }
 
     </div>
     <div class='submenu dropdown' menu:id='conf' >

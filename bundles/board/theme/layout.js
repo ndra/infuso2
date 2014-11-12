@@ -50,6 +50,8 @@ $(function() {
         }
     }
     
+    $container.on("board/collapseLeft", collapseLeft);
+    
     // Открываем задачу
     $container.on("board/openTask", function(event) {
         

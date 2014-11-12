@@ -20,39 +20,40 @@ class Operation extends ActiveRecord\Record {
 					'name' => 'id',
 					'type' => 'jft7-kef8-ccd6-kg85-iueh',
 					'editable' => '1',
-				),
-				array(
+				), array(
 					'name' => 'title',
 					'type' => 'v324-89xr-24nk-0z30-r243',
 					'editable' => '1',
-				),
-				array(
+				), array(
 					'name' => 'code',
 					'type' => 'v324-89xr-24nk-0z30-r243',
 					'editable' => '1',
 					'id' => '0qm92jygrj8gs34aso8vhqmazoce2d',
 					'label' => 'Код',
 					'indexEnabled' => 0,
-				),
-				array(
+				), array(
 					'name' => 'business-logic',
 					'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
 					'editable' => '1',
 					'label' => 'Бизнес-логика (php)',
 					'indexEnabled' => 0,
-				),
-				array(
+				), array(
 					'editable' => 1,
 					'name' => 'parents',
 					'type' => 'v324-89xr-24nk-0z30-r243',
 					'label' => 'Родительские операции',
 					'indexEnabled' => 1,
-				),
-				array(
+				), array(
 					'editable' => 2,
 					'name' => 'role',
 					'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
 					'indexEnabled' => 1,
+				), array(
+					'editable' => 2,
+					'name' => 'superadmin',
+					'type' => 'checkbox',
+					'indexEnabled' => 1,
+                    "default" => 1,
 				),
 			),
 		);
@@ -183,7 +184,7 @@ class Operation extends ActiveRecord\Record {
 
         $ret = false;
         
-        if(\infuso\core\superadmin::check() && $this->data("role")==true) {
+        if(Core\Superadmin::check() && $this->data("role")==true && $this->data("superadmin")) {
             $ret = true;
         }
 

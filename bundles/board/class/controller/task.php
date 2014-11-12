@@ -108,9 +108,18 @@ class Task extends Base {
 		);
     }
 
+    /**
+     * Сохраняет задачу
+     **/         
     public function post_saveTask($p) {
     
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
+    
+        if(!app()->user()->checkAccess("board/editTask", array("task" => $task))) {
+            app()->msg(app()->user()->errorText(),1); 
+            return;  
+        }
+        
         $task->setData($p["data"]);
         
         if($task->data("status") == Model\Task::STATUS_DRAFT) { 
@@ -217,9 +226,11 @@ class Task extends Base {
         $time = array_map(function($item) {
             return $item * 3600;
         }, $p["time"]);
-        $task->chargeTime($time);
+        $task->chargeTime($time);     
 
-        $task->data("status",Model\Task::STATUS_BACKLOG);
+        $task->data("status", app()->user()->checkAccess("board/writeToBacklog") ? 
+            Model\Task::STATUS_BACKLOG : Model\Task::STATUS_REQUEST);
+            
         $task->log(array(
             "text" => $p["comment"],
             "type" => Model\Log::TYPE_TASK_STOPPED,
@@ -290,7 +301,9 @@ class Task extends Base {
             return;
         }
 
-        $task->data("status",Model\Task::STATUS_BACKLOG);
+        $task->data("status", app()->user()->checkAccess("board/writeToBacklog") ? 
+            Model\Task::STATUS_BACKLOG : Model\Task::STATUS_REQUEST);
+            
         $task->log(array(
             "text" => $p["comment"],
             "type" => Model\Log::TYPE_TASK_REVISED,

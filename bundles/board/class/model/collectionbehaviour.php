@@ -31,7 +31,7 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
     public function visible() {
         
         if(app()->user()->checkAccess("board/viewAllTasks")) {
-        } elseif (app()->user()->checkAccess("board/viewTasksByAccess")) {
+        } elseif (app()->user()->hasRole("board/client")) {
            $projects = Access::all()
                 ->eq("userId", app()->user()->id())
                 ->distinct("projectId");

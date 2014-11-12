@@ -1,7 +1,7 @@
 <?
 
 <div class='tf92Pms9UG' >
-    echo $task->pdata("status");
+    var_export($task->statusText());
     echo $task->id();
     echo $task->project()->title();
     <table>

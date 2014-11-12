@@ -6,7 +6,7 @@ use \Infuso\Board\Model;
 
 class Project extends Base {
     
-    public function index() {
+    public function index() {   
         $this->app()->tm()->exec("/board/projects");
     }
     
@@ -43,7 +43,7 @@ class Project extends Base {
         $ret = array(
             "items" => array(),
         );
-        $projects = Model\Project::all()->like("title", $p["query"]);
+        $projects = Model\Project::all()->visible()->like("title", $p["query"]);
         foreach($projects as $project) {
             $ret["items"][] = array(
                 "id" => $project->id(),

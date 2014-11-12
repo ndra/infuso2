@@ -5,6 +5,7 @@ namespace Infuso\Board\Model;
 use \User;
 use \mod, \Util;
 use Infuso\Core;
+use Infuso\Board\Controller;
 
 class Task extends \Infuso\ActiveRecord\Record {
 
@@ -230,6 +231,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Возвращает текст статуса задачи
      **/
     public function statusText() {
+        return $this->data("status");
         return $this->pdata("status");
     }
     
@@ -248,7 +250,17 @@ class Task extends \Infuso\ActiveRecord\Record {
         $status = $this->touchedStatus;
         $status[] = $this->data("status");      
         $status = array_unique($status);
-        app()->msg($status);
+        
+        if(sizeof($status) > 1) {
+            $data = array(
+                "deliverToClient" => true,
+            );
+            $group = new Controller\Pseudogroup("");
+            foreach($group->subgroups() as $sub) {
+                $data["groups"][$sub->id()] = $sub->count();
+            }
+            app()->fire("board/groupsChanged", $data);
+        }
     
         app()->fire("board/taskChanged",array(
             "deliverToClient" => true,
