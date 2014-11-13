@@ -5,7 +5,7 @@
     echo ".";
     echo $task->project()->title();
     echo " / ";
-    <span>{$task->statusText()}</span>
+    <span class='status' >{$task->statusText()}</span>
     <table>
         <tr>
             <td class='left' >

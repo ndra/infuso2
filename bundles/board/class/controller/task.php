@@ -93,6 +93,11 @@ class Task extends Base {
      **/
     public function post_createGroup($p) {
     
+        if(!app()->user()->checkAccess("board/createGroup")) {
+            app()->msg(app()->user()->errorText(),1);
+            return;
+        }
+    
         $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", array(
             "text" => $p["text"],
             "group" => true,
