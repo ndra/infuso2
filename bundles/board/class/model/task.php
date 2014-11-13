@@ -274,6 +274,9 @@ class Task extends \Infuso\ActiveRecord\Record {
         $this->fireChangedEvent();
     }
 
+	/**
+	 * Обновляет потраченное время
+	 **/
     public function updateTimeSpent() {
         $this->data("timeSpent",$this->workflow()->eq("status",Workflow::STATUS_MANUAL)->sum("duration"));
     }
