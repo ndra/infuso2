@@ -15,10 +15,9 @@ class Log extends Record {
     const TYPE_TASK_STOPPED = 6;
     const TYPE_TASK_TAKEN = 7;
     const TYPE_TASK_DONE = 8;
-    const TYPE_TASK_COMPLETED = 9;
+    const TYPE_TASK_CHECKED = 9;
     const TYPE_TASK_REVISED = 10;
     const TYPE_TASK_CANCELLED = 11;
-    const TYPE_TASK_MOVED_TO_BACKLOG = 12;
 
     public static function model() {
         return array (
@@ -57,9 +56,7 @@ class Log extends Record {
                     'type' => 'select',
                     'editable' => '1',
                     'label' => 'Тип',
-                    'list' => array(
-                        self::TYPE_COMMENT => "Комментарий",
-                    ),
+                    'values' => self::enumTypes(),
                 ), array (
                     'name' => 'files',
                     'type' => 'string',
@@ -68,6 +65,20 @@ class Log extends Record {
                 ),
             ),
         );
+    }
+    
+    public static function enumTypes() {
+        return array(
+		    self::TYPE_COMMENT => "Комментарий",
+		    self::TYPE_TASK_MODIFIED => "Изменено",
+		    self::TYPE_TASK_STOPPED => "Остановлена",
+		    self::TYPE_TASK_TAKEN => "Взято",
+		    self::TYPE_TASK_DONE => "Выполнено",
+		    self::TYPE_TASK_CHECKED => "Проверено",
+		    self::TYPE_TASK_REVISED => "Возвращено",
+		    self::TYPE_TASK_CANCELLED => "Отменено",
+		);
+
     }
 
     /**
@@ -168,18 +179,15 @@ class Log extends Record {
 		    case self::TYPE_TASK_DONE:
 		        $icon = "done";
 		        break;
-		    case self::TYPE_TASK_COMPLETED:
-		        $icon = "completed";
+		    case self::TYPE_TASK_CHECKED:
+		        $icon = "checked";
 		        break;
 		    case self::TYPE_TASK_REVISED:
 		        $icon = "revised";
 		        break;
 			case self::TYPE_TASK_CANCELLED:
-				$icon = "revised";
+				$icon = "cancel";
 			    break;
-		    case self::TYPE_TASK_MOVED_TO_BACKLOG:
-		        $icon = "moved-to-backlog";
-		        break;
         }
         
         return self::inspector()->bundle()->path()."/res/img/icons16/{$icon}.png";                    

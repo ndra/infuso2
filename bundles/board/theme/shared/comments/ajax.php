@@ -3,7 +3,7 @@
 <div class='NxEX1Vh7h0' >
 
     $lastDate = null;
-        
+    
     foreach($task->getlog() as $item) {
         
         $date = $item->pdata("created")->date()->text();
@@ -14,14 +14,26 @@
         
         $lastDate = $date;
         
-        <div class='comment' >
-            <img align='absmiddle' style='margin-right:5px;' src='{$item->icon16()}' />
-            <a class='user' href='{$item->user()->url()}' >{$item->user()->title()}</a>
-            <span class='time' >{$item->pdata("created")->format("H:i")}</span>
-            if($text = $item->data("text")) {
-                <div class='text' >{$text}</div>
-            }
-        </div>
+        <table class='comment' >
+            <tr>
+                <td class='type' >
+                    <img src='{$item->icon16()}' />
+                </td>
+                <td class='userpic' >
+                    <img src='{$item->user()->userpic()->preview(16,16)->crop()}' />
+                </td>
+                <td class='user' >
+                    <a href='{$item->user()->url()}' >{$item->user()->title()}</a>
+                </td>
+                <td class='text' >
+                    echo $item->pdata("type");
+                    if($text = $item->text()) {
+                        echo ": ".$text;
+                    }
+                </td>
+                <td class='time' >{$item->pdata("created")->format("H:i")}</td>
+            </tr>
+        </table>
     }
 
 </div>

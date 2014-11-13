@@ -8,24 +8,46 @@
     
     .comment {
         
-        margin-bottom: 3px;
-        position: relative;
+        table-layout: fixed;
+        width: 100%;
         
-        .time {
-            position: absolute;
-            right:0;
-            top:0;
-            font-size:11px;
-            color: gray;
+        &:hover {
+            background: #ededed;
+        }
+        
+        img {
+            display: block;
+        }
+        
+        td {
+            vertical-align: middle;
+            padding: 3px 0;
+        }
+        
+        .type {
+            width:20px;
+        }
+        
+        .userpic {
+            width:20px;
         }
         
         .user {
-            font-size:11px;
+            width: 70px;
+            font-size: 11px;
+            opacity: .5;
         }
         
         .text {
-            font-size: 12px;
+            width: 100%;
         }
+        
+        .time {
+            width: 40px;
+            font-size: 11px;
+            opacity: .5;
+        }
+        
     }
     
 }

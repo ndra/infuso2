@@ -462,7 +462,10 @@ class Task extends \Infuso\ActiveRecord\Record {
             "taskId" => $this->id(),
             "userId" => $user->id(),
         ));
-    
+        
+        $this->log(array(
+            "type" => Log::TYPE_TASK_TAKEN,
+        ));
     }
     
     /**

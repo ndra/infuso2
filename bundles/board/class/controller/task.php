@@ -153,6 +153,9 @@ class Task extends Base {
         app()->msg("Сортировка изменена");
     }
     
+    /**
+     * Возвращает контент диалога закрытия задачи
+     **/
     public function post_doneDlgContent($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         return app()->tm()
@@ -161,6 +164,9 @@ class Task extends Base {
             ->getContentForAjax();
     }
     
+	/**
+     * Возвращает контент диалога остановки задачи
+     **/
     public function post_stopDlgContent($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         return app()->tm()
@@ -169,6 +175,9 @@ class Task extends Base {
             ->getContentForAjax();
     }
     
+ 	/**
+     * Возвращает контент диалога чтобы вернуть задачу
+     **/
     public function post_revisionDlgContent($p) {
         $task = \Infuso\Board\Model\Task::get($p["taskId"]);
         return app()->tm()
@@ -287,7 +296,7 @@ class Task extends Base {
         $task->data("status",Model\Task::STATUS_COMPLETED);
         $task->log(array(
             "text" => $p["comment"],
-            "type" => Model\Log::TYPE_TASK_COMPLETED,
+            "type" => Model\Log::TYPE_TASK_CHECKED,
         ));
 
         return true;
