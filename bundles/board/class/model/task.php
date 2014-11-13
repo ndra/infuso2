@@ -267,7 +267,7 @@ class Task extends \Infuso\ActiveRecord\Record {
             "toolbarLarge" => app()->tm("/board/shared/task-tools")->param("task", $this)->getContentForAjax(),
             "statusText" => $this->statusText(),
             "touchedStatus" => $status,
-        ));
+		));
     }
 
     public function afterStore() {

@@ -3,32 +3,13 @@ mod.init(".mcGSvrqQ3m", function() {
     var $task = $(this);
     
     // id задачи
-    var id = $(this).attr("data:id");
+    var groupId = $(this).attr("data:group");
     
     $task.click(function() {
         $(this).trigger({
             type: "board/setGroup",
-            group: id
+            group: groupId
         });
     });
-    
-    // Нажатие на задачу
-    /*$task.click(function(event) {
-        
-        mod.msg($(event.target).parents(".edit").length);
-        
-        if($(event.target).filter(".edit").length) {
-            $(this).trigger({
-                type: "board/openTask",
-                taskId: id
-            });              
-        } else {
-            $(this).trigger({
-                type: "board/openGroup",
-                groupId: id
-            });                
-        }
-  
-    }); */
     
 });

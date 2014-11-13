@@ -179,7 +179,7 @@ class Operation extends ActiveRecord\Record {
     
         // Попытка проверить несуществующее правило не удастся
         if(!$this->exists()) {
-            return false;
+			throw new \Exception("Operation {$this->data('code')} not exists");
         }
 
         $ret = false;

@@ -69,6 +69,10 @@ class Roles implements Core\Handler {
             ->appendTo("board/editTaskByAccess")
             ->appendTo("board/manager");
             
+		user_operation::create("board/showBacklog", "Показать бэклог")
+            ->appendTo("board/worker")
+            ->appendTo("board/manager");
+            
         //----------------------------------------------------------------------
         // Проекты
         

@@ -139,7 +139,8 @@ class Task extends Base {
     }
     
     /**
-     * Сохраняет приорите списка задач. Используется при сортировке
+     * Сохраняет приоритет списка задач.
+     * Используется при сортировке
      **/
     public function post_savePriority($p) {
         app()->suspendEvents();
@@ -149,6 +150,7 @@ class Task extends Base {
             $task->data("priority", $n);
             $n++;
         }
+        app()->msg("Сортировка изменена");
     }
     
     public function post_doneDlgContent($p) {

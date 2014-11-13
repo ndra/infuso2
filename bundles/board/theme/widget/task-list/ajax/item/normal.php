@@ -2,7 +2,7 @@
 
 $task = $item->task();
 
-<div class='task i95bnu5fvm task-{$task->id()}' data:id='{$task->id()}' data:url='{$task->url()}' >
+<div class='task i95bnu5fvm task-{$task->id()}' data:id='{$task->id()}' >
 
     <table>
         <tr>
