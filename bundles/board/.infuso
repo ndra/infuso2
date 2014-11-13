@@ -2,10 +2,9 @@ public:
   - /res/
   - /files/
 
-leave:
-  - files
-
-inx:
-  path: /inx.mod.board/
-  namespace: inx.mod.board
-
+update:
+  source: github
+  owner: ndra
+  repo: infuso2
+  branch: dev
+  path: /bundles/board/
