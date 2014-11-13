@@ -28,6 +28,10 @@
         padding-left: 10px;
         img {
             display: block;
+            opacity: .3;
+        }
+        .active {
+            opacity: 1;
         }
     }
     

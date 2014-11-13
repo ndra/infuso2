@@ -8,10 +8,13 @@ $task = $item->task();
         <tr>
         
             <td class='users' >
-                foreach($task->activeCollaborators() as $user) {
+            
+                $active = $task->activeCollaborators()->distinct("id");
+            
+                foreach($task->collaborators() as $user) {
                     $userpic = $user->userpic()->preview(16,16)->crop();
                     <div>
-                        <img src='{$userpic}' title='{$user->title()}' />
+                        <img class='{in_array($user->id(),$active) ? "active" : ""}' src='{$userpic}' title='{$user->title()}' />
                     </div>
                 }
             </td>
@@ -28,7 +31,9 @@ $task = $item->task();
                 }
             </td>
             
-            <td class='text'>{$task->text()}</td>
+            <td class='text'>
+                echo \util::str($task->text())->ellipsis(100);
+            </td>
             <td class='time'>
                 echo $task->timeSpent();
                 if($progress = $task->timeSpentProgress()) {
