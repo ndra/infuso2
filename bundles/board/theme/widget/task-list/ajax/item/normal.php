@@ -7,25 +7,28 @@ $task = $item->task();
     <table>
         <tr>
         
+            <td class='id' >{$task->id()}</td>
             <td class='project-icon' >
                 $icon = $task->project()->icon()->preview(16,16);
                 <img src='{$icon}' />
             </td>
             <td class='project' ><a href='{$task->project()->url()}' >{$task->project()->title()}</a></td>
-            <td class='id' >{$task->id()}</td>
             
-            <td class='files' style='width:100px;' >
-                foreach($task->storage()->files() as $file) {
-                    $preview = $file->preview(32,32)->crop();
-                    <div>
-                        <img src='{$preview}' />
-                    </div>
-                }
-            </td>
+            if($task->storage()->files()->count()) {
+                <td class='files' style='width:100px;' >
+                    foreach($task->storage()->files() as $file) {
+                        $preview = $file->preview(32,32)->crop();
+                        <div>
+                            <img src='{$preview}' />
+                        </div>
+                    }
+                </td>
+            }
             
             <td class='text'>
                 echo \util::str($task->text())->ellipsis(200);
             </td>
+            
             <td class='time'>
                 echo $task->timeSpent();
                 if($progress = $task->timeSpentProgress()) {
