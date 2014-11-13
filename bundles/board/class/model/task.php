@@ -52,7 +52,7 @@ class Task extends \Infuso\ActiveRecord\Record {
                     'label' => "Статус задачи",
                     'name' => 'status',
                     'type' => 'select',
-                    'options' => self::enumStatuses(),
+                    'values' => self::enumStatuses(),
                     'editable' => '1',
                 ), array (
                     'name' => 'priority',
@@ -128,7 +128,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
 	public static function enumStatuses() {
-	    return [
+	    return array(
 	        self::STATUS_DEMAND => "Заявка",
 		    self::STATUS_NEW => "Новая",
 		    self::STATUS_BACKLOG => "Бэклог",
@@ -137,7 +137,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 		    self::STATUS_COMPLETED => "Выполнено",
 		    self::STATUS_DRAFT => "Черновик",
 		    self::STATUS_CANCELLED => "Отменено",
-	    ];
+	    );
 	}
 
     /**
@@ -231,7 +231,6 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Возвращает текст статуса задачи
      **/
     public function statusText() {
-        return $this->data("status");
         return $this->pdata("status");
     }
     

@@ -71,19 +71,18 @@ class Task extends Base {
     /**
      * Создает новую задачу
      **/         
-    public function post_newTask($p) {     
-    
+    public function post_newTask($p) {
         if($p["cloneTask"]) {
             $task = \Infuso\Board\Model\Task::get($p["cloneTask"]);
             $data = array(
-                "projectId" => $task->data("propjectId"),
+                "projectId" => $task->data("projectId"),
                 "parent" => $task->data("parent"),
-            );
+            );                
         } else {
             $data = $p["data"];
         }        
         $data["status"] = Model\Task::STATUS_DRAFT;
-        $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", $data); 
+        $task = service("ar")->create("\\Infuso\\Board\\Model\\Task", $data);             
         return array(
 			"taskId" => $task->id(),            
 		);

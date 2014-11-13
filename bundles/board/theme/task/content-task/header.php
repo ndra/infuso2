@@ -1,9 +1,11 @@
 <?
 
 <div class='tf92Pms9UG' >
-    var_export($task->statusText());
     echo $task->id();
+    echo ".";
     echo $task->project()->title();
+    echo " / ";
+    <span>{$task->statusText()}</span>
     <table>
         <tr>
             <td class='left' >
