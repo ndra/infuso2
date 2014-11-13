@@ -3,7 +3,7 @@
 use \Infuso\Board\Model;
 use \Infuso\Board\Controller;
 
-<div class="task-list-zjnu1r2ofp" data:sortable='1' >
+<div class="task-list-zjnu1r2ofp" data:sortable='{$group->sortable() ? 1 : 0}' >
 
     // Хлебные крошки и заголовок
     

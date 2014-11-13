@@ -158,6 +158,25 @@ class PseudoGroup extends Core\Component {
 	}
 	
 	/**
+	 * Сортируются ли элементы
+	 **/
+	public function sortable() {
+		list($status, $id) = explode("/", $this->id);
+		switch($status) {
+		    case "request":
+		        if($id) {
+		        	return true;
+		        } else {
+		            return false;
+		        }
+		    case "backlog":
+		        return true;
+			default:
+				return false;
+		}
+	}
+	
+	/**
 	 * Папка это или нет
 	 **/
 	public function isGroup() {
