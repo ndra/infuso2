@@ -4,7 +4,6 @@ mod.init(".tf92Pms9UG", function() {
     
     mod.on("board/taskChanged", function(data) {
         $container.find(".status").text(data.statusText);
-        mod.msg(121212);
     }, $container);
     
 });

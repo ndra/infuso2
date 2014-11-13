@@ -30,7 +30,7 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
      **/
     public function visible() {
         
-        if(app()->user()->checkAccess("board/viewAllTasks")) {
+        if(app()->user()->checkAccess("board/editAnyTask")) {
         } elseif (app()->user()->hasRole("board/client")) {
            $projects = Access::all()
                 ->eq("userId", app()->user()->id())

@@ -6,9 +6,9 @@
         <td class='left' >
             exec("main-menu");
         </td>
-        <td class='right' >
+        /*<td class='right' >
             exec("search");
-        </td>
+        </td> */
         <td class='right' >
             exec("user-menu");
         </td>
