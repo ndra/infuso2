@@ -1,7 +1,9 @@
 <?
 
+$userId = app()->user()->id();
+
 $projects = \Infuso\Board\Model\Project::all()
-    ->join("Infuso\\Board\\Model\\Task","`Infuso\\Board\\Model\\Task`.`projectId` = `Infuso\\Board\\Model\\Project`.`id`")
+    ->leftJoin("Infuso\\Board\\Model\\Task","`Infuso\\Board\\Model\\Task`.`projectId` = `Infuso\\Board\\Model\\Project`.`id` and `Infuso\\Board\\Model\\Task`.`creator`={$userId}")
     ->groupBy("`Infuso\\Board\\Model\\Project`.`id`")
     ->desc("max(Infuso\\Board\\Model\\Task.created)")
     ->visible();

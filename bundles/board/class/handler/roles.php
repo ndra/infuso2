@@ -73,6 +73,14 @@ class Roles implements Core\Handler {
             ->appendTo("board/worker")
             ->appendTo("board/manager");
             
+		user_operation::create("board/writeToBacklog", "Запись в бэклог")
+            ->appendTo("board/worker")
+            ->appendTo("board/manager");
+            
+		user_operation::create("board/createGroup", "Создать группу")
+            ->appendTo("board/worker")
+            ->appendTo("board/manager");
+            
         //----------------------------------------------------------------------
         // Проекты
         
@@ -82,6 +90,10 @@ class Roles implements Core\Handler {
             
         user_operation::create("board/viewProjectsByAccess", "Просмотр проектов, к которым предоставлен доступ")
             ->appendTo("board/client");
+            
+       user_operation::create("board/editProject", "Редактирование проекта")
+            ->appendTo("board/worker")
+            ->appendTo("board/manager");
             
         //----------------------------------------------------------------------
         // Доступ
