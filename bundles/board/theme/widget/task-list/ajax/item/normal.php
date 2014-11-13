@@ -9,7 +9,10 @@ $task = $item->task();
         
             <td class='users' >
                 foreach($task->activeCollaborators() as $user) {
-                    <span>{$user->title()}</span>
+                    $userpic = $user->userpic()->preview(16,16)->crop();
+                    <div>
+                        <img src='{$userpic}' title='{$user->title()}' />
+                    </div>
                 }
             </td>
         

@@ -24,7 +24,11 @@
     } 
     
     .users {
-        width: 100px;
+        width: 50px;
+        padding-left: 10px;
+        img {
+            display: block;
+        }
     }
     
     .time {
