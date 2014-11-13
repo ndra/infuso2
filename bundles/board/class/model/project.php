@@ -7,11 +7,11 @@ class Project extends \Infuso\ActiveRecord\Record {
 	public function indexTest() {
         if(!app()->user()->checkAccess("board/editProject")) {
             return false;
-        }     
+        }
         return true;
 	}
-	
-	public function index_item($p) {  
+
+	public function index_item($p) {
 	    $project = self::get($p["id"]);
 		$this->app()->tm()->exec("/board/project", array(
 		    "project" => $project,
@@ -72,7 +72,7 @@ class Project extends \Infuso\ActiveRecord\Record {
             ->addBehaviour("infuso\\board\\model\\projectcollection")
 			->desc("priority");
 	}
-    
+
     /**
      * Возвращает флаг наличия у активного пользователя подписки на этот проект
      **/
@@ -107,16 +107,16 @@ class Project extends \Infuso\ActiveRecord\Record {
         $img = imagecreatefrompng("http://www.google.com/s2/favicons?domain={$url}");
         imagesavealpha($img,true);
 
-        $tmp = file::tmp()."favicon.png";
-        imagepng($img,file::get($tmp)->native());
+        $tmp = \file::tmp()."favicon.png";
+        imagepng($img, \file::get($tmp)->native());
 
         $icon = $this->storage()->add($tmp,"favicon.png");
         $this->data("icon",$icon);
 
     }
-    
+
     public function accesses() {
         return Access::all()->eq("projectId", $this->id());
     }
-	
+
 }

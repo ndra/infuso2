@@ -7,18 +7,10 @@ $task = $item->task();
     <table>
         <tr>
         
-            <td class='users' >
-            
-                $active = $task->activeCollaborators()->distinct("id");
-            
-                foreach($task->collaborators() as $user) {
-                    $userpic = $user->userpic()->preview(16,16)->crop();
-                    <div>
-                        <img class='{in_array($user->id(),$active) ? "active" : ""}' src='{$userpic}' title='{$user->title()}' />
-                    </div>
-                }
+            <td class='project-icon' >
+                $icon = $task->project()->icon()->preview(16,16);
+                <img src='{$icon}' />
             </td>
-        
             <td class='project' ><a href='{$task->project()->url()}' >{$task->project()->title()}</a></td>
             <td class='id' >{$task->id()}</td>
             
@@ -32,7 +24,7 @@ $task = $item->task();
             </td>
             
             <td class='text'>
-                echo \util::str($task->text())->ellipsis(100);
+                echo \util::str($task->text())->ellipsis(200);
             </td>
             <td class='time'>
                 echo $task->timeSpent();
@@ -41,6 +33,19 @@ $task = $item->task();
                 }
                 echo " / ".$task->timeScheduled();
             </td>
+            
+            <td class='users' >
+            
+                $active = $task->activeCollaborators()->distinct("id");
+            
+                foreach($task->collaborators() as $user) {
+                    $userpic = $user->userpic()->preview(16,16)->crop();
+                    <div>
+                        <img class='{in_array($user->id(),$active) ? "active" : ""}' src='{$userpic}' title='{$user->title()}' />
+                    </div>
+                }
+            </td>
+            
         </tr>
     </table>
     

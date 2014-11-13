@@ -23,11 +23,16 @@
         table-layout: fixed;
     } 
     
+    img {
+        display: block;
+    }
+    
     .users {
-        width: 50px;
-        padding-left: 10px;
+        width: 70px;
+        div {
+            display: inline-block;
+        }
         img {
-            display: block;
             opacity: .3;
         }
         .active {
@@ -36,13 +41,17 @@
     }
     
     .time {
-        width: 100px;
+        width: 70px;
         font-size: 11px;
     }
     
     .project {
         width: 90px;
         font-size: 11px;
+    }
+    
+    .project-icon {
+        width:20px;
         padding-left: 10px;
     }
     
@@ -63,6 +72,7 @@
     
     .text {
         width: 100%;
+        padding-right: 20px;
     }
 
 }

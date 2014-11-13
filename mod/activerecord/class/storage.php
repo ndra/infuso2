@@ -17,7 +17,7 @@ class Storage extends \Infuso\Core\Controller {
 	    $this->id = $id;
 	    $this->path = $path;
 	}
-	
+
 	public function setPath($path) {
 	    $this->path = $path;
         return $this;
@@ -33,7 +33,7 @@ class Storage extends \Infuso\Core\Controller {
 	public function id() {
 		return $this->id;
 	}
-	
+
 	public function record() {
 		return Record::get($this->class,$this->id);
 	}
@@ -50,11 +50,11 @@ class Storage extends \Infuso\Core\Controller {
 	    if(!$ret) {
 	        $ret = $this->defaultFolder();
 	    }
-	    
+
         $key = $this->record()->id();
         $primaryKeyPrefix = substr(md5($key),0,2);
         $ret.= "/$primaryKeyPrefix/$key/";
-	    
+
 	    return $ret;
 	}
 
@@ -185,13 +185,13 @@ class Storage extends \Infuso\Core\Controller {
 	    $this->prepareFolder();
 	    $path = $this->path()."";
 	    $dest = $path.$name;
-	    
-	    if(file::get($src)->path() == "/") {
-        	throw new Exception("reflex_storage::add() first argument cannot be void");
+
+	    if(Core\File::get($src)->path() == "/") {
+        	throw new \Exception("reflex_storage::add() first argument cannot be void");
 	    }
-	    
-	    file::get($src)->copy($dest);
-	    return file::get($dest)->path();
+
+	    Core\File::get($src)->copy($dest);
+	    return Core\File::get($dest)->path();
 	}
 
 	public function mkdir($name) {
@@ -237,11 +237,13 @@ class Storage extends \Infuso\Core\Controller {
 	 **/
 	public function addNative($url,$name=null) {
 
-	    if(!$url)
+	    if(!$url) {
 	        return;
+		}
 
-	    if(!$name)
+	    if(!$name) {
 	        $name = strtolower(file::get($url)->name());
+		}
 
 	    // Скачиваем файл во временную папку
 	    $dir = file::tmp();
