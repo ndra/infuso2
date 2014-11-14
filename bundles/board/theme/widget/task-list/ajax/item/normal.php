@@ -12,7 +12,7 @@ $task = $item->task();
                 $icon = $task->project()->icon()->preview(16,16);
                 <img src='{$icon}' />
             </td>
-            <td class='project' ><a target='_blank' href='{$task->project()->url()}' >{$task->project()->title()}</a></td>
+            <td class='project' >{$task->project()->title()}</a></td>
            
             <td class='project-icon' >
                 $icon = $task->pdata("creator")->userpic()->preview(16,16);

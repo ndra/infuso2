@@ -385,6 +385,7 @@ class Task extends \Infuso\ActiveRecord\Record {
                     $tools["main"][] = "take";  
                 } else {
                     $tools["main"][] = "done";
+                    $tools["main"][] = "pause";
                 }
 
                 $tools["additional"][] = "stop";
@@ -401,7 +402,6 @@ class Task extends \Infuso\ActiveRecord\Record {
 
             case self::STATUS_DEMAND:
 
-                //$tools["main"][] = "add";
                 $tools["main"][] = "take";
                 $tools["additional"][] = "cancel";
 
@@ -466,6 +466,25 @@ class Task extends \Infuso\ActiveRecord\Record {
         $this->log(array(
             "type" => Log::TYPE_TASK_TAKEN,
         ));
+    }
+    
+    /**
+     * Ставит задачу на паузу
+     **/
+    public function pause($user) {
+        if($this->data("status") == self::STATUS_IN_PROGRESS) {
+	        $flow = $this->workflow()
+				->eq("userId", $user->id())
+				->isnull("end")
+				->one();
+			if($flow->exists()) {
+				$flow->data("end", \util::now());
+		        $this->log(array(
+		            "type" => Log::TYPE_TASK_PAUSED,
+		        ));
+			}
+			
+		}
     }
     
     /**

@@ -218,7 +218,7 @@ class Task extends Base {
             return;
         }
 
-        $task->pauseToggle();
+        $task->pause(app()->user());
 
     }
 

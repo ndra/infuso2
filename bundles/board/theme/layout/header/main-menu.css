@@ -24,6 +24,14 @@
     .active {
         background:#666;        
     }
+    
+    .new-task {
+        background: green;
+        padding-right: 20px;
+        &:hover {
+            background: rgb(0,170,0);
+        }
+    }
 }
 
 .x55qv4lhb8m-submenu {

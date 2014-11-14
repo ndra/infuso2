@@ -73,6 +73,9 @@ class Roles implements Core\Handler {
             ->appendTo("board/worker")
             ->appendTo("board/manager");
             
+		user_operation::create("board/pauseTask", "Поставить задачу на паузу")
+            ->appendTo("board/worker");
+            
 		user_operation::create("board/showBacklog", "Показать бэклог")
             ->appendTo("board/worker")
             ->appendTo("board/manager");

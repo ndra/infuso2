@@ -18,6 +18,7 @@ class Log extends Record {
     const TYPE_TASK_CHECKED = 9;
     const TYPE_TASK_REVISED = 10;
     const TYPE_TASK_CANCELLED = 11;
+    const TYPE_TASK_PAUSED = 15;
 
     public static function model() {
         return array (
@@ -77,6 +78,7 @@ class Log extends Record {
 		    self::TYPE_TASK_CHECKED => "Проверено",
 		    self::TYPE_TASK_REVISED => "Возвращено",
 		    self::TYPE_TASK_CANCELLED => "Отменено",
+		    self::TYPE_TASK_PAUSED => "На паузе",
 		);
 
     }
@@ -187,6 +189,9 @@ class Log extends Record {
 		        break;
 			case self::TYPE_TASK_CANCELLED:
 				$icon = "cancel";
+			    break;
+			case self::TYPE_TASK_PAUSED:
+				$icon = "pause";
 			    break;
         }
         
