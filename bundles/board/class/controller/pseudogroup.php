@@ -85,7 +85,8 @@ class PseudoGroup extends Core\Component {
 		    case "checkout":
 			    $tasks = Model\Task::all()
 			        ->visible()
-			        ->eq("status", Model\Task::STATUS_CHECKOUT);
+			        ->eq("status", Model\Task::STATUS_CHECKOUT)
+			        ->desc("changed");
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
 			    }
@@ -93,6 +94,7 @@ class PseudoGroup extends Core\Component {
 		    case "completed":
 			    $tasks = Model\Task::all()
 			        ->visible()
+			        ->desc("changed")
 			        ->eq("status", Model\Task::STATUS_COMPLETED);
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
@@ -101,7 +103,8 @@ class PseudoGroup extends Core\Component {
 		    case "cancelled":
 			    $tasks = Model\Task::all()
 			        ->visible()
-			        ->eq("status", Model\Task::STATUS_CANCELLED);
+			        ->eq("status", Model\Task::STATUS_CANCELLED)
+			        ->desc("changed");
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
 			    }
