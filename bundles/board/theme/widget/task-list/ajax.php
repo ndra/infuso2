@@ -25,6 +25,7 @@ use \Infuso\Board\Controller;
     foreach($group->subgroups() as $item) {
         exec("item", array(
             "item" => $item,
+            "group" => $group,
         ));
     }
 

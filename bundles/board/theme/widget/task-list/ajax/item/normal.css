@@ -85,5 +85,9 @@
         padding: 4px;
         margin-right: 10px;
     }
+    
+    .sort-handle {
+        width: 25px;
+    }
 
 }

@@ -7,6 +7,12 @@ $task = $item->task();
     <table>
         <tr>
         
+            if($group->sortable()) {
+                <td class='sort-handle' >
+                    <img src='{$this->bundle()->path()}/res/img/icons16/sort.png' style='opacity:.2;' />
+                </td>
+            }
+            
             <td class='id' >{$task->id()}</td>
             <td class='project-icon' >
                 $icon = $task->project()->icon()->preview(16,16);

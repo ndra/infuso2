@@ -6,6 +6,7 @@ mod.init(".task-list-zjnu1r2ofp", function() {
     if($container.attr("data:sortable") == 1) {
         new Sortable($container[0], {
             draggable: ".task",
+            handle: ".sort-handle",
             onStart: function(event) {
                 window.sortProcessing = true;
             }, onEnd: function(event) {
