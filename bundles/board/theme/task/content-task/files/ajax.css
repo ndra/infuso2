@@ -12,7 +12,10 @@
             width:150px;
             height:150px;
             display: block;
-            margin-bottom: 10px;        
+            margin-bottom: 10px;    
+            &:hover {
+                box-shadow: 0 0 10px rgba(0,0,0,.4); 
+            }
         }
         
         .delete {

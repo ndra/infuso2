@@ -12,19 +12,24 @@ $task = $item->task();
                 $icon = $task->project()->icon()->preview(16,16);
                 <img src='{$icon}' />
             </td>
-            <td class='project' ><a href='{$task->project()->url()}' >{$task->project()->title()}</a></td>
+            <td class='project' ><a target='_blank' href='{$task->project()->url()}' >{$task->project()->title()}</a></td>
+           
+            <td class='project-icon' >
+                $icon = $task->pdata("creator")->userpic()->preview(16,16);
+                <img src='{$icon}' />
+            </td>           
             
-            if($task->storage()->files()->count()) {
-                <td class='files' style='width:100px;' >
-                    foreach($task->storage()->files() as $file) {
-                        $preview = $file->preview(32,32)->crop();
-                        <div>
-                            <img src='{$preview}' />
-                        </div>
-                    }
+                
+            foreach($task->storage()->files() as $file) {
+                <td class='file' >
+                    $preview = $file->preview(32,32)->crop();
+                    <div>
+                        <img src='{$preview}' />
+                    </div>
                 </td>
             }
-            
+                
+
             <td class='text'>
                 echo \util::str($task->text())->ellipsis(200);
             </td>
