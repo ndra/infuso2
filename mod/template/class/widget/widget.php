@@ -36,7 +36,7 @@ abstract class Widget extends Generic {
     	    }
     	}
     	
-    	throw new \Exception("Cannot nind widget '{$name}'");
+    	throw new \Exception("Cannot find widget '{$name}'");
     	
 	}
 

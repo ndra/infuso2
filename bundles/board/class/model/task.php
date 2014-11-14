@@ -340,8 +340,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     /**
-     * Возвращает время, потраченное на задачу
-     * Суммируются время, потраченное на задачу и на субзадачи
+     * Возвращает время, потраченное на задачу (в секундах)
      **/
     public function timeSpent() {
         return $this->data("timeSpent");

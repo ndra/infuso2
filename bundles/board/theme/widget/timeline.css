@@ -1,0 +1,35 @@
+.Roy1CZU9ev {
+    
+    border: 1px solid #ccc;
+    overflow: hidden;
+    
+    .day {
+        
+        position: relative;
+        height: 20px;
+        border-bottom: 1px solid #ededed;
+        
+        .num {
+            position: absolute;
+            font-size: 11px;
+            opacity: .4;
+            top: 4px;
+            left: 2px;
+        }
+        
+        .workflow-item {
+            position: absolute;
+            height: 15px;
+            &.status-1 {
+                background: rgba(255, 0, 0, .5);
+                top: 0;
+            }
+            &.status-2 {
+                background: rgba(0, 255, 0, .5);
+                top: 15px;
+            }
+        }
+        
+    }
+    
+}

@@ -51,7 +51,7 @@ class WorkFlow extends ActiveRecord\Record {
                     'type' => 'pg03-cv07-y16t-kli7-fe6x',
                     'editable' => '2',
                     'label' => 'Пользователь',
-                    'class' => 'user',
+                    'class' => \Infuso\User\Model\User::inspector()->className(),
                 ), array (
                     'name' => 'taskId',
                     'type' => 'link',

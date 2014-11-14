@@ -31,13 +31,17 @@ $task = $item->task();
                 
 
             <td class='text'>
+                $comment = $task->getLog()->eq("type", \Infuso\Board\Model\Log::TYPE_TASK_REVISED)->one();
+                if($comment->exists()) {
+                    <span class='comment' >{$comment->message()}</span>
+                }
                 echo \util::str($task->text())->ellipsis(200);
             </td>
             
             <td class='time'>
-                echo $task->timeSpent();
-                if($progress = $task->timeSpentProgress()) {
-                    echo " + ".round($progress / 3600, 2);
+                echo round($task->timeSpent() / 3600, 2);
+                if($progress = round($task->timeSpentProgress() / 3600, 2)) {
+                    echo " + ".$progress;
                 }
                 echo " / ".$task->timeScheduled();
             </td>
