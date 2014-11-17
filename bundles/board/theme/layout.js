@@ -52,6 +52,8 @@ $(function() {
     
     $container.on("board/collapseLeft", collapseLeft);
     
+    $container.find(".left > .collapse").click(collapseLeft);
+    
     // Открываем задачу
     $container.on("board/openTask", function(event) {
         
