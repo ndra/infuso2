@@ -40,10 +40,10 @@
             display: inline-block;
         }
         img {
-            opacity: .3;
+            border: 2px solid rgba(0,0,0,0);
         }
         .active {
-            opacity: 1;
+            border: 2px solid blue;
         }
     }
     

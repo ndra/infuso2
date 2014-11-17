@@ -20,6 +20,8 @@ lib::modJSUI();
     </div>
     
     <div class='left' style='width:1px;' >
+        <div class='collapse' title='Свернуть' ></div>
+        <div class='container' ></div>
     </div>
 
 </div>

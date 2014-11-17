@@ -24,7 +24,8 @@
     <div class='submenu dropdown' menu:id='reports' >
 
         if(user::active()->checkAccess("board/manager")) {
-            <a class='item' href='{action("infuso\\board\\controller\\report","users")}' >Пользователи</a>
+            <a class='item' href='{action("infuso\\board\\controller\\report", "users")}' >Пользователи</a>
+            <a class='item' href='{action("infuso\\board\\controller\\report", "projects")}' >Проекты</a>
         }
 
     </div>

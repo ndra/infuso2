@@ -62,7 +62,7 @@ $(function() {
             cmd: "infuso/board/controller/task/getTask",
             taskId: event.taskId
         }, function(data) {
-            $container.children(".left").html(data.html);
+            $container.find(".left > .container").html(data.html);
         });
         
         selectTask(event.taskId);
@@ -87,7 +87,7 @@ $(function() {
                 cmd: "infuso/board/controller/task/newTaskWindow",
                 groupId: event.groupId
             }, function(data) {
-                $container.children(".left").html(data.html);
+                $container.find(".left > .container").html(data.html);
             });
             deselectTask();
         }
