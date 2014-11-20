@@ -28,19 +28,20 @@ $containerStyles = array(
 
 $container = helper("<span class='datepicker-89z0fcfy09' >");
 $container->begin();
+
+    <input type='hidden' value='{e($value)}' class='hiddenField' name='{e($name)}'/>
+
     $input = helper("<input type='text' class='visibleField'/>");
     $input->attr("value", $date);
     $input->attr("placeholder", $placeholder);
     $input->style("width",80);
-    $hiddenInput = helper("<input type='hidden' value='{$value}' class='hiddenField' name='{$name}'/>");
     
     if($widget->param("clearButton")) {
-        $input->style("padding-right",30);
+        $input->style("padding-right", 30);
         <div class='button' ></div>
     }
     
     $input->exec();
-    $hiddenInput->exec();
     $fastDayShifts = $widget->param("fastDayShifts");
     if($fastDayShifts){
         foreach($fastDayShifts as $date => $title){

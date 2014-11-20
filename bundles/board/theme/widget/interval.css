@@ -1,0 +1,28 @@
+.g9cJIui7ST {
+    
+    display: inline-block;
+    
+    td {
+        vertical-align: middle;
+        padding-right: 10px;
+    }
+    
+    input {
+        margin-right: 0 !important;
+    }
+    
+    .quick-intervals {
+        .interval {
+            margin-right: 10px;
+            opacity: .5;
+            font-style: italic;
+            text-decoration: underline;
+            font-size: 12px;
+            cursor: pointer;
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+    
+}

@@ -3,6 +3,11 @@
 use \Infuso\Board\Model;
 
 <div class='id0xaej160' >
+
+    <form>
+        widget("infuso\\board\\widget\\interval")->exec();
+        <input type='submit' value='Показать' />
+    </form>
     
     $tasks = Model\Task::all()
         ->groupBy("projectId")
