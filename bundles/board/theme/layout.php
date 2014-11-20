@@ -9,7 +9,7 @@ exec("/ui/shared");
 modjs();
 lib::modJSUI();
 
-<div class='layout-slpod3n5sa' >
+<div class='layout-slpod3n5sa layout-change-listener' >
 
     <div class='top' >
         exec("header");

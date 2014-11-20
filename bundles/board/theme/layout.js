@@ -2,8 +2,18 @@ $(function() {
     
     var $container = $(".layout-slpod3n5sa");
     var $style = null;
-
     $container.layout();
+    
+    var $center = $container.find(".center").addClass("layout-change-listener");
+    
+    $center.on("layoutchange", function() {
+        var width = $(this).width();
+        if(width < 800) {
+            $(this).addClass("width-small");
+        } else {
+            $(this).removeClass("width-small");
+        }
+    });
     
     // Разворачивает левую панель
     var expandLeft = function() {

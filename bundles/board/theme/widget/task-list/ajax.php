@@ -15,10 +15,10 @@ use \Infuso\Board\Controller;
             echo " / ";
             <span>{$group->title()}</span>
         </div>
-        <div class='view-mode' >
+        /*<div class='view-mode' >
             echo "по группам / одним списком";
         </div>
-        <div class='pager' >1 2 3</div>
+        <div class='pager' >1 2 3</div> */
     </div>
     
     // Список задач

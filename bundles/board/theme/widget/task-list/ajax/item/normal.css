@@ -4,90 +4,12 @@
     padding: 5px 0;
     cursor: pointer;
     
-    a {
-        text-decoration: none;
-        color: black;
-        &: hover {
-            text-decoration: underline;
-        }
-    }
-    
-    td {
-        vertical-align: middle;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        &:first-child {
-            padding-left: 10px;
-        }
+    &.active {
+        background: #f5f5ea;
     }
     
     &:hover {
         background: #ededed;
     }
     
-    table {
-        width: 100%;
-        table-layout: fixed;
-    } 
-    
-    img {
-        display: block;
-    }
-    
-    .users {
-        width: 70px;
-        div {
-            display: inline-block;
-        }
-        img {
-            border: 2px solid rgba(0,0,0,0);
-        }
-        .active {
-            border: 2px solid blue;
-        }
-    }
-    
-    .time {
-        width: 70px;
-        font-size: 11px;
-    }
-    
-    .project {
-        width: 110px;
-        font-weight: bold;
-        white-space: nowrap;
-    }
-    
-    .project-icon {
-        width:20px;
-    }
-    
-    .id {
-        width: 50px;
-        font-size: 11px;
-    }
-    
-    .file {
-        width: 32px + 2px;
-        img {
-            display: block;
-        }
-    }
-    
-    .text {
-        width: 100%;
-        padding-right: 20px;
-    }
-    
-    .comment {
-        background: #990000;
-        color: white;
-        padding: 4px;
-        margin-right: 10px;
-    }
-    
-    .sort-handle {
-        width: 25px;
-    }
-
 }

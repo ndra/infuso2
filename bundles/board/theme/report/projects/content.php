@@ -8,6 +8,7 @@ use \Infuso\Board\Model;
         ->groupBy("projectId")
         ->limit(0)
         ->having("`spent` > 0")
+        ->orderByExpr("`spent` desc")
         ->visible();
         
     <table>

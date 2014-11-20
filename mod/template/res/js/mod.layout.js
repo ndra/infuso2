@@ -1,7 +1,6 @@
 jQuery.fn.layout = function(p1) {
 
     if(p1 === undefined) {
-    
         // Добавляем элемент в watchlist
         jQuery.fn.layout.watchlist.push(this);
         // Запускаем обновление верстки
@@ -29,7 +28,7 @@ jQuery.fn.layout.update = function() {
         var hash2 = elementLayoutHash(e);
         if(hash1 != hash2) {        
             $(e).filter(".layout-change-listener").trigger("layoutchange");
-            $(e).find(".layout-change-listener").trigger("layoutchange");   
+            $(e).find(".layout-change-listener").trigger("layoutchange");
         }
     }
 

@@ -1,0 +1,63 @@
+.width-small .YXACajLyjN {
+    display: block !important;
+}
+
+.YXACajLyjN {
+    
+    padding: 0 10px;
+    display: none;
+    
+    .header {
+        table-layout: fixed;
+        width: 100%;
+    }
+    
+    .sort-handle {
+        width: 25px;
+    }
+    
+    .time {
+        width: 70px;
+        font-size: 11px;
+    }
+    
+    .project {
+        width: 110px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+    
+    .project-icon {
+        width:20px;
+    }
+    
+    .id {
+        width: 50px;
+        font-size: 11px;
+    }
+    
+    .creator {
+        width: 100px;
+    }
+    
+    .users {
+        width:100px;
+        div {
+            display: inline-block;
+        }
+        img {
+            border: 2px solid rgba(0,0,0,0);
+        }
+        .active {
+            border: 2px solid blue;
+        }
+    }
+    
+    .comment {
+        background: #990000;
+        color: white;
+        padding: 4px;
+        margin-right: 10px;
+    }
+    
+}
