@@ -50,13 +50,19 @@ $task = $item->task();
         </td>
         
         <td class='users' >
-        
             $active = $task->activeCollaborators()->distinct("id");
-        
             foreach($task->collaborators() as $user) {
                 $userpic = $user->userpic()->preview(16,16)->crop();
                 <div>
                     <img class='{in_array($user->id(),$active) ? "active" : ""}' src='{$userpic}' title='{$user->title()}' />
+                </div>
+            }
+        </td>
+        
+        <td class='sticker' >
+            if($task->hangDays()) {
+                <div class='hang' >
+                    echo $task->hangDays();
                 </div>
             }
         </td>

@@ -12,7 +12,7 @@ mod.init(".hi31qru8zr", function() {
         });   
     }
     
-    load();
+    //load();
     
     mod.on("board/task/attachments-changed", load, $container);
     
