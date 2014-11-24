@@ -2,7 +2,9 @@
 
 <div class='rcog1oiaxe' data:task='{$task->id()}' >
 
-    <div class='ajax' style='overflow: auto;padding:20px;' >
+    exec("add");
+
+    <div class='ajax' >
         exec("ajax");
     </div>
     

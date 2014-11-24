@@ -16,14 +16,14 @@
         
         <table class='comment' >
             <tr>
-                <td class='type' >
-                    <img src='{$item->icon16()}' />
-                </td>
                 <td class='userpic' >
                     <img src='{$item->user()->userpic()->preview(16,16)->crop()}' />
                 </td>
                 <td class='user' >
                     <a href='{$item->user()->url()}' >{$item->user()->title()}</a>
+                </td>
+                <td class='type' >
+                    <img src='{$item->icon16()}' />
                 </td>
                 <td class='text' >
                     echo $item->pdata("type");

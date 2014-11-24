@@ -3,7 +3,8 @@
     .date {
         color: gray;
         font-style: italic;
-        margin-bottom:10px;
+        margin: 5px 20px;
+        font-size: 11px;
     }
     
     .comment {
@@ -11,8 +12,20 @@
         table-layout: fixed;
         width: 100%;
         
+        &:last-child td {
+            padding-bottom: 10px;
+        }
+        
+        td:first-child {
+            padding-left:20px;
+        }
+        
+        td:last-child {
+            padding-right:10px;
+        }
+        
         &:hover {
-            background: #ededed;
+            background: rgba(0,0,0,.1);
         }
         
         img {
@@ -20,22 +33,24 @@
         }
         
         td {
-            vertical-align: middle;
             padding: 3px 0;
         }
         
         .type {
+            padding-top: 5px;
             width:20px;
         }
         
         .userpic {
             width:20px;
+            padding-top: 5px;
         }
         
         .user {
             width: 70px;
             font-size: 11px;
             opacity: .5;
+            padding-top: 5px;
         }
         
         .text {
@@ -46,6 +61,7 @@
             width: 40px;
             font-size: 11px;
             opacity: .5;
+            padding-top: 6px;
         }
         
     }
