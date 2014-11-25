@@ -60,7 +60,7 @@ $task = $item->task();
         </td>
         
         <td class='sticker' >
-            if($task->hangDays()) {
+            if($task->hangDays() > 5) {
                 <div class='hang' >
                     echo $task->hangDays();
                 </div>

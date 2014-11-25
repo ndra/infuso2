@@ -7,9 +7,8 @@ $helper = \Infuso\Template\Helper("<input>");
 
 $helper->attr("type", "button");
 
-if($text = $widget->param("text")) {
-    $helper->attr("value", $text);
-}
+$text = $widget->param("text");
+$helper->attr("value", $text);
 
 foreach($widget->attr() as $key => $val) {
     $helper->attr($key, $val);

@@ -8,11 +8,9 @@ mod.init(".hi31qru8zr", function() {
             cmd:"infuso/board/controller/attachment/getAttachments",
             taskId: $container.attr("data:task")
         }, function(data) {
-            $container.html(data.html);
+            $container.children(".ajax").html(data.html);
         });   
     }
-    
-    //load();
     
     mod.on("board/task/attachments-changed", load, $container);
     

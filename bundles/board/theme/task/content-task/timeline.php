@@ -1,12 +1,10 @@
 <? 
 
-<div class='hhraxv0jki' >
+if($task->timeSpent() + $task->timeSpentProgress() == 0) {
+    return false;
+}
 
-    /*foreach($task->workflow() as $item) {
-        //echo $item->user()->id()." - ".$item->data("duration") / 3600;
-        var_export($item->user()->title());
-        <br/>
-    } */
+<div class='hhraxv0jki' >
 
     echo "Потрачено ";
     echo $task->timeSpent();

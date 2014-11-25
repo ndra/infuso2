@@ -2,15 +2,15 @@
     
     .file {
     
-        width:150px;
+        width:125px;
         margin: 0 20px 20px 0;
         display:inline-block;
         position: relative;
         
         img {
             box-shadow: 0 0 10px rgba(0,0,0,.2);    
-            width:150px;
-            height:150px;
+            width:125px;
+            height:125px;
             display: block;
             margin-bottom: 10px;    
             &:hover {

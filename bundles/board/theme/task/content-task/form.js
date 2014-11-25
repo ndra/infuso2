@@ -24,5 +24,19 @@ mod.init(".ybslv95net", function() {
             event.preventDefault();
         }
     }, $container);
+    
+    $container.find(".file").click(function() {
+        $(this).next().click();
+    });
+    
+    $container.find("input[type=file]").change(function() {
+        mod.call({
+            cmd:"infuso/board/controller/attachment/upload",
+            taskId: $container.attr("data:task")
+        }, function() {        
+        }, {
+            files: $container
+        });
+    });
 
 })

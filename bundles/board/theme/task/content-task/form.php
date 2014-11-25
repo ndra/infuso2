@@ -28,10 +28,27 @@
             ->fieldName("timePlanned")
             ->exec(); */
             
-        widget("infuso\\cms\\ui\\widgets\\button")
-            ->text($task->exists() ? "Сохранить" : "Создать")
-            ->attr("type", "submit")
-            ->exec();
+        <table style='width:100%;table-layout: fixed;' >
+            <tr>
+                <td style='width:100%;' >
+                    widget("infuso\\cms\\ui\\widgets\\button")
+                        ->text($task->exists() ? "Сохранить" : "Создать")
+                        ->attr("type", "submit")
+                        ->exec();
+                </td>
+                <td style='width:40px;' >
+                    widget("infuso\\cms\\ui\\widgets\\button")
+                        ->air()
+                        ->addClass("file")
+                        ->icon("attachment")
+                        ->attr("type", "button")
+                        ->attr("title", "Прикрепить файл")
+                        ->exec();
+                    <input type='file' style='display:none' name='file' />
+                </td>
+            </tr>
+        </table>
+            
     </div>
     
 </form>
