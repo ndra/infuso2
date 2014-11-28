@@ -31,11 +31,11 @@
                 "from" => \util::now()->date()->stamp(),
                 "to" => \util::now()->date()->stamp(),
             ), "Неделя" => array(
-                "from" => \util::now()->date()->shiftDay(2)->stamp(),
-                "to" => \util::now()->date()->shiftDay(2)->stamp(),
+                "from" => \util::date(strtotime("last Monday"))->date()->stamp(),
+                "to" => \util::date(strtotime("last Monday"))->date()->shiftDay(6)->stamp(),
             ), "Месяц" => array(
-                "from" => \util::now()->date(),
-                "to" => \util::now()->date(),
+                "from" => \util::now()->day(1)->stamp(),
+                "to" => \util::now()->day(1)->shiftMonth(1)->shiftDay(-1)->stamp(),
             ),
         );
         
