@@ -1,6 +1,6 @@
 <?
 
-$users = $task->workflow()->distinct("userId");
+$users = $task->workflow()->eq("status", \Infuso\Board\Model\Workflow::STATUS_DRAFT)->distinct("userId");
 $users = \Infuso\User\Model\User::all()->eq("id",$users);
 
 <form class='MTm5ivlmGC' data:task='{$task->id()}' >

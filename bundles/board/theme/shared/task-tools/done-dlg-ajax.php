@@ -1,6 +1,6 @@
 <?
 
-$users = $task->workflow()->distinct("userId");
+$users = $task->workflow()->eq("status", \Infuso\Board\Model\Workflow::STATUS_DRAFT)->distinct("userId");
 $users = \Infuso\User\Model\User::all()->eq("id",$users);
 
 <form class='w3T2t7XKGU' data:task='{$task->id()}' >
@@ -18,7 +18,7 @@ $users = \Infuso\User\Model\User::all()->eq("id",$users);
                     widget("infuso\\cms\\ui\\widgets\\textfield")
                         ->style("width", 50)
                         ->fieldName($user->id())
-                        ->value(round($time/3600,2))
+                        ->value(round($time / 3600, 2))
                         ->exec();
                 </td>
             </tr>

@@ -1,12 +1,37 @@
 <?
 
-$days = $workflow->copy()->groupBy("date(begin)")->desc("begin")->select("date(begin) as `date` ");
+$workflow2 = $workflow->copy()
+    ->groupBy("date(begin)")
+    ->desc("begin");
+
+$days = array();
+foreach($workflow2->select("date(begin) as `date`") as $row) {
+    $days[] = $row["date"];
+}
+
+// Учитываем пустые дни, если задан диапазон
+if($from && $to) {
+    $current = \util::date($from)->date();
+    $max = \util::date($to)->date();
+    for($i = 0; $i < 1000; $i ++) {
+        if(!in_array((string) $current, $days)) {
+            $days[] = (string) $current;
+        }
+        $current->shiftDay(1);
+        if((string) $current == $max) {
+            break;
+        }
+    }
+    usort($days, function($a, $b) {
+        return \util::date($b)->stamp() - \util::date($a)->stamp();
+    });
+}
 
 <div class='Roy1CZU9ev' >
 
-    foreach($days as $row) {
+    foreach($days as $day) {
         
-        $day = \util::date($row["date"])->date();
+        $day = \util::date($day)->date();
         
         <div class='day' >
         
@@ -15,7 +40,7 @@ $days = $workflow->copy()->groupBy("date(begin)")->desc("begin")->select("date(b
             foreach($workflow->copy()->eq("date(begin)", $day) as $item) {
                 
                 $left = ($item->pdata("begin")->stamp() - $day->stamp()) / 3600 / 24 * 100;
-                $width = ($item->data("duration")) / 3600 / 24 * 100;
+                $width = ($item->duration()) / 3600 / 24 * 100;
                 
                 $h = helper("<div>")
                     ->addClass("workflow-item")
@@ -23,16 +48,36 @@ $days = $workflow->copy()->groupBy("date(begin)")->desc("begin")->select("date(b
                     ->style("left", $left."%")
                     ->attr("title", $item->user()->title()." / ".round($item->data("duration") / 3600, 2));
                     
-                if($item->data("status") == 2) {
-                    $h->addClass("status-2");
-                } else {
-                    $h->addClass("status-1");
+                $h->attr("title", $item->duration());
+                    
+                switch($item->data("status")) {
+                    
+                    case \Infuso\Board\Model\WorkFlow::STATUS_MANUAL:
+                        $h->addClass("status-manual");
+                        break;
+                        
+                    case \Infuso\Board\Model\WorkFlow::STATUS_AUTO:
+                        $h->addClass("status-auto");
+                        break;
+                        
+                    case \Infuso\Board\Model\WorkFlow::STATUS_DRAFT:
+                        $h->addClass("status-draft");
+                        break;
                 }
                     
                 $h->exec();
                     
             }
         </div>
+    }
+    
+    // Выводим часы
+    for($i = 0; $i < 24; $i ++) {
+        helper("<div>")
+            ->param("content", $i)
+            ->addClass("hour")
+            ->style("left", ($i * 100 / 24)."%")
+            ->exec();
     }
     
 </div>

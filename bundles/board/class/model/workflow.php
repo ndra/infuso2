@@ -107,6 +107,16 @@ class WorkFlow extends ActiveRecord\Record {
 
     }
     
+    /**
+     * Возвращает длительность интервала
+     **/
+    public function duration() {
+        if($this->data("end")) {
+            return $this->data("duration");
+        }
+		return \util::now()->stamp() - $this->pdata("begin")->stamp();
+    }
+    
     public function beforeStore() {
         if($this->data("end")) {
             $d = $this->pdata("end")->stamp() - $this->pdata("begin")->stamp();

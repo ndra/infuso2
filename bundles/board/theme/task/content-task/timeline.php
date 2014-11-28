@@ -6,12 +6,20 @@ if($task->timeSpent() + $task->timeSpentProgress() == 0) {
 
 <div class='hhraxv0jki' >
 
-    echo "Потрачено ";
-    echo $task->timeSpent();
-    echo " + ";
-    echo round($task->timeSpentProgress() / 3600, 2);
-    echo " из ";
-    echo $task->timeScheduled();
+    <div class='time-text' >
+        echo "Потрачено ";
+        echo round($task->timeSpent() / 3600, 2);
+        
+        if($progress = round($task->timeSpentProgress() / 3600, 2)) {
+            echo " + ";
+            echo round($task->timeSpentProgress() / 3600, 2);
+        }
+        
+        echo " из ";
+        echo $task->timeScheduled();
+        echo " ч";
+        
+    </div>
     
     widget("infuso\\board\\widget\\timeline")
         ->taskId($task->id())

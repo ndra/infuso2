@@ -57,7 +57,7 @@ mod.init(".datepicker-89z0fcfy09", function() {
     
     $input.on("input", function() {
         if (!$(this).val()) {
-            inputHidden.val('');
+            $inputHidden.val('');
         }
         fireChangeEvent();
     });

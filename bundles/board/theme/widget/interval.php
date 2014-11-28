@@ -8,14 +8,16 @@
             <td>
                 widget("infuso\\cms\\ui\\widgets\\datepicker")
                     ->value('2014-11-13')
-                    ->fieldName("a")
+                    ->fieldName($widget->param("nameFrom"))
                     ->addClass("from")
+                    ->value($widget->param("valueFrom"))
                     ->exec();
             </td>
             <td>до</td>
             <td>
                 widget("infuso\\cms\\ui\\widgets\\datepicker")
-                    ->fieldName("b")
+                    ->fieldName($widget->param("nameTo"))
+                    ->value($widget->param("valueTo"))
                     ->addClass("to")
                     ->exec();
             </td>

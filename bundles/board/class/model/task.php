@@ -208,12 +208,12 @@ class Task extends \Infuso\ActiveRecord\Record {
 
             // При переходи задачи в статус к исполнению она ставится на первое место
             $this->sentToBeginning();
+            $this->finalizeWorkflow();
 
         }
 
         // Если статус задачи "к исполнению", ответственным лицом становится текущий пользователь.
-        // Если были выполняющиеся задачи, они ставятся на паузу
-        if($this->field("status")->changed() && $this->data("status") == 1) {   
+        if($this->field("status")->changed() && $this->data("status") == 1) {
             // Назначаем ответственного пользователя
             $this->data("responsibleUser",user::active()->id());
         }
@@ -318,7 +318,7 @@ class Task extends \Infuso\ActiveRecord\Record {
                 "status" => Workflow::STATUS_MANUAL,
             ));
         }
-        $this->workflow()->eq("status",Workflow::STATUS_DRAFT)->data("status",Workflow::STATUS_AUTO);
+        $this->finalizeWorkflow();
         $this->updateTimeSpent();
     }
 
@@ -457,6 +457,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     public function take($user) {         
         app()->msg("Берем задачу ".$this->id());          
         $this->data("status", self::STATUS_IN_PROGRESS);
+        $this->store();
         $this->workflow()->create(array(
             "taskId" => $this->id(),
             "userId" => $user->id(),
@@ -482,8 +483,18 @@ class Task extends \Infuso\ActiveRecord\Record {
 		            "type" => Log::TYPE_TASK_PAUSED,
 		        ));
 			}
-			
 		}
+    }
+    
+    public function finalizeWorkflow() {
+		$this->workflow()
+			->eq("status", Workflow::STATUS_DRAFT)
+			->isnull("end")
+			->data("end", \util::now());
+
+		$this->workflow()
+			->eq("status", Workflow::STATUS_DRAFT)
+			->data("status", Workflow::STATUS_AUTO);
     }
     
     /**

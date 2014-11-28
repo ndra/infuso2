@@ -1,0 +1,34 @@
+.H9IXl57L0B {
+    
+    padding: 40px;
+    
+    form {
+        margin-bottom: 20px;
+    }
+    
+    .task-list {
+        
+        table-layout: fixed;
+        width: 100%;
+        
+        td {
+            border: 1px solid #ededed;
+            width: 100px;
+            padding: 4px;
+        }
+        
+        .text {
+            width: 100%;
+        }
+        
+        tr:hover {
+            background: #ededed;
+        }
+        
+        .bottom {
+            font-weight: bold;    
+        }
+
+    }
+    
+}

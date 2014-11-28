@@ -2,12 +2,18 @@
     
     border: 1px solid #ccc;
     overflow: hidden;
+    position: relative;
+    padding-bottom: 15px;
     
     .day {
         
         position: relative;
         height: 20px;
         border-bottom: 1px solid #ededed;
+        
+        &:last-child {
+            border-bottom: 0;
+        }
         
         .num {
             position: absolute;
@@ -19,17 +25,25 @@
         
         .workflow-item {
             position: absolute;
-            height: 15px;
-            &.status-1 {
-                background: rgba(255, 0, 0, .5);
-                top: 0;
+            height: 20px;
+            top: 0;
+            
+            &.status-auto {
+                background: rgba(0, 128, 0, .3);
             }
-            &.status-2 {
-                background: rgba(0, 255, 0, .5);
-                top: 15px;
+            &.status-manual {
+                background: rgba(0, 128, 0, 1);
+            }
+            &.status-draft {
+                background: rgba(255, 0, 0, 1);
             }
         }
-        
+    }
+    
+    .hour {
+        position: absolute;
+        font-size: 9px;
+        bottom: 0;
     }
     
 }

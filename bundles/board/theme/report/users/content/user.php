@@ -7,7 +7,13 @@
     <table> 
         <tr>
             <td>
-                exec("workflow");
+                <div style='width:400px;' >
+                    widget("infuso\\board\\widget\\timeline")
+                        ->param("from", \util::now()->date()->shiftMonth(-1))
+                        ->param("to", \util::now()->date())
+                        ->userId($user->id())
+                        ->exec();
+                </div>
             </td>
             <td>
                 exec("projects");
