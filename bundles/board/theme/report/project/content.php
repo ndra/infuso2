@@ -31,6 +31,7 @@ use \Infuso\Board\Model;
                 <td>{round($task->timeSpent() / 3600, 2)}</td>
                 <td>{$task->timeScheduled()}</td>
                 <td>{$task->statusText()}</td>
+                <td>{$task->pdata("changed")->date()->num()}</td>
             </tr>
         }
         <tr class='bottom' >
