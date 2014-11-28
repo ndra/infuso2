@@ -41,5 +41,9 @@ mod.init(".ddksfajhjz", function() {
         });
     });
     
+    // При изменении задачи, перезагружаем
+    mod.on("board/taskChanged", function(data) {
+        $container.find(".comments-container").show();
+    }, $container);
 
 });

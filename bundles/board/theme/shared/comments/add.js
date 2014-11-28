@@ -15,27 +15,21 @@ mod.init(".ynRXmfiIV4", function() {
             text: text
         });
         $textarea.val("");
-        updateButtonVisibility();
     }
     
     $submit.click(send);
     
-    $textarea.keypress(function(event) {
-        if(event.which == 13 && !event.ctrlKey) {
+    $textarea.keydown(function(event) {
+        if(event.which == 13 && event.ctrlKey) {
             event.preventDefault();
             send();
         }
     });
     
-    var updateButtonVisibility = function() {
-        var val = $textarea.val();
-        if(val.length) {
-            $submit.show();
-        } else {
-            $submit.hide();
-        }
-    }
-    
-    $textarea.on("input", updateButtonVisibility);
-    
+    $container.find(".do-comment").click(function() {
+        $(this).hide();
+        $container.find(".comments-form").show();
+        $container.find("textarea").focus();
+    });
+
 });

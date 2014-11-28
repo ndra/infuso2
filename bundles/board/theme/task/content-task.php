@@ -12,6 +12,13 @@
     
     exec("timeline");
     
-    exec("/board/shared/comments");   
+    $inject = "";
+    if($task->data("status") == \Infuso\Board\Model\Task::STATUS_DRAFT) {
+        $inject = "display: none";
+    }
+    
+    <div class='comments-container' style='{$inject}' >
+        exec("/board/shared/comments");  
+    </div>
 
 </div>

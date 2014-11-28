@@ -2,8 +2,15 @@
     
     padding: 20px;
     
-    .submit {
+    .comments-form {
         display: none;
+    }
+    
+    .do-comment {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
     }
     
 }
