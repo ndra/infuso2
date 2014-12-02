@@ -163,11 +163,18 @@ abstract class Model extends Core\Controller {
         }
 
         // Если два параметра - меняем значение
-        elseif(func_num_args()==2) {                            
+        elseif(func_num_args() == 2) {
             $field = $this->field($key);
+            
+            // Подготавливаем новое и старое значение, чтобы корректно сравнить их
             $preparedValue = $field->prepareValue($val);
-            $this->changedData[$key] = $preparedValue;
-            $this->handleModelDataChanged();
+            $oldPreparedValue = $field->prepareValue($field->value());
+            
+			// Если старое и новое значения совпадают, ничего не делаем
+            if($preparedValue != $oldPreparedValue) {
+	            $this->changedData[$key] = $preparedValue;
+	            $this->handleModelDataChanged();
+            }
         }
     }
     
@@ -180,13 +187,11 @@ abstract class Model extends Core\Controller {
      * @todo сделать чтобы в качестве данных можно было передавать модель или филдсет
      **/
     public final function setData($data) {
-
         if(is_array($data)) {
             foreach($data as $key=>$val) {
                 $this->data($key,$val);
             }
         }
-
     }
     
     /**
