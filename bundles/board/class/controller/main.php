@@ -15,6 +15,19 @@ class Main extends Base {
 			->exec();
     }
     
+    /*public function index_test() {
+		$mail = service("mail")->create()
+		->to("golikov.org@gmail.com")
+		->subject("test")
+		->message("ололо!!!!!!!")
+		->param("a", "this is aaaaaa")
+		->code("board/task/checkout")
+		->send();
+		
+		var_export($mail);
+		
+    } */
+    
     public function index_request() {
         $this->app()->tm("/board/task-list")
             ->param("status", "request")

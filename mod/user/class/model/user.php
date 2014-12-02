@@ -158,8 +158,8 @@ class User extends ActiveRecord\Record {
     /**
      * @return Возвращает пользователя по id
      **/
-    public static function get($data) {
-        return \reflex::get(get_class(),$data);
+    public static function get($id) {
+        return service("ar")->get(get_class(),$id);
     }
 
     /**
@@ -529,25 +529,6 @@ class User extends ActiveRecord\Record {
     }
 
     /**
-     * Отправляет пользователю письмо
-     **/
-    public final function mail($first,$second=null) {
-
-        if(func_num_args()==1 && is_array($first)) {
-            $params = $first;
-        } else {
-            $params = array(
-                "message" => $first,
-                "subject" => $second,
-            );
-        }
-
-        $mail = $this->mailer();
-        $mail->params($params);
-        $mail->send();
-    }
-
-    /**
      * Приводит адрес электронной почты к какноническому виду.
      * Возвращает null, если прверка по режексу не удалась
      **/
@@ -606,7 +587,7 @@ class User extends ActiveRecord\Record {
      * Возвращает электронную почту пользователя
      **/
     public function email() {
-        return $this->fieldOrBehaviour("email");
+        return $this->data("email");
     }
 
     /**

@@ -175,6 +175,8 @@ abstract class Model extends Core\Controller {
 	            $this->changedData[$key] = $preparedValue;
 	            $this->handleModelDataChanged();
             }
+            
+            return $this;
         }
     }
     

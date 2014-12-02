@@ -203,19 +203,17 @@ class Task extends \Infuso\ActiveRecord\Record {
         // Устанавливаем новую дату изменения только если задача активна
         // Иначе мы можем влезть в статистику по прошлому периоду
         if($this->field("status")->changed()) {
-        
             $this->data("changed",util::now());
-
             // При переходи задачи в статус к исполнению она ставится на первое место
             $this->sentToBeginning();
             $this->finalizeWorkflow();
-
         }
 
         // Если статус задачи "к исполнению", ответственным лицом становится текущий пользователь.
-        if($this->field("status")->changed() && $this->data("status") == 1) {
-            // Назначаем ответственного пользователя
-            $this->data("responsibleUser",user::active()->id());
+        if($this->field("status")->changed() && $this->data("status") == self::STATUS_CHECKOUT) {
+            $this->emailSubscribers(array(
+                "xxx" => 121212,
+			));
         }
         
         $status = $this->field("status")->initialValue();
@@ -525,6 +523,31 @@ class Task extends \Infuso\ActiveRecord\Record {
      **/         
     public function access() {  
         return Access::all()->eq("groupId", $this->id());
+    }
+    
+    /**
+     * Отправляет письмо подписчикам (Это участники, автор и те кто комментировал)
+     **/
+    public function emailSubscribers($data) {
+    
+        $users = $this->getLog()->distinct("userId");
+        $users[] = $this->data("creator");
+        $users = array_unique($users);
+        
+        foreach($users as $userId) {
+
+            $user = service("user")->get($userId);
+            $email = $user->email();
+            if($email == "golikov.org@gmail.com") {
+	            $mail = service("mail")->create()
+					->to($email)
+					->code("board/task/checkout")
+					->param("title", $this->title())
+					->param("task-id", $this->id())
+					->send();
+			}
+        }
+    
     }
 
 }

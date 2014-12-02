@@ -130,7 +130,7 @@ class Component {
                     } elseif(sizeof($params)==0) {
                         return $this->$wrapperMethod($fn);
                     } else {
-                        throw new Exception("method $fn defined as wrapper and must have zero or one argument. ");
+                        throw new \Exception("method $fn defined as wrapper and must have zero or one argument. ");
                     }
 
                     return;
@@ -225,8 +225,8 @@ class Component {
         // Загружаем параметры по умолчанию
         $this->params($this->initialParams());
 
+		// ДОбавляем параметры из конфигурации компонентов
         $params = $this->componentConf("params");
-        
         if(is_array($params)) {
             foreach($params as $key=>$val) {
                 $this->param($key,$val);

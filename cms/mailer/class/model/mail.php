@@ -5,7 +5,7 @@ use Infuso\Core;
 use Infuso\ActiveRecord;
 
 /**
- * Модель записи в журнале
+ * Модель письма
  **/ 
 class Mail extends ActiveRecord\Record {
 
@@ -183,6 +183,21 @@ class Mail extends ActiveRecord\Record {
      * Применяет к письму шаблон
      **/         
     public function applyTemplate() {
+    
+        // Если не указан код - выходим
+        $code = $this->code();
+        if(!$code) {
+			return;
+        }
+
+		// Создаем шаблон с этим кодом, если его еще нет
+        $template = $this->template();
+        if(!$template->exists()) {
+            $template = service("ar")->create(Template::inspector()->className(), array(
+                "code" => $code,
+			));
+        }
+        
         $this->template()->applyTo($this);
     }
     
@@ -208,6 +223,7 @@ class Mail extends ActiveRecord\Record {
 	        "type" => "mixed/data",
 	        "subject" => "mixed/data",
 	        "to" => "mixed/data",
+	        "code" => "mixed/data",
 		);
 	}
 

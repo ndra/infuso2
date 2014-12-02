@@ -39,7 +39,7 @@ class Service extends Core\Service {
     }
     
     public function get($id) {
-        return Model\User::get($id);
+        return service("ar")->get(Model\User::inspector()->className(), $id);
     }
     
     /**

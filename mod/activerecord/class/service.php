@@ -45,6 +45,10 @@ class Service extends Core\Service {
 	 **/
 	public function get($class,$id,$data=array()) {
 	
+	    if(!is_numeric($id) && $id !== null && $id !== false && $id !== "") {
+	        throw new \Exception("active record id must be integer. Given ".var_export($id, 1));
+	    }
+	
         // Определяем класс элементов / последовательности
         $class = self::getItemClass($class);
 
