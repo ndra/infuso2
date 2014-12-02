@@ -42,13 +42,19 @@ if($from && $to) {
                 $left = ($item->pdata("begin")->stamp() - $day->stamp()) / 3600 / 24 * 100;
                 $width = ($item->duration()) / 3600 / 24 * 100;
                 
+                $title = $item->user()->title()." / ".round($item->data("duration") / 3600, 2);
+                $title.= " (".$item->pdata("begin")->time();
+                $title.= " — ";
+                if($item->data("end")) {
+                    $title.= $item->pdata("end")->time();
+                }
+                $title.= ")";
+                
                 $h = helper("<div>")
                     ->addClass("workflow-item")
                     ->style("width", $width."%")
                     ->style("left", $left."%")
-                    ->attr("title", $item->user()->title()." / ".round($item->data("duration") / 3600, 2));
-                    
-                $h->attr("title", $item->duration());
+                    ->attr("title", $title);
                     
                 switch($item->data("status")) {
                     

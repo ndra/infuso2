@@ -96,8 +96,11 @@ class Date extends Core\Component {
         $this->time = strtotime(date("Y-m-d", $this->time));
         return $this;
     }
-
-
+    
+    public function time() {
+        return str_pad($this->hours(),2,0, STR_PAD_LEFT).":".str_pad($this->minutes(),2,0, STR_PAD_LEFT);
+    }
+    
     /**
      * Возвращет метку времени linux
      **/
