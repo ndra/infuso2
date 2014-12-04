@@ -2,6 +2,7 @@
 
 namespace Infuso\Board\Controller;
 use \Infuso\Core;
+use \Infuso\Board\Model;
 
 class Main extends Base {
 
@@ -15,18 +16,15 @@ class Main extends Base {
 			->exec();
     }
     
-    /*public function index_test() {
-		$mail = service("mail")->create()
-		->to("golikov.org@gmail.com")
-		->subject("test")
-		->message("ололо!!!!!!!")
-		->param("a", "this is aaaaaa")
-		->code("board/task/checkout")
-		->send();
-		
-		var_export($mail);
-		
-    } */
+    /**
+     * Просмотр задачи
+     **/
+    public function index_task($p) {
+		$group = Pseudogroup::byTask($p["id"]);
+        $this->app()->tm("/board/task-list")
+            ->param("status", $group->id())
+			->exec();
+    }
     
     public function index_request() {
         $this->app()->tm("/board/task-list")

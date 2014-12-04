@@ -106,7 +106,7 @@ class Template extends ActiveRecord\Record {
     public static function processText($text, $params) {
         foreach($params as $key => $val) {
             $text = strtr($text, array(
-				"%%".$key."%%" => $val,
+				'{$'.$key.'}' => $val,
 			));
         }
         return $text;

@@ -117,6 +117,18 @@ class Log extends Record {
             "deliverToClient" => true,
         ));
     }
+    
+    public function afterCreate() {
+        $task = $this->task();
+        $task->emailSubscribers(array(
+			"code" => "board/task/new-comment",
+			"type" => "text/html",
+			"comment" => $this->data("text"),
+			"user-id" => $this->user()->id(),
+			"nick" => $this->user()->nickName(),
+			"userpic-16" => $this->user()->userpic()->preview(16,16),
+		));
+    }
 
     /**
      * Возвращает пользователя от которого сделана запись

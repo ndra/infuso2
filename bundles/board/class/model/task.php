@@ -11,7 +11,6 @@ class Task extends \Infuso\ActiveRecord\Record {
 
     const STATUS_DEMAND = 200;
     const STATUS_REQUEST = 200;
-    const STATUS_NEW = 0;
     const STATUS_BACKLOG = 0;
     const STATUS_IN_PROGRESS = 1;
     const STATUS_CHECKOUT = 2;
@@ -130,7 +129,6 @@ class Task extends \Infuso\ActiveRecord\Record {
 	public static function enumStatuses() {
 	    return array(
 	        self::STATUS_DEMAND => "Заявка",
-		    self::STATUS_NEW => "Новая",
 		    self::STATUS_BACKLOG => "Бэклог",
 		    self::STATUS_IN_PROGRESS => "Выполняется",
 		    self::STATUS_CHECKOUT => "На проепрке",
@@ -528,7 +526,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     /**
      * Отправляет письмо подписчикам (Это участники, автор и те кто комментировал)
      **/
-    public function emailSubscribers($data) {
+    public function emailSubscribers($params) {
     
         $users = $this->getLog()->distinct("userId");
         $users[] = $this->data("creator");
@@ -539,12 +537,23 @@ class Task extends \Infuso\ActiveRecord\Record {
             $user = service("user")->get($userId);
             $email = $user->email();
             if($email == "golikov.org@gmail.com") {
+            
 	            $mail = service("mail")->create()
 					->to($email)
-					->code("board/task/checkout")
-					->param("title", $this->title())
+					->code($params["code"])
 					->param("task-id", $this->id())
-					->send();
+					->param("task-url", $url)
+					->param("task-title", $this->title());
+					
+				if($params["type"]) {
+					$mail->type($params["type"]);
+				}
+					
+				foreach($params as $key => $val) {
+				    $mail->param($key, $val);
+				}
+				
+				$mail->send();
 			}
         }
     

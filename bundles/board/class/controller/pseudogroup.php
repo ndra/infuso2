@@ -12,6 +12,28 @@ class PseudoGroup extends Core\Component {
 	    $this->id = $id;
 	}
 	
+	public static function byTask($taskId) {
+	    $task = Model\Task::all()
+	        ->eq("id", $taskId)
+			->visible()
+			->one();
+		if($task->exists()) {
+			$names = array(
+		        Model\Task::STATUS_DEMAND => "request",
+			    Model\Task::STATUS_BACKLOG => "backlog",
+			    Model\Task::STATUS_IN_PROGRESS => "inprogress",
+			    Model\Task::STATUS_CHECKOUT => "checkout",
+			    Model\Task::STATUS_COMPLETED => "completed",
+			    Model\Task::STATUS_DRAFT => "draft",
+			    Model\Task::STATUS_CANCELLED => "cancelled",
+	    	);
+			return new self($names[$task->data("status")]);
+		} else {
+		    return new self("request");
+		}
+
+	}
+
 	/**
 	 * Возвращает id группы
 	 **/
@@ -117,6 +139,8 @@ class PseudoGroup extends Core\Component {
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
 			    }
+			    break;
+			case "task":
 			    break;
 			    
 		}

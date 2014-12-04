@@ -25,7 +25,6 @@ class Task extends Base {
             ->param("group", $group)
             ->getContentForAjax();
 
-
         return array(
             "html" => $html,
         );
