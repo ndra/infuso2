@@ -14,7 +14,8 @@
         td {
             border: 1px solid #ededed;
             width: 100px;
-            padding: 4px;
+            padding: 8px;
+            vertical-align: middle;
         }
         
         .text {

@@ -8,6 +8,10 @@ jQuery.fn.window = function(params) {
     if(params === undefined) {
         return $(this).parents(".5jfNUBs7a9zwHl:first").andSelf(".5jfNUBs7a9zwHl:first");
     }
+    
+    if(params == "contentElement") {
+        return $(this).window().children(".content");
+    }
 
 };
 
@@ -20,39 +24,11 @@ jQuery.window = function(params) {
     };
 
     params = $.extend({},defaults,params);
-
-    var $wnd = $("<div>").css({
-        position: "fixed",
-        width: params.width,
-        height: params.height,
-        background: "white",
-        boxShadow: "0 0 10px black",
-        zIndex:100
-    }).addClass("5jfNUBs7a9zwHl");
-
-    var header = $("<div>").css({
-        position: "relative",
-        height: 20,
-        background: "#ededed"
-    }).appendTo($wnd);
-
+    
+    // Закрывает окно
     var close = function() {
         $wnd.remove();
     }
-
-    $("<div>").css({
-        position: "absolute",
-        right: 4,
-        top: 4,
-        cursor: "pointer"
-    }).appendTo(header)
-        .html("Закрыть")
-        .click(close);
-
-    var content = $("<div>").css({
-        height: params.height - header.outerHeight(),
-        overflow: "auto"
-    }).appendTo($wnd);
 
     // Ставит окно в центр экрана
     var centerWindow = function() {
@@ -64,12 +40,60 @@ jQuery.window = function(params) {
         });
     }
 
+	// Контейнер окна
+    var $wnd = $("<div>").css({
+        position: "fixed",
+        width: params.width,
+        height: params.height,
+        background: "white",
+        boxShadow: "0 0 10px black",
+        zIndex:100
+    }).addClass("5jfNUBs7a9zwHl");
+
+	// Хэдер
+    var $header = $("<table>").css({
+        position: "relative",
+        background: "#ededed",
+        width: "100%",
+        "table-layout": "fixed",
+    }).appendTo($wnd);
+    
+    var $tr = $("<tr>").appendTo($header);
+
+    $("<td>").css({
+        right: 4,
+        top: 4,
+        padding: 4,
+		width: "100%"
+    }).appendTo($tr)
+        .html(params.title + "");
+
+    $("<td>").css({
+        right: 4,
+        top: 4,
+        width: 12,
+        padding: 4,
+        cursor: "pointer"
+    }).appendTo($tr)
+        .html("&#10006;")
+        .click(close);
+        
     $wnd.appendTo("body");
+    
+    var $content = $("<div>").css({
+        height: params.height - $header.outerHeight(),
+        overflow: "auto"
+    }).addClass("content")
+	.appendTo($wnd);
+    
     centerWindow();
 
-    mod.call(params.call,function(html) {
-        content.html(html);
-    });
+	// Делаем запрос к серверу
+	if(params.call) {
+	    mod.call(params.call,function(html) {
+	        $content.html(html);
+	    });
+    }
     
     return $wnd;
 

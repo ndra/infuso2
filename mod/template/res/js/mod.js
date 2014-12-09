@@ -6,6 +6,8 @@ if(!window.mod) {
     
     mod = {};
     
+	mod.messages = [];
+    
     /**
      * Выводит на экран высплывающее сообщение
      * Если второй параметр = true, сообщение - ошибка
@@ -18,6 +20,11 @@ if(!window.mod) {
         var msg = $("<div>")
     		.addClass("mod-msg")
     		.html(text+"");
+    		
+		mod.messages.push({
+		    text: text,
+		    error: error
+		});
     		
         error && msg.addClass("mod-msg-error");
         msg.css("opacity",0);
