@@ -1,6 +1,7 @@
 <?
 
 namespace Infuso\Core;
+use Infuso\Core\File as File;
 
 class Superadmin extends Controller {
 
@@ -17,7 +18,7 @@ class Superadmin extends Controller {
         }
 
         $hash = Crypt::hash($p1);
-        mod_file::get(mod::app()->confPath()."/__superadmin.txt")->put($hash);
+        File::get(mod::app()->confPath()."/__superadmin.txt")->put($hash);
     }
 
     /**
