@@ -8,7 +8,7 @@ use \Infuso\Core;
  **/
 class Sync extends \Infuso\Core\Controller {
 
-	public function confDescription() {
+	public static function confDescription() {
 	    return array(
 	        "components" => array(
 	            strtolower(get_class()) => array(
