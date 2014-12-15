@@ -14,8 +14,6 @@ use \Infuso\Board\Model;
         <input type='submit' value='Показать' class='g-button' />
     </form>
     
-    echo $from;
-    
     $tasks = Model\Task::all()
         ->limit(0)
         ->eq("projectId", $project->id())
@@ -36,9 +34,10 @@ use \Infuso\Board\Model;
         
     <table class='task-list' >
     
-        <theader>
+        <thead>
             <tr>
                 <td>id</td>
+                <td>Проект</td>
                 <td class='text' >Описание задачи</td>
                 <td>Потрачено, всего</td>
                 <td>Потрачено, за период</td>
@@ -46,18 +45,19 @@ use \Infuso\Board\Model;
                 <td>Статус</td>
                 <td>Изменено</td>
             </tr>
-        </theader>
+        </thead>
     
         foreach($rows as $row) {
             $task = Model\Task::get($row["id"]);
             <tr>
                 <td>{$task->id()}</td>
+                <td>{$task->project()->title()}</td>
                 <td class='text' >{\util::str($task->data('text'))->ellipsis(500)}</td>
                 <td>{round($task->timeSpent() / 3600, 2)}</td>
                 <td>{round($row["duration"] / 3600, 2)}</td>
                 <td>{$task->timeScheduled()}</td>
-                <td>{$task->statusText()}</td>
-                <td>{$task->pdata("changed")->date()->num()}</td>
+                <td class='status' >{$task->statusText()}</td>
+                <td class='changed' >{$task->pdata("changed")->date()->num()}</td>
             </tr>
         }
         <tr class='bottom' >
@@ -66,6 +66,8 @@ use \Infuso\Board\Model;
             <td>{round($tasks->sum('timeSpent') / 3600, 2)}</td>
             <td>{round($tasks->sum('Infuso\Board\Model\Workflow.duration') / 3600, 2)}</td>
             <td>{$tasks->sum('timeScheduled')}</td>
+            <td></td>
+            <td></td>
             <td></td>
         </tr>
     </table>

@@ -1,4 +1,4 @@
-<? 
+<?
 
 namespace Infuso\Board\Handler;
 use \Infuso\Core;
@@ -89,7 +89,7 @@ class Roles implements Core\Handler {
             ->appendTo("board/manager");
             
         //----------------------------------------------------------------------
-        // Проекты
+        // Управление проектами
         
         user_operation::create("board/viewAllProjects", "Просмотр полного списка проектов")
             ->appendTo("board/worker")
@@ -103,10 +103,22 @@ class Roles implements Core\Handler {
             ->appendTo("board/manager");
             
         //----------------------------------------------------------------------
-        // Доступ
+        // Управление доступом
         
         user_operation::create("board/manageAccess", "Управление доступом")
             ->appendTo("board/manager");
+            
+        //----------------------------------------------------------------------
+        // Отчеты
+
+        user_operation::create("board/showReportUsers", "Просмотр отчета по пользователям")
+            ->appendTo("board/manager")
+			->appendTo("board/worker");
+            
+        user_operation::create("board/showReportProjects", "Просмотр отчета по проектам")
+            ->appendTo("board/manager")
+            ->appendTo("board/worker")
+            ->appendTo("board/client");
         
     }
     

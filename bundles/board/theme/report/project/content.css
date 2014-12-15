@@ -12,7 +12,7 @@
         width: 100%;
         
         td {
-            border: 1px solid #ededed;
+            border: 1px solid #ccc;
             width: 100px;
             padding: 8px;
             vertical-align: middle;
@@ -29,7 +29,20 @@
         .bottom {
             font-weight: bold;    
         }
-
+    }
+    
+    thead {
+        td {
+            font-weight: bold;
+        }
+    }
+    
+    .status {
+        font-size: 11px;
+    }
+    
+    .changed {
+        font-size: 11px;
     }
     
 }

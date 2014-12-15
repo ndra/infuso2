@@ -22,9 +22,12 @@
 // Субменю
 <div class='x55qv4lhb8m-submenu' style='position:absolute;z-index:100;width:100%;' >
     <div class='submenu dropdown' menu:id='reports' >
-
-        if(user::active()->checkAccess("board/manager")) {
+    
+        if(user::active()->checkAccess("board/showReportUsers")) {
             <a class='item' href='{action("infuso\\board\\controller\\report", "users")}' >Пользователи</a>
+        }
+
+        if(user::active()->checkAccess("board/showReportProjects")) {
             <a class='item' href='{action("infuso\\board\\controller\\report", "projects")}' >Проекты</a>
         }
 
