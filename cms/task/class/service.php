@@ -67,7 +67,7 @@ class Service extends Core\Service {
 	        if($rmethod->isStatic()) {
 	            $mode = "static";
 	        }
-		} catch (Exception $ex) {}
+		} catch (\Exception $ex) {}
 
         if($mode == "reflex") {
             \Infuso\Cms\Task\Reflex::add($params);
