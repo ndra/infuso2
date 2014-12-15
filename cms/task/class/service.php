@@ -70,7 +70,7 @@ class Service extends Core\Service {
 		} catch (Exception $ex) {}
 
         if($mode == "reflex") {
-            \reflex_task_reflex::add($params);
+            \Infuso\Cms\Task\Reflex::add($params);
             return;
         }
 

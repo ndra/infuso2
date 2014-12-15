@@ -1,12 +1,14 @@
 <?
+namespace Infuso\Cms\Task;
 
 /**
  * Класс для задач-итераторов рефлекса
  **/
-class reflex_task_reflex {
+class Reflex {
 
     public static function add($p) {
-        reflex_task::add(array(
+
+        service("ar")->create(Task::inspector()->className(),array(
             "class" => get_class(),
             "method" => "execReflex",
             "params" => array(
@@ -14,8 +16,9 @@ class reflex_task_reflex {
                 "method" => $p["method"],
                 "query" => $p["query"],
                 "params" => $p["params"],
-            ),
+            )
         ));
+
     }
 
 	/**
@@ -34,7 +37,7 @@ class reflex_task_reflex {
 			$query = $q;
         }
         
-        $item = reflex::get($p["class"])
+        $item = service("ar")->collection($p["class"])
             ->asc("id")
             ->gt("id",$task->data("iterator"))
             ->where($query)
