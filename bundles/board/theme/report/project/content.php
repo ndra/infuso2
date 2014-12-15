@@ -62,6 +62,7 @@ use \Infuso\Board\Model;
         }
         <tr class='bottom' >
             <td></td>
+            <td></td>
             <td>Итого</td>
             <td>{round($tasks->sum('timeSpent') / 3600, 2)}</td>
             <td>{round($tasks->sum('Infuso\Board\Model\Workflow.duration') / 3600, 2)}</td>
