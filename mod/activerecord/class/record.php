@@ -68,7 +68,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	 * По умолчанию, url объекта имеет вид /my_class_name/item/id/123
 	 * Переопределите функцию, если у элемента должен быть другой url
 	 **/
-	public function recordUrl() {
+	public function _recordUrl() {
 		return null;
 	}
 
