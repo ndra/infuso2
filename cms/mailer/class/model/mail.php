@@ -3,7 +3,7 @@
 namespace Infuso\Cms\Mailer\Model;
 use Infuso\Core;
 use Infuso\ActiveRecord;
-
+use Infuso\Core\File as File;
 /**
  * Модель письма
  **/ 
@@ -245,4 +245,42 @@ class Mail extends ActiveRecord\Record {
         }
     }        
 
+    /**
+     * Прикрепляет файл к письму
+     * @var $file string Файл для прикрепления от корня веб проекта
+     * @author Petr.Grishin
+     **/
+    public function attach($file = null, $name = null, $cid = null) {
+
+        if ($file === null || $file == "")
+            return $this;
+
+        return $this->attachNative(File::get($file)->native(), $name, $cid);
+    }
+
+
+    /**
+     * Прикрепляет файл к письму
+     * @var $file string Файл для прикрепления Нативный
+     * @author Petr.Grishin
+     **/
+    public function attachNative($file = null, $name = null, $cid = null) {
+
+        if ($file === null || $file == "")
+            return $this;
+
+        if ($name === null || $name == "") {
+            $name = mod_file::get($file)->name();
+        }
+
+        $attachments = $this->param("attachments");
+        $attachments[] = array(
+            "name" => $name,
+            "file" => $file,
+            "cid" => $cid,
+        );
+        $this->param("attachments",$attachments);
+
+        return $this;
+    }
 }
