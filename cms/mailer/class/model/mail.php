@@ -212,7 +212,11 @@ class Mail extends ActiveRecord\Record {
 	 * Возвращает массив вложений
 	 **/
 	public function attachments() {
-	    return array();
+        $attachments = $this->param("attachments");
+        if(!is_array($attachments)){
+            $attachments = array();
+        }
+	    return  $attachments;
 	}
 
 	public function dataWrappers() {
