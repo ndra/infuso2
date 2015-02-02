@@ -16,9 +16,9 @@ class Widget extends Base {
             if($org->data("person")){
                 $img = "/bundles/heapit/res/img/org/user.png";    
             }
-            $suggestions[] = array("value"=>$org->title(),"key"=>$org->id(), "icon"=>$img);
+            $suggestions[] = array("title"=>$org->title(),"id"=>$org->id(), "icon"=>$img);
         }
-        $ret["suggestions"] = $suggestions;
+        $ret["items"] = $suggestions;
         return $ret;
     }
     
@@ -41,9 +41,9 @@ class Widget extends Base {
             if($org->data("person")){
                 $img = "/bundles/heapit/res/img/org/user.png";    
             }
-            $suggestions[] = array("value"=>$org->title(),"key"=>$org->id(), "icon"=>$img);
+            $suggestions[] = array("title"=>$org->title(),"id"=>$org->id(), "icon"=>$img);
         }
-        $ret["suggestions"] = $suggestions;
+        $ret["items"] = $suggestions;
         return $ret;
     }   
         

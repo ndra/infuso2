@@ -5,11 +5,11 @@
         <tr>
             <td><label>Организация</label></td>
             <td>
-                $w = new \Infuso\Cms\UI\Widgets\Autocomplete();
+                $w = new \Infuso\Cms\UI\Widgets\Combo();
                 $w->fieldName("orgId");
                 $w->value($bargain->data("orgId"));
                 $w->title($bargain->pdata("orgId")->title());
-                $w->cmd("/infuso/heapit/controller/widget/orgList");
+                $w->callParams(array("cmd"=>"/infuso/heapit/controller/widget/orgList"));
                 $w->exec();
                 
             </td>

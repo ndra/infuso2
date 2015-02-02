@@ -45,11 +45,11 @@
         <tr>
             <td>Кто привел</td>
             <td>
-                $w = new \Infuso\Cms\UI\Widgets\Autocomplete;
+                $w = new \Infuso\Cms\UI\Widgets\Combo;
                 $w->fieldName("referral");
                 $w->value($org->data("referral"));
                 $w->title($org->pdata("referral")->title());
-                $w->cmd("/infuso/heapit/controller/widget/orgList");
+                $w->callParams(array("cmd"=>"/infuso/heapit/controller/widget/orgList"));
                 $w->exec();
             </td>
         </tr> 
