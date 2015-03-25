@@ -19,7 +19,11 @@ class Main extends Core\Controller {
     public function index($p) {
     
         $results = service("search")->query($p["query"]);
-    
+		
+        $results->limit(20);
+        $results->addBehaviour("infuso\\cms\\filter");
+        $results->applyQuery($p);
+		
         return app()->tm("/search/index")
             ->param("query", $p["query"])
             ->param("results", $results)
