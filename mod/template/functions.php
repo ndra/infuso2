@@ -31,6 +31,11 @@ function js() {
 	call_user_func_array(array(app()->tm(),"js"),$args);
 }
 
+function singleJS() {
+	$args = func_get_args();
+	call_user_func_array(array(app()->tm(),"singleJS"),$args);
+}
+
 function css() {
 	$args = func_get_args();
 	call_user_func_array(array(app()->tm(),"css"),$args);

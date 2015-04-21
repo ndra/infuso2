@@ -6,7 +6,11 @@ $(function() {
     
         //  Сохраняет данные формы
         var submit = function() {
-        
+            console.log(2);        
+            if(tinymce){
+                console.log(1);
+                tinymce.triggerSave();    
+            }
             // Собираем данные формы
             var serialized = form.serializeArray();
             var formData = {};
