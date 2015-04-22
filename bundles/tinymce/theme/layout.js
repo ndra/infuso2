@@ -2,26 +2,6 @@ mod.init(".tinyMCE-qPe4r8Zov0h", function() {
     
     var $container = $(this);
     var editorParams = $.parseJSON($container.attr("data:params"));
-
-    var defaultTinyMCEparams = {
-        selector:'.tinyMCE-qPe4r8Zov0h textarea', 
-        language : 'ru',
-        convert_urls: false,
-        plugins: [
-            "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-            "searchreplace wordcount visualblocks visualchars code fullscreen",
-            "insertdatetime media nonbreaking save table contextmenu directionality",
-            "emoticons template paste textcolor colorpicker textpattern"
-        ],
-        file_browser_callback : myFileBrowser,
-        image_advtab: true    
-    }
-    
-    var InitTinyMCEparams = $.extend({},defaultTinyMCEparams,editorParams);
-    
-    mod.on("reflex/beforeSave", function(){ 
-        tinymce.triggerSave();    
-    });
     
     var myFileBrowser = function (field_name, url, type, win) {
 		
@@ -45,6 +25,26 @@ mod.init(".tinyMCE-qPe4r8Zov0h", function() {
         return false;
 
     }
+    
+    var defaultTinyMCEparams = {
+        selector:'.tinyMCE-qPe4r8Zov0h textarea', 
+        language : 'ru',
+        convert_urls: false,
+        plugins: [
+            "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars code fullscreen",
+            "insertdatetime media nonbreaking save table contextmenu directionality",
+            "emoticons template paste textcolor colorpicker textpattern"
+        ],
+        file_browser_callback : myFileBrowser,
+        image_advtab: true    
+    }
+    
+    var InitTinyMCEparams = $.extend({},defaultTinyMCEparams,editorParams);
+    
+    mod.on("reflex/beforeSave", function(){ 
+        tinymce.triggerSave();    
+    });
     
     tinymce.init(InitTinyMCEparams);
 });
