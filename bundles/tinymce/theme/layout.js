@@ -32,6 +32,8 @@ mod.init(".tinyMCE-qPe4r8Zov0h", function() {
     tinymce.init({
             selector:'.tinyMCE-qPe4r8Zov0h textarea', 
             language : 'ru',
+            convert_urls: false,
+            //content_css : "/bundles/tinymce/res/test.css",
             plugins: [
                 "advlist autolink lists link image charmap print preview hr anchor pagebreak",
                 "searchreplace wordcount visualblocks visualchars code fullscreen",

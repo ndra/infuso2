@@ -11,11 +11,6 @@ use Infuso\Cms\Reflex\FieldView\View as FieldView;
 
 class View extends FieldView{
 
-    private $plugins  = "advlist autolink lists link image charmap print preview hr anchor pagebreak
-        searchreplace wordcount visualblocks visualchars code fullscreen
-        insertdatetime media nonbreaking save table contextmenu directionality
-        emoticons template paste textcolor colorpicker textpattern";
-
     /**
      * Должна вернуть объект шаблона для редактирования поля
      **/
@@ -23,7 +18,7 @@ class View extends FieldView{
         $tmp = app()->tm("/tinymce/layout/");
         $tmp->param("field", $this->field);
         $tmp->param("view", $this);
-        //$tmp->param("params", $this->params("tinymce"));
+        $tmp->param("params", $this->param("tinymce"));
         return $tmp;
     }
 
@@ -39,9 +34,5 @@ class View extends FieldView{
         return 100;
     }
 
-
-    public function plugins() {
-        return $this->plugins;
-    }
 
 }
