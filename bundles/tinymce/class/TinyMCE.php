@@ -25,7 +25,6 @@ class TinyMCE extends Field {
     }
 
     public function typeAlias() {
-
         return "tinymce";
     }
 
