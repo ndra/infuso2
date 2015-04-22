@@ -11,4 +11,5 @@
 /pub/*
 /conf/*
 /test/
+/bundles/site/*
 /Migration from infuso v.1
