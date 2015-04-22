@@ -23,7 +23,7 @@ class View extends FieldView{
         $tmp = app()->tm("/tinymce/layout/");
         $tmp->param("field", $this->field);
         $tmp->param("view", $this);
-        $tmp->param("params", $this->params("tinymce"));
+        //$tmp->param("params", $this->params("tinymce"));
         return $tmp;
     }
 
