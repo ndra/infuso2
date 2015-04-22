@@ -6,7 +6,7 @@
  * Time: 10:45
  */
 
-namespace NDRA\Plugins\TinyMCE;
+namespace Infuso\TinyMCE;
 use \Infuso\Core;
 use Infuso\Core\Model\Field as Field;
 

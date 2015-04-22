@@ -22,20 +22,21 @@ mod.init(".svfo38b38d", function() {
     }
     
     //обработчки события сейва
-    var saveHandler = function (event) {
+    var save = function (event) {
         mod.fire("reflex/beforeSave");    
-        event.preventDefault();
         submit();    
     }
     
     $form.submit(function(event) {
         // Предотвращаем отправку формы
-        saveHandler(event);
+        event.preventDefault();
+        save(event);
     });
     
     mod.on("keydown", function(event) {
         if(event.keyCode == 83 && event.ctrlKey) {
-            saveHandler(event);    
+            event.preventDefault();    
+            save(event);    
         }
     });
 

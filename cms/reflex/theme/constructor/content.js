@@ -6,11 +6,6 @@ $(function() {
     
         //  Сохраняет данные формы
         var submit = function() {
-            console.log(2);        
-            if(tinymce){
-                console.log(1);
-                tinymce.triggerSave();    
-            }
             // Собираем данные формы
             var serialized = form.serializeArray();
             var formData = {};
@@ -33,6 +28,7 @@ $(function() {
     
         form.submit(function(e) {
             // Предотвращаем отправку формы
+            mod.fire("reflex/beforeSave"); 
             e.preventDefault();
             submit();
         });    

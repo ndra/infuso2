@@ -8,22 +8,23 @@ mod.init(".tinyMCE-qPe4r8Zov0h", function() {
     
     var myFileBrowser = function (field_name, url, type, win) {
 		
-        var $wnd = $.window({
-            width: 800,
-            height: 500,
-            zIndex: 100000000000,
-            call: {
-                cmd:"infuso/cms/reflex/controller/storage/getWindow",
-                editor: $container.attr("data:editor")
-            }
-        });
-        
-                        
-        $wnd.on("reflex/storage/file", function(event) {
-            $wnd.window("close");
-            win.document.getElementById(field_name).value = event.filename;
-        });
-    
+            var $wnd = $.window({
+                width: 800,
+                height: 500,
+                zIndex: 100000000000,
+                call: {
+                    cmd:"infuso/cms/reflex/controller/storage/getWindow",
+                    editor: $container.attr("data:editor")
+                }
+            });
+            
+                            
+            $wnd.on("reflex/storage/file", function(event) {
+                $wnd.window("close");
+                win.document.getElementById(field_name).value = event.filename;
+            });
+            
+      
         return false;
 
     }
