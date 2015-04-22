@@ -20,6 +20,7 @@ jQuery.window = function(params) {
     var defaults = {
         width: 320,
         height: 240,
+        zIndex: 100,
         events: {}
     };
 
@@ -47,7 +48,7 @@ jQuery.window = function(params) {
         height: params.height,
         background: "white",
         boxShadow: "0 0 10px black",
-        zIndex:100
+        zIndex:params.zIndex
     }).addClass("5jfNUBs7a9zwHl");
 
 	// Хэдер
