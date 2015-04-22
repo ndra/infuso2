@@ -15,10 +15,17 @@ class View extends FieldView{
      * Должна вернуть объект шаблона для редактирования поля
      **/
     public function template() {
+        $params = $this->param("tinymce");
+        if($this->field->param("content_css")){
+            $params["content_css"] = $this->field->param("content_css");
+        }
+        if($this->field->param("plugins")){
+            $params["plugins"] = $this->field->param("plugins");
+        }
         $tmp = app()->tm("/tinymce/layout/");
         $tmp->param("field", $this->field);
         $tmp->param("view", $this);
-        $tmp->param("params", $this->param("tinymce"));
+        $tmp->param("params", $params);
         return $tmp;
     }
 

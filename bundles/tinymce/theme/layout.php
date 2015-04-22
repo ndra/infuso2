@@ -1,8 +1,10 @@
 <?
-
 singleJS($this->bundle()->path()."/res/tinymce.min.js");
-<div class='tinyMCE-qPe4r8Zov0h'  data:editor='{$view->editor()->id()}'>
 
+$paramsJson = htmlspecialchars(json_encode($params));
+
+<div class='tinyMCE-qPe4r8Zov0h'  data:editor='{$view->editor()->id()}' data:params="{$paramsJson}">
+    
     $w = widget("\\infuso\\cms\\ui\\widgets\\textarea")
         ->value($field->value())        
         ->fieldName($field->name())

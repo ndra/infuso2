@@ -1,6 +1,23 @@
 mod.init(".tinyMCE-qPe4r8Zov0h", function() {
     
     var $container = $(this);
+    var editorParams = $.parseJSON($container.attr("data:params"));
+
+    var defaultTinyMCEparams = {
+        selector:'.tinyMCE-qPe4r8Zov0h textarea', 
+        language : 'ru',
+        convert_urls: false,
+        plugins: [
+            "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars code fullscreen",
+            "insertdatetime media nonbreaking save table contextmenu directionality",
+            "emoticons template paste textcolor colorpicker textpattern"
+        ],
+        file_browser_callback : myFileBrowser,
+        image_advtab: true    
+    }
+    
+    var InitTinyMCEparams = $.extend({},defaultTinyMCEparams,editorParams);
     
     mod.on("reflex/beforeSave", function(){ 
         tinymce.triggerSave();    
@@ -29,18 +46,5 @@ mod.init(".tinyMCE-qPe4r8Zov0h", function() {
 
     }
     
-    tinymce.init({
-            selector:'.tinyMCE-qPe4r8Zov0h textarea', 
-            language : 'ru',
-            convert_urls: false,
-            //content_css : "/bundles/tinymce/res/test.css",
-            plugins: [
-                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code fullscreen",
-                "insertdatetime media nonbreaking save table contextmenu directionality",
-                "emoticons template paste textcolor colorpicker textpattern"
-            ],
-            file_browser_callback : myFileBrowser,
-            image_advtab: true
-    });
+    tinymce.init(InitTinyMCEparams);
 });
