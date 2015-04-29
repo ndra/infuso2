@@ -308,15 +308,16 @@ class Template extends Generic {
                 throw new \Exception("Шаблон '{$this->template()}' в файле {$this->file()} не найден.");
             }
         }
-
-        if(core\mod::debug()) {
-		//	echo "<!-- ".$this->template()." -->";
+		
+		// В режиме суперадмина показываем путь к шаблону
+        if(\Infuso\Core\Superadmin::check()){
+			echo "<!-- ".$this->template()." -->";
         }
 
         include $this->file()->native();
 
-        if(core\mod::debug()) {
-		//	echo "<!-- end of ".$this->template()." -->";
+        if(\Infuso\Core\Superadmin::check()){
+			echo "<!-- end of ".$this->template()." -->";
         }
 
         self::$current = $__last__;
