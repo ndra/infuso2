@@ -61,7 +61,7 @@ class CartItem extends \Infuso\ActiveRecord\Record {
     /**
      * Возвращает цену адиницы товара
 	 **/
-    public function itemPrice() {
+    public function _itemPrice() {
         return $this->item()->data("price");
     }
 
