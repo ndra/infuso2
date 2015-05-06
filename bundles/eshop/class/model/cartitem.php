@@ -68,7 +68,7 @@ class CartItem extends \Infuso\ActiveRecord\Record {
     /**
      * Возвращает сумму по строке (цена * количество)
 	 **/
-    public function totalPrice() {
+    public function _totalPrice() {
         return $this->item()->data("price") * $this->quantity();
     }
     
