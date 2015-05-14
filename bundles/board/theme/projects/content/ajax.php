@@ -4,7 +4,7 @@ $projects = \Infuso\Board\Model\Project::all()->limit(0);
 
 <div class='hek1b6stnl' >
 
-    <a href='{action("infuso\\board\\controller\\projects", "new")}' >Добавить проект</a>
+    <a href='{action("infuso\\board\\controller\\project", "new")}' >Добавить проект</a>
 
     <table>
     
