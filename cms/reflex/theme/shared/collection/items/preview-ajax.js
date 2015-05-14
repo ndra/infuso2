@@ -2,10 +2,10 @@ mod.init(".yy0l0qu78b", function() {
     
     var $container = $(this);
     
-    /*$container.list({
+    $container.list({
         selectHandle: ".select-handle",
         easyMultiselect: true
-    }); */
+    }); 
     
     new Sortable($container.find(".items")[0], {
         handle: ".sort-handle",
