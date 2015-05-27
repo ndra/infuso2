@@ -2,9 +2,8 @@
 
 namespace Infuso\Cms\Task;
 use Infuso\Core;
-use Infuso\Cms\Reflex;
 
-class TaskEditor extends Reflex\Editor {
+class TaskEditor extends \Infuso\Cms\Reflex\Editor {
 
 	public function itemClass() {
 		return Task::inspector()->className();
