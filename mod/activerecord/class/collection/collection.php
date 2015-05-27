@@ -4,7 +4,7 @@ namespace infuso\ActiveRecord;
 use \infuso\core\mod;
 use \reflex;
 
-/**
+/**b
  * Модель коллекции элементов
  **/
 class Collection extends \Infuso\Core\Component implements \Iterator {
@@ -379,8 +379,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             return 0;
         }
 
-        $groupBy = $this->normalizeColName($this->groupBy());
-        $what = $this->groupBy() ? "distinct {$groupBy} " : "*";
+        $groupBy = $this->groupBy();
+        $what = $groupBy ? "distinct {$groupBy} " : "*";
 
         $q = "select count($what) from {$this->from()} where {$this->whereQuery()} ";
         
@@ -837,12 +837,12 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         return $this;
     }
 
-    public function groupBy($groupBY=null) {
+    public function groupBy($field = null) {
         if(func_num_args()==0) {
             return $this->groupBy;
         }
         if(func_num_args()==1) {
-            $this->groupBy = $groupBY;
+            $this->groupBy = $this->normalizeColName($field);
             return $this;
         }
     }
@@ -985,8 +985,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         if($perPage) {
             $query.= "limit $from,$perPage";
         }
-        reflex_mysql::query($query);
-        return reflex_mysql::get_col();
+        $q = $query;
+        return mod::service("db")->query($q)->exec()->fetchCol();
 
     }
 
