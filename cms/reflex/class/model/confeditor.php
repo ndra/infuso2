@@ -19,7 +19,7 @@ class ConfEditor extends Reflex\Editor {
 	 * @reflex-tab = system
 	 **/
 	public function all() {
-	    return Conf::all()->title("Настройки");
+	    return Conf::all()->param("sort",true)->title("Настройки");
 	}
 
 }

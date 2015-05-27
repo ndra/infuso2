@@ -34,7 +34,7 @@ class Conf extends ActiveRecord\Record {
 				), array (
 					'name' => 'priority',
 					'label' => "Приоритет",
-					'editable' => 1,
+					'editable' => 0,
 					'type' => 'bigint',
 				), array (
 					'name' => 'type',
