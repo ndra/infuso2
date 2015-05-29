@@ -36,6 +36,14 @@
                         ->attr("type", "submit")
                         ->exec();
                 </td>
+                <td style='width:80px;' >
+                    widget("infuso\\cms\\ui\\widgets\\textfield")
+                        ->style("width", 50)
+                        ->placeholder("План")
+                        ->value($task->timeScheduled())
+                        ->fieldName("timeScheduled")
+                        ->exec();
+                </td>
                 <td style='width:40px;' >
                     widget("infuso\\cms\\ui\\widgets\\button")
                         ->air()
