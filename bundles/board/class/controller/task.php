@@ -20,6 +20,7 @@ class Task extends Base {
         }
         
         $group = new PseudoGroup($p["group"]);
+        $group->setQuery($p["query"]);
 
         $html = app()->tm("/board/widget/task-list/ajax")
             ->param("group", $group)

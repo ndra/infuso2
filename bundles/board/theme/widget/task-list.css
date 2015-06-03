@@ -19,4 +19,13 @@
     & > .ajax-container {
     }
     
+    & > .search-container {
+        position: absolute;
+        left: 300px;
+        top: 6px;
+        input {
+            .g-input();
+        }
+    }
+    
 }

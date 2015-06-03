@@ -17,12 +17,19 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
      * Поиск по коллекции
      **/
     public function search($query) {
+    
+        if((string)($query * 1) == $query) {
+            $this->eq("id", $query);
+            return $this;
+        }
+    
         $query2 = \util::str($query)->switchLayout();
         $this->joinByField("projectId");
         $this->like("text", $query)
             //->orr()->like("Infuso\\Board\\Model\\Project.title", $query)
             ->orr()->like("text", $query2);
             //->orr()->like("Infuso\\Board\\Model\\Project.title", $query2);
+        return $this;
     }
 
     /**

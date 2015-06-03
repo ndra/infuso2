@@ -7,6 +7,8 @@ use \Infuso\Board\Model;
 class PseudoGroup extends Core\Component {
 
 	private $id = null;
+    
+    private $query = "";
 
 	public function __construct($id) {
 	    $this->id = $id;
@@ -40,6 +42,15 @@ class PseudoGroup extends Core\Component {
 	public function id() {
 	    return $this->id;
 	}
+    
+    public function query() {
+        return $this->query; 
+    }
+    
+    public function setQuery($query) {
+        $this->query = $query;
+        return $this;
+    }
 
 	/**
 	 * Возвращает массив задач в группе, видимых для пользователя
@@ -68,6 +79,7 @@ class PseudoGroup extends Core\Component {
 				        ->visible()
 				        ->eq("status", Model\Task::STATUS_REQUEST)
                         ->asc("priority")
+                        ->search($this->query())
 						->eq("projectId", $id);
 				    foreach($tasks as $task) {
 				        $ret[] = new self("task/".$task->id());
@@ -75,6 +87,7 @@ class PseudoGroup extends Core\Component {
 			    } else {
 				    $projects = Model\Project::all()
 				        ->visible()
+                        ->search($this->query())
 				        ->join("Infuso\Board\Model\Access", "`Infuso\Board\Model\Access`.`projectId` = `Infuso\Board\Model\Project`.`id`");
 				    foreach($projects as $project) {
 				        $ret[] = new self("request/".$project->id());
@@ -87,6 +100,7 @@ class PseudoGroup extends Core\Component {
 			        ->eq("parent", $id)
                     ->asc("priority")
                     ->limit(50)
+                    ->search($this->query())
 			        ->eq("status", Model\Task::STATUS_BACKLOG);
 			    foreach($tasks as $task) {
 			        if($task->data("group")) {
@@ -99,6 +113,7 @@ class PseudoGroup extends Core\Component {
 		    case "inprogress":
 			    $tasks = Model\Task::all()
 			        ->visible()
+                    ->search($this->query())
 			        ->eq("status", Model\Task::STATUS_IN_PROGRESS);
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
@@ -108,6 +123,7 @@ class PseudoGroup extends Core\Component {
 			    $tasks = Model\Task::all()
 			        ->visible()
 			        ->eq("status", Model\Task::STATUS_CHECKOUT)
+                    ->search($this->query())
 			        ->desc("changed");
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
@@ -117,6 +133,7 @@ class PseudoGroup extends Core\Component {
 			    $tasks = Model\Task::all()
 			        ->visible()
 			        ->desc("changed")
+                    ->search($this->query())
 			        ->eq("status", Model\Task::STATUS_COMPLETED);
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
@@ -126,6 +143,7 @@ class PseudoGroup extends Core\Component {
 			    $tasks = Model\Task::all()
 			        ->visible()
 			        ->eq("status", Model\Task::STATUS_CANCELLED)
+                    ->search($this->query())
 			        ->desc("changed");
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
@@ -135,6 +153,7 @@ class PseudoGroup extends Core\Component {
 			    $tasks = Model\Task::all()
 			        ->visible()
 			        ->eq("status", Model\Task::STATUS_BACKLOG)
+                    ->search($this->query())
 					->eq("parent", $id);
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());

@@ -5,13 +5,15 @@ mod.init(".task-list-rpu80rt4m0", function() {
     var $loader =  $container.find(".loader");
     
     var group = $container.attr("data:status");
+    var $query = $container.find("input[name='query']");
 
     // Загружает список задач
     var load = function() {
         
         var callData = {
             cmd: "Infuso/Board/Controller/Task/getTasks",
-            group: group
+            group: group,
+            query: $query.val()
         };
         
         $container.find(".c-toolbar").triggerHandler({
@@ -35,6 +37,11 @@ mod.init(".task-list-rpu80rt4m0", function() {
     }
     
     $container.on("board/load", load);
+    
+    // Настраиваем поиск
+    $query.on("input", function() {
+        load();
+    })
 
     $container.on("board/setGroup", function(event) {
         group = event.group;
