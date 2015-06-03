@@ -5,7 +5,7 @@ namespace Infuso\Cms\UI\Widgets;
 class Pager extends Input {
 
 	public function name() {
-	    return "Текстовое поле";
+	    return "Пейджер";
 	}
 
 	public function execWidget() {
