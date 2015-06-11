@@ -405,4 +405,11 @@ class Component {
         return $plugin->factory();
 
     }
+
+    /**
+     * @return array Возврвщает массив поведений объекта
+     **/
+    public final function behaviours(){
+        return $this->behaviours;
+    }
 }
