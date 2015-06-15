@@ -573,12 +573,13 @@ class Task extends \Infuso\ActiveRecord\Record {
      **/
     public function emailCreator($params) {
         $creator = service("user")->get($this->data("creator"));
-        app()->msg($creator->id());
+        
         $mail = service("mail")->create()
             ->to($creator->email())
             ->code($params["code"])
             ->message($params["message"])
             ->subject($params["subject"])
+            ->from($params["from"])
             ->param("task-id", $this->id())
             ->param("task-url", $this->fullUrl())
             ->param("task-title", $this->title());
@@ -601,6 +602,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 
         $params = [];
         $params["type"] = "text/html";
+        $params["from"] = "NDRA-board";
         $params["message"] = "Задача № ".$this->id()." выполнена и требует проверки.";
         $params["subject"] = "Задача № ".$this->id().".";
         $params["code"] = "board/task/done/creator";
