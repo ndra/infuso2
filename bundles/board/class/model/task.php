@@ -131,7 +131,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 	        self::STATUS_DEMAND => "Заявка",
 		    self::STATUS_BACKLOG => "Бэклог",
 		    self::STATUS_IN_PROGRESS => "Выполняется",
-		    self::STATUS_CHECKOUT => "На проепрке",
+		    self::STATUS_CHECKOUT => "На проверке",
 		    self::STATUS_COMPLETED => "Выполнено",
 		    self::STATUS_DRAFT => "Черновик",
 		    self::STATUS_CANCELLED => "Отменено",
@@ -209,9 +209,10 @@ class Task extends \Infuso\ActiveRecord\Record {
 
         // Если статус задачи "к исполнению", ответственным лицом становится текущий пользователь.
         if($this->field("status")->changed() && $this->data("status") == self::STATUS_CHECKOUT) {
-            $this->emailSubscribers(array(
+            /*$this->emailSubscribers(array(
                 "xxx" => 121212,
-			));
+			));*/
+            $this->informAboutFinishing();
         }
         
         $status = $this->field("status")->initialValue();
@@ -522,7 +523,15 @@ class Task extends \Infuso\ActiveRecord\Record {
     public function access() {  
         return Access::all()->eq("groupId", $this->id());
     }
-    
+
+    /**
+     * Возвращает полный урл, с схемой и хостом.
+     **/
+    public function fullUrl() {
+        $urlObj = \Infuso\Core\Url::current();
+        return $urlObj->scheme().'://'.$urlObj->host().$this->url();
+    }
+
     /**
      * Отправляет письмо подписчикам (Это участники, автор и те кто комментировал)
      **/
@@ -557,6 +566,47 @@ class Task extends \Infuso\ActiveRecord\Record {
 			}
         }
     
+    }
+
+    /**
+     * Отправляет письмо создателю задачи
+     **/
+    public function emailCreator($params) {
+        $creator = service("user")->get($this->data("creator"));
+        app()->msg($creator->id());
+        $mail = service("mail")->create()
+            ->to($creator->email())
+            ->code($params["code"])
+            ->message($params["message"])
+            ->subject($params["subject"])
+            ->param("task-id", $this->id())
+            ->param("task-url", $this->fullUrl())
+            ->param("task-title", $this->title());
+
+        if($params["type"]) {
+            $mail->type($params["type"]);
+        }
+
+        foreach($params as $key => $val) {
+            $mail->param($key, $val);
+        }
+
+        $mail->send();
+    }
+
+    /**
+     * Отправлет пиьсма уведомлюящие о выполнений задачи
+     **/
+    public function informAboutFinishing() {
+
+        $params = [];
+        $params["type"] = "text/html";
+        $params["message"] = "Задача № ".$this->id()." выполнена и требует проверки.";
+        $params["subject"] = "Задача № ".$this->id().".";
+        $params["code"] = "board/task/done/creator";
+
+        $this->emailCreator($params);
+
     }
 
 }
