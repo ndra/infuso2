@@ -1,4 +1,6 @@
 <?
+use \Infuso\Board\Model\Task as Task;
+
 
 $task = $item->task();
 
@@ -10,6 +12,11 @@ $task = $item->task();
                 <img src='{$this->bundle()->path()}/res/img/icons16/sort.png' style='opacity:.2;' />
             </td>
         }
+        
+        $status = $task->data("status");
+        if( $status == Task::STATUS_CHECKOUT ){
+            <td class="date">{$task->pdata(changed)->num()}</td>
+        } 
         
         <td class='id' >{$task->id()}</td>
         <td class='project-icon' >

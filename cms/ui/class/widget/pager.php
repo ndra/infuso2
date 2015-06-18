@@ -9,6 +9,7 @@ class Pager extends Input {
 	}
 
 	public function execWidget() {
+		app()->tm()->js(self::path()."/js/pager.js");
 
         if(!$this->param("value")) {
             $this->param("value", 1);

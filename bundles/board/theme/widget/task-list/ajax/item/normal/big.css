@@ -48,6 +48,11 @@
         font-size: 11px;
     }
     
+    .date {
+        width: 70px;
+        font-size: 11px;
+    }
+    
     .project {
         width: 110px;
         font-weight: bold;

@@ -50,11 +50,16 @@ if($from && $to) {
                 }
                 $title.= ")";
                 
+                $title.= " № ".$item->task()->id()." ";
+                
+                $title.= \util::str($item->task()->text())->ellipsis(100);
+                
                 $h = helper("<div>")
                     ->addClass("workflow-item")
                     ->style("width", $width."%")
                     ->style("left", $left."%")
-                    ->attr("title", $title);
+                    ->attr("title", $title)
+                    ->attr("data:taskId", $item->task()->id());
                     
                 switch($item->data("status")) {
                     

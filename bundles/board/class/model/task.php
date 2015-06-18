@@ -573,7 +573,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      **/
     public function emailCreator($params) {
         $creator = service("user")->get($this->data("creator"));
-        
+
         $mail = service("mail")->create()
             ->to($creator->email())
             ->code($params["code"])

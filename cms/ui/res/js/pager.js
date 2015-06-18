@@ -8,24 +8,24 @@ $.fn.pager = function(p1,p2) {
         $(this).pager().data("total", p2);
         $(this).pager("render");
     }
-    
+
     if(p1 === "select") {
         $(this).pager().find("input:first").val(p2);
         $(this).pager("render");
         $(this).pager().trigger("change");
-    }   
-    
+    }
+
     if(p1 === "render") {
-    
+
         var container = $(this).pager();
         var items = container.find(".pages").html("");
         var active = $(this).pager().find("input:first").val() * 1;
         var total = container.data("total");
-        
+
         var range = 5;
         var from = Math.max(active - range, 1);
         var to = Math.min(active + range, total * 1);
-        
+
         for(var i = from; i <= to; i++) {
             var button = $("<span class='page' >")
                 .html(i)
@@ -41,4 +41,4 @@ $.fn.pager = function(p1,p2) {
         }
     }
 
-}
+};
