@@ -21,7 +21,13 @@ $h->begin();
             ->clearButton()
             ->exec();
     </div>
-
+    
+    <div class='pager' >
+        widget("infuso\\cms\\ui\\widgets\\pager")
+           ->fieldName("page")
+           ->exec();
+    </div>
+    
     <div class='ajax-container' >
     </div>
     

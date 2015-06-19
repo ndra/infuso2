@@ -4,8 +4,11 @@ mod.init(".task-list-rpu80rt4m0", function() {
     var $ajaxContainer = $container.find(".ajax-container");
     var $loader =  $container.find(".loader");
     
+    var $pager = $container.find(".fr8dqef87w");
+    
     var group = $container.attr("data:status");
     var $query = $container.find("input[name='query']");
+    var page = 1;
 
     // Загружает список задач
     var load = function() {
@@ -13,7 +16,8 @@ mod.init(".task-list-rpu80rt4m0", function() {
         var callData = {
             cmd: "Infuso/Board/Controller/Task/getTasks",
             group: group,
-            query: $query.val()
+            query: $query.val(),
+            page: page
         };
         
         $container.find(".c-toolbar").triggerHandler({
@@ -21,8 +25,9 @@ mod.init(".task-list-rpu80rt4m0", function() {
             callData: callData
         });
         
-        var handler = function(data) {                
+        var handler = function(data) { 
             $loader.hide();
+            $container.pager("total", data.pages);
             $ajaxContainer.html(data.html);
             $container.find(".c-toolbar").triggerHandler({
                 type:"task/load",
@@ -37,6 +42,9 @@ mod.init(".task-list-rpu80rt4m0", function() {
     }
     
     $container.on("board/load", load);
+    
+    $pager.on("change", function(e) { page = $pager.find("input").val(); load();  });
+    
     
     // Настраиваем поиск
     $query.on("input", function() {

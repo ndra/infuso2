@@ -19,8 +19,10 @@ class Task extends Base {
             return;
         }
         
+
         $group = new PseudoGroup($p["group"]);
         $group->setQuery($p["query"]);
+        $group->setPage($p["page"]);
 
         $html = app()->tm("/board/widget/task-list/ajax")
             ->param("group", $group)
@@ -28,6 +30,7 @@ class Task extends Base {
 
         return array(
             "html" => $html,
+            "pages" => $group->pages()
         );
                   
     }

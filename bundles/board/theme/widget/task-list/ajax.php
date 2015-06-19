@@ -14,12 +14,7 @@ use \Infuso\Board\Controller;
             echo " / ";
             <span>{$group->title()}</span>
         </div> 
-        <div class='pager' >
-            //widget("infuso\\cms\\ui\\widgets\\pager")
-             //   ->pages(10)
-               // ->fieldName("page")
-                //->exec();
-        </div>
+        
         /*<div class='view-mode' >
             echo "по группам / одним списком";
         </div>*/

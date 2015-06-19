@@ -4,7 +4,7 @@ namespace infuso\ActiveRecord;
 use \infuso\core\event;
 use \infuso\core\mod;
 use \reflex;
-use \infuso\core\profiler;
+use \infuso\core\pfofiler;
 use \Infuso\Core\Model;
 use \Infuso\Core;
 

@@ -9,6 +9,10 @@ class PseudoGroup extends Core\Component {
 	private $id = null;
     
     private $query = "";
+    
+    private $page = 1;
+    
+    private $pages = 0;
 
 	public function __construct($id) {
 	    $this->id = $id;
@@ -51,7 +55,25 @@ class PseudoGroup extends Core\Component {
         $this->query = $query;
         return $this;
     }
-
+    
+    public function page() {
+        return $this->page; 
+    }
+    
+    public function setPage($page) {
+        $this->page = $page;
+        return $this;
+    }
+    
+    public function pages() {
+        return $this->pages; 
+    }
+    
+    public function setPages($pages) {
+        $this->pages = $pages;
+        return $this;
+    }
+    
 	/**
 	 * Возвращает массив задач в группе, видимых для пользователя
 	 **/
@@ -80,7 +102,9 @@ class PseudoGroup extends Core\Component {
 				        ->eq("status", Model\Task::STATUS_REQUEST)
                         ->asc("priority")
                         ->search($this->query())
+                        ->page($this->page())
 						->eq("projectId", $id);
+						$this->setPages($tasks->pages());
 				    foreach($tasks as $task) {
 				        $ret[] = new self("task/".$task->id());
 				    }
@@ -101,7 +125,9 @@ class PseudoGroup extends Core\Component {
                     ->asc("priority")
                     ->limit(50)
                     ->search($this->query())
+                    ->page($this->page())
 			        ->eq("status", Model\Task::STATUS_BACKLOG);
+			        $this->setPages($tasks->pages());
 			    foreach($tasks as $task) {
 			        if($task->data("group")) {
 			        	$ret[] = new self("backlog/".$task->id());
@@ -114,7 +140,9 @@ class PseudoGroup extends Core\Component {
 			    $tasks = Model\Task::all()
 			        ->visible()
                     ->search($this->query())
+                    ->page($this->page())
 			        ->eq("status", Model\Task::STATUS_IN_PROGRESS);
+			        $this->setPages($tasks->pages());
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
 			    }
@@ -124,7 +152,9 @@ class PseudoGroup extends Core\Component {
 			        ->visible()
 			        ->eq("status", Model\Task::STATUS_CHECKOUT)
                     ->search($this->query())
+                    ->page($this->page())
 			        ->desc("changed");
+			        $this->setPages($tasks->pages());
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
 			    }
@@ -134,7 +164,9 @@ class PseudoGroup extends Core\Component {
 			        ->visible()
 			        ->desc("changed")
                     ->search($this->query())
+                    ->page($this->page())
 			        ->eq("status", Model\Task::STATUS_COMPLETED);
+			        $this->setPages($tasks->pages());
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
 			    }
@@ -144,7 +176,9 @@ class PseudoGroup extends Core\Component {
 			        ->visible()
 			        ->eq("status", Model\Task::STATUS_CANCELLED)
                     ->search($this->query())
+                    ->page($this->page())
 			        ->desc("changed");
+			        $this->setPages($tasks->pages());
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
 			    }
@@ -154,7 +188,9 @@ class PseudoGroup extends Core\Component {
 			        ->visible()
 			        ->eq("status", Model\Task::STATUS_BACKLOG)
                     ->search($this->query())
+                    ->page($this->page())
 					->eq("parent", $id);
+					$this->setPages($tasks->pages());
 			    foreach($tasks as $task) {
 			        $ret[] = new self("task/".$task->id());
 			    }
@@ -163,6 +199,8 @@ class PseudoGroup extends Core\Component {
 			    break;
 			    
 		}
+		
+		//
 		
 		return $ret;
 	}
