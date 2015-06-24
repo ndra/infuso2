@@ -42,6 +42,11 @@ class Template extends ActiveRecord\Record {
 					'type' => 'textarea',
                     'label' => 'Параметры',
 					"editable" => 2,
+				),array (
+					'name' => 'enable',
+                    'type' => 'checkbox',
+                    'label' => 'Включить',
+                    "editable" => true,
 				),
 			),
 		);
@@ -93,20 +98,23 @@ class Template extends ActiveRecord\Record {
 		    "from"
 		);
 		
-		// Пропускаем поля через процессор
-		foreach($fieldsToProcess as $field) {
-		    // Обрабатываем только поля, данные в которых заполнены
-		    if($this->data($field)) {
-		    	$mail->data($field, self::processText($this->data($field), $params));
-		    }
-		}
+		// Если шаблон включен, выполняем его
+        if ($this->data("enable") == true) {
+    		// Пропускаем поля через процессор
+    		foreach($fieldsToProcess as $field) {
+    		    // Обрабатываем только поля, данные в которых заполнены
+    		    if($this->data($field)) {
+    		    	$mail->data($field, self::processText($this->data($field), $params));
+    		    }
+    		}
+        }
 		
     }
     
     public static function processText($text, $params) {
         foreach($params as $key => $val) {
             $text = strtr($text, array(
-				'{$'.$key.'}' => $val,
+				'%%'.$key.'%%' => $val,
 			));
         }
         return $text;
