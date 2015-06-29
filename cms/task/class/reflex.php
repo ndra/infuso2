@@ -8,7 +8,7 @@ class Reflex {
 
     public static function add($p) {
 
-        service("ar")->create(Task::inspector()->className(),array(
+        $task = service("ar")->create(Task::inspector()->className(),array(
             "class" => get_class(),
             "method" => "execReflex",
             "params" => array(
@@ -18,6 +18,8 @@ class Reflex {
                 "params" => $p["params"],
             )
         ));
+
+        return $task;
 
     }
 

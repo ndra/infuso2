@@ -70,8 +70,8 @@ class Service extends Core\Service {
 		} catch (\Exception $ex) {}
 
         if($mode == "reflex") {
-            \Infuso\Cms\Task\Reflex::add($params);
-            return;
+            $item = \Infuso\Cms\Task\Reflex::add($params);
+            return $item;
         }
 
 		// Если мы дошли до этого места, у нас обычная статическая задача
@@ -101,6 +101,8 @@ class Service extends Core\Service {
             	$item->store();
             }
         }
+
+        return $item;
 
     }
     
