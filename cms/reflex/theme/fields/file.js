@@ -1,7 +1,13 @@
 mod.init(".l83i1tvf0u", function() {
 
     var $dropzone = $(this);
-    
+	var container = $(".l83i1tvf0u"); 
+    var path = "/";
+	
+	var onLoad = function(ret) {   
+		container.find("input").val(ret);
+    }
+
     // Перетаскивание файла в дропзону
 
     $dropzone.on("dragover", function(e) {
@@ -17,10 +23,24 @@ mod.init(".l83i1tvf0u", function() {
     });
     
     $dropzone.on("drop", function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        mod.msg("drop");
+       e.stopPropagation();
+       e.preventDefault();
+       mod.msg("drop");
+	   
+	   $(this).removeClass("drag-enter");
+       var file = e.originalEvent.dataTransfer.files[0];  	
+       mod.call({
+            cmd:"infuso/cms/reflex/controller/storage/upload",
+            editor: $dropzone.attr("data:editor"),
+            path: path,
+        }, onLoad, {
+            files: {
+                file: file
+            },
+        });
     });
+	
+	
     
     // Окно выбора файлов
     

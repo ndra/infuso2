@@ -40,7 +40,8 @@ class Storage extends Core\Controller {
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
 	    $storage = $editor->item()->storage();
         $storage->setPath($p["path"]);
-	    $storage->addUploaded($_FILES["file"]["tmp_name"],$_FILES["file"]["name"]);
+	    $path = $storage->addUploaded($_FILES["file"]["tmp_name"],$_FILES["file"]["name"]);
+	    return $path;
 	}
 
     public function post_delete($p) {
