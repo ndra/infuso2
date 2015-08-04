@@ -26,9 +26,9 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
         $query2 = \util::str($query)->switchLayout();
         $this->joinByField("projectId");
         $this->like("text", $query)
-            //->orr()->like("Infuso\\Board\\Model\\Project.title", $query)
-            ->orr()->like("text", $query2);
-            //->orr()->like("Infuso\\Board\\Model\\Project.title", $query2);
+            ->orr()->like("Infuso\\Board\\Model\\Project.title", $query)
+            ->orr()->like("text", $query2)
+            ->orr()->like("Infuso\\Board\\Model\\Project.title", $query2);
         return $this;
     }
 
