@@ -609,10 +609,16 @@ class Task extends \Infuso\ActiveRecord\Record {
         $params["subject"] = $subject;
         $params["code"] = "board/task/done/creator";
         $params["attachFiles"] = 1;
-        $params["timeScheduled"] = $this->data("timeScheduled");
-        $params["timeSpent"] = $this->data("timeSpent");
+        $params["timeScheduled"] = $this->timeScheduled()." ч.";
+        $time = round($this->timeSpent() / 3600, 2);
+        if($progress = round($this->timeSpentProgress() / 3600, 2)) {
+            $time .= " + ".$progress;
+        }
+        $params["timeSpent"] = $time." ч.";
         $user = $this->workflow()->desc("id")->one()->pdata("userId");
-        $params["userName"] = $user->firstName();
+        $userName = $user->firstName();
+        if(!$userName) $userName = $user->nickName();
+        $params["userName"] = $userName;
 
         $this->emailCreator($params);
 
