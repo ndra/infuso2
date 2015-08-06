@@ -603,9 +603,16 @@ class Task extends \Infuso\ActiveRecord\Record {
         $params = [];
         $params["type"] = "text/html";
         $params["from"] = "NDRA-board";
-        $params["message"] = "Задача № ".$this->id()." выполнена и требует проверки.";
-        $params["subject"] = "Задача № ".$this->id().".";
+        $message = "Задача № " . $this->id() . " выполнена и требует проверки.<br/><br/>" . $this->text();
+        $params["message"] = $message;
+        $subject = $this->project()->title().": Задача № ".$this->id().".";
+        $params["subject"] = $subject;
         $params["code"] = "board/task/done/creator";
+        $params["attachFiles"] = 1;
+        $params["timeScheduled"] = $this->data("timeScheduled");
+        $params["timeSpent"] = $this->data("timeSpent");
+        $user = $this->workflow()->desc("id")->one()->pdata("userId");
+        $params["userName"] = $user->firstName();
 
         $this->emailCreator($params);
 
