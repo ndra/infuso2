@@ -6,9 +6,16 @@
  * @version 0.1
  * @package pay
  * @author Petr.Grishin <petr.grishin@grishini.ru>
+ * updated by Alexey.Dvourechesnky <alexey@ndra.ru>
  **/
-class pay_vendors_qiwi extends pay_vendors {
-    
+
+namespace Infuso\Pay\Vendor;
+
+
+use Infuso\Pay\Model\Invoice;
+
+class Qiwi extends Vendor
+{
     /**
      * @var array Коды ошибок
      **/
@@ -24,7 +31,7 @@ class pay_vendors_qiwi extends pay_vendors {
         341 => 'Не указан номер кошелька',
         0   => 'OK',
     );
-    
+
     /**
      * @var array Коды статусов ответа сервера
      **/
@@ -33,46 +40,60 @@ class pay_vendors_qiwi extends pay_vendors {
         60  => 'Оплаченный счёт',
         150 => 'Счёт отклонён',
     );
-    
+
     /**
      * Видимость класса для post запросов
      *
      * @return boolean
      **/
-    public static function postTest() { 
+    public static function postTest() {
         return true;
     }
-    
+
     /**
      * Идентификатор магазина
-	 * @var $merchantId string
+     * @var $merchantId string
      **/
     private static $merchantId = NULL;
-    
+
     /**
      * Секретный ключ пароль
-	 * @var $secretKey string
+     * @var $secretKey string
      **/
     private static $secretKey = NULL;
-    
+
     /**
      * Валюта зачисляемых денежных средств: только RUB (код 643)
      **/
     private static $currency = 643;
-    
+
+    public static function confDescription() {
+        return array(
+            "components" => array(
+                get_class() => array(
+                    "params" => array(
+                        "key" => "Qiwi: Cекретный ключ",
+                        "login" => "Qiwi:  идентификатор магазина",
+                        "ltime" => "Qiwi: Время жизни счета для оплаты с помощью qiwi"
+                    ),
+                ),
+            ),
+        );
+    }
+
     /**
      * Заполняем данные по умолчанию для драйвера
      *
      * @return void
      **/
     private function loadConf() {
-        if (NULL == self::$merchantId = mod::conf("pay:qiwi-merchantId"))
-            throw new Exception("QIWI: не задан идентификатор магазина");
-        
-        if (NULL == self::$secretKey = mod::conf("pay:qiwi-secretKey"))
-            throw new Exception("QIWI: не задан секретный ключ пароль");
+        if (NULL == self::$merchantId = $this->param("login"))
+            throw new \Exception("QIWI: не задан идентификатор магазина");
+
+        if (NULL == self::$secretKey = $this->param("key"))
+            throw new \Exception("QIWI: не задан секретный ключ пароль");
     }
-    
+
     /**
      * Враппер методов для доступа к параметрам
      *
@@ -83,7 +104,7 @@ class pay_vendors_qiwi extends pay_vendors {
             "ltime" => "mixed",
         );
     }
-    
+
     /**
      * Параметры по умолчанию
      *
@@ -94,19 +115,9 @@ class pay_vendors_qiwi extends pay_vendors {
             "ltime" => 24, //Время жизни счета для оплаты с помощью qiwi
         );
     }
-    
-	public static function confDescription() {
-	    return array(
-	        "components" => array(
-	            get_called_class() => array(
-	                "params" => array(
-	                    "ltime" => "Время жизни счета для оплаты с помощью qiwi",
-					),
-				),
-			),
-		);
-	}
-    
+
+
+
     /**
      * Сгенерировать ключ для шифрования
      *
@@ -115,22 +126,22 @@ class pay_vendors_qiwi extends pay_vendors {
     public function key() {
         $merchantId = self::$merchantId;
         $secretKey =  self::$secretKey;
-        
+
         $passwordMD5 = md5(self::$secretKey, TRUE);
         $salt = md5(self::$merchantId . bin2hex($passwordMD5), TRUE);
         $key = str_pad($passwordMD5, 24, '\0');
-        
+
         for ($i = 8; $i < 24; $i++) {
-          if ($i >= 16) {
-              $key[$i] = $salt[$i-8];
-          } else {
-              $key[$i] = $key[$i] ^ $salt[$i-8];
-          }
+            if ($i >= 16) {
+                $key[$i] = $salt[$i-8];
+            } else {
+                $key[$i] = $key[$i] ^ $salt[$i-8];
+            }
         }
-        
+
         return $key;
     }
-    
+
     /**
      * Шифровать данные перед отправкой
      *
@@ -139,94 +150,94 @@ class pay_vendors_qiwi extends pay_vendors {
     public function encrypt($xml) {
         $n = 8 - strlen($xml) % 8;
         $pad = str_pad($xml, strlen($xml) + $n, ' ');
-        
+
         $encrypt = mcrypt_encrypt(MCRYPT_3DES, self::key(), $pad, MCRYPT_MODE_ECB, '\0\0\0\0\0\0\0\0');
-        
+
         $result = "qiwi" . str_pad(self::$merchantId, 10, "0", STR_PAD_LEFT) . "\n";
         $result .= base64_encode($encrypt);
-        
+
         return $result;
     }
-    
+
     /**
      * Сгенерировать адрес платежной системы для оплаты
      *
      * @return string
      **/
     public function payUrl() {
-        
-        $url = mod_action::get("pay_vendors_qiwi", "create", array(
-                "id" => $this->invoice()->id(),
-            ))->url();
-        
+
+        $url = \Infuso\Core\Action::get("pay_vendors_qiwi", "create", array(
+            "id" => $this->invoice()->id(),
+        ))->url();
+
         return $url;
-    }    
-    
+    }
+
     /**
      * Создает счет для отправки POST формы
      *
      * @return void
      **/
     public function index_create($p = null) {
-        
+
         //Загружаем счет
-        $invoice = pay_invoice::get((integer)$p['id']);
-		
-		if (!$invoice->exists())
-			throw new Exception("QIWI: не нашли счет с указанным номером");
-		
-		if ($invoice->paid()) {
-			$invoice->log("Не доступен для оплаты, т.к. счет уже был оплачен ранее");
-			throw new Exception("QIWI: Не доступен для оплаты, т.к. счет уже был оплачен ранее");
-		}
-        
+        $invoice = Invoice::get((integer)$p['id']);
+
+        if (!$invoice->exists())
+            throw new \Exception("QIWI: не нашли счет с указанным номером");
+
+        if ($invoice->paid()) {
+            $invoice->plugin("log")->log("Не доступен для оплаты, т.к. счет уже был оплачен ранее");
+            throw new \Exception("QIWI: Не доступен для оплаты, т.к. счет уже был оплачен ранее");
+        }
+
         if (!$invoice->my())
             throw new Exception("QIWI: вы не являетесь владельцем счета");
-        
-		
-		app()->tm("/pay/vendors/qiwi")->param(array(
-			"id" => $p["id"],
+
+
+        app()->tm("/pay/vendors/qiwi")->param(array(
+            "id" => $p["id"],
             "number" => $_POST["number"]
-		))->exec();
-		
+        ))->exec();
+
     }
-    
+
     /**
      * Создаем счет в системе QIWI
      *
      * @return void
      **/
     public function post_create($p = null) {
-        
+
         self::loadConf();
-        
+
         $merchantId = self::$merchantId;
         $secretKey =  self::$secretKey;
-        
-		if (!$p['id'])
-			throw new Exception("QIWI: счет не заполнен");
-		
+
+        if (!$p['id'])
+            throw new \Exception("QIWI: счет не заполнен");
+
         //Загружаем счет
-        $invoice = pay_invoice::get((integer)$p['id']);
-		
-		if (!$invoice->exists())
-			throw new Exception("QIWI: не нашли счет с указанным номером");
-		
-		if ($invoice->paid()) {
-			$invoice->log("Не доступен для оплаты, т.к. счет уже был оплачен ранее");
-			throw new Exception("QIWI: Не доступен для оплаты, т.к. счет уже был оплачен ранее");
-		}
-        
+        $invoice = Invoice::get((integer)$p['id']);
+
+        if (!$invoice->exists())
+            throw new \Exception("QIWI: не нашли счет с указанным номером");
+
+        if ($invoice->paid()) {
+            $invoice->plugin("log")->log("Не доступен для оплаты, т.к. счет уже был оплачен ранее");
+            throw new \Exception("QIWI: Не доступен для оплаты, т.к. счет уже был оплачен ранее");
+        }
+
         if (!$invoice->my())
-            throw new Exception("QIWI: вы не являетесь владельцем счета");
-        
+            throw new \Exception("QIWI: вы не являетесь владельцем счета");
+
         $invoiceId = $invoice->num();
         $invoiceAmount = $invoice->sum();
-        
+
         $desc = mb_substr($invoice->details(), 0, 99);
-        
+
         $ltime = $this->ltime();
-        
+
         $xml = <<<EOF
 <?xml version="1.0" encoding="utf-8"?>
 <request>
@@ -245,64 +256,64 @@ class pay_vendors_qiwi extends pay_vendors {
 EOF;
         //Кодируем XML для отправки на сервер
         $content = self::encrypt($xml);
-        
+
         $params = array('http' => array(
             'method' => 'POST',
             'header' => "Content-Type: text/xml; encoding=utf-8\r\n",
             'content' => $content,
         ));
-        
+
         $ctx = stream_context_create($params);
-        
+
         $url = "http://ishop.qiwi.ru/xml";
-        
+
         $file = @fopen($url, 'rb', false, $ctx);
-        
+
         //Читаем ответ от сервера
         $response = "";
-        
+
         while (!feof($file)) {
-          $response .= fread($file, 8192);
+            $response .= fread($file, 8192);
         }
-        
+
         //Закрываем соединение
         fclose($file);
-        
+
         $responseXml = simplexml_load_string('<?xml version="1.0" encoding="utf-8"?>' . $response);
-        
+
         $responseCode = (string)$responseXml->{'result-code'};
-        
+
         if ($responseCode == 0) {
-            
+
             //Теперь этот счет можно оплатить только драйвером  QIWI
             $invoice->data("driverUseonly", "qiwi");
-            
+
             //Счет требеут проверки
-            $invoice->status(pay_invoice::STATUS_CHECK);
-            
+            $invoice->status(Invoice::STATUS_CHECK);
+
             header("location: {$invoice->url()}");
             die();
         }
-        
+
         $responseCodeText = self::$errors[$responseCode];
-		app()->tm()->param("pay-vendors-qiwi-error", "Код ответа: " . " ($responseCode) " . $responseCodeText);
-		
+        app()->tm()->param("pay-vendors-qiwi-error", "Код ответа: " . " ($responseCode) " . $responseCodeText);
+
     }
-    
+
     /**
      * Проверка статуса оплаты счета платежной системы QIWI
      *
      * @return void
      **/
     public function check() {
-        
+
         self::loadConf();
-        
+
         $merchantId = self::$merchantId;
         $secretKey =  self::$secretKey;
-        
+
         $invoiceId = $this->invoice()->num();
-        
+
         $xml = <<<EOF
 <?xml version="1.0" encoding="utf-8"?>
 <request>
@@ -315,54 +326,54 @@ EOF;
 </bills-list>
 </request>
 EOF;
-        
+
         //Кодируем XML для отправки на сервер
         $content = self::encrypt($xml);
-        
+
         $params = array('http' => array(
             'method' => 'POST',
             'header' => "Content-Type: text/xml; encoding=utf-8\r\n",
             'content' => $content,
         ));
-        
+
         $ctx = stream_context_create($params);
-        
+
         $url = "http://ishop.qiwi.ru/xml";
-        
+
         $file = @fopen($url, 'rb', false, $ctx);
-        
+
         //Читаем ответ от сервера
         $response = "";
-        
+
         while (!feof($file)) {
-          $response .= fread($file, 8192);
+            $response .= fread($file, 8192);
         }
-        
+
         //Закрываем соединение
         fclose($file);
-        
+
         $responseXml = simplexml_load_string('<?xml version="1.0" encoding="utf-8"?>' . $response);
-        
+
         $responseCode = (string)$responseXml->{'result-code'};
-        
+
         if ($responseCode == 0 ) {
             //Получили ответ от сервера
-            
+
             $responseBill = $responseXml->{'bills-list'}->{'bill'}[0];
-            
+
             if ($responseBill['id'] == $invoiceId) {
-                
+
                 //Проверяем статус ответа
                 $status = (integer)$responseBill['status'];
-                
+
                 //Записываем в лог
-                $this->invoice()->log("Драйвер QIWI ответ сервера после проверки статуса оплаты: (код {$status})" . self::$statuses[$status]);
-                
+                $this->invoice()->plugin("log")->log("Драйвер QIWI ответ сервера после проверки статуса оплаты: (код {$status})" . self::$statuses[$status]);
+
                 //Отменяем счет
                 if ($status == 150) {
-                    $this->invoice()->status(pay_invoice::STATUS_CANCELED);
+                    $this->invoice()->status(Invoice::STATUS_CANCELED);
                 }
-                
+
                 //Оплаченный счет
                 if ($status == 60) {
                     //Зачисляем сумму
@@ -371,21 +382,20 @@ EOF;
                         "driver" => "QIWI",
                     ));
                 }
-                
+
             } else {
                 $this->invoice()->log("Error драйвер QIWI: ответ сервера возвращает другой id счета");
             }
-            
+
         } else {
             $responseCodeText = self::$errors[$responseCode];
             //Ошибка, записываем в лог счета
-            $this->invoice()->log("Error драйвер QIWI: получили ошибку с сервера \n" . "Код ответа: " . " ($responseCode) " . $responseCodeText);
+            $this->invoice()->plugin("log")->log("Error драйвер QIWI: получили ошибку с сервера \n" . "Код ответа: " . " ($responseCode) " . $responseCodeText);
         }
-        
-        
+
+
         //Изменяем время проверки счета
         $this->invoice()->data("timeCheck", util::now());
-        
+
     }
-    
-} //END CLASS
+}

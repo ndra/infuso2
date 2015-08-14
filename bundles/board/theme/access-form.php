@@ -23,7 +23,7 @@
         <td></td>
         <td>
             widget("Infuso\\CMS\\Ui\\Widgets\\Button")
-                //->text($project->exists() ? "Сохранить" : "Создать")
+                ->text("Создать")
                 ->attr("type", "submit")
                 ->exec();
         </td>

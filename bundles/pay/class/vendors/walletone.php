@@ -1,20 +1,36 @@
 <?
+namespace Infuso\Pay\Vendor;
+use Infuso\Pay\Model\Invoice;
 
 /**
  * Драйвер системы оплаты 'единая касса'
  * https://www.walletone.com/
  *
- * @version 0.1
+ * @version 0.2
  * @package pay
  * @author Alexey.Dvourechesnky <alexey@ndra.ru>
  **/
-class pay_vendors_walletone extends pay_vendors {
+class Walletone extends Vendor {
 
     /**
      * Защитный ключ
      **/
     private static $key = null;
     private static $login = null;
+
+    public static function confDescription() {
+        return array(
+            "components" => array(
+                get_class() => array(
+                    "params" => array(
+                        "key" => "Cекретный ключ",
+                        "login" => "Логин магазина(шоп-id)",
+                    ),
+                ),
+            ),
+        );
+    }
+
 
     /**
     * Заполняем данные по умолчанию для драйвера Interkassa
@@ -23,12 +39,12 @@ class pay_vendors_walletone extends pay_vendors {
     **/
     private function loadConf() {
 
-        if (null == self::$key = mod::conf("pay:walletone-key")) {
-            throw new Exception("Не задан секретный ключ");
+        if (null == self::$key = $this->param("key")) {
+            throw new \Exception("Не задан секретный ключ");
         }
 
-        if (null == self::$login = mod::conf("pay:walletone-shopid")) {
-            throw new Exception("Не задан логин");
+        if (null == self::$login = $this->param("login")) {
+            throw new \Exception("Не задан логин");
         }
     }
 
@@ -93,7 +109,7 @@ class pay_vendors_walletone extends pay_vendors {
 
                 // Загружаем счет
                 $inv_id = $p["WMI_PAYMENT_NO"];
-                $invoice = pay_invoice::get((integer)$inv_id);
+                $invoice = Invoice::get((integer)$inv_id);
 
                 //Зачисляем средства
                 $result = $invoice->incoming(array(
@@ -122,11 +138,7 @@ class pay_vendors_walletone extends pay_vendors {
 
     private static function printAnswer($result, $description) {
 
-        mod::service("log")->log(array(
-            "type" => "pay/walletone",
-            "text" => "$result / $description",
-        ));
-
+        app()->trace("$result / $description", "pay/walletone");
         print "WMI_RESULT=" . strtoupper($result) . "&";
         print "WMI_DESCRIPTION=" .urlencode($description);
         exit();
@@ -142,7 +154,7 @@ class pay_vendors_walletone extends pay_vendors {
 
        self::loadConf();
        $inv_id = $_REQUEST["WMI_PAYMENT_NO"];
-       $invoice = pay_invoice::get((integer)$inv_id);
+       $invoice = Invoice::get((integer)$inv_id);
 
        header("location: {$invoice->url()}");
        die();
@@ -158,7 +170,7 @@ class pay_vendors_walletone extends pay_vendors {
 
        self::loadConf();
        $inv_id = $_REQUEST["WMI_PAYMENT_NO"];
-       $invoice = pay_invoice::get((integer)$inv_id);
+       $invoice = Invoice::get((integer)$inv_id);
 
        header("location: {$invoice->url()}");
        die();
@@ -174,7 +186,7 @@ class pay_vendors_walletone extends pay_vendors {
 
     public function payUrl() {
 
-        $url = mod_action::get("pay_vendors_walletone", "create", array(
+        $url = \Infuso\Core\Action::get("pay_vendors_walletone", "create", array(
                 "id" => $this->invoice()->id(),
             ))->url();
 
@@ -196,7 +208,7 @@ class pay_vendors_walletone extends pay_vendors {
 
         $currency = $invoice->data("currency");
         if(!$currency) {
-            throw new Exception("Счет № {$invoice->id()}: не задана валюта оплаты");
+            throw new \Exception("Счет № {$invoice->id()}: не задана валюта оплаты");
         }
 
         $fields["WMI_CURRENCY_ID"]    = $currency;
@@ -268,19 +280,19 @@ class pay_vendors_walletone extends pay_vendors {
         self::loadConf();
 
         //Загружаем счет
-        $invoice = pay_invoice::get((integer)$p['id']);
+        $invoice = Invoice::get((integer)$p['id']);
 
         if (!$invoice->exists()) {
-            throw new Exception("Единая касса: не нашли счет с указанным номером");
+            throw new \Exception("Единая касса: не нашли счет с указанным номером");
         }
 
         if ($invoice->paid()) {
-            $invoice->log("Недоступен для оплаты, т.к. счет уже был оплачен ранее");
-            throw new Exception("Единая касса: Недоступен для оплаты, т.к. счет уже был оплачен ранее");
+            $invoice->plugin("log")->log("Недоступен для оплаты, т.к. счет уже был оплачен ранее");
+            throw new \Exception("Единая касса: Недоступен для оплаты, т.к. счет уже был оплачен ранее");
         }
 
         if (!$invoice->my()) {
-            throw new Exception("Единая касса: вы не являетесь владельцем счета");
+            throw new \Exception("Единая касса: вы не являетесь владельцем счета");
         }
 
 		app()->tm("/pay/vendors/walletone")->param(array(

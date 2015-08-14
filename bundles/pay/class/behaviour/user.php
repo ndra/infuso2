@@ -3,28 +3,44 @@
 /**
  * Класс создает поведение для пользователя, оплачивающего товары/услуги со внутреннего счета.
  **/
-class pay_behaviour_user extends mod_behaviour {
+class userBehaviour extends \infuso\Core\Behaviour {
     
     /**
      * Добавить всем объектам возвращаемого класса методы текущего и наследуемых классов [шито ???]
      **/
     public function addToClass() {
-        return "user";
+        return "Infuso\\User\\Model\\User\\User";
     }
     
     /**
      * Добавить поле
      **/
-    public function fields() {
+    public function model() {
         return array(
-            mod::field("cost")
-                ->name("userCash")
-                ->group("Личные данные")
-                ->label("Сумма на внутреннем счете")
-                ->disable(),
+            "fields" => array(
+                array (
+                    'name' => 'userCash',
+                    'type' => 'cost',
+                    'label' => 'Сумма на внутреннем счете',
+                    "editable" => true,
+                )
+
+            ),
         );
     }
-    
+
+    public static function confDescription() {
+        return array(
+            "components" => array(
+                get_class() => array(
+                    "params" => array(
+                        "accountCurrency" => "Валюта личного кабинета",
+                    ),
+                ),
+            ),
+        );
+    }
+
     /**
      * Пополнить внутренний счет пользователя
      **/
@@ -59,7 +75,7 @@ class pay_behaviour_user extends mod_behaviour {
      * Взять все записи изменения внутреннего счета пользователя
      **/
     public function payAccountOperationLog() {
-        return pay_operationLog::all()->eq("userId", $this->id());
+        return \Infuso\Pay\Model\OperationLog::all()->eq("userId", $this->id());
     }
     
     /**
@@ -88,10 +104,10 @@ class pay_behaviour_user extends mod_behaviour {
      **/
     public function accountCurrency() {
     
-        $currency = mod_conf::get("pay:accountCurrency")*1;
+        $currency = $this->param("pay:accountCurrency")*1;
         
         if(!$currency) {
-            throw new Exception("Валюта личного кабинета не задана");
+            throw new \Exception("Валюта личного кабинета не задана");
         }
     
         return $currency;

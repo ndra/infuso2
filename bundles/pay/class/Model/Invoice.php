@@ -1,149 +1,18 @@
 <?php
 /**
- * Счета
- *
- * @version 0.4
- * @package pay
- * @author Petr.Grishin <petr.grishin@grishini.ru>
- **/
-class pay_invoice extends reflex implements mod_handler {
+ * Created by PhpStorm.
+ * User: AKopleman
+ * Date: 07.08.2015
+ * Time: 16:10
+ */
 
-    
+namespace Infuso\Pay\Model;
+use Infuso\Core;
+use Infuso\User\Model\User as User;
 
-public static function model() {return array (
-  'name' => 'pay_invoice',
-  'fields' => 
-  array (
-    0 => 
-    array (
-      'id' => 'cblqv7dajkksq0b2tha6aoqcygt7x4',
-      'name' => 'id',
-      'type' => 'jft7-kef8-ccd6-kg85-iueh',
-      'editable' => '2',
-      'label' => 'Номер счета',
-    ),
-    1 => 
-    array (
-      'id' => 'pvl0py53eij3je3u9fmhydgoeqvrxw',
-      'name' => 'date',
-      'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
-      'editable' => '2',
-      'label' => 'Дата',
-    ),
-    2 => 
-    array (
-      'name' => 'status',
-      'type' => 'fahq-we67-klh3-456t-plbo',
-      'editable' => 2,
-      'id' => 'k9sf45cq6csz649pgebxoymot31n3o',
-      'label' => 'Статус заказа',
-      'indexEnabled' => 0,
-      'method' => 'pay_invoice::statusAll',
-    ),
-    3 => 
-    array (
-      'name' => 'driver',
-      'type' => 'v324-89xr-24nk-0z30-r243',
-      'editable' => 2,
-      'id' => '85sxmehqc1h7c92xca0qcv0q896xf9',
-      'label' => 'Оплачено через',
-      'indexEnabled' => 0,
-    ),
-    4 => 
-    array (
-      'name' => 'driverUseonly',
-      'type' => 'v324-89xr-24nk-0z30-r243',
-      'editable' => 2,
-      'id' => '1id8q6pib2bfl554k9ta02q94ofon5',
-      'indexEnabled' => 0,
-      'label' => 'Счет может быть оплачен только данным драйвером',
-    ),
-    5 => 
-    array (
-      'name' => 'timeCheck',
-      'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
-      'editable' => 2,
-      'id' => 'df9z0bywrodpr3zc0xjo8lrokf8bir',
-      'label' => 'Время последней проверки статуса оплаты',
-      'indexEnabled' => 0,
-    ),
-    6 => 
-    array (
-      'id' => '8l6fgig9hk2y4ieim80n0r7a31ayl3',
-      'name' => 'sum',
-      'type' => 'nmu2-78a6-tcl6-owus-t4vb',
-      'editable' => '2',
-      'label' => 'Сумма счета',
-    ),
-    7 => 
-    array (
-      'id' => '9tvbztiabw6jb7slv2w4m7gjsx1mcq',
-      'name' => 'currency',
-      'type' => 'rtwaho8esx49ijy9rtc1',
-      'editable' => '2',
-      'label' => 'Валюта счета',
-      'indexEnabled' => 0,
-    ),
-    8 => 
-    array (
-      'id' => 's68uuym7ewrm35zl2crndl6uhucaac',
-      'name' => 'date_incoming',
-      'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
-      'editable' => '2',
-      'label' => 'Дата оплаты',
-    ),
-    9 => 
-    array (
-      'id' => 'pq9j1rxbcj8bf1ulmigebqlrh8xc5k',
-      'name' => 'for_order',
-      'type' => 'v324-89xr-24nk-0z30-r243',
-      'editable' => '2',
-      'label' => 'Номер заказа',
-      'indexEnabled' => 0,
-    ),
-    10 => 
-    array (
-      'id' => 'uaalcclywru0rr7qypzx38utbpps07',
-      'name' => 'title',
-      'type' => 'v324-89xr-24nk-0z30-r243',
-      'editable' => '2',
-      'label' => 'Назначение платежа',
-    ),
-    11 => 
-    array (
-      'name' => 'userId',
-      'type' => 'pg03-cv07-y16t-kli7-fe6x',
-      'editable' => 2,
-      'id' => 'm0v3edesktzwil034c39jbylurscgc',
-      'label' => 'Пользователь',
-      'indexEnabled' => 1,
-      'class' => 'user',
-    ),
-    12 => 
-    array (
-      'name' => 'redirect',
-      'type' => 'v324-89xr-24nk-0z30-r243',
-      'editable' => 2,
-      'id' => 'cgsnfu0qm1278us74e0qmeh3fghjfl',
-      'label' => 'URL возврата после оплаты',
-      'indexEnabled' => 0,
-    ),
-    13 => 
-    array (
-      'name' => 'errorText',
-      'type' => 'v324-89xr-24nk-0z30-r243',
-      'editable' => '1',
-      'id' => '6xpl6j492tfghtp507k9rx8lzd4g2q',
-      'indexEnabled' => 0,
-      'label' => 'Текст ошибки',
-    ),
-  ),
-  'indexes' => 
-  array (
-  ),
-);}
-
-/**
+class Invoice extends \Infuso\ActiveRecord\Record implements \Infuso\Core\Handler
+{
+    /**
      * Статус счета Ожидает оплаты
      **/
     const STATUS_DEFAULT = 0;
@@ -184,7 +53,7 @@ public static function model() {return array (
             die();
         }
 
-		app()->tm("/pay/invoice")->param("invoice", $invoice)->exec();
+        app()->tm("/pay/invoice")->param("invoice", $invoice)->exec();
     }
 
     /**
@@ -215,41 +84,33 @@ public static function model() {return array (
     /**
      * Список всех счетов
      *
-     * @return reflex_collection
+     * @return \Infuso\ActiveRecord\Record
      **/
     public static function all() {
-        return reflex::get(get_class())->desc("date");
+        return service("ar")
+            ->collection(get_class())->desc("date");
     }
 
     /**
-     * Название группы в админке
+     * Получить счет
      *
-     * @return string
      **/
-    public function reflex_rootGroup() {
-       return "Счета";
+
+    public static function get($id = 0) {
+        if ($id <= 0 || !is_int($id))
+            throw new \Exception("Задан невалидный номер счета: ".var_export($id,1));
+
+        return service("ar")->get(get_class(), $id);
     }
 
     /**
-     * Список элементов в админке для редактирования
+     * Заполняем данные по умолчанию только что созданого элемента
      *
-     * @return array
      **/
-    public static function reflex_root() {
-        return array(
-            self::all()->title("Счета")->param("tab","system"),
-        );
-    }
-
-    /**
-    * Заполняем данные по умолчанию только что созданого элемента
-    *
-    * @return void
-    **/
-    public function reflex_beforeCreate() {
+    public function beforeCreate() {
 
         if ($this->data("sum") <= 0) {
-            throw new Exception("Задана невалидная сумма счета, сумма <= 0");
+            throw new \Exception("Задана невалидная сумма счета, сумма <= 0");
         }
 
         // Дата создания счета
@@ -270,56 +131,39 @@ public static function model() {return array (
         return $this->field("currency")->code();
     }
 
-    /**
-     * Имя элемента каталога в админке
-     *
-     * @return array
-     **/
-    public function reflex_title() {
+    public function recordTitle()
+    {
         return "Счет N" . $this->id()
-            . " от " . $this->pdata("date")->txt()
-            . " на ".$this->sum()
-            . " ".$this->currencyName()
-            . ($this->paid() ? " — <span style='color:green;'>оплачен</span>" : " — <span style='color:red;'>ожидает оплаты</span>");
-    }
-
-    /**
-     * Получить счет
-     *
-     * @return reflex
-     **/
-    public static function get($id = 0) {
-        if ($id <= 0 || !is_int($id))
-            throw new Exception("Задан невалидный номер счета: ".var_export($id,1));
-
-        return reflex::get(get_class(), $id);
+        . " от " . $this->pdata("date")->txt()
+        . " на ".$this->sum()
+        . " ".$this->currencyName()
+        . ($this->paid() ? " — <span style='color:green;'>оплачен</span>" : " — <span style='color:red;'>ожидает оплаты</span>");
     }
 
     /**
      * Получить драйвер платежной системы (фабрика классов)
      *
-     * @return reflex
      **/
     public function driver($driver = NULL)
     {
         if ($this->paid() == true) {
-            throw new Exception("Невозможно создать драйвер для уже оплаченого счета");
+            throw new \Exception("Невозможно создать драйвер для уже оплаченого счета");
         }
 
         if ($driver === NULL) {
-            throw new Exception("Не задан Драйвер платежной системы");
+            throw new \Exception("Не задан Драйвер платежной системы");
         }
 
-        $class = 'pay_vendors_' . $driver;
+        $class = 'Infuso\\Pay\\Vendor\\' . $driver;
 
         // Проверка на существование класса драйвера
-        if(!mod::service("classmap")->testClass($class)) {
-            throw new Exception("Несуществующий драйвер: " . $class);
+        if(!service("classmap")->testClass($class)) {
+            throw new \Exception("Несуществующий драйвер: " . $class);
         }
 
         $driverUseonly = $this->data("driverUseonly");
         if ($driverUseonly && $driverUseonly != $driver) {
-            throw new Exception("Текущий счет можно оплатить только драйвером: " . $driverUseonly);
+            throw new \Exception("Текущий счет можно оплатить только драйвером: " . $driverUseonly);
         }
 
         $obj = new $class($this);
@@ -332,42 +176,39 @@ public static function model() {return array (
      *
      * @return array
      **/
-     public function driverAll() {
+    public function driverAll() {
 
-         $_drivers = array();
-         foreach (mod::classes("pay_vendors") as $class) {
+        $_drivers = array();
+        foreach (service("classmap")->getClassesExtends("Infuso\\Pay\\Vendor\\Vendor") as $class) {
             $_drivers[] = substr($class, 12);
-         }
+        }
 
-         return $_drivers;
-     }
+        return $_drivers;
+    }
 
-     /**
-      * Выводит список всех возможных статусов
-      **/
-     public function statusAll() {
-         return array(
-             self::STATUS_DEFAULT    => "Ожидает оплаты",
-             self::STATUS_CANCELED   => "Отменен",
-             self::STATUS_PAID       => "Оплачен",
-             self::STATUS_CHECK      => "Проверка статуса оплаты",
-         );
-     }
+    /**
+     * Выводит список всех возможных статусов
+     **/
+    public function statusAll() {
+        return array(
+            self::STATUS_DEFAULT    => "Ожидает оплаты",
+            self::STATUS_CANCELED   => "Отменен",
+            self::STATUS_PAID       => "Оплачен",
+            self::STATUS_CHECK      => "Проверка статуса оплаты",
+        );
+    }
 
     /**
      * Создать счет (билдер)
      *
-     * @param $sum Сумма счета
-     * @param $currency Валюта счета, по умолчанию RUB (код 643)
-     * @return reflex
      **/
     public static function create($sum = 0, $currency = 643) {
 
         if ($currency <= 0 || !is_int($currency)) {
-            throw new Exception("Задан невалидный тип валюты: " . gettype($currency));
+            throw new \Exception("Задан невалидный тип валюты: " . gettype($currency));
         }
 
-        $invoice = reflex::create(get_class(), array(
+        $invoice = service("ar")->create(get_class(), array(
             "sum" => $sum,
             "currency" => $currency,
         ));
@@ -409,8 +250,6 @@ public static function model() {return array (
     /**
      * Прикрепить или получить счету номер Заказа
      *
-     * @param string $n Номер заказа
-     * @return reflex
      **/
     public function forOrder($n = NULL) {
 
@@ -419,9 +258,21 @@ public static function model() {return array (
         }
 
         if(func_num_args() == 1) {
-            if (!$n) throw new Exception("Не задан номер заказа");
+            if (!$n) throw new \Exception("Не задан номер заказа");
+            list($class, $id) = explode(":", $n);
+            if(!service("classmap")->testClass($class)) {
+                throw new \Exception("Несуществующий класс: " . $class);
+            }
             $this->data("for_order", $n);
-            return $this;
+            return $n;
+        }
+    }
+
+    public function recordParent() {
+        $forOrder = $this->forOrder();
+        list($class, $id) = explode(":", $n);
+        if(service("classmap")->testClass($class)) {
+            return service("ar")->get($class, $id);
         }
     }
 
@@ -452,7 +303,7 @@ public static function model() {return array (
     }
 
     /**
-     * @return Возвращает сумму счета
+     * Возвращает сумму счета
      *
      * @return float
      **/
@@ -461,7 +312,7 @@ public static function model() {return array (
     }
 
     /**
-     * @return Возвращает Оплачен ли счет (true - оплачен, false - не оплачен)
+     * Возвращает Оплачен ли счет (true - оплачен, false - не оплачен)
      *
      * @return boolean
      **/
@@ -504,21 +355,19 @@ public static function model() {return array (
     /**
      * Оплатить счет
      * Возвращает true если сумма оплаты равна сумме счечта
-     *
-     * @return boolean
      **/
     public function incoming($params) {
 
         try {
 
             if($this->paid()) {
-                throw new Exception("Попытка оплаты уже оплаченного счета");
+                throw new \Exception("Попытка оплаты уже оплаченного счета");
             }
 
             $sum = $params["sum"];
 
             if ($sum <= 0) {
-                throw new Exception("Задана невалидная сумма, сумма <= 0");
+                throw new \Exception("Задана невалидная сумма, сумма <= 0");
             }
 
             if ($sum >= $this->data("sum")) {
@@ -530,22 +379,22 @@ public static function model() {return array (
                 $this->data("driver", $params["driver"]);
 
                 // Выбрасываем событие оплаты заказа
-                mod::fire("pay_success", array(
+                app()->fire("pay_success", array(
                     "invoice" => $this,
                 ));
 
-                $this->log("Зачислена сумма {$sum}");
+                $this->plugin("log")->log("Зачислена сумма {$sum}");
 
                 return true;
 
             } else {
 
-                throw new Exception("Входящая сумма {$sum} меньше суммы счета " . $this->data("sum"));
+                throw new \Exception("Входящая сумма {$sum} меньше суммы счета " . $this->data("sum"));
 
             }
 
-        } catch (Exception $ex) {
-            $this->log($ex->getMessage());
+        } catch (\Exception $ex) {
+            $this->plugin("log")->log($ex->getMessage());
             throw $ex;
         }
 
@@ -597,7 +446,7 @@ public static function model() {return array (
         if(func_num_args() == 1) {
 
             if (!array_key_exists($status, self::statusAll()))
-                throw new Exception("Pay: несуществующий статус оплаты с кодом " . $status);
+                throw new \Exception("Pay: несуществующий статус оплаты с кодом " . $status);
 
             //Если указан тип Требует прерки, заполняем поле время проверки
             if($status == self::STATUS_CHECK) {
@@ -611,4 +460,108 @@ public static function model() {return array (
         }
     }
 
-} //END CLASS
+    public static function model()
+    {
+        return array (
+            'name' => get_class(),
+            'fields' =>
+                array (
+                        [
+                            'name' => 'id',
+                            'type' => 'jft7-kef8-ccd6-kg85-iueh',
+                            'editable' => '2',
+                            'label' => 'Номер счета',
+                        ],
+                        [
+                            'name' => 'date',
+                            'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+                            'editable' => '2',
+                            'label' => 'Дата',
+                        ],
+                        [
+                            'name' => 'status',
+                            'type' => 'fahq-we67-klh3-456t-plbo',
+                            'editable' => 2,
+                            'label' => 'Статус заказа',
+                            'indexEnabled' => 0,
+                            'method' => 'statusAll',
+                        ],
+                        [
+                            'name' => 'driver',
+                            'type' => 'v324-89xr-24nk-0z30-r243',
+                            'editable' => 2,
+                            'label' => 'Оплачено через',
+                            'indexEnabled' => 0,
+                        ],
+                        [
+                            'name' => 'driverUseonly',
+                            'type' => 'v324-89xr-24nk-0z30-r243',
+                            'editable' => 2,
+                            'indexEnabled' => 0,
+                            'label' => 'Счет может быть оплачен только данным драйвером',
+                        ],
+                        [
+                            'name' => 'timeCheck',
+                            'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+                            'editable' => 2,
+                            'label' => 'Время последней проверки статуса оплаты',
+                            'indexEnabled' => 0,
+                        ],
+                        [
+                            'name' => 'sum',
+                            'type' => 'nmu2-78a6-tcl6-owus-t4vb',
+                            'editable' => '2',
+                            'label' => 'Сумма счета',
+                        ],
+                        [
+                            'name' => 'currency',
+                            'type' => 'rtwaho8esx49ijy9rtc1',
+                            'editable' => '2',
+                            'label' => 'Валюта счета',
+                            'indexEnabled' => 0,
+                        ],
+                        [
+                            'name' => 'date_incoming',
+                            'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
+                            'editable' => '2',
+                            'label' => 'Дата оплаты',
+                        ],
+                        [
+                            'name' => 'for_order',
+                            'type' => 'v324-89xr-24nk-0z30-r243',
+                            'editable' => '2',
+                            'label' => 'Номер заказа',
+                            'indexEnabled' => 0,
+                        ],
+                        [
+                            'name' => 'title',
+                            'type' => 'v324-89xr-24nk-0z30-r243',
+                            'editable' => '2',
+                            'label' => 'Назначение платежа',
+                        ],
+                        [
+                            'name' => 'userId',
+                            'type' => 'pg03-cv07-y16t-kli7-fe6x',
+                            'editable' => 2,
+                            'label' => 'Пользователь',
+                            'indexEnabled' => 1,
+                            'class' => 'user',
+                        ],
+                        [
+                            'name' => 'redirect',
+                            'type' => 'v324-89xr-24nk-0z30-r243',
+                            'editable' => 2,
+                            'label' => 'URL возврата после оплаты',
+                            'indexEnabled' => 0,
+                        ],
+                        [
+                            'name' => 'errorText',
+                            'type' => 'v324-89xr-24nk-0z30-r243',
+                            'editable' => '1',
+                            'indexEnabled' => 0,
+                            'label' => 'Текст ошибки',
+                        ],
+                ),
+        );
+    }
+}

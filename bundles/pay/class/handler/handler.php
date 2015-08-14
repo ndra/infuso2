@@ -1,6 +1,7 @@
 <?
+namespace Infuso\Pay\Handler;
 
-class pay_handler implements mod_handler {
+class Handler implements \Infuso\Core\Handler {
 
     public function on_mod_init() {
      

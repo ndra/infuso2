@@ -13,6 +13,6 @@
         }
     </table>
     
-    <a href='' >Предоставить доступ</a>
+    <a href='{action("infuso\\board\\controller\\access", "new")}' >Предоставить доступ</a>
     
 </div>

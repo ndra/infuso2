@@ -1,14 +1,16 @@
 <?
-
+namespace Infuso\Pay\Vendor;
+use \Infuso\Core;
 
 /**
  * Абстрактный класс драйвера платежной системы
  *
- * @version 0.1
+ * @version 0.2
  * @package pay
  * @author Petr.Grishin <petr.grishin@grishini.ru>
+ * updated by Alexey.Dvourechesnky <alexey@ndra.ru>
  **/
-abstract class pay_vendors extends mod_controller {
+abstract class Vendor extends Core\Controller {
     
     /**
      * Ссылка на объект Счета
