@@ -2,7 +2,7 @@ mod.init(".x4qRpzOJXG", function() {
     
     var $container = $(this);
     
-    $container.click(function() {
+    $container.children().filter( ":not(.view)" ).click(function() {
         $.window({
             call:{ 
                 cmd: "infuso/cms/reflex/controller/field/linksAdd",
@@ -12,6 +12,7 @@ mod.init(".x4qRpzOJXG", function() {
         }).on("links/select", function(event) {
             $container.find("input").val(event.itemID);
             $container.find(".title").text(event.title);
+            $container.find(".view").attr("href", event.editUrl);
         });
     });
 })
