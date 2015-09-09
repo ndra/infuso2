@@ -18,7 +18,8 @@
             <span class='bold' ><b>Жирный</b></span> 
             <span class='italic' ><i>Наклонный</i></span> 
             <span class='image' >Изображение</span> 
-            <span class='file' >Файл</span> 
+            <span class='file' >Файл</span>
+			<span class='href' >Ссылка</span>			
         </div>
     }
 

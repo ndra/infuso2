@@ -46,6 +46,14 @@ mod.init(".f0rw8hlkvh", function() {
         });
         
     });
+	
+	$container.find(".href").click(function() {
+        
+       var href = prompt("Введите адрес ссылки");
+       if(!href) return; 
+	   replaceSelection("<a href='"+href+"'>","</a>");
+        
+    });
     
     var replaceSelection = function(prefix, suffix) {
         var src = $textarea.val();
