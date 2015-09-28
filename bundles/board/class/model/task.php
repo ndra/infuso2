@@ -595,7 +595,7 @@ class Task extends \Infuso\ActiveRecord\Record {
         $mail->send();
     }
 
-    /**
+     /**
      * Отправлет пиьсма уведомлюящие о выполнений задачи
      **/
     public function informAboutFinishing() {
@@ -615,6 +615,18 @@ class Task extends \Infuso\ActiveRecord\Record {
             $time .= " + ".$progress;
         }
         $params["timeSpent"] = $time." ч.";
+		//добавляем комментарии к задаче
+        $txt = "";
+        foreach($this->getlog() as $item) {
+            $date = $item->pdata("created")->date()->text();
+            $time = $item->pdata("created")->format("H:i");
+            if($text = $item->text()) {
+                $text = \util::str($text)->esc();
+                $text = nl2br($text);
+                $txt.= "<br/>".$date." ".$time." : ".$item->user()->title()." : ".$text;
+            }
+        }
+        $params["comments"] = $txt;
         $user = $this->workflow()->desc("id")->one()->pdata("userId");
         $userName = $user->firstName();
         if(!$userName) $userName = $user->nickName();
