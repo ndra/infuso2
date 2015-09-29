@@ -67,7 +67,7 @@ jQuery.window = function(params) {
         padding: 4,
 		width: "100%"
     }).appendTo($tr)
-        .html(params.title + "");
+        .html(params.title ? params.title : "");
 
     $("<td>").css({
         right: 4,

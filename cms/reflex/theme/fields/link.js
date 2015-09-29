@@ -4,6 +4,7 @@ mod.init(".x4qRpzOJXG", function() {
     
     $container.children().filter( ":not(.view)" ).click(function() {
         $.window({
+            title: "Выберите элемент",
             call:{ 
                 cmd: "infuso/cms/reflex/controller/field/linksAdd",
                 editor: $container.attr("data:editor"),

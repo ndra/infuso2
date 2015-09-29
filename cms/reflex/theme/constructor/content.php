@@ -8,7 +8,7 @@
         if($field->visible() || $field->editable()) {
            
             $view = \Infuso\Cms\Reflex\FieldView\View::get($field);
-            $view->setEditor($editor);
+            $view->setEditor($destEditor);
     
     		app()->tm("/reflex/fields/field-layout")->param(array(
                 "label" => $field->label(),
