@@ -6,7 +6,7 @@ $code = $collection->serialize();
     <h1 class='g-header' >{$collection->collection()->title()}</h1>
 
     // Быстрый поиск
-    <div style='display:none' >
+    <div style='display:inline-block;' >
         widget("\\Infuso\\Cms\\UI\\Widgets\\Textfield")
             ->placeholder("Быстрый поиск")
             ->style("width", 120)

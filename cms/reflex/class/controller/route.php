@@ -23,9 +23,9 @@ class Route extends \Infuso\Core\Controller {
     public function post_create($p) {
         $editor = Reflex\Editor::get($p["editor"]);
         $item = $editor->item();
-        $id = get_class($item).":".$item->id();
+        $hash = get_class($item).":".$item->id();
         $this->service("ar")->create(Reflex\Model\Route::inspector()->className(),array(
-            "hash" => $id,
+            "hash" => $hash,
 		));
     }
     

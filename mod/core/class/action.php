@@ -70,7 +70,6 @@ class Action extends Component {
      * Возвращает информацию о маршруте
      **/
     public function ar($ar = null) {
-    
         if(func_num_args()==0) {
         	return $this->ar;
         } elseif(func_num_args()==1) {
@@ -84,7 +83,6 @@ class Action extends Component {
      * Хэш используется в таблице роутов для быстрого поиска
      * */
     public function hash() {
-
 
         $seek = $this->className();
         if($a = $this->action()) {

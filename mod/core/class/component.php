@@ -400,6 +400,9 @@ class Component {
             case "editor":
                 $plugin = new \Infuso\Cms\Reflex\Plugin\Editor($this);
                 break;
+            case "route":
+                $plugin = new \Infuso\Cms\Reflex\Plugin\Route($this);
+                break;
         }
         
         return $plugin->factory();

@@ -36,7 +36,7 @@ class Field extends Core\Controller {
         $field = $item->field($p["field"]);
         $field->value($p["value"]);
         
-        return \tmp::get("/reflex/fields/links/ajax-items/")
+        return app()->tm("/reflex/fields/links/ajax-items/")
             ->param("field", $field)
             ->getCOntentForAjax();
     }
