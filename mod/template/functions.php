@@ -41,6 +41,11 @@ function css() {
 	call_user_func_array(array(app()->tm(),"css"),$args);
 }
 
+function singleCSS() {
+	$args = func_get_args();
+	call_user_func_array(array(app()->tm(),"singlecss"),$args);
+}
+
 function param() {
 	$args = func_get_args();
 	call_user_func_array(array(app()->tm(),"param"),$args);

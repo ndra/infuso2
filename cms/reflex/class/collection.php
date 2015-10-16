@@ -100,7 +100,7 @@ class Collection extends Core\Component {
         }
 
         if(!$class) {
-        	$editor = new Reflex\NoneEditor;
+        	$editor = new NoneEditor;
             return $editor;
         }
 

@@ -261,8 +261,6 @@ abstract class Editor extends Core\Controller {
             }
         }
 
-        app()->msg($name);
-
         if($name) {
             $collection->like($name, $search);
         }
@@ -367,7 +365,7 @@ abstract class Editor extends Core\Controller {
     }
     
     public function metaEnabled() {
-        return true;
+        return false;
     }
     
     public function setMeta($p) {

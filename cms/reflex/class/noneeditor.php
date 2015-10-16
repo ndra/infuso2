@@ -11,11 +11,5 @@ class NoneEditor extends Editor {
 	public function itemClass() {
 		return "reflex_none";
 	}
-	
-	public function renderItemData() {	
-	    return array(
-	        "text" => "reflex_none",
-		);
-	}
 
 }

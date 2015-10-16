@@ -65,11 +65,13 @@ abstract class Model extends Core\Controller {
      **/
     public function fieldParams($name) {
 		$model = $this->modelExtended();
-		foreach($model["fields"] as $fieldDescr) {
-		    if($fieldDescr["name"] == $name) {
-		        return $fieldDescr;
-		    }
-		}
+        if(is_array($model["fields"])) {
+    		foreach($model["fields"] as $fieldDescr) {
+    		    if($fieldDescr["name"] == $name) {
+    		        return $fieldDescr;
+    		    }
+    		}
+        }
     }
 
     /**

@@ -16,7 +16,10 @@ class Conf extends Core\Service {
 	 * Возвращает значение строки конфигурации
 	 **/
 	public function get($name) {
-	    return \Infuso\Cms\Reflex\Model\Conf::all()->eq("name", $name)->one()->data("value");
+	    return \Infuso\Cms\Reflex\Model\Conf::all()
+            ->eq("name", $name)
+            ->one()
+            ->data("value");
 	}
 
 }

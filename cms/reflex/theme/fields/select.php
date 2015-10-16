@@ -4,7 +4,6 @@
 
     <select name='{e($field->name())}' >
         foreach($field->options() as $key => $val) {
-        
             if($key == $field->value()) {
                 <option selected value='{e($key)}' >{e($val)}</option>
             } else {

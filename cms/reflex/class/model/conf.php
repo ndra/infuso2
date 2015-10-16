@@ -46,6 +46,11 @@ class Conf extends ActiveRecord\Record {
 					'editable' => 1,
 					'label' => "Значение",
 					'type' => 'textarea',
+				), array (
+					"name" => "parent",
+					"label" => "Родитель",
+					"type" => "link",
+                    "class" => self::inspector()->className(),
 				),
 			),
 		);
@@ -66,5 +71,14 @@ class Conf extends ActiveRecord\Record {
 		return service("ar")
 			->get(get_class(),$id);
 	}
+    
+    public function children() {
+        return self::all()
+            ->eq("parent", $this->id());
+    }
+    
+    public function recordParent() {
+        return $this->pdata("parent");
+    }
 	
 }

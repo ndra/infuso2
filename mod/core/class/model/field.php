@@ -332,7 +332,7 @@ abstract class Field extends Core\Component {
         $method = $this->param("method");
         $model = $this->model();
         if($method && method_exists($model,$method)){
-            return $this->model()->$method($val,$data);
+            return $this->model()->$method($val);
         }
 
         return true;

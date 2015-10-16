@@ -30,13 +30,13 @@ class FieldType extends Select {
 	    $classes = service("classmap")->map("infuso\\core\\model\\field");
 	    foreach($classes as $class) {
 	        $field = new $class;
-	        $options[$class] = $field->typeName();
+	        $options[$field->typeId()] = $field->typeName();
 	    }
 	    return $options;
 	}
 
 	public function pvalue() {
-		return mod_field::get(array(
+		return Field::get(array(
 		    "editable" => 1,
 		    "name" => "field",
 		    "type" => $this->value(),
