@@ -25,7 +25,7 @@ class TinyMCE extends Field {
     }
 
     public function typeAlias() {
-        return "tinymce";
+        return array("tinymce", "boya-itpg-z30q-fgid-wuzd");
     }
 
     public function dbIndex() {
