@@ -48,7 +48,7 @@ function singleCSS() {
 
 function param() {
 	$args = func_get_args();
-	call_user_func_array(array(app()->tm(),"param"),$args);
+	return call_user_func_array(array(app()->tm(),"param"),$args);
 }
 
 function head() {

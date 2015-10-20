@@ -1,6 +1,6 @@
 <?
 
-$menu = mod::service("reflex")->root($tab);
+$menu = service("reflex")->root($tab);
 
 <table class='ddw7fs4b37' >
     <tr>

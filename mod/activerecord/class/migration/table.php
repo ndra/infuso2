@@ -121,23 +121,28 @@ class Table {
 
         $this->updateIndex();
 
-
         if(sizeof($this->q)) {
             $q = implode(", ",$this->q);
-            $q = "alter table `{$this->prefixedTableName()}` $q";
-
+            $q = "alter table `{$this->prefixedTableName()}` $q"; 
             return mod::service("db")->query($q)->exec();
         }
 
     }
 
+    /**
+     * Меняем движок таблицы
+     **/         
     public function updateEngine() {
-        $query = "SHOW TABLE STATUS like '{$this->prefixedTableName()}' ";
-        $status = mod::service("db")->query($query)->exec()->fetch();
-        $engine = $status["Engine"];
-        if($engine!="MyISAM") {
-            $this->q[] = "ENGINE=myisam";
-            $this->msg("Changing engine");
+        $name = service("db")->quote($this->prefixedTableName());
+        $query = "SHOW TABLE STATUS where `Name` = {$name} ";          
+        $status = service("db")->query($query)->exec()->fetch();
+        
+        $oldEngine = $status["Engine"];
+        $newEngine = "MyISAM";
+        if($oldEngine != $newEngine) {
+            $this->msg($query);
+            $this->q[] = "ENGINE = {$newEngine}";
+            $this->msg("Changing engine from {$engine} to {$newEngine}");
         }
     }
 
