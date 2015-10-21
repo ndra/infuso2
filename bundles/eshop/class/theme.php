@@ -14,7 +14,7 @@ class eshop_theme extends tmp_theme {
 	}
 
 	public function path() {
-		return mod::service("classmap")->getClassBundle(get_class())->path()."/theme";
+		return service("classmap")->getClassBundle(get_class())->path()."/theme";
 	}
 		
 	public function base() {

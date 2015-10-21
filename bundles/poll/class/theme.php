@@ -1,10 +1,12 @@
 <?
 
+namespace Infuso\Poll;
+
 /**
- * Стандартная тема для интернет-магазина
+ * Стандартная тема для опроса
  **/
 
-class vote_theme extends tmp_theme {
+class Theme extends \Infuso\Template\Theme {
 
 	/**
 	 * @return Приоритет темы =-1
@@ -14,11 +16,11 @@ class vote_theme extends tmp_theme {
 	}
 
 	public function path() {
-		return "/vote/theme/";
+        return self::inspector()->bundle()->path()."/theme/";
 	}
 
 	public function base() {
-		return "vote";
+		return "poll";
 	}
 
 	public function autoload() {
@@ -26,7 +28,7 @@ class vote_theme extends tmp_theme {
 	}
 
 	public function name() {
-		return "Стандартная тема vote";
+		return "Стандартная тема Опроса";
 	}
 
 }

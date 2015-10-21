@@ -19,7 +19,7 @@ class Poll extends \Infuso\ActiveRecord\Record {
                     'name' => 'created',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
                     'editable' => '2',
-                    "default" => "now",
+                    "default" => "now()",
                     'label' => 'Дата создания',
                 ), array (
                     'name' => 'title',
@@ -50,19 +50,11 @@ class Poll extends \Infuso\ActiveRecord\Record {
     /**
      * @return Возвращает коллекцию всех опросов
      **/
-    public static function allEvenHidden() {
+    public static function all() {
         return service("ar")->collection(get_called_class())
             ->desc("active")
             ->desc("created", true)
             ->param("icon", "hand");
-    }
-
-    /**
-     * @return Возвращает коллекцию всех опросов
-     **/
-    public static function all() {
-        return self::allEvenHidden()
-            ->eq("active",1);
     }
 
     /**
@@ -93,6 +85,11 @@ class Poll extends \Infuso\ActiveRecord\Record {
     public function answers() {
         return Answer::all()->eq("pollId",$this->id());
     }
+    
+    public function resultData() {
+        $ret = array();
+        return $ret;
+    }
 
     /**
      * Добавляет ответ в вопрос
@@ -113,73 +110,21 @@ class Poll extends \Infuso\ActiveRecord\Record {
         }
 
         $this->answers()->create(array(
-            "optionID" => $option->id(),
+            "optionId" => $option->id(),
             "cookie" => $cookie
         ));
 
     }
-
-    /**
-     * Добавляет вариант ответа ввиде текста
-     **/
-    public function addText($text,$cookie) {
-
-        // Нормализуем текст
-        // Это даст нам больше шансов что одинаковые ответы объединятся
-        $text = util::str($text)->trim()->text()."";
-
-        if(!$text) {
-            mod::msg("Недопустимый вариант ответа");
-            return;
-        }
-
-        $option = $this->allOptions()->eq("lower(title)",$text)->one();
-        if(!$option->exists())
-            $option = $this->options()->create(array(
-                "title" => $text
-            ));
-
-        $this->addAnswer($option->id(),$cookie);
-    }
-    
-    
-    public function addDraftOption($text,$cookie) {
-        // Нормализуем текст
-        // Это даст нам больше шансов что одинаковые ответы объединятся
-        $text = util::str($text)->trim()->text()."";
-    
-        if(!$this->data("active")) {
-            mod::msg("Голосование закрыто",1);
-            return;
-        }
-        
-        if(!$text) {
-            return;
-        }
-        
-        $option = $this->options()->eq("lower(title)",$text)->one();
-        
-        if(!$option->exists()){
-            $option = $this->options()->create(array(
-                "title" => $text,
-                "draft" => 1
-            ));
-            $option->store();
-        }    
-
-        $this->addAnswer($option->id(),$cookie);
-            
-    }
-    
+  
     /**
      * Возвращает cookie-ключ, уникальный для каждого пользователя
      **/
     public function getCookie() {
         $key = "5g03f90jfv03f5btmvz";
-        $cookie = mod::cookie($key);
+        $cookie = app()->cookie($key);
         if(!$cookie) {
-            $cookie = util::id(20);
-            mod::cookie($key,$cookie);
+            $cookie = \Infuso\Util\Util::id(20);
+            app()->cookie($key,$cookie);
         }
         return $cookie;
     }

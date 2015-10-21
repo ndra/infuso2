@@ -4,6 +4,10 @@
 
     <h1>{$group->title()}</h1>
     
+    // Описание
+    <div>{$group->pdata(description)}</div>
+    
+    // Товары
     foreach($group->items() as $item) {
         <div class='item' >
             <a href='{$item->url()}' >

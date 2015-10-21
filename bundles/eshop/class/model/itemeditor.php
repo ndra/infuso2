@@ -45,5 +45,9 @@ class ItemEditor extends \Infuso\Cms\Reflex\Editor {
         return app()->tm("/eshop/admin/item-list-item")
             ->param("editor", $this);
     }
+    
+    public function metaEnabled() {
+        return true;
+    }
 
 }

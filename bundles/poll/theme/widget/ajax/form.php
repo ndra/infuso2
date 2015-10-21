@@ -1,14 +1,13 @@
 <?
 
-$vote = $p1;
-if($vote->exists()) {    
+if($poll->exists()) {    
 
     echo "<form>";
-    echo "<h2>{$vote->data('title')}</h2>";
+    echo "<h2>{$poll->data('title')}</h2>";
     
-    switch($vote->data("mode")) {
+    switch($poll->data("mode")) {
         case 1:
-            foreach($vote->options() as $option) {
+            foreach($poll->options() as $option) {
                 echo "<div class='oih93un-optionContainer'>";
                 $id = util::id();
                 echo "<input type='radio' id='$id' name='option' value='{$option->id()}' >";
@@ -19,7 +18,7 @@ if($vote->exists()) {
             }
             break;
         case 2:
-            foreach($vote->options() as $option) {
+            foreach($poll->options() as $option) {
                 echo "<div class='oih93un-optionContainer'>";
                 $id = util::id();
                 echo "<input type='checkbox' id='$id' name='{$option->id()}' value='1' >";
@@ -29,13 +28,10 @@ if($vote->exists()) {
                 echo "</div>";
             }
             break;
-        case 3:
-            echo "<input type='text' />";
-            break;
     }
     
     // Скрытое поле с id голосования
-    echo "<input type='hidden' name='voteID' value='{$vote->id()}' />";    
+    echo "<input type='hidden' name='pollId' value='{$poll->id()}' />";    
         
     // Обязательно оставьте класс urxp1-submit, иначе скрипт отправки не сработает
     echo "<input class='urxp1-submit' type='button' value='Ответить' >";

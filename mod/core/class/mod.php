@@ -85,19 +85,7 @@ class Mod extends \Infuso\Core\Component {
 		return $event;
 	}
 
-	/**
-	 * Обертка для mod_cooke::set() и mod_cookie::get()
-	 **/
-	public static function cookie($key,$val=null) {
-  		if(func_num_args()==1) {
-		    return mod_cookie::get($key);
-		}
-		if(func_num_args()==2) {
-	    	mod_cookie::set($key,$val);
-	    }
-	}
-
-	public static function session($key,$val=null) {
+	public static function session($key, $val=null) {
 		if(func_num_args()==1) {
 		    return \mod_session::get($key);
 		}

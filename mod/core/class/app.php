@@ -525,5 +525,17 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
             }
         });        
     }
+    
+    /**
+     * Метод для чтения / записи кук
+     **/         
+    public function cookie($key = null, $val = null, $keepDays = 30) {
+  		if(func_num_args() == 1) {
+		    return Cookie::get($key);
+		}
+		if(func_num_args() == 2) {
+	    	Cookie::set($key, $val, $keepDays);
+	    }
+    }
 
 }

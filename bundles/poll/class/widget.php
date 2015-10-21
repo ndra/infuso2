@@ -1,17 +1,23 @@
 <?
 
+namespace Infuso\Poll;
+
 /**
  * Виджет опроса
  **/
-class vote_widget extends tmp_widget {
+class Widget extends \Infuso\Template\Widget {
 
 	public function name() {
 		return "Опрос";
 	}
+    
+    public function alias() {
+        return "poll";
+    }
 
 	public function execWidget() {
-		$vote = vote::last();
-		tmp::exec("vote:vote", $vote);
+        app()->tm("/poll/widget")
+            ->exec();
 	}
 
 }

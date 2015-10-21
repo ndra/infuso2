@@ -13,7 +13,7 @@ class VoteEditor extends \Infuso\Cms\Reflex\Editor {
      * @reflex-group = Опрос    
      **/         
     public function all() {
-        return Poll::allEvenHidden()
+        return Poll::all()
             ->title("Опросы");
     }
     
@@ -33,6 +33,20 @@ class VoteEditor extends \Infuso\Cms\Reflex\Editor {
         return $this->item()
             ->answers()
             ->title("Ответы");
+    }
+    
+    public function listItemTemplate() {
+        return app()
+            ->tm("/poll/admin/list-item")
+            ->param("poll", $this->item());
+    }
+    
+    public function filters($collection) {
+        $ret = array();
+        $ret["Все"] = $collection->copy();
+        $ret["Активные"] = $collection->copy()->eq("active", 1);
+        $ret["Неактивные"] = $collection->copy()->eq("active", 0);
+        return $ret;
     }
     
 }
