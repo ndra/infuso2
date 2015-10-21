@@ -2,19 +2,57 @@
 
     padding: 10px;
     
-    .bundle-name, .files, .theme {
-        padding: 2px 0;
-    }
-    
-    .files, .theme {
+    -webkit-user-select: none;
+
+    .body {
+        padding: 2px;
+        background-repeat: no-repeat;
+        background-position: 20px 50%;
         cursor: pointer;
-        &:hover {
-            text-decoration: underline;
-        }
+        white-space: nowrap;
     }
     
+    .name {        
+        //padding-left:22px;
+        //background: red;
+    }
+
+    .node:hover > .body > .name {
+        text-decoration: underline;        
+    }
+    
+    .node.selected > .body {
+        background-color: #0099C6;
+        color: white;        
+    }
+
     .subdivisions {
         padding-left: 20px;
+        display: none;
+    }
+    
+    .expanded > .subdivisions {
+        display: block;
+    }
+    
+    .expander {
+        display: inline-block;
+        width:10px;
+        padding-left: 6px;
+        cursor: pointer;
+    }
+    
+    .expander-spacer {
+        display: inline-block;
+        width:16px;
+    }
+    
+    .expander:before {
+        content: "+";
+    }
+    
+    .expanded > .body > .expander:before {
+        content: "-" !important;
     }
 
 }
