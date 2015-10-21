@@ -26,4 +26,13 @@ class VoteEditor extends \Infuso\Cms\Reflex\Editor {
             ->title("Варианты ответа");
     }
     
+    /**
+     * @reflex-child = on
+     **/         
+    public function answers() {
+        return $this->item()
+            ->answers()
+            ->title("Ответы");
+    }
+    
 }

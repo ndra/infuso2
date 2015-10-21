@@ -91,7 +91,7 @@ class Poll extends \Infuso\ActiveRecord\Record {
      * @return Коллекция ответов на данный вопрос
      **/
     public function answers() {
-        return vote_answer::all()->eq("pollId",$this->id());
+        return Answer::all()->eq("pollId",$this->id());
     }
 
     /**

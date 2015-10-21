@@ -33,7 +33,7 @@ class Answer extends \Infuso\ActiveRecord\Record {
                 ), array (
                     'name' => 'cookie',
                     'type' => 'v324-89xr-24nk-0z30-r243',
-                    'editable' => '1',
+                    'editable' => '2',
                     'label' => 'Идентификатор cookie проголосовавшего',
                     'length' => '20',
                 ),
@@ -43,7 +43,7 @@ class Answer extends \Infuso\ActiveRecord\Record {
 
     public static function all() {
         return service("ar")
-            ->get(get_called_class())
+            ->collection(get_called_class())
             ->desc("date");
     }
 
@@ -66,7 +66,7 @@ class Answer extends \Infuso\ActiveRecord\Record {
      * @return Объект голосования
      **/
     public function poll() {
-        return vote::get($this->data("pollId"));
+        return $this->pdata("pollId");
     }
 
     /*public function reflex_afterOperation() {
