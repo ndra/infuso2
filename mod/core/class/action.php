@@ -38,7 +38,7 @@ class Action extends Component {
      **/
     public function fromString($str) {
 
-        $path = util::splitAndTrim($str,"/");
+        $path = \Infuso\Util\Util::splitAndTrim($str,"/");
         $class = array_shift($path);
         $action = array_shift($path);
 
@@ -53,7 +53,8 @@ class Action extends Component {
             }
             $n++;
         }
-        return mod_action::get($class,$action,$params);
+        $action = self::get($class,$action,$params);
+        return $action;
     }
 
     public function canonical() {
@@ -104,22 +105,37 @@ class Action extends Component {
      **/
     public function test() {
 
-        if(!mod::app()->service("classmap")->testClass($this->className(),"infuso\\core\\controller")) {
+        if(!$this->isCorrect()) {
             return false;
-		}
+        }
 
         $class = "\\".$this->className();
-        $obj = new $class;
-
-        if(!call_user_func($this->testCallback(),$this->params())) {
-            return false;
-		}
+        $obj = new $class; 
 
         if($obj->methodExists($this->method())) {
             return true;
         }
 
         return false;
+    }
+    
+    /**
+     * Может ли активный пользователь выполнить этот экшн?
+     **/
+    public function isCorrect() {
+
+        if(!app()->service("classmap")->testClass($this->className(),"infuso\\core\\controller")) {
+            return false;
+		}
+
+        $class = "\\".$this->className();
+        $obj = new $class;
+
+        if(!$obj->methodExists($this->method())) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

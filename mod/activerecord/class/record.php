@@ -226,7 +226,10 @@ abstract class Record extends \Infuso\Core\Model\Model {
             // Если адрес передается в формате action::class_name/action/p1/123/p2/456..., преобразуем адрес в url
             if(preg_match("/action::/",$url)) {
                 $url = strtr($url,array("action::"=>""));
-                $action = mod_action::fromString($url);
+                $action = \Infuso\Core\Action::fromString($url);
+                if(!$action->isCorrect()) {
+                    throw new \Exception("Incorrect action: $url");
+                }
                 return mod::url($action->url());
             // В противном случае возвращаем адрес как есть
             } else {

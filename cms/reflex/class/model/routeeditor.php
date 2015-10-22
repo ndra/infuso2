@@ -18,5 +18,12 @@ class RouteEditor extends Reflex\Editor {
 	public function all() {
 	    return Route::all()->title("Роуты");
 	}
+    
+    public function filters($collection) {
+        return array(
+            "Пользовательские" => $collection->copy()->eq("hash", ""),
+            "Метаданные" => $collection->copy()->neq("hash", ""),
+        );
+    }
 
 }
