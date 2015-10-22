@@ -6,22 +6,23 @@ use Infuso\Core;
 /**
  * Отвечает за то что мы видем в каталоге в разделе «Редиректы»
  **/
-
 class Redirect extends \Infuso\Core\Route {
+
+	public function priority() {
+		return -2000;
+	}
 
 	/**
 	 * url => action
 	 *  @todo восстановить	 
 	 **/
 	public function urlToAction($url) {
-	
-	
-		return;
-	
+    
 		$path = $url->relative();
-		$redirect = reflex_redirect::all()->eq("source",$path)->one();
+		$redirect = \Infuso\Cms\Reflex\Model\Redirect::all()->eq("source", $path)->one();
+        
 		if($redirect->exists()) {
-			return mod::action("reflex_redirect","redirect",array(
+			return \Infuso\Core\Action::get("Infuso\\Cms\\Reflex\\Model\\Redirect", "redirect", array (
 			    "target" => $redirect->data("target"),
 			));
 		}
