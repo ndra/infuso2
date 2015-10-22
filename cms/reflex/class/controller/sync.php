@@ -25,7 +25,7 @@ class Sync extends \Infuso\Core\Controller {
 	}
 
     public static function indexTest() {
-        return true;
+        return Core\Superadmin::check();
     }
 
     public static function postTest() {

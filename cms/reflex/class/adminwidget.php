@@ -21,8 +21,10 @@ class adminWidget extends \Infuso\Cms\Admin\Widgets\Widget {
 		$url = $url = Core\Action::get("infuso\\cms\\reflex\\controller")->url();
 		echo "<h2><a href='{$url}' >Каталог</a></h2> ";
 		
-		$url = $url = Core\Action::get("infuso\\cms\\reflex\\controller\\sync")->url();
-		echo "<a href='{$url}' >Синхронизация</a>";
+        if(Core\Superadmin::check()) {
+    		$url = $url = Core\Action::get("infuso\\cms\\reflex\\controller\\sync")->url();
+    		echo "<a href='{$url}' >Синхронизация</a>";
+        }
 
 	}
 

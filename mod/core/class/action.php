@@ -112,11 +112,11 @@ class Action extends Component {
         $class = "\\".$this->className();
         $obj = new $class; 
 
-        if($obj->methodExists($this->method())) {
-            return true;
-        }
+        if(call_user_func($this->testCallback(),$this->params()) !== true) {
+            return false;
+		}
 
-        return false;
+        return true;
     }
     
     /**
