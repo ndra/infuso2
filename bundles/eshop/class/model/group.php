@@ -31,13 +31,11 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
 				), array (
     				'name' => 'priority',
     				'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
-    				'editable' => '0',
     				'label' => 'Приоритет',
     				'indexEnabled' => '1',
 				), array (
     				'name' => 'parent',
     				'type' => 'pg03-cv07-y16t-kli7-fe6x',
-    				'editable' => '0',
     				'label' => 'Родительская группа',
        				'indexEnabled' => '1',
                     "editable" => true,
@@ -55,7 +53,6 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
     				'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
     				'editable' => '1',
     				'label' => 'Описание',
-    				'group' => 'Основные',
     				'indexEnabled' => '0',
 				), array (
     				'name' => 'active',
@@ -66,6 +63,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
 				), array (
     				'name' => 'status',
     				'type' => "select",
+                    "label" => "Статус",
                     "editable" => 2,
     				'values' => array(
                         self::STATUS_VOID => "Пустая",
@@ -77,7 +75,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
     				'name' => 'numberOfItems',
     				'type' => "bigint",
                     'editable' => 2,
-                    "title" => "Количество активных товаров",
+                    "label" => "Количество активных товаров",
 				),
             ),
         );

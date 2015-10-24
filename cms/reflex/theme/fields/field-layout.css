@@ -9,7 +9,8 @@
     }
 
     .label {
-        width: 200px;
+        width: 180px;
+        padding-right: 20px;
         font-style: italic;
         color: gray;
     }
