@@ -63,7 +63,15 @@ class inspector {
 	        $comments = $method->getDocComment();
 	        if(preg_match_all("/\*\s*\@([a-z0-9\_\-]+)\s*=\s*(.*)/iu",$comments,$matches,PREG_SET_ORDER )) {
 	            foreach($matches as $match) {
-	                $ret[$method->getName()][$match[1]] = trim($match[2]);
+                    $name = $method->getName();
+                    if(preg_match("/^_/", $name)) {
+                        $name = preg_replace("/^_/", "", $name);
+                        if(!isset($ret[$name][$match[1]])) {
+                            $ret[$name][$match[1]] = trim($match[2]);
+                        }
+                    } else {
+                        $ret[$name][$match[1]] = trim($match[2]);
+                    }
 	            }
 	        }
 	    }
