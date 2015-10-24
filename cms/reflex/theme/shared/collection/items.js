@@ -53,7 +53,7 @@ mod.init(".cjoesz8swu", function() {
         });
     }
     
-    load();
+    //load();
     
     $container.on("reflex/refresh", load);
     

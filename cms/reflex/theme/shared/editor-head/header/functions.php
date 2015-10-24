@@ -10,12 +10,12 @@
         ->style("color", "white")
         ->exec();
         
-    <span style='margin-right: 20px;' ></span>
+    // <span style='margin-right: 20px;' ></span>
         
-    $w = widget("infuso\\cms\\ui\\widgets\\button")
+    /*$w = widget("infuso\\cms\\ui\\widgets\\button")
         ->icon("trash")
         ->air()
         ->addClass(".refresh")
-        ->exec();
+        ->exec(); */
     
 </div>

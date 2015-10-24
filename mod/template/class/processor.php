@@ -70,6 +70,10 @@ class Processor extends Core\Component {
      **/
     public function exec($name) {
     
+        if(func_num_args() == 0) {
+            throw new \Exception("Processor::exec() call with zero arguments");
+        }
+    
         $template = self::template($name);
         $args = func_get_args();
         array_shift($args);

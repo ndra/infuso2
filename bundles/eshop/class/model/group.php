@@ -65,12 +65,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
     				'type' => "select",
                     "label" => "Статус",
                     "editable" => 2,
-    				'values' => array(
-                        self::STATUS_VOID => "Пустая",
-                        self::STATUS_USER_DISABLED => "Отключена пользователем",
-                        self::STATUS_DETACHED => "Без родителя",
-                        self::STATUS_ACTIVE => "Активна",                        
-                    ),
+    				'values' => self::enumStatuses(),
 				), array (
     				'name' => 'numberOfItems',
     				'type' => "bigint",
@@ -78,6 +73,15 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
                     "label" => "Количество активных товаров",
 				),
             ),
+        );
+    }
+    
+    public function enumStatuses() {
+        return array(
+            self::STATUS_ACTIVE => "Активна", 
+            self::STATUS_VOID => "Пустая",
+            self::STATUS_USER_DISABLED => "Отключена пользователем",
+            self::STATUS_DETACHED => "Без родителя",                                   
         );
     }
 

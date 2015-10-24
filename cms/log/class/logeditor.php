@@ -26,5 +26,15 @@ class LogEditor extends Reflex\Editor {
 	public function listItemTemplate() {
 	    return app()->tm("/log/list-item")->param("editor", $this);
 	}
+    
+    public function filters($collection) {
+        $ret = array();
+        $ret["Все"] = $collection->copy();
+        $ret["Ошибки"] = $collection->copy()->eq("type","error");
+        $ret["Задачи"] = $collection->copy()->eq("type","task");
+        $ret["Крон"] = $collection->copy()->eq("type","cron");
+        return $ret;
+    }
+    
 
 }

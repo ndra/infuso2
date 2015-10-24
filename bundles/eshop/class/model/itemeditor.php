@@ -49,5 +49,14 @@ class ItemEditor extends \Infuso\Cms\Reflex\Editor {
     public function metaEnabled() {
         return true;
     }
+    
+    public function filters($collection) {    
+        $ret = array();
+        foreach(Item::enumStatuses() as $status => $title) {
+            $ret[$title] = $collection->copy()->eq("status", $status);
+        }
+        $ret["Все"] = $collection->copy();
+        return $ret;    
+    }
 
 }

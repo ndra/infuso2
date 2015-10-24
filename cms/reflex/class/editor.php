@@ -273,10 +273,10 @@ abstract class Editor extends Core\Controller {
     public function _viewModes() {      
         $ret = [];            
         if(in_array("list", $this->availlableViewModes())) {
-            $ret[] = "/reflex/shared/collection/items/list-ajax";
+            $ret[] = "/reflex/shared/collection/items/ajax/list";
         }             
         if(in_array("thumbnail", $this->availlableViewModes())) {
-            $ret[] = "/reflex/shared/collection/items/preview-ajax";
+            $ret[] = "/reflex/shared/collection/items/ajax/preview";
         }           
         return $ret;
     }
@@ -290,7 +290,7 @@ abstract class Editor extends Core\Controller {
     }
     
     public function listItemTemplate() {
-        return app()->tm("/reflex/shared/collection/items/list-ajax/item")
+        return app()->tm("/reflex/shared/collection/items/ajax/list/item")
             ->param("editor", $this);
     }
     

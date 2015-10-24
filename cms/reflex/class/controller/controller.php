@@ -44,17 +44,13 @@ class Controller extends \Infuso\Core\Controller {
      * Контроллер, возвращающий список элементов для ajax-запроса
      **/
     public function post_getItems($p) {
-    
+        
         $collection = Collection::unserialize($p["collection"]);
         $collection->applyParams($p);
         
-        $tmp = $collection->filterTemplate();
-        $html = $tmp->getContentForAjax();
+        $tmp = app()->tm("/reflex/shared/collection/items/ajax")
+            ->param("collection", $collection);
         
-        $tmp = $collection->itemsTemplate();
-        $html.= $tmp->getContentForAjax();
-        
-        $tmp = $collection->pagerTemplate();
         $html.= $tmp->getContentForAjax();
 
         return array(

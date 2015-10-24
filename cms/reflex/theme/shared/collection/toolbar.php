@@ -21,7 +21,7 @@ $code = $collection->serialize();
             ->exec();
                 
         // Режим отображения
-        <select name='viewMode' >
+        <select name='viewMode' style='display: none;' >
             foreach($collection->editor()->viewModes() as $title => $template) {
                 <option>{$title}</option>        
             }
@@ -53,10 +53,10 @@ $code = $collection->serialize();
             ->air()
             ->exec();
             
-        $w = widget("infuso\\cms\\ui\\widgets\\button")
+        /*$w = widget("infuso\\cms\\ui\\widgets\\button")
             ->icon("copy")
             ->air()
-            ->exec();
+            ->exec(); */
             
         <span style='margin-right:20px;' ></span>
             

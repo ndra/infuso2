@@ -83,14 +83,18 @@ class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Sea
                     "label" => "Статус",
                     "editable" => 2,
     				'type' => "select",
-    				'values' => array(
-                        self::STATUS_USER_DISABLED => "Отключен пользователем",
-                        self::STATUS_GROUP_DISABLED => "Группа отключена",
-                        self::STATUS_DETACHED => "Без родителя",
-                        self::STATUS_ACTIVE => "Активен",                        
-                    ),
+    				'values' => self::enumStatuses(),
 				),
             ),
+        );
+    }
+    
+    public function enumStatuses() {
+        return array(
+            self::STATUS_ACTIVE => "Активен",  
+            self::STATUS_USER_DISABLED => "Отключен пользователем",
+            self::STATUS_GROUP_DISABLED => "Группа отключена",
+            self::STATUS_DETACHED => "Без родителя",                                  
         );
     }
 

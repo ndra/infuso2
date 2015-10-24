@@ -142,6 +142,10 @@ class Collection extends Core\Component {
 		$class = $this->param("reflexEditorClass");
 	    $modes = $this->editor()->viewModes();
 	    $tmp = $modes[$this->param("viewMode")];
+        if(!$tmp) {
+            reset($modes);
+            $tmp = current($modes);
+        }
 
 		$tmp = app()->tm($tmp);
         $tmp->param("collection",$this);
@@ -149,14 +153,14 @@ class Collection extends Core\Component {
 	}
 	
     public function filterTemplate() {
-		$tmp = app()->tm("/reflex/shared/collection/items/filters-ajax");
-        $tmp->param("collection",$this);
+		$tmp = app()->tm("/reflex/shared/collection/items/ajax/filters");
+        $tmp->param("collection", $this);
         return $tmp;
     }
     
     public function pagerTemplate() {
-		$tmp = app()->tm("/reflex/shared/collection/items/pager-ajax");
-        $tmp->param("collection",$this);
+		$tmp = app()->tm("/reflex/shared/collection/items/ajax/pager");
+        $tmp->param("collection", $this);
         return $tmp;
     }
     

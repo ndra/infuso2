@@ -21,7 +21,6 @@ class ConfEditor extends Reflex\Editor {
 	public function all() {
 	    return Conf::all()
             ->param("sort", true)
-            ->eq("parent", 0)
             ->title("Настройки");
 	}
     
@@ -45,6 +44,15 @@ class ConfEditor extends Reflex\Editor {
      **/
     public function templateEditForm() {
 		return app()->tm("/reflex/conf/edit-form")->param("editor",$this);
+    }
+    
+    public function filters($collection) {
+        $ret = array();
+        if(!array_key_exists("parent", $collection->eqs("parent"))) {
+            $ret["По группам"] = $collection->copy()->eq("parent", 0);
+        }
+        $ret["Все"] = $collection->copy();
+        return $ret;
     }
 
 }
