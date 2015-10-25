@@ -3,29 +3,51 @@ mod.init(".l83i1tvf0u", function() {
     var $dropzone = $(this);
 	var container = $(".l83i1tvf0u"); 
     var path = "/";
-	
-	var onLoad = function(ret) {   
-		container.find("input").val(ret);
-    }
 
     // Перетаскивание файла в дропзону
 
-    $dropzone.on("dragover", function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).addClass("drag-enter");
+    var draghover = function($e) {
+        $e.each(function() {
+            
+            var collection = $();
+            var self = $(this);
+    
+            self.on('dragenter', function(e) {
+                if (collection.length === 0) {
+                    self.trigger('draghoverstart');
+                }
+                collection = collection.add(e.target);
+            });
+    
+            self.on('dragleave drop', function(e) {
+                collection = collection.not(e.target);
+                if (collection.length === 0) {
+                    self.trigger('draghoverend');
+                }
+            });
+        });
+    };
+    
+    // Перетаскивание файлов в браузер
+    draghover($dropzone);
+    $dropzone.on({
+        'draghoverstart': function(event) {
+            $(this).addClass("drag-enter");
+        },
+        'draghoverend': function(event) {
+            $(this).removeClass("drag-enter");
+        }
     });
     
-    $dropzone.on("dragleave", function(e) {
-        e.stopPropagation();
+    // Нужно сделать превент этому событию, иначе 
+    // события drop не будет
+    $dropzone.on("dragover", function(e) {
         e.preventDefault();
-        $(this).removeClass("drag-enter");
     });
     
     $dropzone.on("drop", function(e) {
        e.stopPropagation();
        e.preventDefault();
-       mod.msg("drop");
 	   
 	   $(this).removeClass("drag-enter");
        var file = e.originalEvent.dataTransfer.files[0];  	
@@ -33,22 +55,26 @@ mod.init(".l83i1tvf0u", function() {
             cmd:"infuso/cms/reflex/controller/storage/upload",
             editor: $dropzone.attr("data:editor"),
             path: path,
-        }, onLoad, {
+        }, function(data) {
+            if(data) {
+                $dropzone.find("input").val(data.filename);
+                $dropzone.find("img").attr("src", data.preview150);
+            }
+        }, {
             files: {
                 file: file
             },
         });
     });
 	
-	
     
     // Окно выбора файлов
-    
     $dropzone.click(function() {
         
         var $wnd = $.window({
             width:800,
             height: 500,
+            title: "Выберите файл",
             call: {
                 cmd:"infuso/cms/reflex/controller/storage/getWindow",
                 editor: $dropzone.attr("data:editor")

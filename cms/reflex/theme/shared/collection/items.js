@@ -111,7 +111,6 @@ mod.init(".cjoesz8swu", function() {
         $container.on("dragover", function(e) {
             if(!sortProcessing) {
                 e.preventDefault();
-                console.log(e);
             }
         });
         

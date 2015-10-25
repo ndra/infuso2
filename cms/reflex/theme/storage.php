@@ -7,10 +7,16 @@ lib::modjsui();
 $editor = get_class($editor).":".$editor->itemId();
 <div class='x0jgagz44k7' infuso:editor='{$editor}' >
 
-    exec("toolbar");
+    <div class='top' >
+        exec("toolbar");
+    </div>
 
-    <div class='files' >
+    <div class='files center' >
         // ajax here
+    </div>
+    
+    <div class='drag-splash' >
+        <div class='text' >Перетащите файлы сюда</div>
     </div>
     
 </div>

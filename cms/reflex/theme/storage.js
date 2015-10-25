@@ -1,7 +1,7 @@
-$(function() {
+mod.init(".x0jgagz44k7", function() {
 
-    var container = $(".x0jgagz44k7");    
-    var editor = $(".x0jgagz44k7").attr("infuso:editor");  
+    var $container = $(this);    
+    var editor = $container.attr("infuso:editor");  
     var path = "/";
 
     var load = function() {
@@ -11,65 +11,93 @@ $(function() {
             editor: editor,
             path: path
         },function(p) {
-            container.find(".files").html(p.html);
+            $container.find(".files").html(p.html);
         });
    
     }
     
     load();
     
-    container.on("reflex/storage/upload",load);
+    $container.on("reflex/storage/upload",load);
+    
+    $container.layout();
     
     // Перенаправляем событие смены директории в тулбар
-    container.on("reflex/storage/cd",function(event) {
+    $container.on("reflex/storage/cd",function(event) {
         path = event.path;
         load();
-        container.find(".c-toolbar").triggerHandler(event);
+        $container.find(".c-toolbar").triggerHandler(event);
     });
     
     // Перенаправляем события выделения в тулбар
-    container.on("list/select", function(event) {
-        container.find(".c-toolbar").triggerHandler(event);
+    $container.on("list/select", function(event) {
+        $container.find(".c-toolbar").triggerHandler(event);
     });
     
     // Клики по хлебным крошкам
-    container.find(".back-path").click(function() {
+    $container.find(".back-path").click(function() {
         var path = $(this).attr("data:path");
-        container.trigger({
+        $container.trigger({
             type: "reflex/storage/cd",
             path: path
         });
     });
     
+    var draghover = function($e) {
+        $e.each(function() {
+            
+            var collection = $();
+            var self = $(this);
+    
+            self.on('dragenter', function(e) {
+                if (collection.length === 0) {
+                    self.trigger('draghoverstart');
+                }
+                collection = collection.add(e.target);
+            });
+    
+            self.on('dragleave drop', function(e) {
+                collection = collection.not(e.target);
+                if (collection.length === 0) {
+                    self.trigger('draghoverend');
+                }
+            });
+        });
+    };
+    
     // Перетаскивание файлов в браузер
-
-    container.on("dragover", function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).addClass("drag-enter");
+    draghover($container);
+    $container.on({
+        'draghoverstart': function(event) {
+            $(this).addClass("drag-enter");
+        },
+        'draghoverend': function(event) {
+            $(this).removeClass("drag-enter");
+        }
     });
     
-    $(this).on("dragleave", function(e) {
-        e.stopPropagation();
+    // Нужно сделать превент этому событию, иначе 
+    // события drop не будет
+    $container.on("dragover", function(e) {
         e.preventDefault();
-        $(this).removeClass("drag-enter");
     });
-    
-    $(this).on("drop", function(e) {
+        
+    $container.on("drop", function(e) {
         e.stopPropagation();
         e.preventDefault();
-        $(this).removeClass("drag-enter");
-        var file = e.originalEvent.dataTransfer.files[0];            
+        var file = e.originalEvent.dataTransfer.files[0];      
+        var files = {};
+        for(var i = 0; i < e.originalEvent.dataTransfer.files.length; i ++) {
+            files["file" + i] = e.originalEvent.dataTransfer.files[i];
+        }
+        
         mod.call({
             cmd:"infuso/cms/reflex/controller/storage/upload",
             editor:editor,
             path:path
         }, load, {
-            files: {
-                file: file
-            }
+            files:files
         });
-        
     });
 
 });

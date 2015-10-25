@@ -25,5 +25,9 @@ class RouteEditor extends Reflex\Editor {
             "Метаданные" => $collection->copy()->neq("hash", ""),
         );
     }
+    
+    public function metaEnabled() {
+        return $this->item()->data("hash")== "";
+    }
 
 }

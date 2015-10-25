@@ -1,5 +1,36 @@
 .x0jgagz44k7 {
 
-    //border: 1px solid #ededed;
+    height: 100%;
+    
+    .files {
+        overflow: auto;
+    }
+    
+    &.drag-enter {
+        .drag-splash {
+            display: block !important;
+        }
+    }
+    
+    .drag-splash {
+        
+        display: none;
+        width: 100%;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        position: absolute;
+        background: rgba(0,180,0,.85);
+        
+        .text {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            font-size: 18px;
+            color: white;
+            text-align: center;
+        }
+        
+    }
 
 }

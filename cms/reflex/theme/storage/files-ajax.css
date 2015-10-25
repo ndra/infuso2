@@ -1,11 +1,7 @@
 .getcbtu0lh {
 
-    padding:10px;
-    
-    &.drag-enter {
-        outline: 4px dashed green;
-    }
-    
+    height: 100%;
+
     .path {
         margin: 0 0 10px 10px;
         .back-path {
