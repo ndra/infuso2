@@ -9,6 +9,7 @@ $route = \Infuso\Cms\Reflex\Model\Route::get($item);
     
         widget("infuso\\cms\\ui\\widgets\\textfield")
             ->value($route->data("url"))
+            ->style("width", 300)
             ->addClass("url")
             ->exec();
             
