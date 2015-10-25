@@ -9,7 +9,7 @@
         margin:0 !important;
     }
     
-    @icon: "@{bundle}res/img/icons24/delete.png";
+    @icon: "@{bundle}res/img/icons16/delete.png";
     
     .button {        
         position:absolute;
@@ -17,7 +17,7 @@
         top: 5px;
         width: 24px;
         height: 24px;
-        background: url(@icon);
+        background: url(@icon) center center no-repeat;
         cursor: pointer;
         opacity: .1;
         

@@ -36,7 +36,11 @@ $container->begin();
     $input->exec();
     
     if($widget->param("clearButton")) {
-        <div class='button' ></div>
+        $h = helper("<div class='button' ></div>");
+        if(!$widget->param("value")) {
+            $h->style("display", "none");
+        }
+        $h->exec();
     }
     
 $container->end();

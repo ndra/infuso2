@@ -1,10 +1,23 @@
-$(function() {
+mod.init(".x8zq1fi07zr", function() {
 
-    $(".x8zq1fi07zr").mod("init", function() {
-        var button = $(this).find(".button");
-        button.click(function() {
-            $(this).parent().find("input").val("").trigger("input");
-        });
+    var $input = $(this).find("input");
+
+    var $button = $(this).find(".button");
+    
+    $(this).on("input", function() {
+        updateButtonVisibility();
+    });
+    
+    var updateButtonVisibility = function() {
+        if($input.val()) {
+            $button.show();
+        } else {
+            $button.hide();
+        }
+    }
+    
+    $button.click(function() {
+        $(this).parent().find("input").val("").trigger("input");
     });
 
 });

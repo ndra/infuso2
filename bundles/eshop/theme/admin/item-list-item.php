@@ -14,6 +14,13 @@ $item = $editor->item();
                     echo $editor->title();
                 </a> 
             </td>
+            <td class='group' >
+                $html = array();
+                foreach($item->parents() as $group) {
+                    $html[] = "<a href='{$group->plugin(editor)->url()}' >".$group->title()."</a>";
+                }
+                echo implode(" / ", $html);
+            </td>
             <td class='status' >
                 echo $item->pdata("status");
             </td>
