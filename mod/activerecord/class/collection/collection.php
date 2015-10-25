@@ -825,9 +825,16 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
     }
 
-    public function orr() {
+    public function o() {
         $this->orMode = true;
         return $this;
+    }
+    
+    /**
+     * Алиас для o()
+     **/         
+    public function orr() {
+        return $this->o();
     }
 
     public function inverse() {
