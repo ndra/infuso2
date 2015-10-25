@@ -13,6 +13,7 @@ class Controller extends Core\Controller {
     }
 
     public function post_validate($p) {
+    
         $formName = $p["form"];
         $form = new $formName();
         $form->scenario($p["scenario"]);

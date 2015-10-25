@@ -9,10 +9,10 @@
 
 .g-input {
 
-    padding:8px;
-    border:1px solid #999;
-    border-radius:5px;
-    box-shadow: 0px 5px 8px rgba(0,0,0,.2) inset;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,.1) inset;
     width:150px;
     box-sizing: content-box;
     margin:0 10px 0 0;
@@ -20,6 +20,10 @@
     &:focus {
         border:1px solid blue;
     }  
+    
+    &:disabled {
+        box-shadow: none;
+    }
 
 }
 
