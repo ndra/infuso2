@@ -42,6 +42,7 @@ class Controller extends \Infuso\Core\Controller {
 
     /**
      * Контроллер, возвращающий список элементов для ajax-запроса
+     * @todo проверка безопасности   
      **/
     public function post_getItems($p) {
         
@@ -64,11 +65,16 @@ class Controller extends \Infuso\Core\Controller {
      **/
     public static function post_save($p) {
         $editor = Editor::get($p["index"]);
+        if(!$editor->beforeEdit()) {
+            app()->msg("Вы не можете редактировать этот объект", 1);
+            return;
+        }
         $editor->setData($p["data"]);
     }
 
     /**
      * Контроллер создания конструктора
+     * @todo проверка безопасности     
      **/
     public static function post_create($p) {
     
@@ -88,6 +94,7 @@ class Controller extends \Infuso\Core\Controller {
 
     /**
      * Контроллер создания элемента из конструктора
+     * @todo проверка безопасности     
      **/
     public static function post_createItem($p) {
 

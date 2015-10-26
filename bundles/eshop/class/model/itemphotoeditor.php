@@ -10,7 +10,7 @@ class ItemPhotoEditor extends \Infuso\Cms\Reflex\Editor {
 	}
 
 	public function beforeEdit() {
-	    return user::active()->checkAccess("eshop:editItem",array(
+	    return app()->user()->checkAccess("eshop:editItem",array(
 	        "item" => $this->item(),
 		));
 	}

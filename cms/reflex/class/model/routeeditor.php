@@ -29,5 +29,10 @@ class RouteEditor extends Reflex\Editor {
     public function metaEnabled() {
         return $this->item()->data("hash")== "";
     }
+    
+    public function listItemTemplate() {
+        return app()->tm("/reflex/route/list-item")
+            ->param("editor", $this);
+    }
 
 }

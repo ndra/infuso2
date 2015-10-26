@@ -1,0 +1,26 @@
+.rSxy24u7JT {
+    
+    padding:5px 10px;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+	
+	.sort-handle {
+        width: 30px;
+        .icon16("sort");
+        opacity: .3;
+        cursor: pointer;
+    }
+    
+    td {
+        vertical-align: middle;
+        padding-right: 20px;
+    }
+    
+    .url {
+        width: 200px;
+    }
+    
+    .action {
+        width: 100%;    
+    }
+    
+}

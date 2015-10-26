@@ -21,6 +21,12 @@ abstract class Editor extends Core\Controller {
     public function index($p) {
         $class = get_called_class();
         $editor = new $class($p["id"]);
+        
+        if(!$editor->beforeView()) {
+            $editor->templateNoAccess()->exec();
+            return;
+        }
+        
         $editor->templateMain()->exec();
     }
     
@@ -106,11 +112,11 @@ abstract class Editor extends Core\Controller {
     /**
      * Конструктор
      **/
-    public function __construct($itemID=null) {
+    public function __construct($itemID = null) {
         if(is_object($itemID)) {
             $this->item = $itemID;
         } else {                                    
-            $this->item = Core\Mod::service("ar")->get($this->itemClass(),$itemID);
+            $this->item = service("ar")->get($this->itemClass(),$itemID);
         }
     }
     
@@ -169,10 +175,10 @@ abstract class Editor extends Core\Controller {
     public function _beforeView() {
 
         if(!$this->item()->exists()) {
-            return;
+            return false;
         }
 
-        return $this->component()->beforeEdit();
+        return $this->beforeEdit();
     }
 
     /**
@@ -184,8 +190,6 @@ abstract class Editor extends Core\Controller {
             "editor" => $this,
         ));
     }
-    
-    public function _afterChange() {}
 
     /**
      * @todo Сделать перенос объектов в корзину, а не простое их удаление
@@ -217,7 +221,7 @@ abstract class Editor extends Core\Controller {
      * Триггер, вызывающийся перед удалением элемента через каталог
      **/
     public function _beforeDelete() {
-        return $this->component()->beforeEdit();
+        return $this->beforeEdit();
     }
 
     /**
@@ -225,10 +229,8 @@ abstract class Editor extends Core\Controller {
      * Контекст - виртуальный объект
      **/
     public function _beforeCreate($data) {
-        return $this->component()->beforeEdit();
+        return $this->beforeEdit();
     }
-
-    public function _afterCreate() {}
     
     public function setData($data) {
     
@@ -340,6 +342,10 @@ abstract class Editor extends Core\Controller {
 		return app()->tm("/reflex/editor")->param("editor", $this);
     }
     
+    public function templateNoAccess() {
+        return app()->tm("/reflex/noaccess")->param("editor", $this);
+    }
+    
     /**
      * Возвращает шаблон формы редактирования элемента
      **/
@@ -381,5 +387,5 @@ abstract class Editor extends Core\Controller {
             "Все элементы" => $collection->copy(),
         );
     }
-
+    
 }
