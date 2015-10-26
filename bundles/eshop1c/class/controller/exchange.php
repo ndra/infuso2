@@ -193,7 +193,12 @@ class Exchange extends Core\Controller {
      * Выполняет один шаг обработки файла inport.xml
      **/         
     public static function importCatalog($filename = "import.xml") {
-
+    
+        service("log")->log(array(
+			"message" => "importCatalog $filename",
+			"type" => "1c/exchange"
+		));
+    
         $vitem = service("ar")->virtual("infuso\\eshop\\model\\item");
 
         $xml = simplexml_load_file(Core\File::get(self::exchangeDir()."/".$filename)->native());
@@ -221,6 +226,11 @@ class Exchange extends Core\Controller {
      * Выполняет один шаг обработки файла offers.xml
      **/         
     public static function importOffers($filename = "offers.xml") {
+    
+        service("log")->log(array(
+			"message" => "importOffers $filename",
+			"type" => "1c/exchange"
+		));
 
         $vitem = service("ar")->virtual("infuso\\eshop\\model\\item");
 
