@@ -50,7 +50,7 @@ class Sync extends \Infuso\Core\Controller {
 
         $ret = array();
 
-        foreach(Core\Mod::service("classmap")->classes("Infuso\\ActiveRecord\\Record") as $class) {
+        foreach(service("classmap")->classes("Infuso\\ActiveRecord\\Record") as $class) {
             if(!in_array($class,$skip)) {
                 $ret[] = $class;
             }
@@ -85,7 +85,7 @@ class Sync extends \Infuso\Core\Controller {
             $limit = 100;
         }
 
-        if(Core\Mod::service("classmap")->testClass($class)) {
+        if(service("classmap")->testClass($class)) {
 
             $items = \reflex::get($class)
                 ->asc("id")

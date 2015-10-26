@@ -9,7 +9,7 @@ function a() {
 }
 
 function service($serviceName) {
-    return \mod::service($serviceName);
+    return app()->service($serviceName);
 }
 
 

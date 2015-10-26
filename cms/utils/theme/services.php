@@ -6,7 +6,7 @@ admin::header();
 
     <h1>Службы, зарегистрированные в системе</h1>
 
-    foreach(mod::service("classmap")->map("infuso\\core\\service") as $class) {
+    foreach(service("classmap")->map("infuso\\core\\service") as $class) {
         <div class='service' >
             <div style='margin-bottom:10px;' >
                 <span class='name' >{$class::defaultService()}</span>

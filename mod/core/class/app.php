@@ -277,7 +277,7 @@ class App {
 
 	public function generateHtaccess() {
 	
-		$gatePath = mod::service("classmap")->getClassBundle(get_class())->path()."/pub/gate.php";
+		$gatePath = service("classmap")->getClassBundle(get_class())->path()."/pub/gate.php";
 		$gatePath = file::get($gatePath);
 
 	    // Загружаем xml с настройками
@@ -331,7 +331,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 	        $this->publicPath(),
 		);
 
-		$bundleManager = mod::service("bundle");
+		$bundleManager = service("bundle");
 	    foreach($bundleManager->all() as $bundle) {
             foreach($bundle->publicFolders() as $pub) {
                 $ret[] = $pub;

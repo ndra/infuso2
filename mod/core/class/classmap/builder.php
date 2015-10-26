@@ -101,7 +101,7 @@ class Builder {
 
 		$ret = array();
 		
-		$bundles = mod::service("bundle")->all();
+		$bundles = service("bundle")->all();
 
 		foreach($bundles as $bundle) {
 		    foreach($bundle->classPath()->search() as $file)
@@ -184,7 +184,7 @@ class Builder {
 		$ret = array();
 
 		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
-		foreach(mod::service("classmap")->classes("Infuso\Core\Behaviour") as $class) {
+		foreach(service("classmap")->classes("Infuso\Core\Behaviour") as $class) {
 		    $obj = new $class;
 		    if($for = $obj->addToClass()) {
                 $for = trim($for,"\\");
@@ -206,7 +206,7 @@ class Builder {
 	 **/
 	public static function handlers() {
 		$handlers = array();
-		foreach(mod::service("classmap")->classes() as $class=>$fuck) {
+		foreach(service("classmap")->classes() as $class=>$fuck) {
 			$r = new \ReflectionClass($class);
 			if($r->implementsInterface("Infuso\\Core\\Handler")) {
 			
@@ -245,7 +245,7 @@ class Builder {
 	 **/
 	public static function services() {
 		$services = array();
-		foreach(mod::service("classmap")->classes() as $class=>$fuck) {
+		foreach(service("classmap")->classes() as $class=>$fuck) {
 			$r = new \ReflectionClass($class);
 			if($r->isSubclassOf("mod_service") && !$r->isAbstract()) {
 			    $item = new $class;
@@ -268,7 +268,7 @@ class Builder {
 		$ret = array();
 
 		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
-		foreach(mod::service("classmap")->classes("infuso\\core\\route") as $class) {
+		foreach(service("classmap")->classes("infuso\\core\\route") as $class) {
 			$ret[] = $class;
 		}
 		
@@ -286,7 +286,7 @@ class Builder {
 		$ret = array();
 
 		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
-		foreach(mod::service("classmap")->classes("Infuso\\Core\\Model\\Field") as $class) {
+		foreach(service("classmap")->classes("Infuso\\Core\\Model\\Field") as $class) {
 			$ret[$class::typeId()] = $class;
 			if($alias = $class::typeAlias()) {
 			    if(!is_array($alias)) {
@@ -303,7 +303,7 @@ class Builder {
 	
 	public function buildControllers() {
 		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
-		foreach(mod::service("classmap")->classes("Infuso\\Core\\Controller") as $class) {
+		foreach(service("classmap")->classes("Infuso\\Core\\Controller") as $class) {
 		    $controller = new $class;
 			$ret[strtolower($controller->controller())] = $class;
 		}
@@ -329,9 +329,9 @@ class Builder {
 		// На втором - родителей
 		$map["map"] = self::classMap(false);
 			    
-		mod::service("classmap")->setClassMap($map);
+		service("classmap")->setClassMap($map);
 		$map["map"] = self::classMap(true);
-		mod::service("classmap")->setClassMap($map);
+		service("classmap")->setClassMap($map);
 		
 		$map["behaviours"] = self::defaultBehaviours();
 		$map["handlers"] = self::handlers();
@@ -341,7 +341,7 @@ class Builder {
 		$map["controllers"] = self::buildControllers();
 
 		// Сохраняем карту классов в памяти, чтобы использовать ее уже в этом запуске скрипта
-		mod::service("classmap")->storeClassMap($map);
+		service("classmap")->storeClassMap($map);
 
 		app()->msg("Карта классов построена");
 		

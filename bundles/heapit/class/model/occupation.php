@@ -39,7 +39,7 @@ class Occupation extends \Infuso\ActiveRecord\Record {
     
     
     public static function get($id) {
-        return Core\Mod::service("ar")->get(get_class(),$id);
+        return service("ar")->get(get_class(),$id);
     }
     
     public static function indexTest() {

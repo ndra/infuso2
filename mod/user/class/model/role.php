@@ -29,7 +29,7 @@ class Role extends Core\Component{
 	 * Конструктор роли
 	 **/
 	public static function create($code, $title = null) {
-	    return Core\Mod::service("ar")->create(Operation::inspector()->classname() ,array(
+	    return service("ar")->create(Operation::inspector()->classname() ,array(
 	        "role" => true,
 	        "code" => $code,
 	        "title" => $title,

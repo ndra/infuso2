@@ -312,7 +312,7 @@ class Processor extends Core\Component {
         $this->loadDefaults();
         $template = trim($template,"/");
         $bundle = $this->templateMap[$template]["bundle"];
-		return \mod::service("bundle")->bundle($bundle);
+		return service("bundle")->bundle($bundle);
 	}
 	
     /**

@@ -17,7 +17,7 @@ class Handler implements Core\Handler {
     }
     
     public static function deleteUnverfiedUsers() {
-        mod::service("user")->deleteUnverfiedUsers();        
+        service("user")->deleteUnverfiedUsers();        
     }
     
     /**

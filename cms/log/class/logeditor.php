@@ -36,5 +36,8 @@ class LogEditor extends Reflex\Editor {
         return $ret;
     }
     
+    public function logEnabled() {
+        return false;
+    }
 
 }

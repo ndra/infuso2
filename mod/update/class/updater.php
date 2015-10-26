@@ -30,7 +30,7 @@ class Updater extends Core\Component {
             }
         }
 	
-		$bundle = Core\Mod::service("bundle")->bundle($bundleName);
+		$bundle = service("bundle")->bundle($bundleName);
 		$conf = $bundle->conf();
 		
 		if($conf["update"]) {

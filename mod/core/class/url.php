@@ -296,7 +296,7 @@ class Url {
      * Взвращает экшн для данного урл
      **/
     public function action() {
-        return mod::service("route")->urlToAction($this);
+        return service("route")->urlToAction($this);
     }
 
 }

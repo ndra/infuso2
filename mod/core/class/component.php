@@ -385,7 +385,7 @@ class Component {
 	}
 	
 	public function service($name) {
-	    return Mod::service($name);
+	    return service($name);
 	}
 
     public function plugin($name) {

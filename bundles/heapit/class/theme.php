@@ -17,7 +17,7 @@ class Theme extends \Infuso\Template\Theme {
 	}
 
 	public function path() {
-		return Core\Mod::service("classmap")->getClassBundle(get_class())->path()."/theme";
+		return service("classmap")->getClassBundle(get_class())->path()."/theme";
 	}
 		
 	public function base() {

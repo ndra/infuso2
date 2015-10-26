@@ -30,7 +30,7 @@ class Event extends component {
      * Возвращает массив классов, которые могут реагировать на данное событие
      **/
     public final function handlers() {
-        $handlers = mod::service("classmap")->classmap("handlers");
+        $handlers = service("classmap")->classmap("handlers");
         $handlers = $handlers[$this->name()];
         if(!$handlers) {
             $handlers = array();

@@ -53,7 +53,7 @@ class Domain extends ActiveRecord\Record {
 	 * Возвращает домен по id
 	 **/
 	public static function get($id) {
-		return Core\Mod::service("ar")
+		return service("ar")
 			->get(get_class(),$id);
 	}
 

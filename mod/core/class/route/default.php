@@ -12,7 +12,7 @@ class mod_route_default extends \Infuso\Core\Route {
 	public function urlToAction($url) {
 	
 		$segments = explode("/",trim(strtolower($url->path()),"/"));
-		$controllers = mod::service("classmap")->classmap("controllers");
+		$controllers = service("classmap")->classmap("controllers");
 		$rest = array();
 
 		do {
@@ -47,7 +47,7 @@ class mod_route_default extends \Infuso\Core\Route {
 
 	public function actionToUrl($action) {
 	
-	    $controllers = mod::service("classmap")->classmap("controllers");
+	    $controllers = service("classmap")->classmap("controllers");
 	    $class = array_search($action->className(), $controllers);
 	
 		$ret = "/".strtr($class,array("\\" => "/"));

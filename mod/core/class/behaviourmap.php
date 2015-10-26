@@ -22,7 +22,7 @@ class BehaviourMap {
 		}
 
 		// Добавляем поведения из карты классов
-        $bb = mod::service("classmap")->classmap("behaviours");
+        $bb = service("classmap")->classmap("behaviours");
         $bb = $bb[$class];
         if($bb) {
             foreach($bb as $b) {
@@ -53,13 +53,13 @@ class BehaviourMap {
 		Profiler::beginOperation("core","behaviour map",$class);
 	
 	    $key = "system/behaviours-map-".$class."-".$behavioursHash;
-	    $data = Mod::service("cache")->get($key);
+	    $data = service("cache")->get($key);
 	    
 	    Profiler::endOperation();
 
 	    if($data === null) {
 	        $data = self::getMapNocache($class,$addBehaviours);
-	        Mod::service("cache")->set($key,$data);
+	        service("cache")->set($key,$data);
 	    }
 	    
 	    return $data;

@@ -35,7 +35,7 @@ $jkeys = base64_encode(json_encode($keys));
                 break;
             case "yaml":
                 <textarea class='new-value yaml' >       
-                    echo mod::service("yaml")->write($value);
+                    echo service("yaml")->write($value);
                 </textarea>
                 break;
         }

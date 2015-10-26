@@ -28,7 +28,7 @@ class Org extends Base {
             return false;
         }
 
-        $org = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Org", $p["data"]);
+        $org = service("ar")->create("Infuso\\Heapit\\Model\\Org", $p["data"]);
         return $org->url();
 
     }

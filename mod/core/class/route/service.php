@@ -22,7 +22,7 @@ class service extends \infuso\core\service {
             return core\mod::action("Infuso\\Core\\Console");
         }
 
-        $routers = core\mod::service("classmap")->classmap("routes");
+        $routers = service("classmap")->classmap("routes");
         
         foreach($routers as $router) {
             if($action = call_user_func(array($router,"urlToAction"),$url)) {
@@ -41,7 +41,7 @@ class service extends \infuso\core\service {
     public function urlToAction($url) {
 
         $key = "system/url/url-to-action/".$url;
-        $serializedAction = Core\Mod::Service("cache")->get($key);
+        $serializedAction = service("cache")->get($key);
 
         if(!$serializedAction) {
         
@@ -53,7 +53,7 @@ class service extends \infuso\core\service {
 				$action->params(),
 				$action->ar(),
 			));
-            Core\Mod::Service("cache")->set($key,$serializedAction);
+            service("cache")->set($key,$serializedAction);
 
             return $action;
 
@@ -85,7 +85,7 @@ class service extends \infuso\core\service {
             // Урл кэшируются на день
             $hash = "system/url/action-to-url:".$action->hash().ceil(time()/3600/24);
 
-            if($url = Core\Mod::service("cache")->get($hash)) {
+            if($url = service("cache")->get($hash)) {
                 Core\Profiler::endOperation();
                 return $url;
             }

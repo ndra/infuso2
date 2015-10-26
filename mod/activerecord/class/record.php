@@ -58,7 +58,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	 **/
     public function handleModelDataChanged() {
     	if(in_array($this->recordStatus(), array(self::STATUS_SYNC, self::STATUS_CHANGED))) {
-			Core\Mod::service("ar")->registerChanges(get_class($this),$this->id());
+			service("ar")->registerChanges(get_class($this),$this->id());
 			$this->setRecordStatus(self::STATUS_CHANGED);
 		}
     }
@@ -188,7 +188,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
     public static function classes() {
         $ret = array();
-        foreach(mod::service("classmap")->classes("infuso\\ActiveRecord\\Record") as $class) {
+        foreach(service("classmap")->classes("infuso\\ActiveRecord\\Record") as $class) {
             if($class!="reflex_none") {
                 $ret[] = $class;
             }
@@ -254,9 +254,9 @@ abstract class Record extends \Infuso\Core\Model\Model {
     public static function get($class,$id=null) {
     
         if(func_num_args()==1) {
-            return Core\Mod::service("ar")->collection($class);
+            return service("ar")->collection($class);
         } elseif(func_num_args()==2) {
-            return Core\Mod::service("ar")->get($class,$id);
+            return service("ar")->get($class,$id);
         }
         
         throw new \Exception("ActiveRecord::get() wrong number of arguments");
@@ -414,7 +414,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 		$this->storeCreated($keepID);     
 		
         // Объект заносим объект в буфер
-        Core\Mod::service("ar")->storeToBuffer($this);
+        service("ar")->storeToBuffer($this);
         
         // Меняем статус объекта
         $this->setRecordStatus(self::STATUS_SYNC);
@@ -450,7 +450,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
         }
         $insert = " (".implode(",",array_keys($data)).") values (".implode(",",$data).") ";
         $query = "insert into `$table` $insert ";
-        $id = mod::service("db")->query($query)->exec()->lastInsertId();
+        $id = service("db")->query($query)->exec()->lastInsertId();
         
         // Заносим id в данные объекта
         $initialData = $this->data();
@@ -478,7 +478,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * Сохраняет в базу все изменения
      **/
     public static function storeAll() {
-		mod::service("ar")->storeAll();
+		service("ar")->storeAll();
     }
 
 	/**
@@ -497,7 +497,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
     public function markAsUnchanged() {
         $this->setInitialData($this->data());
         $this->setRecordStatus(self::STATUS_SYNC);
-        mod::service("ar")->unregisterChanges(get_class($this),$this->id());
+        service("ar")->unregisterChanges(get_class($this),$this->id());
     }
 
     /**
@@ -539,7 +539,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	        $set = "set ".implode(",",$set)." ";
 	        $id = $this->id();
 	        $from = $this->from();
-	        mod::service("db")->query("update $from $set where `id`='$id' ")->exec();
+	        service("db")->query("update $from $set where `id`='$id' ")->exec();
 	
 	        // Сразу после сохранения, помечаем объект как чистый
 	        // Таким образом, если в afterStore() будут изменены поля объекта,
@@ -575,7 +575,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      **/
     public final function free() {
         $this->store();
-		mod::service("db")->query("update $from $set where `id`='$id' ")->exec();
+		service("db")->query("update $from $set where `id`='$id' ")->exec();
     }
 
     /**

@@ -124,7 +124,7 @@ class Table {
         if(sizeof($this->q)) {
             $q = implode(", ",$this->q);
             $q = "alter table `{$this->prefixedTableName()}` $q"; 
-            return mod::service("db")->query($q)->exec();
+            return service("db")->query($q)->exec();
         }
 
     }
@@ -229,7 +229,7 @@ class Table {
     public function createTable() {
         $table = $this->prefixedTableName();
         $query = "create table if not exists `$table` (`id` bigint(20) primary key) ";
-        mod::service("db")->query($query)->exec();
+        service("db")->query($query)->exec();
     }
 
     /**
@@ -237,7 +237,7 @@ class Table {
      **/
     public function describeField($field) {
         $query = "show full columns from `{$this->prefixedTableName()}` ";
-        $ret = mod::service("db")->query($query)->exec()->fetchAll();
+        $ret = service("db")->query($query)->exec()->fetchAll();
         foreach($ret as $row) {
             if($row["Field"] == $field->name()) {
                 return $row;
@@ -250,7 +250,7 @@ class Table {
      **/
     public function realFields() {
         $query = "show full columns from `{$this->prefixedTableName()}` ";
-        return mod::service("db")->query($query)->exec()->fetchCol("Field");
+        return service("db")->query($query)->exec()->fetchCol("Field");
     }
 
     /**
@@ -288,7 +288,7 @@ class Table {
         // Индексы, которые реально есть
         $b = array();
         $query = "show index from `{$this->prefixedTableName()}` ";
-        $items = mod::service("db")->query($query)->exec()->fetchAll();
+        $items = service("db")->query($query)->exec()->fetchAll();
 
         foreach($items as $index) {
             $name = $index["Key_name"];

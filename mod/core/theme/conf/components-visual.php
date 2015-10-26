@@ -10,7 +10,7 @@ admin::header();
     
     $confDescr = array();
     
-    foreach(mod::service("classmap")->getClassesExtends("mod_component") as $class) {    
+    foreach(service("classmap")->getClassesExtends("mod_component") as $class) {    
         $confDescr = array_merge_recursive($confDescr,call_user_func(array($class,"confDescription")));        
     }
     

@@ -13,7 +13,7 @@ abstract class Widget extends Generic {
 	 */
 	public final static function get($name) {
 	
-    	$classmap = Core\Mod::service("classmap");
+    	$classmap = service("classmap");
     	
     	if($classmap->testClass($name,Widget::inspector()->classname())) {
     	    return new $name;

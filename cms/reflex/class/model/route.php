@@ -106,7 +106,7 @@ class Route extends ActiveRecord\Record {
 	 **/
 	public function item() {
 	    list($class,$id) = explode(":",$this->data("hash"));
-	    return Core\Mod::service("ar")->get($class,$id);
+	    return service("ar")->get($class,$id);
 	}
 
 	/**
@@ -304,7 +304,7 @@ class Route extends ActiveRecord\Record {
 	}
 	
 	public function reflex_afterStore() {
-	    mod::service("route")->clearCache();
+	    service("route")->clearCache();
 	}
 
 	/**

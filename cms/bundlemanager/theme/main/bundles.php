@@ -36,7 +36,7 @@
                 </div>  
                 
                 // Шаблоны
-                foreach(mod::service("classmap")->classes("Infuso\Template\Theme") as $class) {
+                foreach(service("classmap")->classes("Infuso\Template\Theme") as $class) {
                     $theme = new $class;
                     if($theme->bundle()->path() == $bundle->path()) {
                         //<div class='theme' data:theme='{get_class($theme)}' >{$theme->name()}</div>

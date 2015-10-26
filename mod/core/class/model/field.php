@@ -36,11 +36,11 @@ abstract class Field extends Core\Component {
 			Throw new \Exception("Bad field alias");
         }
 
-        if(\mod::service("classmap")->testClass($alias,"\\Infuso\\Core\\Model\\Field")) {
+        if(service("classmap")->testClass($alias,"\\Infuso\\Core\\Model\\Field")) {
             return $alias;
         }
         
-        $aliases = \mod::service("classmap")->classmap("fields");
+        $aliases = service("classmap")->classmap("fields");
         if(!$class = $aliases[$alias]) {
             Throw new \Exception("Field alias {$alias} not found");
         }
@@ -213,7 +213,7 @@ abstract class Field extends Core\Component {
     }
     
     public function mysqlValue() {
-        return Core\Mod::service("db")->quote($this->value());
+        return service("db")->quote($this->value());
     }
 
     public function mysqlType() {

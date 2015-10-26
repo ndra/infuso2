@@ -286,7 +286,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $items = $this->select($this->what());
 
         foreach($items as $data) {
-            $this->items[] = mod::service("ar")->get($this->itemClass(),$data["id"],$data);
+            $this->items[] = service("ar")->get($this->itemClass(),$data["id"],$data);
         }
 
         if($this->priorityArray) {
@@ -326,7 +326,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 $query.= "limit $from,$perPage";
             }
 
-            $ret = mod::service("db")->query($query)->exec()->fetchAll();
+            $ret = service("db")->query($query)->exec()->fetchAll();
             
             return $ret;
 
@@ -393,7 +393,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
         }
 
-        $count = mod::service("db")->query($q)->exec()->fetchScalar();
+        $count = service("db")->query($q)->exec()->fetchScalar();
 
         if($cached) {
             mod_cache::set($q,$count);
@@ -464,7 +464,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
             case "s:s":
                 $key = $this->normalizeColName($key);
-                $val = mod::service("db")->quote($val);
+                $val = service("db")->quote($val);
                 if($fn) {
                     $key = "$fn($key)";
                 }
@@ -484,7 +484,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
                 $r = array();
                 foreach($val as $v) {
-                    $r[] = mod::service("db")->quote($v);
+                    $r[] = service("db")->quote($v);
                 }
 
                 switch(sizeof($r)) {
@@ -540,14 +540,14 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     
             case "s:s":
                 $key = $this->normalizeColName($key);
-                $val = mod::service("db")->quote($val);
+                $val = service("db")->quote($val);
                 $this->where("{$key}<>{$val}",$key);
                 break;
                 
             case "s:a":
                 $r = array();
                 foreach($val as $v) {
-                    $r[] = mod::service("db")->quote($v);
+                    $r[] = service("db")->quote($v);
                 }
 
                 switch(sizeof($r)) {
@@ -579,7 +579,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->unload();
         $key = $this->normalizeColName($key);
         $val = "%".$val."%";
-        $val = mod::service("db")->quote($val);
+        $val = service("db")->quote($val);
         $val = mb_strtolower($val,"utf-8");
         $this->where("lower($key) LIKE {$val}");
         return $this;
@@ -627,7 +627,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function gt($key,$val) {
         $this->unload();
         $key = $this->normalizeColName($key);
-        $val = mod::service("db")->quote($val);
+        $val = service("db")->quote($val);
         $this->where("{$key} > {$val}",$key);
         return $this;
     }
@@ -635,7 +635,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function geq($key,$val) {
         $this->unload();
         $key = $this->normalizeColName($key);
-        $val = mod::service("db")->quote($val);
+        $val = service("db")->quote($val);
         $this->where("{$key} >= {$val}",$key);
         return $this;
     }
@@ -643,7 +643,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function lt($key,$val) {
         $this->unload();
         $key = $this->normalizeColName($key);
-        $val = mod::service("db")->quote($val);
+        $val = service("db")->quote($val);
         $this->where("{$key} < {$val}",$key);
         return $this;
     }
@@ -651,7 +651,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function leq($key,$val) {
         $this->unload();
         $key = $this->normalizeColName($key);
-        $val = mod::service("db")->quote($val);
+        $val = service("db")->quote($val);
         $this->where("{$key} <= {$val}",$key);
         return $this;
     }
@@ -931,7 +931,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->callBeforeQuery();
         $key = $this->normalizeColName($key);
         $q = "select sum($key) from {$this->from()} where {$this->whereQuery()} ";
-        return (double) mod::service("db")->query($q)->exec()->fetchScalar();
+        return (double) service("db")->query($q)->exec()->fetchScalar();
     }
 
     /**
@@ -941,7 +941,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->callBeforeQuery();
         $key = $this->normalizeColName($key);
         $q = "select max($key) from {$this->from()} where {$this->whereQuery()} ";
-        return mod::service("db")->query($q)->exec()->fetchScalar();
+        return service("db")->query($q)->exec()->fetchScalar();
     }
 
     /**
@@ -951,7 +951,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->callBeforeQuery();
         $key = $this->normalizeColName($key);
         $q = "select min($key) from {$this->from()} where {$this->whereQuery()} ";
-        return mod::service("db")->query($q)->exec()->fetchScalar();
+        return service("db")->query($q)->exec()->fetchScalar();
     }
 
     /**
@@ -974,7 +974,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 			$key = "$fn($key)";
 		}
         $q = ("select distinct $key from {$this->from()} where {$this->whereQuery()} order by {$this->orderBy()} ");
-        return mod::service("db")->query($q)->exec()->fetchCol();
+        return service("db")->query($q)->exec()->fetchCol();
     }
 
     /**
@@ -993,7 +993,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             $query.= "limit $from,$perPage";
         }
         $q = $query;
-        return mod::service("db")->query($q)->exec()->fetchCol();
+        return service("db")->query($q)->exec()->fetchCol();
 
     }
 
@@ -1004,7 +1004,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function delete() {
         $this->callBeforeQuery();
         $query = "delete `{$this->itemClass()}` from {$this->fromWithoutJoins()} where {$this->whereQuery()} ";
-        return \mod::service("db")->query($query)->exec();
+        return service("db")->query($query)->exec();
     }
 
     /**
@@ -1014,9 +1014,9 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function data($key,$val) {
         if(func_num_args()==2) {
             //$key = reflex_mysql::escape($key);
-            $val = mod::service("db")->quote($val);
+            $val = service("db")->quote($val);
             $query = "update {$this->from()} set `$key`=$val where {$this->whereQuery()} ";
-            mod::service("db")->query($query)->exec();
+            service("db")->query($query)->exec();
             return $this;
         }
     }
@@ -1062,7 +1062,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 $new[$key] = $val;
             }
         }
-        return mod::service("ar")->create($this->itemClass(),$new);
+        return service("ar")->create($this->itemClass(),$new);
     }
 
     /**
@@ -1083,7 +1083,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             }
         }
 
-        return mod::service("ar")->virtual($this->itemClass(),$new);
+        return service("ar")->virtual($this->itemClass(),$new);
     }
 
 }

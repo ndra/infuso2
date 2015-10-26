@@ -309,10 +309,12 @@ abstract class Editor extends Core\Controller {
             "title" => "Редактирование",
         );
         
-        $menu[] = array(
-            "href" => \mod::action(get_class($this),"log",array("id"=>$this->itemID()))->url(),
-            "title" => "Лог",
-        );
+        if($this->logEnabled()) {
+            $menu[] = array(
+                "href" => \mod::action(get_class($this),"log",array("id"=>$this->itemID()))->url(),
+                "title" => "Лог",
+            );
+        }
         
         if($this->metaEnabled()) {
             $menu[] = array(
@@ -372,6 +374,10 @@ abstract class Editor extends Core\Controller {
     
     public function metaEnabled() {
         return false;
+    }
+    
+    public function logEnabled() {
+        return true;
     }
     
     public function setMeta($p) {

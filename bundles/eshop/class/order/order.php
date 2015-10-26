@@ -443,11 +443,11 @@ public static function model() {return array (
      **/
     public static function cart() {
         $id = $_COOKIE[self::$cookie];
-        $order = Core\Mod::service("ar")->virtual(get_class());
+        $order = service("ar")->virtual(get_class());
         if($id)
             $order = eshop_order::drafts()->eq("id",$id)->one();
         if(!$order->my())
-            $order = Core\Mod::service("ar")->virtual(get_class());
+            $order = service("ar")->virtual(get_class());
         return $order;
     }
 

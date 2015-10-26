@@ -18,7 +18,7 @@ abstract class View extends Core\Component {
 	
 	public static function get($field) {
 	    $typeID = $field->typeID();
-	    foreach(Core\Mod::service("classmap")->classes(get_class()) as $class) {
+	    foreach(service("classmap")->classes(get_class()) as $class) {
 			$ids = $class::typeID();
 			if(!is_array($ids)) {
 			    $ids = array($ids);

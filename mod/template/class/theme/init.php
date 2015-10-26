@@ -19,7 +19,7 @@ class tmp_theme_init implements mod_handler {
 
     	// Собираем список классов тем и сортируем их по приоритету
     	$themes = array();
-		foreach(mod::service("classmap")->classes("Infuso\\Template\\Theme") as $class) {
+		foreach(service("classmap")->classes("Infuso\\Template\\Theme") as $class) {
 	        $themes[] = new $class();
 		}
         
@@ -35,7 +35,7 @@ class tmp_theme_init implements mod_handler {
     
     	// Собираем список классов тем и сортируем их по приоритету
     	$themes = array();
-		foreach(mod::service("classmap")->classes("Infuso\\Template\\Theme") as $class) {
+		foreach(service("classmap")->classes("Infuso\\Template\\Theme") as $class) {
 	        $themes[] = new $class();
 		}
 		usort($themes, function($a,$b) {

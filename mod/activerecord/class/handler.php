@@ -16,7 +16,7 @@ class Handler implements \Infuso\Core\Handler {
 
 	    app()->msg("<b>Migrating DB</b>");
 
-	    $v = Mod::service("db")->query("select version()")->exec()->fetchScalar();
+	    $v = service("db")->query("select version()")->exec()->fetchScalar();
 
 	    if(floatval($v)<5) {
 	        app()->msg("You need mysql version 5 or greater. You haver version $v",1);

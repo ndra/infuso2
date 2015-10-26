@@ -14,7 +14,7 @@ class inspector {
 	}
 	
 	public function bundle() {
-	    return mod::service("classmap")->getClassBundle($this->className);
+	    return service("classmap")->getClassBundle($this->className);
 	}
 	
 	public function className() {
@@ -22,7 +22,7 @@ class inspector {
 	}
 	
 	public function path() {
-	    return mod::service("classmap")->classPath($this->className);
+	    return service("classmap")->classPath($this->className);
 	}
     
     /**

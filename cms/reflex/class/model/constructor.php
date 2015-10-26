@@ -53,15 +53,15 @@ class Constructor extends ActiveRecord\Record {
 	}
 
     public static function all() {
-        return reflex::get(get_class())->desc("created");
+        return service("ar")->collection(get_class())->desc("created");
     }
     
     public static function get($data) {
-        return reflex::get(get_class(),$data);
+        return service("ar")->get(get_class(),$data);
     }
     
     public function beforeCreate() {
-        $this->data("userID",\user::active()->id());
+        $this->data("userID", \user::active()->id());
     }
     
     public function collection() {

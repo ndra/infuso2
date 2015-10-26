@@ -12,7 +12,7 @@ class Comments extends Base {
 			"author" => $p["userId"],
 			"parent" => $p["parent"],
 		);
-        $item = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Comment", $data);
+        $item = service("ar")->create("Infuso\\Heapit\\Model\\Comment", $data);
         if($item->exists()){
             return true;     
         }                           

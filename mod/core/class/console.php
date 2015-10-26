@@ -94,7 +94,7 @@ class Console extends Controller {
 		        case "update":
 
 		            $mods = array();
-		            foreach(mod::service("bundle")->all() as $bundle) {
+		            foreach(service("bundle")->all() as $bundle) {
 		                $mods[] = $bundle->path();
 		            }
 
@@ -163,7 +163,7 @@ class Console extends Controller {
 	}
 	
 	public static function resPath() {
-	    return mod::service("classmap")->getClassBundle(get_class())->path()."/res/";
+	    return service("classmap")->getClassBundle(get_class())->path()."/res/";
 	}
 
 	public static function header() {

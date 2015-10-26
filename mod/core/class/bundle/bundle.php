@@ -27,7 +27,7 @@ class Bundle extends \Infuso\Core\Component {
 	    $file = file::get($this->path()."/.infuso");
 	    if($file->exists()) {
 		    $data = file::get($this->path()."/.infuso")->data();
-			$conf = mod::service("yaml")->read($data);
+			$conf = service("yaml")->read($data);
 		} else {
 		    $conf = file::get($this->path()."/info.ini")->ini(true);
 			$conf["public"] = $conf["mod"]["public"];

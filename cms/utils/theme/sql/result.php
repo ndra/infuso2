@@ -5,7 +5,7 @@
     if($_POST["query"]) {
         try {
         
-            $result = \mod::service("db")->query($_POST["query"])->exec();
+            $result = service("db")->query($_POST["query"])->exec();
             
             <table class='result' >
                 

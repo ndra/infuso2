@@ -46,7 +46,7 @@ abstract class Widget extends Core\Component {
 	 **/
 	public function all() {
 		$ret = array();
-		foreach(Core\Mod::service("classmap")->getClassesExtends(get_class()) as $class) {
+		foreach(service("classmap")->getClassesExtends(get_class()) as $class) {
 		    $widget = new $class;
 		    if($widget->test()) {
 		        $ret[] = $widget;

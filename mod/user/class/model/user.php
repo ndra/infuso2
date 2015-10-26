@@ -180,7 +180,7 @@ class User extends ActiveRecord\Record {
      * Создает виртуального пользователя (без занесения в базу)
      **/
     public final function virtual($data=null) {
-        return \mod::service("ar")->virtual(get_class(),$data);
+        return service("ar")->virtual(get_class(),$data);
     }
 
     /**
@@ -397,7 +397,7 @@ class User extends ActiveRecord\Record {
      **/
     private final function newCookie() {
         $cookie = \util::id();
-        $auth = Core\Mod::service("ar")->create(Auth::inspector()->className(),array(
+        $auth = service("ar")->create(Auth::inspector()->className(),array(
             "cookie" => $cookie,
             "userID" => $this->id(),
         ));

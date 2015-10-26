@@ -10,7 +10,7 @@ class mod_cron extends mod_controller {
     }
 
     public static function index() {
-        mod::service("cron")->checkTimeAndprocess();
+        service("cron")->checkTimeAndprocess();
     }
 
 }

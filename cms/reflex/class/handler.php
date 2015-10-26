@@ -62,7 +62,7 @@ class Handler extends Core\Component implements Core\Handler {
 	 **/
 	public static function buildEditorMap() {
 	    $map = array();
-		foreach(\mod::service("classmap")->classes("infuso\\cms\\reflex\\editor") as $class) {
+		foreach(service("classmap")->classes("infuso\\cms\\reflex\\editor") as $class) {
 		    $e = new $class;
 		    $map[$e->itemClass()][] = $class;
 		}
@@ -126,19 +126,10 @@ class Handler extends Core\Component implements Core\Handler {
 	 **/
     public static function cleanup() {
     
-        return;
-
-		// Удаляем старые записи из лога (7 месцев)
-		\reflex_log::all()->leq("datetime",util::now()->shiftMonth(-6))->delete();
-
-		// Удаляем старые руты из каталога (7 дней)
-		\reflex_editor_root::all()->leq("created",util::now()->shiftDay(-7))->delete();
-
 		// Удаляем старые конструкторы (7 дней)
-		\reflex_editor_constructor::all()->leq("created",util::now()->shiftDay(-7))->delete();
-
-		// Удаляем старые задачи (60 дней)
-		\reflex_task::all()->eq("completed",1)->leq("created",util::now()->shiftDay(-60))->delete();
+		Model\Constructor::all()
+            ->leq("created", \util::now()->shiftDay(-7))
+            ->delete();
 
     }
 	

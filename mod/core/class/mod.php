@@ -104,16 +104,6 @@ class Mod extends \Infuso\Core\Component {
 	}
 	
 	/**
-	 * Возвращает службу по ее имени
-	 **/
-	public function service($serviceName) {
-     	Profiler::beginOperation("core","service",$serviceName);
-	    $ret = mod::app()->service($serviceName);
-		Profiler::endOperation("core","service",$serviceName);
-	    return $ret;
-	}
-	
-	/**
 	 * Возвращает текущее приложение
 	 **/
 	public function app() {

@@ -16,7 +16,6 @@ class Log extends ActiveRecord\Record {
 				array (
 					'name' => 'id',
 					'type' => 'jft7-kef8-ccd6-kg85-iueh',
-					"editable" => 2,
 				), array (
 					'name' => 'datetime',
 					'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
@@ -48,6 +47,7 @@ class Log extends ActiveRecord\Record {
 		    	), array (
 					'name' => 'p1',
 					'type' => 'textfield',
+                    'label' => "Дополнительно",
 					'editable' => 2,
 		    	),
 			),

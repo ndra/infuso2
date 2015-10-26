@@ -15,10 +15,7 @@ class Handler implements Core\Handler {
      * @handler = infuso/trace
      **/         
     public function onTrace($event) {
-        service("log")->log(array(
-            "message" => $event->param("message"),
-            "type" => $event->param("type"),
-        ));
+        service("log")->log($event->params());
     }
     
     /**
@@ -32,6 +29,9 @@ class Handler implements Core\Handler {
         ));
     }
     
+    /**
+     * Удаляем старые записи в логе
+     **/         
     public static function cleanup() {
         service("log")->all()
             ->lt("datetime", \util::now()->shiftDay(-14))->delete();    

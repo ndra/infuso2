@@ -9,8 +9,7 @@ use Infuso\ActiveRecord;
  **/
 class Task extends ActiveRecord\Record implements Core\Handler {
 
-	public static function model() {
-	
+	public static function model() {     	
 		return array (
 			'name' => 'reflex_task',
 			'fields' => array (
@@ -219,7 +218,6 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 	        
 		} catch (\Exception $ex) {
 
-			app()->msg($ex->getMessage());
 		    $this->data("lastErrorDate", \util::now());
 			$this->plugin("log")->log("Exception: ".$ex->getMessage());
 		    

@@ -81,7 +81,7 @@ class Controller extends \Infuso\Core\Controller {
         $collection = Collection::unserialize($p["collection"]);
 
         // Создаем конструктор элемента
-        $item = mod::service("ar")->create(Model\Constructor::inspector()->className(),array(
+        $item = service("ar")->create(Model\Constructor::inspector()->className(),array(
             "collection" => $collection->serialize(),
             "redirect" => $p["redirect"],
         ));

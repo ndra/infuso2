@@ -26,9 +26,13 @@ class Link extends Field {
 
     public function pvalue() {
         if(trim($this->param("foreignKey"))) {
-            return Core\Mod::service("ar")->get($this->itemClass())->eq(trim($this->param("foreignKey")),$this->value())->one();
+            return service("ar")
+                ->get($this->itemClass())
+                ->eq(trim($this->param("foreignKey")),$this->value())
+                ->one();
         } else {
-            return Core\Mod::service("ar")->get($this->itemClass(),$this->value());
+            return service("ar")
+                ->get($this->itemClass(),$this->value());
         }
     }
 

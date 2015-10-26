@@ -11,7 +11,7 @@ class eshop_order_status extends mod_component {
 	public static function all() {
 	
 		$ret = array();
-		foreach(mod::service("classmap")->map("eshop_order_status") as $class) {
+		foreach(service("classmap")->map("eshop_order_status") as $class) {
 		    $status = new $class;
 		    if($status->exists()) {
 		        $ret[] = $status;
@@ -35,7 +35,7 @@ class eshop_order_status extends mod_component {
 	 * Возвращает объект класса заказа по id (имени класса)
 	 **/
 	public static function get($class) {
-		if(mod::service("classmap")->testClass($class,"eshop_order_status")) {
+		if(service("classmap")->testClass($class,"eshop_order_status")) {
 		    return new $class;
 		}
 		return new eshop_order_status_none();

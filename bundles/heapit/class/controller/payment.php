@@ -65,7 +65,7 @@ class Payment extends Base {
         $data["status"] = $p["data"]["status"];
         $data["userId"] = $p["data"]["userId"];
         
-        $payment = Core\Mod::service("ar")->create("Infuso\\Heapit\\Model\\Payment", $data);
+        $payment = service("ar")->create("Infuso\\Heapit\\Model\\Payment", $data);
         return $payment->url();
     }
     
