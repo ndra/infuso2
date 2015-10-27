@@ -13,9 +13,14 @@ class Helper extends Widget {
     }
 
     public static function fromHTML($html) {
-        $xml = end(\util::str($html)->html()->body->children());
+        $html = "<div>".$html."</div>";
+        $xml = \util::str($html)->html()->body->div->children()[0];
         $h = new self();
-        $h->tag($xml->getName());
+        if(is_object($xml)) {
+            $h->tag($xml->getName());
+        } else {
+            throw new \Exception("Something wronw with parse html");
+        }
         foreach($xml->attributes() as $key=>$val) {
             $h->attr($key,$val);
         }

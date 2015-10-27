@@ -1,6 +1,6 @@
 .x4qRpzOJXG {
     
-    .title {
+    .title, .title-void {
         text-decoration: underline;
         cursor: pointer;
         vertical-align: middle;
@@ -12,7 +12,24 @@
         height:16px;
         display: inline-block;
         vertical-align: middle;
+        opacity: .3;
         .icon16("view");
+        &:hover {
+            opacity: 1;
+        }
     }
     
+    .clear {
+        cursor: pointer;
+        margin-left: 10px;
+        width:16px;
+        height:16px;
+        display: inline-block;
+        vertical-align: middle;
+        opacity: .3;
+        .icon16("delete");
+        &:hover {
+            opacity: 1;
+        }
+    }
 }

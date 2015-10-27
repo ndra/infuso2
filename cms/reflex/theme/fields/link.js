@@ -2,7 +2,7 @@ mod.init(".x4qRpzOJXG", function() {
     
     var $container = $(this);
     
-    $container.children().filter( ":not(.view)" ).click(function() {
+    $container.find(".title, .title-void").click(function() {
         $.window({
             title: "Выберите элемент",
             call:{ 
@@ -12,8 +12,20 @@ mod.init(".x4qRpzOJXG", function() {
             }
         }).on("links/select", function(event) {
             $container.find("input").val(event.itemID);
-            $container.find(".title").text(event.title);
-            $container.find(".view").attr("href", event.editUrl);
+            $container.find(".title").show().text(event.title);
+            $container.find(".title-void").hide();
+            $container.find(".view").show().attr("href", event.editUrl);
+            $container.find(".clear").show();
         });
     });
+    
+    $container.find(".clear").click(function() {
+        $container.find("input").val(0);
+        $container.find(".title").hide();
+        $container.find(".title-void").show();
+        $container.find(".view").hide();
+        $container.find(".clear").hide();
+    })
+    
+    
 })
