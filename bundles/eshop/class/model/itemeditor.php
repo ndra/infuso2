@@ -27,7 +27,7 @@ class ItemEditor extends \Infuso\Cms\Reflex\Editor {
 	/**
 	 * @reflex-child = on
 	 **/
-	public function photos() {
+	public function _photos() {
 	    return $this->item()
 			->photos()
 			->param("sort", true)
