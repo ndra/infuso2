@@ -84,7 +84,12 @@ mod.init(".l83i1tvf0u", function() {
         $wnd.on("reflex/storage/file", function(event) {
             $wnd.window("close");
             $dropzone.find("input").val(event.filename);
-            $dropzone.find("img").attr("src",event.preview150);
+            if(event.filename) {
+                $dropzone.find("img").attr("src",event.preview150);
+                $dropzone.find("img").show();
+            } else {
+                $dropzone.find("img").hide();
+            }
         });
         
     });

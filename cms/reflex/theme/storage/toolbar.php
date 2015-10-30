@@ -9,6 +9,11 @@ $editorId = get_class($editor).":".$editor->itemId();
         ->text("Создать папку")
         ->addClass("createFolder")
         ->exec();
+        
+    widget("infuso\\cms\\ui\\widgets\\button")
+        ->text("Без файла")
+        ->addClass("empty")
+        ->exec();
     
     <span class='with-selection' >
     
