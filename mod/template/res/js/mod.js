@@ -232,8 +232,7 @@ if(!window.mod) {
         $(function() {
             $(selector).mod("init", fn);
         });   
-    }
-    
+    }       
     
     mod.init(document,function() {
         $(this).keydown(function(event) { 
@@ -275,6 +274,23 @@ if(!window.mod) {
         return clone;
     
     }
+    
+    mod.monitor = function($e, propName) {
+        $e.addClass("PmhHipWLXkGk82RcU");
+        $e.data("PmhHipWLXkGk82RcU", propName);
+    }
+    
+    setInterval(function() {
+        $(".PmhHipWLXkGk82RcU").each(function() {
+            var $e = $(this);
+            if($e.prop($e.data("PmhHipWLXkGk82RcU")) != $e.data("PmhHipW-last")) {
+                if($e.data("PmhHipW-last") !== undefined) {
+                    $e.trigger("mod/monitor");
+                }
+                $e.data("PmhHipW-last", $e.prop($e.data("PmhHipWLXkGk82RcU")));
+            }
+        });
+    }, 1000);
 
 }
 

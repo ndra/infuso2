@@ -1,23 +1,10 @@
 <? 
 
-\Infuso\Template\Lib::jqui(); 
-
-$date = "";
-$value = $widget->param("value");
-if($value) {
-    list($date, $time) = explode(" ", $value);
-    $date = \util::date($date)->date()->num();
-    $datetime = $date." ".$time;
-    $msqlDate = (string)\util::date($date)->date();
-    $value = $msqlDate." ".$time;
-}
-
-$placeholder = "Указать дату";
-if($widget->param("placeholder")){
-    $placeholder = $widget->param("placeholder");   
-}
+lib::modJS(); 
+Lib::jqui(); 
 
 $name = $widget->param("name");
+$value = $widget->param("value");
 
 exec("../../shared");
 
@@ -32,19 +19,16 @@ $containerStyles = array(
 $container = helper("<span class='datetime-hZ1EqT1dlO' >");
 $container->begin();
 
-   
-    
-
     $input = helper("<input type='text' class='visibleField'/>");
-    $input->attr("value", $datetime);
-    $input->attr("placeholder", $placeholder);
-    $input->style("width",120);
-
-    <input type='hidden' value='{e($value)}' class='hiddenField' name='{e($name)}'/>
-    <input type='hidden' value='{e($msqlDate)}' class='hiddenFieldDate' name='{e($name)}_date'/>
-    <input type='hidden' value='{e($time)}' class='hiddenFieldTime' name='{e($name)}_time'/>
-    
+    $input->attr("placeholder", "Дата");
+    $input->style("width", 70);
     $input->exec();
     
+    $input = helper("<input type='text' class='timeField'/>");
+    $input->attr("placeholder", "Время");
+    $input->style("width", 40);
+    $input->exec();
+
+    <input type='idden' disabled style='background:gray;' value='{e($value)}' class='hiddenField' name='{e($name)}'/>
     
 $container->end();

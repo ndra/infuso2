@@ -25,79 +25,67 @@ jQuery(function($) {
     
 mod.init(".datetime-hZ1EqT1dlO", function() {
 
-    var lastValue = null;
-    
-    var fireChangeEvent = function(date) {
-        var dateTime = $inputHiddenDate.val() + " " + $inputHiddenTime.val();
-        $inputHidden.val(dateTime);
-        $input.val(date + " " + $inputHiddenTime.val());
-        if(lastValue != $inputHidden.val()) {
-            $inputHidden.trigger("change");
-        }            
-        lastValue = $inputHidden.val();
-    }
-    
-    var checkTime = function(timeStr) {
-        var timePieces = timeStr.split(":");
-
-        if(timePieces.length != 3){
-            return false;
-        }
-        
-        if(/\./.test(timePieces[0]) || timePieces[0]*1 < 0 || timePieces[0]*1 > 24){
-            return false;
-        }
-        
-        if(/\./.test(timePieces[1]) || timePieces[1]*1 < 0 || timePieces[1]*1 > 60){
-            return false;
-        }
-        
-        if(/\./.test(timePieces[2]) || timePieces[2]*1 < 0 || timePieces[2]*1 > 60){
-            return false;
-        }
-        
-        return true;
-    }
-        
     var $container = $(this);
     var $input = $(this).find(".visibleField");
+    var $inputTime = $(this).find(".timeField");
     var $inputHidden = $(this).find(".hiddenField");
-    var $inputHiddenDate = $(this).find(".hiddenFieldDate");
-    var $inputHiddenTime = $(this).find(".hiddenFieldTime");
-    var lastTime = $inputHiddenTime.val();
+    
+    var dateToText = function(date) {
+        var d = date.getFullYear();
+        d += "-" +  ('0' + (date.getMonth() + 1)).slice(-2);
+        d += "-" +  ('0' + (date.getDate())).slice(-2);
+        d += " ";
+        d += ('0' + (date.getHours())).slice(-2);
+        d += ":" + ('0' + (date.getMinutes())).slice(-2);
+        d += ":" + ('0' + (date.getSeconds())).slice(-2);
+        return d;
+    }
+    
+    var textToDate = function(text) {
+        var r = text.match(/^(\d+)-(\d+)-(\d+)(\s(\d+):(\d+):(\d+))?/);
+        return new Date(r[1],r[2] * 1 - 1,r[3],r[5],r[6],r[7]);
+    }
+    
+    var updateDatepickerValue = function() {
+        var date = textToDate($inputHidden.val());
+        $input.datepicker("setDate", date);
+        var time = "";
+        time += ('0' + date.getHours()).slice(-2);
+        time += ":";
+        time += ('0' + date.getMinutes()).slice(-2);
+        $inputTime.val(time);
+    }
+    
     // Создаем дейтпикер
     $input.datepicker({
         yearRange: "c-5:c+5",
         changeMonth: true,
-        changeYear: true,
-        altField: $inputHiddenDate,
-        altFormat: "yy-mm-dd",
-        onSelect: fireChangeEvent
+        changeYear: true
     });
     
+    updateDatepickerValue();
     
-    $input.on("input", function() {
-        if (!$(this).val()) {
-            $inputHidden.val('');
-        }else{
-            var datetime = $(this).val().split(" ");
-            var date = datetime[0];
-            var time = datetime[1];
-            
-            if(!time || !checkTime(time)){
-                time = lastTime;
-            }
-            
-            $inputHiddenTime.val(time);
-            lastTime = time;
-        }
-        fireChangeEvent(date);
-    });
+    // Мониторим изменения тектового поля
     
+    var updateHiddenFields = function() {
+        var date = $input.datepicker("getDate");
+        var time = $inputTime.val().split(":");
+        date.setHours(time[0] || 0);
+        date.setMinutes(time[1] || 0);
+        var d = dateToText(date);
+        $inputHidden.val(d);
+    }
     
-    /*$container.on("setDate",function(event) {
-        var date = new Date(event.date * 1000);
-        $input.datepicker("setDate", date);
-    })*/
+    mod.monitor($input, "value");
+    mod.monitor($inputTime, "value");
+    $input.on("mod/monitor", updateHiddenFields);
+    $inputTime.on("mod/monitor", updateHiddenFields);
+    
+    var handleBlur = function() {
+        updateHiddenFields();
+        updateDatepickerValue();
+    }
+    $input.blur(handleBlur);
+    $inputTime.blur(handleBlur);
     
 });
