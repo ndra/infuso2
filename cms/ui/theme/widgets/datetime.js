@@ -43,17 +43,25 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
     
     var textToDate = function(text) {
         var r = text.match(/^(\d+)-(\d+)-(\d+)(\s(\d+):(\d+):(\d+))?/);
-        return new Date(r[1],r[2] * 1 - 1,r[3],r[5],r[6],r[7]);
+        if(r) {
+            return new Date(r[1],r[2] * 1 - 1,r[3],r[5],r[6],r[7]);
+        } else {
+            return null;
+        }
     }
     
     var updateDatepickerValue = function() {
         var date = textToDate($inputHidden.val());
         $input.datepicker("setDate", date);
-        var time = "";
-        time += ('0' + date.getHours()).slice(-2);
-        time += ":";
-        time += ('0' + date.getMinutes()).slice(-2);
-        $inputTime.val(time);
+        if(date) {
+            var time = "";
+            time += ('0' + date.getHours()).slice(-2);
+            time += ":";
+            time += ('0' + date.getMinutes()).slice(-2);
+            $inputTime.val(time);
+        } else {
+            $inputTime.val("");
+        }
     }
     
     // Создаем дейтпикер
@@ -69,11 +77,20 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
     
     var updateHiddenFields = function() {
         var date = $input.datepicker("getDate");
-        var time = $inputTime.val().split(":");
-        date.setHours(time[0] || 0);
-        date.setMinutes(time[1] || 0);
-        var d = dateToText(date);
-        $inputHidden.val(d);
+        if(date) {
+            var time = $inputTime.val().match(/(\d)+:(\d+)/);
+            if(time) {
+                date.setHours(time[1]);
+                date.setMinutes(time[2]);
+            } else {
+                date.setHours(0);                
+                date.setSeconds(0);     
+            }
+            var d = dateToText(date);
+            $inputHidden.val(d);
+        } else {
+            $inputHidden.val("");
+        }
     }
     
     mod.monitor($input, "value");
