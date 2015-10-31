@@ -3,6 +3,7 @@
     
     
     $w = widget("\\infuso\\cms\\ui\\widgets\\datetime")
+        ->param("timeEnabled", true)
         ->value($field->value())        
         ->fieldName($field->name());
         

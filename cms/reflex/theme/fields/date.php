@@ -1,7 +1,7 @@
 <?
 <div class='b-datefield-uS0gkzcIcA' >
     
-    $w = widget("\\infuso\\cms\\ui\\widgets\\datepicker")
+    $w = widget("\\infuso\\cms\\ui\\widgets\\datetime")
         ->value($field->value())        
         ->fieldName($field->name());
         

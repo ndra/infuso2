@@ -3,6 +3,8 @@
 lib::modJS(); 
 Lib::jqui(); 
 
+$timeEnabled = $widget->param("timeEnabled");
+
 $name = $widget->param("name");
 $value = $widget->param("value");
 
@@ -24,11 +26,13 @@ $container->begin();
     $input->style("width", 70);
     $input->exec();
     
-    $input = helper("<input type='text' class='timeField'/>");
-    $input->attr("placeholder", "Время");
-    $input->style("width", 40);
-    $input->exec();
+    if($timeEnabled) {
+        $input = helper("<input type='text' class='timeField'/>");
+        $input->attr("placeholder", "Время");
+        $input->style("width", 40);
+        $input->exec();
+    }
 
-    <input type='idden' disabled style='background:gray;' value='{e($value)}' class='hiddenField' name='{e($name)}'/>
+    <input type='hidden' style='background:gray;' value='{e($value)}' class='hiddenField' name='{e($name)}'/>
     
 $container->end();
