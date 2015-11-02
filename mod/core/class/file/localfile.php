@@ -2,7 +2,7 @@
 
 namespace infuso\core;
 
-class localFile extends file {
+class LocalFile extends file {
 
 	private static $temporaryFolder = "/mod/_temp/";
 	
@@ -263,21 +263,6 @@ class localFile extends file {
 	public function mod() {
 	    $path = explode("/",trim($this->path(),"/"));
 	    return $path[0];
-	}
-
-	/**
-	 * Возвращает объект превью-генератора
-	 **/
-	public function preview($width=100,$height=100) {
-	    
-	    if(func_num_args()==0) {
-	    	return new \file_preview($this->path());
-		}
-		
-		if(func_num_args()==2) {
-	    	return new \file_preview($this->path(),$width,$height);
-	    }
-		
 	}
 
 	/**

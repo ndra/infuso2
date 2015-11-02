@@ -6,7 +6,9 @@ $log = service("log")->all()
     ->limit(0)
     ->eq("type","cron")
     ->eq("date(datetime)", \util::now()->date());
-$data = $log->groupby("datetime")->select("`datetime` - interval (MINUTE(`datetime`)*60 + second(`datetime`)) second as `time`, count(*) as `count`, round(min(`p1`),1) as `min`, round(max(`p1`),1) as `max`, round(avg(`p1`),1) as `avg`");
+    
+$data = $log->groupby("HOUR(datetime)")
+    ->select("HOUR(datetime) as `time`, count(*) as `count`, round(min(`p1`),2) as `min`, round(max(`p1`),2) as `max`, round(avg(`p1`),2) as `avg`");
 
 <div style='padding:20px;' >
     <table class='x618enltmoz' >
@@ -23,7 +25,7 @@ $data = $log->groupby("datetime")->select("`datetime` - interval (MINUTE(`dateti
     
         foreach($data as $row) {
             <tr>
-                $time = \util::date($row["time"])->txt();
+                $time = $row["time"];
                 <td>{$time}</td>
                 <td>{$row[min]}</td>
                 <td>{$row[max]}</td>

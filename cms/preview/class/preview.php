@@ -1,9 +1,14 @@
 <?
 
+namespace Infuso\Cms\Preview;
+use \Infuso\Core\File as File;
+use \Infuso\Core\Profiler as mod_profiler;
+use \Infuso\Core\Mod as mod;
+
 /**
  * Класс-генератор превьюшек
  **/
-class file_preview extends mod_component {
+class Generator extends \Infuso\Core\Component {
 
     private $src = null;
     private $cache = true;
@@ -41,15 +46,17 @@ class file_preview extends mod_component {
     const ERROR_TOO_LARGE = 2;
     const ERROR_LOAD_FAILED = 3;
 
-    public function __construct($src=null,$width=100,$height=100) {
+    public function __construct($src = null, $width = 100, $height = 100) {
 
         $this->src = file::get($src)->path();
 
         if(func_num_args()==3) {
-            if($width)
+            if($width) {
                 $this->width($width);
-            if($height)
+            }
+            if($height) {
                 $this->height($height);
+            }
         }
     }
 
