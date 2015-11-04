@@ -39,10 +39,12 @@ class Storage extends \Infuso\Core\Controller {
 	}
 
 	public function defaultFolder() {
-	    $c = explode("_",$this->class);
-	    $mod = $c[0];
-	    $class = strtr($this->class,array("\\" => "_"));
-	    return \mod::app()->publicPath()."/files/{$class}/";
+	    $class = $this->class;
+        $class = strtolower($class);
+	    $class = strtr($class, array(
+            "\\" => "_"
+        ));
+	    return app()->publicPath()."/files/{$class}/";
 	}
 
 	public function root() {
