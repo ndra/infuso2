@@ -39,8 +39,14 @@ class reader {
 	}
 	
 	public function fetchScalar($col = null) {
+    
 	    $row = $this->fetch();
-	    if( $col === null ) {
+        
+        if($row === false) {
+            return false;
+        }
+        
+	    if($col === null) {
 			$col = key($row);
 	    }
 	    return $row[$col];

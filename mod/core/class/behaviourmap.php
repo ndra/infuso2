@@ -48,7 +48,7 @@ class BehaviourMap {
 	 * Возвращает карту поведений для класса $class
 	 * Кэширует результат
 	 **/
-	private function getMap($class,$addBehaviours,$behavioursHash) {
+	private function getMap($class, $addBehaviours = array(), $behavioursHash = "") {
 		
 		Profiler::beginOperation("core","behaviour map",$class);
 	
@@ -58,8 +58,8 @@ class BehaviourMap {
 	    Profiler::endOperation();
 
 	    if($data === null) {
-	        $data = self::getMapNocache($class,$addBehaviours);
-	        service("cache")->set($key,$data);
+	        $data = self::getMapNocache($class, $addBehaviours);
+	        service("cache")->set($key, $data);
 	    }
 	    
 	    return $data;
@@ -88,8 +88,8 @@ class BehaviourMap {
         return $ret;
     }
     
-    public static function routeMethod($class,$method,$addBehaviours,$behavioursHash) {
-        $map = self::getMap($class,$addBehaviours,$behavioursHash);
+    public static function routeMethod($class, $method, $addBehaviours, $behavioursHash) {
+        $map = self::getMap($class, $addBehaviours, $behavioursHash);
         $behaviours = $map[$method];
         if(!$behaviours) {
             return;
@@ -97,8 +97,8 @@ class BehaviourMap {
         return end($behaviours);
     }
     
-    public function getBehavioursForMethod($class,$method,$addBehaviours,$behavioursHash) {
-        $map = self::getMap($class,$addBehaviours,$behavioursHash);
+    public function getBehavioursForMethod($class, $method, $addBehaviours = array(), $behavioursHash = "") {
+        $map = self::getMap($class, $addBehaviours, $behavioursHash);
         $behaviours = $map[$method];
         if(!$behaviours) {
             $behaviours = array();

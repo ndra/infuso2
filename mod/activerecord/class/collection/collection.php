@@ -308,7 +308,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             $this->callBeforeQuery();
 
             // Расчитываем ограничения
-            $from = intval(($this->page-1)*$this->perPage);
+            $from = intval(($this->page-1) * $this->perPage);
             $perPage = intval($this->perPage);
             $query = "select {$select} from {$this->from()} where {$this->whereQuery()} ";
 
@@ -1013,7 +1013,6 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      **/
     public function data($key,$val) {
         if(func_num_args()==2) {
-            //$key = reflex_mysql::escape($key);
             $val = service("db")->quote($val);
             $query = "update {$this->from()} set `$key`=$val where {$this->whereQuery()} ";
             service("db")->query($query)->exec();

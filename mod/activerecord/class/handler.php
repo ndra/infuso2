@@ -18,12 +18,14 @@ class Handler implements \Infuso\Core\Handler {
 
 	    $v = service("db")->query("select version()")->exec()->fetchScalar();
 
-	    if(floatval($v)<5) {
+	    if(floatval($v) < 5) {
 	        app()->msg("You need mysql version 5 or greater. You haver version $v",1);
 	        return;
 	    }
 
 	    app()->msg("mysql version {$v} ok");
+        
+        self::renameOldTables();
 
 		// Проходимся по классам и создаем таблицы для них
 		foreach(Record::classes() as $class) {
@@ -52,6 +54,24 @@ class Handler implements \Infuso\Core\Handler {
 		}
 
 	}
+    
+    public static function renameOldTables() {
+    
+        $q = service("db")->query("show tables");
+        $result = $q->exec();
+        while($oldName = $result->fetchScalar()) {                 
+            // Проходимся по классам и создаем таблицы для них
+    		foreach(Record::classes() as $class) {
+                $newName = $class::prefixedTableName(); 
+                if($class::prepareName($oldName) == $newName && $newName != $oldName) {
+                    $query = "rename table `$oldName` to `$newName` ";
+                    app()->msg($query);
+                    service("db")->query($query)->exec();
+                }
+            }                 
+        }
+    
+    }
     
     /**
      * @handler = infuso/defer

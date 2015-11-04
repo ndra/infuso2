@@ -52,6 +52,31 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	 * Статус записи
 	 **/
 	protected $recordStatus = 0;
+    
+    public static function prepareName($name) {
+    
+        if($name !== null) {
+        
+            $name = mb_strtolower($name);
+            $name = strtr($name, array(
+                "\\" => "_",
+            ));
+            
+            $name = preg_replace("/_+/", "_", $name);
+            
+            if(!preg_match("/^[a-z0-9_]+$/", $name)) {
+                throw new \Exception("Wrong table name `$name` ");
+            }
+        }
+    
+        return $name;
+    }
+    
+    public function modelExtended() {
+        $ret = parent::modelExtended();
+        $ret["name"] = self::prepareName($ret["name"]); 
+        return $ret;
+    }
 
     /**
      * При изменении данных модели, меняем ее статус и сообщаем службе ar об изменениях
@@ -168,7 +193,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
     
     public final function prefixedTableName() {
-        $ret = $this->modelExtended();
+        $ret = self::modelExtended();
         return "infuso_".$ret["name"];
     }
     

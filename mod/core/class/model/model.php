@@ -46,9 +46,15 @@ abstract class Model extends Core\Controller {
      * @todo сделать кэширование
      **/
     public function modelExtended() {
-        $ret = $this->model();
-        foreach($this->behaviourMethods("model") as $method) {
-            $data = $method();
+    
+        $class = get_called_class();
+        
+        $ret = $class::model();
+        
+        $behaviours = \Infuso\Core\BehaviourMap::getBehavioursForMethod($class, "model");        
+        
+        foreach($behaviours as $behaviour) {
+            $data = $behaviour::model();
             if(array_key_exists("fields", $data)) {
                 foreach($data["fields"] as $fieldData) {
                     $ret["fields"][] = $fieldData;

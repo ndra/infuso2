@@ -88,7 +88,7 @@ class Component {
      **/
     public final function __call($fn,$params) {
     
-        $behaviourClass = BehaviourMap::routeMethod(get_class($this),$fn,$this->behaviours,$this->behaviourHash());
+        $behaviourClass = BehaviourMap::routeMethod(get_class($this), $fn, $this->behaviours, $this->behaviourHash());
         if($behaviourClass) {
             $fn = $this->behaviourMethodFactory($behaviourClass,$fn);
             return call_user_func_array(array($fn,"__invoke"),$params);
