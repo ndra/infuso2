@@ -57,87 +57,8 @@ class Sync extends \Infuso\Core\Controller {
         }
 
         return $ret;
-    }
-
-    /**
-     * Контроллер, отдающий данные
-     **/
-    public function index_get($p) {
-
-        $token = trim($this->param("token"));
-        if(!$token) {
-            throw new \Exception("Token not set");
-        }
-
-        if($token != $p["token"]) {
-            throw new \Exception("Bad token");
-        }
-
-        // Сюда будем складывать данные
-        $data = array(
-            "rows" => array(),
-        );
-
-        $class = $p["class"];
-
-        $limit = $p["limit"] * 1;
-        if(!$limit) {
-            $limit = 100;
-        }
-
-        if(service("classmap")->testClass($class)) {
-
-            $items = \reflex::get($class)
-                ->asc("id")
-                ->gt("id",$p["id"])
-                ->limit($limit);
-
-            $data["total"] = $items->count();
-
-            $n = 0;
-            foreach($items as $item) {
-
-                // Собираем данные
-                $itemData = $item->data();
-                foreach($itemData as $key => $val) {
-                    $itemData[$key] = base64_encode($val);
-                }
-
-                $files = array();
-                foreach($item->storage()->allFiles() as $file) {
-                    $files[] = array(
-                        "rel" => $file->rel($item->storage()->root()),
-                        "url" => $file->url(),
-                    );
-                }
-
-                $data["rows"][] = array(
-                    "data" => $itemData,
-                    "files" => $files,
-                );
-                $data["nextId"] = $item->id();
-                $n++;
-            }
-
-            // Если записано 0 строк, мы закончили с этим классом
-            if($n == 0) {
-                $data["completed"] = true;
-            }
-
-        } else {
-
-            $data["completed"] = true;
-
-        }
-
-        // Отправляем данные
-        header("content-type:application/json");
-        $data = json_encode($data);
-        $data = gzcompress($data);
-        echo $data;
-
-    }
-
+    }      
+        
     /**
      * Контроллер, запрашивающий данные
      **/
@@ -159,23 +80,29 @@ class Sync extends \Infuso\Core\Controller {
             $limit = 50;
         }
 
-        $url = Core\Mod::url("http://$host/infuso/cms/reflex/controller/sync/get");
+        $url = Core\Mod::url("http://$host/infuso/cms/reflex/controller/syncserver");
         $url->query("class", $class);
         $url->query("id", $p["fromId"]);
         $url->query("token", $token);
         $url->query("limit", $limit);
 
-        $data = Core\File::http($url)->data();
+        $http = Core\File::http($url);
+        $compressedData = $http->data();        
+        $info = $http->info();
 
-        if(!$data) {
+        if(!$compressedData) {
             app()->msg("No data received",1);
             return false;
         }
 
-        $data = @gzuncompress($data);
+        $data = gzuncompress($compressedData);
 
         if(!$data) {
-            throw new \Exception("Data received but unzip failed. Possible wrong format.");
+            app()->trace(array(
+                "message" => var_export($info, 1)."\n\n--------\n\n".$compressedData,
+                "type" => "reflex/sync-error",
+            ));
+            throw new \Exception("Data received but unzip failed. Possible wrong format. See log for details.");
         }
 
         $data = json_decode($data,1);
@@ -230,8 +157,7 @@ class Sync extends \Infuso\Core\Controller {
 						Core\File::get($dest)->put($content);
 		            }
 	            }
-            }
-
+            }     
         }
 
         return array(
