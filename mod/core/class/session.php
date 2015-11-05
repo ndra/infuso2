@@ -1,9 +1,11 @@
 <?
 
+namespace Infuso\Core;
+
 /**
  * Класс-обертка для работы с сессией
  **/
-class mod_session extends \infuso\core\service {
+class Session extends Service {
 
 	private static $started;
 
@@ -12,8 +14,7 @@ class mod_session extends \infuso\core\service {
     }
 
     public static function serviceFactory() {
-        self::start();
-        return new util_array($_SESSION);
+        return new self();
     }
 
 	public static function start() {

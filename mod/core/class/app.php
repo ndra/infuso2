@@ -537,5 +537,17 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 	    	Cookie::set($key, $val, $keepDays);
 	    }
     }
+    
+    /**
+     * Метод для чтения / записи сессии
+     **/         
+    public function session($key = null, $val = null, $keepDays = 30) {
+  		if(func_num_args() == 1) {
+		    return Session::get($key);
+		}
+		if(func_num_args() == 2) {
+	    	Session::set($key, $val, $keepDays);
+	    }
+    }
 
 }
