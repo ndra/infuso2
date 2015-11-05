@@ -329,10 +329,9 @@ abstract class Field extends Core\Component {
             return false;
         }
 
-        $method = $this->param("method");
-        $model = $this->model();
-        if($method && method_exists($model,$method)){
-            return $this->model()->$method($val);
+        $method = $this->param("validateMethod");
+        if($method){
+            return $this->model()->$method($val, $data);
         }
 
         return true;
