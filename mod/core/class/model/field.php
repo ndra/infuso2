@@ -282,7 +282,7 @@ abstract class Field extends Core\Component {
      * Делает поле видимым
      **/
     public function show() {
-        $this->param("editable",self::EDITABLE);
+        $this->param("editable", self::EDITABLE);
         return $this;
     }
 

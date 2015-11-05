@@ -46,14 +46,28 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
     var textToDate = function(text) {
         var r = text.match(/^(\d+)-(\d+)-(\d+)(\s(\d+):(\d+):(\d+))?/);
         if(r) {
-            return new Date(r[1],r[2] * 1 - 1,r[3],r[5],r[6],r[7]);
+            
+            if(r[4] !== undefined) {
+                var d = new Date(r[1],r[2] * 1 - 1,r[3],r[5],r[6],r[7]);
+            } else {
+                var d = new Date(r[1],r[2] * 1 - 1,r[3]);
+            }
+            
+            console.log(r);
+            
+            if (isNaN(d.getTime())) {
+                mod.msg("Invalid date " + text);    
+            }
+            return d;
         } else {
             return null;
         }
     }
     
     var updateDatepickerValue = function() {
+        
         var date = textToDate($inputHidden.val());
+        
         $input.datepicker("setDate", date);
         if(date) {
             var time = "";
