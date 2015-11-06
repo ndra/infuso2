@@ -194,13 +194,19 @@ abstract class Model extends Core\Controller {
 
     /**
      * Передает в модель массив данных
-     * @todo сделать чтобы в качестве данных можно было передавать модель или филдсет
+     * В качестве данных можно было передавать модель или филдсет
      **/
     public final function setData($data) {
         if(is_array($data)) {
-            foreach($data as $key=>$val) {
-                $this->data($key,$val);
+            foreach($data as $key => $val) {
+                $this->data($key, $val);
             }
+        } elseif(is_object($data) && is_subclass_of($data, "infuso\\core\\model\\model")) {
+            foreach($data->data() as $key => $val) {
+                $this->data($key, $val);
+            }
+        } else {
+            throw new \Exception("setData bad argument");
         }
     }
     
@@ -315,7 +321,7 @@ abstract class Model extends Core\Controller {
 	 * Данные предварительно валидируются в соответствии с активнм сценарием
 	 * Будут заполнены только те поля, которые отмечены как редактируемые в сценарии
 	 **/
-	public function fill($data) {
+	public function fill($data) {    
 	
 		if(!$this->validate($data)) {
 		    throw new \Exception("Model::fill() validation failed");
