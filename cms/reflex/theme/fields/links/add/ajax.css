@@ -1,0 +1,12 @@
+.fJjAkO4k53 {
+    
+    .item {
+        cursor: pointer;
+        padding: 3px 6px;
+        &:hover {
+            background: #ededed;
+        }
+    }
+    
+    
+}

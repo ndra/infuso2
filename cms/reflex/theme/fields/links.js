@@ -16,6 +16,8 @@ mod.init(".QWQ2cWdbx", function() {
 
     $container.find(".add").click(function() {
         $.window({
+            width: 600,
+            height: 400,
             call:{ 
                 cmd: "infuso/cms/reflex/controller/field/linksAdd",
                 editor: $container.attr("data:editor"),

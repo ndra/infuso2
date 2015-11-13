@@ -5,6 +5,8 @@ mod.init(".x4qRpzOJXG", function() {
     $container.find(".title, .title-void").click(function() {
         $.window({
             title: "Выберите элемент",
+            width: 600,
+            height: 400,
             call:{ 
                 cmd: "infuso/cms/reflex/controller/field/linksAdd",
                 editor: $container.attr("data:editor"),

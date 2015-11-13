@@ -242,6 +242,9 @@ abstract class Editor extends Core\Controller {
         app()->msg("Объект изменен");
     }
 
+    /**
+     * Выполняет поиск по коллекции
+     **/         
     public function _applyQuickSearch($collection, $search) {
 
         $item = $this->item();

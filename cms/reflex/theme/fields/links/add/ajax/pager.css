@@ -1,0 +1,21 @@
+.xMgMgMvtp1 {
+    
+    padding: 20px;
+    
+    span {
+        vertical-align: middle;
+        cursor: pointer;
+        padding: 4px 7px;
+        border-radius: 5px;
+        &:hover {
+            background: #ccc;
+        }
+    }
+    
+    .active {
+        background: gray !important;
+        padding: 4px 7px;
+        color: white;
+    }
+    
+}

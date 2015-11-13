@@ -1,19 +1,32 @@
 mod.init(".mQ2bn91Yw", function() {
    
    var $container = $(this);
-   $container.click(function(event) {
-        var id = $(event.target).attr("data:id");
-        var editUrl = $(event.target).attr("data:editUrl");
-        if(id) {
-            $container.window().trigger({
-                type: "links/select",
-                itemID: id,
-                editUrl: editUrl,
-                title: $(event.target).text()
-            });
-            $container.window("close");
-        }
-   });
    
+    $search = $container.find(".search");
     
+    $container.layout();
+    
+    var page = 1
+    
+    $container.on("reflex/setPage", function(e) {
+        page = e.page;
+        load();
+    });
+   
+    var load = function() {
+        mod.call({
+            cmd: "infuso/cms/reflex/controller/field/linksAddItems",
+            editor: $container.attr("data:editor"),
+            field: $container.attr("data:field"),
+            search: $search.val(),
+            page: page
+        }, function(html) {
+            $container.find(".ajax").html(html);
+        })
+    };
+    
+   // load();
+    
+    $search.on("input", load);
+   
 });
