@@ -40,8 +40,6 @@ abstract class View extends Core\Component {
 	 * (МОжет вернуть массив из нескольких id)
 	 **/
 	abstract public static function typeID();
-    
-    abstract public function colWidth();
 	
 	/**
 	 * Возвращает типа расположения метки поля в форме
