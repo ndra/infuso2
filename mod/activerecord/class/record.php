@@ -72,7 +72,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
         return $name;
     }
     
-    public function modelExtended() {
+    public static function modelExtended() {
         $ret = parent::modelExtended();
         $ret["name"] = self::prepareName($ret["name"]); 
         return $ret;
@@ -318,7 +318,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * fn(field)
      * @todo - я добавил возвожность использовать бэкслэши в именах полей. Проверить на возможность инъекций
      **/
-    public static function normalizeColName($name,$table=null) {
+    public static function normalizeColName($name, $table = null) {
 
         $symbols = "[a-z0-9\_\-\:\\\\]+";
 
@@ -340,7 +340,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return $matches[1]."(`".$matches[2]."`.`".$matches[3]."`)";
         }
 
-        return "";
+        throw new \Exception("normalizeColName - bad field name");
     }
 
     /**

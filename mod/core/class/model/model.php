@@ -45,7 +45,7 @@ abstract class Model extends Core\Controller {
      * Описание таблицы записи с учетом поведений
      * @todo сделать кэширование
      **/
-    public function modelExtended() {
+    public static function modelExtended() {
     
         $class = get_called_class();
         
