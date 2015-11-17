@@ -25,10 +25,10 @@ class Multiselect extends Field {
     }
     
     public function isOptionSelected($key) {
-        return in_array($key, $this->pdata());
+        return in_array($key, $this->pvalue());
     }
     
-    public function pdata() {
+    public function pvalue() {
         $options = $this->options();
         $ret = array();
         foreach(explode(" ", $this->value()) as $key) {
