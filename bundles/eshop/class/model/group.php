@@ -117,7 +117,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
 	public function _items() {
 	    return service("ar")
             ->collection(Item::inspector()->className())
-			->param("sort", true)
+			->asc("priority")
             ->eq("groupId",$this->id());
 	}
     
