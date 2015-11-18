@@ -35,6 +35,7 @@ class GroupEditor extends \Infuso\Cms\Reflex\Editor {
 	public function _items() {
 		return $this->item()
             ->items()
+			->asc("priority")
             ->param("sort", true)
 			->param("title","Товары");
 	}
