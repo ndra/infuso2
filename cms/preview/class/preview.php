@@ -420,8 +420,9 @@ class Generator extends \Infuso\Core\Component {
     public function width($width) {
         $width = intval($width);
 
-        if($width<16)
-            $width = 16;
+        if($width<16) {
+         //   $width = 16;
+        }
 
         if($width > $this->param("maxWidth")) {
             $width = $this->param("maxWidth");
@@ -438,7 +439,7 @@ class Generator extends \Infuso\Core\Component {
         $height = intval($height);
 
         if($height<16) {
-            $height=16;
+          //  $height=16;
         }
 
         if($height > $this->param("maxHeight")) {
@@ -457,7 +458,7 @@ class Generator extends \Infuso\Core\Component {
         return $this;
     }
 
-    public function fit($p=1) {
+    public function fit($p = 1) {
         $this->setResizeParam("mode","fit");
         return $this;
     }
@@ -466,7 +467,7 @@ class Generator extends \Infuso\Core\Component {
     * Устанавливает режим генерации превьюшки - crop;
     * Если вызвана с двумя параметрами ($width,$height) - дополнительно обрезает картинку
     **/
-    public function crop($width=null,$height=null,$c=null,$d=null) {
+    public function crop($width = null, $height = null, $c = null, $d = null) {
 
         if(func_num_args()==0) {
             $this->setResizeParam("mode","crop");
@@ -491,6 +492,13 @@ class Generator extends \Infuso\Core\Component {
             return $this;
         }
     }
+    
+    public function cropResize($width = null, $height = null) {
+        if(func_num_args()==0) {
+            $this->setResizeParam("mode","crop-resize");
+            return $this;
+        }
+    }
 
     private function operation_resize($p) {
 
@@ -501,7 +509,7 @@ class Generator extends \Infuso\Core\Component {
         $previewWidth = $p["width"];
         $previewHeight = $p["height"];
 
-        $reduce = $previewWidth<$srcWidth || $previewHeight < $srcHeight || $p["maximize"];
+        $reduce = $previewWidth < $srcWidth || $previewHeight < $srcHeight || $p["maximize"];
 
         $mode = $p["mode"];
 
@@ -510,16 +518,29 @@ class Generator extends \Infuso\Core\Component {
             $mode = "crop";
         }
 
-        $scale1 = $previewWidth/$srcWidth;
-        $scale2 = $previewHeight/$srcHeight;
-        $scale = $scale1<$scale2 ? $scale1 : $scale2;
+        $scale1 = $previewWidth / $srcWidth;
+        $scale2 = $previewHeight / $srcHeight;
+        $scale = $scale1 < $scale2 ? $scale1 : $scale2;
+        
+        $minScale = $scale1 < $scale2 ? $scale1 : $scale2;
+        $maxScale = $scale1 > $scale2 ? $scale1 : $scale2;
+        
+       // app()->trace("min:".$minScale.", max:".$maxScale);
+        
+        if($mode == "crop-resize") {
+            if($maxScale / $minScale > 1.2) {
+                $mode = "resize";
+            } else {
+                $mode = "crop";
+            }               
+        }
 
         switch($mode) {
             default:
             case "fit":
                 if($reduce) {
-                    $dw = $srcWidth*$scale;
-                    $dh = $srcHeight*$scale;
+                    $dw = $srcWidth * $minScale;
+                    $dh = $srcHeight * $minScale;
                 } else {
                     $dw = $srcWidth;
                     $dh = $srcHeight;
@@ -527,8 +548,8 @@ class Generator extends \Infuso\Core\Component {
                 break;
             case "resize":
                 if($reduce) {
-                    $dw = $srcWidth*$scale;
-                    $dh = $srcHeight*$scale;
+                    $dw = $srcWidth * $minScale;
+                    $dh = $srcHeight * $minScale;
                 } else {
                     $dw = $srcWidth;
                     $dh = $srcHeight;
@@ -537,10 +558,9 @@ class Generator extends \Infuso\Core\Component {
                 $previewHeight = $dh;
                 break;
             case "crop":
-                $scale = $scale1>$scale2 ? $scale1 : $scale2;
                 if($reduce) {
-                    $dw = $srcWidth*$scale;
-                    $dh = $srcHeight*$scale;
+                    $dw = $srcWidth * $maxScale;
+                    $dh = $srcHeight * $maxScale;
                 } else {
                     $dw = $srcWidth;
                     $dh = $srcHeight;
@@ -550,20 +570,22 @@ class Generator extends \Infuso\Core\Component {
 
         // Если картинка очень узкая, может получиться 0 по одному из изменений
         // Не допускаем этого
-        if($previewWidth < 1)
-            $previewWidth = 1;
-        if($previewHeight < 1)
+        if($previewWidth < 1) {
+            $previewWidth = 1; 
+        }
+        if($previewHeight < 1) {
             $previewHeight = 1;
+        }
 
         // Создаем картинку для будущей превьюшки
         // и заливаем ее фоном
-        $destImg = @imagecreatetruecolor($previewWidth,$previewHeight);
-        imagealphablending($destImg,true);
-        imagesavealpha($destImg,true);
-        $color = imagecolorallocatealpha($destImg,255,255,255,127);
-        imagefill($destImg,0,0,$color);
+        $destImg = @imagecreatetruecolor($previewWidth, $previewHeight);
+        imagealphablending($destImg, true);
+        imagesavealpha($destImg, true);
+        $color = imagecolorallocatealpha($destImg, 255, 255, 255, 127);
+        imagefill($destImg, 0, 0, $color);
 
-        $y = ($previewHeight-$dh)/2;
+        $y = ($previewHeight - $dh)/2;
         if($p["mode"]=="crop"){
             switch($p["valign"]) {
                 default:
