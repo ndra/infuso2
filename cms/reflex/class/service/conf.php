@@ -4,7 +4,7 @@ namespace Infuso\Cms\Reflex\Service;
 use Infuso\Core;
 
 /**
- * Ñëóæáà äîñòóïà ê íàñòðîéêàì reflex
+ * Ð¡Ð»ÑƒÐ¶Ð±Ð° Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð° Ðº Ð½Ð°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ°Ð¼ reflex
  **/
 class Conf extends Core\Service {
 
@@ -13,13 +13,23 @@ class Conf extends Core\Service {
     }
 
 	/**
-	 * Âîçâðàùàåò çíà÷åíèå ñòðîêè êîíôèãóðàöèè
+	 * Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ ÑÑ‚Ñ€Ð¾ÐºÐ¸ ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸
 	 **/
 	public function get($name) {
 	    return \Infuso\Cms\Reflex\Model\Conf::all()
             ->eq("name", $name)
             ->one()
             ->data("value");
+	}
+    
+	/**
+	 * Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ p-Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ ÑÑ‚Ñ€Ð¾ÐºÐ¸ ÐºÐ¾Ð½Ñ„Ð¸Ð³ÑƒÑ€Ð°Ñ†Ð¸Ð¸
+	 **/
+	public function pget($name) {
+	    return \Infuso\Cms\Reflex\Model\Conf::all()
+            ->eq("name", $name)
+            ->one()
+            ->pdata("value");
 	}
 
 }
