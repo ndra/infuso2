@@ -114,7 +114,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
 	/**
 	 * @return Возвращает коллекцию товаров в группе, включая скрытые товары
 	 **/
-	public function items() {
+	public function _items() {
 	    return service("ar")
             ->collection(Item::inspector()->className())
             ->asc("priority")
@@ -124,7 +124,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
     /**
      * Возвращает товары в самой группе и в подгруппах
      **/         
-    public function itemsRecursive() {
+    public function _itemsRecursive() {
     
         $id = array();
         
