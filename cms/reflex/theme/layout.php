@@ -1,9 +1,9 @@
 <? 
 
 lib::modJS();
+lib::modjsui();
 
 \admin::header();
-lib::modjsui();
 
 <div class='x0h4tfwmhnn' >
     <div style='width:300px;' class='left' >

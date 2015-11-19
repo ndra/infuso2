@@ -1,9 +1,8 @@
 .ddw7fs4b37 {
     
-    width:100%;
-    table-layout: fixed;
+    height: 100%;
     
-    & tbody > tr > .left {
+    & .left {
         
         width:60px;
         padding-top: 10px;
@@ -20,9 +19,9 @@
         }
     }
     
-    & tbody > tr > .right {
-        width: 100%;
+    & > .center {
         padding: 10px;
+        overflow: auto;
     }
     
 }
