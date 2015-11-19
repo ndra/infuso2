@@ -38,7 +38,7 @@ class Indexer implements Core\Handler {
         
             // Отмечаем отключенные пользователем группы
             default:
-            
+			
                 if($iterator == 0) {
                     service("ar")
                         ->collection(Model\Index::inspector()->className())
@@ -69,14 +69,13 @@ class Indexer implements Core\Handler {
                     "type" => self::TYPE_GROUP,
                     "status" => $status
                 ));
-                
+				
                 $iterator = $group->id();
                 $task->data("iterator", $iterator); 
                 break;
 
             // Обновляем статус товаров
             case "activate-items":
-            
                 $item = Model\Item::all()->gt("id", $iterator)->asc("id")->one();
                 
                 if(!$item->exists()) {
@@ -86,11 +85,11 @@ class Indexer implements Core\Handler {
                     $task->data("iterator", 0);
                     return;
                 }
-                                                   
+                
                 $groupIndex = Model\Index::all()
-                    ->eq("type", self::TYPE_GROUP)
-                    ->eq("itemId", $item->data("groupId"))
-                    ->one();
+                ->eq("type", self::TYPE_GROUP)
+                ->eq("itemId", $item->group()->id())
+                ->one();
                     
                 $status = $item->data("active") ? Model\Item::STATUS_ACTIVE : Model\Item::STATUS_USER_DISABLED;        
                                    
@@ -101,14 +100,11 @@ class Indexer implements Core\Handler {
                 }
                 
                 $item->data("status", $status);
-                
                 $iterator = $item->id();
                 $task->data("iterator", $iterator); 
-                
                 break;
                 
             case "count-items":
-            
                 $group = Model\Group::all()->gt("id", $iterator)->asc("id")->one();
                 
                 $groupIndex = Model\Index::all()
@@ -134,7 +130,6 @@ class Indexer implements Core\Handler {
                 } 
                 
                 $group->data("status", $status);
-                                                             
                 $iterator = $group->id();
                 $task->data("iterator", $iterator);   
                                                  

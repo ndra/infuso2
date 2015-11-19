@@ -14,6 +14,29 @@ class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Sea
     const STATUS_ACTIVE  = Group::STATUS_ACTIVE;
 
     public static function model() {
+        
+        if(Group::multigroupMode()){
+            $field =  array (
+				'name' => 'groupsId',
+                'type' => 'car3-mlid-mabj-mgi3-8aro',
+                'editable' => '1',
+                'label' => 'Группы товаров',
+                'group' => 'Основные',
+                'indexEnabled' => '1',
+                'class' => Group::inspector()->className(),
+			);   
+        }else{
+            $field =  array (
+				'name' => 'groupId',
+                'type' => 'pg03-cv07-y16t-kli7-fe6x',
+                'editable' => '1',
+                'label' => 'Группа товаров',
+                'group' => 'Основные',
+                'indexEnabled' => '1',
+                'class' => Group::inspector()->className(),
+			);     
+        }
+        
         return array(
             'name' => 'eshop_item',
             'fields' => array(
@@ -41,15 +64,8 @@ class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Sea
                     'editable' => '1',
                     'label' => 'Товар активен',
                     "default" => 1,
-                ), array (
-                    'name' => 'groupId',
-                    'type' => 'pg03-cv07-y16t-kli7-fe6x',
-                    'editable' => '1',
-                    'label' => 'Группа товаров',
-                    'group' => 'Основные',
-                    'indexEnabled' => '1',
-                    'class' => Group::inspector()->className(),
-                ), array (
+                ),$field, 
+                array (
                     'name' => 'price',
                     'type' => 'nmu2-78a6-tcl6-owus-t4vb',
                     'editable' => '1',
@@ -124,7 +140,14 @@ class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Sea
      * @return Возвращает родительскую группу данного товара
      **/
     public final function group() {
-        return $this->pdata("groupId");
+
+        if(Group::multigroupMode()){
+            return $this->pdata("groupsId")->one();
+        }else{
+            return $this->pdata("groupId");
+        }
+        
+        return false;
     }
     
 	public function photos() {

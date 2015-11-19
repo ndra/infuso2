@@ -119,10 +119,20 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
 	 * @return Возвращает коллекцию товаров в группе, включая скрытые товары
 	 **/
 	public function _items() {
-	    return service("ar")
-            ->collection(Item::inspector()->className())
-			->asc("priority")
-            ->eq("groupId",$this->id());
+	    
+	    //если в настройках указана мультигруппа
+        if(self::multigroupMode()){
+            return service("ar")
+                ->collection(Item::inspector()->className())
+    			->asc("priority")
+                ->eqMaterializedPath("groupsId",$this->id());
+        }else{
+           return service("ar")
+                ->collection(Item::inspector()->className())
+    			->asc("priority")
+                ->eq("groupId",$this->id()); 
+        }
+           
 	}
     
     /**
@@ -146,7 +156,14 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
         
         $scan($this);
         
-        return Item::all()->eq("groupId", $id);    
+         //если в настройках указана мультигруппа
+        if(self::multigroupMode()){
+            return Item::all()->eqMaterializedPath("groupsId", $id); 
+        }else{
+            return Item::all()->eq("groupId", $id); 
+        }
+        
+        return false;    
     }
 
 	/**
