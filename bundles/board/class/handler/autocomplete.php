@@ -15,7 +15,7 @@ class board_handler_autocomplete implements \Infuso\Core\Handler {
     
     public static function createAutocompleteTask() {
         service("task")->add(array(
-            "class" => "board_task",
+            "class" => "infuso\\board\\model\\task",
             "query" => "status=".board_task_status::STATUS_CHECKOUT."",
             "method" => "tryAutocomplete",
 		));

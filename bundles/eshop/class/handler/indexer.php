@@ -124,7 +124,6 @@ class Indexer implements Core\Handler {
                 $status = $groupIndex->data("status");
                 
                 $count = $group->itemsRecursive()
-                    ->joinByField("groupId")
                     ->eq("status", Model\Item::STATUS_ACTIVE)
                     ->count();
                     

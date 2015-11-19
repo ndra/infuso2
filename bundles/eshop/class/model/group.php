@@ -12,6 +12,10 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
     const STATUS_USER_DISABLED = 1;
     const STATUS_DETACHED = 2;
     const STATUS_ACTIVE = 3;
+    
+    public static function multigroupMode() {
+        return !!service("conf")->get("components", "infuso\\eshop\\model\\group", "multigroup");
+    }
 
 	public static function model() {
         return array (

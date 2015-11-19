@@ -5,9 +5,17 @@ namespace Infuso\Core;
 /**
  * Класс для загрузки конфигурации
  **/
-class Conf extends Component {
+class Conf extends Service {
 
 	private static $generalConf = null;
+    
+    public function defaultService() {
+        return "conf";
+    }
+    
+    public function get() {
+        return call_user_func_array(array("self","general"), func_get_args());
+    }
 
 	/**
 	 * Возвращает параметр из общей конфигурации components.yml
