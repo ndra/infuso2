@@ -596,14 +596,14 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         return $this;
     }
     
-    public function eqMaterializedPath($key, $val) {
+     public function eqMaterializedPath($key, $val) {
         $this->unload();
         if(is_array($val)) {
             $mas = array();
             foreach($val as $item){
-                $item = str_pad($item,5,"0",STR_PAD_LEFT);
-                $this->match($key,$item);
+                $mas[]  = str_pad($item,5,"0",STR_PAD_LEFT);
             }
+            $this->match($key,$mas);
         }else{
             $val = str_pad($val,5,"0",STR_PAD_LEFT); 
             $this->match($key,$val);
