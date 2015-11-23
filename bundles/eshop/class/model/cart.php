@@ -1,6 +1,7 @@
 <?
 
 namespace Infuso\Eshop\Model;
+use Infuso\User\Model\User as User;
 use Infuso\Core;
 
 /**
