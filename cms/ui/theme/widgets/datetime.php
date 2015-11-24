@@ -22,7 +22,7 @@ $container = helper("<span class='datetime-hZ1EqT1dlO' >");
 $container->begin();
 
     $input = helper("<input type='text' class='visibleField'/>");
-    $input->attr("placeholder", "Дата");
+    $input->attr("placeholder", $widget->param("placeholder"));
     $input->style("width", 70);
     $input->exec();
     
