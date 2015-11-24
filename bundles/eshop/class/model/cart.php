@@ -189,7 +189,7 @@ class Cart extends \Infuso\ActiveRecord\Record {
     public function user() {
         $user = user::get($this->data("userId"));
         if(!$user->exists()) {
-            $user = reflex::virtual("user",array(
+            $user = user::virtual(array(
                 "email" => $this->data("email"),
             ));
         }
