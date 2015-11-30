@@ -13,15 +13,15 @@ class Main extends Core\Controller {
     }
 
 	public function indexTest() {
-	    return true;
+        return \Infuso\Core\Superadmin::check();
 	}
+    
+    public function indexFailed() {
+        return \Infuso\CMS\Admin\Admin::fuckoff();
+    }
 	
 	public function index() {
 		app()->tm("/bundlemanager/main")->exec();
 	}
-    
-    public function index_test() {
-        service("bundle")->all();
-    }
 
 }

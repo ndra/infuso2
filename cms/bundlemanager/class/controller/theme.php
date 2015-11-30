@@ -9,7 +9,7 @@ use \Infuso\Core;
 class Theme extends Core\Controller {
 
 	public function postTest() {
-	    return true;
+        return \Infuso\Core\Superadmin::check();
 	}
     
     /**

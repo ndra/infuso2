@@ -10,7 +10,7 @@ use \Infuso\Core;
 class Files extends Core\Controller {
 
 	public function postTest() {
-	    return true;
+        return \Infuso\Core\Superadmin::check();
 	}
 
     /**

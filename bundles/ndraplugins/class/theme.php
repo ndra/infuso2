@@ -9,7 +9,7 @@
 namespace NDRA\Plugins;
 
 
-class theme extends \tmp_theme {
+class Theme extends \Infuso\Template\Theme {
 
     public function path() {
         return self::inspector()->bundle()->path()."/theme/";

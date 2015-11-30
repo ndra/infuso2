@@ -158,6 +158,8 @@ class Component {
         if(method_exists(get_called_class(),$_fn)) {
             return call_user_func_array(array(get_called_class(),$_fn),$params);
         }
+        
+        throw new \Exception("Unknown static method \"$fn\"");
 
     }
 
