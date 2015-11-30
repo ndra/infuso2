@@ -76,10 +76,31 @@ class Constructor extends ActiveRecord\Record {
         return $this->collection()->editor()->item()->parent();
     }
     
+    /**
+     * Создает элемент из конструктора и возвращает его редактор
+     **/         
     public function createItem($data) {
+    
+        // Создаем элемент
         $item = $this->collection()->collection()->create($data);
+        
+        // Создаем объект редактора
         $class = get_class($this->collection()->editor());
         $editor = new $class($item->id());
+        
+        // Копируем файлы из папки хранилища
+        foreach($editor->fields() as $field) {
+            if($field->typeID() == "knh9-0kgy-csg9-1nv8-7go9") {
+                $val = $field->field()->value();
+                $folder = "/".trim($this->storage()->root(), "/");
+                $folder = preg_quote($folder, "/");
+                if(preg_match("/^$folder/", $val)) {
+                    $newFile = $item->storage()->add($val, basename($val));
+                    $field->field()->value($newFile);
+                } 
+            }
+        }
+        
         return $editor;
     }
     

@@ -9,6 +9,7 @@
            
             $view = \Infuso\Cms\Reflex\FieldView\View::get($field);
             $view->setEditor($destEditor);
+            $view->setStorageEditor($editor);
     
     		app()->tm("/reflex/fields/field-layout")->param(array(
                 "label" => $field->label(),

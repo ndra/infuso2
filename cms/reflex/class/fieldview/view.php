@@ -11,6 +11,7 @@ abstract class View extends Core\Component {
 
 	protected $field = null;
 	protected $editor = null;
+    protected $storageEditor = null;
 
 	public function __construct($field) {
 	    $this->field = $field;
@@ -37,12 +38,12 @@ abstract class View extends Core\Component {
 	
 	/**
 	 * Доблжна вернуть id типа поля
-	 * (МОжет вернуть массив из нескольких id)
+	 * (Может вернуть массив из нескольких id)
 	 **/
 	abstract public static function typeID();
 	
 	/**
-	 * Возвращает типа расположения метки поля в форме
+	 * Возвращает тип расположения метки поля в форме
 	 * Переопределите метод в дочернем классе, если нужно изменить расположение метки в форме
 	 **/
 	public function labelAlign() {
@@ -55,6 +56,17 @@ abstract class View extends Core\Component {
 	
 	public function editor() {
 		return $this->editor;
+	}
+    
+	public function storageEditor() {
+        if($this->storageEditor) {
+	       return $this->storageEditor;
+        }
+        return $this->editor;   
+	}
+    
+	public function setStorageEditor($editor) {
+	    $this->storageEditor = $editor;
 	}
 	
 	/**

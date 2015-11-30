@@ -47,6 +47,9 @@ class Storage extends \Infuso\Core\Controller {
 	    return app()->publicPath()."/files/{$class}/";
 	}
 
+    /**
+     * Возвращает путь к папке файлов объекта
+     **/         
 	public function root() {
 	    $ret = $this->record()->recordStorageFolder();
 	    if(!$ret) {
@@ -56,6 +59,9 @@ class Storage extends \Infuso\Core\Controller {
         $key = $this->record()->id();
         $primaryKeyPrefix = substr(md5($key),0,2);
         $ret.= "/$primaryKeyPrefix/$key/";
+        
+        // Заменяем два слэша на один
+        $ret = preg_replace("%/+%","/", $ret);
 
 	    return $ret;
 	}
@@ -179,7 +185,7 @@ class Storage extends \Infuso\Core\Controller {
 	/**
 	 * Добавляет файл в хранилище
 	 **/
-	public function add($src,$name) {
+	public function add($src, $name) {
 	    $name = self::normalizeName($name);
 	    if(!$this->exists()) {
 			return;
