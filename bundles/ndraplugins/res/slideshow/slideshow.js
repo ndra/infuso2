@@ -182,10 +182,10 @@ ndra.slideshow = new function() {
 
         });
 
-
-
-        if(params.loader)
+        if(params.loader) {
             ndra.slideshow.load(params.loader);
+        }
+        
         if(params.data) {
             ndra.slideshow.setData(params.data);
             ndra.slideshow.selectImage(params.select);
@@ -307,8 +307,8 @@ ndra.slideshow = new function() {
      * Утстанавливает html-описание
      **/
     this.setHtml = function(html) {
-        eContent.top.html(html);
-        eContent.right.html(html);
+        //eContent.top.html(html);
+        //eContent.right.html(html);
         eContent.bottom.html(html);
     }
 
@@ -352,8 +352,9 @@ ndra.slideshow = new function() {
 
             eBigImageContainer.html("");
 
-            if(data.html)
+            if(data.html) {
                 ndra.slideshow.setHtml(data.html);
+            }
 
             $(this).appendTo(eBigImageContainer);
 
@@ -384,10 +385,11 @@ ndra.slideshow = new function() {
                 $(selector).each(function(n){
                     var big = $(this).attr("href");
                     var html = $(this).attr("title");
-                    if(big==href)
+                    if(big == href) {
                         selected = n;
+                    }
                     data.push({
-                        small:$(this).find("img").attr("src"),
+                        small:$(this).attr("data:small") || $(this).find("img").attr("src"),
                         big:big,
                         html:html
                     });
@@ -424,8 +426,9 @@ ndra.slideshow = new function() {
      **/
     this.updateLayout = function() {
 
-        if(!opened)
+        if(!opened) {
             return;
+        }
 
         eContent.top.css("display",eContent.top.html().length ? "block" : "none");
         eContent.bottom.css("display",eContent.bottom.html().length ? "block" : "none");
@@ -537,7 +540,7 @@ ndra.slideshow = new function() {
 
         eContent.bottom.css({
             right:rightWidth,
-            width:layoutWidth - (eContent.bottom.outerWidth() - eContent.bottom.width()) - leftWidth - rightWidth
+            width:layoutWidth - leftWidth - rightWidth
         })
 
         eRollerContainer.width(windowWidth);
@@ -596,22 +599,22 @@ ndra.slideshow = new function() {
 
                 if(ndra.slideshow.rollerWidth() > eRollerContainer.width()) {
                     // Выход за левую границу
-                    if(rollerX>=ndra.slideshow.maxRollerX() && rollerSpeed>=-10) {
+                    if(rollerX >= ndra.slideshow.maxRollerX() && rollerSpeed>=-10) {
                         rollerSpeed = 0;
-                        rollerX =ndra.slideshow.maxRollerX()*.3 + rollerX*.7;
+                        rollerX =ndra.slideshow.maxRollerX() *.3 + rollerX *.7;
 
-                        if(dragMode==2) {
+                        if(dragMode == 2) {
                             dragMode = 0;
                             rollerX = ndra.slideshow.maxRollerX();
                             rollerSpeed = 0;
                         }
                     }
                     // Выход за правую границу
-                    if(rollerX<=ndra.slideshow.minRollerX() && rollerSpeed<=10) {
+                    if(rollerX <= ndra.slideshow.minRollerX() && rollerSpeed <= 10) {
                         rollerSpeed = 0;
-                        rollerX = ndra.slideshow.minRollerX()*.3 + rollerX*.7;
+                        rollerX = ndra.slideshow.minRollerX() *.3 + rollerX *.7;
 
-                        if(dragMode==2) {
+                        if(dragMode == 2) {
                             rollerSpeed = 0;
                             rollerX = ndra.slideshow.minRollerX();
                             dragMode = 0;
