@@ -1,0 +1,46 @@
+$(function() {
+    
+    $(window).blur(function() {
+        earb.soundEnabled = false;
+    })
+    
+    var getRandomInt = function(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    var bass = earb.instrument("bass");
+    var minor = earb.scales.xminor(2);
+
+    var pattern1 = bass.pattern({
+        pattern: [1,1-7,1-7, 1,1-7,1-7, 1,1-7,1-7, 1,1-7,1-7,1,1-7,1,1-7,],
+        pattern: [1,2,1-7,2,3,1-7,3,4,1-7,4,5,1-7,4,3,2,1],
+        //pattern: [1,2,3,4,5+7,4+7,3+7,2+7],
+        shiftNext: 0,
+    }, minor);
+    pattern1.onStep(function(step) {
+        var chords = [0,2,-3,-4];
+        this.shift(chords[Math.floor(step / 1) % 4] - 7 * 2);
+        
+        if(step == 4) {
+            
+           /*   this.params.pattern = [1,1-7,1-7, 1,1-7,1-7, 1,1-7,1-7, 1,1-7,1-7,1,1-7,1,1-7,];
+            
+              var pattern2 = bass.pattern({
+                pattern: [1,2,3,4,5,6,7,6,5,4,3,2 ,7,6,5,4,6,5,4,3,5,4,3,2],
+                //pattern: [1,2,3,4,5+7,4+7,3+7,2+7],
+                shiftNext: 3,
+            }, minor);
+            pattern2.onStep(function(step) {
+                var chords = [0,2,-3,-4];
+                this.shift(chords[Math.floor(step / 1) % 4] - 7);
+            });
+            pattern2.play(); */
+        }
+        
+    })
+    pattern1.play();
+    
+
+
+
+});
