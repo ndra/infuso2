@@ -2,19 +2,7 @@ window.earb = function(params) {
 
     this.params = params;
     
-    var extend = function(obj, extend) {
-        if(!obj) {
-            obj = {};
-        }
-        for(var i in extend) {
-            if(obj[i] === undefined) {
-                obj[i] = extend[i];
-            }
-        }
-        return obj;
-    }
-    
-    this.params = extend(this.params, {
+    this.params = window.earb.extend(this.params, {
         bpm: 120,
         timeSignature: [4,4],
     });
@@ -92,7 +80,7 @@ window.earb = function(params) {
      * Возвращает частоту ноты
      **/         
     this.getNoteFrequency = function(note) {
-        note += 36;
+        note += 48;
         var frequency = 27.5 * Math.pow(2, note / 12);
         return frequency;
     }
@@ -104,8 +92,8 @@ window.earb = function(params) {
         return new window.earb.instrument(this,params);
     } 
     
-    this.sample = function() {
-        return new window.earb.sample(this);
+    this.sample = function(params) {
+        return new window.earb.sample(this, params);
     }
     
     this.tick32 = function() {
@@ -143,12 +131,15 @@ window.earb = function(params) {
 
 // ----------------------------------------------------------------------------- Инструмент
 
-earb.instrument = function(song, params) {
+earb.instrument = function(song, name) {
         
     song.instruments.push(this);
         
-    this.params = {};
-    this.params.monophonic = false;
+    var instrumentParams = earb.instruments[name];
+    
+    if(!instrumentParams) {
+        alert("Undefined instrument " + name);
+    }
     
     var patternObject = null;
 
@@ -156,11 +147,13 @@ earb.instrument = function(song, params) {
     var voices = [];
     var instrument = this;
     
-    var sample = song.sample();
+    var sample = song.sample(instrumentParams);
     
     var degree = 0;
     
     var handlers = {};
+    
+    var gain = .3;
     
     var iscale = null;
     
@@ -191,6 +184,8 @@ earb.instrument = function(song, params) {
             amp.connect(song.audioContext.destination);
             amp.gain.value = 0;
             
+            var gain;
+            
             var sampleController;
         
             this.isPlaying = function() {
@@ -201,6 +196,8 @@ earb.instrument = function(song, params) {
 
                 sampleController = sample.start(amp, params.frequency);
                 isPlaying = true;
+                
+                gain = instrument.gain();
 
                 var now = song.audioContext.currentTime;
                 var d = 0;                
@@ -208,15 +205,15 @@ earb.instrument = function(song, params) {
                 amp.gain.setValueAtTime(0, now);
                 // Атака
                 d += params.attackDuration / 1000;
-                amp.gain.linearRampToValueAtTime(params.attackGain, now + d);
+                amp.gain.linearRampToValueAtTime(gain * params.attackGain, now + d);
                 
                 // Спад
                 d += params.decayDuration / 1000;
-                amp.gain.linearRampToValueAtTime(params.sustainGain, now + d);
+                amp.gain.linearRampToValueAtTime(gain * params.sustainGain, now + d);
                 
                 // Сустейн
                 d = params.duration / 1000;
-                amp.gain.linearRampToValueAtTime(params.sustainGain, now + d);
+                amp.gain.linearRampToValueAtTime(gain * params.sustainGain, now + d);
                 
                 setTimeout(this.release, d * 1000);
                 
@@ -276,11 +273,11 @@ earb.instrument = function(song, params) {
 
         var voice = this.getFreeVoice(); 
         params.frequency = song.getNoteFrequency(params.note);
-        params.attackDuration = 50;
-        params.attackGain = 1;
-        params.decayDuration = 100;
-        params.sustainGain = .8;
-        params.releaseDuration = 500;
+        params.attackDuration = instrumentParams.attackDuration;
+        params.attackGain = instrumentParams.attackGain;
+        params.decayDuration = instrumentParams.decayDuration;
+        params.sustainGain = instrumentParams.sustainGain;
+        params.releaseDuration = instrumentParams.releaseDuration;
         voice.play(params);
 
     }
@@ -327,7 +324,16 @@ earb.instrument = function(song, params) {
             iscale = p1;
             return this;
         }
-    }      
+    }   
+    
+    this.gain = function(p1) {
+        if(arguments.length == 0) {
+            return gain;
+        } if(arguments.length == 1) {
+            gain = p1;
+            return this;
+        }
+    }        
           
 }
 
@@ -458,47 +464,46 @@ earb.createScales();
 
 // -----------------------------------------------------------------------------
 
-earb.sample = function(song) {
+earb.sample = function(song, params) {
  
     var context = song.audioContext;
     
     var buffer;       
-                    
-    var params = {
-        loopFrom: 0.7621660430915653,
-        loopTo: 1.9586443684063852,
-        url: '/bundles/earb/res/sounds/fantasia.wav',
-        sampleFrequency: song.getNoteFrequency(3),
-    }
     
     var request = new XMLHttpRequest();
-    request.open('GET', params.url, true); 
+    request.open('GET', params.sample, true); 
     request.responseType = 'arraybuffer';
     request.onload = function() {
         context.decodeAudioData(request.response, function(response) {
-            
-            var bytesLoopFrom = Math.round(params.loopFrom * response.sampleRate);
-            var bytesLoopTo = Math.round(params.loopTo * response.sampleRate);
-            var bytesLoop = Math.round(bytesLoopTo - bytesLoopFrom);
 
-            buffer = context.createBuffer(
-                response.numberOfChannels,
-                response.length + bytesLoop * 2,
-                response.sampleRate
-            );
+            if(params.loopBidi) {
             
-            for(var i = 0; i < response.length; i ++) {
-                if(i < bytesLoopFrom) {
-                    buffer.getChannelData(0)[i] = response.getChannelData(0)[i];
+                var bytesLoopFrom = Math.round(params.loopFrom * response.sampleRate);
+                var bytesLoopTo = Math.round(params.loopTo * response.sampleRate);
+                var bytesLoop = Math.round(bytesLoopTo - bytesLoopFrom);
+    
+                buffer = context.createBuffer(
+                    response.numberOfChannels,
+                    response.length + bytesLoop * 2,
+                    response.sampleRate
+                );
+                
+                for(var i = 0; i < response.length; i ++) {
+                    if(i < bytesLoopFrom) {
+                        buffer.getChannelData(0)[i] = response.getChannelData(0)[i];
+                    }
+                    if(i >= bytesLoopFrom && i <= bytesLoopTo) {
+                        buffer.getChannelData(0)[i] = response.getChannelData(0)[i];
+                        buffer.getChannelData(0)[bytesLoopFrom + bytesLoop * 2 - (i - bytesLoopFrom)] = response.getChannelData(0)[i];
+                        buffer.getChannelData(0)[i + bytesLoop * 2] = response.getChannelData(0)[i];
+                    }
+                    if(i >= bytesLoopTo) {
+                        buffer.getChannelData(0)[i + bytesLoop * 2] = response.getChannelData(0)[i];
+                    }
                 }
-                if(i >= bytesLoopFrom && i <= bytesLoopTo) {
-                    buffer.getChannelData(0)[i] = response.getChannelData(0)[i];
-                    buffer.getChannelData(0)[bytesLoopFrom + bytesLoop * 2 - (i - bytesLoopFrom)] = response.getChannelData(0)[i];
-                    buffer.getChannelData(0)[i + bytesLoop * 2] = response.getChannelData(0)[i];
-                }
-                if(i >= bytesLoopTo) {
-                    buffer.getChannelData(0)[i + bytesLoop * 2] = response.getChannelData(0)[i];
-                }
+            
+            } else {
+                buffer = response;
             }
             
         });
@@ -519,8 +524,8 @@ earb.sample = function(song) {
         
         return new function() {
             this.release = function() {
-                source.loopStart = buffer.duration - .01;
-                source.loopEnd = buffer.duration;
+                //source.loopStart = buffer.duration - .01;
+                //source.loopEnd = buffer.duration;
             }
             this.stop = function() {
                 source.stop();
@@ -529,5 +534,57 @@ earb.sample = function(song) {
         
     }
 
+}
+
+// ----------------------------------------------------------------------------- Утилиты
+
+earb.extend = function(obj, extend) {
+    if(!obj) {
+        obj = {};
+    }
+    for(var i in extend) {
+        if(obj[i] === undefined) {
+            obj[i] = extend[i];
+        }
+    }
+    return obj;
+}
+
+// -----------------------------------------------------------------------------
+
+earb.instruments = {
+    bass: {
+        attackDuration: 50,
+        attackGain: 1,
+        decayDuration: 100,
+        sustainGain: .1,
+        releaseDuration: 300,
+        loopFrom: 0.583,
+        loopTo: 0.583 + 0.0150 * 5,
+        sample: '/bundles/earb/res/sounds/accoustic-bass.wav',
+        sampleFrequency: 246.96
+    }, fantasy: {
+        attackDuration: 50,
+        attackGain: 1,
+        decayDuration: 100,
+        sustainGain: .8,
+        releaseDuration: 5000,
+        loopFrom: 0.7621660430915653,
+        loopTo: 1.9586443684063852,
+        loopBidi: true,
+        sample: '/bundles/earb/res/sounds/fantasia.wav',
+        sampleFrequency: 523.25 // Нота до второй октавы
+    }, horn: {
+        attackDuration: 50,
+        attackGain: 1,
+        decayDuration: 100,
+        sustainGain: .8,
+        releaseDuration: 100,
+        loopFrom: 0.487815,
+        loopTo: 1.701875,
+        loopBidi: true,
+        sample: '/bundles/earb/res/sounds/horn.wav',
+        sampleFrequency: 293.66
+    },
 }
     
