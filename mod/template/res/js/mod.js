@@ -190,7 +190,7 @@ if(!window.mod) {
     
             // При ошибке разбора показываем уведомление
             if(!result.success) {
-                mod.msg(ret.text,1);
+                mod.msg(result.text,1);
                 return;
             }
         

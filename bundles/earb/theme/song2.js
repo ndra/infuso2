@@ -8,7 +8,7 @@ $(function() {
         bpm: 120,
         timeSignature: [2,4]
     });
-    song.scale(earb.scales.xminor());
+    song.scale(earb.scales.minor());
     var bass1 = song.instrument("bass");
     var bass2 = song.instrument("bass");
     var solo = song.instrument("solo");
@@ -79,7 +79,7 @@ $(function() {
 
     song.frame(0,function() {
         
-       /* bass2.onbar(function(event) {
+        bass1.onbar(function(event) {
             this.degree([0,-1,-2,-3][event.bar % 4] - 7);
             
             if(event.bar % 16 == 0) {
@@ -96,7 +96,7 @@ $(function() {
                 }
             }
             
-        }); */
+        });
         
         solo.onbar(function(event) {
             
@@ -126,7 +126,7 @@ $(function() {
     });
 
     
-    setTimeout(function() {song.play()}, 1000);
+    song.play();
     
     $(window).blur(song.stop);
 
