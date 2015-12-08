@@ -8,7 +8,7 @@
         </td>
         
         // Добавляем в шапку стандартные блоки
-        add("admin-header","info");
+        add("admin-header","login");
         add("admin-header","log");
         
         foreach(app()->tm()->block("admin-header")->templates() as $block) {
