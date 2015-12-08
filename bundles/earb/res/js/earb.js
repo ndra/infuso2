@@ -143,7 +143,7 @@ earb.instrument = function(song, name) {
     
     var patternObject = null;
 
-    var maxVoices = 40;
+    var maxVoices = 50;
     var voices = [];
     var instrument = this;
     
@@ -153,7 +153,8 @@ earb.instrument = function(song, name) {
     
     var handlers = {};
     
-    var gain = .3;
+    var instrumentAmp = song.audioContext.createGain();
+    instrumentAmp.connect(song.audioContext.destination);     
     
     var iscale = null;
     
@@ -181,10 +182,8 @@ earb.instrument = function(song, name) {
             var isPlaying = false;
             
             var amp = song.audioContext.createGain();
-            amp.connect(song.audioContext.destination);
+            amp.connect(instrumentAmp);
             amp.gain.value = 0;
-            
-            var gain;
             
             var sampleController;
         
@@ -192,37 +191,39 @@ earb.instrument = function(song, name) {
                 return isPlaying;
             }
             
-            this.play = function(params) {
-
-                sampleController = sample.start(amp, params.frequency);
+            var voiceParams;
+            
+            this.play = function(p) {
+            
+                voiceParams = p;
+            
+                sampleController = sample.start(amp, voiceParams.frequency);
                 isPlaying = true;
-                
-                gain = instrument.gain();
 
                 var now = song.audioContext.currentTime;
                 var d = 0;                
                 // Начало
                 amp.gain.setValueAtTime(0, now);
                 // Атака
-                d += params.attackDuration / 1000;
-                amp.gain.linearRampToValueAtTime(gain * params.attackGain, now + d);
+                d += voiceParams.attackDuration / 1000;
+                amp.gain.linearRampToValueAtTime(voiceParams.attackGain, now + d);
                 
                 // Спад
-                d += params.decayDuration / 1000;
-                amp.gain.linearRampToValueAtTime(gain * params.sustainGain, now + d);
+                d += voiceParams.decayDuration / 1000;
+                amp.gain.linearRampToValueAtTime(voiceParams.sustainGain, now + d);
                 
                 // Сустейн
-                d = params.duration / 1000;
-                amp.gain.linearRampToValueAtTime(gain * params.sustainGain, now + d);
+                d = voiceParams.duration / 1000;
+                amp.gain.linearRampToValueAtTime(voiceParams.sustainGain, now + d);
                 
                 setTimeout(this.release, d * 1000);
                 
             }
             
             this.release = function() {
-                amp.gain.linearRampToValueAtTime(0,  song.audioContext.currentTime + params.releaseDuration / 1000);
+                amp.gain.linearRampToValueAtTime(0,  song.audioContext.currentTime + voiceParams.releaseDuration / 1000);
                 sampleController.release();
-                setTimeout(voice.stop, params.releaseDuration);
+                setTimeout(voice.stop, voiceParams.releaseDuration);                    
             }
             
             this.stop = function() {
@@ -255,6 +256,8 @@ earb.instrument = function(song, name) {
         }
         
         var signature = (typeof p1)+":"+(typeof p2);
+        
+        var params;
         
         switch(signature) {
             case "object:undefined":
@@ -328,9 +331,9 @@ earb.instrument = function(song, name) {
     
     this.gain = function(p1) {
         if(arguments.length == 0) {
-            return gain;
+            return instrumentAmp.gain.value;
         } if(arguments.length == 1) {
-            gain = p1;
+            instrumentAmp.gain.value = p1;
             return this;
         }
     }        
@@ -474,8 +477,22 @@ earb.sample = function(song, params) {
     request.open('GET', params.sample, true); 
     request.responseType = 'arraybuffer';
     request.onload = function() {
-        context.decodeAudioData(request.response, function(response) {
-
+        context.decodeAudioData(request.response, function(response) {    
+        
+            //var d = 0;
+        
+            //params.loopFrom += d;
+            //params.loopTo  += d;
+                                 
+            params.loopFrom = Math.floor(params.loopFrom * response.sampleRate) / response.sampleRate;
+            params.loopTo = Math.floor(params.loopTo * response.sampleRate) / response.sampleRate;
+            
+            var bytesLoopFrom = Math.round(params.loopFrom * response.sampleRate);
+            var bytesLoopTo = Math.round(params.loopTo * response.sampleRate);
+            var bytesLoop = Math.round(bytesLoopTo - bytesLoopFrom);
+            
+            mod.msg(bytesLoop);
+            
             if(params.loopBidi) {
             
                 var bytesLoopFrom = Math.round(params.loopFrom * response.sampleRate);
@@ -502,8 +519,8 @@ earb.sample = function(song, params) {
                     }
                 }
             
-            } else {
-                buffer = response;
+            } else {       
+                buffer = response;      
             }
             
         });
@@ -520,7 +537,7 @@ earb.sample = function(song, params) {
         source.loopStart = params.loopFrom;
         source.loopEnd = params.loopTo + (params.loopTo - params.loopFrom);
         source.loop = true;
-        source.start();
+        source.start(); 
         
         return new function() {
             this.release = function() {
@@ -554,6 +571,7 @@ earb.extend = function(obj, extend) {
 
 earb.instruments = {
     bass: {
+        name: "bass",
         attackDuration: 50,
         attackGain: 1,
         decayDuration: 100,
@@ -563,18 +581,19 @@ earb.instruments = {
         loopTo: 0.583 + 0.0150 * 5,
         sample: '/bundles/earb/res/sounds/accoustic-bass.wav',
         sampleFrequency: 246.96
-    }, fantasy: {
+    }, fantasia: {
         attackDuration: 50,
         attackGain: 1,
         decayDuration: 100,
         sustainGain: .8,
-        releaseDuration: 5000,
+        releaseDuration: 300,
         loopFrom: 0.7621660430915653,
         loopTo: 1.9586443684063852,
         loopBidi: true,
         sample: '/bundles/earb/res/sounds/fantasia.wav',
         sampleFrequency: 523.25 // Нота до второй октавы
     }, horn: {
+        name: "horn",
         attackDuration: 50,
         attackGain: 1,
         decayDuration: 100,
@@ -584,6 +603,17 @@ earb.instruments = {
         loopTo: 1.701875,
         loopBidi: true,
         sample: '/bundles/earb/res/sounds/horn.wav',
+        sampleFrequency: 293.66
+    }, sine: {
+        attackDuration: 50,
+        attackGain: 1,
+        decayDuration: 100,
+        sustainGain: .8,
+        releaseDuration: 100,
+        loopFrom: 0.0161,
+        loopTo: 0.0539,
+        //loopTo: 0.0879,
+        sample: '/bundles/earb/res/sounds/sine.wav',
         sampleFrequency: 293.66
     },
 }

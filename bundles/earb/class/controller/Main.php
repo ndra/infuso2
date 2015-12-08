@@ -19,5 +19,9 @@ class Main extends Core\Controller {
     public function index() {
         app()->tm("/earb/index")->exec();
     }
+    
+    public function index_test() {
+        app()->tm("/earb/test")->exec();
+    }
 
 }
