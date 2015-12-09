@@ -12,5 +12,12 @@ class ProjectEditor extends \Infuso\Cms\Reflex\Editor {
 	public function beforeEdit() {
 	    return Core\Superadmin::check();
 	}
+	
+	 /**
+	 * @reflex-root = on
+	 **/
+	public function all() {
+	    return Project::all()->title("Проекты");
+	}
 
 }
