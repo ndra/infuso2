@@ -27,7 +27,7 @@ $(function() {
 
     song.frame(0,function() {
         
-        bass.pattern("1 . ");
+        //bass.pattern("1 . ");
         
         ambient.pattern(". . . . 1(12), . . . . . . . . . . .  0(12)  . . . . . . . . . . . 1(24) . . . . . . . . . . . . . . . . . . . .   ");
         ambient.degree(-14);
