@@ -43,7 +43,9 @@ class ConfEditor extends Reflex\Editor {
      * Возвращает шаблон формы редактирования элемента
      **/
     public function templateEditForm() {
-		return app()->tm("/reflex/conf/edit-form")->param("editor",$this);
+		return app()
+            ->tm("/reflex/conf/edit-form")
+            ->param("editor",$this);
     }
     
     public function filters($collection) {

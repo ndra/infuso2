@@ -53,8 +53,6 @@ mod.init(".cjoesz8swu", function() {
         });
     }
     
-    //load();
-    
     $container.on("reflex/refresh", load);
     
     $container.on("reflex/setPage", function(event) {

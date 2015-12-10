@@ -9,7 +9,9 @@ js($this->bundle()->path()."/res/js/sortable.min.js");
     <div class='items' >
         $n = 0;
         foreach($collection->editors() as $editor) {
-            $editor->listItemTemplate()->exec();
+            $editor->listItemTemplate()
+                ->param("collection", $collection)
+                ->exec();
             $n++;
         }
         

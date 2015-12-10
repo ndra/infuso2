@@ -1,0 +1,39 @@
+.tiy0dEnJg5 {
+
+    table-layout: fixed;
+    width: 100%;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+
+	
+	.sort-handle {
+        width: 30px;
+        .icon16("sort");
+        opacity: .3;
+        cursor: pointer;
+    }
+    
+	.sort-handle-spacer {
+        width: 30px;
+    }
+    
+    td {
+        padding:5px 10px;
+        vertical-align: middle;
+        padding-right: 20px;
+    }
+    
+    .type {
+        font-size: .8em;
+        opacity: .5;
+    }
+    
+    .title {
+        width: 200px;
+    }
+    
+    .folder {
+        .icon24("folder");
+        background-position: left center;
+        padding-left: 32px;
+    }
+}

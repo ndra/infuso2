@@ -20,6 +20,7 @@ if(\Infuso\Core\Superadmin::check()) {
 }
 
 try {
+    
     $field = $editor->item()->pdata("type");
     $field->setModel($editor->item());
     $field->name("value");
@@ -31,6 +32,7 @@ try {
         "label" => $field->label(),
         "view" => $view,
     ))->exec();	
+    
 } catch (\Exception $ex) {
     echo "Редактирование недоступно";
 }

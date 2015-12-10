@@ -50,6 +50,7 @@ class Conf extends ActiveRecord\Record {
 					"name" => "parent",
 					"label" => "Родитель",
 					"type" => "link",
+                    "editable" => 2,
                     "class" => self::inspector()->className(),
 				),
 			),
