@@ -174,7 +174,7 @@ class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Sea
         return $this->photos()->one()->pdata("photo");
     }
     
-    public function searchContent() {
+    public function _searchContent() {
         return array(
             "content" => $this->title(),
             "snippet" => "/eshop/search/item-snippet",

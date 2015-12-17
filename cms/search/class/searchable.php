@@ -8,6 +8,4 @@ namespace Infuso\Cms\Search;
 
 interface Searchable {
 
-    public function searchContent();    
-
 }
