@@ -204,6 +204,7 @@ earb.instrument = function(song, name) {
                 var d = 0;                
                 // Начало
                 amp.gain.setValueAtTime(0, now);
+                
                 // Атака
                 d += voiceParams.attackDuration / 1000;
                 amp.gain.linearRampToValueAtTime(voiceParams.attackGain, now + d);
@@ -221,6 +222,7 @@ earb.instrument = function(song, name) {
             }
             
             this.release = function() {
+                amp.gain.cancelScheduledValues(song.audioContext.currentTime);
                 amp.gain.linearRampToValueAtTime(0,  song.audioContext.currentTime + voiceParams.releaseDuration / 1000);
                 sampleController.release();
                 setTimeout(voice.stop, voiceParams.releaseDuration);                    
@@ -545,8 +547,7 @@ earb.sample = function(song, params) {
         var source = context.createBufferSource();
         source.connect(destination);           
             
-        source.playbackRate.value = frequency / params.sampleFrequency;
-        
+        source.playbackRate.value = frequency / params.sampleFrequency;  
         
         source.buffer = buffer;
         source.loopStart = params.loopFrom;
@@ -635,11 +636,12 @@ earb.instruments = {
         sample: '/bundles/earb/res/sounds/horn.wav',
         sampleFrequency: 293.66
     }, sine: {
-        attackDuration: 50,
+        attackDuration: 0,
         attackGain: 1,
-        decayDuration: 100,
-        sustainGain: .8,
-        releaseDuration: 100,
+        decayDuration: 300,
+        sustainGain: .1,
+        sustainDuration: 0,
+        releaseDuration: 200,
         loopFrom: 0.0161,
         loopTo: 0.0539,
         sample: '/bundles/earb/res/sounds/sine.wav',
