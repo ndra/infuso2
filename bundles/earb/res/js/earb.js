@@ -193,6 +193,9 @@ earb.instrument = function(song, name) {
             
             var voiceParams;
             
+            /**
+             * Нажатие клавиши
+             **/                         
             this.play = function(p) {
             
                 voiceParams = p;
@@ -207,22 +210,27 @@ earb.instrument = function(song, name) {
                 
                 // Атака
                 d += voiceParams.attackDuration / 1000;
-                amp.gain.linearRampToValueAtTime(voiceParams.attackGain, now + d);
+                amp.gain.linearRampToValueAtTime(voiceParams.attackGain * voiceParams.gain, now + d);
                 
                 // Спад
                 d += voiceParams.decayDuration / 1000;
-                amp.gain.linearRampToValueAtTime(voiceParams.sustainGain, now + d);
+                amp.gain.linearRampToValueAtTime(voiceParams.sustainGain * voiceParams.gain , now + d);
                 
                 // Сустейн
                 d = voiceParams.duration / 1000;
-                amp.gain.linearRampToValueAtTime(voiceParams.sustainGain, now + d);
+                amp.gain.linearRampToValueAtTime(voiceParams.sustainGain * voiceParams.gain, now + d);
                 
                 setTimeout(this.release, d * 1000);
                 
             }
             
+            /**
+             * Отпускание клавиши
+             **/                         
             this.release = function() {
+                var gain = amp.gain.value; 
                 amp.gain.cancelScheduledValues(song.audioContext.currentTime);
+                amp.gain.setValueAtTime(gain,song.audioContext.currentTime);
                 amp.gain.linearRampToValueAtTime(0,  song.audioContext.currentTime + voiceParams.releaseDuration / 1000);
                 sampleController.release();
                 setTimeout(voice.stop, voiceParams.releaseDuration);                    
@@ -275,6 +283,10 @@ earb.instrument = function(song, name) {
                 alert("interument.playNode bad params " + signature);
                 break;
         }
+        
+        params = earb.extend(params, {
+            gain: 1
+        });
 
         var voice = this.getFreeVoice(); 
         params.frequency = song.getNoteFrequency(params.note);
@@ -284,6 +296,34 @@ earb.instrument = function(song, name) {
         params.sustainGain = instrumentParams.sustainGain;
         params.releaseDuration = instrumentParams.releaseDuration;
         voice.play(params);
+        
+        if(instrumentParams.echo) {
+        
+            setTimeout(function() {
+                var voice = instrument.getFreeVoice(); 
+                params.frequency = song.getNoteFrequency(params.note);
+                params.attackDuration = instrumentParams.attackDuration;
+                params.attackGain = instrumentParams.attackGain;
+                params.decayDuration = instrumentParams.decayDuration;
+                params.sustainGain = instrumentParams.sustainGain;
+                params.releaseDuration = instrumentParams.releaseDuration;
+                params.gain = .6;
+                voice.play(params);
+            }, song.duration32() * 2);
+            
+            setTimeout(function() {
+                var voice = instrument.getFreeVoice(); 
+                params.frequency = song.getNoteFrequency(params.note);
+                params.attackDuration = instrumentParams.attackDuration;
+                params.attackGain = instrumentParams.attackGain;
+                params.decayDuration = instrumentParams.decayDuration;
+                params.sustainGain = instrumentParams.sustainGain;
+                params.releaseDuration = instrumentParams.releaseDuration;
+                params.gain *= .3;
+                params.play(params);
+            }, song.duration32() * 4);
+        
+        }
 
     }
     
@@ -364,19 +404,34 @@ earb.pattern = function(instrument, params) {
         
         var parseCommand = function(cmd) {
             
-            var x = cmd.match(/^(-?\d+)(\((\d+)\))?$/);
+            var x = cmd.match(/^(-?\d+)(\((\d+)\)|(\-+))?$/);
+            
             if(x) {
+            
+                var reg = {
+                    duration: 3,
+                    durationPlus: 4,
+                    degree: 1
+                };
             
                 if(!pattern[n]) {
                     pattern[n] = [];
                 }
                 
-                var d = x[3] * 1 || 1;
+                // Расчитываем длительность
+                var d = x[reg.duration] * 1 || 1;
+                if(x[reg.durationPlus]) {
+                    d = x[reg.durationPlus].length + 1;
+                }
                     
                 pattern[n].push({
-                    degree: x[1] * 1,
+                    degree: x[reg.degree] * 1,
                     duration: 32 / stepDuration * d
-                });
+                });  
+                
+                n+= d;              
+            } else {
+                n++;
             }
             
         }
@@ -388,7 +443,7 @@ earb.pattern = function(instrument, params) {
                 var command = commands[i];
                 parseCommand(command);
             }  
-            n++;      
+            //n++;      
         }
         
         numberOfSteps = n - 1;
@@ -425,7 +480,16 @@ earb.pattern = function(instrument, params) {
     
     this.start = function() {
         startTick = instrument.song().tick32();
-    }   
+    }  
+    
+    this.duration = function(p1) {
+        if(arguments.length == 0) {
+            return numberOfSteps;
+        } if(arguments.length == 1) {
+            numberOfSteps = p1;
+            return this;
+        }
+    } 
     
 }
 
@@ -638,14 +702,15 @@ earb.instruments = {
     }, sine: {
         attackDuration: 0,
         attackGain: 1,
-        decayDuration: 300,
+        decayDuration: 900,
         sustainGain: .1,
         sustainDuration: 0,
-        releaseDuration: 200,
+        releaseDuration: 300,
         loopFrom: 0.0161,
         loopTo: 0.0539,
         sample: '/bundles/earb/res/sounds/sine.wav',
-        sampleFrequency: 265 // Нота до второй октавы
+        sampleFrequency: 265, // Нота до второй октавы
+        //echo: true,
     },
 }
     
