@@ -43,18 +43,20 @@ jQuery.fn.tree = function(params) {
         event.stopPropagation();
         $node = node(event.target);
 
-        var loader = mod.deepCopy(params.loader);
-        
-        var data = {};
-        var attr = $node.get(0).attributes;
-        for(var i = 0; i < attr.length; i++) {
-            if(attr[i].nodeName.match(/^data\:/)) {
-                loader[attr[i].name.replace(/^data\:/, "")] = attr[i].value;
+        if(params.loader) {
+            var loader = mod.deepCopy(params.loader);
+            
+            var data = {};
+            var attr = $node.get(0).attributes;
+            for(var i = 0; i < attr.length; i++) {
+                if(attr[i].nodeName.match(/^data\:/)) {
+                    loader[attr[i].name.replace(/^data\:/, "")] = attr[i].value;
+                }
             }
+            
+            mod.call(loader, function(html) {
+                $node.find(" > .subdivisions").html(html);
+            });
         }
-        
-        mod.call(loader, function(html) {
-            $node.find(" > .subdivisions").html(html);
-        });
     });
 };
