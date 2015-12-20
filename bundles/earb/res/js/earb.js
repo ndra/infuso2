@@ -93,7 +93,15 @@ window.earb = function(params) {
     } 
     
     this.sample = function(params) {
-        return new window.earb.sample(this, params);
+    
+        
+
+    
+        if(params.oscillator) {
+            return new window.earb.oscillator(this, params);            
+        } else {
+            return new window.earb.sample(this, params);
+        }
     }
     
     this.tick32 = function() {
@@ -219,7 +227,7 @@ earb.instrument = function(song, name) {
                 // Сустейн
                 d = voiceParams.duration / 1000;
                 amp.gain.linearRampToValueAtTime(voiceParams.sustainGain * voiceParams.gain, now + d);
-                
+                                         
                 setTimeout(this.release, d * 1000);
                 
             }
@@ -320,7 +328,7 @@ earb.instrument = function(song, name) {
                 params.sustainGain = instrumentParams.sustainGain;
                 params.releaseDuration = instrumentParams.releaseDuration;
                 params.gain *= .3;
-                params.play(params);
+                voice.play(params);
             }, song.duration32() * 4);
         
         }
@@ -637,6 +645,33 @@ earb.sample = function(song, params) {
 
 }
 
+// ----------------------------------------------------------------------------- Генераторы
+
+earb.oscillator = function(song, params) {
+
+    this.start = function(destination, frequency) {
+    
+        var oscillator = song.audioContext.createOscillator();
+        
+        oscillator.type = params.oscillator;
+        oscillator.frequency.value = frequency;
+        oscillator.connect(destination);
+        oscillator.start()
+        
+        return new function() {
+            this.release = function() {
+                //source.loopStart = buffer.duration - .01;
+                //source.loopEnd = buffer.duration;
+            }
+            this.stop = function() {
+                oscillator.stop();
+            }
+        }();
+        
+    }
+
+}
+
 // ----------------------------------------------------------------------------- Утилиты
 
 earb.extend = function(obj, extend) {
@@ -704,12 +739,23 @@ earb.instruments = {
         attackGain: 1,
         decayDuration: 900,
         sustainGain: .1,
-        releaseDuration: 2300,
-        loopFrom: 0.0161,
-        loopTo: 0.0539,
-        sample: '/bundles/earb/res/sounds/sine.wav',
-        sampleFrequency: 265, // Нота до второй октавы
-        //echo: true,
+        releaseDuration: 300,
+        oscillator: 'sine',
+        echo: true
+    }, sawtooth: {
+        attackDuration: 0,
+        attackGain: 1,
+        decayDuration: 900,
+        sustainGain: .1,
+        releaseDuration: 300,
+        oscillator: 'sawtooth',
+    }, square: {
+        attackDuration: 0,
+        attackGain: 1,
+        decayDuration: 900,
+        sustainGain: .1,
+        releaseDuration: 300,
+        oscillator: 'square'
     },
 }
     
