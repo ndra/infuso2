@@ -4,7 +4,12 @@ exec("/reflex/layout/global");
 exec("/ui/shared");
 js($this->bundle()->path()."/res/js/sortable.min.js");
 
-<div class='x1arvpu0c38' data:collection='{$collection->serialize()}' >
+$class = "x1arvpu0c38";
+if($collection->sortable()) {
+    $class.= " sortable";
+}
+
+<div class='{$class}' data:collection='{$collection->serialize()}' >
 
     <div class='items' >
         $n = 0;

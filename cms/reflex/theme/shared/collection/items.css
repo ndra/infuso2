@@ -40,8 +40,4 @@
         }
     }
     
-    &:not(.sortable) .sort-handle {
-        display: none;
-    }
-
 }
