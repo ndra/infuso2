@@ -193,7 +193,10 @@ class Controller extends \Infuso\Core\Controller {
      **/
     public static function post_savePriority($p) {
     
-        $collection = Collection::unserialize($p["collection"])->collection();
+        $collection = Collection::unserialize($p["collection"]);
+        $collection->applyParams($p);
+        $collection = $collection->collection();
+        
         $pages = $collection->pages();
 
         // Поле, по которому будет производиться сортировка

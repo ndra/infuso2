@@ -19,14 +19,27 @@ html, body {
             font-weight: bold;
         }
         
+        .label {
+
+        }
+        
+        .label:hover {
+            text-decoration: underline;
+        }
+        
         .close {
             margin-left:5px;
+            padding: 2px 4px;
+            border-radius: 2px;
+            &:hover {
+                background: #ccc;
+            }
         }
         
     }
     
     & > .right {
-        width:250px;
+        width: 250px;
         border-left: 1px solid #ccc;
         overflow: auto;
     }    

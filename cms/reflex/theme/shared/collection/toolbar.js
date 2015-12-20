@@ -18,9 +18,9 @@ mod.init(".qoi8w451jl", function() {
     
     // Учет параметров фильтра перед загрузкой
 
-    mod.on("reflex/beforeLoad",function(p) {    
-        p.viewMode = $container.find("select[name='viewMode']").val();
-        p.query = $container.find("input[name='query']").val();
+    $container.on("reflex/beforeLoad",function(event) {    
+        event.params.viewMode = $container.find("select[name='viewMode']").val();
+        event.params.query = $container.find("input[name='query']").val();
     });
     
     // Создание элемента

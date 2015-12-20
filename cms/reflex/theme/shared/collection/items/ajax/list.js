@@ -16,12 +16,20 @@ mod.init(".x1arvpu0c38", function() {
             $container.find(".list-item").each(function() {
                 priority.push($(this).attr("data:id"));
             });
-            mod.call({
+            
+            var params = {
                 cmd: "infuso/cms/reflex/controller/savePriority",
                 collection: $container.attr("data:collection"),
                 page: 1,
                 priority: priority
+            };
+            
+            $container.trigger({
+                type: "reflex/beforeSavePriority",
+                params: params
             });
+            
+            mod.call(params);
         }
     });
 

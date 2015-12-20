@@ -128,11 +128,11 @@ class Http extends Core\File {
      * Проверяет наличие внешнего файла
      **/
     public function exists() {
-        $ch = $this->getCurl();
+        $ch = $this->getCurl();          
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_FAILONERROR, true);  // this works
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+        curl_setopt($ch, CURLOPT_NOBODY, true);       
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);      
         $connectable = curl_exec($ch);
         curl_close($ch);
         return $connectable;

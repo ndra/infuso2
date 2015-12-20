@@ -7,6 +7,10 @@ mod.init(".x2s6mdnq7sy", function() {
         $(this).find(".c-toolbar").triggerHandler(event);
     })
     
+    $container.on("reflex/beforeLoad",function(event) {
+        $(this).find(".c-toolbar").triggerHandler(event);
+    })
+    
     $container.on("reflex/refresh",function(e,params) {
         $(this).find(".c-items").triggerHandler("reflex/refresh");
     })

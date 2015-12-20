@@ -1,4 +1,4 @@
-$(function() {
+mod.init(".zdh71269gn", function() {
 
     var updateHeight = function() {
     
@@ -11,6 +11,8 @@ $(function() {
         $(".zdh71269gn").layout("update");
     
     }
+    
+    var $container = $(this);
     
     updateHeight();
     setInterval(updateHeight,1000);
@@ -62,16 +64,23 @@ $(function() {
         if($tab.length == 0) {
         
             $tab = $("<div>")
-                .html(params.title)
                 .data("tab-id", params.id)
-                .appendTo($tabsHead)
+                .appendTo($tabsHead);
+                
+            var label = $("<span class='label' >")
+                .html(params.title)
+                .appendTo($tab)
                 .click(function() {
                     selectTab($tab);
+                }).dblclick(function() {
+                    removeTab($tab);
                 });
+                
+                
                 
             // Закрывалка табы
             $("<span>")
-                .html("x")
+                .html("&times;")
                 .addClass("close")
                 .appendTo($tab)
                 .click(function() {
@@ -150,7 +159,7 @@ $(function() {
         
     }
    
-    $(".zdh71269gn").on("bundlemanager/openFile", function(event) {                
+    $container.on("bundlemanager/openFile", function(event) {                
         addTab({
             title: event.path,
             id: "file:"+event.path,
@@ -161,7 +170,7 @@ $(function() {
         });        
     });
     
-    $(".zdh71269gn").on("bundlemanager/openTemplate", function(event) {                
+    $container.on("bundlemanager/openTemplate", function(event) {                
         addTab({
             title: event.theme+":"+event.template,
             id: "template:"+event.theme+":"+event.template,

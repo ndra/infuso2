@@ -9,7 +9,8 @@ $(function() {
     var solo2 = song.instrument("sine")
         .gain(.1);
 
-    var bass = song.instrument("bass").gain(.2);
+    var bass = song.instrument("sine").gain(.2);
+    var amb = song.instrument("ambient1").gain(.2);
         
     var getRandomInt = function(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -34,13 +35,15 @@ var ppp = [];
 
     song.frame(0,function() {
         
-      // bass.pattern("8 . . . 8 8 . . . . . . .");
+       // bass.pattern("1 2 3 2 3 4 3 4 5 4 5 6 5 4 3 2");
+        //amb.pattern("-8(16) . . . . . . . . . . . . . . . .");
         
         solo.pattern("1- 5- 9 10   1- 5- 9- 10- 7-    1- 6- 6 5 4- 5- 6- 7 8 1 . ");
         //solo2.pattern("1- 5- 9 10   1- 5- 9- 10- 7-    1- 6- 6 5 4- 5- 6- 7 8 1 . ");
         solo.onbar(function(event) {
-            solo2.degree(7);
-            solo.degree(-7);
+            solo2.degree(0);
+            solo.degree(2);
+            bass.degree(-7);
             
             if(event.bar >= 8) {
                 if(event.bar % 8 == 0) {

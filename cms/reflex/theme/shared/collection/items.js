@@ -43,7 +43,12 @@ mod.init(".cjoesz8swu", function() {
         
         $container.find(" > .loader").show();
     
-        mod.fire("reflex/beforeLoad", params);
+        //mod.fire("reflex/beforeLoad", params);
+        
+        $container.trigger({
+            type: "reflex/beforeLoad",
+            params: params
+        });
         
         mod.call(params, function(ret) {
             $container.find(".ajax").html(ret.html);
@@ -54,6 +59,11 @@ mod.init(".cjoesz8swu", function() {
     }
     
     $container.on("reflex/refresh", load);
+    
+    $container.on("reflex/beforeSavePriority", function(event) {
+        event.params.page = page;
+        event.params.filter = filter;
+    });
     
     $container.on("reflex/setPage", function(event) {
         page = event.page;
