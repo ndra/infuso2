@@ -143,7 +143,7 @@ earb.instrument = function(song, name) {
     
     var patternObject = null;
 
-    var maxVoices = 50;
+    var maxVoices = 40;
     var voices = [];
     var instrument = this;
     
@@ -229,11 +229,11 @@ earb.instrument = function(song, name) {
              **/                         
             this.release = function() {
                 var gain = amp.gain.value; 
-                amp.gain.cancelScheduledValues(song.audioContext.currentTime);
+                amp.gain.cancelScheduledValues(0);
                 amp.gain.setValueAtTime(gain,song.audioContext.currentTime);
                 amp.gain.linearRampToValueAtTime(0,  song.audioContext.currentTime + voiceParams.releaseDuration / 1000);
                 sampleController.release();
-                setTimeout(voice.stop, voiceParams.releaseDuration);                    
+                setTimeout(voice.stop, voiceParams.releaseDuration);
             }
             
             this.stop = function() {
@@ -664,7 +664,7 @@ earb.instruments = {
         loopFrom: 0.713,
         loopTo: 0.775,
         sample: '/bundles/earb/res/sounds/electric1.wav',
-        sampleFrequency: 523.25 // Нота до второй октавы
+        sampleFrequency: 392.00 // Нота до второй октавы
     }, fantasia: {
         attackDuration: 50,
         attackGain: 1,
@@ -704,8 +704,7 @@ earb.instruments = {
         attackGain: 1,
         decayDuration: 900,
         sustainGain: .1,
-        sustainDuration: 0,
-        releaseDuration: 300,
+        releaseDuration: 2300,
         loopFrom: 0.0161,
         loopTo: 0.0539,
         sample: '/bundles/earb/res/sounds/sine.wav',
