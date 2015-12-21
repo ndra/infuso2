@@ -39,7 +39,12 @@ class GitHub extends \Infuso\Core\Component {
 		
 		$file = Core\File::http($url);
 		$file->userAgent("Awesome-Octocat-App");
-		$contents = $file->contents();
+		//$contents = $file->contents();
+        
+		// Сохраняем данные, полученные по api в zip-файл
+		$zip = Core\File::tmp()."/1.zip";
+		$file->copy($zip);
+        
 		$info = $file->info();
 		
 		if($info["http_code"] != 200 ) {  		
@@ -52,11 +57,7 @@ class GitHub extends \Infuso\Core\Component {
 			    Throw new \Exception("Github returns {$info['http_code']}");
 			}
 		}
-		
-		// Сохраняем данные, полученные по api в zip-файл
-		$zip = Core\File::tmp()."/1.zip";
-		Core\File::get($zip)->put($contents);
-		
+
 		// Распаковываем zip в целевую папку
 		$this->extract($zip, $params["dest"], $params["path"]);
 		

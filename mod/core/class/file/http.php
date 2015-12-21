@@ -116,6 +116,30 @@ class Http extends Core\File {
         Core\Profiler::endOperation();
         return $body;
     }
+    
+    /**
+     * Копирует удаленный файл в папку $dest
+     **/
+    public function copy($dest) {
+    
+        $ch = $this->getCurl();
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        
+        $out = fopen(\Infuso\Core\File::get($dest)->native(), "wb");
+        if ($out == FALSE){ 
+          print "File not opened<br>"; 
+          exit; 
+        } 
+
+        curl_setopt($ch, CURLOPT_FILE, $out);
+        
+        curl_exec($ch);
+        
+        if($error = $this->errorText()) {
+            throw new \Exception($error);
+        }
+        
+    }
 
     /**
      * Возвращает полный путь к файлу
