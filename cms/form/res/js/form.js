@@ -32,22 +32,29 @@ var form = function(selector, formx, scenario) {
             // Если форма валидна, отправляем ее
             if(d.valid) {
                
-               // При срабатывании события afterValidation достаем событие 
-               var event;
-               $(selector).on("afterValidation.eventSaver", function(e){
-                   event = e;
-               });
+                // При срабатывании события afterValidation достаем событие 
+                var event;
+                $(selector).on("afterValidation.eventSaver", function(e){
+                    event = e;
+                });
                
-               //запускаем событие afterValidation
-               $(selector).trigger("afterValidation", data);               
+                // Старый способ, дла совместимости
+                // запускаем событие afterValidation
+                $(selector).trigger("afterValidation", data);  
                
-               //Если событие неыбло прервано то сабмитим форму
-               if(!event.isDefaultPrevented()){
-                   form.unbind("submit");
-                   form.submit();        
-               } 
+                // Новый способ
+                $(selector).trigger({
+                    type: "validate",
+                    formData: data
+                });             
                
-               $(selector).off("afterValidation.eventSaver");     
+                // Если событие не было прервано то сабмитим форму
+                if(!event.isDefaultPrevented()){
+                    form.unbind("submit");
+                    form.submit();        
+                } 
+               
+                $(selector).off("afterValidation.eventSaver");     
                 
             // Если форма не валидна, показываем сообщение об ошибке
             } else {
