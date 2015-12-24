@@ -34,15 +34,11 @@ var form = function(selector, formx, scenario) {
                
                 // При срабатывании события afterValidation достаем событие 
                 var event;
-                $(selector).on("afterValidation.eventSaver", function(e){
+                $(selector).on("validate.eventSaver", function(e){
                     event = e;
                 });
                
-                // Старый способ, дла совместимости
-                // запускаем событие afterValidation
-                $(selector).trigger("afterValidation", data);  
-               
-                // Новый способ
+                
                 $(selector).trigger({
                     type: "validate",
                     formData: data
@@ -54,7 +50,7 @@ var form = function(selector, formx, scenario) {
                     form.submit();        
                 } 
                
-                $(selector).off("afterValidation.eventSaver");     
+                $(selector).off("validate.eventSaver");     
                 
             // Если форма не валидна, показываем сообщение об ошибке
             } else {
