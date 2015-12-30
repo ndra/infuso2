@@ -1,5 +1,44 @@
 .p7jBpDQmdS {
+    
     .remove {
         cursor: pointer;
+    }
+    
+    .void {
+        opacity: .5;
+        font-style: italic;
+    }
+    
+    .item {
+        
+        &:hover {
+            background: #ededed;
+        }
+        
+        .sort-handle {
+            width: 32px;
+            .icon16("sort");
+            opacity: .2;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        
+        .title {
+            width: 100%;
+            padding: 6px;
+        }
+        
+        .remove {
+            width: 32px;
+            .icon16("delete");
+            opacity: .2;
+            &:hover {
+                opacity: 1;
+            }
+        }
+        
+        width: 100%;
+        table-layout: fixed;
     }
 }

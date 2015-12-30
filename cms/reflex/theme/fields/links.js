@@ -31,18 +31,20 @@ mod.init(".QWQ2cWdbx", function() {
         });
     });
     
-    $container.on("links/remove", function(event) {
-        var val = $input.val().split(" ");
-        var val2 = [];
-        for(var i in val) {
-            var id = val[i] * 1;
-            if(id != event.itemID) {
-                val2.push(id);
-            }
+    var update = function() {
+        var val = [];
+        $container.find(".item").each(function() {
+            val.push($(this).attr("data:id"));
+        });
+        $input.val(val.join(" "));
+        
+        if(val.length == 0) {
+            load();
         }
-        $input.val(val2.join(" "));
-        load();
-    });
+        
+    }
     
+    $container.on("links/remove", update);
+    $container.on("links/sort", update);
     
 });

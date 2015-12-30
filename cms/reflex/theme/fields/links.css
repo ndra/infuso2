@@ -1,4 +1,24 @@
 .QWQ2cWdbx {
-    border:1px solid #ededed;
-    padding: 5px;
+  
+    .g-input();
+    
+    width: 100%;
+    box-sizing: border-box;
+    
+    .ajax {
+        padding: 10px;
+    }
+    
+    .add {
+        background: #ccc;
+        padding: 20px 10px;
+        width: 24px;
+        .icon16("plus");
+        opacity: .5;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
+  
 }
