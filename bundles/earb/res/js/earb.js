@@ -93,10 +93,6 @@ window.earb = function(params) {
     } 
     
     this.sample = function(params) {
-    
-        
-
-    
         if(params.oscillator) {
             return new window.earb.oscillator(this, params);            
         } else {
@@ -304,34 +300,6 @@ earb.instrument = function(song, name) {
         params.sustainGain = instrumentParams.sustainGain;
         params.releaseDuration = instrumentParams.releaseDuration;
         voice.play(params);
-        
-        if(instrumentParams.echo) {
-        
-            setTimeout(function() {
-                var voice = instrument.getFreeVoice(); 
-                params.frequency = song.getNoteFrequency(params.note);
-                params.attackDuration = instrumentParams.attackDuration;
-                params.attackGain = instrumentParams.attackGain;
-                params.decayDuration = instrumentParams.decayDuration;
-                params.sustainGain = instrumentParams.sustainGain;
-                params.releaseDuration = instrumentParams.releaseDuration;
-                params.gain = .6;
-                voice.play(params);
-            }, song.duration32() * 2);
-            
-            setTimeout(function() {
-                var voice = instrument.getFreeVoice(); 
-                params.frequency = song.getNoteFrequency(params.note);
-                params.attackDuration = instrumentParams.attackDuration;
-                params.attackGain = instrumentParams.attackGain;
-                params.decayDuration = instrumentParams.decayDuration;
-                params.sustainGain = instrumentParams.sustainGain;
-                params.releaseDuration = instrumentParams.releaseDuration;
-                params.gain *= .3;
-                voice.play(params);
-            }, song.duration32() * 4);
-        
-        }
 
     }
     
@@ -394,71 +362,16 @@ earb.instrument = function(song, name) {
 
 earb.pattern = function(instrument, params) {
 
-    var startTick = null; // Тик, от которого считать
+    // Тик, от которого считать
+    var startTick = null; 
     
-    var stepDuration = 16; // Длительность шага ( 16 означает 1/16, 8 означает 1/8 и т.д.)
+    // Длительность шага ( 16 означает 1/16, 8 означает 1/8 и т.д.)
+    var stepDuration = 16; 
     
-    var numberOfSteps = 1; // Количество шагов в паттерне
+    // Количество шагов в паттерне
+    var numberOfSteps = params; 
     
-    var pattern = [];
-
-    this.parsePattern = function(pat) {
-    
-        pat = pat.trim();
-        pat = pat.replace(/\s+/g," ");
-        pat = pat.split(" ");
-        
-        var n = 1;
-        
-        var parseCommand = function(cmd) {
-            
-            var x = cmd.match(/^(-?\d+)(\((\d+)\)|(\-+))?$/);
-            
-            if(x) {
-            
-                var reg = {
-                    duration: 3,
-                    durationPlus: 4,
-                    degree: 1
-                };
-            
-                if(!pattern[n]) {
-                    pattern[n] = [];
-                }
-                
-                // Расчитываем длительность
-                var d = x[reg.duration] * 1 || 1;
-                if(x[reg.durationPlus]) {
-                    d = x[reg.durationPlus].length + 1;
-                }
-                    
-                pattern[n].push({
-                    degree: x[reg.degree] * 1,
-                    duration: 32 / stepDuration * d
-                });  
-                
-                n+= d;              
-            } else {
-                n++;
-            }
-            
-        }
-        
-        for(var i in pat) {
-            var step = pat[i];
-            var commands = step.split(",");
-            for(var i in commands) {
-                var command = commands[i];
-                parseCommand(command);
-            }  
-            //n++;      
-        }
-        
-        numberOfSteps = n - 1;
-    
-    }
-    
-    this.parsePattern(params);  
+    var pattern = [];       
    
     this.handle32 = function(event) {
     
@@ -474,16 +387,20 @@ earb.pattern = function(instrument, params) {
     }
     
     this.handleStep = function(step) {
-        var datas = pattern[step + 1];
+        var datas = pattern[step];
         if(datas) {      
             for(var i in datas) {
-                var data = datas[i];
-                var degree = data.degree + instrument.degree();
-                var note = instrument.scale().note(degree);
-                var duration = instrument.song().duration32() * data.duration;
-                instrument.playNote(note, duration);
+                var note = datas[i];
+                if(note) {
+                    console.log(step);
+                    note.play();
+                }
             }
         }
+    }
+    
+    this.instrument = function() {
+        return instrument;
     }
     
     this.start = function() {
@@ -499,6 +416,51 @@ earb.pattern = function(instrument, params) {
         }
     } 
     
+    this.at = function(position) {
+        var note = new earb.patternNote(this);
+        if(!pattern[position]) {
+            pattern[position] = [];
+        }
+        pattern[position].push(note);
+        return note;
+    }    
+   
+}
+
+// ----------------------------------------------------------------------------- Нота паттерна
+
+earb.patternNote = function(pattern) {
+
+    var noteParams = {};
+
+    this.note = function(p) {
+        noteParams = earb.extend(p, {
+            duration: 1
+        });
+        return this;
+    }
+    
+    this.duration = function(p1) {
+        if(arguments.length == 0) {
+            return noteParams.duration;
+        } if(arguments.length == 1) {
+            noteParams.duration = p1;
+            return this;
+        }
+    } 
+    
+    this.play = function() {
+        var instrument = pattern.instrument();
+        var degree = noteParams.degree + instrument.degree();
+        var note = instrument.scale().note(degree);
+        var duration = instrument.song().duration32() * noteParams.duration;
+        instrument.playNote(note, duration);
+    }
+    
+    this.at = function(position) {
+        return pattern.at(position);
+    }
+
 }
 
 // ----------------------------------------------------------------------------- Гаммы
@@ -660,8 +622,6 @@ earb.oscillator = function(song, params) {
         
         return new function() {
             this.release = function() {
-                //source.loopStart = buffer.duration - .01;
-                //source.loopEnd = buffer.duration;
             }
             this.stop = function() {
                 oscillator.stop();
