@@ -38,7 +38,8 @@ class VoteEditor extends \Infuso\Cms\Reflex\Editor {
     public function listItemTemplate() {
         return app()
             ->tm("/poll/admin/list-item")
-            ->param("poll", $this->item());
+            ->param("poll", $this->item())
+            ->param("editor", $this);
     }
     
     public function filters($collection) {

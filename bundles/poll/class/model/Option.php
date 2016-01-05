@@ -29,11 +29,6 @@ class Option extends \Infuso\ActiveRecord\Record {
                     'label' => 'Текст ответа',
                     'indexEnabled' => '1',
                 ), array (
-                    'name' => 'draft',
-                    'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-                    'label' => 'Пользовательский',
-                    'editable' => 1,
-                ), array (
                     'name' => 'count',
                     'type' => 'gklv-0ijh-uh7g-7fhu-4jtg',
                     'editable' => '2',
@@ -47,14 +42,17 @@ class Option extends \Infuso\ActiveRecord\Record {
 	 * Возвращает коллекцию всех вариантов ответа
 	 **/
 	public static function all() {
-		return service("ar")->collection(get_called_class())->asc("priority");
+		return service("ar")
+            ->collection(get_called_class())
+            ->asc("priority");
 	}
 
 	/**
 	 * Возвращает вариант ответа по ID
 	 **/
 	public static function get($id) {
-		return service("ar")->get(get_called_class(),$id);
+		return service("ar")
+            ->get(get_called_class(),$id);
 	}
 
 	/**
@@ -90,8 +88,13 @@ class Option extends \Infuso\ActiveRecord\Record {
 	 * Результат округляется до сотых
 	 **/
 	public function percent() {
+    
+        if(!$this->vote()->answers()->count()) {
+            return 0;
+        }
+            
 		$ret = $this->count() / $this->vote()->answers()->count();
-		$ret*=100;
+		$ret *= 100;
 		$ret = number_format($ret,2,".","");
 		return $ret;
 	}

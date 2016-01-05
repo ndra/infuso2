@@ -25,7 +25,7 @@ class Poll extends \Infuso\ActiveRecord\Record {
                     'name' => 'title',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
-                    'label' => 'Вопрос',
+                    'label' => 'Название',
                 ), array (
                     'name' => 'active',
                     'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
