@@ -6,6 +6,9 @@ namespace Infuso\Poll\Model;
  * Модель опроса
  **/
 class Poll extends \Infuso\ActiveRecord\Record {
+    
+    const MODE_SINGLE = 1;
+    const MODE_MULTY = 2;
 
     public static function model() {
 
@@ -38,13 +41,12 @@ class Poll extends \Infuso\ActiveRecord\Record {
                     'label' => 'Режим',
                     'indexEnabled' => '1',
                     'list' => array (
-                        "Один ответ",
-                        "Несколько ответов",
+                        self::MODE_SINGLE => "Один ответ",
+                        self::MODE_MULTY => "Несколько ответов",
                     ),
                 ), 
             ),
-        );
-    
+        );      
     }
 
     /**
@@ -61,14 +63,17 @@ class Poll extends \Infuso\ActiveRecord\Record {
      * @return Возвращает опрос по id
      **/
     public static function get($id) {
-        return service("ar")->get(get_called_class(),$id);
+        return service("ar")
+            ->get(get_called_class(),$id);
     }
 
     /**
      * @return Возвращает последний активный опрос
      **/
     public static function last() {
-        return self::all()->eq("active",1)->one();
+        return self::all()
+            ->eq("active",1)
+            ->one();
     }
 
     /**
@@ -83,7 +88,8 @@ class Poll extends \Infuso\ActiveRecord\Record {
      * @return Коллекция ответов на данный вопрос
      **/
     public function answers() {
-        return Answer::all()->eq("pollId",$this->id());
+        return Answer::all()
+            ->eq("pollId",$this->id());
     }
     
     public function resultData() {
@@ -133,7 +139,9 @@ class Poll extends \Infuso\ActiveRecord\Record {
      * true, если пользователь проголосовал за последние 24 часа
      **/
     public function voted() {
-        return !!$this->answers()->eq("cookie",self::getCookie())->count();
+        return !!$this->answers()
+            ->eq("cookie",self::getCookie())
+            ->count();
     }
 
 }

@@ -1,15 +1,18 @@
 <?
 
+namespace Infuso\Poll;
+
+
 /**
  * Контроллер опроса
  **/
-class vote_controller extends mod_controller {
+class Controller extends \Infuso\Core\Controller {
 
     public static function postTest() {
         return true;
     }
 
-    public static function post_vote($p) {
+    public static function post_submit($p) {
 
         $cookie = vote::getCookie();
         $vote = vote::get($p["voteID"]);
@@ -32,9 +35,7 @@ class vote_controller extends mod_controller {
                 $vote->addText($p["text"],$cookie);
                 break;
         }
-        if($vote->data("enableDraft") && $p["draft"]){
-            $vote->addDraftOption($p["draft"],$cookie);    
-        }
+
         ob_start();
         tmp::exec("vote:vote.ajax",$vote);
         return ob_get_clean();
