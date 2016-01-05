@@ -102,18 +102,20 @@ class Poll extends \Infuso\ActiveRecord\Record {
      * @param $optionID - id варианта ответа
      * @param $cookie - cookie-ключ для защиты от повторного голосования
      **/
-    public function addAnswer($optionID,$cookie) {
+    public function addAnswer($optionId) {
 
         if(!$this->data("active")) {
-            mod::msg("Голосование закрыто",1);
+            app()->msg("Голосование закрыто", 1);
             return;
         }
 
-        $option = $this->allOptions()->eq("id",$optionID)->one();
+        $option = $this->options()->eq("id", $optionId)->one();
         if(!$option->exists()) {
-            mod::msg("Недопустимый вариант ответа",1);
+            app()->msg("Недопустимый вариант ответа",1);
             return;
         }
+        
+        $cookie = self::getCookie();
 
         $this->answers()->create(array(
             "optionId" => $option->id(),
@@ -125,7 +127,7 @@ class Poll extends \Infuso\ActiveRecord\Record {
     /**
      * Возвращает cookie-ключ, уникальный для каждого пользователя
      **/
-    public function getCookie() {
+    public static function getCookie() {
         $key = "5g03f90jfv03f5btmvz";
         $cookie = app()->cookie($key);
         if(!$cookie) {

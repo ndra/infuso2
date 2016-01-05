@@ -17,13 +17,11 @@ if($poll->exists()) {
                 break;
             case 2:
                 foreach($poll->options() as $option) {
-                    echo "<div class='oih93un-optionContainer'>";
-                    $id = util::id();
-                    echo "<input type='checkbox' id='$id' name='{$option->id()}' value='1' >";
-                    echo "<label for='$id' >";
-                    echo $option->title();
-                    echo "</label>";
-                    echo "</div>";
+                    <div class='oih93un-optionContainer'>
+                        $id = \Infuso\Util\Util::id();
+                        <input type='checkbox' id='$id' name='{$option->id()}' value='1' >
+                        <label for='$id' >{$option->title()}</label>
+                    </div>
                 }
                 break;
         }

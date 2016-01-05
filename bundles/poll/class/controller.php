@@ -14,31 +14,33 @@ class Controller extends \Infuso\Core\Controller {
 
     public static function post_submit($p) {
 
-        $cookie = vote::getCookie();
-        $vote = vote::get($p["voteID"]);
-        switch($vote->data("mode")) {
+        $cookie = Model\Poll::getCookie();       
+        $poll = Model\Poll::get($p["pollId"]);
+        
+        if(!$poll->data("active")) {
+            throw new \Exception("Non active vote (id='{$p[pollId]}')");
+        }
+        
+        switch($poll->data("mode")) {
 
             // Разрешен один ответ
-            case 1:
+            case Model\Poll::MODE_SINGLE:
                 $option = end($p["options"]);
-                $vote->addAnswer($option,$cookie);
+                $poll->addAnswer($option);
                 break;
 
             // Разрешено несколько ответов
-            case 2:
+            case Model\Poll::MODE_MULTY:
                 $options = array_unique($p["options"]);
                 foreach($options as $option) {
-                    $vote->addAnswer($option,$cookie);
+                    $poll->addAnswer($option);
                 }
-                break;
-            case 3:
-                $vote->addText($p["text"],$cookie);
                 break;
         }
 
-        ob_start();
-        tmp::exec("vote:vote.ajax",$vote);
-        return ob_get_clean();
+        return app()->tm("/poll/widget/ajax")
+            ->param("poll", $poll)
+            ->getContentForAjax();
 
     }
 

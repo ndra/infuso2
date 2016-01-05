@@ -2,7 +2,7 @@
 
 // Шаблон для списка опросов в каталоге
 
-<div class='SYun44HISR list-item' data:id='{$poll->id()}' >
+<div class='SYun44HISR list-item' data:id='{$editor->id()}' >
 
     <table class='header' >
         <tr>
