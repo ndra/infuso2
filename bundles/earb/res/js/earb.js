@@ -9,10 +9,12 @@ window.earb = function(params) {
     
     var earb = this;   
 
-    this.audioContext = new window.AudioContext();        
+    this.audioContext = new window.AudioContext();    
+        
     this.soundEnabled = true;
 
     this.frames = [];
+    
     var tick32 = 0;
     
     var scale = window.earb.scales.minor(0);
@@ -89,16 +91,14 @@ window.earb = function(params) {
      * Создает новый инструмент
      **/         
     this.instrument = function(params) { 
-        return new window.earb.instrument(this,params);
+        var instrument = new window.earb.instrument(this, params);
+        this.instruments.push(instrument);
+        return instrument;
     } 
     
-    this.sample = function(params) {
-        if(params.oscillator) {
-            return new window.earb.oscillator(this, params);            
-        } else {
-            return new window.earb.sample(this, params);
-        }
-    }
+    this.note = function(params) { 
+        return new window.earb.note(this, params);
+    } 
     
     this.tick32 = function() {
         return tick32;
@@ -125,343 +125,15 @@ window.earb = function(params) {
         return duration32 * 1000;
     }
     
+    /**
+     * Возвращает bpm песни
+     **/         
     this.bpm = function() {
         return this.params.bpm;
-    }
-    
+    }        
 
     
 };
-
-// ----------------------------------------------------------------------------- Инструмент
-
-earb.instrument = function(song, name) {
-        
-    song.instruments.push(this);
-        
-    var instrumentParams = earb.instruments[name];
-    
-    if(!instrumentParams) {
-        alert("Undefined instrument " + name);
-    }
-    
-    var patternObject = null;
-
-    var maxVoices = 40;
-    var voices = [];
-    var instrument = this;
-    
-    var sample = song.sample(instrumentParams);
-    
-    var degree = 0;
-    
-    var handlers = {};
-    
-    var instrumentAmp = song.audioContext.createGain();
-    instrumentAmp.connect(song.audioContext.destination);     
-    
-    var iscale = null;
-    
-    this.onbar = function(fn) {
-        this.on("bar",fn)
-    };
-    
-    this.on = function(name, fn) {
-        handlers[name] = [fn];
-    }
-    
-    this.fire = function(name, params) {
-        var hh = handlers[name];
-        for(var i in hh) {
-            hh[i].apply(this,[params]);
-        }
-    };
-    
-    // Создаем голоса
-    for(var i = 0; i < maxVoices; i ++) {
-        voices[i] = new function() { 
-        
-            var voice = this; 
-        
-            var isPlaying = false;
-            
-            var amp = song.audioContext.createGain();
-            amp.connect(instrumentAmp);
-            amp.gain.value = 0;
-            
-            var sampleController;
-        
-            this.isPlaying = function() {
-                return isPlaying;
-            }
-            
-            var voiceParams;
-            
-            /**
-             * Нажатие клавиши
-             **/                         
-            this.play = function(p) {
-            
-                voiceParams = p;
-            
-                sampleController = sample.start(amp, voiceParams.frequency);
-                isPlaying = true;
-
-                var now = song.audioContext.currentTime;
-                var d = 0;                
-                // Начало
-                amp.gain.setValueAtTime(0, now);
-                
-                // Атака
-                d += voiceParams.attackDuration / 1000;
-                amp.gain.linearRampToValueAtTime(voiceParams.attackGain * voiceParams.gain, now + d);
-                
-                // Спад
-                d += voiceParams.decayDuration / 1000;
-                amp.gain.linearRampToValueAtTime(voiceParams.sustainGain * voiceParams.gain , now + d);
-                
-                // Сустейн
-                d = voiceParams.duration / 1000;
-                amp.gain.linearRampToValueAtTime(voiceParams.sustainGain * voiceParams.gain, now + d);
-                                         
-                setTimeout(this.release, d * 1000);
-                
-            }
-            
-            /**
-             * Отпускание клавиши
-             **/                         
-            this.release = function() {
-                var gain = amp.gain.value; 
-                amp.gain.cancelScheduledValues(0);
-                amp.gain.setValueAtTime(gain,song.audioContext.currentTime);
-                amp.gain.linearRampToValueAtTime(0,  song.audioContext.currentTime + voiceParams.releaseDuration / 1000);
-                sampleController.release();
-                setTimeout(voice.stop, voiceParams.releaseDuration);
-            }
-            
-            this.stop = function() {
-                sampleController.stop();
-                isPlaying = false;
-            }
-
-        }();
-    }
-    
-    /**
-     * Возвращает первый свободный голос
-     **/                         
-    this.getFreeVoice = function() {
-        for(var i = 0; i < maxVoices; i ++) {
-            if(!voices[i].isPlaying()) {
-                return voices[i];
-            }                
-        }
-        alert("Too many voices");
-    }
-
-    /**
-     * Проигрывает заданную ноту
-     **/         
-    this.playNote = function(p1,p2) {
-    
-        if(!song.soundEnabled) {
-            return;
-        }
-        
-        var signature = (typeof p1)+":"+(typeof p2);
-        
-        var params;
-        
-        switch(signature) {
-            case "object:undefined":
-                params = p1;
-                break;
-            case "number:number":
-                params = {
-                    note:p1,
-                    duration: p2
-                };
-                break;
-            default:                    
-                alert("interument.playNode bad params " + signature);
-                break;
-        }
-        
-        params = earb.extend(params, {
-            gain: 1
-        });
-
-        var voice = this.getFreeVoice(); 
-        params.frequency = song.getNoteFrequency(params.note);
-        params.attackDuration = instrumentParams.attackDuration;
-        params.attackGain = instrumentParams.attackGain;
-        params.decayDuration = instrumentParams.decayDuration;
-        params.sustainGain = instrumentParams.sustainGain;
-        params.releaseDuration = instrumentParams.releaseDuration;
-        voice.play(params);
-
-    }
-    
-    /**
-     * Обработчик 32 ноты
-     **/                         
-    this.handle32 = function(tick) {
-        if(patternObject) {
-            patternObject.handle32(tick);    
-        }
-    }     
-    
-    this.handleBar = function(event) {
-        this.fire("bar", event);
-    }        
-    
-    this.pattern = function(params) {
-        patternObject = new window.earb.pattern(this, params);
-        return patternObject;
-    }       
-    
-    this.song = function() {
-        return song;
-    }
-    
-    this.degree = function(p1) {
-        if(arguments.length == 0) {
-            return degree;
-        } else if(arguments.length == 1) {
-            degree = p1;
-            return this;
-        }
-    }  
-    
-    this.scale = function(p1) {
-        if(arguments.length == 0) {
-            if(iscale) {
-                return iscale;
-            } else {
-                return song.scale();
-            }
-        } if(arguments.length == 1) {
-            iscale = p1;
-            return this;
-        }
-    }   
-    
-    this.gain = function(p1) {
-        if(arguments.length == 0) {
-            return instrumentAmp.gain.value;
-        } if(arguments.length == 1) {
-            instrumentAmp.gain.value = p1;
-            return this;
-        }
-    }        
-          
-}
-
-// ----------------------------------------------------------------------------- Паттерн
-
-earb.pattern = function(instrument, params) {
-
-    // Тик, от которого считать
-    var startTick = null; 
-    
-    // Длительность шага ( 16 означает 1/16, 8 означает 1/8 и т.д.)
-    var stepDuration = 16; 
-    
-    // Количество шагов в паттерне
-    var numberOfSteps = params; 
-    
-    var pattern = [];       
-   
-    this.handle32 = function(event) {
-    
-        var tick = event.tick - startTick;  
-
-        // Только ноты паттерна
-        if(tick % (32 / stepDuration) != 0) {
-            return;
-        } 
-        
-        var step = (tick / (32 / stepDuration)) % numberOfSteps;        
-        this.handleStep(step);
-    }
-    
-    this.handleStep = function(step) {
-        var datas = pattern[step];
-        if(datas) {      
-            for(var i in datas) {
-                var note = datas[i];
-                if(note) {
-                    console.log(step);
-                    note.play();
-                }
-            }
-        }
-    }
-    
-    this.instrument = function() {
-        return instrument;
-    }
-    
-    this.start = function() {
-        startTick = instrument.song().tick32();
-    }  
-    
-    this.duration = function(p1) {
-        if(arguments.length == 0) {
-            return numberOfSteps;
-        } if(arguments.length == 1) {
-            numberOfSteps = p1;
-            return this;
-        }
-    } 
-    
-    this.at = function(position) {
-        var note = new earb.patternNote(this);
-        if(!pattern[position]) {
-            pattern[position] = [];
-        }
-        pattern[position].push(note);
-        return note;
-    }    
-   
-}
-
-// ----------------------------------------------------------------------------- Нота паттерна
-
-earb.patternNote = function(pattern) {
-
-    var noteParams = {};
-
-    this.note = function(p) {
-        noteParams = earb.extend(p, {
-            duration: 1
-        });
-        return this;
-    }
-    
-    this.duration = function(p1) {
-        if(arguments.length == 0) {
-            return noteParams.duration;
-        } if(arguments.length == 1) {
-            noteParams.duration = p1;
-            return this;
-        }
-    } 
-    
-    this.play = function() {
-        var instrument = pattern.instrument();
-        var degree = noteParams.degree + instrument.degree();
-        var note = instrument.scale().note(degree);
-        var duration = instrument.song().duration32() * noteParams.duration;
-        instrument.playNote(note, duration);
-    }
-    
-    this.at = function(position) {
-        return pattern.at(position);
-    }
-
-}
 
 // ----------------------------------------------------------------------------- Гаммы
 
@@ -480,8 +152,7 @@ earb.createScales = function() {
     };
     
     var createScale = function(name, scheme) {
-        earb.scales[name] = function(tonic) {
-        
+        earb.scales[name] = function(tonic) {         
         
             if(!tonic) {
                 tonic = 0;
@@ -504,134 +175,6 @@ earb.createScales = function() {
 };
 earb.createScales();
 
-// -----------------------------------------------------------------------------
-
-earb.sample = function(song, params) {
- 
-    var context = song.audioContext;
-    
-    var buffer;       
-    
-    var request = new XMLHttpRequest();
-    request.open('GET', params.sample, true); 
-    request.responseType = 'arraybuffer';
-    request.onload = function() {
-        context.decodeAudioData(request.response, function(response) {    
-          
-            var bytesLoopFrom = Math.round(params.loopFrom * response.sampleRate);
-            var bytesLoopTo = Math.round(params.loopTo * response.sampleRate);
-            var bytesLoop = Math.round(bytesLoopTo - bytesLoopFrom);    
-            
-            if(params.loopBidi) { 
-    
-                buffer = context.createBuffer(
-                    response.numberOfChannels,
-                    response.length + bytesLoop * 2,
-                    response.sampleRate
-                );
-                
-                for(var i = 0; i < response.length; i ++) {
-                    if(i < bytesLoopFrom) {
-                        buffer.getChannelData(0)[i] = response.getChannelData(0)[i];
-                    }
-                    if(i >= bytesLoopFrom && i <= bytesLoopTo) {
-                        buffer.getChannelData(0)[i] = response.getChannelData(0)[i];
-                        buffer.getChannelData(0)[bytesLoopFrom + bytesLoop * 2 - (i - bytesLoopFrom)] = response.getChannelData(0)[i];
-                        buffer.getChannelData(0)[i + bytesLoop * 2] = response.getChannelData(0)[i];
-                    }
-                    if(i >= bytesLoopTo) {
-                        buffer.getChannelData(0)[i + bytesLoop * 2] = response.getChannelData(0)[i];
-                    }
-                }
-            
-            } else {
-            
-                buffer = context.createBuffer(
-                    response.numberOfChannels,
-                    response.length,
-                    response.sampleRate
-                );
-            
-                for(var i = 0; i < response.length; i ++) { 
-                    buffer.getChannelData(0)[i] = response.getChannelData(0)[i];
-                }
-                   
-                var smooth = Math.round(Math.min(bytesLoopTo / 10, 4000));
-                var smoothStart = bytesLoopTo - smooth;
-                var mix = function(a,b,k) {                 
-                    if(k > 1) {
-                        k = 1;
-                    }                     
-                    return a * k + b * (1 - k);
-                }
-                for(var i = 0; i < smooth * 2; i ++) {
-                    var a = response.getChannelData(0)[i + smoothStart - bytesLoop];
-                    var b = response.getChannelData(0)[i + smoothStart];
-                    var k = i / smooth;
-                    buffer.getChannelData(0)[i + smoothStart] = mix(a, b, k);
-                }                
-            }
-            
-        });
-    };
-    request.send();
-    
-    this.start = function(destination, frequency) {
-    
-        var source = context.createBufferSource();
-        source.connect(destination);           
-            
-        source.playbackRate.value = frequency / params.sampleFrequency;  
-        
-        source.buffer = buffer;
-        source.loopStart = params.loopFrom;
-        if(!params.loopBidi) {
-            source.loopEnd = params.loopTo;
-        } else {
-            source.loopEnd = params.loopTo + (params.loopTo - params.loopFrom);
-        }   
-        source.loop = true;
-        source.start(); 
-        
-        return new function() {
-            this.release = function() {
-                //source.loopStart = buffer.duration - .01;
-                //source.loopEnd = buffer.duration;
-            }
-            this.stop = function() {
-                source.stop();
-            }
-        }();
-        
-    }
-
-}
-
-// ----------------------------------------------------------------------------- Генераторы
-
-earb.oscillator = function(song, params) {
-
-    this.start = function(destination, frequency) {
-    
-        var oscillator = song.audioContext.createOscillator();
-        
-        oscillator.type = params.oscillator;
-        oscillator.frequency.value = frequency;
-        oscillator.connect(destination);
-        oscillator.start()
-        
-        return new function() {
-            this.release = function() {
-            }
-            this.stop = function() {
-                oscillator.stop();
-            }
-        }();
-        
-    }
-
-}
-
 // ----------------------------------------------------------------------------- Утилиты
 
 earb.extend = function(obj, extend) {
@@ -646,76 +189,25 @@ earb.extend = function(obj, extend) {
     return obj;
 }
 
-// -----------------------------------------------------------------------------
+earb.makeListener = function(obj) {
 
-earb.instruments = {
-    bass: {
-        name: "bass",
-        attackDuration: 50,
-        attackGain: 1,
-        decayDuration: 100,
-        sustainGain: .1,
-        releaseDuration: 100,
-        loopFrom: 0.713,
-        loopTo: 0.775,
-        sample: '/bundles/earb/res/sounds/electric1.wav',
-        sampleFrequency: 392.00 // Нота до второй октавы
-    }, fantasia: {
-        attackDuration: 50,
-        attackGain: 1,
-        decayDuration: 100,
-        sustainGain: .8,
-        releaseDuration: 300,
-        loopFrom: 0.7621660430915653,
-        loopTo: 1.9586443684063852,
-        loopBidi: true,
-        sample: '/bundles/earb/res/sounds/fantasia.wav',
-        sampleFrequency: 523.25 // Нота до второй октавы
-    }, ambient1: {
-        attackDuration: 50,
-        attackGain: 1,
-        decayDuration: 100,
-        sustainGain: .8,
-        releaseDuration: 500,
-        loopFrom: 0.69475,
-        loopTo: 1.4745,
-        //loopBidi: true,
-        sample: '/bundles/earb/res/sounds/ambient1.wav',
-        sampleFrequency: 196
-    }, horn: {
-        name: "horn",
-        attackDuration: 50,
-        attackGain: 1,
-        decayDuration: 100,
-        sustainGain: .8,
-        releaseDuration: 100,
-        loopFrom: 0.487815,
-        loopTo: 1.701875,
-        loopBidi: true,
-        sample: '/bundles/earb/res/sounds/horn.wav',
-        sampleFrequency: 293.66
-    }, sine: {
-        attackDuration: 0,
-        attackGain: 1,
-        decayDuration: 900,
-        sustainGain: .1,
-        releaseDuration: 300,
-        oscillator: 'sine',
-        echo: true
-    }, sawtooth: {
-        attackDuration: 0,
-        attackGain: 1,
-        decayDuration: 900,
-        sustainGain: .1,
-        releaseDuration: 300,
-        oscillator: 'sawtooth',
-    }, square: {
-        attackDuration: 0,
-        attackGain: 1,
-        decayDuration: 900,
-        sustainGain: .1,
-        releaseDuration: 300,
-        oscillator: 'square'
-    },
+    obj.handlers = {};
+
+    obj.on = function(event, fn) {
+        if(!obj.handlers[event]) {
+            obj.handlers[event] = [];
+        }
+        obj.handlers[event].push(fn);
+    }
+    
+    obj.fire = function(event, params) {
+        if(obj.handlers[event]) {
+            for(var i in obj.handlers[event]) {
+                obj.handlers[event][i](params);
+            }
+        }
+    }
+
 }
+
     

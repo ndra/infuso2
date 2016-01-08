@@ -1,43 +1,35 @@
 $(function() {
     
-    var context = new window.AudioContext();
+    var song = new earb({
+        bpm: 130
+    });
+
+    var instrument = song.instrument();
+    var x = instrument.pattern(4)
+    .at(0).note({
+        degree: 1,
+        duration: 1
+    }).at(1).note({
+        degree: 2,
+        duration: 1
+    }).at(2).note({
+        degree: 3,
+        duration: 1
+    }).at(3).note({
+        degree: 4,
+        duration: 1
+    });
     
-    var length = 150000;
     
-    var buffer = context.createBuffer(
-        1,
-        length,
-        context.sampleRate
-    );
+    //var voice = instrument.getFreeVoice();
+    //var note = song.note();
+    //voice.play(note);
+    //var voice2 = instrument.getFreeVoice();
+    //console.log(voice2);
     
-    mod.msg(context.sampleRate);
-    
-    var fr = Math.floor(Math.random() * 440 + 140);
-    //fr = ;
-    fr = 300;
-    
-    for(var i = 0; i < buffer.length; i ++) {
-        buffer.getChannelData(0)[i] = Math.sin(i / fr * Math.PI * 2) * .5 - .5;
-    }
-    
-    var a = Math.random() * 1000;
-    var b = a + fr * Math.floor(2 + Math.random() * 30) + 2;
-    
-    console.log(a + ":" + b);
-    
-    var source = context.createBufferSource();
-    source.connect(context.destination);
-    source.buffer = buffer;
-    source.loop = true;
-    source.loopStart = a / context.sampleRate;
-    source.loopEnd = b / context.sampleRate;
-    
+    song.play();
     setTimeout(function() {
-        source.start();
-    },Math.random() * 1000);
-    
-    setTimeout(function() {
-        source.stop();    
-    },3000);
+        song.stop();
+    }, 10000);
 
 });

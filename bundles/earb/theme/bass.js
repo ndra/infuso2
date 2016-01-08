@@ -8,17 +8,11 @@ $(function() {
 
     var bass = song.instrument("sawtooth").gain(.3);
     
-    bass.pattern(8)
-        .at(0).note({
-            degree: 1,
-            duration: 3,
-        }).at(1).note({
-            degree: 2,
-            duration: 3,
-        }).at(2).note({
-            degree: 3,
-            duration: 5
-        });
+    bass.pattern(4)
+        .at(0).note({degree: -7 * 0 + 1})
+        .at(1).note({degree: -7 * 0 + 2})
+        .at(2).note({degree: -7 * 0 + 3})
+        .at(3).note({degree: -7 * 0 + 4});
 
 var ppp = [];
 
