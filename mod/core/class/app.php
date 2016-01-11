@@ -271,7 +271,8 @@ class App {
 	}
 
 	public function httpError() {
-        header("Status: 404 Not Found");
+        echo 12121;
+        header("HTTP/1.0 404 Not Found");
 		$this->tm("/mod/404")->exec();
 	}
 
