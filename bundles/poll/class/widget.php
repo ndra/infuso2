@@ -5,7 +5,7 @@ namespace Infuso\Poll;
 /**
  * Виджет опроса
  **/
-class Widget extends \Infuso\Template\Widget {
+class Widget extends \Infuso\Template\Helper {
 
 	public function name() {
 		return "Опрос";
@@ -16,8 +16,16 @@ class Widget extends \Infuso\Template\Widget {
     }
 
 	public function execWidget() {
-        app()->tm("/poll/widget")
-            ->exec();
+    
+        $content = app()->tm("/poll/widget")
+            ->rexec();
+
+        $this->tag("div");
+        $this->style("border", "1px solid red");
+        $this->param("content", $content);
+        
+        parent::execWidget();
+
 	}
 
 }

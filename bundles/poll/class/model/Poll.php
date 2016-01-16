@@ -142,7 +142,7 @@ class Poll extends \Infuso\ActiveRecord\Record {
      **/
     public function voted() {
         return !!$this->answers()
-            ->eq("cookie",self::getCookie())
+            ->eq("cookie", self::getCookie())
             ->count();
     }
 

@@ -1,18 +1,18 @@
 <?
 
-echo "<div>";
+<div>
 
-echo "<h2>{$poll->data('title')}</h2>";
-echo "Спасибо за голосование. Вот как распределились результаты:";
-echo "<table>";
+<h2>{$poll->data('title')}</h2>
+echo "Спасибо за голосование! Вот как распределились результаты:";
+<table class='results' >
 foreach($poll->options()->desc("count") as $option) {
-    echo "<tr>";
-    echo "<td>{$option->title()}</td>";
-    echo "<td>{$option->count()}</td>";
-    echo "<td>{$option->percent()}%</td>";
-    echo "</tr>";
+    <tr>
+        <td>{$option->title()}</td>
+        <td>{$option->count()}</td>
+        <td>{$option->percent()}%</td>
+    </tr>
 }
-echo "</table>";
+</table>
 echo "Всего проголосовало&nbsp;&mdash; ".$poll->answers()->count();
 
-echo "</div>";
+</div>
