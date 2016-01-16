@@ -21,7 +21,6 @@ class Widget extends \Infuso\Template\Helper {
             ->rexec();
 
         $this->tag("div");
-        $this->style("border", "1px solid red");
         $this->param("content", $content);
         
         parent::execWidget();
