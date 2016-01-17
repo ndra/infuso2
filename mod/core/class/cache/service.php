@@ -30,7 +30,13 @@ class Service extends Core\Service implements Core\Handler {
     private function driver() {
 
         if(!self::$driver) {
-            switch("filesystem") {
+        
+            $driver = "filesystem";
+            if(function_exists("xcache_unset_by_prefix")) {
+                $driver = "xcache";
+            }
+        
+            switch($driver) {
                 default:
                 case "filesystem":
                     self::$driver = new filesystem();
