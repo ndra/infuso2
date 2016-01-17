@@ -45,12 +45,12 @@ class Handler implements Core\Handler {
         
         $errors7Days = service("log")->all()
             ->eq("type", "error")
-            ->gt("datetime", \Infuso\Util\Util::now()->shistday(-7))
+            ->gt("datetime", \Infuso\Util\Util::now()->shiftday(-7))
             ->count();
             
         $errors1Day = service("log")->all()
             ->eq("type", "error")
-            ->gt("datetime", \Infuso\Util\Util::now()->shistday(-1))
+            ->gt("datetime", \Infuso\Util\Util::now()->shiftday(-1))
             ->count();
             
         if($errors1Day > 0) {
