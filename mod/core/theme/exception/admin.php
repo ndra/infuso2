@@ -17,16 +17,6 @@ lib::reset();
         echo $exception->getTraceAsString();
     </pre>
     
-    if(rand()%100==0) {
-        $feed = new youtube_feed();
-        $feed->q("cat");
-        echo $feed->first()->player();
-    }
-    
-    //if(rand()%1==0) {
-      //  <script>prompt('Вы хотите удалить все файлы модуля site?');</script>
-   // }
-    
 </div>
 
 footer();

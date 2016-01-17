@@ -110,7 +110,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
     
     /**
      * Обработчик события Хартбит - теста системы
-     * @handler = Infuso/Admin/Heartbeat
+     * @handler = Infuso/heartbeat
      **/
     public function onHeartbeat($event) {
     

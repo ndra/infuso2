@@ -195,7 +195,10 @@ class App {
 		    ob_start();
 
 		    // Трейсим ошибки
-		    $this->trace($_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage(), "exception");
+		    $this->trace(array(
+                "message" => $_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage(),
+                "type" => "error"
+            ));
 
 		    try {
 
@@ -253,10 +256,13 @@ class App {
 
         // Если события не заблокированы - вызываем событие
         if($this->eventsEnabled()) {
-        	mod::fire("infuso/beforeActionSYS", array(
+        	$this->fire("infuso/beforeActionSYS", array(
                 "action" => $this->action(),
             ));
         	Profiler::addMilestone("before action sys");
+        	$this->fire("infuso/beforeAction", array(
+                "action" => $this->action(),
+            ));
         }
 
 	    if($action->exists()) {

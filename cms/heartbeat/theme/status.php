@@ -1,4 +1,4 @@
-<? 
+<?
 
 admin::header();
 
@@ -6,7 +6,7 @@ admin::header();
 
     <h1>Состояние системы</h1>
     
-    $event = new \Infuso\Cms\Utils\Heartbeat\Event("Infuso/Admin/Heartbeat");
+    $event = new \Infuso\Cms\Heartbeat\Event();
     $event->fire();
     
     <table>
@@ -14,11 +14,11 @@ admin::header();
         
             $class = "message";  
             
-            if($message["type"] == \Infuso\Cms\Utils\Heartbeat\Event::TYPE_ERROR) {
+            if($message["type"] == \Infuso\Cms\Heartbeat\Event::TYPE_ERROR) {
                 $class = "error";
             }
             
-            if($message["type"] == \Infuso\Cms\Utils\Heartbeat\Event::TYPE_WARNING) {
+            if($message["type"] == \Infuso\Cms\Heartbeat\Event::TYPE_WARNING) {
                 $class = "warning";
             }
             
@@ -35,3 +35,4 @@ admin::header();
 </div>
 
 admin::footer();
+

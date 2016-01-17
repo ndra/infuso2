@@ -26,7 +26,12 @@ class Admin extends Core\Controller {
 	/**
 	 * Выводит шапку админки
 	 **/
-	public static function header($title="") {
+	public static function header($title = "") {
+    
+        //if(!app()->user()->checkAccess("admin:showInterface")) {
+        ///    self::fuckoff();        
+        //}
+    
 	    $tmp = app()->tm();
 	    $tmp->noindex();
 		$tmp->param("title",$title);

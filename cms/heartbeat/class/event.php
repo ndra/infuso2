@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Cms\Utils\Heartbeat;
+namespace Infuso\Cms\Heartbeat;
 use Infuso\Core;
 
 /**
@@ -13,6 +13,10 @@ class Event extends Core\Event {
 	const TYPE_MESSAGE = 3;
 
 	private $messages = array();
+    
+    public function __construct() {
+        parent::__construct("Infuso/heartbeat");
+    }
 	
     /**
      * Добавляет сообщение об ошибке

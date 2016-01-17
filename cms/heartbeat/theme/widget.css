@@ -1,0 +1,16 @@
+.kjicTBX3F8 {
+    
+    .error, .warning {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    
+    .error {
+        color: red !important; 
+    }
+    
+    .warning {
+        color: yellow !important;
+    }
+    
+}

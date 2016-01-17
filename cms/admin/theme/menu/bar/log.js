@@ -5,7 +5,7 @@ mod.init(".ahkzj6jdb", function() {
         var $content = $.window({
             width: 600,
             height: 400,
-            title: "Ололо!"
+            title: "Лог"
         }).window("contentElement");
         
         $content.html("");

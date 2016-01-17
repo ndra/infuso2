@@ -80,7 +80,7 @@ class Service extends Core\Service implements Core\Handler {
 
     /**
      * Обработчик события Хартбит - теста системы
-     * @handler = Infuso/Admin/Heartbeat
+     * @handler = Infuso/heartbeat
      **/
     public function onHeartbeat($event) {
     
