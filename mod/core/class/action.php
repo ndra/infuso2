@@ -158,12 +158,15 @@ class Action extends Component {
         if(!$this->test()) {  
 			call_user_func($this->failCallback(),$this->params());
         } else {
-            if(mod::app()->eventsEnabled()) {
-	            mod::fire("mod_beforeAction",array(
+        
+            // Это какой-то странный код
+            /*if(mod::app()->eventsEnabled()) {
+	            app()-("mod_beforeAction",array(
 	                "action" => $this,
 	            ));
 			}
-            Profiler::addMilestone("before action");
+            Profiler::addMilestone("before action"); */
+            
             call_user_func($this->callback(),$this->params());
         }
 

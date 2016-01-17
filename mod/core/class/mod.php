@@ -52,37 +52,10 @@ class Mod extends \Infuso\Core\Component {
 	}
 
 	/**
-	 * Заносит сообщение в лог
-	 **/
-	public function trace($message) {
-        mod::fire("infuso/trace", array(
-            "message" => $message,
-        ));
-	}
-
-	/**
 	 * Возвращает экшн (класс mod_action)
 	 **/
 	public static function action($a,$b=null,$c=array()) {
 		return action::get($a,$b,$c);
-	}
-
-	/**
-	 * Создает и возвращает экземпляр класса mod_event
-	 **/
-	public function event($eventName,$params=array()) {
-		return new event($eventName,$params);
-	}
-
-	/**
-	 * Вызывает событие
-	 * @param string $eventName Имя события
-	 * @param array $params Параметры события
-	 **/
-	public function fire($eventName,$params=array()) {
-		$event = self::event($eventName,$params);
-		$event->fire();
-		return $event;
 	}
 
 	public static function session($key, $val=null) {

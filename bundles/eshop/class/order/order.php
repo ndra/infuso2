@@ -326,7 +326,7 @@ public static function model() {return array (
         $cart->updateTotal();
         $cart->data("changed",util::now());
 
-        mod::fire("eshop_cartChanged",array(
+        app()->fire("eshop_cartChanged",array(
             "order" => $this,
             "cart" => $this,
             "deliverToClient" => true,
@@ -385,7 +385,7 @@ public static function model() {return array (
         return $user;
     }
 
-    public static function on_mod_beforeAction() {
+    /*public static function on_mod_beforeAction() {
     
         $user = user::active();
         
@@ -401,11 +401,10 @@ public static function model() {return array (
 		
         setcookie(self::$cookieMyOrders,false,-1,"/");
         
-        
     }
 
     private static $cookie = "orderID";
-    private static $cookieMyOrders = "fubqw5rd";
+    private static $cookieMyOrders = "fubqw5rd";   */
 
     /**
      * Изменяет статус заказа
@@ -430,7 +429,7 @@ public static function model() {return array (
 
         $statusObj->afterSet($this);
 
-        mod::fire("eshop_orderStatusChanged",array(
+        app()->fire("eshop_orderStatusChanged",array(
             "order" => $this,
             "status" => $status,
             "deliverToClient" => true,
@@ -534,7 +533,7 @@ public static function model() {return array (
             
         $item->setQuantity($item->quantity()+$n);
 
-        mod::fire("eshop_addToCart",array(
+        app()->fire("eshop_addToCart",array(
             "cart" => $this,
             "itemID" => $itemID,
             "item" => $item,

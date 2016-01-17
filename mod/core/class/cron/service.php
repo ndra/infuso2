@@ -88,7 +88,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
     public function process() {
     
         $begin = microtime(true);
-        mod::fire("infuso/cron");
+        app()->fire("infuso/cron");
         $time = microtime(true) - $begin;
         
         app()->msg($time);

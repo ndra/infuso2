@@ -219,7 +219,7 @@ class App {
 
         // Пост-обработка (отложенные функции)
         if($this->eventsEnabled()) {
-	        $event = mod::fire("infusoAfterActionSys",array(
+	        $event = app()->fire("infusoAfterActionSys",array(
 	            "content" => $content,
 	        ));
 	        $content = $event->param("content");
@@ -227,7 +227,7 @@ class App {
 
         echo $content;
 
-        mod::fire("infusoAppShutdown");
+        app()->fire("infusoAppShutdown");
 
 	}
 
@@ -359,7 +359,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 			classmap\builder::buildClassMap();
 		    $next = true;
 		} else {
-			$event = mod::event("infuso/deploy");
+			$event = new Event("infuso/deploy");
 			$done = !$event->firePartial($step - 1);
 		}
 
@@ -376,7 +376,7 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 
         $n = 0;
         do {
-            $done = mod::app()->deployStep($n);
+            $done = app()->deployStep($n);
             $n++;
         } while (!$done);
 
@@ -466,11 +466,13 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
         $this->fire("infuso/trace", $message);
     }
     
-    public function fire($event, $params = array()) {
+    public function fire($eventName, $params = array()) {
         if($this->eventsSuspended) {
             return;
         }
-        \mod::fire($event, $params);
+		$event = new Event($eventName, $params);
+		$event->fire();
+        return $event;
     }
     
     public function user() {

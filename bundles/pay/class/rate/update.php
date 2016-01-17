@@ -27,7 +27,7 @@ class pay_rate_update implements mod_handler {
         }
         
         reflex::storeAll();
-        mod::fire("pay_ratesUpdated");            
+        app()->fire("pay_ratesUpdated");            
     }
     
 }

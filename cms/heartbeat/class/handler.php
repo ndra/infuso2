@@ -10,7 +10,9 @@ class Handler implements Core\Handler {
      * @handler = infuso/beforeAction
      **/         
     public function beforeAction() {
-        app()->tm()->add("admin-header", "/heartbeat/widget");
+        if(\Infuso\Core\Superadmin::check()) {
+            app()->tm()->add("admin-header", "/heartbeat/widget");
+        }
     }
 
 }

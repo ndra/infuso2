@@ -35,7 +35,7 @@ class Defer {
 
         $n = 0;
 
-        Mod::fire("infuso/defer");
+        app()->fire("infuso/defer");
 
         while(sizeof(self::$defer)) {
 

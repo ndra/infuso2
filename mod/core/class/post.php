@@ -66,7 +66,7 @@ class Post {
 			        try {
 			        
 			            // Вызываем сообщение
-			            mod::fire("mod_beforecmd",array(
+			            app()->fire("mod_beforecmd",array(
 			                "params" => $p,
 						));
 

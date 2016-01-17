@@ -149,7 +149,7 @@ public static function model() {return array (
 	public function reflex_afterOperation() {
 	    // Вызываем событие изменения позиции в заказе
 	    // На это сообщение подписан него подписан заказ
-		mod::fire("eshop_cartContentChanged",array(
+		app()->fire("eshop_cartContentChanged",array(
 			"item" => $this,
 			"cart" => $this->order(),
 			"deliverToClient" => true,
@@ -157,7 +157,7 @@ public static function model() {return array (
 	}
 
 	public function fireError($txt) {
-		mod::fire("eshop_cartItemError",array(
+		app()->fire("eshop_cartItemError",array(
 	    	"text" => $txt,
 	    	"itemID" => $this->item()->id(),
 	    	"orderItemID" => $this->id(),
