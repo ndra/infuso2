@@ -13,7 +13,7 @@ class Video {
     
     public function player($width = 560, $height = 315) {
         
-        if(preg_match("/http\:\/\/www\.youtube\.com/", $this->src)){
+        if(preg_match("/http(s)?\:\/\/www\.youtube\.com/", $this->src)){
             $url = \Infuso\Core\Url::get($this->src);
             $id = $url->query("v");
             return "<iframe width='{$width}' height='{$height}' src='http://www.youtube.com/embed/{$id}' frameborder='0' allowfullscreen></iframe>";
