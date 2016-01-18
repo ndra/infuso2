@@ -17,5 +17,10 @@ class Test extends Core\Controller {
         app()->tm("/ndraplugins/test/slideshow")
             ->exec();        
     }
+    
+    public function index_video() {
+        app()->tm("/ndraplugins/test/video")
+            ->exec();        
+    }
 
 }
