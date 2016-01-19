@@ -6,7 +6,7 @@ use Infuso\Core;
 /**
  * Дефолтный контроллер админки
  **/
-class Admin extends Core\Controller {
+class Admin extends Core\Controller implements Core\Handler {
 
 	private static $showLogin = true;
 	
@@ -17,20 +17,31 @@ class Admin extends Core\Controller {
 	public static function fuckoff() {
 	    app()->tm()->noindex();
 		if(self::$showLogin) {
-            app()->tm("admin:not_logged_in")->exec();
+            throw new \Infuso\Core\Exception\NotAuthorized();
 		} else {
 			app()->httpError(404);
 		}
 	}
+    
+    /**
+     * @handler = infuso/exception
+     * @todo Доработать чтобы реагировала не на все исключения     
+     **/         
+    public function onException($event) {
+        if(is_a($event->param("exception"), "Infuso\\Core\\Exception\\NotAuthorized")) {
+            $event->stop();
+            app()->tm("admin:not_logged_in")->exec();
+        }
+    }
 
 	/**
 	 * Выводит шапку админки
 	 **/
 	public static function header($title = "") {
     
-        //if(!app()->user()->checkAccess("admin:showInterface")) {
-        ///    self::fuckoff();        
-        //}
+        if(!app()->user()->checkAccess("admin:showInterface")) {
+            self::fuckoff();        
+        }
     
 	    $tmp = app()->tm();
 	    $tmp->noindex();

@@ -188,26 +188,32 @@ class App {
 
 	    } catch(\Exception $exception) {
 
-			while(ob_get_level()) {
-		        ob_end_clean();
-		    }
-
-		    ob_start();
-
-		    // Трейсим ошибки
-		    $this->trace(array(
-                "message" => $_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage(),
-                "type" => "error"
-            ));
-
 		    try {
+            
+    			while(ob_get_level()) {
+    		        ob_end_clean();
+    		    }
+    
+    		    ob_start();
+    
+    		    // Трейсим ошибки
+    		    $this->trace(array(
+                    "message" => $_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage(),
+                    "type" => "error"
+                ));
 
 				// Сбрасываем процессор шаблонов
 		        $this->clearTmp();
+                
+                $event = app()->fire("infuso/exception", array(
+                    "exception" => $exception,
+                ));
 
-			    $this->tm("/mod/exception")
-                    ->param("exception", $exception)
-                    ->exec();
+                if(!$event->stopped()) {
+    			    $this->tm("/mod/exception")
+                        ->param("exception", $exception)
+                        ->exec();
+                }
 
 		    } catch(\Exception $ex2) {
 		        throw $exception;

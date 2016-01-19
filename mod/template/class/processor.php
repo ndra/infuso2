@@ -320,7 +320,7 @@ class Processor extends Core\Component {
      * (На практике устанавливает специальный параметр, который учитывается при построеннии шапки)
      **/
     public function noindex() {
-        $this->param("meta:noindex",true);
+        $this->param("head/noindex",true);
     }
     
 	/**

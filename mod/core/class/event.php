@@ -75,11 +75,17 @@ class Event extends component {
         if($callback) {
         
             profiler::beginOperation("event",$this->name(),$callback[0]."::".$callback[1]);
+            
+            // Сохраняем информацию о классе и методе, которые обрабатываются в данный момент
+            // Это используется в heartbeat
             $this->handlerClass = $callback[0];
             $this->handlerMethod = $callback[1];
+            
             call_user_func($callback,$this);
-            $this->handlerClass = $null;
-            $this->handlerMethod = $null;
+            
+            $this->handlerClass = null;
+            $this->handlerMethod = null;
+            
             profiler::endOperation();
             
             return true;
