@@ -196,12 +196,6 @@ class App {
     
     		    ob_start();
     
-    		    // Трейсим ошибки
-    		    $this->trace(array(
-                    "message" => $_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage(),
-                    "type" => "error"
-                ));
-
 				// Сбрасываем процессор шаблонов
 		        $this->clearTmp();
                 
@@ -210,6 +204,13 @@ class App {
                 ));
 
                 if(!$event->stopped()) {
+                
+        		    // Трейсим ошибки
+        		    $this->trace(array(
+                        "message" => $_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage(),
+                        "type" => "error"
+                    ));                
+                
     			    $this->tm("/mod/exception")
                         ->param("exception", $exception)
                         ->exec();
