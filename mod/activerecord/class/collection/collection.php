@@ -854,6 +854,11 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             return $this;
         }
     }
+    
+    public function groupByExpr($expr) {
+        $this->groupBy = $expr;
+        return $this;
+    }
 
     public function resetSort() {
         $this->sort = array();

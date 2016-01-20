@@ -50,7 +50,7 @@ class Payment extends \Infuso\ActiveRecord\Record {
                     'type' => 'select',
                     'values' => self::enumStatuses(),
                     'editable' => '1',
-                    'label' => 'Причина отказа',
+                    'label' => 'Статус',
                     'default' => 200
                 ), array(
                     'name' => 'group',
@@ -85,7 +85,10 @@ class Payment extends \Infuso\ActiveRecord\Record {
     }
     
     public static function all() {
-        return \reflex::get(get_class())->desc("date")->addBehaviour("infuso\\heapit\\model\\PaymentCollection");
+        return service("ar")
+            ->collection(get_class())
+            ->desc("date")
+            ->addBehaviour("infuso\\heapit\\model\\PaymentCollection");
     }
     
     public static function get($id) {
@@ -104,4 +107,19 @@ class Payment extends \Infuso\ActiveRecord\Record {
             self::STATUS_DELETED => "Отменено",
         );    
     }
+    
+    public function isLocked() {
+    
+        if($this->data("status") == self::STATUS_PLAN) {
+            return false;
+        }
+        
+        if($this->data("status") == self::STATUS_PUSHED) {
+            return false;
+        }  
+    
+        return \Infuso\Util\Util::now()->date()->stamp() > $this->pdata("date")->stamp();
+    
+    }
+    
 }

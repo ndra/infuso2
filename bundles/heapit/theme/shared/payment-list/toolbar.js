@@ -20,11 +20,11 @@ $(function() {
         mod.fire("collectionFilterChanged");
     });
     
-    $(".payment-toolabr-ah3hf8pqdk input[name=from]").on("change", function() {
+    $(".payment-toolabr-ah3hf8pqdk input[name=from]").on("datechange", function() {
         mod.fire("collectionFilterChanged");
     });
     
-    $(".payment-toolabr-ah3hf8pqdk input[name=to]").on("change", function() {
+    $(".payment-toolabr-ah3hf8pqdk input[name=to]").on("datechange", function() {
         mod.fire("collectionFilterChanged");
     });
     

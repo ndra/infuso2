@@ -340,7 +340,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return $matches[1]."(`".$matches[2]."`.`".$matches[3]."`)";
         }
 
-        throw new \Exception("normalizeColName - bad field name");
+        throw new \Exception("normalizeColName - bad field name \"$name\"");
     }
 
     /**

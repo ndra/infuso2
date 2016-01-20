@@ -3,10 +3,10 @@ $(function() {
     $(window).bind('keydown', function(event) {
         if (event.ctrlKey || event.metaKey) {
             switch (String.fromCharCode(event.which).toLowerCase()) {
-            case 's':
-                event.preventDefault();
+                case 's':
+                    event.preventDefault();
                     $form.parent().submit();
-                break;
+                    break;
             }
         }
     });

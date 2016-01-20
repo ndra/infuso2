@@ -43,7 +43,7 @@
                 $w->value($bargain->data("amount"));
                 $w->exec();
                 
-                $w = new \Infuso\Cms\UI\Widgets\Datepicker;
+                $w = new \Infuso\Cms\UI\Widgets\Datetime;
                 $w->fieldName("paymentDate");
                 $w->clearButton();
                 $w->placeholder("Дата оплаты");
@@ -98,15 +98,15 @@
                 <td><label>Когда связаться</label></td>
                 <td>
                 
-                    $w = new \Infuso\Cms\UI\Widgets\Datepicker;
+                    $w = new \Infuso\Cms\UI\Widgets\Datetime;
                     $w->fieldName("callTime");
                     
-                    $w->fastDayShifts(array(
+                    /*$w->fastDayShifts(array(
                         \util::now()->stamp() => "Сегодня",
                         \util::now()->shiftDay(1)->stamp() => "Завтра",
                         \util::date(strtotime("monday"))->stamp() => "В понедельник",
                         \util::now()->shiftDay(14)->stamp() => "Через две недели",
-                    ));
+                    )); */
                     
                     $w->clearButton();
                     $w->value($bargain->data("callTime"));

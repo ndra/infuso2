@@ -9,7 +9,7 @@
 namespace Infuso\Cms\UI\Widgets;
 
 
-class Datetime extends Input
+class Datetime extends Textfield
 {
     public function name() {
         return "Датавремя с календарем";

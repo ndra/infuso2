@@ -57,6 +57,10 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
         }
     }
     
+    var fireChangedEvent = function() {
+        $inputHidden.trigger("datechange");
+    }
+    
     // Обновляет видимое значение на основании скрытого поля
     var updateDatepickerValue = function() {
         
@@ -110,15 +114,24 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
     mod.monitor($input, "value");
     mod.monitor($inputTime, "value");
     mod.monitor($inputHidden, "value");
+    
+    var handleVisibleChanged = function() {
+        updateHiddenFields();
+        fireChangedEvent();
+    }
+    
     $input
-        .on("mod/monitor", updateHiddenFields)
-        .on("input", updateHiddenFields);
+        .on("mod/monitor", handleVisibleChanged)
+        .on("input", handleVisibleChanged);
     $inputTime
-        .on("mod/monitor", updateHiddenFields)
-        .on("input", updateHiddenFields);
+        .on("mod/monitor", handleVisibleChanged)
+        .on("input", handleVisibleChanged);
         
+    // При изменении скрытого поля обновляем видимые 
+    // и выбрасываем событие изменения
     $inputHidden.on("mod/monitor", function() {
         updateDatepickerValue();
+        fireChangedEvent();
     })
     
     // Создаем дейтпикер

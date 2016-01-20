@@ -78,6 +78,13 @@ class Payment extends Base {
         }
 
         $payment = \Infuso\Heapit\Model\Payment::get($p["paymentId"]);
+        
+        if($payment->isLocked()) {
+            app()->msg("Изменение платежа заблокировано", 1);
+            return;
+        }
+        
+        
         $payment->data("description", $p["data"]["description"]);
         $payment->data("orgId", $p["data"]["orgId"]);
         $payment->data("date", $p["data"]["date"]);

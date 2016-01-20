@@ -1,10 +1,12 @@
 <? 
 <div class="popup-ejmhyas19m">
 
-    $w = new \Infuso\Cms\UI\Widgets\Autocomplete();
+    $w = new \Infuso\Cms\UI\Widgets\Combo();
     $w->fieldName("occId");
-    $w->cmd("/infuso/heapit/controller/widget/personalList");
-    $w->cmdParams(array("orgId"=>$org->id()));
+    $w->callParams(array(
+        "cmd" => "/infuso/heapit/controller/widget/personalList",
+        "orgId" => $org->id(),
+    ));
     $w->exec();
     
     $w = new \Infuso\Cms\UI\Widgets\Button();

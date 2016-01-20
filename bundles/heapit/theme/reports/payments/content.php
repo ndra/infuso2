@@ -29,7 +29,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
     
     // Данные по доходам (оплачено)
     $idata = $payments->copy()
-        ->groupBy("`year`, `month`, `group`")
+        ->groupByExpr("`year`, `month`, `group`")
         ->eq("status", 200)
         ->select("month(`date`) as month, year(`date`) as `year`, sum(`income`) as `sum`, `group`");
     foreach($idata as $row) {
@@ -38,7 +38,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
     
     // Данные по доходам (сделки)
     $ipdata = \Infuso\Heapit\Model\Bargain::all()->copy()
-        ->groupBy("`year`, `month`")
+        ->groupByExpr("`year`, `month`")
         ->eq("status", 200)
         ->select("month(`paymentDate`) as month, year(`paymentDate`) as `year`, sum(`amount`) as `sum`");
     foreach($ipdata as $row) {
@@ -47,7 +47,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
     
     // Планируемый доход (счета)
     $ipdata = $payments->copy()
-        ->groupBy("`year`, `month`")
+        ->groupByExpr("`year`, `month`")
         ->eq("status", array(50,100))
         ->select("month(`date`) as month, year(`date`) as `year`, sum(`income`) as `sum`");
     foreach($ipdata as $row) {
@@ -56,7 +56,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
     
     // Данные по расходам (оплачено)
     $edata = $payments->copy()
-        ->groupBy("`year`, `month`, `group`")
+        ->groupByExpr("`year`, `month`, `group`")
         ->eq("status", 200)
         ->select("month(`date`) as month, year(`date`) as `year`, sum(`expenditure`) as `sum`, `group`");
     foreach($edata as $row) {
@@ -65,7 +65,7 @@ $payments = \Infuso\Heapit\Model\Payment::all();
     
     // Данные по расходам (планируется)
     $epdata = $payments->copy()
-        ->groupBy("`year`, `month`")
+        ->groupByExpr("`year`, `month`")
         ->eq("status", array(50,100))
         ->select("month(`date`) as month, year(`date`) as `year`, sum(`expenditure`) as `sum`");
         

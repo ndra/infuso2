@@ -5,7 +5,7 @@
         <tr>
             <td><label>Дата</label></td>
             <td>
-                $w = new \Infuso\Cms\UI\Widgets\Datepicker();
+                $w = new \Infuso\Cms\UI\Widgets\Datetime();
                 $w->fieldName("date");
                 $w->value($payment->data("date"));
                 $w->exec();
@@ -115,14 +115,22 @@
             <td></td>
             <td>
                 <br/>
-
-                $w = new \Infuso\Cms\UI\Widgets\Button();
-                $w->text($payment->exists() ? "Сохранить" : "Создать");
-                $w->attr("type", "submit");
-                $w->exec();
+                
+                //if(!$payment->isLocked()) {
+                
+                    $w = new \Infuso\Cms\UI\Widgets\Button();
+                    $w->text($payment->exists() ? "Сохранить" : "Создать");
+                    $w->attr("type", "submit");
+                    $w->exec();
+                
+                //} else {
+                    //<input type='submit' disabled />
+                //}
                 
                 $action = action("infuso\\heapit\\controller\\payment","add", array("copy" => $payment->id()));
-                <a href='{$action}' >Скопировать</a>
+                if($payment->exists()) {
+                    <a href='{$action}' >Скопировать</a>
+                }
                
             </td>
         </tr>

@@ -7,13 +7,13 @@
         ->clearButton()
         ->exec();
         
-    widget("\\infuso\\cms\\ui\\widgets\\datepicker")
+    widget("\\infuso\\cms\\ui\\widgets\\datetime")
         ->clearButton()    
         ->fieldName("from")    
         ->placeholder("от")
         ->exec();
         
-    widget("\\infuso\\cms\\ui\\widgets\\datepicker")
+    widget("\\infuso\\cms\\ui\\widgets\\datetime")
         ->clearButton()
         ->placeholder("до")
         ->fieldName("to")
