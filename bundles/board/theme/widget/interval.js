@@ -4,15 +4,9 @@ mod.init(".g9cJIui7ST", function() {
     
     $container.find(".quick-intervals .interval").click(function() {
         var from = $(this).attr("data:from");
-        $container.find("input:visible").eq(0).trigger({
-            type: "setDate",
-            date: from
-        });
+        $container.find("input:hidden").eq(0).val(from);
         var to = $(this).attr("data:to");
-        $container.find("input:visible").eq(1).trigger({
-            type: "setDate",
-            date: to
-        });
+        $container.find("input:hidden").eq(1).val(to);
     });
     
 });

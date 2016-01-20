@@ -57,11 +57,12 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
         }
     }
     
+    // Обновляет видимое значение на основании скрытого поля
     var updateDatepickerValue = function() {
         
         var date = textToDate($inputHidden.val());
-        
         $input.datepicker("setDate", date);
+        
         if(date) {
             var time = "";
             time += ('0' + date.getHours()).slice(-2);
@@ -71,10 +72,17 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
         } else {
             $inputTime.val("");
         }
+        
+        // Чтобы не выбрасывалocь mod/monitor
+        mod.monitorReset($input, "value");
+        if($inputTime.length) {
+            // Чтобы не выбрасывалocь mod/monitor
+            mod.monitorReset($inputTime, "value");
+        }
+        
     }
     
-    // Мониторим изменения тектового поля
-    
+    // Обновляет скрытые поля при изменении видимого поля
     var updateHiddenFields = function() {
         var date = $input.datepicker("getDate");
         if(date) {
@@ -90,15 +98,28 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
             }
             var d = dateToText(date);
             $inputHidden.val(d);
+            // Чтобы не выбрасывалocь mod/monitor
+            mod.monitorReset($inputHidden, "value");
         } else {
             $inputHidden.val("");
+            // Чтобы не выбрасывалocь mod/monitor
+            mod.monitorReset($inputHidden, "value");
         }
     }
     
     mod.monitor($input, "value");
     mod.monitor($inputTime, "value");
-    $input.on("mod/monitor", updateHiddenFields).on("input", updateHiddenFields);
-    $inputTime.on("mod/monitor", updateHiddenFields).on("input", updateHiddenFields);
+    mod.monitor($inputHidden, "value");
+    $input
+        .on("mod/monitor", updateHiddenFields)
+        .on("input", updateHiddenFields);
+    $inputTime
+        .on("mod/monitor", updateHiddenFields)
+        .on("input", updateHiddenFields);
+        
+    $inputHidden.on("mod/monitor", function() {
+        updateDatepickerValue();
+    })
     
     // Создаем дейтпикер
     $input.datepicker({
@@ -110,11 +131,6 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
     
     updateDatepickerValue();
     
-    /*var handleBlur = function() {
-        updateHiddenFields();
-        updateDatepickerValue();
-    }
-    $input.blur(handleBlur);
-    $inputTime.blur(handleBlur); */
+
     
 });

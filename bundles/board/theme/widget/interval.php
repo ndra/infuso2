@@ -6,8 +6,7 @@
         <tr>
             <td>от</td>
             <td>
-                widget("infuso\\cms\\ui\\widgets\\datepicker")
-                    ->value('2014-11-13')
+                widget("infuso\\cms\\ui\\widgets\\datetime")
                     ->fieldName($widget->param("nameFrom"))
                     ->addClass("from")
                     ->value($widget->param("valueFrom"))
@@ -15,7 +14,7 @@
             </td>
             <td>до</td>
             <td>
-                widget("infuso\\cms\\ui\\widgets\\datepicker")
+                widget("infuso\\cms\\ui\\widgets\\datetime")
                     ->fieldName($widget->param("nameTo"))
                     ->value($widget->param("valueTo"))
                     ->addClass("to")
@@ -28,14 +27,14 @@
     
         $intervals = array(
             "Сегодня" => array(
-                "from" => \util::now()->date()->stamp(),
-                "to" => \util::now()->date()->stamp(),
+                "from" => \util::now()->date(),
+                "to" => \util::now()->date(),
             ), "Неделя" => array(
-                "from" => \util::date(strtotime("last Monday"))->date()->stamp(),
-                "to" => \util::date(strtotime("last Monday"))->date()->shiftDay(6)->stamp(),
+                "from" => \util::date(strtotime("last Monday"))->date(),
+                "to" => \util::date(strtotime("last Monday"))->date()->shiftDay(6),
             ), "Месяц" => array(
-                "from" => \util::now()->day(1)->stamp(),
-                "to" => \util::now()->day(1)->shiftMonth(1)->shiftDay(-1)->stamp(),
+                "from" => \util::now()->day(1)->date(),
+                "to" => \util::now()->day(1)->shiftMonth(1)->shiftDay(-1)->date(),
             ),
         );
         

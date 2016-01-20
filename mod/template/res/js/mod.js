@@ -280,6 +280,10 @@ if(!window.mod) {
         $e.data("PmhHipWLXkGk82RcU", propName);
     }
     
+    mod.monitorReset = function($e, propName) {
+        $e.data("PmhHipW-last", $e.prop($e.data("PmhHipWLXkGk82RcU")));
+    }
+    
     setInterval(function() {
         $(".PmhHipWLXkGk82RcU").each(function() {
             var $e = $(this);
@@ -290,7 +294,7 @@ if(!window.mod) {
                 $e.data("PmhHipW-last", $e.prop($e.data("PmhHipWLXkGk82RcU")));
             }
         });
-    }, 1000);
+    }, 300);
 
 }
 
