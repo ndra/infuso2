@@ -320,7 +320,7 @@ class Generator extends \Infuso\Core\Component {
         $time = @filemtime(file::get($this->src)->native());
         $ext = $this->isTransparent() ? "png" : "jpg";
         
-        return mod::app()->publicPath()."/preview/$group/{$time}_$hash.$ext";
+        return app()->publicPath()."/preview/$group/{$time}_$hash.$ext";
     }
 
     /**
