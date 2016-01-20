@@ -64,5 +64,14 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
         $collection->like("email", $search);
         $collection->orr()->like("nickName", $search);
     }
+    
+    public function filters($collection) {    
+        $ret = array();
+        $ret["Все"] = $collection->copy();
+        $ret["Подтвержденные"] = $collection->copy()->eq("verified", true);
+        $ret["Неподтвержденные"] = $collection->copy()->eq("verified", false);
+        return $ret;    
+    }
+
 
 }

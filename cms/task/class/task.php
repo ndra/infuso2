@@ -211,10 +211,11 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 	        call_user_func($callback, $params, $this);
 
 			$this->data("counter",$this->data("counter")+1);
-	        $this->plugin("log")->log(array(
+            
+	        /*$this->plugin("log")->log(array(
                 "message" => "Выполняем",
                 "type" => "task",
-            ));
+            )); */
 	        
 		} catch (\Exception $ex) {
 
