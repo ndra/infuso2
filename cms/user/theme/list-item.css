@@ -2,6 +2,30 @@
 
     padding: 5px 10px;
     
+    table {
+        table-layout: fixed;
+        width: 100%;
+        td:nth-child(1) {
+            width:32px;
+        }
+        td:nth-child(2) {
+            width:150px;    
+        }
+        td:nth-child(3) {
+            width: 40px;
+            &.verified {
+                .icon24("ok");
+                opacity:.5;
+            }
+        }
+    }
+    
+    .registration {
+        opacity: .5;
+        font-size: .7em;
+        font-style: italic;
+    }
+    
     td {
         vertical-align: middle;
         padding-right: 10px;

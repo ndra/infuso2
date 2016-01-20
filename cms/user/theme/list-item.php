@@ -19,8 +19,15 @@ $user = $editor->item();
                     echo implode(", ", $roles);
                 </div>
             </td>
-            <td class='sort-handle' >
-                echo 1111;
+            
+            if($user->verified()) {
+                <td class='verified' title='Пользователь подтвержден' ></td>
+            } else {
+                <td></td>
+            }
+                
+            <td class='registration' title='Дата регистрации' >
+                echo $user->pdata("registrationTime")->left();
             </td>
         </tr>
     </table>

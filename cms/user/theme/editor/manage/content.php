@@ -4,22 +4,39 @@
 
 $user = $editor->item();
 
-<div class='eacthazen4' >
+<table class='eacthazen4' >
 
-    exec("change-email", array(
-        "user" => $user,
-    ));
+    <tr>
     
-    exec("change-password", array(
-        "user" => $user,
-    ));
+        <td>
+
+            exec("change-email", array(
+                "user" => $user,
+            ));
+        
+        </td>
     
-    exec("roles", array(
-        "user" => $user,
-    ));
+        <td>
+            exec("change-password", array(
+                "user" => $user,
+            ));
+        </td>
+    </tr>
+    <tr>
+        
+        <td>
+
+            exec("roles", array(
+                "user" => $user,
+            ));
+        
+        </td>
     
-    exec("login-as", array(
-        "user" => $user,
-    ));
+        <td>
+            exec("login-as", array(
+                "user" => $user,
+            )); 
+        </td>
     
-</div>
+    </tr>
+</table>
