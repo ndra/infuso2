@@ -116,6 +116,7 @@ if(!window.mod) {
         
         var requests = [];
         var onSuccess = [];
+    
         
         var fdata = new FormData();
         
@@ -143,8 +144,14 @@ if(!window.mod) {
         
         mod.requests = [];
         
+        var urlId = [];
+        for(var i in requests) {
+            urlId.push(requests[i].cmd);
+        }
+        urlId = urlId.join(",");
+        
         var xhr = $.ajax({
-            url: "/mod_json/",
+            url: "/mod_json/?cmd=" + urlId,
             data: fdata,
             contentType: false,
             processData: false,        
@@ -200,32 +207,6 @@ if(!window.mod) {
         
         }
     
-    }
-    
-    mod.parseCmd = function(str) {
-    
-        try{
-            eval("var data="+str);
-        } catch(ex) {
-            return {
-                success:false,
-                text:str
-            };
-        }
-        
-        // Выводим сообщения
-        for(var i=0;i<data.messages.length;i++) {
-            var msg = data.messages[i];
-            mod.msg(msg.text,msg.error);
-        }      
-        
-        // Обрабатываем события
-        for(var i = 0; i < data.events.length; i++) {
-            var event = data.events[i];
-            mod.fire(event.name, event.params);
-        }
-        
-        return data.results;
     }
     
     mod.init = function(selector, fn) {   
