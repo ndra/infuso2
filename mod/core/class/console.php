@@ -72,7 +72,7 @@ class Console extends Controller {
 
 					$step = $_POST["step"];
                                       
-	                $done = mod::app()->deployStep($step);
+	                $done = app()->deployer()->deployStep($step);
 
 		            $messages = array();
 		            foreach(service("msg")->messages() as $msg) {
@@ -125,7 +125,7 @@ class Console extends Controller {
 
 		        default:
 
-		            mod::app()->generateHtaccess();
+		            app()->deployer()->generateHtaccess();
 		            self::header();
 
 		            // Выводим предостережение в случае пароля 0000

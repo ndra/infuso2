@@ -288,52 +288,7 @@ class App {
 		$this->tm("/mod/404")->exec();
 	}
 
-	public function generateHtaccess() {
-	
-		$gatePath = service("classmap")->getClassBundle(get_class())->path()."/pub/gate.php";
-		$gatePath = file::get($gatePath);
 
-	    // Загружаем xml с настройками
-	    //$htaccess = mod::conf("mod:htaccess");
-	    $htaccess = "";
-
-	    $htaccess = strtr($htaccess,array('\n'=>"\n"));
-		$htaccess.="\n\n";
-
-		/*if(mod::conf("mod:htaccess-non-www"))
-			$htaccess.="
-RewriteCond %{HTTPS} off
-RewriteCond %{REQUEST_METHOD} !=POST
-RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
-
-RewriteCond %{HTTPS} on
-RewriteCond %{REQUEST_METHOD} !=POST
-RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
-	"; */
-
-	    // Создаем .htaccess
-	    $str = $htaccess;
-	    $str.="RewriteEngine on \n";
-	    $str.="RewriteCond %{REQUEST_URI} !\. \n";
-	    $str.="RewriteRule .* {$gatePath} [L] \n";
-
-        foreach($this->publicFolders() as $pub) {
-            $pub = "/".trim($pub,"/")."/";
-            $pub = strtr($pub,array("/"=>'\/'));
-            $str.= "RewriteCond %{REQUEST_URI} !^$pub\n";
-        }
-
-		$gatePath2 = strtr($gatePath,array("\\" => "\\/"));
-		$str.= "RewriteCond %{REQUEST_URI} !{$gatePath2}\n";
-		$str.= "RewriteCond %{REQUEST_URI} !^\/?[^/]*$\n";
-		$str.= "RewriteRule .* {$gatePath} [L]\n";
-
-		$str.= "ErrorDocument 404 {$gatePath}\n";
-
-	    file::get(".htaccess")->put($str);
-	}
 
 	/**
 	 * Возвращает массив публичных папок приложения
@@ -355,41 +310,11 @@ RewriteRule ^(.*)$ https://%1/$1 [R=301,L]\n\n
 
 	}
 
-    /**
-     * Один шаг инсталляции приложения
-     * Вернет true, если инициализация на этом шаге закончилась
-     **/
-    public function deployStep($step) {
-    
-		if($step==0) {
-			$this->generateHtaccess();
-			classmap\builder::buildClassMap();
-		    $next = true;
-		} else {
-			$event = new Event("infuso/deploy");
-			$done = !$event->firePartial($step - 1);
-		}
-
-        return $done;
-
-    }
-
-    /**
-     * Инсталлирует приложение
-     **/
-    public function deploy() {
-
-        set_time_limit(0);
-
-        $n = 0;
-        do {
-            $done = app()->deployStep($n);
-            $n++;
-        } while (!$done);
-
-    }
-
     private static $xservices = array();
+    
+    public function deployer() {
+        return new Deploy();
+    }
 
     /**
      * Возвращает службу (объект) по имени службы
