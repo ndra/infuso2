@@ -118,7 +118,7 @@ class Console extends Controller {
 						);
 
 		            } else {
-		            	mod::app()->generateHtaccess();
+		            	app()->deployer()->generateHtaccess();
 		            }
 		            echo json_encode($ret);
 		            break;
