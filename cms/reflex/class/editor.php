@@ -232,13 +232,9 @@ abstract class Editor extends Core\Controller {
         return $this->beforeEdit();
     }
     
-    public function setData($data) {
-    
+    public function setData($data) {    
         $item = $this->item();
-        foreach($data as $key => $val) {
-            $item->data($key,$val);
-        }
-        
+        $item->fill($data);        
         app()->msg("Объект изменен");
     }
 

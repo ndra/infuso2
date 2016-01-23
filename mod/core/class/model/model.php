@@ -37,7 +37,7 @@ abstract class Model extends Core\Controller {
      * Возвращает коллекцию полей модели
      **/
     public final function fields() {
-		$fieldset = new Fieldset($this,$this->fieldNames());
+		$fieldset = new Fieldset($this, $this->fieldNames());
 		return $fieldset;
     }
     
@@ -45,11 +45,11 @@ abstract class Model extends Core\Controller {
      * Описание таблицы записи с учетом поведений
      * Данные кэшируются
      **/
-    public static function modelExtended() {
+    public static function modelExtended($scenario) {
     
         $class = get_called_class();
     
-        $cacheKey = "system/model/".$class; 
+        $cacheKey = "system/model/".$class.":".$scenario; 
         $cache = service("cache");
         $model = $cache->get($cacheKey);
         
@@ -72,18 +72,37 @@ abstract class Model extends Core\Controller {
                 $model["fields"][] = $newField;
             };
             
-            // Добавляем в модель поля из поведений
+            // Добавляет в модель $model данные $newData
+            $mergeData = function($newData) use (&$model,&$mergeField) {
             
-            $behaviours = \Infuso\Core\BehaviourMap::getBehavioursForMethod($class, "model");        
+                $mergedFields = array();
             
-            foreach($behaviours as $behaviour) {
-                $data = $behaviour::model();
-                if(array_key_exists("fields", $data)) {
-                    foreach($data["fields"] as $fieldData) {
-                         $mergeField($fieldData);
+                if(is_array($newData)) {
+                    if(array_key_exists("fields", $newData)) {
+                        foreach($newData["fields"] as $fieldData) {
+                             $mergedFields[] = $fieldData["name"];
+                             $mergeField($fieldData);
+                        }
                     }
                 }
+                
+            };
+            
+            // Добавляем в модель данные поведений              
+            $behaviours = \Infuso\Core\BehaviourMap::getBehavioursForMethod($class, "model");
+            foreach($behaviours as $behaviour) {
+                $mergeData($behaviour::model());
             }
+            
+            // Добавляем в модель данные из сценариев
+            if($scenario) {
+                foreach($model["fields"] as $index => $null) {
+                    $model["fields"][$index]["editable"] = 0;
+                }
+                $mergeData($model["scenarios"][$scenario], true);            
+            }
+            
+            unset($model["scenarios"]);
             
             $cache->set($cacheKey, $model);
         
@@ -97,7 +116,7 @@ abstract class Model extends Core\Controller {
      * @todo сделать кэширвоанеи работы
      **/
     public function fieldParams($name) {
-		$model = $this->modelExtended();
+		$model = $this->modelExtended($this->scenario());
         if(is_array($model["fields"])) {
     		foreach($model["fields"] as $fieldDescr) {
     		    if($fieldDescr["name"] == $name) {
@@ -114,27 +133,7 @@ abstract class Model extends Core\Controller {
     
         $fieldData = $this->fieldParams($name);
         if($fieldData) {
-
-			// Учитываем сценарии
-	        if($scenario = $this->scenario()) {
-
-	            $found = false;
-	            foreach($this->scenarioData() as $scenarioFieldData) {
-	                if($scenarioFieldData["name"] == $name) {
-	                    foreach($scenarioFieldData as $key => $val) {
-	                        $fieldData[$key] = $val;
-	                    }
-		                $found = true;
-		                break;
-	                }
-	            }
-	            if(!$found) {
-	                $fieldData["editable"] = false;
-	            }
-	        }
-	        
-	        $ret = Field::get($fieldData);
-        
+	        $ret = Field::get($fieldData);        
         } else {
 			$ret = Field::getNonExistent();
         }
@@ -149,7 +148,7 @@ abstract class Model extends Core\Controller {
      **/
     public function fieldNames() {
         $names = array();
-        $model = $this->modelExtended();
+        $model = $this->modelExtended($this->scenario());
 
         if(!is_array($model["fields"])) {
             throw new \Exception("Model[fields] must be Array in ".get_class($this));
@@ -311,12 +310,29 @@ abstract class Model extends Core\Controller {
      * Проверяет данные на валидность
      **/         
     public final function validate($data) {
+    
         foreach($this->fields() as $field) {
             if(!$field->validate($data[$field->name()], $data)) {
                 $this->validationError($field->name(), $field->validationErrorText());
                 return false;
             }
+        } 
+        
+        $model = $this->modelExtended($this->scenario());
+        if($callback = $model["validationCallback"]) {
+            $event = new ValidationEvent(array(
+                "model" => $this,
+                "field" => null,
+                "value" => null,
+                "data" => $data,
+                "callback" => $callback,
+            ));
+            $event->exec();
+            if(!$event->isValid()) {
+                return false;
+            }
         }
+        
         return true;
     }
     
@@ -336,12 +352,12 @@ abstract class Model extends Core\Controller {
     /**
      * Возвращает массив данных активного сценария
      **/
-	public function scenarioData() {
+	/*public function scenarioData() {
 	    $scenario = $this->scenario();
 	    $model = $this->model();
 		$scenarioData = $model["scenarios"][$scenario];
 		return $scenarioData;
-	}
+	}  */
 	
 	/**
 	 * заполняет данные модели из массива $data
@@ -351,7 +367,11 @@ abstract class Model extends Core\Controller {
 	public function fill($data) {    
 	
 		if(!$this->validate($data)) {
-		    throw new \Exception("Model::fill() validation failed");
+            $errors = "";
+            foreach($this->getValidationErrors() as $error) {
+                $errors .= $error["name"].": ".$error["text"]." ";
+            }
+		    throw new \Exception("Model::fill() validation failed. " . $errors);
 		}
 		
 		foreach($this->fields()->editable() as $field) {

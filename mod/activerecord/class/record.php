@@ -72,8 +72,8 @@ abstract class Record extends \Infuso\Core\Model\Model {
         return $name;
     }
     
-    public static function modelExtended() {
-        $ret = parent::modelExtended();
+    public static function modelExtended($scenario) {
+        $ret = parent::modelExtended($scenario);
         $ret["name"] = self::prepareName($ret["name"]); 
         return $ret;
     }
@@ -193,7 +193,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
     }
     
     public final function prefixedTableName() {
-        $ret = self::modelExtended();
+        $ret = self::modelExtended("");
         return "infuso_".$ret["name"];
     }
     

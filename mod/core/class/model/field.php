@@ -277,30 +277,6 @@ abstract class Field extends Core\Component {
     public final function readonly() {
         return $this->param("editable") == self::READ_ONLY;
     }
-
-    /**
-     * Делает поле видимым
-     **/
-    public function show() {
-        $this->param("editable", self::EDITABLE);
-        return $this;
-    }
-
-    /**
-     * Скрывает поле
-     **/
-    public function hide() {
-        $this->param("editable",self::HIDDEN);
-        return $this;
-    }
-
-    /**
-     * Делает поле «Только для чтения»
-     **/
-    public function disable() {
-        $this->param("editable",self::READ_ONLY);
-        return $this;
-    }
     
     public function validate($val, $data) {
 
@@ -329,10 +305,13 @@ abstract class Field extends Core\Component {
             return false;
         }
 
-        $method = $this->param("validateMethod");
-        if($method){
-            return $this->model()->$method($val, $data);
-        }
+        /*$callback = $this->param("callback");
+        if($callback) {
+            $c = explode("::", $callback);
+            if(!call_user_func($c, $val, $data, $this->model()) {
+                return false;
+            }
+        } */
 
         return true;
     }

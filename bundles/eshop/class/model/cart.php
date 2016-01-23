@@ -78,11 +78,11 @@ class Cart extends \Infuso\ActiveRecord\Record {
 		}
 		
 		// Создаем сценарий submit на основе полей из self::submitFields()
-		$data["scenarios"]["submit"] = array();
+		$data["scenarios"]["submit"]["fields"] = array();
 		foreach(self::submitFields() as $field) {
-		    $data["scenarios"]["submit"][] = array(
+		    $data["scenarios"]["submit"]["fields"][] = array(
 		        "name" => $field["name"],
-		        "editable" => true,
+		        "editable" => 1,
 			);
 		}
 
