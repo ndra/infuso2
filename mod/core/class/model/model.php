@@ -43,25 +43,52 @@ abstract class Model extends Core\Controller {
     
     /**
      * Описание таблицы записи с учетом поведений
-     * @todo сделать кэширование
+     * Данные кэшируются
      **/
     public static function modelExtended() {
     
         $class = get_called_class();
+    
+        $cacheKey = "system/model/".$class; 
+        $cache = service("cache");
+        $model = $cache->get($cacheKey);
         
-        $ret = $class::model();
+        if(!$model) {
         
-        $behaviours = \Infuso\Core\BehaviourMap::getBehavioursForMethod($class, "model");        
-        
-        foreach($behaviours as $behaviour) {
-            $data = $behaviour::model();
-            if(array_key_exists("fields", $data)) {
-                foreach($data["fields"] as $fieldData) {
-                    $ret["fields"][] = $fieldData;
+            $model = $class::model();
+            
+            // Добавляет в модель $model поле $newField
+            // Если поле с таким именем есть в модели, новые данные заменят данные существующего поля
+            // Если поля с таким именем еще нет, оно добавится в конец списка полей
+            $mergeField = function($newField) use (&$model) {
+                foreach($model["fields"] as $fieldIndex => $field) {
+                    if($field["name"] == $newField["name"]) {
+                        foreach($newField as $nk => $nv) {
+                            $model["fields"][$fieldIndex][$nk] = $nv;
+                        }
+                        return;
+                    }
+                }
+                $model["fields"][] = $newField;
+            };
+            
+            // Добавляем в модель поля из поведений
+            
+            $behaviours = \Infuso\Core\BehaviourMap::getBehavioursForMethod($class, "model");        
+            
+            foreach($behaviours as $behaviour) {
+                $data = $behaviour::model();
+                if(array_key_exists("fields", $data)) {
+                    foreach($data["fields"] as $fieldData) {
+                         $mergeField($fieldData);
+                    }
                 }
             }
+            
+            $cache->set($cacheKey, $model);
+        
         }
-        return $ret;
+        return $model;
     }
 
     /**

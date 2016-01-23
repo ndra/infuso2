@@ -1,14 +1,14 @@
 <?
 
-namespace infuso\core\cache;
+namespace Infuso\Core\Cache;
 
 /**
  * Драйвер кэша файловой системы
  **/
-class filesystem extends driver {
+class Filesystem extends driver {
 
 	public static function cachePath() {
-	    return \mod::app()->varPath()."/cache/";
+	    return app()->varPath()."/cache/";
 	}
 
     /**
@@ -24,7 +24,7 @@ class filesystem extends driver {
      * Возвращает значение переменной
      **/
     public function get($key) {
-        $ret = \infuso\core\file::get(self::filename($key))->data();
+        $ret = \Infuso\Core\File::get(self::filename($key))->data();
         if($ret !== null) {
         	$ret = json_decode($ret,1);
         }
@@ -36,8 +36,8 @@ class filesystem extends driver {
      **/
     public function set($key,$val) {
         $val = json_encode($val);
-        \infuso\core\file::mkdir(\infuso\core\file::get(self::filename($key))->up());
-        \infuso\core\file::get(self::filename($key))->put($val);
+        \Infuso\Core\File::mkdir(\infuso\core\file::get(self::filename($key))->up());
+        \Infuso\Core\File::get(self::filename($key))->put($val);
     }
 
     /**
@@ -45,7 +45,7 @@ class filesystem extends driver {
      * Удаляет папку /mod/cache/
      **/
     public function clear() {
-        \infuso\core\file::get(self::cachePath())->delete(true);
+        \Infuso\Core\File::get(self::cachePath())->delete(true);
     }
     
     /**
