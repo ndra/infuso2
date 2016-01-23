@@ -58,7 +58,11 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
     }
     
     var fireChangedEvent = function() {
-        $inputHidden.trigger("datechange");
+        $inputHidden.trigger({
+            type: "datechange",
+            value: $inputHidden.val(),
+            date: textToDate($inputHidden.val()) // Объект Date
+        });
     }
     
     // Обновляет видимое значение на основании скрытого поля
@@ -118,14 +122,12 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
     var handleVisibleChanged = function() {
         updateHiddenFields();
         fireChangedEvent();
-    }
+    } 
     
     $input
-        .on("mod/monitor", handleVisibleChanged)
-        .on("input", handleVisibleChanged);
+        .on("mod/monitor", handleVisibleChanged);
     $inputTime
-        .on("mod/monitor", handleVisibleChanged)
-        .on("input", handleVisibleChanged);
+        .on("mod/monitor", handleVisibleChanged);
         
     // При изменении скрытого поля обновляем видимые 
     // и выбрасываем событие изменения
@@ -139,11 +141,17 @@ mod.init(".datetime-hZ1EqT1dlO", function() {
         yearRange: "c-5:c+5",
         changeMonth: true,
         changeYear: true,
-        onSelect: updateHiddenFields
+        onSelect: updateHiddenFields,
+        beforeShow:function() {
+            var options = {};
+            $inputHidden.trigger({
+                options: options,
+                type :"datepicker"
+            });
+            return options;
+        }
     });
     
     updateDatepickerValue();
-    
-
     
 });
