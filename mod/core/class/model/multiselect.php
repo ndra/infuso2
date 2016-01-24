@@ -32,11 +32,48 @@ class Multiselect extends Field {
         $options = $this->options();
         $ret = array();
         foreach(explode(" ", $this->value()) as $key) {
+            $key = (int) $key;
             if(array_key_exists($key, $options)) {
                 $ret[] = $key;
             }
         } 
         return $ret;
+    }
+    
+    public function selectedValues() {
+        $options = $this->options();
+        $ret = array();
+        foreach($this->pvalue() as $key) {
+            $ret[] = $options[$key];
+        } 
+        return $ret;
+    }
+    
+    public function prepareValue($val) {        
+
+        // Строку преобразуем в массив
+        if(is_string($val)) {
+            $val = explode(" ", $val);
+        }
+
+        // Массив преобразуем в строку
+        if(is_array($val)) {
+            $ret = array();
+            foreach($val as $b) {
+                if(!is_scalar($b)) {
+                    continue;
+                }
+                $b *= 1;
+                if($b>0) {
+                    $b = str_pad($b, 5, "0", STR_PAD_LEFT);
+                    $ret[] = $b;
+                }
+            }
+            $ret = array_unique($ret);
+            $val = implode(" ", $ret);
+        }
+
+        return $val;
     }
     
 	/**
