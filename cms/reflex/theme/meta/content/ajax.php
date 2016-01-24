@@ -36,7 +36,7 @@ $metaObject = $item->plugin("meta")->metaObject();
                         widget("\\infuso\\cms\\ui\\widgets\\button")
                             ->text("Удалить метаданные")
                             ->air()
-                            ->addClass("remove")
+                            ->addClass("remove-RxgtVH2Scv")
                             ->icon("trash")
                             ->exec();
                     </td>
@@ -44,9 +44,6 @@ $metaObject = $item->plugin("meta")->metaObject();
             </table>
             
         </form>
-    
-
-    
     }
     
 </div>
