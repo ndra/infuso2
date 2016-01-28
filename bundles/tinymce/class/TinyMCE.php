@@ -36,7 +36,7 @@ class TinyMCE extends Field {
     }
 
     public function pvalue($params=array()) {
-        return reflex_content_processor::getDefault()->params($params)->process($this->value());
+         return service("content-processor")->params($params)->process($this->value());
     }
 
     public function prepareValue($val) {
