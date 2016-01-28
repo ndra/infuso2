@@ -1,12 +1,12 @@
 <?
 
-namespace Infuso\CMS\Form;
+namespace Infuso\CMS\Form\Controller;
 use \Infuso\Core;
 
 /**
  * Контроллер-валидатор для форм
  **/
-class Controller extends Core\Controller {
+class Validate extends Core\Controller {
 
     public function postTest() {
         return true;
