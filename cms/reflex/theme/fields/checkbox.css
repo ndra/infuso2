@@ -2,4 +2,8 @@
     * {
         vertical-align:middle;
     }
+    
+    label.disabled {
+        opacity: .5;
+    }
 }

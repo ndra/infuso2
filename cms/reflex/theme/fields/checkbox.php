@@ -3,10 +3,14 @@
 $id = \util::id();
 <div class='vgd2nzxvnn' >
 
-    $inject = $field->value() ? "checked" : "";
-    <input type='checkbox' id='{$id}' {$inject} />
+    helper("<input type='checkbox' />")
+        ->attr("id", $id)
+        ->attr("checked", $field->value() ? "checked" : null)
+        ->attr("disabled", !$field->editable() ? "disabled" : null)
+        ->exec();
     
-    <label for='{$id}' >{$field->label()}</label>
+    $inject = $field->editable() ? "" : "class='disabled' ";
+    <label {$inject} for='{$id}' {$inject} >{$field->label()}</label>
     
     $val = $field->value();
     <input type='hidden' name='{$field->name()}' value='{$val}' >

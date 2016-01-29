@@ -24,22 +24,19 @@ class User extends ActiveRecord\Record {
                     'name' => 'id',
                     'type' => 'jft7-kef8-ccd6-kg85-iueh',
                     'group' => 'Основное',
-                ) ,
-                array(
+                ), array(
                     'name' => 'password',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'label' => 'Хэш пароля',
                     'group' => 'Основное',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array (
                     'name' => 'email',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'label' => 'Электронная почта',
                     'group' => 'Основное',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array(
                     'name' => 'registrationTime',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
                     'editable' => '2',
@@ -47,8 +44,7 @@ class User extends ActiveRecord\Record {
                     'group' => 'Основное',
                     'indexEnabled' => '1',
                     "default" => "now()",
-                ) ,
-                array(
+                ), array(
                     'name' => 'lastActivity',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
                     'editable' => 2,
@@ -56,64 +52,56 @@ class User extends ActiveRecord\Record {
                     'indexEnabled' => 1,
                     'label' => 'Когда был на сайте',
                     'group' => 'Основное',
-                ) ,
-                array(
+                ), array(
                     'name' => 'verificationCode',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '2',
                     'label' => 'Код подтверждения операции',
                     'group' => 'Основное',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array(
                     'name' => 'verified',
                     'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',
-                    'editable' => '2',
+                    'editable' => 1,
                     'label' => 'Почта подтверждена',
                     'group' => 'Основное',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array(
                     'name' => 'extra',
                     'type' => 'puhj-w9sn-c10t-85bt-8e67',
                     'editable' => '1',
                     'label' => 'Дополнительно',
                     'group' => 'Основное',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array(
                     'name' => 'firstName',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
                     'label' => 'Имя',
                     'group' => 'Личные данные',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array(
                     'name' => 'lastName',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
                     'label' => 'Фамилия',
                     'group' => 'Личные данные',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array(
                     'name' => 'nickName',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
                     'label' => 'Никнейм',
                     'group' => 'Личные данные',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array(
                     'name' => 'userpic',
                     'type' => 'knh9-0kgy-csg9-1nv8-7go9',
                     'editable' => '1',
                     'label' => 'Юзерпик',
                     'group' => 'Личные данные',
                     'indexEnabled' => '1',
-                ) ,
-                array(
+                ), array(
                     'name' => 'country',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
@@ -121,8 +109,7 @@ class User extends ActiveRecord\Record {
                     'label' => 'Страна',
                     'indexEnabled' => '0',
                     'group' => 'Личные данные',
-                ) ,
-                array(
+                ), array(
                     'name' => 'region',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
@@ -130,8 +117,7 @@ class User extends ActiveRecord\Record {
                     'label' => 'Регион',
                     'indexEnabled' => '0',
                     'group' => 'Личные данные',
-                ) ,
-                array(
+                ), array(
                     'name' => 'city',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
