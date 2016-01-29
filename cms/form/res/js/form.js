@@ -20,7 +20,7 @@ var form = function(selector, formx, scenario) {
         delete data.cmd;
 
         mod.call({
-            cmd: "infuso/cms/form/controller/validate/validate",
+            cmd: "infuso/cms/form/controller/validator/validate",
             data: data,
             form: formx,
             scenario: scenario
