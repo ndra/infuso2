@@ -6,7 +6,7 @@ use \Infuso\Core;
 /**
  * Контроллер-валидатор для форм
  **/
-class Validate extends Core\Controller {
+class Validator extends Core\Controller {
 
     public function postTest() {
         return true;
