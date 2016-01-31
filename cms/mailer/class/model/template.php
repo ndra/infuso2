@@ -103,7 +103,7 @@ class Template extends ActiveRecord\Record {
     		// Пропускаем поля через процессор
     		foreach($fieldsToProcess as $field) {
     		    // Обрабатываем только поля, данные в которых заполнены
-    		    if($this->data($field)) {
+    		    if(trim($this->data($field))) {
     		    	$mail->data($field, self::processText($this->data($field), $params));
     		    }
     		}

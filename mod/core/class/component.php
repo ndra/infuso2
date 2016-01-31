@@ -227,7 +227,7 @@ class Component {
         // Загружаем параметры по умолчанию
         $this->params($this->initialParams());
 
-		// ДОбавляем параметры из конфигурации компонентов
+		// Довавляем параметры из конфигурации компонентов
         $params = $this->componentConf("params");
         if(is_array($params)) {
             foreach($params as $key=>$val) {
@@ -271,9 +271,7 @@ class Component {
 
         if(func_num_args()==0) {
             return $this->params;
-        }
-
-        if(func_num_args()==1) {
+        } elseif (func_num_args() == 1) {
 
             if(is_array($key)) {
                 foreach($key as $a=>$b) {
@@ -292,9 +290,7 @@ class Component {
                 return null;
             }
 
-        }
-
-        if(func_num_args()==2) {
+        }  elseif(func_num_args() == 2) {
             if(!in_array($key,$this->lockedParams)) {
                 $this->params[$key] = $val;
             }
@@ -314,7 +310,7 @@ class Component {
             return $this->params;
         }
 
-        if(func_num_args()==1) {
+        if(func_num_args() == 1) {
 
             if(!is_array($params)) {
                 throw new \Exception("mod_component::params() called with single argument of type ".gettype($params).": '$string', expecting array" );

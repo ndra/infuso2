@@ -53,11 +53,16 @@ class Mail extends ActiveRecord\Record {
 					'label' => 'Тема',
 					"editable" => 2,
 		    	), array (
+					'name' => 'from',
+					'type' => 'string',
+					'label' => 'От',
+					"editable" => 2,
+		    	), array (
 					'name' => 'to',
 					'type' => 'string',
 					'label' => 'Кому',
 					"editable" => 2,
-		    	), array (
+		    	),  array (
 					'name' => 'sentDatetime',
 					'type' => 'datetime',
 					'label' => 'Дата и время отправки',
@@ -66,6 +71,11 @@ class Mail extends ActiveRecord\Record {
 					'name' => 'sent',
 					'type' => 'checkbox',
 					'label' => 'Сообщение отправлено',
+					"editable" => 2,
+		    	), array (
+					'name' => 'params',
+					'type' => 'array',
+					'label' => 'Параметры',
 					"editable" => 2,
 		    	),
 			),
@@ -288,5 +298,9 @@ class Mail extends ActiveRecord\Record {
         $this->param("attachments",$attachments);
 
         return $this;
+    }
+    
+    public function beforeStore() {
+        $this->data("params", $this->params());
     }
 }
