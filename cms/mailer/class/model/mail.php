@@ -44,7 +44,7 @@ class Mail extends ActiveRecord\Record {
 					"editable" => 2,
 		    	), array (
 					'name' => 'message',
-					'type' => 'textfield',
+					'type' => 'textarea',
 					'label' => 'Сообщение',
 					"editable" => 2,
 		    	), array (
@@ -239,10 +239,10 @@ class Mail extends ActiveRecord\Record {
      * @author Petr.Grishin
      */
     private static function utf8email($email) {
-        if (preg_match("/.*? <.*?>/ui", $email)) {
-            $name = preg_replace("/(.*?) (<.*?>)/ui", "\$1", $email);
+        if (preg_match("/.*? <.*?".">/ui", $email)) {
+            $name = preg_replace("/(.*?) (<.*?".">)/ui", "\$1", $email);
             $name = '"=?UTF-8?B?' . base64_encode($name) . '?=" ';
-            $email = preg_replace("/(.*?) (<.*?>)/ui", "\$2", $email);
+            $email = preg_replace("/(.*?) (<.*?".">)/ui", "\$2", $email);
             return $name . $email;
         } else {
             return $email;
@@ -256,8 +256,9 @@ class Mail extends ActiveRecord\Record {
      **/
     public function attach($file = null, $name = null, $cid = null) {
 
-        if ($file === null || $file == "")
+        if ($file === null || $file == "") {
             return $this;
+        }
 
         return $this->attachNative(File::get($file)->native(), $name, $cid);
     }
@@ -270,8 +271,9 @@ class Mail extends ActiveRecord\Record {
      **/
     public function attachNative($file = null, $name = null, $cid = null) {
 
-        if ($file === null || $file == "")
+        if ($file === null || $file == "") {
             return $this;
+        }
 
         if ($name === null || $name == "") {
             $name = mod_file::get($file)->name();
