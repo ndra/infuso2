@@ -109,6 +109,7 @@ class Paragraph extends Core\Service {
 	public function getArray($html) {
 	
 	    $gramma = array(
+            "/^<!--(.*)-->/U" => "comment",
 	        "/^<(\"[^\"]*\"|'[^']*'|[^'\">])*>/" => "tag",
 	        "/^[^<]+/i" => "text",
 		);
@@ -122,6 +123,7 @@ class Paragraph extends Core\Service {
 					$html = mb_substr($html, $mlen, $slen - $mlen, "utf-8");
 			        $this->$method($matches[0]);
 			        $found = true;
+                    break;
 			    }
 			}
 			if(!$found) {
@@ -158,6 +160,10 @@ class Paragraph extends Core\Service {
 	
 	public function text($text) {
 	    $this->write($text);
+	}
+    
+	public function comment($comment) {
+	    //$this->write($text);
 	}
 	
 	public function tag($tag) {

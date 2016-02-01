@@ -27,12 +27,12 @@ class Service extends Core\Service {
      **/
     public function process($html) {
 
-        //Разбираем виджеты
+        // Выполняем виджеты
         $html = self::processorWidget($html);
         
-		$paragraph = new Paragraph();
-
+        // Переводим \n в параграфы, если включена настройка
         if($this->param("newlineToParagraph")) {
+            $paragraph = new Paragraph();
             $html = $paragraph->process($html);
         }
 
@@ -42,6 +42,8 @@ class Service extends Core\Service {
     /**
      * Метод заменяет виджет на отложеную функцию
      * UPD: метод не рефакторился
+     * UPD - вроде все ок, можно доработать реджексы выдирания контента
+     * чтобы <widget> искало только в начале и конце строки
      **/
     private static function replaceWidget($matches) {
 
@@ -49,19 +51,20 @@ class Service extends Core\Service {
         $widget = \util::str($matches)->html()->body->widget;
 
         $params = array();
-        foreach($widget->attributes() as $a)
+        foreach($widget->attributes() as $a) {
             $params[$a->getName()] = $a."";
+        }
 
         // Находим контент виджета
         $params["content"] = preg_replace(array(
             "/\<widget[^>]*?\>/s",
             "/\<\/widget\>/s",
-        ),"",$matches);
+        ), "", $matches);
         
         $w = \Infuso\Template\Widget::get($params["name"]);
 
         foreach($params as $key => $val) {
-            $w->param($key,$val);
+            $w->param($key, $val);
         }
 
         return $w->rexec();
