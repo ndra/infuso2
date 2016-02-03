@@ -180,5 +180,16 @@ class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Sea
             "snippet" => "/eshop/search/item-snippet",
         );
     }
+	
+	/**
+     * @return bool добавлен ли товар в корзину?
+     **/
+    public function inCart() {
+        foreach(\Infuso\Eshop\Model\Cart::active()->items() as $item) {
+            if($item->item()->id()==$this->id()) {
+                return true;
+            }
+        }
+    }
 
 }

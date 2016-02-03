@@ -298,5 +298,55 @@ class Cart extends \Infuso\ActiveRecord\Record {
 	    return $ret;
 	
 	}
+	
+	/**
+     * Дублирует ранее созданный заказ
+     **/
+	public function _repeatOrder(){
+        $oldOrder = $this;
+        
+        //получаем активную корзину
+        $cart = \Infuso\Eshop\Model\Cart::active();
+        
+        //очищаем корзину
+        $cart->items()->delete();
+        
+        //если нет корзины, создаем
+        if(!$cart->id()){
+            $cart = \Infuso\Eshop\Model\Cart::createCartForActiveUser();  
+        }
+        
+        //получаем доступные для покупки товары из прошлого заказа
+        $itemsForCart = $oldOrder->checkActiveItems();
+        if(!$itemsForCart->count()){
+            app()->msg("Нет доступных для заказа товаров", 1);
+            return false;
+        }
+        
+        //берем текущие товары в корзине
+        $currentCartItems = $cart->items();
+        //перебираем товары из старого заказа
+        foreach($itemsForCart as $item){
+            //добавляем только если товара нет в текущей корзине
+            if(!$item->item()->inCart()){
+                $event = new \Infuso\Eshop\Handler\CartEvent("eshop/add");
+    			$event->requestData("id", $item->item()->id());
+    			$event->requestData("quantity", $item->quantity());
+    	        $event->setItem($item->item()->id());
+    	        $event->fire();
+            }    
+        }
+        app()->msg("Заказ добавлен в корзину"); 
+    }
+    
+    /**
+     * Возвращаем доступные для заказа товары
+     **/
+    public function _checkActiveItems() {
+        $itemsForOrder = $this->items()->joinByField("itemId")->eq("Infuso\\Eshop\\Model\\Item.active",1);
+        
+        return $itemsForOrder;
+           
+    }
 
 }
