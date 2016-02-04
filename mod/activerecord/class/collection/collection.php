@@ -979,7 +979,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         if($fn) {
 			$key = "$fn($key)";
 		}
-        $q = ("select distinct $key from {$this->from()} where {$this->whereQuery()} order by {$this->orderBy()} ");
+        $q = ("select distinct $key from {$this->from()} where {$this->whereQuery()} order by {$this->orderBy()} limit {$this->perPage()} ");
         return service("db")->query($q)->exec()->fetchCol();
     }
 
