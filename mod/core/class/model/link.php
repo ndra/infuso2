@@ -60,7 +60,7 @@ class Link extends Field {
         $fn = trim($this->param("collection"));
 
         if($fn) {
-            return $this->reflexItem()->$fn();
+            return $this->model()->$fn();
         }
 
         $items = service("ar")->collection($this->itemClass())->limit(100);

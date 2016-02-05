@@ -63,7 +63,7 @@ class Service extends Core\Service {
         $mode = "reflex";
 
         try {
-	        $rmethod = new \ReflectionMethod($params["class"],$params["method"]);
+	        $rmethod = new \ReflectionMethod($params["class"], $params["method"]);
 	        if($rmethod->isStatic()) {
 	            $mode = "static";
 	        }
