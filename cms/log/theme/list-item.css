@@ -10,10 +10,14 @@
     
     td {
         overflow: hidden;
+        padding-right: 10px;
+        &:last-child {
+            padding-right: 0;
+        }
     }
     
-    .type {
-        width: 120px;
+    .type, .user, .item {
+        width: 100px;
     }
     
     .message {

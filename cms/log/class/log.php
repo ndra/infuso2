@@ -82,8 +82,8 @@ class Log extends ActiveRecord\Record {
 	 * Вернет элемент к которому прикреплена запись
 	 **/
     public function item() {
-        list($class,$id) = explode(":",$this->data("index"));
-        return reflex::get($class,$id);
+        list($class, $id) = explode(":", $this->data("index"));
+        return service("ar")->get($class, $id);
     }
 
 }
