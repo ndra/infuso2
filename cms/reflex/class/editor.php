@@ -72,11 +72,11 @@ abstract class Editor extends Core\Controller {
     /**
      * Контроллер лога объекта
      **/
-    public function index_log($p) {
+    /*public function index_log($p) {
         $class = get_called_class();
         $editor = new $class($p["id"]);
 		app()->tm("/reflex/log")->param("editor",$editor)->exec();
-    }
+    } */
     
     /**
      * Контроллер лога объекта
@@ -236,6 +236,15 @@ abstract class Editor extends Core\Controller {
         $item = $this->item();
         $item->fill($data);        
         app()->msg("Объект изменен");
+        
+        $fields = array();
+        foreach($item->fields()->changed() as $field) {
+            $fields[] = $field->name();
+        }
+        
+        $item->plugin("log")->log(array(
+            "message" => "Изменение данных ".implode(", ", $fields),
+        ));
     }
 
     /**
@@ -308,12 +317,12 @@ abstract class Editor extends Core\Controller {
             "title" => "Редактирование",
         );
         
-        if($this->logEnabled()) {
+        /*if($this->logEnabled()) {
             $menu[] = array(
                 "href" => \mod::action(get_class($this),"log",array("id"=>$this->itemID()))->url(),
                 "title" => "Лог",
             );
-        }
+        } */
         
         if($this->metaEnabled()) {
             $menu[] = array(
@@ -328,11 +337,13 @@ abstract class Editor extends Core\Controller {
             if($annotations["reflex-child"] == "on") {
                 $editor = $this;
                 $collection = $editor->$fn();
-                $menu[] = array(
-                    "href" => \mod::action(get_class($this),"child",array("id"=>$this->itemID(),"method" => $fn))->url(),
-                    "title" => $collection->title(),
-                    "count" => $collection->count(),
-                );
+                if($collection) {
+                    $menu[] = array(
+                        "href" => \mod::action(get_class($this),"child",array("id"=>$this->itemID(),"method" => $fn))->url(),
+                        "title" => $collection->title(),
+                        "count" => $collection->count(),
+                    );
+                }
             }
         }
         
@@ -391,6 +402,18 @@ abstract class Editor extends Core\Controller {
         return array (
             "Все элементы" => $collection->copy(),
         );
+    }
+    
+    /**
+     * @reflex-child = on
+     **/
+    public function logg() {  
+        if($this->logEnabled()) {
+            return service("log")
+                ->all()
+                ->eq("index", get_class($this->item()).":".$this->item()->id())
+                ->param("title", "Лог");
+        }   
     }
     
 }

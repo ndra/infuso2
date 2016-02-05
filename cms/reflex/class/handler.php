@@ -68,7 +68,7 @@ class Handler extends Core\Component implements Core\Handler {
 		}
 		$path = mod::app()->varPath()."/reflex/editors.php";
 		file::mkdir(file::get($path)->up());
-		util::save_for_inclusion($path,$map);
+		util::save_for_inclusion($path, $map);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ class Handler extends Core\Component implements Core\Handler {
 	    \user_operation::create("reflex:editLog","Редактирование лога")
 			->appendTo("reflex:viewLog");
 
-		\user_operation::create("reflex:viewLog","Редактирование лога")
+		\user_operation::create("reflex:viewLog","Просмотр лога")
 			->appendTo("admin");
 
         service("task")->add(array(
@@ -96,7 +96,7 @@ class Handler extends Core\Component implements Core\Handler {
     public function addMeta() {   
         $ar = app()->action()->ar();
         list($class,$id) = explode("/",$ar);
-        $record = service("ar")->get($class,$id);
+        $record = service("ar")->get($class, $id);
         $metaObject = $record->plugin("meta")->metaObject();
         app()->tm()->param("head/title", $metaObject->data("title"));
         app()->tm()->param("head/noindex", $metaObject->data("noindex"));

@@ -24,7 +24,7 @@ class menuCollectEvent extends Core\Event {
 
 		foreach($this->menuItems as $params) {
 		    if($params["tab"] == $tab) {
-				if(array_key_exists("template",$params)) {
+				if(array_key_exists("template", $params)) {
 			        $item = app()->tm($params["template"]);
 			        if(is_array($params["templateParams"])) {
 			            $item->params($params["templateParams"]);

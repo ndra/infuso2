@@ -20,7 +20,9 @@ class Service extends Core\Service {
     } 
     
     public function all() {
-        return service("ar")->collection(Log::inspector()->className());
+        return service("ar")
+            ->collection(Log::inspector()->className())
+            ->desc("datetime");
     }
 
 }

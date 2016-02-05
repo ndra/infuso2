@@ -349,7 +349,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * Возвращает false, если хотя бы один из вызванных методов вернул false
      * Если false не был возвращен ни одним из методов, вернет true
      **/
-    public final function callReflexTrigger($fn,$event) {
+    public final function callReflexTrigger($fn, $event) {
 
         if($this->$fn()===false) {
             return;
@@ -366,7 +366,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
             "beforeStore",
             "beforeDelete",
         ))) {
-            if(!$this->callReflexTrigger("beforeOperation",$event)) {
+            if(!$this->callReflexTrigger("beforeOperation", $event)) {
                 return false;
 			}
 		}
@@ -376,7 +376,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
             "afterStore",
             "afterDelete",
         ))) {
-            $this->callReflexTrigger("afterOperation",$event);
+            $this->callReflexTrigger("afterOperation", $event);
 		}
 		
 		$event->fire();
@@ -483,11 +483,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
         $this->setInitialData($initialData);
         $this->id = $id;
 
-		$event = new event("afterStore",array(
+		$event = new event("afterStore", array (
 		    "item" => $this,
 		));
 		
-		$this->callReflexTrigger("afterStore",$event);
+		$this->callReflexTrigger("afterStore", $event);
 
         return true;
     }
@@ -568,7 +568,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	
 	        // Сразу после сохранения, помечаем объект как чистый
 	        // Таким образом, если в afterStore() будут изменены поля объекта,
-	        // Метод store может быть вызванповторно
+	        // Метод store может быть вызван повторно
 	        $this->markAsUnchanged();
 	        
 			$event = new event("afterStore",array(
@@ -576,7 +576,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 			    "changedFields" => $changedFields,
 			));
 	
-	        $this->callReflexTrigger("afterStore",$event);
+	        $this->callReflexTrigger("afterStore", $event);
 	
 	        return true;
         }

@@ -31,8 +31,8 @@ class Editor extends Core\Service implements Core\Handler {
         foreach(service("classmap")->map("Infuso\\Cms\\Reflex\\Editor") as $class) {
             $a = $class::inspector()->annotations();
             foreach($a as $fn => $annotations) {
-                if($annotations["reflex-root"] == "on") {
-                    $collection = new \Infuso\Cms\Reflex\Collection($class,$fn);
+                if($annotations["reflex-root"] == "on") {                        
+                    $collection = new \Infuso\Cms\Reflex\Collection($class, $fn);
                     $items[] = array(
 			            "template" => "/reflex/menu-root",
 			            "tab" => $annotations["reflex-tab"],
