@@ -19,6 +19,14 @@ class Video {
         }         
     }
     
+    public function iframeSrc() {         
+        if(preg_match("/http(s)?\:\/\/www\.youtube\.com/", $this->src)) {
+            $url = \Infuso\Core\Url::get($this->src);
+            $id = $url->query("v");
+            return "http://www.youtube.com/embed/{$id}";
+        }         
+    }
+    
     /**
      * Возвращает превью видео
      **/         
