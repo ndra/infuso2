@@ -22,5 +22,10 @@ class Test extends Core\Controller {
         app()->tm("/ndraplugins/test/video")
             ->exec();        
     }
+    
+    public function index_fancybox() {
+        app()->tm("/ndraplugins/test/fancybox")
+            ->exec();        
+    }
 
 }
