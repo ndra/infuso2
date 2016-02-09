@@ -452,15 +452,12 @@ class App {
             );
             
             if( $error !== NULL) {
-            
                 if(in_array($error["type"], $errors)) {
-            
-                    $errno   = $error["type"];
-                    $errfile = $error["file"];
-                    $errline = $error["line"];
-                    $errstr  = $error["message"];
-                    $this->trace(var_export($error,1), "error");
-                
+        		    // Трейсим ошибки
+        		    $this->trace(array(
+                        "message" => $_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got error: ".var_export($error, 1),
+                        "type" => "error",
+                    )); 
                 }
             }
         });        

@@ -188,7 +188,7 @@ class Action extends Component {
     }
 
     public function method() {
-        return $this->action()=="index" ? "index" : "index_".$this->action();
+        return $this->action() == "index" ? "index" : "index_".$this->action();
     }
 
     public function testCallback() {
