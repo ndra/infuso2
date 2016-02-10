@@ -7,8 +7,8 @@ namespace Infuso\Cms\Task;
 class Reflex {
 
     public static function add($p) {
-
-        $task = service("ar")->create(Task::inspector()->className(),array(
+       
+        service("task")->add(array(
             "class" => get_class(),
             "method" => "execReflex",
             "params" => array(
@@ -16,7 +16,7 @@ class Reflex {
                 "method" => $p["method"],
                 "query" => $p["query"],
                 "params" => $p["params"],
-            )
+            ),
         ));
 
         return $task;
@@ -26,7 +26,7 @@ class Reflex {
 	/**
 	 * Статический метод для задач-рефлексов
 	 **/
-    public static function execReflex($p,$task) {
+    public static function execReflex($p, $task) {
 
 		$query = 1;
 		

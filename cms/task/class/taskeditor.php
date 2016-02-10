@@ -17,10 +17,10 @@ class TaskEditor extends \Infuso\Cms\Reflex\Editor {
 	    return Task::all()->title("Задачи");
 	}
 	
-    public function viewModes() {
-        return array(
-            "Таблица" => "/task/grid",
-        );
+    public function listItemTemplate() {
+        return app()
+            ->tm("/task/list-item")
+            ->param("editor", $this);
     }
     
     public function filters($collection) {

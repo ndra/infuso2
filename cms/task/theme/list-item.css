@@ -1,0 +1,43 @@
+.x0kf50uz479 {
+
+    padding: 5px;
+    cursor: pointer;
+    
+    &.selected {
+        background: @selection;
+        color: white;
+    }
+    
+    &:hover {
+        background: #ededed;
+    }
+        
+
+    td {
+        vertical-align: middle;    
+        padding: 4px 10px;
+    }
+    
+    table {
+        table-layout: fixed;
+    }
+    
+    .title {
+        width: 100%;
+    }
+    
+    .exec {
+        width: 32px;
+        //height: 24px;
+        .icon16("play");
+        opacity: .3;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    
+    .iterator {
+        width: 24px;
+    }
+    
+}

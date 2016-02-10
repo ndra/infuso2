@@ -1,9 +1,5 @@
 mod.init(".x0kf50uz479", function() {
 
-    $(this).list({
-        keepSelection: "mqenkkfuvb"
-    });
-    
     $(this).find(".exec").click(function() {
         var $e = $(this);
         mod.call({

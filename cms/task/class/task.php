@@ -225,5 +225,14 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 		}
 	        
     }
+    
+    public function recordTitle() {
+    
+        if(strtolower($this->data("class")) == "infuso\\cms\\task\\reflex") {
+            return "ref";
+        }
+    
+        return $this->data("class")."::".$this->data("method");
+    }
 
 }
