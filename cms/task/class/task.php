@@ -227,9 +227,19 @@ class Task extends ActiveRecord\Record implements Core\Handler {
     }
     
     public function recordTitle() {
+        
+        $params = $this->pdata("params");
+        
+        if($params["title"]) {
+            return $params["title"];
+        }
     
         if(strtolower($this->data("class")) == "infuso\\cms\\task\\reflex") {
-            return "ref";
+            $title = "DB task ".$params["class"]."::".$params["method"];
+            if($params["query"]) {
+                $title.= " ({$params['query']})";
+            }
+            return $title;
         }
     
         return $this->data("class")."::".$this->data("method");
