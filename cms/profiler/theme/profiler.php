@@ -7,7 +7,7 @@
     <div class='glass' >
 
         exec("main");
-        exec("milestones");
+        //exec("milestones");
 
         <table class='t1' >    
             foreach(\Infuso\Core\Profiler::log() as $group=>$items) {

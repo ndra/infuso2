@@ -1,8 +1,8 @@
 <?
 
-namespace Infuso\Profiler;
+namespace Infuso\CMS\Profiler;
 
-class Theme extends \tmp_theme {
+class Theme extends \Infuso\Template\Theme {
 
 	/**
 	 * @return Приоритет темы =-1
@@ -16,7 +16,7 @@ class Theme extends \tmp_theme {
 	}
 
 	public function base() {
-		return "infuso/profiler";
+		return "cms/profiler";
 	}
 
 	public function autoload() {
