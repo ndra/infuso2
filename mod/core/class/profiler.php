@@ -133,7 +133,6 @@ class Profiler {
     }
 
     public function log() {
-
         foreach(self::$data["log"] as $k1 => $a) {
             foreach($a as $k2 => $b) {
                 $keys = $b["keys"];
