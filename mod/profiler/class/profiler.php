@@ -21,13 +21,13 @@ class Widget extends \Infuso\Core\Component {
     }
 
     public static function showProfiler() {
-
+    
         if(!\Infuso\Core\Superadmin::check()) {
             return;
         }
 
 		\Infuso\Core\Profiler::stop();
-        exec("/infuso/profiler/widget");
+        app()->tm("/infuso/profiler/widget")->exec();
 
     }
 

@@ -124,7 +124,6 @@ class Util {
         }
                 
         return $ret;
-        
     }
 
     public static function saveXMLConf($target,$conf) {

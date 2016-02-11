@@ -17,7 +17,7 @@ $width = 1000;
         $x = $width*($time - $last);
         $left = $last * $width;
         
-        $h = tmp::helper("<div>")
+        $h = helper("<div>")
             ->style("width",$x)
             ->style("left",$left)
             ->style("background","none")

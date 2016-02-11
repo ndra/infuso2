@@ -118,7 +118,7 @@ class Service extends Core\Service {
             return false;
         }
 
-        // $n - хранится в кэше и увеличивается на 1 с каждым запуском крона
+        // $n - хранится в кэше и увеличивается на 1 с каждым запуском этого метода
         $n = service("cache")->get("01h1b4yw6kbz2l9y6orj");
         if(!$n) {
             $n = 0;
@@ -126,9 +126,9 @@ class Service extends Core\Service {
 
         // Выбираем задачу в зависимости от $n
         // Т.о. каждый на запуск крона задачи будут поочередно вызываны
-        $task = $tasks->limit(1)->page($n%$total+1)->one();
+        $task = $tasks->limit(1)->page($n % $total + 1)->one();
 
-        service("cache")->set("01h1b4yw6kbz2l9y6orj",$n+1);
+        service("cache")->set("01h1b4yw6kbz2l9y6orj", $n + 1);
 
         $task->exec();
         return true;

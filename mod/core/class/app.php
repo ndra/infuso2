@@ -51,20 +51,21 @@ class App {
 
         include("../appfn.php");
 	
-		include("profiler.php");
-		include("component.php");
+        include("component.php");
+        include("controller/controller.php");	
+        include("superadmin.php");
+        include("file/flist.php");
+		include("profiler.php");		
 		include("mod.php");
 		
-		Profiler::beginOperation("core","includeCoreClasses",1);
-	    include("controller/controller.php");
-	    include("superadmin.php");
+		//Profiler::beginOperation("core","includeCoreClasses",1);	        
 	    include("service.php");
 	    include("classmap/service.php");
 	    include("file/file.php");
 	    include("file/localfile.php");
-	    include("file/flist.php");
+	    
 	    include("bundle/bundle.php");
-	    Profiler::endOperation();
+	    //Profiler::endOperation();
 	}
 
 	public function setErrorLevel() {
@@ -220,7 +221,7 @@ class App {
 		        throw $exception;
 		    }
 
-	    }
+	    }             
 
         $content = ob_get_clean();
 

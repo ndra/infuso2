@@ -17,7 +17,7 @@ class Profiler {
     private static $paused = false;
     
     public static function enabled() {
-        return false;
+        return Superadmin::check();
     }
     
     /**

@@ -16,7 +16,7 @@
                     <td class='title'>$group</td>
         
                     <td>
-                        foreach($items as $operation=>$params) {
+                        foreach($items as $operation => $params) {
             
                             $time = number_format($params["time"],6);                    
                             $keys = $params["keys"];
