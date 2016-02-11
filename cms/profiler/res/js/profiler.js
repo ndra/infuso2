@@ -1,5 +1,7 @@
 $(function() {
 
+	var id = SoS4LQkVRF8Q;
+
 	// Записывает куку
 	var createCookie = function(name,value) {
 	    document.cookie = name + "=" + value + "; path=/";
@@ -11,8 +13,12 @@ $(function() {
 	    var ca = document.cookie.split(';');
 	    for(var i = 0; i < ca.length; i ++) {
 	        var c = ca[i];
-	        while (c.charAt(0) == ' ') { c = c.substring(1,c.length); }
-	        if (c.indexOf(nameEQ) == 0) { return c.substring(nameEQ.length,c.length); }
+	        while (c.charAt(0) == ' ') {
+				c = c.substring(1, c.length);
+			}
+	        if (c.indexOf(nameEQ) == 0) {
+				return c.substring(nameEQ.length, c.length);
+			}
 	    }
 	    return null;
 	}
@@ -26,11 +32,13 @@ $(function() {
 				top: 0,
 				width: "100%",
 				height: "100%",
-				background: "#ededed"
+				background: "#ededed",
+				zIndex: 1000
 			});
 		mod.call({
-			cmd: "infuso/cms/profiler/controller/info"
-		},function(data) {
+			cmd: "infuso/cms/profiler/controller/info",
+			id: id
+		}, function(data) {
 			$screen.html(data);
 		});
 	};
@@ -40,10 +48,18 @@ $(function() {
 	var $floater = $("<div>")
 		.css({
 			position: "fixed",
-			width:100,
-			height:100,
-			background: "#ededed"
-		}).appendTo("body");
+			width: 200,
+			background: "#ededed",
+			zIndex: 1000
+		}).appendTo("body")
+		.addClass("jj6C9CG39lUb");
+		
+	mod.call({
+		cmd: "infuso/cms/profiler/controller/short",
+		id: id
+	}, function(data) {
+		$floater.html(data);
+	});
 		
 	var setPosition = function(x, y) {
 	
@@ -96,10 +112,12 @@ $(function() {
 		});
 		
 		$(document).mouseup(function(event) {
-			update(event);
-			drag = false;	
-			if(d <= 10) {
-				openProfiler();
+			if(drag) {
+				update(event);
+				drag = false;	
+				if(d <= 10) {
+					openProfiler();
+				}
 			}
 		});
 	

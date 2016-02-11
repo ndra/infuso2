@@ -1,9 +1,15 @@
 .nw5bny9hxyu6 {
 
-    font-size:12px;
-    width:100%;
-    border-top:3px solid black;
+    font-size: 12px;
     font-family: Arial, Helvetica, sans-serif;
+    
+    .close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        font-size: 22px;
+        cursor: pointer;
+    }
     
     .glass {
         width:1000px;

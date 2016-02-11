@@ -227,7 +227,7 @@ class App {
 
         // Пост-обработка (отложенные функции)
         if($this->eventsEnabled()) {
-	        $event = app()->fire("infusoAfterActionSys",array(
+	        $event = app()->fire("infuso/afterActionSys",array(
 	            "content" => $content,
 	        ));
 	        $content = $event->param("content");

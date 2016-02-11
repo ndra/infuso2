@@ -1,16 +1,16 @@
 <?
 
-\Infuso\Core\Profiler::pause();
-
 <div class='nw5bny9hxyu6' >
 
+    <div class='close' >&times;</div>
+    
     <div class='glass' >
 
         exec("main");
         //exec("milestones");
 
         <table class='t1' >    
-            foreach(\Infuso\Core\Profiler::log() as $group=>$items) {
+            foreach($data["log"] as $group => $items) {
                 <tr>
         
                     <td class='title'>$group</td>
@@ -51,5 +51,3 @@
     
     </div>
 </div>
-
-\Infuso\Core\Profiler::resume();

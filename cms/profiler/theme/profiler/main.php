@@ -16,7 +16,7 @@
         </td>
         
         <td>
-            echo "Page size : ".\util::bytesToSize1000(\Infuso\Core\Profiler::getVariable("contentSize"));
+            echo "Page size : ".\util::bytesToSize1000($data["variables"]["contentSize"]);
         </td>
         
         <td>

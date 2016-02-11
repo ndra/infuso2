@@ -5,19 +5,22 @@ namespace Infuso\Core;
 class Profiler {
 
     public static $stack = array();
-
-    public static $log = array();
-
-    private static $variables = array();
-
-    private static $milestones = array();
+  
+    private static $data = array();
     
-    public static $operations = array();
-    
-    private static $paused = false;
+    private static $id;
     
     public static function enabled() {
         return Superadmin::check();
+    }
+    
+    public static function id() {
+    
+        if(!self::$id) {
+            self::$id = "ArwPr30x-".crc32(microtime(1));
+        }
+    
+        return self::$id;
     }
     
     /**
@@ -70,23 +73,19 @@ class Profiler {
 
         if(!self::enabled()) {
             return;
-        }
+        }  
 
-        if(!self::$paused) {
+        $item = array_pop(self::$stack);
+        $time = microtime(true) - $item[3];
+        self::$data["log"][$item[0]][$item[1]]["time"] += $time;
+        self::$data["log"][$item[0]][$item[1]]["keys"][$item[2]]["count"] ++;
+        self::$data["log"][$item[0]][$item[1]]["keys"][$item[2]]["time"] += $time;
 
-	        $item = array_pop(self::$stack);
-	        $time = microtime(true) - $item[3];
-	        self::$log[$item[0]][$item[1]]["time"] += $time;
-	        self::$log[$item[0]][$item[1]]["keys"][$item[2]]["count"] ++;
-	        self::$log[$item[0]][$item[1]]["keys"][$item[2]]["time"] += $time;
-
-	        self::$operations[] = array(
-	            "s" => $item[3] - $GLOBALS["infusoStarted"],
-	            "d" => $time,
-	            "n" => $item[0]."/".$item[1]."/".$item[2],
-			);
-
-		}
+        self::$data["operations"] = array(
+            "s" => $item[3] - $GLOBALS["infusoStarted"],
+            "d" => $time,
+            "n" => $item[0]."/".$item[1]."/".$item[2],
+		);
 
     }
 
@@ -99,7 +98,7 @@ class Profiler {
             return;
         }
 
-        self::$milestones[] = array(
+        self::$data["milestones"][] = array(
             $name,
             microtime(true),
         );
@@ -114,20 +113,12 @@ class Profiler {
 	    self::addMilestone("done");
     }
     
-    public function pause() {
-        self::$paused = true;
-    }
-    
-	public function resume() {
-	    self::$paused = false;
-    }
-
     public function setVariable($key,$val) {
-        self::$variables[$key] = $val;
+        self::$data["variables"][$key] = $val;
     }
 
     public function getVariable($key) {
-        return self::$variables[$key];
+        return self::$data["variables"][$key];
     }
 
     public function getMilestones() {
@@ -136,21 +127,25 @@ class Profiler {
 
     public static function sortLog($a,$b) {
         $r = $b["time"] - $a["time"];
-        if($r>0) return 1;
-        if($r<0) return -1;
+        if($r > 0) return 1;
+        if($r < 0) return -1;
         return 0;
     }
 
     public function log() {
 
-        foreach(self::$log as $k1=>$a) {
-            foreach($a as $k2=>$b) {
-
+        foreach(self::$data["log"] as $k1 => $a) {
+            foreach($a as $k2 => $b) {
                 $keys = $b["keys"];
-                uasort($keys,array(self,"sortLog"));
-                self::$log[$k1][$k2]["keys"] = $keys;
+                uasort($keys, array(self,"sortLog"));
+                self::$data["log"][$k1][$k2]["keys"] = $keys;
             }
         }
-        return self::$log;
+        return self::$data["log"];
     }
+    
+    public static function getData() {
+        return self::$data;
+    }
+    
 }
