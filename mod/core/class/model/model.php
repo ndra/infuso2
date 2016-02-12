@@ -18,6 +18,8 @@ abstract class Model extends Core\Controller {
 	 **/
     private $changedData = array();
     
+    private $preparedData = array();
+    
     /**
      * Поля модели (массив)
      **/
@@ -164,36 +166,39 @@ abstract class Model extends Core\Controller {
      * Враппер для доступа к даным
      * @todo рефакторить скорость для дефолтных полей
      **/
-    public final function data($key=null,$val=null) {
+    public final function data($key = null, $val = null) {
 
         // Если параметров 0 - возвращаем массив с данными
-        if(func_num_args()==0) {
-        
-            // Берем массив с исходными данными и мержим его с измененными данными
-            $ret = $this->changedData + $this->initialData;
-            
-            // Добавляем дефолтные значения для несуществующих индексов
+        if(func_num_args() == 0) { 
+            $ret = array();
             foreach($this->fieldNames() as $name) {
-                if(!array_key_exists($name,$ret)) {
-                    $ret[$name] = $this->field($name)->defaultValue();
-                }
+                $ret[$name] = $this->data($name);
             }
-            
             return $ret;
         }
 
         // Если параметров 1 - возвращаем значение поля
-        if(func_num_args()==1) {
-        
-            if(array_key_exists($key,$this->changedData)) {
-                return $this->changedData[$key];
+        if(func_num_args() == 1) {
+            
+            if(array_key_exists($key, $this->preparedData)) {
+            
+                return $this->preparedData[$key];
+                
+            } else {
+            
+                if(array_key_exists($key, $this->changedData)) {
+                    $value = $this->changedData[$key];
+                } elseif (array_key_exists($key, $this->initialData)) {
+    				$value = $this->field($key)->prepareValue($this->initialData[$key]);
+    			} else {
+                    $value = $this->field($key)->defaultValue();
+                };
+                
+                $this->preparedData[$key] = $value;
+                return $value;
+                            
             }
             
-            if(array_key_exists($key,$this->initialData)) {
-				return $this->initialData[$key];
-			}
-			
-			return $this->field($key)->defaultValue();
         }
 
         // Если два параметра - меняем значение
@@ -202,11 +207,13 @@ abstract class Model extends Core\Controller {
             
             // Подготавливаем новое и старое значение, чтобы корректно сравнить их
             $preparedValue = $field->prepareValue($val);
-            $oldPreparedValue = $field->prepareValue($field->value());
+            // Старое зрачение и так подготовлено
+            $oldPreparedValue = $field->value();
             
 			// Если старое и новое значения совпадают, ничего не делаем
             if($preparedValue != $oldPreparedValue) {
 	            $this->changedData[$key] = $preparedValue;
+                $this->preparedData[$key] = $preparedValue;
 	            $this->handleModelDataChanged();
             }
             
@@ -236,13 +243,6 @@ abstract class Model extends Core\Controller {
         }
     }
     
-    /**
-     * Возвращает исходные данные модели (до изменения)
-     **/
-    public final function initialData() {
-        return $this->initialData;
-    }
-    
 	/**
      * Устанавливает исходные данные модели
      **/
@@ -258,16 +258,13 @@ abstract class Model extends Core\Controller {
 
         $this->changedData = array();
 
-        foreach($data as $key => $val) {
-            $field = $this->field($key);
-            $data[$key] = $field->prepareValue($val);
-        }
-
         $this->initialData = $data;
+        $this->preparedData = array();
     }
     
     public function revertInitialData() {
         $this->changedData = array();
+        $this->perparedData = array();
     }
     
     public final function isFieldChanged($key) {

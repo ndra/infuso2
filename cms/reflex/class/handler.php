@@ -112,9 +112,9 @@ class Handler extends Core\Component implements Core\Handler {
 	 **/
 	public static function onbeforeActionSys($p) { 
 		$action = $p->param("action");
-	    if($action->action()=="item") {
+	    if($action->action() == "item") {
 			$id = $action->param("id");
-			$obj = service("ar")->get($action->className(),$id);
+			$obj = service("ar")->get($action->className(), $id);
 			$action->ar(get_class($obj)."/".$obj->id());
 		}		
 	}

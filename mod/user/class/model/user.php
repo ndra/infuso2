@@ -39,7 +39,7 @@ class User extends ActiveRecord\Record {
                 ), array(
                     'name' => 'registrationTime',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
-                    'editable' => '2',
+                    'editable' => 2,
                     'label' => 'Время регистрации',
                     'group' => 'Основное',
                     'indexEnabled' => '1',

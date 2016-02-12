@@ -43,7 +43,7 @@ class Service extends Core\Service {
 	/**
 	 * @todo ен складывает в буффер объекты после загрузки, пофиксить
 	 **/
-	public function get($class,$id,$data=array()) {
+	public function get($class, $id, $data=array()) {
 	
 	    if(!is_numeric($id) && $id !== null && $id !== false && $id !== "") {
 	        throw new \Exception("active record id must be integer. Given ".var_export($id, 1));
