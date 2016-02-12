@@ -4,10 +4,19 @@ namespace Infuso\Core;
 
 class Profiler {
 
+    /**
+     * переменная для временного хранения стэка текущих операций
+     **/
     public static $stack = array();
   
+    /**
+     * Основной массив с данными профайлера
+     **/
     private static $data = array();
     
+    /**
+     * id текущего запуска
+     **/
     private static $id;
     
     public static function enabled() {
@@ -44,7 +53,7 @@ class Profiler {
     }
 
     /**
-     * Открывает новую операцию
+     * Обновляет текущую опрецию
      **/
     public static function updateOperation($group, $operation, $key) {
 
@@ -104,25 +113,9 @@ class Profiler {
         );
     }
     
-    public function start() {
-        self::setVariable("start",microtime(1));
-    }
-    
-	public function stop() {
-	    self::setVariable("stop",microtime(1));
-	    self::addMilestone("done");
-    }
-    
+   
     public function setVariable($key,$val) {
         self::$data["variables"][$key] = $val;
-    }
-
-    public function getVariable($key) {
-        return self::$data["variables"][$key];
-    }
-
-    public function getMilestones() {
-        return self::$milestones;
     }
 
     public static function sortLog($a,$b) {

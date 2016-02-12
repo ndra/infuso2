@@ -7,6 +7,7 @@
     <div class='glass' >
 
         exec("main");
+        
         //exec("milestones");
 
         <table class='t1' >    
@@ -50,4 +51,7 @@
         </table>
     
     </div>
+    
+    exec("server");
+    
 </div>

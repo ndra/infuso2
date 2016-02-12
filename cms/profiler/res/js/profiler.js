@@ -33,6 +33,7 @@ $(function() {
 				width: "100%",
 				height: "100%",
 				background: "#ededed",
+				overflow: "auto",
 				zIndex: 1000
 			});
 		mod.call({

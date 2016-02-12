@@ -65,48 +65,50 @@ class FList implements \Iterator{
 
     public function exclude($name) {
         $ret = array();
-        foreach($this as $item)
-            if($item->name()!=$name)
+        foreach($this as $item) {
+            if($item->name() != $name) {
                 $ret[] = $item;
+            }
+        }
         return new self($ret);
     }
 
+    /**
+     * Возвращает сумму места, занимаемого файлами списка
+     **/
     public function size() {
         $ret = 0;
-        foreach($this as $file)
-            $ret+= $file->size();
+        foreach($this as $file) {
+            $ret += $file->size();
+        }
         return $ret;
     }
 
     public static function sortFiles($a,$b) {
         $ret = $b->folder() - $a->folder();
-        if($ret!=0)
+        if($ret != 0) {
             return $ret;
+        }
         return strcmp($a,$b);
     }
 
-    public static function sortFilesByDate($a,$b) {
+    public static function sortFilesByDate($a, $b) {
         $ret = $b->folder() - $a->folder();
-        if($ret!=0)
+        if($ret != 0) {
             return $ret;
+        }
         $aStamp = $a->time()->stamp();
         $bStamp = $b->time()->stamp(); 
-        return $aStamp - $bStamp;   
+        return $bStamp - $aStamp;   
     }
 
-    public function sort($param = "byAlphabet") {
-        switch ($param ) {
-            case "byAlphabet":
-                usort($this->items,array("self","sortFiles"));
-                break;
-            case "byDate":
-                usort($this->items,array("self","sortFilesByDate"));
-                break;
-            default:
-                usort($this->items,array("self","sortFiles"));
-                break;
-        }
-
+    public function sort() {
+        usort($this->items, array("self", "sortFiles"));
+        return $this;
+    }
+    
+    public function tsort() {
+        usort($this->items, array("self", "sortFilesByDate"));
         return $this;
     }
 

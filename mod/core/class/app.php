@@ -38,7 +38,7 @@ class App {
 	}
 
 	public function __construct($params) {
-     	$GLOBALS["infusoStarted"] = microtime(1);
+     	//$GLOBALS["infusoStarted"] = microtime(1);
 	    $this->url = $params["url"];
 	    $this->post = $params["post"];
 	    $this->files = $params["files"];
