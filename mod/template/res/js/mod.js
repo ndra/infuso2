@@ -152,6 +152,7 @@ if(!window.mod) {
         
         var xhr = $.ajax({
             url: "/mod_json/?cmd=" + urlId,
+            async: true,
             data: fdata,
             contentType: false,
             processData: false,        

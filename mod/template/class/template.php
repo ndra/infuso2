@@ -73,10 +73,8 @@ class Template extends Generic {
      * Загружает(если надо) и возвращает массив("имя шаблона"=>"ttl") шаблонов для кэша
      **/
     public function loadCachedTemplates() {
-        if(!self::$cachedTemplates) {
-
+        if(!self::$cachedTemplates) { 
             self::$cachedTemplates = array();
-
             $cache = $this->componentConf("cache");
             if(is_array($cache)) {
                 foreach($cache as $item){

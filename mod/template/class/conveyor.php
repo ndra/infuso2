@@ -261,8 +261,8 @@ class Conveyor extends Core\Component {
         //}
 
         // Упакованные js
-        $packJs = Render::packIncludes($packJs,"js");
-        if($packCss) {
+        $packJs = Render::packIncludes($packJs, "js");
+        if($packJs) {
             $head.= "<script type='text/javascript' src='$packJs'></script>\n";
         }
 

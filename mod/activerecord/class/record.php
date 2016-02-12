@@ -186,6 +186,12 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	public function afterOperation() {
 	}
 
+    /**
+     * Этот метод очень важен
+     * Он используется в шаблонах (не напрямую, но через serialize())
+     * Для определения параметров кэшируемого шаблона его данные сериализируются
+     * Если передать параметров ActiveRecord, то при сериализации он превратится в массив, который можно видеть ниже
+     **/
     public function __sleep() {
         return array(
             "id",
