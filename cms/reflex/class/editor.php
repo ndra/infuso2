@@ -72,15 +72,6 @@ abstract class Editor extends Core\Controller {
     /**
      * Контроллер лога объекта
      **/
-    /*public function index_log($p) {
-        $class = get_called_class();
-        $editor = new $class($p["id"]);
-		app()->tm("/reflex/log")->param("editor",$editor)->exec();
-    } */
-    
-    /**
-     * Контроллер лога объекта
-     **/
     public function index_meta($p) {
         $class = get_called_class();
         $editor = new $class($p["id"]);   
@@ -124,7 +115,7 @@ abstract class Editor extends Core\Controller {
      * Возвращает редактор элемента по индексу
      **/
     public static function get($index) {
-        list($class,$id) = explode(":",$index);
+        list($class, $id) = explode(":", $index);
         return new $class($id);
     }
     
@@ -317,13 +308,6 @@ abstract class Editor extends Core\Controller {
             "title" => "Редактирование",
         );
         
-        /*if($this->logEnabled()) {
-            $menu[] = array(
-                "href" => \mod::action(get_class($this),"log",array("id"=>$this->itemID()))->url(),
-                "title" => "Лог",
-            );
-        } */
-        
         if($this->metaEnabled()) {
             $menu[] = array(
                 "href" => \mod::action(get_class($this),"meta",array("id"=>$this->itemID()))->url(),
@@ -331,6 +315,19 @@ abstract class Editor extends Core\Controller {
             );
         }
         
+        foreach($this->childrenCollections() as $collection) {  
+            $menu[] = array(
+                "href" => (new \Infuso\Core\Action(get_class($this), "child", array("id"=>$this->itemID(), "method" => $collection->method())))->url(),
+                "title" => $collection->collection()->title(),
+                "count" => $collection->collection()->count(),
+            );      
+        }
+        
+        return $menu;
+    }
+    
+    public function childrenCollections() {
+        $ret = array();
         $class = get_class($this);
         $a = $class::inspector()->annotations();
         foreach($a as $fn => $annotations) {
@@ -338,16 +335,11 @@ abstract class Editor extends Core\Controller {
                 $editor = $this;
                 $collection = $editor->$fn();
                 if($collection) {
-                    $menu[] = array(
-                        "href" => \mod::action(get_class($this),"child",array("id"=>$this->itemID(),"method" => $fn))->url(),
-                        "title" => $collection->title(),
-                        "count" => $collection->count(),
-                    );
+                    $ret[] = new Collection(get_class($this), $fn, $editor->itemId());
                 }
             }
         }
-        
-        return $menu;
+        return $ret;
     }
     
     public function templateMain() {

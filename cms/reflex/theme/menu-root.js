@@ -39,7 +39,7 @@ $(function() {
         } else {
             collapseNode($node);
         }        
-e    }
+    }
 
     initNodes();
 

@@ -9,17 +9,22 @@ class Collection extends Core\Component {
 	private $method = null;
 	private $id = null;
 
-	public function __construct($class,$method,$id = null) {
+	public function __construct($class, $method, $id = null) {
 	    $this->className = $class;
 	    $this->method = $method;
 	    $this->id = $id;
 	}
+    
+    public function method() {
+        return $this->method;
+    }
 	
 	/**
 	 * Возвращает коллекцию элементов (ActiveRecord\Collection)
 	 * @todo безопасностью здесь и не пахнет
 	 **/
 	public function collection() {
+    
 		$editor = Editor::get($this->className.":".$this->id);
 		$fn = $this->method;
 		$collection = $editor->$fn();     

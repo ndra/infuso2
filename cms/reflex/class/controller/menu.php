@@ -42,18 +42,17 @@ class Menu extends Core\Controller {
 	
 	public static function getSubdividionsByNodeId($nodeId, $mode = "editors") {
 	
-		list($type,$class,$param) = explode("/",$nodeId);
-		$collection = new \Infuso\Cms\Reflex\Collection($class,$param);
-		
+		list($type) = explode("/", $nodeId);
+        
 		$ret = array();
 		$count = 0;
 
 		switch($type) {
 
 		    // Уровень списка рутов
-		    case "root":
-		    
-		    
+		    case "root":            
+                list($type, $class, $method) = explode("/", $nodeId);
+                $collection = new \Infuso\Cms\Reflex\Collection($class, $method);    
 		        switch($mode) {
 		            case "editors":
 				        foreach($collection->editors() as $editor) {
@@ -63,33 +62,26 @@ class Menu extends Core\Controller {
 					case "count":
 					    $count += $collection->collection()->count();
 					    break;
-		        }
-		        
+		        } 		        
 		        break;
 
 		    // Уровень вложенных редакторов
 		    case "child":
 
+                list($type, $class, $id) = explode("/", $nodeId);
+                $editor = \Infuso\CMS\Reflex\Editor::get($class.":".$id);
                 switch($mode) {
 		            case "editors":
-				        $a = $class::inspector()->annotations();
-				        foreach($a as $fn => $annotations) {
-				            if($annotations["reflex-child"] == "on") {
-				                $collection = new \Infuso\Cms\Reflex\Collection($class,$fn,$param);
-				                foreach($collection->editors() as $editor) {
-				                    $ret[] = $editor;
-				                }
-				            }
-				        }
+                        foreach($editor->childrenCollections() as $collection) {
+			                foreach($collection->editors() as $editor) {
+			                    $ret[] = $editor;
+                            }
+                        }              
 				        break;
 					case "count":
-				        $a = $class::inspector()->annotations();
-				        foreach($a as $fn => $annotations) {
-				            if($annotations["reflex-child"] == "on") {
-				                $collection = new \Infuso\Cms\Reflex\Collection($class,$fn,$param);
-				                $count += $collection->collection()->count();
-				            }
-				        }
+                        foreach($editor->childrenCollections() as $collection) {
+			                $count += $collection->collection()->count();
+                        }
 				        break;
 			}
 		}

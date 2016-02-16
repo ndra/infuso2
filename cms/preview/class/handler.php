@@ -15,10 +15,13 @@ class Handler implements \Infuso\Core\Handler {
         ));
     }
     
+    /**
+     * @todo Что произойдет, когда iterator превысит 256?
+     **/
     public static function cleanupStep($params, $task) {
     
         $iterator = $task->data("iterator");
-        $group = str_pad(dechex($iterator),2,0,STR_PAD_LEFT);
+        $group = str_pad(dechex($iterator), 2, 0, STR_PAD_LEFT);
         $path = \Infuso\Core\File::get(app()->publicPath()."/preview/$group/");
         
         // Удаляем в папке все файлы старше 60 дней
