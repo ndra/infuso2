@@ -152,10 +152,19 @@ class Controller extends \Infuso\Core\Controller {
      * Контроллер удаления объекта
      **/
     public static function post_delete($p) {
+        $url = (new \Infuso\Core\Action(get_class(),"index"))->url();
         foreach($p["items"] as $id) {
             $editor = Editor::get($id);
-            $editor->delete();
+            if(!$editor->beforeDelete()) {
+                app()->msg("У вас нет прав для удаления объекта",1);
+            } else {            
+                if($url2 = $editor->redirectAfterDelete()) {
+                    $url = $url2;
+                }
+                $editor->delete();
+            }
         }
+        return $url;
     }
 
     /**

@@ -225,6 +225,14 @@ abstract class Editor extends Core\Controller {
     public function _beforeDelete() {
         return $this->beforeEdit();
     }
+    
+    public function redirectAfterDelete() {
+        $parent = $this->item()->parent();
+        if(!$parent->exists()) {
+            return null;
+        }
+        return $parent->plugin("editor")->url();
+    }
 
     /**
      * Триггер, вызывающийся перед созданием элемента через каталог
