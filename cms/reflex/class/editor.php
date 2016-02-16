@@ -147,8 +147,19 @@ abstract class Editor extends Core\Controller {
     /**
      * Возвращает url для редактирвоания объяекта
      **/
-    public function _url($p=array()) {
-        $url = \mod::action(get_class($this),"index",array("id"=>$this->itemID()))->params($p)->url();
+    public function _url() {
+    
+        $method = Keeper::get(get_class($this), $this->itemID());
+        
+        if($method) {
+            return (new \Infuso\Core\Action(get_class($this), "child"))
+                ->param("method", $method)
+                ->param("id", $this->itemID())
+                ->url();
+        }
+    
+    
+        $url = \mod::action(get_class($this),"index",array("id"=>$this->itemID()))->url();
         return $url;
     }
 
@@ -304,7 +315,7 @@ abstract class Editor extends Core\Controller {
         $menu = array();
         
         $menu[] = array(
-            "href" => $this->url(),
+            "href" => \mod::action(get_class($this), "index", array("id"=>$this->itemID()))->url(),
             "title" => "Редактирование",
         );
         

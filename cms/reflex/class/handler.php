@@ -116,7 +116,16 @@ class Handler extends Core\Component implements Core\Handler {
 			$id = $action->param("id");
 			$obj = service("ar")->get($action->className(), $id);
 			$action->ar(get_class($obj)."/".$obj->id());
-		}		
+		}	
+        if(is_subclass_of($action->className(), "infuso\\cms\\reflex\\editor")) {
+            if($action->action() == "child") {
+                Keeper::set($action->className(), $action->param("id"), $action->param("method"));
+            }
+            if($action->action() == "index") {
+                Keeper::set($action->className(), $action->param("id"), null);
+            }
+        }
+        	
 	}
 
 	/**
