@@ -32,4 +32,16 @@
             opacity: 1;
         }
     }
+    
+    &.disabled {
+        * {
+            text-decoration: none;
+            opacity: .5;
+            cursor: default;
+        }
+        .clear {
+            display: none;
+        }
+    }
+    
 }

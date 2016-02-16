@@ -2,6 +2,10 @@ mod.init(".x4qRpzOJXG", function() {
     
     var $container = $(this);
     
+    if($container.hasClass("disabled")) {
+        return;
+    }
+    
     $container.find(".title, .title-void").click(function() {
         $.window({
             title: "Выберите элемент",

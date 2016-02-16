@@ -24,12 +24,18 @@ $container->begin();
     $input = helper("<input type='text' class='visibleField'/>");
     $input->attr("placeholder", $widget->param("placeholder"));
     $input->style("width", 70);
+    if($widget->param("disabled")) {
+        $input->attr("disabled", "disabled");
+    }
     $input->exec();
     
     if($timeEnabled) {
         $input = helper("<input type='text' class='timeField'/>");
         $input->attr("placeholder", "Время");
         $input->style("width", 40);
+        if($widget->param("disabled")) {
+            $input->attr("disabled", "disabled");
+        }
         $input->exec();
     }
 

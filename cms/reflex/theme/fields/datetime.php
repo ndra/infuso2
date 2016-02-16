@@ -8,7 +8,7 @@
         ->fieldName($field->name());
         
     if(!$field->editable()) {
-        $w->attr("disabled", true);
+        $w->param("disabled", true);
     }
         
         

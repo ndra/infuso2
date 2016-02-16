@@ -2,11 +2,15 @@
 
 $editorInfo = get_class($editor).":".$editor->itemId();  
 
-<div class='x4qRpzOJXG' data:editor='{$editorInfo}' data:field='{$field->name()}'>
+$class = $field->editable() ? "x4qRpzOJXG" : "x4qRpzOJXG disabled";
+
+<div class='{$class}' data:editor='{$editorInfo}' data:field='{$field->name()}'>
 
     // Скрытое поле для хранения значения
     
-    <input type='hidden' name='{$field->name()}' value='{$field->value()}' />
+    if($field->editable()) {
+        <input type='hidden' name='{$field->name()}' value='{$field->value()}' />
+    }
     
     // Название
     
@@ -39,7 +43,6 @@ $editorInfo = get_class($editor).":".$editor->itemId();
     $h->exec();
     
     // Кнопка очистки
-    
     $h = helper("<span class='clear'></span>");
     if (!$field->pvalue()->exists()) {
         $h->style("display", "none");
