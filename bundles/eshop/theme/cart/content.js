@@ -20,6 +20,6 @@ mod.init(".LzMqPQSsHk", function() {
         }, function() {
             window.location.reload();
         });
-    })
+    });
     
-})
+});

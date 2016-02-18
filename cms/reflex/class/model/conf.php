@@ -24,12 +24,12 @@ class Conf extends ActiveRecord\Record {
 				), array (
 					'name' => 'title',
 					'type' => 'v324-89xr-24nk-0z30-r243',
-					'editable' => '1',
+					'editable' => 1,
 					'label' => 'Название (рус.)',
 				), array (
 					'name' => 'name',
 					'type' => 'string',
-					'editable' => '1',
+					'editable' => 1,
 					'label' => 'Ключ',
 				), array (
 					'name' => 'priority',
@@ -50,7 +50,7 @@ class Conf extends ActiveRecord\Record {
 					"name" => "parent",
 					"label" => "Родитель",
 					"type" => "link",
-                    "editable" => 2,
+                    "editable" => 1,
                     "class" => self::inspector()->className(),
 				),
 			),

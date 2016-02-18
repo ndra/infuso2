@@ -15,11 +15,6 @@ class Cart extends \Infuso\ActiveRecord\Record {
 	const STATUS_CANCELLED = 3;
 
     /**
-     * Имя куки с номером корзины
-     **/         
-    private static $cookie = "order-id";
-    
-    /**
      * Имя куки с ключами моих заказов
      **/
     private static $cookieMyOrders = "fubqw5rd";
@@ -175,10 +170,10 @@ class Cart extends \Infuso\ActiveRecord\Record {
     public function myOrders() {
         $user = app()->user();
         if($user->exists()) {
-            $ret = self::all()->eq("userId",$user->id());
+            $ret = self::all()->eq("userId", $user->id());
         } else {
-            $s = \util::splitAndTrim($_COOKIE[self::$cookieMyOrders],",");
-            $ret = self::all()->eq("security",$s);
+            $s = \util::splitAndTrim(app()->cookie(self::$cookieMyOrders), ",");
+            $ret = self::all()->eq("security", $s);
         }
         return $ret;
     }
@@ -200,20 +195,17 @@ class Cart extends \Infuso\ActiveRecord\Record {
      * Вернет активный заказ (Корзину)
      **/
     public static function active() {
-        $cartId = $_COOKIE[self::$cookie];
-        if($cartId) {
-            $cart = Cart::drafts()
-                ->eq("id",$cartId)
-                ->one();
-
-            if($cart->my()) {
-                return $cart;
-            } else {
-                return new Cart;
-            }
-        } else {
-            return new Cart;
+       
+        $cart = self::myOrders()
+            ->eq("status", self::STATUS_DRAFT)
+            ->desc("id")
+            ->one();
+       
+        if(!$cart->exists()) {
+            $cart = new Cart();
         }
+        
+        return $cart;
     }
     
     /**
@@ -226,8 +218,8 @@ class Cart extends \Infuso\ActiveRecord\Record {
             return true;
         }
         
-        $s = \util::splitAndTrim($_COOKIE[self::$cookieMyOrders],",");
-        if(in_array($this->data("security"),$s)) {
+        $s = \util::splitAndTrim(app()->cookie(self::$cookieMyOrders), ",");
+        if(in_array($this->data("security"), $s)) {
             return true;
         }
         
@@ -244,14 +236,8 @@ class Cart extends \Infuso\ActiveRecord\Record {
             "userId" => app()->user()->id(),
         ));
 
-        $id = $cart->id();
-        setcookie(self::$cookie,$id,time()+60*60*24*30,"/");
-        $_COOKIE[self::$cookie] = $id;
-        
         $cart->store();
-
-        $cart->addToCookies();
-
+        $cart->addToCookies();  
         return $cart;
     }
 
@@ -260,12 +246,11 @@ class Cart extends \Infuso\ActiveRecord\Record {
      **/
     public function addToCookies() {
         $order = $this;
-        $s = \util::splitAndTrim($_COOKIE[self::$cookieMyOrders],",");
+        $s = \util::splitAndTrim(app()->cookie(self::$cookieMyOrders), ",");
         $s[] = $order->data("security");
         $s = array_unique($s);
-        $s = implode(",",$s);
-        setcookie(self::$cookieMyOrders,$s,time()+60*60*24*30,"/");
-        $_COOKIE[self::$cookieMyOrders] = $s;        
+        $s = implode(",", $s);
+        app()->cookie(self::$cookieMyOrders, $s);        
     }
 
 
@@ -287,43 +272,43 @@ class Cart extends \Infuso\ActiveRecord\Record {
         return CartItem::all()->eq("cartId", $this->id())->limit(0);
     }
 
-	public function total() {
-	
-	    $ret = 0;
-	    
+    /**
+     * Возвращает сумму заказа
+     **/
+	public function total() {   	
+	    $ret = 0; 	    
 	    foreach($this->items()->limit(0) as $item) {
 	        $ret += $item->totalPrice();
-	    }
-	    
-	    return $ret;
-	
+	    }       	    
+	    return $ret; 	
 	}
 	
 	/**
      * Дублирует ранее созданный заказ
      **/
-	public function _repeatOrder(){
+	public function _repeatOrder() {
+    
         $oldOrder = $this;
         
-        //получаем активную корзину
+        // получаем активную корзину
         $cart = \Infuso\Eshop\Model\Cart::active();
         
-        //очищаем корзину
+        // очищаем корзину
         $cart->items()->delete();
         
-        //если нет корзины, создаем
-        if(!$cart->id()){
+        // если нет корзины, создаем
+        if(!$cart->id()) {
             $cart = \Infuso\Eshop\Model\Cart::createCartForActiveUser();  
         }
         
-        //получаем доступные для покупки товары из прошлого заказа
+        // получаем доступные для покупки товары из прошлого заказа
         $itemsForCart = $oldOrder->checkActiveItems();
         if(!$itemsForCart->count()){
             app()->msg("Нет доступных для заказа товаров", 1);
             return false;
         }
         
-        //берем текущие товары в корзине
+        // берем текущие товары в корзине
         $currentCartItems = $cart->items();
         //перебираем товары из старого заказа
         foreach($itemsForCart as $item){
@@ -343,10 +328,8 @@ class Cart extends \Infuso\ActiveRecord\Record {
      * Возвращаем доступные для заказа товары
      **/
     public function _checkActiveItems() {
-        $itemsForOrder = $this->items()->joinByField("itemId")->eq("Infuso\\Eshop\\Model\\Item.active",1);
-        
-        return $itemsForOrder;
-           
+        $itemsForOrder = $this->items()->joinByField("itemId")->eq("Infuso\\Eshop\\Model\\Item.active", 1);             
+        return $itemsForOrder;           
     }
 
 }
