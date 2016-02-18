@@ -33,6 +33,7 @@
     
     .folder {
         .icon24("folder");
+        opacity: .5;
         background-position: left center;
         padding-left: 32px;
     }
