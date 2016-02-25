@@ -73,7 +73,6 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
             echo "</div>";
             
             \infuso\template\lib::reset();
-            \util::profiler();
             \infuso\cms\admin\admin::footer();
 
             if(array_key_exists("loop",$_GET)) {
