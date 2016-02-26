@@ -39,5 +39,19 @@ class LogEditor extends Reflex\Editor {
     public function logEnabled() {
         return false;
     }
+    
+    
+    /**
+     * Выполняет поиск по коллекции
+     **/         
+    public function applyQuickSearch($collection, $search) {
+    
+        $search = trim($search);
+
+        if($search) {
+            $collection->eq("type", $search);
+        }
+
+    }
 
 }
