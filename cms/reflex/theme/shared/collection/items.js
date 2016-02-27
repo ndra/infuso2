@@ -126,15 +126,13 @@ mod.init(".cjoesz8swu", function() {
             if(!sortProcessing) { 
                 e.stopPropagation();
                 e.preventDefault();
-                var file = e.originalEvent.dataTransfer.files[0];  
-                if(file) {
+                var files = e.originalEvent.dataTransfer.files;
+                if(files.length) {
                     mod.call({
                         cmd: "infuso/cms/reflex/controller/uploadCreate",
                         collection: $container.attr("infuso:collection")
                     }, load, {
-                        files: {
-                            file: file
-                        }
+                        files: files
                     });
                 }
             }

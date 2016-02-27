@@ -112,12 +112,14 @@ class Controller extends \Infuso\Core\Controller {
      * @todo какой-то из контроллеров лишний
      **/
     public function post_uploadCreate($p) {
-        $collection = Collection::unserialize($p["collection"]);
-        $item = $collection->collection()->create();
-        $editor = $item->plugin("editor");
-        $field = $editor->fileField();
-        $file = $item->storage()->addUploaded($_FILES["file"]["tmp_name"], $_FILES["file"]["name"]);
-        $item->data($field, $file);
+        $collection = Collection::unserialize($p["collection"]);   
+        foreach($_FILES as $ufile) {            
+            $item = $collection->collection()->create();
+            $editor = $item->plugin("editor");
+            $field = $editor->fileField();
+            $file = $item->storage()->addUploaded($ufile["tmp_name"], $ufile["name"]);
+            $item->data($field, $file);
+        }        
     }
 
     /**

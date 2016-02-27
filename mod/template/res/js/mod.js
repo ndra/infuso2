@@ -126,7 +126,7 @@ if(!window.mod) {
             
     		var files = mod.requests[i].conf.files;
     		if(files) {
-    	        if(files.constructor === Object) {
+    	        if(files.constructor === Object || files.constructor === FileList) {
     	            for(var ii in files) {
     	                fdata.append(i + "/" + ii, files[ii]);
     	            }
