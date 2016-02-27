@@ -223,7 +223,7 @@ class Template extends Generic {
         $this->processor()->js($this->fileJS()."",1);
         // Если включен режим кэширования
 
-        if($this->cache) {
+        if($this->cache && $this->processor()->param("cache")) {
             // расчитываем хэш для сохранения в кэш :)
             $hash = $this->file().":".$this->cache.":".serialize($p);
             

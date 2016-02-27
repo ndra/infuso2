@@ -27,6 +27,12 @@ class Processor extends Core\Component {
      **/
     private $conveyor = array();
     
+    public function initialParams() {
+        return array(
+            "cache" => true,
+        );
+    }
+    
     /**
      * @return Возващает объект шаблона
      **/
@@ -327,14 +333,10 @@ class Processor extends Core\Component {
 	 * Статический метод для добавляния в хэдер заголовков метаданных
 	 * @Вынести меты в шаблон tmp/header
 	 **/
-    public static function headInsert() {
-
-        $head = "";
-
-        $head.= app()->tm()->conveyor()->exec();
-
-        echo $head;
-
+    public static function headInsert() { 
+        $head = "";    
+        $head.= app()->tm()->conveyor()->exec(); 
+        echo $head;   
     }
 
 
