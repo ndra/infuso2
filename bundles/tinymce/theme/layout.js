@@ -21,7 +21,6 @@ mod.init(".tinyMCE-qPe4r8Zov0h", function() {
                     editor: $container.attr("data:editor")
                 }
             });
-            
                             
             $wnd.on("reflex/storage/file", function(event) {
                 $wnd.window("close");
@@ -41,6 +40,8 @@ mod.init(".tinyMCE-qPe4r8Zov0h", function() {
         selector:'.tinyMCE-qPe4r8Zov0h textarea', 
         language : 'ru',
         convert_urls: false,
+        menubar:false,
+        toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | fontsizeselect",
         plugins: [
             "advlist autolink lists link image charmap print preview hr anchor pagebreak",
             "searchreplace wordcount visualblocks visualchars code fullscreen",

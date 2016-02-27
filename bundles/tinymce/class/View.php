@@ -9,23 +9,27 @@
 namespace Infuso\TinyMCE;
 use Infuso\Cms\Reflex\FieldView\View as FieldView;
 
-class View extends FieldView{
+class View extends FieldView {
 
     /**
      * Должна вернуть объект шаблона для редактирования поля
      **/
     public function template() {
-        $params = $this->param("tinymce");
-        if($this->field->param("content_css")){
+    
+        $params = $this->field()->param("tinymce") ?: array();
+        
+        if($this->field->param("content_css")) {
             $params["content_css"] = $this->field->param("content_css");
         }
-        if($this->field->param("plugins")){
+        if($this->field->param("plugins")) {
             $params["plugins"] = $this->field->param("plugins");
         }
-        $tmp = app()->tm("/tinymce/layout/");
-        $tmp->param("field", $this->field);
-        $tmp->param("view", $this);
-        $tmp->param("params", $params);
+        
+        $tmp = app()->tm("/tinymce/layout/")
+            ->param("field", $this->field)
+            ->param("view", $this)
+            ->param("params", $params);
+            
         return $tmp;
     }
 
