@@ -88,6 +88,9 @@ class Storage extends Core\Controller {
         app()->msg("Файлы удалены");
     }
 
+    /**
+     * Создает папку
+     **/
     public function post_createFolder($p) {
 	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
         
@@ -98,6 +101,22 @@ class Storage extends Core\Controller {
 	    $storage = $editor->item()->storage();
         $storage->setPath($p["path"]);
         $storage->mkdir($p["name"]);
+    }
+    
+    public function post_getPreview($p) {
+    
+	    $editor = \Infuso\Cms\Reflex\Editor::get($p["editor"]);
+        
+        if(!$editor->beforeView()) {
+            throw new \Exception("Security error");
+        }
+        
+        $file = \Infuso\Core\File::get($p["value"]);
+    
+        return app()->tm("/reflex/fields/file/ajax")
+            ->param("file", $file)
+            ->getContentForAjax();
+        
     }
    
 }

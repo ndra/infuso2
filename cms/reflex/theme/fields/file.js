@@ -3,6 +3,20 @@ mod.init(".l83i1tvf0u", function() {
     var $dropzone = $(this);
 	var container = $(".l83i1tvf0u"); 
     var path = "/";
+    
+    var updatePreview = function() {
+        mod.call({
+            cmd:"infuso/cms/reflex/controller/storage/getPreview",
+            editor: $dropzone.attr("data:editor"),
+            value: $dropzone.find("input").val(),
+            field: $dropzone.find("input").attr("name"),
+        }, function(data) {
+            $dropzone.find(".ajax-container").html(data);
+        });
+    };
+    
+    // Это для отладки оставлю
+    // updatePreview();
 
     // Перетаскивание файла в дропзону
 
@@ -58,7 +72,7 @@ mod.init(".l83i1tvf0u", function() {
         }, function(data) {
             if(data) {
                 $dropzone.find("input").val(data.filename);
-                $dropzone.find("img").attr("src", data.preview150);
+                updatePreview();
             }
         }, {
             files: {
@@ -66,10 +80,9 @@ mod.init(".l83i1tvf0u", function() {
             },
         });
     });
-	
     
     // Окно выбора файлов
-    $dropzone.click(function() {
+    $dropzone.on("filebrowser", function() {
         
         var $wnd = $.window({
             width:800,
@@ -84,12 +97,7 @@ mod.init(".l83i1tvf0u", function() {
         $wnd.on("reflex/storage/file", function(event) {
             $wnd.window("close");
             $dropzone.find("input").val(event.filename);
-            if(event.filename) {
-                $dropzone.find("img").attr("src",event.preview150);
-                $dropzone.find("img").show();
-            } else {
-                $dropzone.find("img").hide();
-            }
+            updatePreview();
         });
         
     });

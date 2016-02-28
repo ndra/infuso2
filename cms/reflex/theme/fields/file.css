@@ -1,10 +1,7 @@
 .l83i1tvf0u {
 
-    .g-input();
-    height: 150px;
-    cursor: pointer;
     position: relative;
-    
+
     .drag-splash {
         
         display: none;
@@ -19,7 +16,7 @@
             position: absolute;
             width: 100%;
             top: 50%;
-            margin-top: -20px;
+            margin-top: -10px;
             font-size: 18px;
             color: white;
             text-align: center;

@@ -26,6 +26,9 @@ abstract class File extends Component {
      * Возвращает полный путь к файлу
      **/
     public function path() {
+        if(!$this->exists) {
+            return null;
+        }
         return $this->path;
     }
     

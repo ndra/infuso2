@@ -12,6 +12,9 @@ class LocalFile extends file {
 
 	public function __construct($path) {
 	    $this->path = self::normalizePath($path);
+        if(!$path) {
+            $this->exists = false;
+        }
 	}
 	
 	/**
