@@ -2,6 +2,9 @@
     
     padding: 4px;
     border-bottom: 1px solid #ededed;
+    &:hover {
+        background: #ededed;
+    }
   
     table {
         width:100%;
