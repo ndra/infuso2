@@ -154,8 +154,8 @@ class App {
     
 	    if(!$this->templateProcessor) {
 	        $this->templateProcessor = new \Infuso\Template\Processor();
-	    }
-        
+        }
+                
 	    return $this->templateProcessor;
 	}
 
@@ -400,11 +400,10 @@ class App {
     }
     
     public function fire($eventName, $params = array()) {
-        if($this->eventsSuspended) {
-            return;
-        }
 		$event = new Event($eventName, $params);
-		$event->fire();
+        if(!$this->eventsSuspended) {
+            $event->fire();
+        }
         return $event;
     }
     
