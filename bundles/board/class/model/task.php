@@ -564,14 +564,14 @@ class Task extends \Infuso\ActiveRecord\Record {
 				
 				$mail->send();
 			}
-        }
-    
+        }    
     }
 
     /**
      * Отправляет письмо создателю задачи
      **/
     public function emailCreator($params) {
+    
         $creator = service("user")->get($this->data("creator"));
 
         $mail = service("mail")->create()

@@ -11,7 +11,7 @@ abstract class Model extends Core\Controller {
 	/**
 	 * Начальные данные модели
 	 **/
-    private $initialData = array();
+    private $initialDataRaw = array();
     
 	/**
 	 * Измененные данные
@@ -31,8 +31,8 @@ abstract class Model extends Core\Controller {
      **/        
     private $validationErrors = array();
 
-    public function __construct($initialData = array()) {
-        $this->initialData = $initialData;
+    public function __construct($initialDataRaw = array()) {
+        $this->initialDataRaw = $initialDataRaw;
     }
 
     /**
@@ -188,8 +188,8 @@ abstract class Model extends Core\Controller {
             
                 if(array_key_exists($key, $this->changedData)) {
                     $value = $this->changedData[$key];
-                } elseif (array_key_exists($key, $this->initialData)) {
-    				$value = $this->field($key)->prepareValue($this->initialData[$key]);
+                } elseif (array_key_exists($key, $this->initialDataRaw)) {
+    				$value = $this->field($key)->prepareValue($this->initialDataRaw[$key]);
     			} else {
                     $value = $this->field($key)->defaultValue();
                 };
@@ -219,6 +219,18 @@ abstract class Model extends Core\Controller {
             
             return $this;
         }
+    }
+    
+    /**
+     * Возвращает начальный данные модели
+     * Данные прогоняются через prepareValue() полей
+     **/
+    public final function initialData() {
+        $ret = array();
+        foreach($this->fields() as $field) {
+            $ret[$field->name()] = $field->prepareValue($this->initialDataRaw[$field->name()]);
+        }
+        return $ret;
     }
     
     abstract public static function model();
@@ -256,9 +268,8 @@ abstract class Model extends Core\Controller {
             throw new \Exception("Model::setInitialData() first argument must be array, ".gettype($data)." given");
         }
 
-        $this->changedData = array();
-
-        $this->initialData = $data;
+        $this->changedData = array(); 
+        $this->initialDataRaw = $data;
         $this->preparedData = array();
     }
     
