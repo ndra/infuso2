@@ -16,7 +16,7 @@ abstract class Model extends Core\Controller {
 	/**
 	 * Измененные данные
 	 **/
-    private $changedData = array();
+    private $changedDataRaw = array();
     
     private $preparedData = array();
     
@@ -186,8 +186,8 @@ abstract class Model extends Core\Controller {
                 
             } else {
             
-                if(array_key_exists($key, $this->changedData)) {
-                    $value = $this->changedData[$key];
+                if(array_key_exists($key, $this->changedDataRaw)) {
+                    $value = $this->changedDataRaw[$key];
                 } elseif (array_key_exists($key, $this->initialDataRaw)) {
     				$value = $this->field($key)->prepareValue($this->initialDataRaw[$key]);
     			} else {
@@ -212,7 +212,7 @@ abstract class Model extends Core\Controller {
             
 			// Если старое и новое значения совпадают, ничего не делаем
             if($preparedValue != $oldPreparedValue) {
-	            $this->changedData[$key] = $preparedValue;
+	            $this->changedDataRaw[$key] = $preparedValue;
                 $this->preparedData[$key] = $preparedValue;
 	            $this->handleModelDataChanged();
             }
@@ -268,18 +268,18 @@ abstract class Model extends Core\Controller {
             throw new \Exception("Model::setInitialData() first argument must be array, ".gettype($data)." given");
         }
 
-        $this->changedData = array(); 
+        $this->changedDataRaw = array(); 
         $this->initialDataRaw = $data;
         $this->preparedData = array();
     }
     
     public function revertInitialData() {
-        $this->changedData = array();
+        $this->changedDataRaw = array();
         $this->perparedData = array();
     }
     
     public final function isFieldChanged($key) {
-        return array_key_exists($key, $this->changedData);
+        return array_key_exists($key, $this->changedDataRaw);
 	}
 
     /**
