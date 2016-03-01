@@ -382,9 +382,12 @@ abstract class Model extends Core\Controller {
 		    throw new \Exception("Model::fill() validation failed. " . $errors);
 		}
 		
-		foreach($this->fields()->editable() as $field) {
-		    $this->data($field->name(),$data[$field->name()]);
-		}
+        foreach($data as $name => $value) {
+            $field = $this->fields($key);
+            if($field->editable()) {
+                $this->data($name, $value);
+            }
+        }
 		
 		return $this;
 	

@@ -158,7 +158,6 @@ abstract class Editor extends Core\Controller {
                 ->url();
         }
     
-    
         $url = \mod::action(get_class($this),"index",array("id"=>$this->itemID()))->url();
         return $url;
     }
@@ -242,7 +241,8 @@ abstract class Editor extends Core\Controller {
         return $this->beforeEdit();
     }
     
-    public function setData($data) {    
+    public function setData($data) {  
+      
         $item = $this->item();
         $item->fill($data);        
         app()->msg("Объект изменен");
