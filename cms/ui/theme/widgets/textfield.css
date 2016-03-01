@@ -6,7 +6,9 @@
     
     input {
         .g-input();
+        width: 100%;
         margin:0 !important;
+        box-sizing: border-box;
     }
     
     @icon: "@{bundle}res/img/icons16/delete.png";

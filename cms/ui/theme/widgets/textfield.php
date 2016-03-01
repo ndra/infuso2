@@ -8,6 +8,8 @@ $containerStyles = array(
     "margin-right",
     "margin-top",
     "margin-bottom",
+    "width",
+    "display"
 );
 
 $container = helper("<span class='x8zq1fi07zr' >");
