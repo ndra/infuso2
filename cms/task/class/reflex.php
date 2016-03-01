@@ -8,7 +8,7 @@ class Reflex {
 
     public static function add($p) {
        
-        service("task")->add(array(
+		$task = service("task")->add(array(
             "class" => get_class(),
             "method" => "execReflex",
             "params" => array(
