@@ -288,6 +288,13 @@ class Cart extends \Infuso\ActiveRecord\Record {
      **/
 	public function _repeatOrder(){
         $oldOrder = $this;
+		
+		//получаем доступные для покупки товары из прошлого заказа
+        $itemsForCart = $oldOrder->activeItems();
+        if(!$itemsForCart->count()){
+            app()->msg("Нет доступных для заказа товаров", 1);
+            return false;
+        }
         
         //получаем активную корзину
         $cart = \Infuso\Eshop\Model\Cart::active();
@@ -297,13 +304,6 @@ class Cart extends \Infuso\ActiveRecord\Record {
         
         //если нет корзины, создаем
         $cart = self::getActiveCreateIfNotExists();  
-
-        //получаем доступные для покупки товары из прошлого заказа
-        $itemsForCart = $oldOrder->activeItems();
-        if(!$itemsForCart->count()){
-            app()->msg("Нет доступных для заказа товаров", 1);
-            return false;
-        }
         
         //перебираем товары из старого заказа
         foreach($itemsForCart as $item){
