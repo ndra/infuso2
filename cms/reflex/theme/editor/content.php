@@ -1,6 +1,6 @@
 <? 
 
-exec("/reflex/shared/editor-head");
+//exec("/reflex/shared/editor-head");
 
 foreach($editor->layout() as $item) {
     if($item === "form") {

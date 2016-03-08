@@ -3,6 +3,9 @@
 lib::modJS();
 lib::modjsui();
 
+add("left","../layout/menu");
+add("top", "/reflex/shared/editor-head");
+
 \admin::header();
 
 <div class='x0h4tfwmhnn' >
