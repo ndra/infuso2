@@ -64,7 +64,13 @@ class Cart extends \Infuso\ActiveRecord\Record {
 					'type' => 'datetime',
 					'label' => 'Дата и время отправки',
 					'editable' => 2,
-				),
+				), array(
+                    "name" => "userId",
+                    "type" => "pg03-cv07-y16t-kli7-fe6x",
+                    "label" => "Пользователь",
+                    'class' => "Infuso\\User\\Model\\User",
+                    "editable" => 2, 
+                ),
             ),
         );
         
