@@ -45,7 +45,7 @@ class Service extends Core\Service {
      * UPD - вроде все ок, можно доработать реджексы выдирания контента
      * чтобы <widget> искало только в начале и конце строки
      **/
-    private static function replaceWidget($matches) {
+    public function replaceWidget($matches) {
 
         // Находим параметры виджета
         $widget = \util::str($matches)->html()->body->widget;
@@ -57,8 +57,8 @@ class Service extends Core\Service {
 
         // Находим контент виджета
         $params["content"] = preg_replace(array(
-            "/\<widget[^>]*?\>/s",
-            "/\<\/widget\>/s",
+            "/^\<widget[^>]*?\>/s",
+            "/\<\/widget\>$/s",
         ), "", $matches);
         
         $w = \Infuso\Template\Widget::get($params["name"]);
@@ -79,14 +79,14 @@ class Service extends Core\Service {
          $level = 0;
 
          //Буфер
-         $content = array();
+         $content = array();          
 
          //Разбиваем строку на куски
          $train = preg_split("/(<widget\s*[^>]*?[^>]*\/>|<widget\s*[^>]*?[^>]*>|<\/widget>)/", $html, -1, PREG_SPLIT_DELIM_CAPTURE);
 
          foreach ($train as $item) {
 
-             if (preg_match("/<widget\s*[^>]*?[^>]*\/>/", $item)) {
+             if (preg_match("/<widget\s*[^>]*?[^>]*\/>/", $item)) {       
                  //Виджет без контента
                  $content[$level] .= self::replaceWidget($item);
 
