@@ -4,7 +4,30 @@ if(!window.mod) {
     $("<style>.mod-msg{width:300px;background:black;color:white;padding:10px;margin-bottom:2px;border-radius:5px;}</style>").appendTo("head");
     $("<style>.mod-msg-error{background:red;}</style>").appendTo("head");
     
-    mod = {};
+    mod = function($e) {
+    	return new function() {
+    		this.init = function(fn, params) {
+    			mod.init($e, fn, params);
+    			return this;
+			};
+			this.on = function(name, handler) {
+				mod.on(name, handler, $e);
+			};
+			
+			this.formData = function() {
+			    var data = {};
+		        var temp = $e.serializeArray();
+		        for(var i in temp) {
+		            data[temp[i].name] = temp[i].value;
+		        }		        
+		        $e.find("input[type='checkbox']").each(function() {
+		            var val = !!$(this).prop("checked");
+		            data[$(this).attr("name")] = val;
+		        });		        
+		        return data;
+			}
+		};
+	};
     
 	mod.messages = [];
     
@@ -210,10 +233,24 @@ if(!window.mod) {
     
     }
     
-    mod.init = function(selector, fn) {   
-        $(function() {
-            $(selector).mod("init", fn);
-        });   
+    mod.init = function(selector, fn, params) {
+	
+		if(!params) {
+			params = {};
+		}
+		
+		if(!params.key) {
+			params.key = "";
+		}
+	      
+    	$(function() {            
+	        $(selector).each(function() {
+		        if(!$(this).data("hrbCtS8MoMw61V" + params.key)) {
+		            fn.apply(this);
+		            $(this).data("hrbCtS8MoMw61V" + params.key, true);
+		        }
+	        });         
+        });  
     }       
     
     mod.init(document,function() {

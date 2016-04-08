@@ -6,7 +6,7 @@ mod.init(".gOuxIB8D7X", function() {
         mod.call({
             cmd: "infuso/heapit/controller/bargain/updateCallTime",
             bargainId: $container.attr("data:bargain"),
-            data: $container.mod("formData")
+            data: mod($container).formData()
         }, function(ret) {
             if(ret) {
                 $container.window("close");

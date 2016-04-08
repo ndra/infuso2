@@ -65,7 +65,7 @@ mod.init(".aivh9q8neu", function() {
         });
         
         
-        $(this).mod("on","keydown", function(e) {
+        mod(this).on("keydown", function(e) {
        
             if(!$editor.filter(":visible").length) {
                 return;

@@ -3,7 +3,7 @@ mod.init(".w3T2t7XKGU", function() {
     var $container = $(this);
     $container.submit(function(event) {
         event.preventDefault();
-        var time = $container.mod("formData");
+        var time = mod($container).formData();
         mod.call({
             cmd: "infuso/board/controller/task/doneTask",
             time: time,

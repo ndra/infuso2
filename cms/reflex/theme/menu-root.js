@@ -1,7 +1,7 @@
 $(function() {    
 
     var initNodes = function() {
-        $(".pp7cpa1wpc .node").mod("init", function() {            
+        mod(".pp7cpa1wpc .node").init(function() {            
             var $node = $(this);
             $node.find(".expander:first").click(function() {
                 toggleNode($node);

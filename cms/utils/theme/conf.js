@@ -18,7 +18,7 @@ mod.init(".am2bKLBsQW", function() {
     $container.find(".save").click(save);
     
     // Ctrl+S для сохранения
-    $(this).mod("on","keydown", function(e) {
+    mod(this).on("keydown", function(e) {
         if(e.which == 83 && e.ctrlKey) {
             save();
             e.preventDefault();

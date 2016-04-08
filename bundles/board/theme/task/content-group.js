@@ -6,7 +6,7 @@ mod.init(".wLGKYMEfER", function() {
     $form.find("textarea").focus();
     
     var save = function() {
-        var data = $form.mod("formData");
+        var data = mod($form).formData();
         mod.call({
             cmd:"infuso/board/controller/task/saveTask",
             taskId: $container.attr("data:task"),

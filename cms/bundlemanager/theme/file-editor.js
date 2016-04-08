@@ -13,7 +13,7 @@ mod.init(".y1esl75wqs", function() {
         editor.resize();
     });
     
-    $(this).mod("on","keydown", function(e) {
+    mod(this).on("keydown", function(e) {
    
         if(!$editor.filter(":visible").length) {
             return;

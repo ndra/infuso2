@@ -56,7 +56,7 @@ mod.init(".lonjnbmi8k", function() {
             });
         });
         
-        $container.mod("on", "keydown", function(e) {
+        mod($container).on("keydown", function(e) {
             if(e.keyCode == 83 && e.ctrlKey) {
                 e.preventDefault();
                 submit();

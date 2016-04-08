@@ -4,7 +4,7 @@ mod.init(".B5AhPI5rlz", function() {
     
     $container.submit(function(e) {        
         e.preventDefault();
-        var data = $(this).mod("formData");
+        var data = mod(this).formData();
         mod.call({
             cmd: "infuso/heapit/controller/comments/save",
             commentId: $container.attr("data:id"),

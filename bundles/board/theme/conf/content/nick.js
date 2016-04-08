@@ -4,7 +4,7 @@ $(function() {
         e.preventDefault();
         mod.call({
             cmd:"infuso/board/controller/conf/save",
-            data: $(".iv09v31m1i").mod("formData")
+            data: mod(".iv09v31m1i").formData()
         });
     });
 
