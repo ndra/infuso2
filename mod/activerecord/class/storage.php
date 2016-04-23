@@ -250,24 +250,24 @@ class Storage extends \Infuso\Core\Controller {
 		}
 
 	    if(!$name) {
-	        $name = strtolower(file::get($url)->name());
+	        $name = strtolower(\Infuso\Core\File::get($url)->name());
 		}
 
 	    // Скачиваем файл во временную папку
-	    $dir = file::tmp();
+	    $dir = \Infuso\Core\File::tmp();
 	    $data = file_get_contents($url);
 
 	    if(!$data)
 	        return false;
 
 	    $tmpname = $dir."/".$name;
-	    file::get($tmpname)->put($data);
+	    \Infuso\Core\File::get($tmpname)->put($data);
 
 	    // Добавляем файл в хранилище
 	    $img = $this->add($tmpname,$name);
 
 	    // Убираем временные файлы
-	    file::get($tmpname)->delete(true);
+	    \Infuso\Core\File::get($tmpname)->delete(true);
 
 	    return $img;
 	}
