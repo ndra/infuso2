@@ -28,39 +28,20 @@ class Mailer implements Core\Handler {
      * @handler = board/task/done
      **/
     public static function onTaskCompleted($event) {     
-        $params = [];
         
-        //$params["type"] = "text/html";
-        //$params["from"] = "NDRA-board";
-        //$message = "Задача № " . $this->id() . " выполнена и требует проверки.<br/><br/>" . $this->text();
-        //$params["message"] = $message;          
-        //$subject = $this->project()->title().": Задача № ".$this->id().".";
-        //$params["subject"] = $subject;
- //       $params["attachFiles"] = 1;
+        $task = $event->param("task");
+        $user = $task->workflow()->desc("id")->one()->pdata("userId");
         
-        $params["code"] = "board/task/done";
+        $task->emailSubscribers(array(
+            "code" => "board/task/done",
+            "timeScheduled" => $task->timeScheduled(),
+            "timeSpent" => round($task->timeSpent() / 3600, 2), 
+			"user-id" => $user->id(),
+		 	"nick" => $user->nickName(),
+			"userpic-16" => $root.$user->userpic()->preview(16,16),
+        ));         
+         
 
-        // Планируемое время
-        $params["timeScheduled"] = $this->timeScheduled();
-        
-        // Затраченное время
-        $params["timeSpent"] = round($this->timeSpent() / 3600, 2);
-        
-		// Добавляем комментарии к задаче
-        /*$txt = "";
-        foreach($this->getlog() as $item) {
-            $date = $item->pdata("created")->date()->text();
-            $time = $item->pdata("created")->format("H:i");
-            if($text = $item->text()) {
-                $text = \util::str($text)->esc();
-                $text = nl2br($text);
-                $txt.= "<br/>".$date." ".$time." : ".$item->user()->title()." : ".$text;
-            }
-        }
-        $params["comments"] = $txt;   */
-        
-        $user = $this->workflow()->desc("id")->one()->pdata("userId");
-        $params["userName"] = $user->title(); 
     }
 
 }
