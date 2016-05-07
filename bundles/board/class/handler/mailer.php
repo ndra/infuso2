@@ -34,6 +34,7 @@ class Mailer implements Core\Handler {
         
         $task->emailSubscribers(array(
             "code" => "board/task/done",
+            "type" => "text/html",
             "timeScheduled" => $task->timeScheduled(),
             "timeSpent" => round($task->timeSpent() / 3600, 2), 
 			"user-id" => $user->id(),
