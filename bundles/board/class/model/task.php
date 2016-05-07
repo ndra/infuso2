@@ -544,7 +544,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 
             $user = service("user")->get($userId);
             $email = $user->email();
-            if($email == "golikov.org@gmail.com") {
+            if($user->id() != app()->user()->id()) {
             
 	            $mail = service("mail")->create()
 					->to($email)
