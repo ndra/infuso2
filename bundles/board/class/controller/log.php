@@ -10,6 +10,7 @@ class Log extends Base {
         service("ar")->create(Model\Log::inspector()->className(), array(
             "taskId" => $p["taskId"],
             "text" => $p["text"],
+            "type" => Model\Log::TYPE_COMMENT,
         )); 
     }
     

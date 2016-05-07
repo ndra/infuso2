@@ -209,10 +209,9 @@ class Task extends \Infuso\ActiveRecord\Record {
 
         // Если статус задачи "к исполнению", ответственным лицом становится текущий пользователь.
         if($this->field("status")->changed() && $this->data("status") == self::STATUS_CHECKOUT) {
-            /*$this->emailSubscribers(array(
-                "xxx" => 121212,
-			));*/
-            $this->informAboutFinishing();
+            app()->fire("board/task/done", array(
+                "task" => $this,
+            ));
         }
         
         $status = $this->field("status")->initialValue();
@@ -565,75 +564,6 @@ class Task extends \Infuso\ActiveRecord\Record {
 				$mail->send();
 			}
         }    
-    }
-
-    /**
-     * Отправляет письмо создателю задачи
-     **/
-    public function emailCreator($params) {
-    
-        $creator = service("user")->get($this->data("creator"));
-
-        $mail = service("mail")->create()
-            ->to($creator->email())
-            ->code($params["code"])
-            ->message($params["message"])
-            ->subject($params["subject"])
-            ->from($params["from"])
-            ->param("task-id", $this->id())
-            ->param("task-url", $this->fullUrl())
-            ->param("task-title", $this->title());
-
-        if($params["type"]) {
-            $mail->type($params["type"]);
-        }
-
-        foreach($params as $key => $val) {
-            $mail->param($key, $val);
-        }
-
-        $mail->send();
-    }
-
-     /**
-     * Отправлет пиьсма уведомлюящие о выполнений задачи
-     **/
-    public function informAboutFinishing() {
-
-        $params = [];
-        $params["type"] = "text/html";
-        $params["from"] = "NDRA-board";
-        $message = "Задача № " . $this->id() . " выполнена и требует проверки.<br/><br/>" . $this->text();
-        $params["message"] = $message;
-        $subject = $this->project()->title().": Задача № ".$this->id().".";
-        $params["subject"] = $subject;
-        $params["code"] = "board/task/done/creator";
-        $params["attachFiles"] = 1;
-        $params["timeScheduled"] = $this->timeScheduled()." ч.";
-        $time = round($this->timeSpent() / 3600, 2);
-        if($progress = round($this->timeSpentProgress() / 3600, 2)) {
-            $time .= " + ".$progress;
-        }
-        $params["timeSpent"] = $time." ч.";
-		//добавляем комментарии к задаче
-        $txt = "";
-        foreach($this->getlog() as $item) {
-            $date = $item->pdata("created")->date()->text();
-            $time = $item->pdata("created")->format("H:i");
-            if($text = $item->text()) {
-                $text = \util::str($text)->esc();
-                $text = nl2br($text);
-                $txt.= "<br/>".$date." ".$time." : ".$item->user()->title()." : ".$text;
-            }
-        }
-        $params["comments"] = $txt;
-        $user = $this->workflow()->desc("id")->one()->pdata("userId");
-        $userName = $user->firstName();
-        if(!$userName) $userName = $user->nickName();
-        $params["userName"] = $userName;
-
-        $this->emailCreator($params);
-
     }
 
 }

@@ -14,7 +14,7 @@ class Event extends component {
     private $handlerClass = null;
     private $handlerMethod = null;
 
-    public function __construct($name,$params=array()) {
+    public function __construct($name, $params=array()) {
         $this->name = $name;
         $this->params($params);
     }

@@ -560,8 +560,9 @@ class User extends ActiveRecord\Record {
      **/
     private final function fieldOrBehaviour($key) {
         $val = trim($this->data($key));
-        if($val)
+        if($val) {
             return $val;
+        }
 
         foreach($this->behaviours() as $b)
             if(method_exists($b,$key))
@@ -647,7 +648,7 @@ class User extends ActiveRecord\Record {
     }
     
     /**
-     * Проверяет пароль $pass для данного полбзователя
+     * Проверяет пароль $pass для данного поьбзователя
      * Возвращает true/false
      **/
     public function checkPassword($pass) {
@@ -655,9 +656,14 @@ class User extends ActiveRecord\Record {
         return $check;
     }
 
+    /**
+     * Возвращает имя пользователя
+     * Используется никнейм, если он задан
+     * Если нет никнейма используется почта
+     **/
     public function recordTitle() {
 
-		if($r = $this->data("nickName")) {
+		if($r = $this->nickName()) {
             return $r;
         }
 
