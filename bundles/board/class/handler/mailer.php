@@ -48,7 +48,7 @@ class Mailer implements Core\Handler {
     /**
      * @handler = board/task/revised
      **/
-    public static function onTaskCompleted($event) {     
+    public static function onTaskRevised($event) {     
         
         $task = $event->param("task");
         $user = $task->workflow()->desc("id")->one()->pdata("userId");
