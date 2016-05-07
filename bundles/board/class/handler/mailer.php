@@ -8,7 +8,10 @@ class Mailer implements Core\Handler {
     /**
      * @handler = board/task/new-comment
      **/
-    public static function onComment($event) {     
+    public static function onComment($event) {   
+    
+        $root = app()->url()->scheme()."://".app()->url()->domain();
+      
         $comment = $event->param("comment");    
         $task = $comment->task();
         $task->emailSubscribers(array(
