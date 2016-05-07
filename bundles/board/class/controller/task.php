@@ -296,7 +296,7 @@ class Task extends Base {
             return;
         }
 
-        $task->data("status",Model\Task::STATUS_COMPLETED);
+        $task->data("status", Model\Task::STATUS_COMPLETED);
         $task->log(array(
             "text" => $p["comment"],
             "type" => Model\Log::TYPE_TASK_CHECKED,
@@ -324,6 +324,7 @@ class Task extends Base {
             
         $task->log(array(
             "text" => $p["comment"],
+            "task" => $task,
             "type" => Model\Log::TYPE_TASK_REVISED,
         ));
         
