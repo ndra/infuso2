@@ -31,6 +31,7 @@ class Mailer implements Core\Handler {
         
         $task = $event->param("task");
         $user = $task->workflow()->desc("id")->one()->pdata("userId");
+        $root = app()->url()->scheme()."://".app()->url()->domain();
         
         $task->emailSubscribers(array(
             "code" => "board/task/done",
@@ -40,8 +41,28 @@ class Mailer implements Core\Handler {
 			"user-id" => $user->id(),
 		 	"nick" => $user->nickName(),
 			"userpic-16" => $root.$user->userpic()->preview(16,16),
-        ));         
-         
+        ));
+
+    }
+    
+    /**
+     * @handler = board/task/revised
+     **/
+    public static function onTaskCompleted($event) {     
+        
+        $task = $event->param("task");
+        $user = $task->workflow()->desc("id")->one()->pdata("userId");
+        $root = app()->url()->scheme()."://".app()->url()->domain();
+        
+        $task->emailSubscribers(array(
+            "code" => "board/task/revised",
+            "type" => "text/html",
+            "timeScheduled" => $task->timeScheduled(),
+            "timeSpent" => round($task->timeSpent() / 3600, 2), 
+			"user-id" => $user->id(),
+		 	"nick" => $user->nickName(),
+			"userpic-16" => $root.$user->userpic()->preview(16,16),
+        ));
 
     }
 
