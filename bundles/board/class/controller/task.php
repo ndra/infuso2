@@ -324,12 +324,11 @@ class Task extends Base {
             
         $task->log(array(
             "text" => $p["comment"],
-            "task" => $task,
             "type" => Model\Log::TYPE_TASK_REVISED,
         ));
         
         app()->fire("board/task/revised", array(
-            "task" => $this,
+            "task" => $task,
             "comment" => $p["comment"],
         ));
 
