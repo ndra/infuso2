@@ -20,7 +20,7 @@ class Mailer implements Core\Handler {
 			"comment" => $comment->data("text"),
 			"user-id" => $comment->user()->id(),
 		 	"nick" => $comment->user()->nickName(),
-			"userpic-16" => $comment->user()->userpic()->preview(16,16),
+			"userpic-16" => $root.$comment->user()->userpic()->preview(16,16),
 		));     
     }
 
