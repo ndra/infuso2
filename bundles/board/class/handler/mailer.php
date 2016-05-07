@@ -62,6 +62,7 @@ class Mailer implements Core\Handler {
 			"user-id" => $user->id(),
 		 	"nick" => $user->nickName(),
 			"userpic-16" => $root.$user->userpic()->preview(16,16),
+            "comment" => $event->param("comment"),
         ));
 
     }
