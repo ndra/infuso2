@@ -551,7 +551,8 @@ class Task extends \Infuso\ActiveRecord\Record {
 					->code($params["code"])
 					->param("task-id", $this->id())
 					->param("task-url", $url)
-					->param("task-title", $this->title());
+					->param("task-title", $this->title())
+                    ->param("task-text-short", \util::str($this->data("text"))->ellipsis(250).""); 
 					
 				if($params["type"]) {
 					$mail->type($params["type"]);
