@@ -135,7 +135,7 @@ class Sync extends \Infuso\Core\Controller {
             foreach($row["data"] as $key => $val) {
 
                 // Не забываем разкодировать данные из base64
-                $val = base64_decode($val);
+                $val = $val !== null ? base64_decode($val) : null;
 
                 $insert["`".$key."`"] = service("db")->quote($val);
             }

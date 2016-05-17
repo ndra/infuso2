@@ -55,7 +55,7 @@ class SyncServer extends \Infuso\Core\Controller {
                 // Собираем данные
                 $itemData = $item->data();
                 foreach($itemData as $key => $val) {
-                    $itemData[$key] = base64_encode($val);
+                    $itemData[$key] = $val !== null ? base64_encode($val) : null;
                 }
 
                 $files = array();
