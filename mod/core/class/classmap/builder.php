@@ -304,8 +304,7 @@ class Builder {
 	public function buildControllers() {
 		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
 		foreach(service("classmap")->classes("Infuso\\Core\\Controller") as $class) {
-		    $controller = new $class;
-			$ret[strtolower($controller->controller())] = $class;
+			$ret[strtolower($class::controller())] = $class;
 		}
 
 		return $ret;

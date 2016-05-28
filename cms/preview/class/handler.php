@@ -11,7 +11,8 @@ class Handler implements \Infuso\Core\Handler {
         service("task")->add(array(
             "class" => get_class(),
             "method" => "cleanupStep",
-            "crontab" => "* * * * *"
+            "crontab" => "* * * * *",
+            "randomize" => 60,
         ));
     }
     
@@ -21,7 +22,7 @@ class Handler implements \Infuso\Core\Handler {
     public static function cleanupStep($params, $task) {
     
         $iterator = $task->data("iterator");
-        $group = str_pad(dechex($iterator), 2, 0, STR_PAD_LEFT);
+        $group = str_pad(dechex($iterator % 256), 2, 0, STR_PAD_LEFT);
         $path = \Infuso\Core\File::get(app()->publicPath()."/preview/$group/");
         
         // Удаляем в папке все файлы старше 60 дней
@@ -43,8 +44,6 @@ class Handler implements \Infuso\Core\Handler {
         
         // Обновляем задачу   
         $task->data("iterator", $task->data("iterator") + 1);
-        $min = rand() % 60;
-        $task->data("crontab", $min." * * * *");
     }
 
 }

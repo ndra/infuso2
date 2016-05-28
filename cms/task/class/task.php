@@ -79,6 +79,11 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 					'label' => 'Шаблон (в формате crontab)',
 					'help' => "Минуты, часы, день месяца, месяц, день недели",
 				), array (
+					'name' => 'randomize',
+					'type' => 'bigint',
+					'label' => 'Рандомизировать (добавляет указанное количество минут ко времени следующего запуска)',
+                    'editable' => true,
+				), array (
 					'name' => 'origin',
 					'type' => 'textfield',
 					'editable' => '1',
@@ -159,6 +164,9 @@ class Task extends ActiveRecord\Record implements Core\Handler {
             $time = \reflex_task_crontab::nextDate($this->data("crontab"));
             $this->data("nextLaunch",$time);
         }
+        
+        $min = rand(0, $this->data("randomize") * 60);
+        $this->data("nextLaunch", $this->pdata("nextLaunch")->shift($min));
     }
 
     /**

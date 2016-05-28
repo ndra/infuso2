@@ -22,7 +22,7 @@ class Service extends Core\Service {
     public function tasksToLaunch() {
         return Task::all()
             ->leq("nextLaunch", \util::now())
-            ->eq("completed",0);
+            ->eq("completed", 0);
     }
     
 
@@ -45,7 +45,7 @@ class Service extends Core\Service {
         // Разруливаем олдскульный случай, когда параметры передавались не массивом а в аргументах
 
         if(is_array($params)) {
-            $params = \util::a($params)->filter("class","query","method","params","crontab")->value();
+            $params = \util::a($params)->filter("class", "query", "method", "params", "crontab", "randomize")->value();
 
         } else {
 

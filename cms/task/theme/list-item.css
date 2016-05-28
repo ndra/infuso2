@@ -2,6 +2,7 @@
 
     padding: 5px;
     cursor: pointer;
+    display: flex;
     
     &.selected {
         background: @selection;
@@ -13,22 +14,17 @@
     }
         
 
-    td {
+    & > div {
         vertical-align: middle;    
         padding: 4px 10px;
     }
     
-    table {
-        table-layout: fixed;
-    }
-    
     .title {
-        width: 100%;
+        flex: 1;
     }
     
     .exec {
         width: 32px;
-        //height: 24px;
         .icon16("play");
         opacity: .3;
         &:hover {

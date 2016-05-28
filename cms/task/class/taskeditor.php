@@ -14,7 +14,9 @@ class TaskEditor extends \Infuso\Cms\Reflex\Editor {
 	 * @reflex-tab = system
 	 **/
 	public function all() {
-	    return Task::all()->title("Задачи");
+	    return Task::all()->asc("class")
+            ->asc("method", true)
+            ->title("Задачи");
 	}
 	
     public function listItemTemplate() {
