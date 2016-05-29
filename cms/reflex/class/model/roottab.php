@@ -8,7 +8,7 @@ use \mod;
 /**
  * Модель вкладки в каталоге
  **/
-class rootTab extends Record {
+class RootTab extends Record {
 
 	/**
 	 * Описание таблицы

@@ -1,12 +1,13 @@
 <?
 
-namespace Infuso\Cms\Reflex;
+namespace Infuso\Cms\Reflex\Handler;
+use Infuso\Cms\Reflex\Model;
 
 use \user_role, \user_operation;
 use \mod, \file, \util;
 use Infuso\Core;
 
-class Handler extends Core\Component implements Core\Handler {
+class General extends Core\Component implements Core\Handler {
 
 	/**
 	 * @handler = infuso/deploy
@@ -14,7 +15,7 @@ class Handler extends Core\Component implements Core\Handler {
 	 **/
 	public function removeRootTabs() {
 	    app()->msg("removing root tabs");
-        Model\rootTab::removeAll();
+        Model\RootTab::removeAll();
 	}
 
 	/**
@@ -119,10 +120,10 @@ class Handler extends Core\Component implements Core\Handler {
 		}	
         if(is_subclass_of($action->className(), "infuso\\cms\\reflex\\editor")) {
             if($action->action() == "child") {
-                Keeper::set($action->className(), $action->param("id"), $action->param("method"));
+                \Infuso\Cms\Reflex\Keeper::set($action->className(), $action->param("id"), $action->param("method"));
             }
             if($action->action() == "index") {
-                Keeper::set($action->className(), $action->param("id"), null);
+                \Infuso\Cms\Reflex\Keeper::set($action->className(), $action->param("id"), null);
             }
         }
         	

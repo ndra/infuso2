@@ -1,16 +1,16 @@
 <?
 
-namespace infuso\ActiveRecord;
+namespace infuso\ActiveRecord\Handler;
 
 use Infuso\Core;
 use Infuso\Core\Mod;
 
-class Handler implements \Infuso\Core\Handler {
+class General implements Core\Handler {
 
 	/**
 	 * @handler = infuso/deploy
 	 * @handlerPriority = -1000
-	 * При инициализации приводим таблицы в БД в соответствии с макетами
+	 * При инициализации приводим таблицы в БД в соответствии с моделями
 	 **/
 	public function onDeploy() {
 
@@ -28,13 +28,13 @@ class Handler implements \Infuso\Core\Handler {
         self::renameOldTables();
 
 		// Проходимся по классам и создаем таблицы для них
-		foreach(Record::classes() as $class) {
+		foreach(\Infuso\ActiveRecord\Record::classes() as $class) {
 
 		    try {
 				$record = new $class();
 				$table = $record->modelExtended("");
 				if($table) {
-					$migration = new Migration\Table($table);
+					$migration = new \Infuso\ActiveRecord\Migration\Table($table);
 					$migration->migrateUp();
 
 					// Если во время миграции таблицы были сообщения, выводим их
@@ -61,7 +61,7 @@ class Handler implements \Infuso\Core\Handler {
         $result = $q->exec();
         while($oldName = $result->fetchScalar()) {                 
             // Проходимся по классам и создаем таблицы для них
-    		foreach(Record::classes() as $class) {
+    		foreach(\Infuso\ActiveRecord\Record::classes() as $class) {
                 $newName = $class::prefixedTableName(); 
                 if($class::prepareName($oldName) == $newName && $newName != $oldName) {
                     $query = "rename table `$oldName` to `$newName` ";
@@ -78,7 +78,7 @@ class Handler implements \Infuso\Core\Handler {
      * При завершении приложения сохраняем все измененные записи
      **/
     public function onDefer() {
-        Record::storeAll();
+        \Infuso\ActiveRecord\Record::storeAll();
     }
 
 }
