@@ -9,7 +9,7 @@ use Infuso\Core;
 class Redirect extends \Infuso\Core\Route {
 
 	public function priority() {
-		return -2000;
+		return 0;
 	}
 
 	/**
