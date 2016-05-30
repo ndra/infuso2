@@ -17,8 +17,10 @@ class Redirect extends \Infuso\Core\Route {
 	 *  @todo восстановить	 
 	 **/
 	public function urlToAction($url) {
-    
-		$path = $url->relative();
+        
+        $path = $url->relative();
+        $path = "/".trim($path, "/");
+        
 		$redirect = \Infuso\Cms\Reflex\Model\Redirect::all()->eq("source", $path)->one();
         
 		if($redirect->exists()) {

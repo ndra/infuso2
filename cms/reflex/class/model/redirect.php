@@ -29,6 +29,16 @@ class Redirect extends \Infuso\ActiveRecord\Record {
     public function indexTest() {
 		return true;
 	}
+    
+    public function afterStore() {
+        service("route")->clearCache();
+    }
+    
+    public function beforeStore() {
+        $url = (new \Infuso\Core\Url($this->data("source")))->relative();
+        $url = "/".trim($url, "/");
+        $this->data("source", $url);
+    }
 
 	public function index_redirect($p) {
 		header("Location: $p[target]", true, 301);

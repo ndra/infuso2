@@ -46,7 +46,7 @@ class Route extends \Infuso\Core\Controller {
         
         $route = \Infuso\Cms\Reflex\Model\Route::get($editor->item());
         $route->data("url", $p["url"]);
-        service("cache")->clearByPrefix("system/url");
+        service("route")->clearCache();
     }
     
     /**
@@ -61,7 +61,7 @@ class Route extends \Infuso\Core\Controller {
         
         $route = \Infuso\Cms\Reflex\Model\Route::get($editor->item());
         $route->delete();
-        service("cache")->clearByPrefix("system/url");
+        service("route")->clearCache();         
     }
     
     public function post_getContent($p) {

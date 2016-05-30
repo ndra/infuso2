@@ -95,7 +95,7 @@ class service extends \infuso\core\service {
         $url = $this->actionToUrlNocache($action);
 
         if(true) {
-            service("cache")->set($hash,$url);
+            service("cache")->set($hash, $url);
         }
 
         Core\Profiler::endOperation();
@@ -112,10 +112,14 @@ class service extends \infuso\core\service {
 
         $routes = service("classmap")->classmap("routes");
         foreach($routes as $router) {
-            if($url = call_user_func(array($router,"actionToUrl"),$action)) {
+            if($url = call_user_func(array($router,"actionToUrl"), $action)) {
                 return $url;
             }
         }
+    }
+    
+    public function clearCache() {
+        service("cache")->clearByPrefix("system/url");
     }
 
 }
