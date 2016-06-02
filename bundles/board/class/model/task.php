@@ -385,6 +385,7 @@ class Task extends \Infuso\ActiveRecord\Record {
                     $tools["main"][] = "pause";
                 }
 
+                $tools["additional"][] = "problem";
                 $tools["additional"][] = "stop";
                 $tools["additional"][] = "cancel";
 
