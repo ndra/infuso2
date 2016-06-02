@@ -565,7 +565,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 					->to($email)
 					->code($params["code"])
 					->param("task-id", $this->id())
-					->param("task-url", $this->url())
+					->param("task-url", $this->fullUrl())
 					->param("task-title", $this->title())
                     ->param("task-text-short", \util::str($this->data("text"))->ellipsis(250).""); 
 					
