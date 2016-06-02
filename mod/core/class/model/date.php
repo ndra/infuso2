@@ -45,7 +45,7 @@ class Date extends Field {
 	}
 
 	public function prepareValue($val) {
-		if(is_scalar($val) && ($val*1).""===$val."") {
+		if(is_scalar($val) && ($val*1)."" === $val."") {
 		    $val = util::date($val)->standart();
 		}
 		return $val;
@@ -63,7 +63,7 @@ class Date extends Field {
 	}
 
 	public function defaultValue() {
-		if(trim($this->param("default"))=="now()") {
+		if(trim($this->param("default")) == "now()") {
 			return util::now()."";
 		}
 		return "";

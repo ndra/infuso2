@@ -17,6 +17,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     const STATUS_COMPLETED = 3;
     const STATUS_DRAFT = 10;
     const STATUS_CANCELLED = 100;
+    const STATUS_PROBLEM = 300;
     
     private $touchedStatus = array();
 
@@ -135,6 +136,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 		    self::STATUS_COMPLETED => "Выполнено",
 		    self::STATUS_DRAFT => "Черновик",
 		    self::STATUS_CANCELLED => "Отменено",
+            self::STATUS_PROBLEM => "Проблемы",
 	    );
 	}
 
@@ -392,6 +394,7 @@ class Task extends \Infuso\ActiveRecord\Record {
   
                 $tools["main"][] = "take";  
                 $tools["additional"][] = "cancel";
+                $tools["additional"][] = "problem";
 
                 break;
 
@@ -418,6 +421,13 @@ class Task extends \Infuso\ActiveRecord\Record {
 
                 $tools["additional"][] = "revision";
                 break;
+                
+            case self::STATUS_PROBLEM:
+                $tools["main"][] = "revision";
+                $tools["main"][] = "cancel";
+                break;
+
+                
 
         }
 
@@ -530,6 +540,10 @@ class Task extends \Infuso\ActiveRecord\Record {
         $urlObj = \Infuso\Core\Url::current();
         return $urlObj->scheme().'://'.$urlObj->host().$this->url();
     }
+    
+    public function recordURL() {
+        return new \Infuso\Core\Action(\Infuso\Board\Controller\Main::inspector()->className(), "task", array("id" => $this->id())); 
+    }
 
     /**
      * Отправляет письмо подписчикам (Это участники, автор и те кто комментировал)
@@ -550,7 +564,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 					->to($email)
 					->code($params["code"])
 					->param("task-id", $this->id())
-					->param("task-url", $url)
+					->param("task-url", $this->url())
 					->param("task-title", $this->title())
                     ->param("task-text-short", \util::str($this->data("text"))->ellipsis(250).""); 
 					

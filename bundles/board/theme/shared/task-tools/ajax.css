@@ -38,6 +38,10 @@
             background: url("@{bundle}res/img/@{pack}/complete.png") center center no-repeat;
         }
         
+        .problem {
+            background: url("@{bundle}res/img/@{pack}/problem.png") center center no-repeat;
+        }
+        
     }    
     
     input {

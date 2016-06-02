@@ -41,7 +41,9 @@ $task = $item->task();
         }
 
         <td class='text'>
-            $comment = $task->getLog()->eq("type", \Infuso\Board\Model\Log::TYPE_TASK_REVISED)->one();
+            $comment = $task->getLog()
+                ->eq("type", array(\Infuso\Board\Model\Log::TYPE_TASK_REVISED, \Infuso\Board\Model\Log::TYPE_TASK_PROBLEM))
+                ->one();
             if($comment->exists()) {
                 <span class='comment' >{$comment->message()}</span>
             }

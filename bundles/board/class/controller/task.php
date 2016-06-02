@@ -188,6 +188,17 @@ class Task extends Base {
             ->param("task", $task)
             ->getContentForAjax();
     }
+    
+ 	/**
+     * Возвращает контент диалога оповещения о проблеме
+     **/
+    public function post_problemDlgContent($p) {
+        $task = \Infuso\Board\Model\Task::get($p["taskId"]);
+        return app()->tm()
+            ->template("/board/shared/task-tools/problem-dlg-ajax")
+            ->param("task", $task)
+            ->getContentForAjax();
+    }
 
     /**
      * Взять задачу
@@ -330,6 +341,37 @@ class Task extends Base {
         app()->fire("board/task/revised", array(
             "task" => $task,
             "comment" => $p["comment"],
+            "user" => app()->user(),
+        ));
+
+        return true;
+    }
+    
+    /**
+     * Оповещает о проблемах в задаче
+     **/
+    public function post_problemTask($p) {
+
+        $task = Model\Task::get($p["taskId"]);
+
+        if(!\user::active()->checkAccess("board/editTask",array(
+            "task" => $task,
+        ))) {
+            app()->msg(\user::active()->errorText(),1);
+            return;
+        }
+
+        $task->data("status", Model\Task::STATUS_PROBLEM);
+            
+        $task->log(array(
+            "text" => $p["comment"],
+            "type" => Model\Log::TYPE_TASK_PROBLEM,
+        ));
+        
+        app()->fire("board/task/problem", array(
+            "task" => $task,
+            "comment" => $p["comment"],
+            "user" => app()->user(),
         ));
 
         return true;

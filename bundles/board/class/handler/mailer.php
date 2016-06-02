@@ -30,7 +30,7 @@ class Mailer implements Core\Handler {
     public static function onTaskCompleted($event) {     
         
         $task = $event->param("task");
-        $user = $task->workflow()->desc("id")->one()->pdata("userId");
+        $user = $event->param("user");
         $root = app()->url()->scheme()."://".app()->url()->domain();
         
         $task->emailSubscribers(array(
@@ -40,7 +40,7 @@ class Mailer implements Core\Handler {
             "timeSpent" => round($task->timeSpent() / 3600, 2), 
 			"user-id" => $user->id(),
 		 	"nick" => $user->nickName(),
-			"userpic-16" => $root.$user->userpic()->preview(16,16),
+			"userpic-16" => $root.$user->userpic()->preview(16,16),   
         ));
 
     }
@@ -51,11 +51,33 @@ class Mailer implements Core\Handler {
     public static function onTaskRevised($event) {     
         
         $task = $event->param("task");
-        $user = $task->workflow()->desc("id")->one()->pdata("userId");
+        $user = $event->param("user");
         $root = app()->url()->scheme()."://".app()->url()->domain();
         
         $task->emailSubscribers(array(
             "code" => "board/task/revised",
+            "type" => "text/html",
+            "timeScheduled" => $task->timeScheduled(),
+            "timeSpent" => round($task->timeSpent() / 3600, 2), 
+			"user-id" => $user->id(),
+		 	"nick" => $user->nickName(),
+			"userpic-16" => $root.$user->userpic()->preview(16,16),
+            "comment" => $event->param("comment"),   
+        ));
+
+    }
+    
+    /**
+     * @handler = board/task/problem
+     **/
+    public static function onTaskProblem($event) {     
+        
+        $task = $event->param("task");
+        $user = $event->param("user");
+        $root = app()->url()->scheme()."://".app()->url()->domain();
+        
+        $task->emailSubscribers(array(
+            "code" => "board/task/problem",
             "type" => "text/html",
             "timeScheduled" => $task->timeScheduled(),
             "timeSpent" => round($task->timeSpent() / 3600, 2), 

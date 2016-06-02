@@ -34,6 +34,9 @@
                 case "complete":
                     <input type='button' class='complete' title='$item' />
                     break;
+                case "problem":
+                    <input type='button' class='problem' title='$item' />
+                    break;
                 default:
                     Throw new \Exception("Task tools: unknown button $item!");
                     break;

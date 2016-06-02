@@ -1,6 +1,6 @@
 <?
 
-<div class='MhpEuDh2NX c-board' data:status='{$status}' >
+<div class='MhpEuDh2NX c-board' data:status='{$status}' data:task='{$task}' >
 
     <div class='center' >
         <div class='roller' >

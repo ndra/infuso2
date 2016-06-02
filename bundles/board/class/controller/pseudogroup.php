@@ -29,6 +29,7 @@ class PseudoGroup extends Core\Component {
 			    Model\Task::STATUS_BACKLOG => "backlog",
 			    Model\Task::STATUS_IN_PROGRESS => "inprogress",
 			    Model\Task::STATUS_CHECKOUT => "checkout",
+                Model\Task::STATUS_PROBLEM => "problem",
 			    Model\Task::STATUS_COMPLETED => "completed",
 			    Model\Task::STATUS_DRAFT => "draft",
 			    Model\Task::STATUS_CANCELLED => "cancelled",
@@ -93,6 +94,7 @@ class PseudoGroup extends Core\Component {
 		        $ret[] = new self("checkout");
 		        $ret[] = new self("completed");
 		        $ret[] = new self("cancelled");
+                $ret[] = new self("problem");
 		        break;
 		
 		    case "request":
@@ -183,6 +185,18 @@ class PseudoGroup extends Core\Component {
 			        $ret[] = new self("task/".$task->id());
 			    }
 			    break;
+		    case "problem":
+			    $tasks = Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_PROBLEM)
+                    ->search($this->query())
+                    ->page($this->page())
+			        ->desc("changed");
+			        $this->setPages($tasks->pages());
+			    foreach($tasks as $task) {
+			        $ret[] = new self("task/".$task->id());
+			    }
+			    break;
 			case "task":
 			    $tasks = Model\Task::all()
 			        ->visible()
@@ -199,8 +213,6 @@ class PseudoGroup extends Core\Component {
 			    break;
 			    
 		}
-		
-		//
 		
 		return $ret;
 	}
@@ -236,8 +248,10 @@ class PseudoGroup extends Core\Component {
 			    return "Архив";
 			case "cancelled":
 			    return "Отменено";
+			case "problem":
+			    return "Проблемы";
 		    case "task":
-		        return $this->task()->title();
+		        return $this->task()->title();   
 		}
 	}
 	
@@ -342,6 +356,12 @@ class PseudoGroup extends Core\Component {
 			    return Model\Task::all()
 			        ->visible()
 			        ->eq("status", Model\Task::STATUS_CANCELLED)
+					->count();
+                    
+		    case "problem":
+			    return Model\Task::all()
+			        ->visible()
+			        ->eq("status", Model\Task::STATUS_PROBLEM)
 					->count();
 		}
 

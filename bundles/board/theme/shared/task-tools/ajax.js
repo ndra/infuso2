@@ -64,6 +64,15 @@ mod(".ttbuu8389u").init(function() {
                         }
                     });
                     break;
+                case "problem":
+                    $.window({
+                        title: "Сообщить о проблеме",
+                        call: {
+                            cmd: "infuso/board/controller/task/problemDlgContent",
+                            taskId:id
+                        }
+                    });
+                    break;                    
             }
             return;
         }

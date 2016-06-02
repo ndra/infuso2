@@ -67,7 +67,6 @@ $(function() {
     // Открываем задачу
     $container.on("board/openTask", function(event) {
         
-        //$container.children(".left").html("");
         expandLeft();
     
         mod.call({
