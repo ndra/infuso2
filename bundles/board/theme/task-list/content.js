@@ -39,10 +39,12 @@ mod.init(".MhpEuDh2NX", function() {
     selectTab($container.attr("data:status"));
     
     var task = $container.attr("data:task");
-    $container.trigger({
-        type: "board/openTask",
-        taskId: task
-    });
+    if(task) {
+        $container.trigger({
+            type: "board/openTask",
+            taskId: task
+        });
+    }
 
     
 });
