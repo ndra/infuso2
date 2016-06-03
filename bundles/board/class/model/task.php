@@ -402,7 +402,7 @@ class Task extends \Infuso\ActiveRecord\Record {
             case self::STATUS_DEMAND:
 
                 $tools["main"][] = "take";
-                $tools["main"][] = "cancel";
+                $tools["main"][] = "problem";
                 $tools["additional"][] = "cancel";
 
                 break;
