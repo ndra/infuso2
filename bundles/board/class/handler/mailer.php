@@ -27,7 +27,7 @@ class Mailer implements Core\Handler {
     /**
      * @handler = board/task/done
      **/
-    public static function onTaskCompleted($event) {     
+    public static function onTaskDone($event) {     
         
         $task = $event->param("task");
         $user = $event->param("user");

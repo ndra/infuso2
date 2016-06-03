@@ -402,6 +402,12 @@ class Task extends Base {
             return $item * 3600;
         }, $p["time"]);
         $task->chargeTime($time);
+        
+        app()->fire("board/task/done", array(
+            "task" => $task,
+            "comment" => $p["comment"],
+            "user" => app()->user(),
+        ));
 
         return true;
     }
