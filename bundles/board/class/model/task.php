@@ -393,8 +393,8 @@ class Task extends \Infuso\ActiveRecord\Record {
 
             case self::STATUS_BACKLOG:
   
-                $tools["main"][] = "take";  
-                $tools["additional"][] = "cancel";
+                $tools["main"][] = "take";   
+                $tools["main"][] = "cancel";
                 $tools["additional"][] = "problem";
 
                 break;
@@ -402,6 +402,7 @@ class Task extends \Infuso\ActiveRecord\Record {
             case self::STATUS_DEMAND:
 
                 $tools["main"][] = "take";
+                $tools["main"][] = "cancel";
                 $tools["additional"][] = "cancel";
 
                 break;
