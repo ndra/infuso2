@@ -45,7 +45,12 @@ class Date extends Field {
 	}
 
 	public function prepareValue($val) {
-		if(is_scalar($val) && ($val*1)."" === $val."") {
+    
+        if($val === null) {
+            return null;
+        }
+    
+		if(is_scalar($val) && ($val * 1)."" === $val."") {
 		    $val = util::date($val)->standart();
 		}
 		return $val;

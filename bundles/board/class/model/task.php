@@ -186,6 +186,10 @@ class Task extends \Infuso\ActiveRecord\Record {
         $this->data("creator",user::active()->id());
     }
     
+    /**
+     * Переносит задачу на первое место (только в случае бэклога)
+     * Для остальных статусов не делает ничего
+     **/
     public function sentToBeginning() {
         if($this->data("status") == self::STATUS_BACKLOG) {
             $min = Task::all()->eq("status",self::STATUS_BACKLOG)->min("priority");

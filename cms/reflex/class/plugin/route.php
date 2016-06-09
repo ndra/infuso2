@@ -39,7 +39,6 @@ class Route extends \Infuso\Core\Component {
     
     public function setUrl($url) {
         $item = $this->getOrCreateRouteObject();
-        echo $item->id();
         $item->data("url", $url);
     }
     
