@@ -12,7 +12,7 @@ $workflow = \Infuso\Board\Model\Workflow::all()
     
     $userData = $workflow
         ->JoinByField("taskId")
-        ->groupBy("`Infuso\\Board\\Model\\Task`.`projectId`")
+        ->groupBy("Infuso\\Board\\Model\\Task.projectId")
         ->select("projectId, sum(duration)  as `spent`");
     
     $json = array();
