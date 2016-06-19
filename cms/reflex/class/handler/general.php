@@ -87,6 +87,7 @@ class General extends Core\Component implements Core\Handler {
             "class" => get_class(),
             "method" => "cleanup",
             "crontab" => "0 0 * * *",
+            "randomize" => 120,
         ));
 
 	}
@@ -132,15 +133,13 @@ class General extends Core\Component implements Core\Handler {
 	/**
 	 * Запускается как задача раз в день
 	 * Очищает каталог от мусора
-	 * @todo включить функцию     
 	 **/
-    public static function cleanup() {
-    
+    public static function cleanup() {     
 		// Удаляем старые конструкторы (7 дней)
 		Model\Constructor::all()
             ->leq("created", \util::now()->shiftDay(-7))
-            ->delete();
-
+            ->delete(); 
     }
+    
 	
 }

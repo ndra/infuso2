@@ -88,6 +88,12 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 					'type' => 'textfield',
 					'editable' => '1',
 					'label' => 'Источник',
+				),  array (
+					'name' => 'title',
+					'type' => 'textfield',
+					'editable' => '1',
+					'label' => 'Название',
+                    
 				),
 			),
 		);
@@ -134,12 +140,24 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 	/**
      * Возвращает параметры вызываемого метода
      **/
-    public function methodParams(){
+    public function methodParams() {
         $params = $this->pdata("params");
         if(!is_array($params)) {
             $params = array();
         }
         return $params;
+    }
+    
+    public function extra($key = null, $val = null) {
+        if(func_num_args() == 0) {
+            return $thius->pdata("internalParams");
+        } elseif (func_num_args() == 1) {
+            return $this->pdata("internalParams")[$key];
+        } elseif (func_num_args() == 2) {
+            $data = $this->pdata("internalParams");
+            $data[$key] = $val;
+            $this->data("internalParams", $data);
+        }
     }
 
     /**
@@ -238,8 +256,8 @@ class Task extends ActiveRecord\Record implements Core\Handler {
         
         $params = $this->pdata("params");
         
-        if($params["title"]) {
-            return $params["title"];
+        if($title = $this->data("title")) {
+            return $title;
         }
     
         if(strtolower($this->data("class")) == "infuso\\cms\\task\\reflex") {

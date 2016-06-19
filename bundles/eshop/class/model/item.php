@@ -6,7 +6,9 @@ use Infuso\Core;
 /**
  * Модель товара
  **/
-class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Searchable  {
+class Item extends \Infuso\ActiveRecord\Record
+    implements \Infuso\Cms\Search\Searchable,
+    Core\Handler  {
 
     const STATUS_USER_DISABLED = 1000;
     const STATUS_GROUP_DISABLED = Group::STATUS_USER_DISABLED;
@@ -191,5 +193,7 @@ class Item extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Sea
             }
         }
     }
+    
+
 
 }

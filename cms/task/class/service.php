@@ -45,7 +45,7 @@ class Service extends Core\Service {
         // Разруливаем олдскульный случай, когда параметры передавались не массивом а в аргументах
 
         if(is_array($params)) {
-            $params = \util::a($params)->filter("class", "query", "method", "params", "crontab", "randomize")->value();
+            $params = \util::a($params)->filter("class", "query", "method", "params", "crontab", "randomize", "title")->value();
 
         } else {
 
