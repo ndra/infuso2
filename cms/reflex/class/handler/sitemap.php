@@ -60,6 +60,8 @@ class Sitemap extends Core\Component implements Core\Handler {
     public static function end() {   
         $xml = '</urlset>';
         $path = self::tmpPath();
+        $fp = fopen(self::tmpPath()->native(), 'a');
+        fwrite($fp, $xml);
         Core\File::get($path)->rename(self::destPath());
     }
     
