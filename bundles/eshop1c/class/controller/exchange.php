@@ -192,7 +192,7 @@ class Exchange extends Core\Controller {
     /** 
      * Выполняет один шаг обработки файла inport.xml
      **/         
-    public static function importCatalog($filename = "import.xml") {
+    public static function _importCatalog($filename = "import.xml") {
     
         service("log")->log(array(
 			"message" => "importCatalog $filename",
