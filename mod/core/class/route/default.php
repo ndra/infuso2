@@ -9,7 +9,7 @@ class mod_route_default extends \Infuso\Core\Route {
 		return -1000;
 	}
 
-	public function urlToAction($url) {
+	public function urlToAction($url) {      
 	
 		$segments = explode("/",trim(strtolower($url->path()),"/"));
 		$controllers = service("classmap")->classmap("controllers");
@@ -17,7 +17,7 @@ class mod_route_default extends \Infuso\Core\Route {
 
 		do {
 
-			$controller = implode("/",$segments);
+			$controller = implode("/",$segments); 
 			
 			$class = $controllers[$controller];
 			

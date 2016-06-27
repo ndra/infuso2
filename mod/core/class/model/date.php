@@ -49,6 +49,17 @@ class Date extends Field {
         if($val === null) {
             return null;
         }
+        
+        // В MySQL < 5.7 моглы быть такие вот значения даты при не заданном defaultValue
+        // Более поздние версии MySQL ругаются на такие значения
+        // Преобразуем их к null
+        if($val === "0000-00-00 00:00:00") {
+            return null;
+        }
+    
+        if($val === "0000-00-00") {
+            return null;
+        }
     
 		if(is_scalar($val) && ($val * 1)."" === $val."") {
 		    $val = util::date($val)->standart();
