@@ -21,30 +21,12 @@ class Bigint extends Field {
 		return "index";
 	}
 
-	public function editorInx() {
-		return array(
-		    "type" => "inx.textfield",
-		    "width" => 70,
-		    "value" => $this->value(),
-		);
-	}
-
 	public function filterType() {
 		return "number";
 	}
 
 	public function prepareValue($val) {
 		return floor($val);
-	}
-
-	public function tableCol() {
-		return array(
-	    	width => 50,
-		);
-	}
-
-	public function tableRender() {
-	    return $this->rvalue();
 	}
 
 	public function defaultValue() {
