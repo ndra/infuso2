@@ -12,6 +12,10 @@ class Select extends Bigint {
 	public function typeName() {
 		return "Список";
 	}
+    
+    public function typeAlias() {
+        return array("select", "list");
+    }    
 
 	/**
 	 * Возвращает текстовое значение элемента списка

@@ -12,6 +12,13 @@ class Bigint extends Field {
 	public function typeName() {
 		return "Большое целое";
 	}
+    
+    public function typeAlias() {
+        return array(
+            "bigint",
+            "integer"
+        );
+    }
 
 	public function mysqlType() {
 		return "bigint(20)";

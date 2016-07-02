@@ -36,6 +36,12 @@ class Currency extends Select {
             "sign" => "T",   
         )
     );
+    
+    public function typeAlias() {
+        return array(
+            "currency",
+        );
+    }
 
     public function typeID() {
         return "rtwaho8esx49ijy9rtc1";

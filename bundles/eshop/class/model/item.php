@@ -194,6 +194,8 @@ class Item extends \Infuso\ActiveRecord\Record
         }
     }
     
-
-
+    public function _price() {
+        return $this->data("price");
+    }
+    
 }

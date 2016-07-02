@@ -12,14 +12,12 @@ class Decimal extends Bigint {
 	public function mysqlType() { return "double"; }
 	
 	public function mysqlIndexType() { return "index"; }
-
-	public function editorInx() {
-		return array(
-		    "type" => "inx.textfield",
-		    "width" => 70,
-		    "value" => $this->value(),
-		);
-	}
+    
+    public function typeAlias() {
+        return array(
+            "decimal",
+        );
+    }
 
 	public function filterType() { return "number"; }
 

@@ -12,6 +12,13 @@ class Cost extends Decimal {
 	public function typeName() {
 		return "Стоимость";
 	}
+    
+    public function typeAlias() {
+        return array(
+            "cost",
+            "price"
+        );
+    }
 
 	public function mysqlType() {
 		return "decimal(16,2)";
