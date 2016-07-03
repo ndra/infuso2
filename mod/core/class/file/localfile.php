@@ -23,7 +23,7 @@ class LocalFile extends file {
 	public static function normalizePath($path) {
 	    $path = preg_replace("/\/+/","/",$path);
 	    $path = preg_replace("/\.+/",".",$path);
-	    $path = preg_replace("/[^\/._\-1234567890qwertyuiopasdfghjklzxcvbnm]/i","",$path);
+	    $path = preg_replace("/[^\/._\-@1234567890qwertyuiopasdfghjklzxcvbnm]/i","",$path);
 	    $path = "/".trim($path,"/ ");
 	    return $path;
 	}
