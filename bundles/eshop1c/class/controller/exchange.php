@@ -63,7 +63,7 @@ class Exchange extends Core\Controller {
         }
 
         service("log")->log(array(
-			"message" => $cmd." ".var_export($_GET,1)." ".Eshop1C\Utils::importCycle(),
+			"message" => $_SERVER['REMOTE_ADDR']." ".$cmd." ".var_export($_GET,1)." ".Eshop1C\Utils::importCycle(),
 			"type" => "1c/exchange"
 		));
 		
@@ -93,6 +93,11 @@ class Exchange extends Core\Controller {
                 // Сохраняем имя последнего переданного файла
                 // Это понадобится нам позже чтобы определить когда закончить выгрузку
                 Core\File::get("{$dir}/last-import-file.txt")->put($_GET["filename"]);
+                
+                service("log")->log(array(
+        			"message" => $_SERVER['REMOTE_ADDR']." catalog::file file received ".$_GET["filename"]." ".strlen($str)." bytes",
+        			"type" => "1c/exchange"
+        		));
 
                 echo "success";
                 break;
