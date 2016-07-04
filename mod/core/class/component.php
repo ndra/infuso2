@@ -57,7 +57,11 @@ class Component {
 			$reflectionClass = new \ReflectionClass($behaviour);
 			$reflectionMethod = $reflectionClass->getMethod($method);
 			$closure = $reflectionMethod->getClosure(new $behaviour);
-			$this->behaviourClosures[$key] = $closure->bindTo($this);
+            if($reflectionMethod->isStatic()) {
+                $this->behaviourClosures[$key] = $closure;
+            } else {
+                $this->behaviourClosures[$key] = $closure->bindTo($this);
+            }
 		
 		}
 		
