@@ -423,6 +423,7 @@ abstract class Editor extends Core\Controller {
             return service("log")
                 ->all()
                 ->eq("index", get_class($this->item()).":".$this->item()->id())
+                ->param("menu", false)
                 ->param("title", "Лог");
         }   
     }

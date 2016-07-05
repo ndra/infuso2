@@ -73,18 +73,23 @@ class Menu extends Core\Controller {
                 switch($mode) {
 		            case "editors":
                         foreach($editor->childrenCollections() as $collection) {
-			                foreach($collection->editors() as $editor) {
-			                    $ret[] = $editor;
+                            if($collection->collection()->param("menu") != false) {
+    			                foreach($collection->editors() as $editor) {
+    			                    $ret[] = $editor;
+                                }
                             }
                         }              
 				        break;
 					case "count":
                         foreach($editor->childrenCollections() as $collection) {
-			                $count += $collection->collection()->count();
+                            if($collection->collection()->param("menu") != false) {
+                                $count += $collection->collection()->count();
+                            }
                         }
 				        break;
-			}
-		}
+                }
+                break;
+        }
 		
 		switch($mode) {
             case "editors":
