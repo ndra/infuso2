@@ -212,13 +212,6 @@ class Task extends \Infuso\ActiveRecord\Record {
             $this->sentToBeginning();
             $this->finalizeWorkflow();
         }
-
-        // Перенес это в контроллер 
-        /* if($this->field("status")->changed() && $this->data("status") == self::STATUS_CHECKOUT) {
-            app()->fire("board/task/done", array(
-                "task" => $this,
-            ));
-        } */
         
         $status = $this->field("status")->initialValue();
         $this->touchedStatus[] = $status;

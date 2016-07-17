@@ -145,8 +145,8 @@ class Task extends Base {
      * Сохраняет приоритет списка задач.
      * Используется при сортировке
      **/
-    public function post_savePriority($p) {
-        app()->suspendEvents();
+    public function post_savePriority($p) {     
+   
         $n = 0;
         foreach($p["priority"] as $taskId) {
             $task = Model\Task::get($taskId);
