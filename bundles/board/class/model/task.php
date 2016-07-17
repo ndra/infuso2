@@ -304,7 +304,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 
     }
     
-    public function chargeTime($users) {
+    public function chargeTime($users) {     
         foreach($users as $user => $duration) {
             $x = $this->workflow()->create(array(
                 "userId" => $user,

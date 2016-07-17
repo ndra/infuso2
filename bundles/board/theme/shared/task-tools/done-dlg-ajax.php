@@ -5,7 +5,7 @@ $users = \Infuso\User\Model\User::all()->eq("id",$users);
 
 <form class='w3T2t7XKGU' data:task='{$task->id()}' >
 
-    <table>
+    <table class='time' >
         foreach($users as $user) {
             <tr>
                 
@@ -24,6 +24,12 @@ $users = \Infuso\User\Model\User::all()->eq("id",$users);
             </tr>
         }
     </table>
+    
+    widget("infuso\\cms\\ui\\widgets\\textarea")
+        ->style("width", "100%")
+        ->addClass("comment")
+        ->placeholder("Комментарий")
+        ->exec();
     
     widget("infuso\\cms\\ui\\widgets\\button")
         ->text("Сохранить")

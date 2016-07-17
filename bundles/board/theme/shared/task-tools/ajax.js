@@ -23,6 +23,8 @@ mod(".ttbuu8389u").init(function() {
                 case "done":
                     $.window({
                         width: 800,
+                        height: 400,
+                        title: "Задача выполнена",
                         call: {
                             cmd: "infuso/board/controller/task/doneDlgContent",
                             taskId:id
