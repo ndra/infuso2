@@ -401,21 +401,12 @@ class App {
     
     public function fire($eventName, $params = array()) {
 		$event = new Event($eventName, $params);
-        if(!$this->eventsSuspended) {
-            $event->fire();
-        }
+        $event->fire();
         return $event;
     }
     
     public function user() {
         return \user::active();
-    }
-    
-    public function suspendEvents() {
-        $this->eventsSuspended = true;
-    }
-    
-	public function unsuspendEvents() {
     }
     
     /**
