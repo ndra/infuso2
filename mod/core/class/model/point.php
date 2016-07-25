@@ -12,6 +12,10 @@ class Point extends Textfield {
     public function typeName() {
         return "Точка";
     }
+    
+    public function typeAlias() {
+        return array("point", "coords");
+    }
 
     public function mysqlType() {
         return "Point";

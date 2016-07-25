@@ -17,7 +17,7 @@ class Item extends \Infuso\ActiveRecord\Record
 
     public static function model() {
         
-        if(Group::multigroupMode()){
+        if(Group::multigroupMode()) {
             $field =  array (
 				'name' => 'groupsId',
                 'type' => 'car3-mlid-mabj-mgi3-8aro',
@@ -27,7 +27,7 @@ class Item extends \Infuso\ActiveRecord\Record
                 'indexEnabled' => '1',
                 'class' => Group::inspector()->className(),
 			);   
-        }else{
+        } else {
             $field =  array (
 				'name' => 'groupId',
                 'type' => 'pg03-cv07-y16t-kli7-fe6x',
@@ -66,7 +66,8 @@ class Item extends \Infuso\ActiveRecord\Record
                     'editable' => '1',
                     'label' => 'Товар активен',
                     "default" => 1,
-                ),$field, 
+                ), 
+                $field, 
                 array (
                     'name' => 'price',
                     'type' => 'nmu2-78a6-tcl6-owus-t4vb',
