@@ -96,7 +96,7 @@ class Service extends Core\Service {
 	/**
 	 * Создает новую запись в базе
 	 **/
-	public function create($class, $data=array(), $keepID = false) {
+	public function create($class, $data = array(), $keepID = false) {
 
 		if(!is_string($class)) {
             throw new \Exception ("reflex::create() first argument must be string, have ".gettype($class));

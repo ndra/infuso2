@@ -42,7 +42,7 @@ class SyncServer extends \Infuso\Core\Controller {
 
         if(service("classmap")->testClass($class)) {
 
-            $items = \reflex::get($class)
+            $items = service("ar")->collection($class)
                 ->asc("id")
                 ->gt("id",$p["id"])
                 ->limit($limit);

@@ -144,7 +144,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Возвращает список всех задач
      **/
     public static function all() {
-        return \Infuso\ActiveRecord\Record::get(get_class())
+        return service("ar")->collection(get_class())
             ->addBehaviour("Infuso\\Board\\Model\\CollectionBehaviour")
             ->asc("priority");
     }
@@ -153,7 +153,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      * Возвращает задлачу по id
      **/
     public static function get($id) {
-        return \Infuso\ActiveRecord\Record::get(get_class(),$id);
+        return service("ar")->get(get_class(),$id);
     }
 
     /**

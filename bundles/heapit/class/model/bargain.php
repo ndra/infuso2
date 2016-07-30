@@ -112,7 +112,8 @@ class Bargain extends \Infuso\ActiveRecord\Record {
     }
 
     public static function all() {
-        return \reflex::get(get_class())
+        return service("ar")
+            ->collection(get_class())
             ->desc("created")
             ->addBehaviour("infuso\\heapit\\model\\BargainCollection");
     }

@@ -3,11 +3,10 @@
 /**
  * Модель производителя
 **/
-class eshop_vendor extends reflex {
+class eshop_vendor extends \Infuso\ActiveRecord\Record { 	
 
-	
-
-public static function model() {return array (
+    public static function model() {
+        return array (
   'name' => 'eshop_vendor',
   'parent' => '',
   'fields' => 

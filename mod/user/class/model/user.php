@@ -136,7 +136,7 @@ class User extends ActiveRecord\Record {
      * Возвращает коллекцию всех пользователей
      **/
     public static function all() {
-        return \reflex::get(get_class())
+        return service("ar")->collection(get_class())
             ->addBehaviour("\\Infuso\\User\\Model\\UserCollection")
 			->desc("registrationTime");
     }

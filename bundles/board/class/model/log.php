@@ -88,7 +88,7 @@ class Log extends Record {
      * Возвращает коллекцию всех записей в логе
      **/
     public static function all() {
-        return Record::get(get_class())->desc("created");
+        return service("ar")->collection(get_class())->desc("created");
     }
 
     /**

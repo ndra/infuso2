@@ -1,6 +1,6 @@
 <?
 
-class reflex_editor_trash extends reflex {
+class reflex_editor_trash extends \Infuso\ActiveRecord\Record {
 
 	
 
@@ -95,11 +95,11 @@ public static function model() {return array (
 );}
 
 public static function get($id) {
-		return reflex::get(get_class(),$id);
+		return service("ar")->get(get_class(), $id);
 	}
 	
 	public static function all() {
-		return reflex::get(get_class())->desc("datetime");
+		return service("ar")->collection(get_class())->desc("datetime");
 	}
 
 	public static function reflex_root() {

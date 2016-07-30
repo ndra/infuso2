@@ -63,7 +63,7 @@ class Operation extends ActiveRecord\Record {
      * Возвращает коллекцию всех операций
      **/
     public static function all() {
-        return \reflex::get(get_class())->limit(0);
+        return service("ar")->collection(get_class())->limit(0);
     }
 
     /**
@@ -73,7 +73,7 @@ class Operation extends ActiveRecord\Record {
     public static function get($code) {
         $ret = self::all()->eq("code",$code)->one();
         if(!$ret->exists()) {
-            $ret = Core\Mod::app()->service("ar")->virtual(get_class(),array(
+            $ret = service("ar")->virtual(get_class(),array(
                 "code" => $code,
             ));
         }

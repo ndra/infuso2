@@ -207,10 +207,7 @@ class App {
                 if(!$event->stopped()) {
                 
         		    // Трейсим ошибки
-        		    $this->trace(array(
-                        "message" => $_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$exception->getMessage(),
-                        "type" => "error"
-                    ));                
+        		    $this->trace($exception);                
                 
     			    $this->tm("/mod/exception")
                         ->param("exception", $exception)
@@ -389,6 +386,13 @@ class App {
      **/
     public function trace($message, $type = null) {
     
+        if(is_object($message) && is_a($message, "Exception")) {
+            $message = array(
+                "message" => $_SERVER["REMOTE_ADDR"]." at ".$_SERVER["REQUEST_URI"]." got exception: ".$message->getMessage()." ".var_export($message->getTrace(), true),
+                "type" => "error"
+            );
+        }
+    
         if(!is_array($message)) {
             $message = array(
                 "message" => $message,
@@ -426,11 +430,6 @@ class App {
     public function createFatalErrorHandler() {
     
         register_shutdown_function(function() {
-        
-            $errfile = "unknown file";
-            $errstr  = "shutdown";
-            $errno   = E_CORE_ERROR;
-            $errline = 0;
             
             $error = error_get_last();
             

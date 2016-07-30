@@ -2,7 +2,6 @@
 
 namespace infuso\ActiveRecord;
 use \infuso\core\mod;
-use \reflex;
 
 /**b
  * Модель коллекции элементов
@@ -94,7 +93,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     /**
      * Присоединяет к коллекции другую коллекцию или таблицу
      **/
-    public function join($class,$a=null,$b=null) {
+    public function join($class, $a=null, $b=null) {
 
         if(is_string($class) && preg_match("/^field\:(.*)/",$class,$matches)) {
             $this->joinByField($matches[1]);
@@ -113,7 +112,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 "type" => "inner join",
             );
 
-        } elseif(func_num_args()==3) {
+        } elseif (func_num_args() == 3) {
 
             $thisClass = $this->itemClass();
             $on = "`$class`.`$b` = `$thisClass`.`$a`";
@@ -167,7 +166,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         }
 
         foreach($this->listJoins as $join) {
-            foreach(reflex::virtual($join["class"])->fields() as $field) {
+            foreach(service("ar")->virtual($join["class"])->fields() as $field) {
                 $ret[] = $field;
             }
         }
@@ -193,7 +192,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->param("fieldJoin-".$name,true);
 
         $class = $field->itemClass();
-        $list = reflex::get($class);
+        $list = service("ar")->collection($class);
         $this->join($list,$field->name(), $field->foreignKey());
 
         if($collection) {
@@ -238,7 +237,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         foreach($this->listJoins as $join) {
 
             $joinClassName = $join["class"];
-            $joinTable = reflex::get($joinClassName)->virtual()->prefixedTableName();
+            $joinTable = service("ar")->collection($joinClassName)->virtual()->prefixedTableName();
             $on = $join["on"];
             $joinType = $join["type"];
 
@@ -904,7 +903,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->load();
         $ret = $this->items[0];
         if(!$ret)
-            return reflex::get($this->itemClass(),0);
+            return service("ar")->get($this->itemClass(),0);
         return $ret;
     }
 
@@ -926,7 +925,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $this->limit(1)->page($n);
         $this->load();
         $ret = $this->items[0];
-        if(!$ret) return reflex::get($this->itemClass(),0);
+        if(!$ret) return service("ar")->get($this->itemClass(),0);
         return $ret;
     }
 
@@ -963,11 +962,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     /**
      * Возвразает среднее значение по колонке
      **/
-    public function avg($key) {
-        $this->callBeforeQuery();
-        $key = $this->normalizeColName($key);
-        reflex_mysql::query("select avg($key) from {$this->from()} where {$this->whereQuery()} ");
-        return reflex_mysql::get_scalar();
+    public function avg($key) {         
     }
 
     /**
@@ -1028,7 +1023,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
     /**
      * Устанавливает / возвращает заголовок коллекции
-     * Это равносильно вызову метода reflex_collection::param("title",$myTitle)
+     * Это равносильно вызову метода Collection::param("title",$myTitle)
      **/
     public final function title($title=null) {
         if(func_num_args()==0) {
@@ -1037,19 +1032,6 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             $this->param("title",$title);
             return $this;
         }
-    }
-
-    /**
-     * Устанавливает / возвращает иконку коллекции
-     * Это равносильно вызову метода reflex_collection::param("icon",$myTitle)
-     **/
-    public final function icon($title=null) {
-        if(func_num_args()==0) {
-            $ret = $this->param("icon");
-            if(!$ret)
-                $ret = $this->editor()->icon();
-            return $ret;
-        } else { $this->param("icon",$title); return $this; }
     }
 
     /**

@@ -42,7 +42,7 @@ class Index extends \Infuso\ActiveRecord\Record {
      * Возвращает коллекцию задач
      **/
     public static function all() {
-        return \reflex::get(get_class());
+        return service("ar")->collection(get_class());
     }
 
     /**

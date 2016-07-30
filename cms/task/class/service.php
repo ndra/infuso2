@@ -24,7 +24,6 @@ class Service extends Core\Service {
             ->leq("nextLaunch", \util::now())
             ->eq("completed", 0);
     }
-    
 
     /**
      * Добавляет новое задание очередь. Задание - это выполнение заданного метода заданной модели по крону.

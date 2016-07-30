@@ -68,7 +68,7 @@ class Project extends \Infuso\ActiveRecord\Record {
 	 * Возвращает список всех проектов
 	 **/
 	public static function all() {
-		return \Infuso\ActiveRecord\Record::get(get_class())
+		return service("ar")->collection(get_class())
             ->addBehaviour("infuso\\board\\model\\projectcollection")
 			->desc("priority");
 	}

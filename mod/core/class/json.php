@@ -54,8 +54,13 @@ class mod_json extends \infuso\core\controller {
                 
                 \Infuso\Core\Defer::callDeferedFunctions();   
     
-    		} catch(Exception $ex) { 
-    			app()->msg("<b>Exception:</b> ".$ex->getMessage(),1);
+    		} catch(Exception $ex) {
+                
+    		    // Трейсим ошибки
+    		    app()->trace($ex); 
+                
+                app()->msg("<b>Exception:</b> ".$ex->getMessage(), 1);
+                
     		}
             
             $n++;

@@ -44,7 +44,7 @@ class Domain extends ActiveRecord\Record {
 	 * Возвращает список доманов
 	 **/
 	public static function all() {
-		return \reflex::get(get_class())
+		return service("ar")->collection(get_class())
 			->asc("priority")
 			->param("sort",true);
 	}

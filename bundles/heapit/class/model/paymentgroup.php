@@ -43,7 +43,7 @@ class PaymentGroup extends \Infuso\ActiveRecord\Record {
     }
 
     public static function all() {
-        return \reflex::get(get_class())->asc("title");
+        return service("ar")->collection(get_class())->asc("title");
     }
     
     public static function get($id) {

@@ -191,7 +191,6 @@ class classmapService extends service {
 	    "tmp_theme" => "\\infuso\\template\\theme",
 	    "tmp_delayed" => "\\infuso\\template\\delayed",
 	    "util" => "\\infuso\\util\\util",
-	    "reflex" => "\\infuso\\activerecord\\record",
 	    "reflex_editor" => "\\infuso\\cms\\reflex\\editor",
 	    "admin" => "\\infuso\\cms\\admin\\admin",
 	    "user" => "\\infuso\\user\\model\\user",

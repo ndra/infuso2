@@ -39,7 +39,7 @@ class Comment extends \Infuso\ActiveRecord\Record {
     }
     
     public static function all() {
-        return \reflex::get(get_class())->desc("datetime")->addBehaviour("infuso\\heapit\\model\\CommentCollection");
+        return service("ar")->collection(get_class())->desc("datetime")->addBehaviour("infuso\\heapit\\model\\CommentCollection");
     }
     
     public static function get($id) {

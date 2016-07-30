@@ -103,7 +103,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	 * Родитель используется в каталоге для построения пути к объекту
 	 **/
 	public function recordParent() {
-		return reflex::get("reflex_none",0);
+		return service("ar")->get("reflex_none", 0);
 	}
 	
 	public function recordTitle() {
@@ -277,21 +277,9 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
     }
 
-    public final function __construct($id=0) {
+    public final function __construct($id = 0) {
         $this->id = $id;
         $this->status = self::STATUS_NEW;
-    }
-
-    public static function get($class,$id=null) {
-    
-        if(func_num_args()==1) {
-            return service("ar")->collection($class);
-        } elseif(func_num_args()==2) {
-            return service("ar")->get($class,$id);
-        }
-        
-        throw new \Exception("ActiveRecord::get() wrong number of arguments");
-
     }
 
     /**

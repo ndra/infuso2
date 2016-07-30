@@ -44,7 +44,7 @@ class RootTab extends Record {
 	}
 	
 	public static function all() {
-	    return Record::get(get_class())->desc("priority");
+	    return service("ar")->collection(get_class())->desc("priority");
 	}
 
 	public static function allVisible() {
@@ -60,7 +60,7 @@ class RootTab extends Record {
 	}
 	
 	public static function get($id) {
-	    return reflex::get(get_class(),$id);
+	    return service("ar")->get(get_class(), $id);
 	}
 
     public function dataWrappers() {

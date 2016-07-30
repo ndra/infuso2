@@ -113,7 +113,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
      * Возвращает коллекцию задач
      **/
     public static function all() {
-        return \reflex::get(get_class())->desc("nextLaunch",true);
+        return service("ar")->collection(get_class())->desc("nextLaunch",true);
     }
 
     /**

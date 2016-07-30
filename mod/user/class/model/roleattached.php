@@ -39,11 +39,11 @@ class RoleAttached extends ActiveRecord\Record {
 	 * Возвращает все авторизации всех пользователей
  	**/
 	public static function all() {
-		return \reflex::get(get_class())->desc("role");
+		return service("ar")->collection(get_class())->desc("role");
 	}
 
 	public static function get($id) {
-		return \reflex::get(get_class(),$id);
+		return service("ar")->get(get_class(),$id);
 	}
 
 	public function user() {

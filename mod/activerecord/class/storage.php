@@ -35,7 +35,7 @@ class Storage extends \Infuso\Core\Controller {
 	}
 
 	public function record() {
-		return Record::get($this->class,$this->id);
+		return service("ar")->get($this->class, $this->id);
 	}
 
 	public function defaultFolder() {

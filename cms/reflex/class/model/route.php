@@ -80,7 +80,7 @@ class Route extends ActiveRecord\Record {
 	}
 
 	public static function all() {
-		return \reflex::get(get_class())->asc("priority");
+		return service("ar")->collection(get_class())->asc("priority");
 	}
 	
 	/**
