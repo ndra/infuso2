@@ -39,7 +39,7 @@ class Select extends Bigint {
 	/**
 	 * Возвращает список значений ввиде массива $ключ => $значение
 	 **/
-	public function options($options=null) {
+	public function options($options = null) {
 	
 	    if(func_num_args() == 0) {
 	

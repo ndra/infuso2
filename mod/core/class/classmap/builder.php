@@ -169,12 +169,6 @@ class Builder {
 		return $ret;
 	}
 
-	public function sortbehaviours($a,$b) {
-		$a = new $a;
-		$b = new $b;
-		return $a->behaviourPriority() - $b->behaviourPriority();
-	}
-
 	/**
 	 * Функция возвращает поведения по умолчанию ввиде массива
 	 * Этот массив будет использован при построении карты классов
@@ -195,7 +189,11 @@ class Builder {
 
 		// Сортируем поведения
 		foreach($ret as $key=>$val) {
-		    usort($ret[$key],array(self,"sortBehaviours"));
+		    usort($ret[$key], function($a,$b) {
+                $a = new $a;
+                $b = new $b;
+                return $a->behaviourPriority() - $b->behaviourPriority();
+            });
 		}
 
 		return $ret;
@@ -257,12 +255,6 @@ class Builder {
 		return $services;
 	}
 	
-	public function sortRoutes($a,$b) {
-	    $a = new $a();
-	    $b = new $b();
-	    return $b->priority() - $a->priority();
-	}
-	
 	public static function getRoutes() {
 
 		$ret = array();
@@ -273,7 +265,11 @@ class Builder {
 		}
 		
 		// Сортируем поведения
-	    usort($ret,array(self,"sortRoutes"));
+	    usort($ret, function($a,$b) {
+            $a = new $a();
+            $b = new $b();
+            return $b->priority() - $a->priority();
+        });
 
 		return $ret;
 	}

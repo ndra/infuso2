@@ -25,7 +25,7 @@ class FieldType extends Select {
 		return trim($val);
 	}
 
-	public function options() {
+	public function options($options = null) {
 	    $options = array();
 	    $classes = service("classmap")->map("infuso\\core\\model\\field");
 	    foreach($classes as $class) {

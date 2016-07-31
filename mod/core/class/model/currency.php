@@ -73,7 +73,7 @@ class Currency extends Select {
         return self::$codes[$this->value()]["sign"];
     }
 
-    public function options() {
+    public function options($options = null) {
         $ret = array();
         foreach(self::$codes as $n=>$item)
             $ret[$n] = $item["code"];
