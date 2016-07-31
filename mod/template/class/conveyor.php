@@ -241,6 +241,8 @@ class Conveyor extends Core\Component {
         }
 
         $head = "";
+        
+        $render = new Render();
 
         // Одиночные css
         //foreach($singleCss as $item) {
@@ -248,7 +250,7 @@ class Conveyor extends Core\Component {
         //}
 
         // Упакованные css
-        $packCss = Render::packIncludes($packCss,"css");
+        $packCss = $render->packIncludes($packCss,"css");
         if($packCss) {
 			$head.= "<style type='text/css'>";
 			$head.= Core\File::get($packCss)->data();
@@ -261,7 +263,7 @@ class Conveyor extends Core\Component {
         //}
 
         // Упакованные js
-        $packJs = Render::packIncludes($packJs, "js");
+        $packJs = $render->packIncludes($packJs, "js");
         if($packJs) {
             $head.= "<script type='text/javascript' src='$packJs'></script>\n";
         }
