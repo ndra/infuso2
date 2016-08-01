@@ -46,7 +46,7 @@ class Component {
      * При этом контекст замыкания - $this - этот объект
      * todo Оптимизация скорости, кэширование
      **/
-    public function behaviourMethodFactory($behaviour,$method) {
+    public function behaviourMethodFactory($behaviour, $method) {
     
     	$key = $behaviour.":".$method;
     

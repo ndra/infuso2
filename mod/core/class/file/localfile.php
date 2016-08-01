@@ -2,7 +2,7 @@
 
 namespace infuso\core;
 
-class LocalFile extends file {
+class LocalFile extends File {
 
 	private static $temporaryFolder = "/mod/_temp/";
 	
@@ -21,10 +21,10 @@ class LocalFile extends file {
 	 * Нормирует имя файла, убирая из него небезопасные символы типа ../
 	 **/
 	public static function normalizePath($path) {
-	    $path = preg_replace("/\/+/","/",$path);
-	    $path = preg_replace("/\.+/",".",$path);
-	    $path = preg_replace("/[^\/._\-\@1234567890qwertyuiopasdfghjklzxcvbnm]/i","",$path);
-	    $path = "/".trim($path,"/ ");
+	    $path = preg_replace("/\/+/","/", $path);
+	    $path = preg_replace("/\.+/",".", $path);
+	    $path = preg_replace("/[^\/._\-\@1234567890qwertyuiopasdfghjklzxcvbnm]/i", "", $path);
+	    $path = "/".trim($path, "/ ");
 	    return $path;
 	}
 
@@ -32,7 +32,7 @@ class LocalFile extends file {
 	 * @return striung Возвращает имя файла (без пути)
 	 **/
 	public function name() {
-	    $name = explode("/",trim($this->path(),"/"));
+	    $name = explode("/", trim($this->path(), "/"));
 	    return end($name);
 	}
 
@@ -40,7 +40,7 @@ class LocalFile extends file {
 	 * @return string Имя файла без расширения
 	 **/
 	public function basename() {
-	    $name = explode(".",$this->name());
+	    $name = explode(".", $this->name());
 	    return $name[0];
 	}
 
@@ -48,7 +48,7 @@ class LocalFile extends file {
 	 * @return Возвращает расширение файла
 	 **/
 	public function ext() {
-	    return end(explode(".",$this->path()));
+	    return end(explode(".", $this->path()));
 	}
 
 	public function url() {
@@ -96,25 +96,31 @@ class LocalFile extends file {
 	    return $ret;
 	}
 
-	private static function scandir($dir,&$ret) {
+	private static function scandir($dir, &$ret) {
 	
 	    $localPath = app()->root()."/".$dir;
 		$files = @scandir($localPath);
-		if(!$files) return;
+		if(!$files) {
+            return;
+        }
 		foreach($files as $file) {
 
-		    if($file=="." || $file=="..")
+		    if($file=="." || $file=="..") {
 				continue;
-			if($file==".svn")
+            }
+			if($file==".svn") {
 			    continue;
-			if($file==".git")
+            }
+			if($file==".git") {
 			    continue;
-    		if($file==".DS_Store")
+            }
+    		if($file==".DS_Store") {
     		    continue;
+            }
             
 			$path = self::normalizePath("/".$dir."/".$file);
 
-		    if(strcmp($path,$from)<0) {
+		    if(strcmp($path,$from) < 0) {
 		        continue;
 		    }
 
@@ -122,7 +128,7 @@ class LocalFile extends file {
 				$ret[] = self::get($dir."/".$file);
 			} else {
 			    $ret[] = self::get($dir."/".$file);
-			    self::scandir($dir."/".$file,$ret,$from);
+			    self::scandir($dir."/".$file, $ret, $from);
 			}
 
 		}
