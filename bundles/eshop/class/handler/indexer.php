@@ -26,12 +26,41 @@ class Indexer implements Core\Handler {
     public static function createTask() {
         service("task")->add(array(
             "class" => get_class($this),
-            "method" => "indexStep",
+            "method" => "iteratorStep",
         ));
     }
     
-    public static function indexStep($params, $task) {
     
+     /**
+     * Получаем предельное кол-во итераций за шаг   
+	 * если не задано, ставим 10
+     **/ 
+    public static function iteratorSpeedMode() {
+        $speed = service("conf")->get("components", "infuso\\eshop\\handler\\indexer", "speed");
+        
+        if(!$speed){
+            $speed = 10;    
+        }
+        
+        return $speed;
+    }
+    
+     /**
+     * Прогоняем индексатор пока задача не будет выполнена 
+     **/ 
+    public static function iteratorStep($params, $task) {
+        
+        for ($step=0; $step<self::iteratorSpeedMode(); $step++){
+            
+            if($task->data("completed")){
+                break;    
+            }
+            
+            self::indexStep($params, $task);          
+        }
+    }
+    
+    public static function indexStep($params, $task) {
         $iterator = $task->data("iterator");
         
         switch($task->pdata("internalParams")["phase"]) {
