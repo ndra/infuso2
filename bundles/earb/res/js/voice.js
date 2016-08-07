@@ -25,26 +25,27 @@ earb.voice = function(context) {
         // Создаем осцилляторы    
         var osc1 = context.createOscillator();
         osc1.connect(releaseGain);   
+        //osc1.type = 'square';
         osc1.start(); 
         
         // Создаем осцилляторы    
-        var osc2 = context.createOscillator();
+       /* var osc2 = context.createOscillator();
         var gain2 = context.createGain();
         osc2.connect(gain2);
         gain2.gain.value = 200;
         gain2.connect(osc1.frequency);
         
-        osc2.start(); 
+        /osc2.start();    */
         
         this.on("start", function(params) {
         
             osc1.frequency.value = params.note.frequency;
-            osc2.frequency.value = params.note.frequency / 3;
+            /*osc2.frequency.value = params.note.frequency / 3;
         
             var time = context.currentTime;  
             
             gain2.gain.setValueAtTime(time, 200);
-            gain2.gain.setTargetAtTime(0, time, .001);  
+            gain2.gain.setTargetAtTime(0, time, .04);  */           
         });
         
     }

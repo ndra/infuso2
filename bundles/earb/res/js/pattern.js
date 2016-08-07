@@ -32,7 +32,6 @@ earb.pattern = function(instrument, params) {
             for(var i in datas) {
                 var note = datas[i];
                 if(note) {
-                    console.log(step);
                     note.play();
                 }
             }
@@ -57,20 +56,25 @@ earb.pattern = function(instrument, params) {
     } 
     
     this.at = function(position) {
-    
-        var song = instrument.song;
-        var note = song.note();
-        note.instrument = instrument;
-        
-        if(!pattern[position]) {
-            pattern[position] = [];
-        }
-        pattern[position].push(note);
         
         return new function() {
         
             this.note = function(params) {
-                note.setParams(params);
+            
+                var song = instrument.song;
+                var note = song.note(params);
+                note.instrument = instrument;
+                
+                if(!pattern[position]) {
+                    pattern[position] = [];
+                }
+                pattern[position].push(note);            
+            
+                return patternObject;
+            }
+            
+            this.clear = function() {
+                pattern[position] = [];
                 return patternObject;
             }
         

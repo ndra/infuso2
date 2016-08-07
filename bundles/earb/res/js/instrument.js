@@ -56,22 +56,61 @@ earb.instrument = function(song, instrumentParams) {
     }
     
     this.handleBar = function() {
+        this.clearVoices();
     }
     
     this.html = function() {
     
         $e = $("<div>")
             .css({
-                width: 200,
-                height: 100,
-                border: "1px solid gray"
+                height: 50*10,
+                border: "1px solid gray",
+                position: "relative"
             }).appendTo("body");
+            
+        for(var i = 0; i < pattern.duration() ; i ++ ) {
+        
+            for(var j = 0; j < 10; j ++ ) {
+                $("<div>")
+                    .css({
+                        width: 40,
+                        height: 40,
+                        position: "absolute",
+                        left: i * 50,
+                        top: j * 50,
+                        background: "#ccc"
+                    })
+                    .appendTo($e)
+                    .data("degree", j)
+                    .data("position", i)
+                    .click(function() {
+                        pattern
+                            .at($(this).data("position"))
+                            .clear()
+                            .at($(this).data("position"))
+                            .note({
+                                degree: $(this).data("degree") - 14,
+                                duration: 1
+                            });
+                    });
+            }
+        }
     
+    }
+    
+    this.clearVoices = function() {
+        var newVoices = [];
+        for(var i in voices) {
+            if(voices[i].isPlaying()) {
+                newVoices.push(voices[i]);
+            }
+        }
+        voices = newVoices;
     }
     
     this.updateHTML = function() {
     
-        if(!$e) {
+        /*if(!$e) {
             return;
         }
         
@@ -79,7 +118,7 @@ earb.instrument = function(song, instrumentParams) {
         for(var i in voices) {
             html += voices[i].isPlaying() ? "*" : "_";
         }
-        $e.html(html);
+        $e.html(html); */
         
     }
     

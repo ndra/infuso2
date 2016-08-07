@@ -1,28 +1,22 @@
 $(function() {
     
     var song = new earb({
-        bpm: 60
+        bpm: 120
     });
 
     var instrument = song.instrument();
-    instrument.html();
-    var x = instrument.pattern(4)
-    .at(0).note({
+    var pattern = instrument.pattern(16);
+    pattern.at(0).note({
         degree: 1,
         duration: 1
-    }).at(1).note({
-        degree: 2,
-        duration: 1
-    }).at(2).note({
-        degree: 3,
-        duration: 1
-    }).at(3).note({
-        degree: 4,
-        duration: 1
     });
-
-
+    instrument.html();    
     
+    $("<div>").css("height", 100).appendTo("body");
+    
+    var instrument2 = song.instrument();
+    var pattern = instrument2.pattern(16);
+    instrument2.html(); 
     
     //var voice = instrument.getFreeVoice();
     //var note = song.note();
