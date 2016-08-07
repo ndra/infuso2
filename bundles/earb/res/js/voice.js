@@ -6,7 +6,7 @@ earb.voice = function(context) {
     var releaseGain;
     var voice = this;
     
-    var isPlaying = false;
+    var isPlaying = false;  
 
     this.init = function() {   
     
@@ -18,7 +18,7 @@ earb.voice = function(context) {
         
         this.createOscillators();
     
-    }
+    }                
     
     this.createOscillators = function() {
     
@@ -58,16 +58,16 @@ earb.voice = function(context) {
     
         if(!(note instanceof earb.note)) {
             alert("voice.play() require note object");
-        }   
+        }     
     
-        isPlaying = true;
+        isPlaying = true;  
     
         var attackDuration = .003;
         var attackGain = 1;
         var decayDuration = .1;
         var decayGain = .8;
-        var sustainDuration = 5;
-        var sustainGain = 0;
+        var sustainDuration = 15;
+        var sustainGain = 0;    
         
         this.fire("start", {
             note: note
@@ -83,7 +83,7 @@ earb.voice = function(context) {
         dt += decayDuration;
         gain.gain.linearRampToValueAtTime(decayGain, currentTime + dt);
         dt += sustainDuration;
-        gain.gain.linearRampToValueAtTime(sustainGain, currentTime + dt);
+        gain.gain.linearRampToValueAtTime(sustainGain, currentTime + dt);        
         
         setTimeout(function() {         
             voice.stop();         
@@ -101,7 +101,8 @@ earb.voice = function(context) {
         releaseGain.gain.linearRampToValueAtTime(0, currentTime + releaseDuration); 
         setTimeout(function() {
             isPlaying = false;
-        }, releaseDuration * 1000);   
+            gain.disconnect();
+        }, releaseDuration * 1000 + 1);   
     }
     
     this.isPlaying = function() {

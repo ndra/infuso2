@@ -1,10 +1,11 @@
 $(function() {
     
     var song = new earb({
-        bpm: 130
+        bpm: 60
     });
 
     var instrument = song.instrument();
+    instrument.html();
     var x = instrument.pattern(4)
     .at(0).note({
         degree: 1,
@@ -19,6 +20,8 @@ $(function() {
         degree: 4,
         duration: 1
     });
+
+
     
     
     //var voice = instrument.getFreeVoice();
@@ -29,7 +32,7 @@ $(function() {
     
     song.play();
     setTimeout(function() {
-        song.stop();
+      //  song.stop();
     }, 10000);
 
 });

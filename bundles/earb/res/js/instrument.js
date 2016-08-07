@@ -4,11 +4,13 @@ earb.instrument = function(song, instrumentParams) {
        
     var voices = [];
     
-    var maxVoices = 10;
+    var maxVoices = 2;
     
     var gain;
     
     var pattern;
+    
+    var $e; // html элемент инструмента
     
     // Объект инструмента    
     Object.defineProperty(this, "song", {      
@@ -19,18 +21,10 @@ earb.instrument = function(song, instrumentParams) {
         }
     });
     
-    this.init = function() {
-    
+    this.init = function() {     
         gain = song.audioContext.createGain();
         gain.connect(song.audioContext.destination);
-        gain.gain.value = .5;
-    
-        // Создаем голоса
-        for(var i = 0; i < maxVoices; i ++) {
-            voices[i] = new earb.voice(song.audioContext);
-            voices[i].connect(gain);
-        }
-
+        gain.gain.value = .5;        
     }
     
     this.init();
@@ -39,12 +33,10 @@ earb.instrument = function(song, instrumentParams) {
      * Возвращает первый свободный голос
      **/                         
     this.getFreeVoice = function() {
-        for(var i = 0; i < maxVoices; i ++) {
-            if(!voices[i].isPlaying()) {
-                return voices[i];
-            }                
-        }
-        alert("Too many voices");
+        var voice = new earb.voice(song.audioContext);
+        voice.connect(gain);
+        voices.push(voice);
+        return voice;
     }
     
     this.play = function(note) {
@@ -57,10 +49,38 @@ earb.instrument = function(song, instrumentParams) {
     }
     
     this.handle32 = function(event) {
-        pattern.handle32(event);
+        if(pattern) {
+            pattern.handle32(event);
+        }
+        this.updateHTML();
     }
     
     this.handleBar = function() {
+    }
+    
+    this.html = function() {
+    
+        $e = $("<div>")
+            .css({
+                width: 200,
+                height: 100,
+                border: "1px solid gray"
+            }).appendTo("body");
+    
+    }
+    
+    this.updateHTML = function() {
+    
+        if(!$e) {
+            return;
+        }
+        
+        var html = "";
+        for(var i in voices) {
+            html += voices[i].isPlaying() ? "*" : "_";
+        }
+        $e.html(html);
+        
     }
     
 
