@@ -1,4 +1,4 @@
-earb.voice = function(context) {
+earb.voice = function(context, instrument) {
 
     earb.makeListener(this);
 
@@ -22,30 +22,15 @@ earb.voice = function(context) {
     
     this.createOscillators = function() {
     
-        // Создаем осцилляторы    
-        var osc1 = context.createOscillator();
-        osc1.connect(releaseGain);   
-        //osc1.type = 'square';
-        osc1.start(); 
-        
-        // Создаем осцилляторы    
-       /* var osc2 = context.createOscillator();
-        var gain2 = context.createGain();
-        osc2.connect(gain2);
-        gain2.gain.value = 200;
-        gain2.connect(osc1.frequency);
-        
-        /osc2.start();    */
-        
+        // Создаем осцилляторы 
         this.on("start", function(params) {
         
+            var osc1 = context.createOscillator();
+            osc1.connect(releaseGain);   
+            osc1.type = instrument.name() == "solo" ? 'sine' : "sawtooth";
             osc1.frequency.value = params.note.frequency;
-            /*osc2.frequency.value = params.note.frequency / 3;
-        
-            var time = context.currentTime;  
-            
-            gain2.gain.setValueAtTime(time, 200);
-            gain2.gain.setTargetAtTime(0, time, .04);  */           
+            osc1.start(); 
+         
         });
         
     }

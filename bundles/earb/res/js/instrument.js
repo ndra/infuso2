@@ -1,6 +1,10 @@
 earb.instrument = function(song, instrumentParams) {
 
+    instrumentParams = earb.extend(instrumentParams, {});
+
     earb.makeListener(this);
+    
+    var instrument = this;
        
     var voices = [];
     
@@ -22,9 +26,40 @@ earb.instrument = function(song, instrumentParams) {
     });
     
     this.init = function() {     
+    
         gain = song.audioContext.createGain();
-        gain.connect(song.audioContext.destination);
-        gain.gain.value = .5;        
+        gain.gain.value = .2;   
+        
+        if(instrumentParams.name == "sol2o") {
+        
+            var convolver = song.audioContext.createConvolver();
+            
+            var concertHallBuffer, soundSource;
+            
+            var ajaxRequest = new XMLHttpRequest();
+            ajaxRequest.open('GET', '/bundles/earb/res/convolution/irHall.ogg', true);
+            ajaxRequest.responseType = 'arraybuffer';
+            
+            ajaxRequest.onload = function() {
+                var audioData = ajaxRequest.response;
+                song.audioContext.decodeAudioData(audioData, function(buffer) {
+                    concertHallBuffer = buffer;
+                    soundSource = song.audioContext.createBufferSource();
+                    soundSource.buffer = concertHallBuffer;  
+                    convolver.buffer = concertHallBuffer;
+                });
+                
+            }
+            
+            ajaxRequest.send();
+            
+            convolver.connect(song.audioContext.destination);
+            gain.connect(convolver);
+        
+        }  else {
+            gain.connect(song.audioContext.destination);
+        }
+             
     }
     
     this.init();
@@ -33,7 +68,7 @@ earb.instrument = function(song, instrumentParams) {
      * Возвращает первый свободный голос
      **/                         
     this.getFreeVoice = function() {
-        var voice = new earb.voice(song.audioContext);
+        var voice = new earb.voice(song.audioContext, this);
         voice.connect(gain);
         voices.push(voice);
         return voice;
@@ -52,11 +87,15 @@ earb.instrument = function(song, instrumentParams) {
         if(pattern) {
             pattern.handle32(event);
         }
-        this.updateHTML();
+        this.updateHTML(Math.floor(event.tick / 2 ) % 16);
     }
     
     this.handleBar = function() {
         this.clearVoices();
+    }
+    
+    this.name = function() {
+        return instrumentParams.name;
     }
     
     this.html = function() {
@@ -68,33 +107,63 @@ earb.instrument = function(song, instrumentParams) {
                 position: "relative"
             }).appendTo("body");
             
+        instrument.$notes = {};
+        instrument.$cols = {};
+    
         for(var i = 0; i < pattern.duration() ; i ++ ) {
         
+            var $col = $("<div>").appendTo($e);
+            instrument.$cols[i] = $col;
+        
             for(var j = 0; j < 10; j ++ ) {
-                $("<div>")
+            
+                var degree = j + (instrumentParams.name == "solo" ? 0 : -21);
+            
+                var $note = $("<div>")
                     .css({
                         width: 40,
                         height: 40,
                         position: "absolute",
                         left: i * 50,
-                        top: j * 50,
-                        background: "#ccc"
+                        top: j * 50
                     })
-                    .appendTo($e)
-                    .data("degree", j)
+                    .appendTo($col)
+                    .data("degree", degree)
                     .data("position", i)
-                    .click(function() {
-                        pattern
-                            .at($(this).data("position"))
-                            .clear()
-                            .at($(this).data("position"))
-                            .note({
-                                degree: $(this).data("degree") - 14,
+                    .mousedown(function() {
+                        var place = pattern.at($(this).data("position"));
+                        if(place.notes().length) {
+                            place.clear();
+                        } else {                            
+                            place.clear();
+                            place.note({
+                                degree: $(this).data("degree"),
                                 duration: 1
                             });
+                        }
+                        instrument.updatePatternHTML();
                     });
+                instrument.$notes[i + "-" + degree] = $note;
             }
         }
+        
+        this.updatePatternHTML = function() {
+        
+            var notes = [];
+            for(var i = 0; i < pattern.duration(); i ++) {
+                var n = pattern.at(i).notes();
+                for(var j in n) {
+                    notes[i+ "-" + n[j].degree] = true;
+                }
+            }
+            
+            for(var i in instrument.$notes) {
+                instrument.$notes[i].css("background", notes[i] ? "red" : "#ccc");
+            };
+    
+        }
+        
+        this.updatePatternHTML();
     
     }
     
@@ -108,17 +177,11 @@ earb.instrument = function(song, instrumentParams) {
         voices = newVoices;
     }
     
-    this.updateHTML = function() {
+    this.updateHTML = function(n) {
     
-        /*if(!$e) {
-            return;
+        for(var i in instrument.$cols) {
+            instrument.$cols[i].css("opacity", i == n ? 1 : .8)
         }
-        
-        var html = "";
-        for(var i in voices) {
-            html += voices[i].isPlaying() ? "*" : "_";
-        }
-        $e.html(html); */
         
     }
     

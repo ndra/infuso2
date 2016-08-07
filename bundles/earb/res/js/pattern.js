@@ -77,6 +77,10 @@ earb.pattern = function(instrument, params) {
                 pattern[position] = [];
                 return patternObject;
             }
+            
+            this.notes = function() {
+                return pattern[position] || [];
+            }
         
         }();
     }    
