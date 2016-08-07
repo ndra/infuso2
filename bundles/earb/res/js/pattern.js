@@ -84,5 +84,11 @@ earb.pattern = function(instrument, params) {
         
         }();
     }    
+    
+    this.serialize = function() {
+        var data = {};
+        data.seria
+        return data;
+    }
    
 }

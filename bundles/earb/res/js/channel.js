@@ -7,9 +7,7 @@ earb.channel = function(song, channelParams) {
     var channel = this;
        
     var voices = [];
-    
-    var maxVoices = 2;
-    
+   
     var gain;
     
     var pattern;

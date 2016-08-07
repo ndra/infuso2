@@ -4,7 +4,7 @@ $(function() {
         bpm: 120
     });
     
-    song.scale(earb.scales.blues(0));
+    song.scale(earb.scales.arabic(0));
 
     var channel = song.channel();
     var pattern = channel.pattern(16);

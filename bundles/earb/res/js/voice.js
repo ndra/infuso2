@@ -27,7 +27,7 @@ earb.voice = function(context, instrument) {
         
             var osc1 = context.createOscillator();
             osc1.connect(releaseGain);   
-            osc1.type = instrument.name() == "solo" ? 'sine' : "sawtooth";
+            osc1.type = instrument.name() == "solo" ? 'sawtooth' : "sawtooth";
             osc1.frequency.value = params.note.frequency;
             osc1.start(); 
          
