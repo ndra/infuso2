@@ -2,10 +2,10 @@ window.earb = function(params) {
 
     this.params = params;
     
-    this.params = window.earb.extend(this.params, {
+    this.params = window.earb.extend({
         bpm: 120,
         timeSignature: [4,4],
-    });
+    }, this.params);
     
     var earb = this;   
 
@@ -19,7 +19,7 @@ window.earb = function(params) {
     
     var scale = window.earb.scales.minor(0);
     
-    this.instruments = [];
+    this.channels = [];
     
     var interval = null;
 
@@ -46,8 +46,8 @@ window.earb = function(params) {
             // Доля. Пока ничего не делаем с этим                    
         }
         
-        for(var i in earb.instruments) {
-            earb.instruments[i].handle32(timeEvent);
+        for(var i in earb.channels) {
+            earb.channels[i].handle32(timeEvent);
         }
         
         tick32 ++;
@@ -61,8 +61,8 @@ window.earb = function(params) {
         if(fn) {
             fn.apply(earb);
         }
-        for(var i in earb.instruments) {
-            earb.instruments[i].handleBar(event);
+        for(var i in earb.channels) {
+            earb.channels[i].handleBar(event);
         }
     }
     
@@ -90,10 +90,10 @@ window.earb = function(params) {
     /**
      * Создает новый инструмент
      **/         
-    this.instrument = function(params) { 
-        var instrument = new window.earb.instrument(this, params);
-        this.instruments.push(instrument);
-        return instrument;
+    this.channel = function(params) { 
+        var channel = new window.earb.channel(this, params);
+        this.channels.push(channel);
+        return channel;
     } 
     
     this.note = function(params) { 
@@ -180,11 +180,12 @@ earb.createScales();
 earb.extend = function(obj, extend) {
     if(!obj) {
         obj = {};
+    }    
+    if(!extend) {
+        extend = {};
     }
     for(var i in extend) {
-        if(obj[i] === undefined) {
-            obj[i] = extend[i];
-        }
+        obj[i] = extend[i];
     }
     return obj;
 }

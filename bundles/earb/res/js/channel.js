@@ -1,10 +1,10 @@
-earb.instrument = function(song, instrumentParams) {
+earb.channel = function(song, channelParams) {
 
-    instrumentParams = earb.extend(instrumentParams, {});
+    channelParams = earb.extend({}, channelParams);
 
     earb.makeListener(this);
     
-    var instrument = this;
+    var channel = this;
        
     var voices = [];
     
@@ -30,7 +30,7 @@ earb.instrument = function(song, instrumentParams) {
         gain = song.audioContext.createGain();
         gain.gain.value = .2;   
         
-        if(instrumentParams.name == "sol2o") {
+        if(channelParams.name == "solo") {
         
             var convolver = song.audioContext.createConvolver();
             
@@ -94,8 +94,9 @@ earb.instrument = function(song, instrumentParams) {
         this.clearVoices();
     }
     
+    // Убрать этот метод
     this.name = function() {
-        return instrumentParams.name;
+        return channelParams.name;
     }
     
     this.html = function() {
@@ -107,17 +108,17 @@ earb.instrument = function(song, instrumentParams) {
                 position: "relative"
             }).appendTo("body");
             
-        instrument.$notes = {};
-        instrument.$cols = {};
+        channel.$notes = {};
+        channel.$cols = {};
     
         for(var i = 0; i < pattern.duration() ; i ++ ) {
         
             var $col = $("<div>").appendTo($e);
-            instrument.$cols[i] = $col;
+            channel.$cols[i] = $col;
         
             for(var j = 0; j < 10; j ++ ) {
             
-                var degree = j + (instrumentParams.name == "solo" ? 0 : -21);
+                var degree = j + (channelParams.name == "solo" ? 0 : -21);
             
                 var $note = $("<div>")
                     .css({
@@ -141,9 +142,9 @@ earb.instrument = function(song, instrumentParams) {
                                 duration: 1
                             });
                         }
-                        instrument.updatePatternHTML();
+                        channel.updatePatternHTML();
                     });
-                instrument.$notes[i + "-" + degree] = $note;
+                channel.$notes[i + "-" + degree] = $note;
             }
         }
         
@@ -157,8 +158,8 @@ earb.instrument = function(song, instrumentParams) {
                 }
             }
             
-            for(var i in instrument.$notes) {
-                instrument.$notes[i].css("background", notes[i] ? "red" : "#ccc");
+            for(var i in channel.$notes) {
+                channel.$notes[i].css("background", notes[i] ? "red" : "#ccc");
             };
     
         }
@@ -179,8 +180,8 @@ earb.instrument = function(song, instrumentParams) {
     
     this.updateHTML = function(n) {
     
-        for(var i in instrument.$cols) {
-            instrument.$cols[i].css("opacity", i == n ? 1 : .8)
+        for(var i in channel.$cols) {
+            channel.$cols[i].css("opacity", i == n ? 1 : .8)
         }
         
     }

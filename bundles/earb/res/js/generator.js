@@ -8,9 +8,9 @@ earb.generator = function(instrument, params) {
         this.generateText = function(params) {
         
   
-            params = earb.extend(params, {
+            params = earb.extend({
                 length: 16
-            });
+            }, params);
             
             // Распределение ступеней гаммы по вероятности
             var degrees = [1,3,5,1,3,5,1,3,5,2,4,6,7];

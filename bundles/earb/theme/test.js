@@ -4,19 +4,19 @@ $(function() {
         bpm: 120
     });
     
-    song.scale(earb.scales.arabic(0));
+    song.scale(earb.scales.blues(0));
 
-    var instrument = song.instrument();
-    var pattern = instrument.pattern(16);
-    instrument.html();    
+    var channel = song.channel();
+    var pattern = channel.pattern(16);
+    channel.html();    
     
     $("<div>").css("height", 100).appendTo("body");
     
-    var instrument2 = song.instrument({
+    var channel2 = song.channel({
         name: "solo"
     });
-    var pattern = instrument2.pattern(16);
-    instrument2.html(); 
+    var pattern = channel2.pattern(16);
+    channel2.html(); 
     
     song.play();
 

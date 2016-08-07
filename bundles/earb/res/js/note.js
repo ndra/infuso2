@@ -3,9 +3,9 @@ earb.note = function(song, params) {
     var instrument;
 
     this.setParams = function(p) {
-        params = earb.extend(p, {
+        params = earb.extend({
             degree : 1
-        }); 
+        }, p); 
     }
     
     this.setParams(params);
