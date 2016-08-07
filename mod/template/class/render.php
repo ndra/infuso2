@@ -18,6 +18,23 @@ class Render extends Core\Component {
 			"cache" => true,
 		);
 	}
+    
+	public static function confDescription() {
+	    return array(
+	        "components" => array(
+	            strtolower(get_class()) => array(
+	                "params" => array(
+	                    "cache" => array(
+                            "item" => true, 
+                            "type" => "bool",
+                            "title" => "Кэшировать js и css",
+                            "help" => "да поможет тебе бгъ!"
+                        )
+					),
+				),
+			),
+		);
+	}
 	
 	private static function lesscssInstance() {
 		if(!self::$less) {
