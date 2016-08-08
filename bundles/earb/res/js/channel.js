@@ -1,9 +1,5 @@
 earb.channel = function(song, channelParams) {
-
-    channelParams = earb.extend({}, channelParams);
-
-    earb.makeListener(this);
-    
+   
     var channel = this;
        
     var voices = [];
@@ -23,12 +19,22 @@ earb.channel = function(song, channelParams) {
         }
     });
     
-    this.init = function() {     
+    this.init = function() {
+    
+        earb.makeListener(this);    
+    
+        channelParams = earb.extend({}, channelParams);
+
+        channelParams = earb.extend(channelParams, this.loadData());
+        
+        if(channelParams.pattern) {
+            this.pattern(channelParams.pattern);
+        }
     
         gain = song.audioContext.createGain();
         gain.gain.value = .2;   
         
-        if(channelParams.name == "solo") {
+        if(channelParams.name == "solow") {
         
             var convolver = song.audioContext.createConvolver();
             
@@ -59,8 +65,6 @@ earb.channel = function(song, channelParams) {
         }
              
     }
-    
-    this.init();
        
     /**
      * Возвращает первый свободный голос
@@ -76,8 +80,8 @@ earb.channel = function(song, channelParams) {
         this.getFreeVoice().play(note);
     }
     
-    this.pattern = function(numberOfSteps) {    
-        pattern = new earb.pattern(this, numberOfSteps);
+    this.pattern = function(patternParams) {    
+        pattern = new earb.pattern(this, patternParams);
         return pattern;    
     }
     
@@ -141,6 +145,7 @@ earb.channel = function(song, channelParams) {
                             });
                         }
                         channel.updatePatternHTML();
+                        channel.saveData();
                     });
                 channel.$notes[i + "-" + degree] = $note;
             }
@@ -163,7 +168,7 @@ earb.channel = function(song, channelParams) {
         }
         
         this.updatePatternHTML();
-    
+        
     }
     
     this.clearVoices = function() {
@@ -184,6 +189,25 @@ earb.channel = function(song, channelParams) {
         
     }
     
+    this.saveData = function() {
+        var id = channelParams.store;
+        if(id) {
+            localStorage.setItem("earb/pattern/" + id, JSON.stringify(pattern.serialize()));
+        }
+    }
+    
+    this.loadData = function() {
+        var id = channelParams.store;
+        if(id) {
+            var data = localStorage.getItem("earb/pattern/" + id);
+            if(data) {
+                data = JSON.parse(data);
+                return data;
+            }
+        }
+    }
+    
+    this.init();
 
 }
     

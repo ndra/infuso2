@@ -1,13 +1,24 @@
 earb.pattern = function(instrument, params) {
 
+    if(typeof params == "number") {
+        params = {
+            numberOfSteps: params
+        };
+    }
+    
+    if(params.notes) {
+        for(var i in params.notes) {
+            for(var j in params.notes[i]) {
+                this.at(i).node(params.notes[i][j]);
+            }
+        }
+    }
+
     // Тик, от которого считать
     var startTick = null; 
     
     // Длительность шага ( 16 означает 1/16, 8 означает 1/8 и т.д.)
     var stepDuration = 16; 
-    
-    // Количество шагов в паттерне
-    var numberOfSteps = params; 
     
     var pattern = [];   
     
@@ -22,7 +33,7 @@ earb.pattern = function(instrument, params) {
             return;
         } 
         
-        var step = (tick / (32 / stepDuration)) % numberOfSteps;        
+        var step = (tick / (32 / stepDuration)) % params.numberOfSteps;        
         this.handleStep(step);
     }
     
@@ -48,9 +59,9 @@ earb.pattern = function(instrument, params) {
     
     this.duration = function(p1) {
         if(arguments.length == 0) {
-            return numberOfSteps;
+            return params.numberOfSteps;
         } if(arguments.length == 1) {
-            numberOfSteps = p1;
+            params.numberOfSteps = p1;
             return this;
         }
     } 
@@ -86,8 +97,22 @@ earb.pattern = function(instrument, params) {
     }    
     
     this.serialize = function() {
-        var data = {};
-        data.seria
+        var data = {
+            numberOfSteps: params.numberOfSteps,
+            notes: []    
+        }
+        
+        for(var i = 0; i < params.numberOfSteps; i ++) {
+            var notes = this.at(i).notes();
+            var stepData = [];
+            for(var j in notes) {
+                stepData.push(notes[j].serialize());
+            }
+            if(stepData.length) {
+                data.notes[i] = stepData;
+            }
+        }
+        
         return data;
     }
    

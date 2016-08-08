@@ -8,6 +8,10 @@ earb.note = function(song, params) {
         }, p); 
     }
     
+    this.serialize = function() {
+        return params;
+    }
+    
     this.setParams(params);
 
     // Объект песни    

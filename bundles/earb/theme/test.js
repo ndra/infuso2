@@ -4,10 +4,14 @@ $(function() {
         bpm: 120
     });
     
-    song.scale(earb.scales.arabic(0));
+    song.scale(earb.scales.hminor(0));
 
-    var channel = song.channel();
-    var pattern = channel.pattern(16);
+    var channel = song.channel({
+        store: "mwDwlnhdL5",
+        pattern: {
+            numberOfSteps: 16    
+        }
+    });
     channel.html();    
     
     $("<div>").css("height", 100).appendTo("body");
