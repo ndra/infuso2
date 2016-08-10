@@ -1,8 +1,6 @@
 earb.channel = function(song, channelParams) {
    
     var channel = this;
-       
-    var voices = [];
    
     var gain;
     
@@ -34,7 +32,7 @@ earb.channel = function(song, channelParams) {
         gain = song.audioContext.createGain();
         gain.gain.value = .2;   
         
-        if(channelParams.name == "solow") {
+        /*if(channelParams.name == "solow") {
         
             var convolver = song.audioContext.createConvolver();
             
@@ -60,24 +58,13 @@ earb.channel = function(song, channelParams) {
             convolver.connect(song.audioContext.destination);
             gain.connect(convolver);
         
-        }  else {
+        }  else {  */
             gain.connect(song.audioContext.destination);
-        }
-             
-    }
-       
-    /**
-     * Возвращает первый свободный голос
-     **/                         
-    this.getFreeVoice = function() {
-        var voice = new earb.voice(song.audioContext, this);
-        voice.connect(gain);
-        voices.push(voice);
-        return voice;
-    }
+        //}                         
+    } 
     
     this.play = function(note) {
-        this.getFreeVoice().play(note);
+        this.instrument.play(note);
     }
     
     this.handle32 = function(event) {
@@ -107,16 +94,6 @@ earb.channel = function(song, channelParams) {
             return pattern;
         }
     } 
-    
-    this.clearVoices = function() {
-        var newVoices = [];
-        for(var i in voices) {
-            if(voices[i].isPlaying()) {
-                newVoices.push(voices[i]);
-            }
-        }
-        voices = newVoices;
-    }
     
     this.controller = function() {
         return new earb.channelController(this);
