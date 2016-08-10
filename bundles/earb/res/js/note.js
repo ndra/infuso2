@@ -1,6 +1,6 @@
 earb.note = function(song, params) {
 
-    var instrument;
+    var channel;
 
     this.setParams = function(p) {
         params = earb.extend({
@@ -24,11 +24,11 @@ earb.note = function(song, params) {
     });
     
     // Объект инструмента    
-    Object.defineProperty(this, "instrument", {      
+    Object.defineProperty(this, "channel", {      
         get: function() {
-            return instrument;
+            return channel;
         }, set: function(p) {
-            instrument = p;
+            channel = p;
         }
     });
 
@@ -74,7 +74,7 @@ earb.note = function(song, params) {
     });
     
     this.play = function() {
-        this.instrument.play(this);
+        this.channel.play(this);
     }
 
 }

@@ -1,18 +1,5 @@
-earb.pattern = function(instrument, params) {
+earb.pattern = function(channel, patternParams) {
 
-    if(typeof params == "number") {
-        params = {
-            numberOfSteps: params
-        };
-    }
-    
-    if(params.notes) {
-        for(var i in params.notes) {
-            for(var j in params.notes[i]) {
-                this.at(i).node(params.notes[i][j]);
-            }
-        }
-    }
 
     // Тик, от которого считать
     var startTick = null; 
@@ -22,7 +9,25 @@ earb.pattern = function(instrument, params) {
     
     var pattern = [];   
     
-    var patternObject = this;    
+    var patternObject = this;  
+    
+    this.init = function() {
+    
+        if(typeof patternParams == "number") {
+            patternParams = {
+                numberOfSteps: patternParams
+            };
+        }
+        
+        if(patternParams.notes) {
+            for(var i in patternParams.notes) {
+                for(var j in patternParams.notes[i]) {
+                    this.at(i).note(patternParams.notes[i][j]);
+                }
+            }
+        }
+    
+    }  
    
     this.handle32 = function(event) {
     
@@ -33,7 +38,7 @@ earb.pattern = function(instrument, params) {
             return;
         } 
         
-        var step = (tick / (32 / stepDuration)) % params.numberOfSteps;        
+        var step = (tick / (32 / stepDuration)) % patternParams.numberOfSteps;        
         this.handleStep(step);
     }
     
@@ -49,19 +54,19 @@ earb.pattern = function(instrument, params) {
         }
     }
     
-    this.instrument = function() {
-        return instrument;
+    this.channel = function() {
+        return channel;
     }
     
     this.start = function() {
-        startTick = instrument.song().tick32();
+        startTick = channel.song().tick32();
     }  
     
     this.duration = function(p1) {
         if(arguments.length == 0) {
-            return params.numberOfSteps;
+            return patternParams.numberOfSteps;
         } if(arguments.length == 1) {
-            params.numberOfSteps = p1;
+            patternParams.numberOfSteps = p1;
             return this;
         }
     } 
@@ -72,9 +77,9 @@ earb.pattern = function(instrument, params) {
         
             this.note = function(params) {
             
-                var song = instrument.song;
+                var song = channel.song;
                 var note = song.note(params);
-                note.instrument = instrument;
+                note.channel = channel;
                 
                 if(!pattern[position]) {
                     pattern[position] = [];
@@ -96,13 +101,16 @@ earb.pattern = function(instrument, params) {
         }();
     }    
     
+    /**
+     * ВОзвращает данные паттерна ввиде массива
+     **/
     this.serialize = function() {
         var data = {
-            numberOfSteps: params.numberOfSteps,
+            numberOfSteps: patternParams.numberOfSteps,
             notes: []    
         }
         
-        for(var i = 0; i < params.numberOfSteps; i ++) {
+        for(var i = 0; i < patternParams.numberOfSteps; i ++) {
             var notes = this.at(i).notes();
             var stepData = [];
             for(var j in notes) {
@@ -115,5 +123,7 @@ earb.pattern = function(instrument, params) {
         
         return data;
     }
+    
+    this.init();
    
 }

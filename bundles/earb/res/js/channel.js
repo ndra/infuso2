@@ -23,8 +23,10 @@ earb.channel = function(song, channelParams) {
     
         earb.makeListener(this);    
     
+        // Дополняем настройки настройками по умолчагию (пока их нет) 
         channelParams = earb.extend({}, channelParams);
 
+        // Пытаемся загрузить данные
         channelParams = earb.extend(channelParams, this.loadData());
         
         if(channelParams.pattern) {
@@ -192,7 +194,10 @@ earb.channel = function(song, channelParams) {
     this.saveData = function() {
         var id = channelParams.store;
         if(id) {
-            localStorage.setItem("earb/pattern/" + id, JSON.stringify(pattern.serialize()));
+            var data = {
+                pattern: pattern.serialize()
+            };
+            localStorage.setItem("earb/pattern/" + id, JSON.stringify(data));
         }
     }
     
