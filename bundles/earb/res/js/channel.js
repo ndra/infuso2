@@ -7,9 +7,7 @@ earb.channel = function(song, channelParams) {
     var gain;
     
     var pattern;
-    
-    var $e; // html элемент инструмента
-    
+
     // Объект инструмента    
     Object.defineProperty(this, "song", {      
         get: function() {
@@ -82,16 +80,11 @@ earb.channel = function(song, channelParams) {
         this.getFreeVoice().play(note);
     }
     
-    this.pattern = function(patternParams) {    
-        pattern = new earb.pattern(this, patternParams);
-        return pattern;    
-    }
-    
     this.handle32 = function(event) {
         if(pattern) {
             pattern.handle32(event);
         }
-        this.updateHTML(Math.floor(event.tick / 2 ) % 16);
+        this.fire("1/32", event);
     }
     
     this.handleBar = function() {
@@ -103,75 +96,17 @@ earb.channel = function(song, channelParams) {
         return channelParams.name;
     }
     
-    this.html = function() {
-    
-        $e = $("<div>")
-            .css({
-                height: 50*10,
-                border: "1px solid gray",
-                position: "relative"
-            }).appendTo("body");
-            
-        channel.$notes = {};
-        channel.$cols = {};
-    
-        for(var i = 0; i < pattern.duration() ; i ++ ) {
-        
-            var $col = $("<div>").appendTo($e);
-            channel.$cols[i] = $col;
-        
-            for(var j = 0; j < 10; j ++ ) {
-            
-                var degree = j + (channelParams.name == "solo" ? 0 : -21);
-            
-                var $note = $("<div>")
-                    .css({
-                        width: 40,
-                        height: 40,
-                        position: "absolute",
-                        left: i * 50,
-                        top: j * 50
-                    })
-                    .appendTo($col)
-                    .data("degree", degree)
-                    .data("position", i)
-                    .mousedown(function() {
-                        var place = pattern.at($(this).data("position"));
-                        if(place.notes().length) {
-                            place.clear();
-                        } else {                            
-                            place.clear();
-                            place.note({
-                                degree: $(this).data("degree"),
-                                duration: 1
-                            });
-                        }
-                        channel.updatePatternHTML();
-                        channel.saveData();
-                    });
-                channel.$notes[i + "-" + degree] = $note;
-            }
+    /**
+     * ВОзвращает / изменяет паттерн
+     **/
+    this.pattern = function(p1) {
+        if(arguments.length == 0) {
+            return pattern;
+        } if(arguments.length == 1) {
+            pattern = new earb.pattern(this, p1);
+            return pattern;
         }
-        
-        this.updatePatternHTML = function() {
-        
-            var notes = [];
-            for(var i = 0; i < pattern.duration(); i ++) {
-                var n = pattern.at(i).notes();
-                for(var j in n) {
-                    notes[i+ "-" + n[j].degree] = true;
-                }
-            }
-            
-            for(var i in channel.$notes) {
-                channel.$notes[i].css("background", notes[i] ? "red" : "#ccc");
-            };
-    
-        }
-        
-        this.updatePatternHTML();
-        
-    }
+    } 
     
     this.clearVoices = function() {
         var newVoices = [];
@@ -183,12 +118,8 @@ earb.channel = function(song, channelParams) {
         voices = newVoices;
     }
     
-    this.updateHTML = function(n) {
-    
-        for(var i in channel.$cols) {
-            channel.$cols[i].css("opacity", i == n ? 1 : .8)
-        }
-        
+    this.controller = function() {
+        return new earb.channelController(this);
     }
     
     this.saveData = function() {

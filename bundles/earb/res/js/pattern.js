@@ -11,6 +11,8 @@ earb.pattern = function(channel, patternParams) {
     
     var patternObject = this;  
     
+    var currentStep = 0;
+    
     this.init = function() {
     
         if(typeof patternParams == "number") {
@@ -52,6 +54,11 @@ earb.pattern = function(channel, patternParams) {
                 }
             }
         }
+        currentStep = step;
+    }
+    
+    this.currentStep = function() {
+        return currentStep;
     }
     
     this.channel = function() {
@@ -71,6 +78,9 @@ earb.pattern = function(channel, patternParams) {
         }
     } 
     
+    /**
+     * Методя для создания / удаления нот
+     **/
     this.at = function(position) {
         
         return new function() {
@@ -102,14 +112,17 @@ earb.pattern = function(channel, patternParams) {
     }    
     
     /**
-     * ВОзвращает данные паттерна ввиде массива
+     * Возвращает данные паттерна ввиде массива
      **/
     this.serialize = function() {
+    
+        // Общие параметры патрерна
         var data = {
             numberOfSteps: patternParams.numberOfSteps,
             notes: []    
         }
         
+        // Записываем ноты
         for(var i = 0; i < patternParams.numberOfSteps; i ++) {
             var notes = this.at(i).notes();
             var stepData = [];

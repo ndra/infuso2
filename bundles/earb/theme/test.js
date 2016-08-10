@@ -12,15 +12,15 @@ $(function() {
             numberOfSteps: 16    
         }
     });
-    channel.html();    
+    channel.controller().html();    
     
-    $("<div>").css("height", 100).appendTo("body");
+    /*$("<div>").css("height", 100).appendTo("body");
     
     var channel2 = song.channel({
         name: "solo"
     });
     var pattern = channel2.pattern(16);
-    channel2.html(); 
+    channel2.html();  */
     
     song.play();
 
