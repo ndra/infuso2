@@ -2,57 +2,76 @@ earb.channelController = function(channel) {
 
     var controller = this;
     
+    this.$notes = {};
+    this.$cols = {};
+    
     channel.on("1/32", function(event) {
         controller.handle32(event);
     });
        
     this.html = function() {    
+    
+        var buttonWidth = 40;
+        var buttonHeight = 40;
+        var buttonHSpacing = 5;
+        var buttonVSpacing = 5; 
+        
+        // Сколько ступеней выводить        
+        var degrees = 10;
         
         this.$e = $("<div>")
             .css({
-                height: 50*10,
+                height: degrees * (buttonHeight + buttonVSpacing) + buttonVSpacing,
                 border: "1px solid gray",
-                position: "relative"
+                position: "relative",
+                "user-select": "none"
+                
             }).appendTo("body");
-            
-        channel.$notes = {};
-        channel.$cols = {};
     
         for(var i = 0; i < channel.pattern().duration() ; i ++ ) {
         
             var $col = $("<div>").appendTo(this.$e);
-            channel.$cols[i] = $col;
+            this.$cols[i] = $col;
         
-            for(var j = 0; j < 10; j ++ ) {
+            for(var j = 0; j < degrees; j ++ ) {
             
-                var degree = -j;
+                var degree = degrees - j - 1;
             
                 var $note = $("<div>")
                     .css({
-                        width: 40,
-                        height: 40,
+                        width: buttonWidth,
+                        height: buttonHeight,
                         position: "absolute",
-                        left: i * 50,
-                        top: j * 50
+                        left: buttonHSpacing + i * (buttonWidth + buttonHSpacing),
+                        top: buttonVSpacing + j * (buttonHeight + buttonVSpacing)
                     }).appendTo($col)
                     .data("degree", degree)
                     .html(degree)
                     .data("position", i)
                     .mousedown(function() {
                         var place = channel.pattern().at($(this).data("position"));
-                        if(place.notes().length) {
-                            place.clear();
-                        } else {                            
-                            place.clear();
-                            place.note({
-                                degree: $(this).data("degree"),
-                                duration: 1
-                            });
-                        }
-                        channel.updatePatternHTML();
+                          
+                            var exists = false;
+                            var notes = place.notes();
+                            for(var k in notes) {
+                                if(notes[k].degree == $(this).data("degree")) {
+                                    exists = true;
+                                }
+                            }
+                          
+                            if(!exists) {
+                                place.note({
+                                    degree: $(this).data("degree"),
+                                    duration: 1
+                                });
+                            } else {
+                                place.clear();
+                            }
+ 
+                        controller.updatePatternHTML();
                         channel.saveData();
                     });
-                channel.$notes[i + "-" + degree] = $note;
+                this.$notes[i + "-" + degree] = $note;
             }
         }
         
@@ -62,8 +81,8 @@ earb.channelController = function(channel) {
         
     this.handle32 = function(event) {       
         var step = channel.pattern().currentStep();     
-        for(var i in channel.$cols) {
-            channel.$cols[i].css("opacity", i == step ? 1 : .8)
+        for(var i in this.$cols) {
+            this.$cols[i].css("opacity", i == step ? .8 : 1)
         }         
     }
     
@@ -77,8 +96,8 @@ earb.channelController = function(channel) {
             }
         }
         
-        for(var i in channel.$notes) {
-            channel.$notes[i].css("background", notes[i] ? "red" : "#ccc");
+        for(var i in this.$notes) {
+            this.$notes[i].css("background", notes[i] ? "red" : "#ccc");
         };
 
     }
