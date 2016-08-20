@@ -1,6 +1,6 @@
 .m69716bx32 {
 
-    input[type='text'], textarea, select {
+   /* input[type='text'], textarea, select {
         .g-input();
     }
     
@@ -11,7 +11,7 @@
     textarea {
         width: 500px;
         height:100px;
-    }
+    } */
     
     td {
         vertical-align: middle;

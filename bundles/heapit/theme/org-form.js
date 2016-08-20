@@ -12,7 +12,7 @@ $(function() {
     });
     
     $form.find(".mailto").click(function() {
-        var email = $(this).prev().val();
+        var email = $(this).prev().find("input").val();
         window.open("mailto:"+email);
     });
     

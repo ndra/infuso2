@@ -5,6 +5,9 @@ if(!window.mod) {
     $("<style>.mod-msg-error{background:red;}</style>").appendTo("head");
     
     mod = function($e) {
+    
+        $e = $($e);
+    
     	return new function() {
     		this.init = function(fn, params) {
     			mod.init($e, fn, params);
