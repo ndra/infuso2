@@ -6,8 +6,6 @@ if(!window.mod) {
     
     mod = function($e) {
     
-        $e = $($e);
-    
     	return new function() {
     		this.init = function(fn, params) {
     			mod.init($e, fn, params);
@@ -18,6 +16,7 @@ if(!window.mod) {
 			};
 			
 			this.formData = function() {
+                $e = $($e);
 			    var data = {};
 		        var temp = $e.serializeArray();
 		        for(var i in temp) {
