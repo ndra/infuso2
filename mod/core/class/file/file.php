@@ -40,8 +40,8 @@ abstract class File extends Component {
     /**
      * Уведомляет о начале операции с файлом (для профайлера)
      **/
-    public static function beginOperation($operation,$name) {
-        Profiler::beginOperation("file",$operation,$name);
+    public static function beginOperation($operation, $name) {
+        Profiler::beginOperation("file", $operation, $name);
     }
 
     /**
@@ -53,20 +53,16 @@ abstract class File extends Component {
 
     /**
      * Обертка для конструктора
-     * @param $string Относительный путь к файлу от корня сайта
+     * @param $ret Относительный путь к файлу от корня сайта или объкт файла
      **/
-    public static function get($name) {
+    public static function get($src) {
     
-        $name.="";
-
-        // В режиме отладки ведем лог
-        self::beginOperation("get",$name);
-
-        $ret = new localFile($name);
-
-        // В режиме отладки ведем лог
-        self::endOperation();
-
+        if(is_object($src) && is_a($src, "infuso\\core\\file")) {
+            $ret = $src;
+        } else {
+            $ret = new localFile($src);
+        }
+        
         return $ret;
     }
     

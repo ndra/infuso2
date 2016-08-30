@@ -6,7 +6,7 @@ use Infuso\Core;
 /**
  * Класс для работы с внешними файлами
  **/
-class Http extends Core\File {
+class Http extends File {
 
     private $lastCurl = null;
     
