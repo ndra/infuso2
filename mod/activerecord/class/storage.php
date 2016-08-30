@@ -12,7 +12,7 @@ class Storage extends \Infuso\Core\Controller {
 	private $id;
 	private $path;
 
-	public function __construct($class=null,$id=null,$path="/") {
+	public function __construct($class = null, $id = null, $path = "/") {
 	    $this->class = $class;
 	    $this->id = $id;
 	    $this->path = $path;
@@ -168,7 +168,8 @@ class Storage extends \Infuso\Core\Controller {
 	/**
 	 * Добавляет закачанный файл в хранилище
 	 **/
-	public function addUploaded($src,$name) {
+	public function addUploaded($src, $name) {
+    
 	    $name = self::normalizeName($name);
 	    if(!$this->exists()) {
 	        app()->msg("Вы пытаетесь закачать файл в несуществующий объект",1);
@@ -186,6 +187,11 @@ class Storage extends \Infuso\Core\Controller {
 	 * Добавляет файл в хранилище
 	 **/
 	public function add($src, $name) {
+    
+        if($name === null) {
+            $name = Core\File::get($src)->name();
+        }
+    
 	    $name = self::normalizeName($name);
 	    if(!$this->exists()) {
 			return;
