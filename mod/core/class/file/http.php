@@ -22,6 +22,14 @@ class Http extends Core\File {
         $this->path = $path;
     }
     
+	/**
+	 * @return striung Возвращает имя файла (без пути)
+	 **/
+	public function name() {
+	    $name = explode("/", trim($this->path(), "/"));
+	    return end($name);
+	}
+    
     public function userAgent($ua) {
         $options = $this->param("curlOptions");
         $options["CURLOPT_USERAGENT"] = $ua;
