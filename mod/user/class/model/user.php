@@ -632,7 +632,7 @@ class User extends ActiveRecord\Record {
         return $this->fieldOrBehaviour("country");
     }
     
-	public function userpic() {
+	public function _userpic() {
 	    return $this->pdata("userpic");
 	}
 
