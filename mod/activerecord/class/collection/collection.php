@@ -681,14 +681,14 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     /**
      * Добавляет условие чтобы поле $key лежало в прямоугольнике, образованном четырьмя координатами
      **/
-    public final function inRect($key,$x1,$y1,$x2,$y2) {
+    public final function inRect($key, $x1, $y1, $x2, $y2) {
         $this->unload();
         $this->inPolygon($key,array(
-            array($x1,$y1),
-            array($x2,$y1),
-            array($x2,$y2),
-            array($x1,$y2),
-            array($x1,$y1),
+            array($x1, $y1),
+            array($x2, $y1),
+            array($x2, $y2),
+            array($x1, $y2),
+            array($x1, $y1),
         ));
         return $this;
     }
@@ -698,14 +698,14 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * В отличие от метода inRect этот метод правильно работает с географическими координатами
      * (ситуацию осложняет то что при переходе через долготу 180 или -180 край прямоугольника должен появиться с противоположной стороны карты)
      **/
-    public final function inGeographicalRect($key,$x1,$y1,$x2,$y2) {
+    public final function inGeographicalRect($key, $x1, $y1, $x2, $y2) {
         $this->unload();
         if($x1>$x2) {
-            $this->inRect($key,$x1,$y1,180,$y2)
+            $this->inRect($key, $x1, $y1, 180, $y2)
                 ->orr()
-                ->inRect($key,-180,$y1,$x2,$y2);
+                ->inRect($key, -180, $y1, $x2, $y2);
         } else {
-            $this->inRect($key,$x1,$y1,$x2,$y2);
+            $this->inRect($key, $x1, $y1, $x2, $y2);
         }
         return $this;
     }
@@ -714,7 +714,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * Сортирует объекты по расстоянию до указанной точки
      * @todo метод считает дистанцию неправильно если используются сферические (использую сферические координаты как плоские). Надо добавить отдельный метод для географический сферических координат
      **/
-    public function orderByDistance($key,$point) {
+    public function orderByDistance($key, $point) {
 
         $this->unload();
         $coords = mod::field("point")->value($point)->mysqlValue();

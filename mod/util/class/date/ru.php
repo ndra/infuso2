@@ -15,24 +15,47 @@ class Ru extends Core\Behaviour {
         $ret = "";
         $date = @getdate($this->stamp());
 
-        $d = clone $this;
-
-
+        $d = clone $this;  
+        
+        $near = false;
 
         if($d->date()->num() == \util::now()->date()->num()) {
             $ret.= "сегодня ";
+            $near = true;
         } elseif($d->date()->num() == \util::now()->shiftDay(-1)->date()->num()) {
             $ret.= "вчера ";
+            $near = true;
         } else {
 
-            $months = array("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря");
-            $ret.= $date["mday"]." ".$months[$date["mon"]-1];
-            $ret.= " $date[year] г. ";
+            $months = array(
+                "января",
+                "февраля",
+                "марта",
+                "апреля",
+                "мая",
+                "июня",
+                "июля",
+                "августа",
+                "сентября",
+                "октября",
+                "ноября",
+                "декабря");
+                
+            $ret.= $date["mday"]." ".$months[$date["mon"]-1]." ";
+            
+            if($d->year() != \util::now()->year()) {
+                $ret.= $date["year"]." г. ";    
+            }
         }
 
         // Добавляем время
-        if($this->timeEnabled()) {
-            $ret.= $date["hours"].":".str_pad($date["minutes"],2,0,STR_PAD_LEFT);
+        if($this->timeEnabled() && $near) {
+        
+            if($d->date()->num() == \util::now()->date()->num()) {
+                $ret = "";
+            }
+        
+            $ret.= $date["hours"].":".str_pad($date["minutes"], 2, 0, STR_PAD_LEFT);
         }
 
         return $ret;
