@@ -6,8 +6,8 @@ class Controller extends Component {
 
 	private $redirectUrl = null;
 	
-	public function controller() {
-	    return strtr(self::inspector()->className(),array("\\" => "/"));
+	public function _controller() {
+	    return strtr(self::inspector()->className(), array("\\" => "/"));
 	}
 
 	public function defaultBehaviours() {
