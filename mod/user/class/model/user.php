@@ -543,14 +543,21 @@ class User extends ActiveRecord\Record {
         return $password;
     }
 
-    public function extra($key,$val=null) {
+    public function extra($key = null, $val = null) {
+    
+        if(func_num_args() == 0) {
+            return $this->pdata("extra");
+        }
+    
         $extra = $this->pdata("extra");
-        if(func_num_args()==1) {
+        
+        if(func_num_args() == 1) {
             return $extra[$key];
         }
-        if(func_num_args()==2) {
+        
+        if(func_num_args() == 2) {
             $extra[$key] = $val;
-            $this->data("extra",json_encode($extra));
+            $this->data("extra", json_encode($extra));
         }
     }
 
