@@ -110,128 +110,231 @@ if(!window.mod) {
         }
     }
     
-    mod.requests = [];
+    mod.requests = {};
     
+    /**
+     * Выполняет ассинхронный запрос к серверу
+     * Запрос добавляется в буффер, который отправляется на сервер раз в 50мс
+     * Таким образом запросы, сделанные одновременно, отправляются на сервер пачкой
+     **/
     mod.call = function(params, onSuccess, conf) {
     
     	if(!conf) {
     	    conf = {};
     	}
+        
+        // Генерируем уникальный id для запроса
+        conf.id = mod.id();
+        
+        // Отменяем запрос с таким же id
+        if(conf.unique) {
+            for(var requestId in mod.requests) {
+                if(mod.requests[requestId].conf.unique == conf.unique) {
+                    mod.abort(mod.requests[requestId].conf.id);
+                }
+            }
+        }
     
-        mod.requests.push({
+        mod.requests[conf.id] = {
             params: params,
             onSuccess: onSuccess,
             conf: conf
-        })
+        };
     
     };
     
     /**
-     * Отправляет команду на сервер
+     * Отменяет запрос к серверу
+     **/
+    mod.abort = function(requestId) {
+    
+        // Находим запрос по id
+        var request = mod.requests[requestId];
+        if(!request) {
+            return;
+        }
+        
+        request.status = "cancelled";
+        
+        mod.abortAjaxForCancelledRequests();
+    
+    }
+    
+    mod.id = function() {       
+        var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';     
+        var length = 32;
+        var result = '';
+        for (var i = length; i > 0; --i) {
+            result += chars[Math.floor(Math.random() * chars.length)];
+        }
+        return result;
+    }
+    
+    /**
+     * Отправляет пачку команд на сервер
      **/
     mod.send = function() {
-    
-        if(!mod.requests.length) {
-            return;
-        }
-    
-        if (!window.JSON) {
-            return;
-        }    
         
-        var requests = [];
-        var onSuccess = [];
-    
+        var requestsToSend = {};
         
+        // Признак того, что есть запросы котоыре нужно отправить
+        var needSend = false;
+        
+        // Сюда добавим файлы
         var fdata = new FormData();
         
-        for(var i in mod.requests) {
-            requests[i] = mod.requests[i].params;
-            onSuccess[i] = mod.requests[i].onSuccess;
-            
-    		var files = mod.requests[i].conf.files;
-    		if(files) {
-    	        if(files.constructor === Object || files.constructor === FileList) {
-    	            for(var ii in files) {
-    	                fdata.append(i + "/" + ii, files[ii]);
-    	            }
-    	        } else {
-    	            $(files).find("input[type=file]").each(function() {
-    	                fdata.append(i + "/" + this.name, this.files[0]);
-    	            });
-    	        }
-        	}
-        }
-    
-        fdata.append("data", JSON.stringify({
-            requests: requests
-        }));
+        var ajaxId = mod.id();
         
-        mod.requests = [];
+        for(var requestId in mod.requests) {
         
-        var urlId = [];
-        for(var i in requests) {
-            urlId.push(requests[i].cmd);
-        }
-        urlId = urlId.join(",");
+            var request = mod.requests[requestId];             
+                    
+            if(!request.sent) {
         
-        var xhr = $.ajax({
-            url: "/mod_json/?cmd=" + urlId,
-            async: true,
-            data: fdata,
-            contentType: false,
-            processData: false,        
-            type: "POST",
-            success: function(d) {
-                mod.handleCmd(d, onSuccess);
-            },
-            error:function(r) {
-                if(r.readyState != 0) {
-                    mod.handleCmd(false,r.responseText);
-                }
+                requestsToSend[requestId] = request.params; 
+                needSend = true;           
+                
+                // Добавляем в fdata файлы из запросов
+                // через префикс - id запроса
+        		var files = request.conf.files;
+        		if(files) {
+        	        if(files.constructor === Object || files.constructor === FileList) {
+        	            for(var ii in files) {
+        	                fdata.append(requestId + "/" + ii, files[ii]);
+        	            }
+        	        } else {
+        	            $(files).find("input[type=file]").each(function() {
+        	                fdata.append(requestId + "/" + this.name, this.files[0]);
+        	            });
+        	        }
+            	}
+                
+                request.ajaxId = ajaxId;
+                request.sent = true;            
             }
-        });
+        }     
+        
+        if(needSend) {    
+    
+            fdata.append("data", JSON.stringify({
+                requests: requestsToSend
+            }));
+            
+            // Строим урл запроса
+            var urlId = [];
+            for(var i in requestsToSend) {
+                urlId.push((String)(requestsToSend[i].cmd).replace(/[^a-zA-Z0-9\/_]/g, ""));
+            }
+            urlId = urlId.join(",");
+            
+            var xhr = $.ajax({
+                url: "/mod_json/?cmd=" + urlId,
+                async: true,
+                data: fdata,
+                contentType: false,
+                processData: false,        
+                type: "POST",
+                success: function(data) {
+                    mod.handleCmd(data, ajaxId);
+                }, error:function(r) {
+                    mod.msg("Request failed", true);
+                    mod.removeCompletedRequests(ajaxId);
+                }
+            });
+            
+            for(var id in requestsToSend) {
+                mod.requests[id].xhr = xhr;
+            }
+        
+        }
         
     };
     
     setInterval(mod.send, 50);
     
-    mod.handleCmd = function(response, onSuccess) {
+    /**
+     * Удаляет обработанные запросы из списка mod.requests
+     **/
+    mod.removeCompletedRequests = function(ajaxId) {            
+        for(var requestId in mod.requests) {
+            if(mod.requests[requestId].ajaxId == ajaxId) {
+                delete mod.requests[requestId];
+            }
+        }
+    }
+    
+    mod.abortAjaxForCancelledRequests = function() {
+    
+        var xhrToRemove = {};
+    
+        // id ajax в которых есть хоть один отмененный запрос
+        for(var requestId in mod.requests) {
+            var request = mod.requests[requestId];
+            if(request.status == "cancelled") { 
+                xhrToRemove[request.ajaxId] = true;
+            }
+        }         
+        
+        // Если в группе запросов есть хотя бы один не отмененный, мы не можем отменить весь запрос
+        for(var requestId in mod.requests) {
+            var request = mod.requests[requestId].ajaxId;
+            if(request.status != "cancelled") {
+                delete xhrToRemove[request.ajaxId];  
+            }
+        }
+        
+        for(var requestId in mod.requests) {
+            var request = mod.requests[requestId];
+            request.xhr.abort();
+            delete mod.requests[requestId];
+        }        
+        
+    }
+    
+    mod.handleCmd = function(response, ajaxId) {
     
         // Пробуем разобрать ответ от сервера
-        try{
-            eval("var data="+response);
+        try {
+            eval("var data = " + response);
         } catch(ex) {
             mod.msg("Failed parse JSON: " + response, 1);
-        }
+            mod.removeCompletedRequests(ajaxId);
+            return;
+        }         
+      
+        for(var requestId in data) {
         
-        // Выводим сообщения
-        for(var i = 0; i < data.messages.length; i++) {
-            var msg = data.messages[i];
-            mod.msg(msg.text, msg.error);
-        }      
-        
-        // Обрабатываем события
-        for(var i = 0; i < data.events.length; i++) {
-            var event = data.events[i];
-            mod.fire(event.name, event.params);
-        }
-        
-        for(var i in data.results) {
-        
-            var result = data.results[i];
+            var result = data[requestId];
+            var request = mod.requests[requestId];
+            
+            if(request.status != "cancelled") {
     
-            // При ошибке разбора показываем уведомление
-            if(!result.success) {
-                mod.msg(result.text,1);
-                return;
-            }
-        
-            if(onSuccess[i]) {                
-                onSuccess[i](result.data);
+                // При ошибке показываем уведомление
+                if(result.success) {
+                
+                    if(request.onSuccess) {
+                        request.onSuccess(result.data);
+                    }
+                    
+                    // Обрабатываем события
+                    for(var i = 0; i < data[requestId].events.length; i++) {
+                        var event = data[requestId].events[i];
+                        mod.fire(event.name, event.params);
+                    } 
+                
+                }
+                
+                // Выводим сообщения
+                for(var i = 0; i < data[requestId].messages.length; i++) {
+                    var msg = data[requestId].messages[i];
+                    mod.msg(msg.text, msg.error);
+                }      
+                
             }
         
         }
+        
+        mod.removeCompletedRequests(ajaxId);
     
     }
     

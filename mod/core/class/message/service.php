@@ -50,7 +50,7 @@ class Service extends Core\Service {
      * Возвращает сообщения
      * Если параметр опущен или равен true, функция дополнительно очищает список сообщений.
      **/
-    public static function messages($clear=true) {
+    public static function messages($clear = true) {
         $msg = array();
         @session_start();
         if(!$_SESSION["log:messages"]) {
@@ -73,13 +73,13 @@ class Service extends Core\Service {
         // Массив
         if(is_array($a)) {
             $a = var_export($a,1);
-            $a = preg_replace("/\n/"," ",$a);
+            $a = preg_replace("/\n/", " ", $a);
             return $a;
         }
 
         if(is_object($a)) {
-            if(get_class($a)=="SimpleXMLElement") {
-                return strtr(util::prettyPrintXML($a),array("\n"=>" "));
+            if(get_class($a) == "SimpleXMLElement") {
+                return strtr(util::prettyPrintXML($a), array("\n" => " "));
             }
         }
 

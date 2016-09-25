@@ -21,13 +21,12 @@ class mod_json extends \infuso\core\controller {
         $xfiles = $_FILES;
         
         // Обрабатываем пачку команд
-        $n = 0;
-        foreach($data["requests"] as $request) {
-        
+        foreach($data["requests"] as $requestId => $request) {
+                
             $_FILES = array();
             foreach($xfiles as $key => $file) {
-                if(preg_match("/^{$n}\//",$key)) {
-                    $newKey = preg_replace("/^{$n}\//", "", $key);
+                if(preg_match("/^{$requuestId}\//", $key)) {
+                    $newKey = preg_replace("/^{$requuestId}\//", "", $key);
                     $_FILES[$newKey] = $xfiles[$key];
                 }
             }
@@ -42,58 +41,54 @@ class mod_json extends \infuso\core\controller {
     				$success
     			);
     
-    			$results[$n] = array(
-                    "data" => $result,
-                    "success" => $success 
-                );
-    
-    			// Если скрипт вывел что-нибудь в поток, выводим это как сообщение 			
+    			// Если скрипт вывел что-нибудь в поток, выводим это как ошибку 			
     			if($txt = ob_get_clean()) {
-    				app()->msg($txt,1);
-    			}  
+    				app()->msg($txt, 1);
+    			} 
+    
+    			$results[$requestId] = array(
+                    "data" => $result,
+                    "success" => $success,
+                    "messages" => array(),
+                    "events" => array(), 
+                );                  
                 
-                \Infuso\Core\Defer::callDeferedFunctions();   
+                \Infuso\Core\Defer::callDeferedFunctions();  
+                
+        		// Собираем массив событий
+        		$events = array();
+        		foreach(\Infuso\Core\Event::all() as $event) {
+        			$results[$requestId]["events"][] = array(
+        				"name" => $event->name(),
+        				"params" => $event->params()
+        			);
+        		}
+                
+                \Infuso\Core\Event::clearFiredEvents(); 
     
     		} catch(Exception $ex) {
                 
     		    // Трейсим ошибки
-    		    app()->trace($ex); 
-                
+    		    app()->trace($ex);
                 app()->msg("<b>Exception:</b> ".$ex->getMessage(), 1);
                 
     		}
             
-            $n++;
+    		// Собираем массив сообщений
+    		$messages = array();
+    		foreach(service("msg")->messages() as $msg) {
+    			$results[$requestId]["messages"][] = array(
+    				"text" => $msg->text(),
+    				"error" => $msg->error(),
+    			);
+    		}
+            
+            service("msg")->clear();
             
         }
 
-		// Собираем массив сообщений
-		$messages = array();
-		foreach(service("msg")->messages() as $msg) {
-			$messages[] = array(
-				"text" => $msg->text(),
-				"error" => $msg->error(),
-			);
-		}
-
-		// Собираем массив событий
-		$events = array();
-		foreach(\infuso\core\event::all() as $event) {
-			$events[] = array(
-				"name" => $event->name(),
-				"params" => $event->params()
-			);
-		}
-
-		$ret = array(
-			"messages" => $messages,
-			"events" => $events,
-			"results" => $results,
-		);
-
-
 		$json = new mod_confLoader_json();
-		echo $json->write($ret);
+		echo $json->write($results);
 		
 	}
 

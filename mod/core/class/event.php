@@ -123,5 +123,9 @@ class Event extends component {
     public static function all() {
         return self::$firedEvents;
     }
+    
+    public static function clearFiredEvents() {
+        self::$firedEvents = array();
+    }
 
 }
