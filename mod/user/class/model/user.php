@@ -566,15 +566,17 @@ class User extends ActiveRecord\Record {
      * соответствующего метода поведений
      **/
     private final function fieldOrBehaviour($key) {
+    
         $val = trim($this->data($key));
         if($val) {
             return $val;
         }
 
-        foreach($this->behaviours() as $b)
-            if(method_exists($b,$key))
-                if($val = trim($b->$key()))
-                    return $val;
+        foreach($this->behaviourMethods($key) as $fn) {
+            if($val = trim($fn())) {
+                return $val;
+            }
+        }
     }
 
     /**

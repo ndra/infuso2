@@ -17,6 +17,11 @@ abstract class Field extends Core\Component {
     protected $model = null;
 
     protected $exists = true;
+    
+    /**
+     * Значение для случая, когда поле используется без модели
+     **/
+    protected $value;
 
     /**
      * Конструктор поля
@@ -149,17 +154,24 @@ abstract class Field extends Core\Component {
     /**
      * Возвращает / изменяет значение этого поля
      **/
-    public final function value($value=null) {
+    public final function value($value = null) {
 
         // Если функция вызвана без параметров, возвращаем значение поля
         // Если значение было изменено, возвращаем измененое значение
-        if(func_num_args()==0) {
-            return $this->model()->data($this->name());
+        if(func_num_args() == 0) {
+            if($this->model()) {
+                return $this->model()->data($this->name());
+            } else {
+                return $this->value;
+            }
         }
 
-        if(func_num_args()==1) {
-            return $this->model()->data($this->name(),$value);
-            return $this;
+        if(func_num_args() == 1) {        
+            if($this->model()) {
+                return $this->model()->data($this->name(), $value);
+            } else {
+                $this->value = $value;
+            }
         }
     }
 

@@ -25,7 +25,7 @@ class Component {
      * @return $this
      **/
     public final function addBehaviour($behaviour) {
-        if(!array_key_exists($behaviour,$this->behaviours)) {
+        if(!array_key_exists($behaviour, $this->behaviours)) {
             $this->behaviours[] = $behaviour;
         }
         return $this;
@@ -36,7 +36,7 @@ class Component {
 	 * Одинаковый хэш - одинаковый массив поведений
 	 **/
 	public final function behaviourHash() {
-	    return implode("|",$this->behaviours);
+	    return implode("|", $this->behaviours);
 	}
 	
 	private static $behaviourClosures = array();
@@ -79,8 +79,8 @@ class Component {
     
         $ret = array();
 
-        foreach(BehaviourMap::getBehavioursForMethod(get_class($this),$method,$this->behaviours,$this->behaviourHash()) as $bclass) {
-			$ret[] = $this->behaviourMethodFactory($bclass,$method);
+        foreach(BehaviourMap::getBehavioursForMethod(get_class($this), $method, $this->behaviours, $this->behaviourHash()) as $bclass) {
+			$ret[] = $this->behaviourMethodFactory($bclass, $method);
         }
         
         return $ret;
@@ -90,29 +90,29 @@ class Component {
      * Магический метод, который вызывается при обращении к несуществующему методу класса.
      * С помощью данного метода реализуется механизм поведений
      **/
-    public final function __call($fn,$params) {
+    public final function __call($fn, $params) {
     
         $behaviourClass = BehaviourMap::routeMethod(get_class($this), $fn, $this->behaviours, $this->behaviourHash());
         if($behaviourClass) {
-            $fn = $this->behaviourMethodFactory($behaviourClass,$fn);
-            return call_user_func_array(array($fn,"__invoke"),$params);
+            $fn = $this->behaviourMethodFactory($behaviourClass, $fn);
+            return call_user_func_array(array($fn,"__invoke"), $params);
         }
     
         // Пытаемся вызвать метод _fn
         $fn3 = "_".$fn;
-        if(method_exists($this,$fn3)) {
-            return call_user_func_array(array($this,$fn3),$params);
+        if(method_exists($this, $fn3)) {
+            return call_user_func_array(array($this, $fn3), $params);
         }
         
 		// Пытаемся вызвать дата-врапперы
         $wrappers = $this->dataWrappers();
 
-        if(array_key_exists($fn,$wrappers)) {
+        if(array_key_exists($fn, $wrappers)) {
 
 			$split = function($str) {
 		        $ret = array();
-		        foreach(explode(",",$str) as $part) {
-		            if(trim($part)!=="") {
+		        foreach(explode(",", $str) as $part) {
+		            if(trim($part) !== "") {
 		                $ret[] = $part;
 		            }
 		        }
@@ -184,15 +184,15 @@ class Component {
      **/
     public final function methodExists($fn) {
 
-        if(method_exists($this,$fn)) {
+        if(method_exists($this, $fn)) {
             return true;
 		}
 
-        if(method_exists($this,"_".$fn)) {
+        if(method_exists($this, "_".$fn)) {
             return true;
 		}
 
-        $behaviourClass = BehaviourMap::routeMethod(get_class($this),$fn,$this->behaviours,$this->behaviourHash());
+        $behaviourClass = BehaviourMap::routeMethod(get_class($this), $fn, $this->behaviours, $this->behaviourHash());
 		if($behaviourClass) {
 		    return true;
 		}
@@ -200,8 +200,6 @@ class Component {
 		return false;
 		
     }
-
-
     
     /**
      * @return Массив поведений, который дорбавляются объекту по умолчанию
@@ -379,17 +377,6 @@ class Component {
 		return array();
 	}
 	
-	/**
-	 * Возвращает текущее приложение
-	 **/
-	public function app() {
-	    return \Mod::app();
-	}
-	
-	public function service($name) {
-	    return service($name);
-	}
-
     public function plugin($name) {
 
         switch($name) {
@@ -411,10 +398,4 @@ class Component {
 
     }
 
-    /**
-     * @return array Возврвщает массив поведений объекта
-     **/
-    public final function behaviours(){
-        return $this->behaviours;
-    }
 }
