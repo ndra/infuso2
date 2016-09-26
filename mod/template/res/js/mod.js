@@ -237,8 +237,10 @@ if(!window.mod) {
                 success: function(data) {
                     mod.handleCmd(data, ajaxId);
                 }, error:function(r) {
-                    mod.msg("Request failed", true);
-                    mod.removeCompletedRequests(ajaxId);
+                    if(r.statusText == "error") {
+                        mod.msg("Request failed", true);
+                        mod.removeCompletedRequests(ajaxId);                    
+                    }
                 }
             });
             
