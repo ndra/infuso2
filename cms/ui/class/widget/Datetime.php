@@ -18,7 +18,7 @@ class Datetime extends Textfield
 
     public function execWidget() {
 
-        $this->app()->tm()
+        app()->tm()
             ->exec("/ui/widgets/datetime",array (
                 "widget" => $this,
             ));

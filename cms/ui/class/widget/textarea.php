@@ -9,7 +9,7 @@ class Textarea extends Input {
 	}
 
 	public function execWidget() {
-		$this->app()->tm()
+		app()->tm()
 			->exec("/ui/widgets/textarea",array (
 			    "widget" => $this,
 			));

@@ -6,7 +6,7 @@ use \Infuso\Core;
 class Conf extends Base {
     
     public function index() {
-        $this->app()->tm()->exec("/heapit/conf");
+        app()->tm()->exec("/heapit/conf");
     }
 
     /**

@@ -14,7 +14,7 @@ class Menu extends Core\Controller {
 	 **/
 	public function post_root($p) {
 	
-	    $tmp = $this->app()->tm()->template("/reflex/layout/menu/ajax", array(
+	    $tmp = app()->tm()->template("/reflex/layout/menu/ajax", array(
             "stored" => $p["stored"],
             "tab" => $p["tab"],
 		));
@@ -30,7 +30,7 @@ class Menu extends Core\Controller {
 	 **/
 	public function post_subdivisions($p) {
 
-	    $tmp = $this->app()->tm()->template("/reflex/menu-root/subdivisions", array(
+	    $tmp = app()->tm()->template("/reflex/menu-root/subdivisions", array(
 	        "nodeId" => $p["nodeId"],
 		));
 

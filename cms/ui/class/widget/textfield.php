@@ -14,7 +14,7 @@ class Textfield extends Input {
     }
 
 	public function execWidget() {
-		$this->app()->tm()
+		app()->tm()
 			->exec("/ui/widgets/textfield",array (
 			    "widget" => $this,
 			));

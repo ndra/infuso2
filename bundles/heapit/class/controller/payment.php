@@ -7,7 +7,7 @@ use \Infuso\Heapit\Model;
 class Payment extends Base {
 
     public function index() {
-        $this->app()->tm()->exec("/heapit/payment-list");
+        pp()->tm()->exec("/heapit/payment-list");
     }
     
     public function index_add($p) {    
@@ -22,7 +22,7 @@ class Payment extends Base {
             $copy->data("expenditure", 1);
         }
         
-        $this->app()->tm()->exec("/heapit/payment-new", array(
+        app()->tm()->exec("/heapit/payment-new", array(
             "paymentToCopy" => $copy,
         ));
     }

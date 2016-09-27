@@ -27,7 +27,7 @@ class Task extends \Infuso\ActiveRecord\Record {
 
     public function index_item($p) {
         $task = self::get($p["id"]);
-        $this->app()->tm()->exec("/board/task", array(
+        app()->tm()->exec("/board/task", array(
             "task" => $task,
         ));
     }

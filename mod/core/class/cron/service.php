@@ -35,7 +35,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
      **/
     public function checkTimeAndprocess() {
 
-        $file = file::get($this->app()->varPath()."/cron.php");
+        $file = file::get(app()->varPath()."/cron.php");
         $time = $file->time();
 
         // Читаем статус из файла

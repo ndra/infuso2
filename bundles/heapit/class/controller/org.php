@@ -6,7 +6,7 @@ use \Infuso\Core;
 class Org extends Base {
 
     public function index() {
-        $this->app()->tm()->exec("/heapit/org-list");
+        app()->tm()->exec("/heapit/org-list");
     }
 
     public function index_test() {
@@ -15,7 +15,7 @@ class Org extends Base {
     }
 
     public function index_add() {
-        $this->app()->tm()->exec("/heapit/org-new");
+        app()->tm()->exec("/heapit/org-new");
     }
 
     /**

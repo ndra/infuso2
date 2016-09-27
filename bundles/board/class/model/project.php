@@ -13,7 +13,7 @@ class Project extends \Infuso\ActiveRecord\Record {
 
 	public function index_item($p) {
 	    $project = self::get($p["id"]);
-		$this->app()->tm()->exec("/board/project", array(
+		app()->tm()->exec("/board/project", array(
 		    "project" => $project,
 		));
 	}

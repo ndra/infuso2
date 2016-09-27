@@ -106,7 +106,7 @@ class Bargain extends \Infuso\ActiveRecord\Record {
     
     public function index_item($p) {
         $bargain = self::get($p["id"]);
-        $this->app()->tm()->exec("/heapit/bargain",array(
+        app()->tm()->exec("/heapit/bargain",array(
             "bargain" => $bargain,
         ));
     }

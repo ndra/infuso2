@@ -6,7 +6,7 @@ use \Infuso\Core;
 class Main extends Base {
 
     public function index() {
-        $this->app()->tm()->exec("/heapit/index");
+        app()->tm()->exec("/heapit/index");
     }
 
     public function index_test() {

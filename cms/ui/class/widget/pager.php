@@ -15,7 +15,7 @@ class Pager extends Input {
             $this->param("value", 1);
         }
 
-		$this->app()->tm()
+		app()->tm()
 			->exec("/ui/widgets/pager",array (
 			    "widget" => $this,
 			));

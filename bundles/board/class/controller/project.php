@@ -7,11 +7,11 @@ use \Infuso\Board\Model;
 class Project extends Base {
     
     public function index() {   
-        $this->app()->tm()->exec("/board/projects");
+        app()->tm()->exec("/board/projects");
     }
     
     public function index_new() {
-        $this->app()->tm()->exec("/board/project-new");
+        app()->tm()->exec("/board/project-new");
     }
 
     /**
