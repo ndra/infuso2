@@ -208,7 +208,7 @@ class Action extends Component {
     }
     
     public function url() {
-        return $this->app()->service("route")->actionToURL($this);
+        return app()->service("route")->actionToURL($this);
     }
 
     public function redirect() {
