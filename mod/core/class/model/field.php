@@ -170,7 +170,8 @@ abstract class Field extends Core\Component {
             if($this->model()) {
                 return $this->model()->data($this->name(), $value);
             } else {
-                $this->value = $value;
+                $this->value = $this->prepareValue($value);
+                return $this;
             }
         }
     }
