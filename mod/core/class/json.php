@@ -25,15 +25,15 @@ class mod_json extends \infuso\core\controller {
                 
             $_FILES = array();
             foreach($xfiles as $key => $file) {
-                if(preg_match("/^{$requuestId}\//", $key)) {
-                    $newKey = preg_replace("/^{$requuestId}\//", "", $key);
-                    $_FILES[$newKey] = $xfiles[$key];
-                }
+                if(preg_match("/^{$requestId}\//", $key)) {
+                    $newKey = preg_replace("/^{$requestId}\//", "", $key);
+                    $_FILES[$newKey] = $xfiles[$key];                   
+                } 
             }
 
     		try {
             
-               ob_start();
+                ob_start();
                 
                 $result = \infuso\core\post::process(
     				$request,

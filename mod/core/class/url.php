@@ -275,10 +275,12 @@ class Url {
      **/
     public function relative() {
         $ret = "";
-        if($this->path())
+        if($this->path()) {
             $ret.= $this->path();
-        if($this->queryString())
+        }
+        if($this->queryString()) {
             $ret.= "?".$this->queryString();
+        }
         return $ret;
     }
 
