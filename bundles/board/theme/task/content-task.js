@@ -33,7 +33,7 @@ mod.init(".ddksfajhjz", function() {
             cmd:"infuso/board/controller/attachment/upload",
             taskId: $container.attr("data:task")
         }, function() {        
-            $container.find(".c-attachments").triggerHandler("board/upload");        
+            //$container.find(".c-attachments").triggerHandler("board/upload");        
         }, {
             files: {
                 file: file

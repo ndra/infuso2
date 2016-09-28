@@ -14,11 +14,9 @@ class mod_json extends \infuso\core\controller {
 		header("Content-type: text/plain; charset=utf-8");
         
 		$data = $_POST["data"];
-		$data = json_decode($data,1);   
-        
+		$data = json_decode($data,1);
         $results = array();      
-        
-        $xfiles = $_FILES;
+        $xfiles = $_FILES;        
         
         // Обрабатываем пачку команд
         foreach($data["requests"] as $requestId => $request) {
