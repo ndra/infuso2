@@ -29,7 +29,7 @@ class Route extends \Infuso\Core\Controller {
         
         $item = $editor->item();
         $hash = get_class($item).":".$item->id();
-        $this->service("ar")->create(Reflex\Model\Route::inspector()->className(),array(
+        service("ar")->create(Reflex\Model\Route::inspector()->className(),array(
             "hash" => $hash,
 		));
     }
