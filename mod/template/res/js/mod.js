@@ -127,7 +127,7 @@ if(!window.mod) {
         conf.id = mod.id();
         
         // Отменяем запрос с таким же id
-        if(conf.unique) {
+        if(conf.unique) {    
             for(var requestId in mod.requests) {
                 if(mod.requests[requestId].conf.unique == conf.unique) {
                     mod.abort(mod.requests[requestId].conf.id);
@@ -146,13 +146,13 @@ if(!window.mod) {
     /**
      * Отменяет запрос к серверу
      **/
-    mod.abort = function(requestId) {
-    
+    mod.abort = function(requestId) { 
+        
         // Находим запрос по id
         var request = mod.requests[requestId];
         if(!request) {
             return;
-        }
+        }        
         
         request.status = "cancelled";
         
@@ -265,30 +265,42 @@ if(!window.mod) {
         }
     }
     
-    mod.abortAjaxForCancelledRequests = function() {
+    /**
+     * Отменяет уже отправленные запросы на сервер
+     * Запрос отменяется, если все запросы в нем (:) отменены
+     * В противном случае, не трогаем запрос, но его колбэк не выполнится
+     * и сообщения не будут выведены
+     **/
+    mod.abortAjaxForCancelledRequests = function() {   
     
         var xhrToRemove = {};
     
         // id ajax в которых есть хоть один отмененный запрос
         for(var requestId in mod.requests) {
             var request = mod.requests[requestId];
-            if(request.status == "cancelled") { 
-                xhrToRemove[request.ajaxId] = true;
+            if(request.xhr) {
+                if(request.status == "cancelled") { 
+                    xhrToRemove[request.ajaxId] = true;
+                }
             }
         }         
         
         // Если в группе запросов есть хотя бы один не отмененный, мы не можем отменить весь запрос
-        for(var requestId in mod.requests) {
-            var request = mod.requests[requestId].ajaxId;
-            if(request.status != "cancelled") {
-                delete xhrToRemove[request.ajaxId];  
+        for(var requestId in mod.requests) {            
+            var request = mod.requests[requestId];
+            if(request.xhr) { 
+                if(request.status != "cancelled") {
+                    delete xhrToRemove[request.ajaxId];  
+                }
             }
         }
-        
+       
         for(var requestId in mod.requests) {
             var request = mod.requests[requestId];
-            request.xhr.abort();
-            delete mod.requests[requestId];
+            if(xhrToRemove[request.ajaxId]) {
+                request.xhr.abort();
+                delete mod.requests[requestId];
+            }
         }        
         
     }
@@ -423,4 +435,3 @@ if(!window.mod) {
     }, 300);
 
 }
-
