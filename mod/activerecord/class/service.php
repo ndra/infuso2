@@ -188,6 +188,7 @@ class Service extends Core\Service {
 	}
 	
 	public function clearBuffer() {
+        self::$buffer = array();
 	}
 	
 }

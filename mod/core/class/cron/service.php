@@ -45,9 +45,9 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
         // Определяем время работы крона, умножаем на 10
         // Следующий запуск крона возможен не раньше, чем длительность предыдущего запуска * 10 + 10
         // Т.е. если скрипт выполнялся 8 с., то следующий запуск возможен через 8*10+10 = 90 с.
-        if(preg_match("/done:\s*(\d+)/",$status,$matches)) {
+        if(preg_match("/done:\s*(\d+)/", $status, $matches)) {
             $s = $matches[1];
-            $delay = max($s*$this->param("delayMultiplier"),$this->param("minDelay"));
+            $delay = max($s * $this->param("delayMultiplier"), $this->param("minDelay"));
         } else {
             $delay = 3600;
         }
@@ -55,7 +55,7 @@ class mod_cron_service extends \infuso\core\service Implements Infuso\Core\Handl
         $left = $time->stamp() + $delay - util::now()->stamp();
 
         // Рарзрешаем обработчикам крона запуститься только если истек кулдаун или мы в режиме суперадмина
-        if($left<0 || \mod_superadmin::check()) {
+        if($left < 0 || \mod_superadmin::check()) {
             $file->put("processing");
             $t1 = \util::now()->stamp();
             self::process();
