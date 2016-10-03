@@ -37,6 +37,8 @@ class Handler implements Core\Handler {
      **/
     public static function onException($event) {
     
+        header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+    
 	    // Трейсим ошибки
 	    app()->trace($event->param("exception"));                
     
