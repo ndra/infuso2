@@ -93,7 +93,7 @@ class Sync extends \Infuso\Core\Controller {
         if(!$compressedData) {
             app()->msg("No data received",1);
             return false;
-        }
+        }      
 
         $data = gzuncompress($compressedData);
 

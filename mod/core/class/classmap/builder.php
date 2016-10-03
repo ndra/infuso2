@@ -200,7 +200,7 @@ class Builder {
 	}
 
 	/**
-	 * Возвращает часть карты сайта, в которйо содержатся обработчики событий
+	 * Возвращает часть карты сайта, в которой содержатся обработчики событий
 	 **/
 	public static function handlers() {
 		$handlers = array();
@@ -223,12 +223,15 @@ class Builder {
 			}
 		}
 		
+        // Сортируем обработчики
 		foreach($handlers as $key => $val) {
 			usort($handlers[$key], function($a,$b) {
 			    return $a["priority"] - $b["priority"];
 			});
 		}
 		
+        // Приводим массив к тому виду, который будет в карте классов
+        // Удаляем лишнее
 		foreach($handlers as $event => $list) {
 			foreach($list as $key => $val) {
 			    $handlers[$event][$key] = $val["handler"];
@@ -311,6 +314,9 @@ class Builder {
 	 **/
 	public static function buildClassMap() {
 	
+        // Это сделано чтобы избежать рекурсии
+        // Что-то внутри этого метода может дернуть его же
+        // Какая-то черная магия здесь
 	    if(self::$building) {
 	        return array();
 	    }

@@ -78,7 +78,15 @@ class General implements Core\Handler {
      * При завершении приложения сохраняем все измененные записи
      **/
     public function onDefer() {
-        \Infuso\ActiveRecord\Record::storeAll();
+        service("ar")->storeAll();
+    }
+    
+    /**
+     * @handler = infuso/flush
+     * При завершении приложения сохраняем все измененные записи
+     **/    
+    public function onFlush() {
+        service("ar")->clearBuffer();
     }
 
 }

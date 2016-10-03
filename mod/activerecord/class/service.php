@@ -163,7 +163,9 @@ class Service extends Core\Service {
             $items = array_keys(self::$changedItems);
             $n++;
 
-            if($n>100) {
+            // Защита от рекурсии
+            // При сохранении объекта может дернуться триггер, который опять вызовет сохранение объекта
+            if($n > 100) {
 				throw new Exception("reflex_storeAll() - recursion");
 			}
 
@@ -173,21 +175,12 @@ class Service extends Core\Service {
 	
 	}
 	
-	/**
-	 * Освобождает буффер объектов
-	 * несохраненные объекты сохраняются автоматически
-	 **/
-	public function freeAll() {
-		foreach(self::$buffer as $class) {
-            foreach($class as $item) {
-                $item->free();
-            }
-        }
-        self::$buffer = array();
-        self::$changedItems = array();
-	}
-	
+    /**
+     * Очищает буффер
+     * @todo сделать чтобы записям в буффере ставился статус detached
+     **/
 	public function clearBuffer() {
+        $this->storeAll();
         self::$buffer = array();
 	}
 	

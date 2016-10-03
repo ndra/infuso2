@@ -493,13 +493,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
         return $this->id;
     }
 
-    /**
-     * Сохраняет в базу все изменения
-     **/
-    public static function storeAll() {
-		service("ar")->storeAll();
-    }
-
 	/**
 	 * @todo Надобность в этой функции под вопросом
 	 **/
@@ -586,15 +579,6 @@ abstract class Record extends \Infuso\Core\Model\Model {
             $field->revert();
         }
         $this->markAsUnchanged();
-    }
-
-    /**
-     * Записывает объект и удаляет его из буфера
-     * @todo не удаляет из буффера, пофиксить
-     **/
-    public final function free() {
-        $this->store();
-		service("db")->query("update $from $set where `id`='$id' ")->exec();
     }
 
     /**

@@ -130,6 +130,9 @@ class Service extends Core\Service {
         service("cache")->set("01h1b4yw6kbz2l9y6orj", $n + 1);
 
         $task->exec();
+        
+        app()->fire("infuso/flush");
+        
         return true;
     }
     

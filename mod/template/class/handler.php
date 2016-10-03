@@ -30,5 +30,20 @@ class Handler implements Core\Handler {
         }
         
     }
+    
+    /**
+     * @handler = infuso/exception
+     * @handlerPriority = 9999999;
+     **/
+    public static function onException($event) {
+    
+	    // Трейсим ошибки
+	    app()->trace($event->param("exception"));                
+    
+        // И наконец выводим шаблон исключения
+	    app()->tm("/mod/exception")
+            ->param("exception", $event->param("exception"))
+            ->exec();        
+    }
 
 }

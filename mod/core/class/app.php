@@ -185,12 +185,17 @@ class App {
 
 	    try {
 
+            // Этот метод делает всю работу, но не обрабатывает исключения
 	        $this->execWithoutExceptionHandling();
 
 	    } catch(\Exception $exception) {
 
+            // Пробуем обработать ошибку, показать страницу исключения и т.д
+            // Если по каким-то причинам при этом вылетит другое исключение,
+            // мы покажем пользователю уже его
 		    try {
             
+                // Очищаем object buffer
     			while(ob_get_level()) {
     		        ob_end_clean();
     		    }
@@ -200,19 +205,10 @@ class App {
 				// Сбрасываем процессор шаблонов
 		        $this->clearTmp();
                 
+                // Вызываем событие исключения
                 $event = app()->fire("infuso/exception", array(
                     "exception" => $exception,
                 ));
-
-                if(!$event->stopped()) {
-                
-        		    // Трейсим ошибки
-        		    $this->trace($exception);                
-                
-    			    $this->tm("/mod/exception")
-                        ->param("exception", $exception)
-                        ->exec();
-                }
 
 		    } catch(\Exception $ex2) {
 		        throw $exception;
@@ -231,8 +227,6 @@ class App {
         }
 
         echo $content;
-
-        app()->fire("infusoAppShutdown");
 
 	}
 
