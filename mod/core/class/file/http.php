@@ -15,6 +15,7 @@ class Http extends Core\File {
     public function initialParams() {
         return array(
             "curlOptions" => array(),
+            "timeout" => 30,
         );
     }
 
@@ -76,6 +77,15 @@ class Http extends Core\File {
 		
 		}
     }
+    
+    public function timeout($timeout = 0) {
+        if(func_num_args() == 0) {
+            return $this->param("timeout");
+        } elseif (func_num_args() == 1) {
+            return $this->param("timeout", $timeout);
+            return $this;
+        }
+    }
 
     /**
      * Возвращает ресурс curl c базовыми настройкми
@@ -86,11 +96,14 @@ class Http extends Core\File {
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $this->param("timeout"));
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->param("timeout"));
         
         foreach($this->param("curlOptions") as $key => $val) {
-            curl_setopt($ch, constant($key),$val);
+            curl_setopt($ch, constant($key), $val);
         }
+        
+        app()->msg($this->param("timeout"));
 
         $this->lastCurl = $ch;
 
@@ -116,10 +129,8 @@ class Http extends Core\File {
 		$body = substr($response, $headerSize);
         
         if($error = $this->errorText()) {
-            throw new \Exception($error);
+            throw new \Exception($error." ".var_export($this->info(), true));
         }
-        
-        //curl_close($ch);
         
         Core\Profiler::endOperation();
         return $body;
@@ -144,7 +155,7 @@ class Http extends Core\File {
         curl_exec($ch);
         
         if($error = $this->errorText()) {
-            throw new \Exception($error);
+            throw new \Exception($error." ".var_export($this->info(), true));
         }
         
     }

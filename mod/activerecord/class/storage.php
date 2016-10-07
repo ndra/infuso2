@@ -186,7 +186,7 @@ class Storage extends \Infuso\Core\Controller {
 	/**
 	 * Добавляет файл в хранилище
 	 **/
-	public function add($src, $name = null) {
+	public function add($src, $name = null, $replaceExists = false) {
     
         if($name === null) {
             $name = Core\File::get($src)->name();
@@ -198,14 +198,20 @@ class Storage extends \Infuso\Core\Controller {
 		}
 	    $this->prepareFolder();
 	    $path = $this->path()."";
-	    $dest = $path.$name;
+        $dest =  Core\File::get($path.$name);
 
 	    if(Core\File::get($src)->path() == "/") {
         	throw new \Exception("reflex_storage::add() first argument cannot be void");
 	    }
 
-	    Core\File::get($src)->copy($dest);
-	    return Core\File::get($dest)->path();
+        // Копируем файл, если надо
+        if($replaceExists || !$dest->exists()) {
+            app()->msg(Core\File::get($src)->params());
+            Core\File::get($src)->copy($dest);
+            app()->msg("ololo!");
+        }
+        return $dest;
+	    
 	}
 
 	public function mkdir($name) {

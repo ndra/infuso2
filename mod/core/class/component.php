@@ -232,7 +232,7 @@ class Component {
 		// Довавляем параметры из конфигурации компонентов
         $params = $this->componentConf("params");
         if(is_array($params)) {
-            foreach($params as $key=>$val) {
+            foreach($params as $key => $val) {
                 $this->param($key,$val);
             }
         }
