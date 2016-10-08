@@ -64,7 +64,7 @@ class Multiselect extends Field {
                     continue;
                 }
                 $b *= 1;
-                if($b>0) {
+                if($b >= 0) {
                     $b = str_pad($b, 5, "0", STR_PAD_LEFT);
                     $ret[] = $b;
                 }
