@@ -102,8 +102,6 @@ class Http extends Core\File {
         foreach($this->param("curlOptions") as $key => $val) {
             curl_setopt($ch, constant($key), $val);
         }
-        
-        app()->msg($this->param("timeout"));
 
         $this->lastCurl = $ch;
 
