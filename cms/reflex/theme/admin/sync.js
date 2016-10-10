@@ -1,17 +1,27 @@
-$(function() {
-
-    $(".x0f1k9gbr5c .go").click(function() {
-        fetchClass();
-    });
-
-    var classList = [];
-    $(".x0f1k9gbr5c .class").each(function() {
-        classList.push($(this).text());
-    });
+mod(".x0f1k9gbr5c").init(function() {
     
+    var $container = $(this);
+    
+    // Выделить все 
+    $container.find(".select-all").click(function() {
+        $container.find(":checkbox").prop("checked", true);
+    });
+
+    // Снять выделение
+    $container.find(".deselect").click(function() {
+        $container.find(":checkbox").prop("checked", false);
+    });
+
+    // Начать
+    $container.find(".go").click(function() {
+        $container.find(".class").removeClass("done");
+        nextClass();
+    });
+
     var fromId = null;
     var className = null;
     
+    // Выводит лог
     var log = function(data) {
        $(".x0f1k9gbr5c .class-"+data["class"]+" .log").html(data.message);
     }
@@ -28,7 +38,8 @@ $(function() {
         }
         
         if(data.action == "nextClass") {
-            fetchClass();
+            $container.find(".class-"+data["log"]["class"]).addClass("done");
+            nextClass();
             return;
         }
         
@@ -45,14 +56,28 @@ $(function() {
             cmd:"infuso/cms/reflex/controller/sync/syncStep",
             className: className,
             fromId: fromId
-        },handleStep)
+        }, handleStep, {unique: "jn00F53tRf"});
     }
     
     var done = function() {
+        mod.msg("done");
     }
     
-    var fetchClass = function() {
-        className = classList.shift();
+    // Делает запрос для следующего класса
+    // Если следующего класса нет - выполнено
+    var nextClass = function() {
+        
+        className = null;
+        $container.find(".class").not(".done").each(function() {
+            if(className) {
+                return;
+            }
+            var $checkbox = $(this).find(":checkbox:checked");
+            if($checkbox.length) {
+                className = $(this).attr("data:class");
+            }
+        });
+        
         if(!className) {
             done();
         } else {

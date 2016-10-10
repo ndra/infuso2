@@ -206,9 +206,7 @@ class Storage extends \Infuso\Core\Controller {
 
         // Копируем файл, если надо
         if($replaceExists || !$dest->exists()) {
-            app()->msg(Core\File::get($src)->params());
             Core\File::get($src)->copy($dest);
-            app()->msg("ololo!");
         }
         return $dest;
 	    

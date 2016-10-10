@@ -15,6 +15,7 @@ class Sync extends \Infuso\Core\Controller {
 	                "params" => array(
 	                    "remoteToken" => "Токен удаленной машины",
 	                    "remoteHost" => "Хост удаленной машины",
+                        "removeScheme" => "Схема удаленной машины (http или https)",
 	                    "skip" => "[yaml] Пропустить модули",
 	                    "remoteLimit" => "Сколько строк скачивать за раз",
 	                    "syncFiles" => "Синхронизировать файлы",
@@ -23,6 +24,12 @@ class Sync extends \Infuso\Core\Controller {
 			),
 		);
 	}
+    
+    public function initialParams() {
+        return array(
+            "remoteScheme" => "http",
+        );
+    }
 
     public static function indexTest() {
         return Core\Superadmin::check();
@@ -65,6 +72,10 @@ class Sync extends \Infuso\Core\Controller {
     public function post_syncStep($p) {
 
         $class = $p["className"];
+        
+        if(!$scheme = $this->param("remoteScheme")) {
+            throw new \Exception("Scheme missing");
+        }
 
         if(!$token = $this->param("remoteToken")) {
             throw new \Exception("Token missing");
@@ -80,7 +91,7 @@ class Sync extends \Infuso\Core\Controller {
             $limit = 50;
         }
 
-        $url = Core\Mod::url("http://$host/infuso/cms/reflex/controller/syncserver");
+        $url = Core\Mod::url("{$scheme}://$host/infuso/cms/reflex/controller/syncserver");
         $url->query("class", $class);
         $url->query("id", $p["fromId"]);
         $url->query("token", $token);

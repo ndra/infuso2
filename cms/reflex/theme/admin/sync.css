@@ -2,7 +2,21 @@
 
     .log {
         margin-left:10px;
-        color:gray;
+        opacity: .5;
+    }
+    
+    .done {
+        background: green;
+        color: white;
+    }
+    
+    .select-all, .deselect {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    
+    .select-all {
+        margin-right: 20px;
     }
 
 }
