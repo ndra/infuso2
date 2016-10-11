@@ -186,7 +186,7 @@ class Storage extends \Infuso\Core\Controller {
 	/**
 	 * Добавляет файл в хранилище
 	 **/
-	public function add($src, $name = null, $replaceExists = false) {
+	public function add($src, $name = null, $replaceExists = true) {
     
         if($name === null) {
             $name = Core\File::get($src)->name();
