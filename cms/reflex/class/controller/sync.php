@@ -28,6 +28,7 @@ class Sync extends \Infuso\Core\Controller {
     public function initialParams() {
         return array(
             "remoteScheme" => "http",
+            "replaceExistingFiles" => false,
         );
     }
 
@@ -88,7 +89,7 @@ class Sync extends \Infuso\Core\Controller {
         $limit = $this->param("remoteLimit");
 
         if(!$limit) {
-            $limit = 10;
+            $limit = 100;
         }
 
         $url = Core\Mod::url("{$scheme}://$host/infuso/cms/reflex/controller/syncserver");
@@ -161,10 +162,12 @@ class Sync extends \Infuso\Core\Controller {
 	            $item = service("ar")->get($class, $id);
 	            if($row["files"]) {
 		            foreach($row["files"] as $file) {
-		                $dest = $item->storage()->path()."/".$file["rel"];
-		                $content = Core\File::http("http://$host/".$file["url"])->data();
-		                Core\File::mkdir(Core\File::get($dest)->up());
-						Core\File::get($dest)->put($content);
+		                $dest = Core\File::get($item->storage()->path()."/".$file["rel"]); 
+                        if($this->param("replaceExistingFiles") || !$dest->exists()) {
+    		                $content = Core\File::http("http://$host/".$file["url"])->data();
+    		                Core\File::mkdir(Core\File::get($dest)->up());
+    						Core\File::get($dest)->put($content);
+                        }
 		            }
 	            }
             }     
