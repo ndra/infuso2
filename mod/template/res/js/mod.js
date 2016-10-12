@@ -237,8 +237,9 @@ if(!window.mod) {
                 success: function(data) {
                     mod.handleCmd(data, ajaxId);
                 }, error:function(r) {
-                    if(r.statusText == "error") {
-                        mod.msg("Request failed", true);
+                    if(r.status != 0) {
+                        console.log(r);
+                        mod.msg("Request failed " + r.responseText, true);
                         mod.removeCompletedRequests(ajaxId);                    
                     }
                 }

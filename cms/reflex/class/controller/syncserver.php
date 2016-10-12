@@ -39,18 +39,24 @@ class SyncServer extends \Infuso\Core\Controller {
         if(!$limit) {
             $limit = 100;
         }
+        
+        $startTime = time();
 
         if(service("classmap")->testClass($class)) {
 
-            $items = service("ar")->collection($class)
+            $items = service("ar")
+                ->collection($class)
                 ->asc("id")
-                ->gt("id",$p["id"])
                 ->limit($limit);
 
             $data["total"] = $items->count();
+            
+            $items->gt("id",$p["id"]);
 
-            $n = 0;
+            $done = true;
             foreach($items as $item) {
+            
+                $done = false;
 
                 // Собираем данные
                 $itemData = $item->data();
@@ -71,11 +77,15 @@ class SyncServer extends \Infuso\Core\Controller {
                     "files" => $files,
                 );
                 $data["nextId"] = $item->id();
-                $n++;
+                
+                if(time() - $startTime > 2) {
+                    break;
+                }
+                
             }
 
             // Если записано 0 строк, мы закончили с этим классом
-            if($n == 0) {
+            if($done) {
                 $data["completed"] = true;
             }
 

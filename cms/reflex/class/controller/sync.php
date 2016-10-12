@@ -88,7 +88,7 @@ class Sync extends \Infuso\Core\Controller {
         $limit = $this->param("remoteLimit");
 
         if(!$limit) {
-            $limit = 50;
+            $limit = 10;
         }
 
         $url = Core\Mod::url("{$scheme}://$host/infuso/cms/reflex/controller/syncserver");
@@ -155,7 +155,6 @@ class Sync extends \Infuso\Core\Controller {
             $itemData = array();
             $insert = " (".implode(",",array_keys($insert)).") values (".implode(",",$insert).") ";
             $query = "insert into `$table` $insert ";
-            app()->trace($query);
             $id = service("db")->query($query)->exec()->lastInsertId();
 
 			if($this->param("syncFiles")) {
