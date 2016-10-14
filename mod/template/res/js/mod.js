@@ -420,17 +420,29 @@ if(!window.mod) {
     }
     
     mod.monitorReset = function($e, propName) {
-        $e.data("PmhHipW-last", $e.prop($e.data("PmhHipWLXkGk82RcU")));
+        $e.data("PmhHipW-last", mod.getMonitorProp($e, $e.data("PmhHipWLXkGk82RcU")));
+    }
+    
+    mod.getMonitorProp = function($e, propName) {
+        switch(propName) {
+            case "width":
+                return $e.outerWidth();
+            default:
+                return $e.prop(propName);
+        }
     }
     
     setInterval(function() {
         $(".PmhHipWLXkGk82RcU").each(function() {
-            var $e = $(this);
-            if($e.prop($e.data("PmhHipWLXkGk82RcU")) != $e.data("PmhHipW-last")) {
+            var $e = $(this);   
+            var propName = $e.data("PmhHipWLXkGk82RcU");
+            var val = mod.getMonitorProp($e, propName);
+                                                                
+            if(val != $e.data("PmhHipW-last")) {
                 if($e.data("PmhHipW-last") !== undefined) {
                     $e.trigger("mod/monitor");
                 }
-                $e.data("PmhHipW-last", $e.prop($e.data("PmhHipWLXkGk82RcU")));
+                $e.data("PmhHipW-last", val);
             }
         });
     }, 300);
