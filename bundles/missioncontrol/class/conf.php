@@ -7,7 +7,7 @@ namespace Infuso\Missioncontrol;
  **/
 class Conf extends \Infuso\Core\Component {
 
-    public static function initialParams() {
+    public function initialParams() {
         return array(
             "server-status" => "http://localhost/server-status",
         );
