@@ -33,7 +33,8 @@ class ServerStatusLog extends \Infuso\ActiveRecord\Record {
 
     public static function all() {
         return service("ar")
-            ->collection(get_class());
+            ->collection(get_class())
+            ->desc("datetime");
     }
 
     public static function get($id) {
