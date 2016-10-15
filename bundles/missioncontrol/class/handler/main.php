@@ -53,7 +53,7 @@ class Main implements Core\Handler {
     public static function clearLog() {
 
         \Infuso\Missioncontrol\Model\ServerStatusLog::all()
-            ->leq("datetime", \Infuso\Util\Util::now()->shiftDays(-7))
+            ->leq("datetime", \Infuso\Util\Util::now()->shiftDay(-7))
             ->delete();
 
     }

@@ -32,7 +32,20 @@
         }
     }
     
+    .error {
+        background: red;
+        color: white;
+    }
+    
+    .crontab {
+        width: 50px;
+    }
+    
     .iterator {
+        width: 24px;
+    }
+    
+    .counter {
         width: 24px;
     }
     
