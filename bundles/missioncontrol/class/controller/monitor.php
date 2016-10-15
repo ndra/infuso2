@@ -29,8 +29,11 @@ class Monitor extends Core\Controller {
     
     public function index_logsaver() {
     
+        $conf = new \Infuso\Missioncontrol\Conf();
+    
         set_time_limit(100);
-        sleep(rand()%60);
+        // Засыпаем на интервал 0-59 сек для того чтобы забирать данные в разное время, а не только в начале минуты когда стартует крон 
+        sleep(rand() % 60);
     
         // Данные из top
         ob_start();
@@ -47,9 +50,8 @@ class Monitor extends Core\Controller {
             );
         }
         
-        // Данные из server-status
-        
-        $contents = \Infuso\Core\File::http("http://localhost/server-status")->data();
+        // Разбираем данные из server-status        
+        $contents = \Infuso\Core\File::http($conf->param("server-status"))->data();
         $html = new \Infuso\Missioncontrol\HTML($contents);
         $table = $html->xpath("table")->first();
         $data = array();

@@ -28,11 +28,13 @@ class Main implements Core\Handler {
 
         $ctx = stream_context_create(array( 
             'http' => array( 
-                'timeout' => 1 
+                'timeout' => .1 
                 ) 
             ) 
         ); 
-        file_get_contents("http://ndra.ru/missioncontrol/logsaver", 0, $ctx);    
+        
+        $url = app()->url();          
+        file_get_contents($url->scheme()."://".$url->domain()."/missioncontrol/logsaver", 0, $ctx);    
 
     }
 	

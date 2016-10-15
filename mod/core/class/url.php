@@ -60,7 +60,7 @@ class Url {
      * Создает новый объект на основе текущего урл
      **/
     public function current() {
-        return mod::app()->url();
+        return app()->url();
     }
 
     /**
