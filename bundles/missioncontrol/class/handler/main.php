@@ -23,7 +23,7 @@ class Main implements Core\Handler {
         service("task")->add(array(
             "class" => get_class(),
             "method" => "clearLog",
-            "crontab" => "* * * 0 0",
+            "crontab" => "0 0 * * *",
             "title" => "Очистка лога server-status",
             "randomize" => 60 * 24
         ));
