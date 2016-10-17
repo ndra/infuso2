@@ -1,0 +1,9 @@
+public:
+  - /res/
+
+update:
+  source: github
+  owner: ndra
+  repo: infuso2
+  branch: dev
+  path: /bundles/socialauth/
