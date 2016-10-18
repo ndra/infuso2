@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\UserActions\Provider;
+namespace Infuso\SocialAuth\Provider;
 use \Infuso\Core;
 
 /**

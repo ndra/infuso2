@@ -1,12 +1,12 @@
 <?
 
-namespace Infuso\UserActions;
+namespace Infuso\SocialAuth;
 use \Infuso\Core;
 
 /**
  * Стандартная тема социальной авторизации
  **/
-class SocialAuth extends \Infuso\Template\Theme {
+class Theme extends \Infuso\Template\Theme {
 
 	/**
 	 * @return Приоритет темы =-1

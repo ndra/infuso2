@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\UserActions\Controller;
+namespace Infuso\SocialAuth\Controller;
 use \Infuso\Core;
 
 /**
@@ -16,8 +16,8 @@ class Main extends Core\Controller {
         return true;
     }
     
-    public function index() {
-        //app()->tm("/so/registration")->exec();
+    public function index_test() {
+        app()->tm("/socialauth/test")->exec();
     }
 
 }
