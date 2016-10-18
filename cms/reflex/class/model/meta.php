@@ -33,6 +33,16 @@ class Meta extends ActiveRecord\Record {
 				'type' => 'textarea',
 				'editable' => true,
 				'label' => '&lt;HEAD&gt;',
+		    ),array (
+				'name' => 'keywords',
+				'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
+				'editable' => '1',
+				'label' => 'Keywords',
+		    ), array (
+				'name' => 'description',
+				'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
+				'editable' => '1',
+				'label' => 'Description',
 		    ), array (
 				'name' => 'noindex',
 				'type' => 'fsxp-lhdw-ghof-1rnk-5bqp',

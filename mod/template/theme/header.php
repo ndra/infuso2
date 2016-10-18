@@ -18,6 +18,15 @@
         if(app()->tm()->param("head/insert")) {
             head(app()->tm()->param("head/insert"));
         }
+		
+		// Добавляем меты
+        foreach(array("head/keywords","head/description") as $name) {
+            $val = app()->tm()->param($name);
+            if($val) {
+				$name = str_replace("head/","",$name);
+                head("<meta name='{$name}' content='{$val}' />\n");
+            }
+        }
         
         echo \tmp_delayed::add(array(
             "class" => "infuso\\template\\processor",

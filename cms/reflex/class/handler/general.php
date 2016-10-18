@@ -101,6 +101,8 @@ class General extends Core\Component implements Core\Handler {
         $record = service("ar")->get($class, $id);
         $metaObject = $record->plugin("meta")->metaObject();
         app()->tm()->param("head/title", $metaObject->data("title"));
+		app()->tm()->param("head/keywords", $metaObject->data("keywords"));
+        app()->tm()->param("head/description", $metaObject->data("description"));
         app()->tm()->param("head/noindex", $metaObject->data("noindex"));
         app()->tm()->param("head/insert", $metaObject->data("head"));
     }
