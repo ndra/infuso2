@@ -51,6 +51,26 @@ class Meta extends \Infuso\Core\Component {
         }
         return $item->data("head");
     }
+	
+	public function keywords() {
+        $item  = $this->getOrCreateMetaObject();
+        $args = func_get_args();
+        if(count($args)){
+            $title = $args[0];
+            $item->data("keywords", $title);
+        }
+        return $item->data("keywords");
+    }
+	
+	public function description() {
+        $item  = $this->getOrCreateMetaObject();
+        $args = func_get_args();
+        if(count($args)){
+            $title = $args[0];
+            $item->data("description", $title);
+        }
+        return $item->data("description");
+    }
 
     public function create() {
         $item = $this->component();
