@@ -5,7 +5,7 @@ $route = \Infuso\Cms\Reflex\Model\Route::get($item);
 
 <div class='ioy1gedqt1' data:editor='{$editor->id()}' >
 
-    if($route->exists()) {
+    if($route->exists() && !$route->data("auto")) {
     
         widget("infuso\\cms\\ui\\widgets\\textfield")
             ->value($route->data("url"))

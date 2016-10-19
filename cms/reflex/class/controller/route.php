@@ -27,10 +27,8 @@ class Route extends \Infuso\Core\Controller {
         }
         
         $item = $editor->item();
-        $hash = get_class($item).":".$item->id();
-        service("ar")->create(Reflex\Model\Route::inspector()->className(),array(
-            "hash" => $hash,
-		));
+        $route = $item->plugin("route")->getOrCreateRouteObject();
+        $route->data("auto", false);        
     }
     
     /**
@@ -58,9 +56,8 @@ class Route extends \Infuso\Core\Controller {
             throw new \Exception("Security error");
         }
         
-        $route = \Infuso\Cms\Reflex\Model\Route::get($editor->item());
-        $route->delete();
-        service("route")->clearCache();         
+        $item = $editor->item();
+        $route = $item->plugin("route")->reset();       
     }
     
     public function post_getContent($p) {

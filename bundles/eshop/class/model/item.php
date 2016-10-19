@@ -201,7 +201,7 @@ class Item extends \Infuso\ActiveRecord\Record
     }
     
     public function generateURL() {
-        return $this->title();
+        //return $this->title();
     }
     
 }

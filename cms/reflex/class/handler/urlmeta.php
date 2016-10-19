@@ -12,7 +12,11 @@ class URLMeta implements Core\Handler {
 	 **/
 	public function onStore($event) {        
         
-      //  app()->msg($event->params());
+        $item = $event->param("item");
+        if(is_a($item, "infuso\\cms\\reflex\\autoroute")) {
+            $url = $item->generateURL();
+            $item->plugin("route")->setURLAuto($url);
+        }
         
 	}
     
