@@ -48,9 +48,12 @@ class Component {
      **/
     public function behaviourMethodFactory($behaviour, $method) {
     
+        // На всякий случай, переведем метод в маленький регистр
+        $method = strtolower($method);
+        
     	$key = $behaviour.":".$method;
     
-		Profiler::beginOperation("core","create closure",get_class($this)." - ".$key);
+		Profiler::beginOperation("core", "create closure", get_class($this)." - ".$key);
 		
 		if(!$this->behaviourClosures[$key]) {
     

@@ -343,37 +343,49 @@ abstract class Record extends \Infuso\Core\Model\Model {
      * Возвращает false, если хотя бы один из вызванных методов вернул false
      * Если false не был возвращен ни одним из методов, вернет true
      **/
-    public final function callReflexTrigger($fn, $event) {
+    public final function callReflexTrigger($event) {
+    
+        $fn = preg_replace("/^activerecord\//i", "", $event->name());
+        $fn = strtolower($fn);
 
-        if($this->$fn()===false) {
+        if($this->$fn() === false) {
             return;
 		}
             
         foreach($this->behaviourMethods($fn) as $closure) {
-            if($closure($event)===false) {
+            if($closure($event) === false) {
                 return false;
 			}
         }
+        
+        $event->fire();
 
-        if(in_array($fn,array(
-            "beforeCreate",
-            "beforeStore",
-            "beforeDelete",
+        if(in_array($fn, array(
+            "beforecreate",
+            "beforestore",
+            "beforedelete",
         ))) {
-            if(!$this->callReflexTrigger("beforeOperation", $event)) {
+        
+            $event = new Core\Event("ActiveRecord/BeforeOperation", array(
+                "item" => $this,
+            ));
+            if(!$this->callReflexTrigger($event)) {
                 return false;
 			}
 		}
 
-        if(in_array($fn,array(
-            "afterCreate",
-            "afterStore",
-            "afterDelete",
+        if(in_array($fn, array(
+            "aftercreate",
+            "afterstore",
+            "afterdelete",
         ))) {
-            $this->callReflexTrigger("afterOperation", $event);
+            $event = new Core\Event("ActiveRecord/AfterOperation", array(
+                "item" => $this,
+            ));
+            if(!$this->callReflexTrigger($event)) {
+                return false;
+			}
 		}
-		
-		$event->fire();
 		
         return true;
     }
@@ -387,12 +399,12 @@ abstract class Record extends \Infuso\Core\Model\Model {
         if(!$this->exists())
             return;
             
-		$event = new event("beforeDelete",array(
+		$event = new event("ActiveRecord/beforeDelete", array(
 		    "item" => $this,
 		));
 
         // Вызываем пре-триггеры
-        if(!$this->callReflexTrigger("beforeDelete",$event)) {
+        if(!$this->callReflexTrigger($event)) {
             return;
 		}
 
@@ -401,16 +413,16 @@ abstract class Record extends \Infuso\Core\Model\Model {
         service("db")->query("delete `$tableName` from `$prefixedTableName` as `$tableName` where `id`={$id}")->exec();
 
         // Очищаем хранилище (Если не используется чужое хранилище)
-        if($this->storage()->record()==$this) {
+        if($this->storage()->record() == $this) {
         	$this->storage()->clear();
         }
         
-		$event = new event("afterDelete",array(
+		$event = new event("ActiveRecord/AfterDelete", array(
 		    "item" => $this,
 		));
 
         // Вызываем пост-триггеры
-        if(!$this->callReflexTrigger("afterDelete",$event)) {
+        if(!$this->callReflexTrigger($event)) {
             return;
 		}
 
@@ -422,11 +434,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
      **/
     public function createThis($keepID = false) {
 
-		$event = new \Infuso\Core\Event("beforeCreate",array(
+		$event = new \Infuso\Core\Event("ActiveRecord/BeforeCreate", array(
 		    "item" => $this,
 		));
 
-        if(!$this->callReflexTrigger("beforeCreate",$event)) {
+        if(!$this->callReflexTrigger($event)) {
             return false;
         }
 
@@ -438,11 +450,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
         // Меняем статус объекта
         $this->setRecordStatus(self::STATUS_SYNC);
             
-		$event = new \Infuso\Core\Event("afterCreate",array(
+		$event = new \Infuso\Core\Event("ActiveRecord/AfterCreate",array(
 		    "item" => $this,
 		));
         
-        $this->callReflexTrigger("afterCreate",$event);
+        $this->callReflexTrigger($event);
 
     }
 
@@ -452,11 +464,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
      **/
     private final function storeCreated() {
     
-		$event = new event("beforeStore",array(
+		$event = new event("ActiveRecord/BeforeStore",array(
 		    "item" => $this,
 		));
 
-        if(!$this->callReflexTrigger("beforeStore",$event)) {
+        if(!$this->callReflexTrigger($event)) {
             return false;
 		}
 		
@@ -477,11 +489,11 @@ abstract class Record extends \Infuso\Core\Model\Model {
         $this->setInitialData($initialData);
         $this->id = $id;
 
-		$event = new event("afterStore", array (
+		$event = new event("ActiveRecord/AfterStore", array (
 		    "item" => $this,
 		));
 		
-		$this->callReflexTrigger("afterStore", $event);
+		$this->callReflexTrigger($event);
 
         return true;
     }
@@ -525,12 +537,12 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	            return false;
 	        }
 	        
-			$event = new event("beforeStore",array(
+			$event = new event("ActiveRecord/BeforeStore",array(
 			    "item" => $this,
 			));
 	
 	        // Триггер
-	        if(!$this->callReflexTrigger("beforeStore",$event)) {
+	        if(!$this->callReflexTrigger($event)) {
 	            $this->markAsUnchanged();
 	            return false;
 	        }
@@ -558,12 +570,12 @@ abstract class Record extends \Infuso\Core\Model\Model {
 	        // Метод store может быть вызван повторно
 	        $this->markAsUnchanged();
 	        
-			$event = new event("afterStore",array(
+			$event = new event("ActiveRecord/AfterStore",array(
 			    "item" => $this,
 			    "changedFields" => $changedFields,
 			));
 	
-	        $this->callReflexTrigger("afterStore", $event);
+	        $this->callReflexTrigger($event);
 	
 	        return true;
         }

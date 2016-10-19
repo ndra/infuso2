@@ -8,6 +8,7 @@ use Infuso\Core;
  **/
 class Item extends \Infuso\ActiveRecord\Record
     implements \Infuso\Cms\Search\Searchable,
+    \Infuso\Cms\Reflex\AutoRoute,
     Core\Handler  {
 
     const STATUS_USER_DISABLED = 1000;
@@ -197,6 +198,10 @@ class Item extends \Infuso\ActiveRecord\Record
     
     public function _price() {
         return $this->data("price");
+    }
+    
+    public function generateURL() {
+        return $this->title();
     }
     
 }

@@ -8,7 +8,7 @@ use Infuso\Core;
  * Отвечает за то что мы видем в каталоге в разделе «Роуты»
  **/
 
-class Main extends \Infuso\Core\Route implements Core\Handler {
+class Main extends \Infuso\Core\Route {
 
 	private static $n = 0;
 	
@@ -42,26 +42,24 @@ class Main extends \Infuso\Core\Route implements Core\Handler {
 	 **/
 	public function urlToAction($url) {   
 
-        // Пытаемся найти роут прямым запросом в базу
-        
-	    $route = self::routesForActiveDomain()->eq("url",$url->path())->one();
+        // Пытаемся найти роут прямым запросом в базу          
+	    $route = self::routesForActiveDomain()->eq("url", $url->path())->one();
 	    if($route->exists()) {
 	        $params = $url->query();
 	        $params = array_merge($params,$route->pdata("params"));
-	        $action = \Infuso\Core\Action::get($route->className(),$route->action(),$params);
+	        $action = \Infuso\Core\Action::get($route->className(), $route->action(), $params);
 	        $action->ar(get_class($route)."/".$route->id());
 	        return $action;
 	    }
 	    
-	    // Не удалось найти прямым запросом - будем перебирать
-
+	    // Не удалось найти прямым запросом - будем перебирать 
 	    foreach(self::allRoutes() as $route) {
 	    
 	        self::$keys = array();
 	        $r = $route->data("url");
-	        $r = preg_replace_callback("/\<([a-z0-9]+)\:(.*?)\>/s",array("self","replace"),$r);
+	        $r = preg_replace_callback("/\<([a-z0-9]+)\:(.*?)\>/s",array("self","replace"), $r);
 	        $r = preg_quote($r);
-	        $r = "<^".preg_replace_callback("/#(\d+)#/s",array("self","replaceBack"),$r).'$>';
+	        $r = "<^".preg_replace_callback("/#(\d+)#/s",array("self","replaceBack"), $r).'$>';
 	        
 	        if(preg_match($r,$url->path(),$matches,PREG_OFFSET_CAPTURE)) {
 	        

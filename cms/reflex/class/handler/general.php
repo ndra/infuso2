@@ -25,7 +25,7 @@ class General extends Core\Component implements Core\Handler {
 	
 	    // Создаем роль «Контент-менеджер»
 	    
-	    $role = user_role::create("reflex:content-manager","Контент-менеджер");
+	    $role = user_role::create("reflex:content-manager", "Контент-менеджер");
 	    $role->appendTo("admin");
 	    user_operation::get("admin:showInterface")->appendTo("reflex:content-manager");
 	    
@@ -34,10 +34,10 @@ class General extends Core\Component implements Core\Handler {
 	    $op = user_operation::create("reflex:editItem");
 	    $op->appendTo("reflex:content-manager");
 	    
-	    $op = user_operation::create("reflex:editConfValue","Редактирование значения настройки")
+	    $op = user_operation::create("reflex:editConfValue", "Редактирование значения настройки")
 			->appendTo("admin");
 			
-		$op = user_operation::create("reflex:viewConf","Просмотр настроек")
+		$op = user_operation::create("reflex:viewConf", "Просмотр настроек")
 			->appendTo("admin");
 			
 		// Добавляем вкладки в каталоге
@@ -77,10 +77,10 @@ class General extends Core\Component implements Core\Handler {
 	 **/
 	public function onDeploy() {
 
-	    \user_operation::create("reflex:editLog","Редактирование лога")
+	    \user_operation::create("reflex:editLog", "Редактирование лога")
 			->appendTo("reflex:viewLog");
 
-		\user_operation::create("reflex:viewLog","Просмотр лога")
+		\user_operation::create("reflex:viewLog", "Просмотр лога")
 			->appendTo("admin");
 
         service("task")->add(array(
