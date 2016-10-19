@@ -6,6 +6,7 @@ mod.init(".ioy1gedqt1", function() {
         $container.trigger("route/reload");
     };
 
+    // Создать
     $container.find(".create-object").click(function() {
         mod.call({
             cmd: "infuso/cms/reflex/controller/route/create",
@@ -13,6 +14,7 @@ mod.init(".ioy1gedqt1", function() {
         }, reload);
     });
     
+    // Сохранить
     $container.find(".save").click(function() {
         mod.call({
             cmd: "infuso/cms/reflex/controller/route/save",
@@ -21,6 +23,7 @@ mod.init(".ioy1gedqt1", function() {
         }, reload);
     });
     
+    // Удалить
     $container.find(".delete").click(function() {
         mod.call({
             cmd: "infuso/cms/reflex/controller/route/delete",

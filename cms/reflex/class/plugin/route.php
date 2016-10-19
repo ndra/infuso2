@@ -15,6 +15,10 @@ class Route extends \Infuso\Core\Component {
         return $this->component;
     }
 
+    /**
+     * Возвращает роут
+     * Если роута нет, возвращается несуществующий объект
+     **/
 	public function routeObject() {
         $item = $this->component();
         return \Infuso\Cms\Reflex\Model\Route::get(get_class($item).":".$item->id());
@@ -28,7 +32,10 @@ class Route extends \Infuso\Core\Component {
         return $item;
     }   
 
-    public function create() {
+    /**
+     * Создает роут
+     **/
+    private function create() {
         $item = $this->component();
         $hash = get_class($item).":".$item->id();
         $meta = service("ar")->create("\\Infuso\\Cms\\Reflex\\Model\\Route", array(
@@ -42,6 +49,9 @@ class Route extends \Infuso\Core\Component {
         $item->data("url", $url);
     }
     
+    /**
+     * Удаляет роут
+     **/
     public function removeUrl() {
         $this->routeObject()->delete();
     }

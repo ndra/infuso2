@@ -17,8 +17,7 @@ class Route extends \Infuso\Core\Controller {
     }
 
     /**
-     * Контроллер создания мета-объекта
-     * @todo проверка безопасности     
+     * Контроллер создания мета-объекта 
      **/
     public function post_create($p) {
         $editor = Reflex\Editor::get($p["editor"]);

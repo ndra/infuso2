@@ -1,5 +1,11 @@
 .ioy1gedqt1 {
+    
     * {
         vertical-align: middle;
     }
+    
+    .delete {
+        color: brown;   
+    }
+    
 }

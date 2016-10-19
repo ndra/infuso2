@@ -29,8 +29,6 @@ class Google extends Provider {
         $redirect = (new Core\Url(new Core\Action(get_class(), "result")))
             ->scheme("http")
             ->domain("infuso2.mysite.ru");
-            
-        echo $redirect;
     
         $url = 'https://accounts.google.com/o/oauth2/auth';
         $params = array(

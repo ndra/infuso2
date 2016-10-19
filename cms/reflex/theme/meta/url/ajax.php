@@ -21,13 +21,14 @@ $route = \Infuso\Cms\Reflex\Model\Route::get($item);
             widget("infuso\\cms\\ui\\widgets\\button")
                 ->text("Удалить адрес")
                 ->addClass("delete")
+                ->air()
+                ->icon("trash")
                 ->exec();
         
         
     } else {
         <div class='' >
             <span style='margin-right: 10px;' >Сейчас используется адрес по умолчанию: {$item->url()}</span>
-            
             $w = widget("infuso\\cms\\ui\\widgets\\button")
                 ->text("Изменить адрес")
                 ->addClass("create-object")
