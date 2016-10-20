@@ -178,9 +178,8 @@ class Builder {
 		$ret = array();
 
 		// Берем поведения по умолчанию (на основании mod_behaviour::addToClass)
-		foreach(service("classmap")->classes("Infuso\Core\Behaviour") as $class) {
-		    $obj = new $class;
-		    if($for = $obj->addToClass()) {
+		foreach(service("classmap")->classes("Infuso\Core\Behaviour") as $class) { 
+		    if($for = $class::addToClass()) {
                 $for = trim($for,"\\");
                 $for = strtolower($for);
 		        $ret[$for][] = $class;

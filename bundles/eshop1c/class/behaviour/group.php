@@ -9,7 +9,7 @@ use \Infuso\Eshop1C;
  **/ 
 class Group extends Core\Behaviour {
 
-    public function addToClass() {
+    public static function addToClass() {
         return "infuso\\eshop\\model\\group";
     }
     

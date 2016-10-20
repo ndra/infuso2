@@ -8,9 +8,10 @@ namespace Infuso\Core;
 class BehaviourMap {
 
 	/**
-	 * Возвращает список поведений, прикрепленных к данному классу
+	 * Возвращает массив поведений, прикрепленных к данному классу
+	 * Элемент массива - строка с именем класса поведения
 	 **/
-	public function getList($class,$addBehaviours) {
+	public static function getBehaviours($class, $addBehaviours = array()) {
     
         $class = strtolower($class);
 	
@@ -48,9 +49,9 @@ class BehaviourMap {
 	 * Возвращает карту поведений для класса $class
 	 * Кэширует результат
 	 **/
-	private function getMap($class, $addBehaviours = array(), $behavioursHash = "") {
+	private static function getMap($class, $addBehaviours = array(), $behavioursHash = "") {
 		
-		Profiler::beginOperation("core","behaviour map",$class);
+		Profiler::beginOperation("core", "behaviour map", $class);
 	
 	    $key = "system/behaviours-map-".$class."-".$behavioursHash;
 	    $data = service("cache")->get($key);
@@ -70,9 +71,9 @@ class BehaviourMap {
 	 * Возвращает карту поведений для класса $class
 	 * Результат не кэшируется
 	 **/
-    private static function getMapNocache($class,$addBehaviours) {
+    private static function getMapNocache($class, $addBehaviours) {
     
-        $behaviours = self::getList($class,$addBehaviours);
+        $behaviours = self::getBehaviours($class, $addBehaviours);
     
         $ret = array();
         foreach($behaviours as $b) {

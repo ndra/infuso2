@@ -6,8 +6,6 @@ class Component {
 
     /**
      * Параметры компонента
-     *
-     * @var array
     **/
     private $params = array();
     
@@ -183,7 +181,7 @@ class Component {
     /**
      * Проверяет наличие метода у компонента
      * Поиск производится в самом компоненте и в прикрепленных поведениях
-     * @todo когда дело доходит до поведений, не сработает
+     * @todo когда дело доходит до дата-врапперов
      **/
     public final function methodExists($fn) {
 
@@ -333,7 +331,7 @@ class Component {
      * Ставит задачу отложенного вызова метода $method
      **/
     public function defer($method) {
-        Defer::add($this,$method);
+        Defer::add($this, $method);
     }
 
 	/**
@@ -358,13 +356,6 @@ class Component {
         return array();
     }
 
-	/**
-	 * @todo сделать кэширование
-	 **/
-    public static final function inspector() {
-        return new \infuso\core\inspector(get_called_class());
-    }
-
     /**
      * Выполняет код в контексте объенкта
      * Разворачивает в область видимости кода массив переменных $params
@@ -376,10 +367,16 @@ class Component {
         return eval(func_get_arg(0));
     }
     
+    /**
+     * Возвращает конфигурацию объекта из YAML с настройками
+     **/
 	public static function confDescription() {
 		return array();
 	}
 	
+    /**
+     * @todo рефакторить хардкод
+     **/
     public function plugin($name) {
 
         switch($name) {
@@ -399,6 +396,17 @@ class Component {
         
         return $plugin->factory();
 
+    }
+
+    /**
+	 * @todo сделать кэширование
+	 **/
+    public static final function inspector() {
+        return new \infuso\core\inspector(get_called_class());
+    }
+    
+    public function hasInterface($interface) {
+        
     }
 
 }

@@ -6,7 +6,7 @@
 
 class mod_controller_behaviour extends mod_behaviour {
 
-	public function behaviourPriority() {
+	public static function behaviourPriority() {
 		return -10000;
 	}
 

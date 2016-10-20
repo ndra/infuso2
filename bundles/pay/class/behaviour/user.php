@@ -8,7 +8,7 @@ class userBehaviour extends \infuso\Core\Behaviour {
     /**
      * Добавить всем объектам возвращаемого класса методы текущего и наследуемых классов [шито ???]
      **/
-    public function addToClass() {
+    public static function addToClass() {
         return "Infuso\\User\\Model\\User\\User";
     }
     

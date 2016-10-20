@@ -9,11 +9,11 @@ use \Infuso\Eshop1C;
  **/
 class Order extends Core\Behaviour {
 
-    public function addToClass() {
+    public static function addToClass() {
         return "infuso\\eshop\\model\\order";
     }
     
-    public function behaviourPriority() {
+    public static function behaviourPriority() {
         return -1;
     }
     

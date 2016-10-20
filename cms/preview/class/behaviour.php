@@ -7,8 +7,8 @@ namespace Infuso\Cms\Preview;
  **/
 class Behaviour extends \Infuso\Core\Behaviour {
 
-    public function addToClass() {
-        return "infuso\\core\\localfile";
+    public static function addToClass() {
+        return "Infuso\\Core\\Localfile";
     }
     
 	/**

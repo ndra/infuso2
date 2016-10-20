@@ -6,7 +6,7 @@
 
 class util_str_ru extends mod_behaviour {
 
-    public function addToClass() {
+    public static function addToClass() {
         return "util_str";
     }
 

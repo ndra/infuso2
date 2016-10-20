@@ -11,7 +11,7 @@ class Behaviour {
 	 * При помощи этой функции вы можете прикрепить это поведение как стандартное к любому классу.
 	 * @return string Класс, к которому вы хотите приеркпить поведение
 	 **/
-	public function addToClass() {
+	public static function addToClass() {
 		return null;
 	}
 
@@ -19,8 +19,12 @@ class Behaviour {
 	 * @return float Приоритет поведения
 	 * Поведения с более высоким приоритетам просматриваются в первую очередь
 	 **/
-	public function behaviourPriority() {
+	public static function behaviourPriority() {
 		return 0;
 	}
+    
+    private final function __construct() {
+        throw new \Exception("Cannot instantiate behaviour");
+    }
 
 }
