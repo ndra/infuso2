@@ -53,7 +53,7 @@ class Component {
     
 		Profiler::beginOperation("core", "create closure", get_class($this)." - ".$key);
 		
-		if(!$this->behaviourClosures[$key]) {
+		if(!$this->behaviourClosures[$key]) { 
     
 			$reflectionClass = new \ReflectionClass($behaviour);
 			$reflectionMethod = $reflectionClass->getMethod($method);
@@ -63,7 +63,7 @@ class Component {
             } else {
                 $this->behaviourClosures[$key] = $closure->bindTo($this);
             }
-		
+		                    
 		}
 		
 		Profiler::endOperation("");

@@ -75,6 +75,9 @@ class Service extends Core\Service implements Core\Handler {
         self::$memoryCache[$key] = $val;
         \Infuso\Core\Profiler::endOperation();
     }
+    
+    public function fuck($key, $fn) {
+    }
 
     public static function clear() {
         self::driver()->clear();

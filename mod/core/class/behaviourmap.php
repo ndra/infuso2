@@ -36,11 +36,11 @@ class BehaviourMap {
 		    $behaviours[] = $b;
 		}
 		
-        // На всяки случай уберем дубликаты
+        // На всякий случай уберем дубликаты
 		$behaviours = array_unique($behaviours);
 
         // Отсортируем по приоритету
-		usort($behaviours, function($a,$b) {
+		usort($behaviours, function($a, $b) {
 		    return $a::behaviourPriority() - $b::behaviourPriority();
 		});
 		

@@ -22,9 +22,5 @@ class Behaviour {
 	public static function behaviourPriority() {
 		return 0;
 	}
-    
-    private final function __construct() {
-        throw new \Exception("Cannot instantiate behaviour");
-    }
 
 }
