@@ -71,6 +71,17 @@ class Meta extends \Infuso\Core\Component {
         }
         return $item->data("description");
     }
+	
+	
+	public function noindex() {
+        $item  = $this->getOrCreateMetaObject();
+        $args = func_get_args();
+        if(count($args)){
+            $val = $args[0];
+            $item->data("noindex", $val);
+        }
+        return $item->data("noindex");
+    }
 
     public function create() {
         $item = $this->component();
