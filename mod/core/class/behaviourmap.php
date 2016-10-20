@@ -31,12 +31,15 @@ class BehaviourMap {
 			}
 		}
 		
+        // Добавим поведения, добавленные вручную
 		foreach($addBehaviours as $b) {
 		    $behaviours[] = $b;
 		}
 		
+        // На всяки случай уберем дубликаты
 		$behaviours = array_unique($behaviours);
 
+        // Отсортируем по приоритету
 		usort($behaviours, function($a,$b) {
 		    return $a::behaviourPriority() - $b::behaviourPriority();
 		});

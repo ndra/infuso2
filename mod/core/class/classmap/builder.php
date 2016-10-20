@@ -187,11 +187,9 @@ class Builder {
 		}
 
 		// Сортируем поведения
-		foreach($ret as $key=>$val) {
+		foreach($ret as $key => $val) {
 		    usort($ret[$key], function($a,$b) {
-                $a = new $a;
-                $b = new $b;
-                return $a->behaviourPriority() - $b->behaviourPriority();
+                return $a::behaviourPriority() - $b::behaviourPriority();
             });
 		}
 
