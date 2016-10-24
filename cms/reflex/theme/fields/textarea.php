@@ -13,7 +13,7 @@
     
     $w->exec();
     
-    if($field->editable()) {
+    if($field->editable() && $html) {
         <div class='toolbar' >
             <span class='bold' ><b>Жирный</b></span> 
             <span class='italic' ><i>Наклонный</i></span> 

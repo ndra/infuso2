@@ -54,7 +54,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
     				'help' => 'Название товарной группы',
 				), array (
     				'name' => 'description',
-    				'type' => 'kbd4-xo34-tnb3-4nxl-cmhu',
+    				'type' => 'html',
     				'editable' => '1',
     				'label' => 'Описание',
     				'indexEnabled' => '0',

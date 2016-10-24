@@ -8,7 +8,7 @@ use infuso\util\util;
  **/
 class Textarea extends Field {
 
-	public function typeID() {
+	public function typeId() {
 		return "kbd4-xo34-tnb3-4nxl-cmhu";
 	}
 	
@@ -19,6 +19,12 @@ class Textarea extends Field {
 	public function mysqlType() {
 		return "longtext";
 	}
+    
+    public function typeAlias() {
+        return array(
+            "textarea",
+        );
+    }    
 
     public function dbIndex() {
         return array(
@@ -26,13 +32,6 @@ class Textarea extends Field {
             "fields" => $this->name()."(1)",
 		);
     }
-
-	public function editorInx() {
-		return array(
-		    "type" => "inx.mod.reflex.fields.textarea",
-		    "value" => $this->value(),
-		);
-	}
 
 	public function pvalue($params=array()) {
 		return service("content-processor")->process($this->value());

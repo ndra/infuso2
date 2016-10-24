@@ -97,7 +97,7 @@ class General extends Core\Component implements Core\Handler {
      **/         
     public function addMeta() {   
         $ar = app()->action()->ar();
-        list($class,$id) = explode("/",$ar);
+        list($class,$id) = explode("/", $ar);
         $record = service("ar")->get($class, $id);
         $metaObject = $record->plugin("meta")->metaObject();
         app()->tm()->param("head/title", $metaObject->data("title"));

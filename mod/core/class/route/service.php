@@ -17,7 +17,7 @@ class service extends \infuso\core\service {
             $url = mod_url::get($url);
         }
 
-        if(strtolower($url->path())=="/mod") {
+        if(strtolower($url->path()) == "/mod") {
             core\profiler::endOperation();
             return core\mod::action("Infuso\\Core\\Console");
         }
@@ -25,7 +25,7 @@ class service extends \infuso\core\service {
         $routers = service("classmap")->classmap("routes");
         
         foreach($routers as $router) {
-            if($action = call_user_func(array($router,"urlToAction"),$url)) {
+            if($action = call_user_func(array($router, "urlToAction"), $url)) {
                 Core\Profiler::endOperation();
                 return $action;
             }
@@ -45,8 +45,7 @@ class service extends \infuso\core\service {
 
         if(!$serializedAction) {
         
-            $action = $this->urlToActionNocache($url);
-
+            $action = $this->urlToActionNocache($url);    
             $serializedAction = json_encode(array(
 				$action->className(),
 				$action->action(),
@@ -54,15 +53,13 @@ class service extends \infuso\core\service {
 				$action->ar(),
 			));
             service("cache")->set($key,$serializedAction);
-
             return $action;
 
         } else {
 
-            list($class,$method,$params,$ar) = json_decode($serializedAction,true);
-            $action = Core\Mod::action($class,$method,$params);
-            $action->ar($ar);
-
+            list($class,$method, $params, $ar) = json_decode($serializedAction, true);
+            $action = Core\Mod::action($class, $method, $params);
+            $action->ar($ar);   
             return $action;
 
         }
@@ -78,12 +75,12 @@ class service extends \infuso\core\service {
      **/
     public final function actionToUrl($action) {
 
-        Core\Profiler::beginOperation("url","build",$action->canonical());
+        Core\Profiler::beginOperation("url", "build", $action->canonical());
 
         if(true) {
 
             // Урл кэшируются на день
-            $hash = "system/url/action-to-url:".$action->hash().ceil(time()/3600/24);
+            $hash = "system/url/action-to-url:".$action->hash().ceil(time() / 3600 / 24);
 
             if($url = service("cache")->get($hash)) {
                 Core\Profiler::endOperation();

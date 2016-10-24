@@ -23,19 +23,36 @@ class Meta extends \Infuso\Core\Controller {
     
     public function post_create($p) {     
         $editor = \Infuso\CMS\Reflex\Editor::get($p["index"]);
+        
+        if(!$editor->beforeEdit()) {
+            throw new \Exception("Security error");
+        }
+        
         $item = $editor->item();
         $item->plugin("meta")->create();    
     }
     
     public function post_save($p) {
         $editor = \Infuso\CMS\Reflex\Editor::get($p["index"]);
-        $editor->setMeta($p["data"]);
+
+        if(!$editor->beforeEdit()) {
+            throw new \Exception("Security error");
+        }
+        
+        $item = $editor->item()->plugin("meta")->metaObject();
+        $item->setData($p["data"]);
         app()->msg("Метаданные сохранены");
     }
     
     public function post_remove($p) {
         $editor = \Infuso\CMS\Reflex\Editor::get($p["index"]);
-        $editor->deleteMeta();
+        
+        if(!$editor->beforeEdit()) {
+            throw new \Exception("Security error");
+        }
+        
+        $item = $editor->item()->plugin("meta")->metaObject();
+        $item->delete();
         app()->msg("Метаданные удалены");
     }
     

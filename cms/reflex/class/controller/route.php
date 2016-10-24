@@ -43,6 +43,7 @@ class Route extends \Infuso\Core\Controller {
         
         $route = \Infuso\Cms\Reflex\Model\Route::get($editor->item());
         $route->data("url", $p["url"]);
+        app()->msg("Роут сохранен");
         service("route")->clearCache();
     }
     

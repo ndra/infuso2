@@ -3,32 +3,20 @@
 namespace Infuso\Core\Model;
 use infuso\util\util;
 
-class Html extends Field {
+class HTML extends Textarea {
 
-	public function typeID() {
+	public function typeId() {
 		return "fgkn-o95h-uikx-c878-k4bi";
-	}
-	
-	public function mysqlType() {
-		return "longtext";
-	}
-
-    public function dbIndex() {
-        return array(
-            "name" => "+".$this->name(),
-            "fields" => $this->name()."(1)",
-		);
-    }
-
-	public function editorInx() {
-		return array(
-		    "type" => "inx.code",
-		    "value" => $this->value(),
-		);
 	}
 
 	public function typeName() {
 		return "Код HTML";
 	}
+    
+    public function typeAlias() {
+        return array(
+            "html",
+        );
+    }
 
 }
