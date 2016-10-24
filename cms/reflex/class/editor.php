@@ -393,7 +393,7 @@ abstract class Editor extends Core\Controller {
                                         
     }
     
-    public function metaEnabled() {
+    public function _metaEnabled() {
         return false;
     }
     
@@ -401,13 +401,13 @@ abstract class Editor extends Core\Controller {
         return true;
     }
     
-    public function setMeta($p) {
+    /*public function setMeta($p) {
         $this->item()->plugin("meta")->metaObject()->setData($p);
     }
     
     public function deleteMeta() {
         $this->item()->plugin("meta")->metaObject()->delete();
-    }
+    } */
     
     public function filters($collection) {
         return array (

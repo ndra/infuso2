@@ -19,7 +19,7 @@ class Helper extends Widget {
         if(is_object($xml)) {
             $h->tag($xml->getName());
         } else {
-            throw new \Exception("Something wronw with parse html");
+            throw new \Exception("Something wrong with parse html");
         }
         foreach($xml->attributes() as $key=>$val) {
             $h->attr($key,$val);

@@ -45,7 +45,7 @@ class inspector {
         // Аннотации поведений
         if(service("classmap")->testClass($this->className(), "infuso\\core\\component")) {
         
-            foreach(\Infuso\Core\BehaviourMap::getBehaviours($this->className()) as $behaviour) {                        
+            foreach(\Infuso\Core\BehaviourMap::getBehaviours($this->className(), array(), "") as $behaviour) {                        
                 $behaviour = new \ReflectionClass($behaviour);
         	    foreach($behaviour->getMethods() as $method) {
         	        $comments = $method->getDocComment();                    

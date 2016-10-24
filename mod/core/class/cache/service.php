@@ -52,15 +52,21 @@ class Service extends Core\Service implements Core\Handler {
     /**
      * @return mixed Возвращает значение переменной из кэша
      **/
-    public static function get($key) {
+    public static function get($key, $fn = null) {
 
-        \infuso\core\profiler::beginOperation("cache","read",$key);
+        \Infuso\Core\Profiler::beginOperation("cache","read",$key);
 
-        if(!array_key_exists($key,self::$memoryCache)) {
+        if(!array_key_exists($key, self::$memoryCache)) {
             self::$memoryCache[$key] = self::driver()->get($key);
         }
+        
+        if($fn) {
+            if(self::$memoryCache[$key] === null) {
+                self::set($key,  $fn());
+            }
+        }
 
-        \infuso\core\profiler::endOperation();
+        \Infuso\Core\Profiler::endOperation();
 
         return self::$memoryCache[$key];
         
@@ -69,14 +75,11 @@ class Service extends Core\Service implements Core\Handler {
     /**
      * Записывает переменную в кэш
      **/
-    public static function set($key,$val,$ttl = null) {
+    public static function set($key, $val, $ttl = null) {
         \Infuso\Core\Profiler::beginOperation("cache","write",$key);
         self::driver()->set($key,$val,$ttl);
         self::$memoryCache[$key] = $val;
         \Infuso\Core\Profiler::endOperation();
-    }
-    
-    public function fuck($key, $fn) {
     }
 
     public static function clear() {

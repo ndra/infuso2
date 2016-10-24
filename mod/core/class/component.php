@@ -405,7 +405,27 @@ class Component {
         return new \infuso\core\inspector(get_called_class());
     }
     
+    public function behaviours() {
+        return BehaviourMap::getBehavioursForMethod(get_class($this), $this->behaviours, $this->behaviourHash());
+    }
+    
+    /**
+     * @todo сделать кэширование
+     * Имеет ли класс интерфейс
+     * Учитываются также интерфейсы поведений
+     **/
     public function hasInterface($interface) {
+        if(is_a($this, $interface)) {
+            return true;
+        }
+        
+        foreach($this->behaviours() as $behaviour) {
+            if(is_a($behaviour, $class)) {
+                return true;
+            }
+        }
+        
+        return false;
         
     }
 
