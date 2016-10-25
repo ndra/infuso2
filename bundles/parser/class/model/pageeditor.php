@@ -20,8 +20,9 @@ class PageEditor extends \Infuso\Cms\Reflex\Editor {
     public function filters($collection) {
         return array(
             "Все" => $collection->copy(),
-            "Готово" => $collection->copy()->neq("html", ""),
-            "Не готово" => $collection->copy()->eq("html", ""),
+            "Готово" => $collection->copy()->eq("status", 1),
+            "Не готово" => $collection->copy()->eq("status", 0),
+            "Ошибка" => $collection->copy()->eq("status", 2),
         );
     }
 

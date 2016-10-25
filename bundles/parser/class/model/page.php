@@ -23,12 +23,28 @@ class Page extends \Infuso\ActiveRecord\Record {
                     'label' => "HTML",
                     'type' => 'html',
                     'editable' => 1,
-                ),  array (
+                ), array (
                     'name' => 'projectId',
                     'label' => "Проект",
                     'type' => 'link',
                     "class" => Project::inspector()->className(),
                     'editable' => 2,
+                ), array (
+                    'name' => 'depth',
+                    'label' => "Глубина",
+                    'type' => 'bigint',
+                    "class" => Project::inspector()->className(),
+                    'editable' => 1,
+                ), array (
+                    'name' => 'status',
+                    'label' => "Статус",
+                    'type' => 'select',
+                    'options' => array(
+                        0 => "Новый",
+                        1 => "Скачано",
+                        2 => "Ошибка",
+                    ),
+                    'editable' => 1,
                 ),
             ),
         );
@@ -56,38 +72,76 @@ class Page extends \Infuso\ActiveRecord\Record {
         return $this->pdata("projectId");
     }
     
+    /**
+     * Подготавливает урл к загрузке
+     * Удаляет лишние параметры
+     **/
+    public function prepareURL($url) {
+    
+        $url = new \Infuso\Core\Url($url);
+        $url->hash("");
+        
+        // Урл проекта        
+        $projectURL = new \Infuso\Core\Url($this->project()->data("url"));
+        
+        // Разбираемся со ссылками от корня сайта (без http://domain.com)
+        if(!$url->scheme()) {
+            $url->domain($projectURL->domain());
+            $url->scheme($projectURL->scheme());
+        }
+        
+        if(!in_array($url->scheme(), array("http", "https"))) {
+            return false;
+        }
+        
+        if(strpos((String)$url, (String)$projectURL) !== 0) {
+            return false;
+        }       
+        
+        // Убираем параметры из строки запроса
+        foreach($url->query() as $key => $val) {
+            $url->query($key, null);
+        }
+        
+        return $url;
+    
+    }
+    
     public function parse() {
     
         echo $this->data("url"); 
-    
-        $projectURL = new \Infuso\Core\Url($this->project()->data("url"));
         
-        $rawHTML = Core\File::http($this->data("url"))->contents();
-        $html = new \Infuso\Parser\HTML($rawHTML);
-        foreach($html->xpath("//a") as $a) {
-            $url = new \Infuso\Core\Url($a->attr("href"));
-            if(!$url->domain()) {
-                $url->domain($projectURL->domain());
-                $url->scheme($projectURL->scheme());
-            }
+        try {
+        
+            $rawHTML = Core\File::http($this->data("url"))->contents();         
+            $html = new \Infuso\Parser\HTML($rawHTML);
             
-            if(strpos((String)$url, (String)$projectURL) === 0) {            
-                
-                // Добавляем страницы, если их еще нет
-                $page = $this->project()->pages()->eq("url", $url)->one();
-                if(!$page->exists()) {
-                    $page = $this->project()->pages()->create(array(
-                        "url" => $url,
-                    )); 
+            // Проходимся по всем ссылкам
+            foreach($html->xpath("//a") as $a) {     
+                    
+                if($url = $this->prepareURL($a->attr("href"))) {     
+                    
+                    // Добавляем страницы, если их еще нет
+                    $page = $this->project()->pages()->eq("url", $url)->one();
+                    if(!$page->exists()) {
+                        $page = $this->project()->pages()->create(array(
+                            "url" => $url,
+                            "depth" => $this->data("depth") + 1,
+                        )); 
+                    }                
                 }
-                
-                // Сохраняем данные в страницу
-                $this->data("html", $rawHTML);
-                
             }
-                        
+                    
+            // Сохраняем данные в страницу
             
-        }
+            $rawHTML = \Infuso\Util\Util::str($rawHTML)->decode();
+            
+            $this->data("html", $rawHTML);
+            $this->data("status", 1);
+        
+        } catch (\Exception $ex) {
+            $this->data("status", 2);
+        } 
             
     }
 

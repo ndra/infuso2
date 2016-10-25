@@ -124,11 +124,11 @@ class Url {
      **/
     public function hash($hash=null) {
 
-        if(func_num_args()==0) {
+        if(func_num_args() == 0) {
             return $this->hash;
         }
 
-        if(func_num_args()==1) {
+        if(func_num_args() == 1) {
             $this->hash = $hash;
             return $this;
         }

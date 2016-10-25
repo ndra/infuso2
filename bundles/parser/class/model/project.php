@@ -51,7 +51,7 @@ class Project extends \Infuso\ActiveRecord\Record {
         } else {
         
             // Выбираем первую страницу с незаполненным HTML
-            $page = $this->pages()->eq("html", "")->one();
+            $page = $this->pages()->eq("status", 0)->one();
             if($page->exists()) {
                 $page->parse();
             }

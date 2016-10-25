@@ -27,7 +27,7 @@ class Command extends \Infuso\Core\Component {
 	    $error = $dbh->errorInfo();
 	    if($error[0] != "00000") {
 	        Core\Profiler::endOperation();
-	        throw new \Exception($this->query." ".$error[2]);
+	        throw new \Exception($error[2]." ".$this->query);
 	    }
 	    
 	    Core\Profiler::endOperation();

@@ -17,12 +17,16 @@ class Main extends Core\Controller {
     }
     
     public function index() {
+    
+        app()->tm()->header();
 
         foreach(\Infuso\Parser\Model\Project::all() as $project) {
             $project->parseStep();
         }
         
         echo "<script>window.location.reload();</script>";
+        
+        app()->tm()->footer();
         
     }
 
