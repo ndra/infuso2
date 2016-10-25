@@ -34,6 +34,7 @@ class Handler implements Core\Handler {
     /**
      * @handler = infuso/exception
      * @handlerPriority = 9999999;
+     * @todo вынести запись в лог в модуль cms/log
      **/
     public static function onException($event) {
     
@@ -43,8 +44,19 @@ class Handler implements Core\Handler {
 	    app()->trace($event->param("exception"));                
     
         // И наконец выводим шаблон исключения
-	    app()->tm("/mod/exception")
+	    app()->tm("/tmp/exception")
             ->param("exception", $event->param("exception"))
+            ->exec();        
+    }
+    
+    /**
+     * @handler = infuso/httperror
+     * @handlerPriority = 9999999;
+     **/
+    public static function onHTTPError($event) {            
+    
+        // И наконец выводим шаблон исключения
+	    app()->tm("/tmp/404")
             ->exec();        
     }
 

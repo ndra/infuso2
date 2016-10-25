@@ -275,9 +275,12 @@ class App {
 
 	}
 
-	public function httpError() {
+	public function httpError($code) {
         header("HTTP/1.0 404 Not Found");
-		$this->tm("/mod/404")->exec();
+        $this->fire("infuso/httperror", array(
+            "code" => $code,
+        ));
+        
 	}
 
 
