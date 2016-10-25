@@ -37,7 +37,7 @@ class Url {
         $this->host = $matches["host"];
         $this->port = $matches["port"];
         $this->path = urldecode($matches["path"]);
-        parse_str($matches["query"],$query);
+        parse_str($matches["query"], $query);
         $this->query = $query;
         $this->hash = $matches["hash"];
     }
@@ -180,22 +180,21 @@ class Url {
      * С одним параметром - возаращает параметр запроса
      * Два параметра - меняет параметр строки запроса
      **/
-    public function query($key=null,$val=null) {
+    public function query($key = null, $val = null) {
 
         if(func_num_args()==0) {
             return $this->query;
         }
 
-        if(func_num_args()==1) {
+        if(func_num_args() == 1) {
             return $this->query[$key];
         }
 
-        if(func_num_args()==2) {
+        if(func_num_args() == 2) {
             $this->query[$key] = $val;
-
-            if($val===null || $val===false)
-                unset ($this->query[$key]);
-
+            if($val === null || $val === false) {
+                unset($this->query[$key]);
+            }
             return $this;
         }
 
