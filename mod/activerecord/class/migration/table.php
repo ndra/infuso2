@@ -124,7 +124,7 @@ class Table {
         if(sizeof($this->q)) {
             $q = implode(", ",$this->q);            
             $q = "alter table `{$this->prefixedTableName()}` $q"; 
-            app()->msg($q, 1);
+            //app()->msg($q, 1);
             return service("db")->query($q)->exec();
         }
 
@@ -300,7 +300,7 @@ class Table {
             $b[$name]["fields"][] = $indexDescr;
 
             if($name == "PRIMARY") {
-                   $b[$name]["type"] = "primary";
+                $b[$name]["type"] = "primary";
             } else {
                 $b[$name]["type"] = $index["Index_type"] == "BTREE" ? "index" : "fulltext";
             }
