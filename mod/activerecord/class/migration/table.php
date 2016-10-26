@@ -122,8 +122,9 @@ class Table {
         $this->updateIndex();
 
         if(sizeof($this->q)) {
-            $q = implode(", ",$this->q);
+            $q = implode(", ",$this->q);            
             $q = "alter table `{$this->prefixedTableName()}` $q"; 
+            app()->msg($q, 1);
             return service("db")->query($q)->exec();
         }
 
@@ -167,7 +168,7 @@ class Table {
 
         $type = $field->mysqlType()." ";
 
-        if(preg_match("/(varchar)|(longtext)/i",$type)) {
+        if(preg_match("/(varchar)|(longtext)/i", $type)) {
             $type.= "COLLATE utf8_general_ci ";
         }
 
@@ -192,11 +193,11 @@ class Table {
             $ret.= "collate ".$c." ";
         }
 
-        if($descr["Null"]=="NO") {
+        if($descr["Null"] == "NO") {
             $ret.= "NOT NULL ";
         }
 
-        if($descr["Extra"]=="auto_increment") {
+        if($descr["Extra"] == "auto_increment") {
             $ret.= "auto_increment ";
         }
 
@@ -213,7 +214,7 @@ class Table {
             $this->createField($field,$a);
         } else {
 
-            $alter = trim($a)!=trim($b);
+            $alter = trim($a) != trim($b);
             $type = $a;
 
             if($alter) {
@@ -293,7 +294,7 @@ class Table {
         foreach($items as $index) {
             $name = $index["Key_name"];
             $indexDescr = $index["Column_name"];
-            if($n=$index["Sub_part"]) {
+            if($n = $index["Sub_part"]) {
                 $indexDescr.= "(".$n.")";
             }
             $b[$name]["fields"][] = $indexDescr;
@@ -320,13 +321,15 @@ class Table {
 
             $fields = array();
             foreach($index["fields"] as $field) {
-                preg_match("/^([^()]*)(\(\d+\))?$/i",$field,$matches);
+                preg_match("/^([^()]*)(\(\d+\))?$/i", $field, $matches);
                 $fields[] = "`".$matches[1]."`".($matches[2] ? " {$matches[2]}" : "");
             }
 
-            $fields = implode(",",$fields);
+            $fields = implode(",", $fields);
 
-            if($hash1!=$hash2) {
+            if($hash1 != $hash2) {
+            
+            //    app()->msg("*** ".var_export($index, true)." - ".var_export($b[$name], true), 1);
 
                 if(array_key_exists($name,$b)) {
                     $this->q[] = "drop index `$name`";
@@ -334,7 +337,7 @@ class Table {
 
                 $type = $index["type"];
 
-                if($name=="PRIMARY") {
+                if($name == "PRIMARY") {
                     $this->q[] = "add primary key($fields)";
                 } else {
                     $this->q[] = "add $type `$name` ($fields) ";

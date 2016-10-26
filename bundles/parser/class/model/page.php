@@ -16,13 +16,14 @@ class Page extends \Infuso\ActiveRecord\Record {
                 ), array (
                     'name' => 'url',
                     'label' => "URL",
-                    'type' => 'textarea',
+                    'type' => 'string',
                     'editable' => 1,
+                    'length' => 500,
                 ), array (
                     'name' => 'html',
                     'label' => "HTML",
                     'type' => 'html',
-                    'editable' => 1,
+                    'editable' => 2,
                 ), array (
                     'name' => 'projectId',
                     'label' => "Проект",
@@ -39,7 +40,7 @@ class Page extends \Infuso\ActiveRecord\Record {
                     'name' => 'status',
                     'label' => "Статус",
                     'type' => 'select',
-                    'options' => array(
+                    'values' => array(
                         0 => "Новый",
                         1 => "Скачано",
                         2 => "Ошибка",

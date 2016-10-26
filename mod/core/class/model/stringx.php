@@ -3,7 +3,7 @@
 namespace Infuso\Core\Model;
 use infuso\util\util;
 
-class Textfield extends Field {
+class StringX extends Field {
 
 	public function typeID() {
 		return "v324-89xr-24nk-0z30-r243";
@@ -15,7 +15,7 @@ class Textfield extends Field {
 
 	public function typeAlias() {
 	
-	    if(get_called_class()==get_class()) {
+	    if(get_called_class() == get_class()) {
 		    return array(
 		        "string",
 		        "textfield"
@@ -24,6 +24,19 @@ class Textfield extends Field {
 		    return parent::typeAlias();
 		}
 	}
+    
+    public function dbIndex() {
+    
+        $prefix = "";
+        if($this->length() > 255) {
+            $prefix = "(255)";
+        }
+    
+        return array(
+            "name" => "+".$this->name(),
+            "fields" => $this->name().$prefix,
+		);
+    }
 
 	public function mysqlType() {
 		return "varchar(".$this->length().")";

@@ -3,7 +3,7 @@
 namespace Infuso\Core\Model;
 use infuso\util\util;
 
-class Point extends Textfield {
+class Point extends StringX {
 
     public function typeID() {
         return "opu03";
@@ -23,13 +23,6 @@ class Point extends Textfield {
 
     public function mysqlNull() {
         return true;
-    }
-
-    public function editorInx() {
-        return array(
-            "type" => "inx.textarea",
-            "value" => $this->rvalue(),
-        );
     }
 
     public function prepareValue($val) {
