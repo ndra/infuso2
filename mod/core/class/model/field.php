@@ -82,7 +82,7 @@ abstract class Field extends Core\Component {
      * Используется в mod_fieldset::field() если запрашиваемого поля не существует
      **/
     public function getNonExistent() {
-        $field = new Textfield;
+        $field = new StringX;
         $field->exists = false;
         return $field;
     }
