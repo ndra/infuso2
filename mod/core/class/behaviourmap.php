@@ -96,6 +96,9 @@ class BehaviourMap {
     }
     
     public static function routeMethod($class, $method, $addBehaviours, $behavioursHash) {
+    
+        $method = strtolower($method);
+    
         $map = self::getMap($class, $addBehaviours, $behavioursHash);
         $behaviours = $map[$method];
         if(!$behaviours) {
@@ -105,6 +108,9 @@ class BehaviourMap {
     }
     
     public function getBehavioursForMethod($class, $method, $addBehaviours = array(), $behavioursHash = "") {
+    
+        $method = strtolower($method);
+    
         $map = self::getMap($class, $addBehaviours, $behavioursHash);
         $behaviours = $map[$method];
         if(!$behaviours) {
