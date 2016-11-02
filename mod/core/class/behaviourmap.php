@@ -85,10 +85,10 @@ class BehaviourMap {
         foreach($behaviours as $b) {
             $r = new \ReflectionClass($b);
             foreach($r->getMethods() as $method) {
-                if($method->getDeclaringClass()->getName() == "Infuso\\Core\\Behaviour") {
+                if(strtolower($method->getDeclaringClass()->getName()) == "infuso\\core\\behaviour") {
 					break;
                 }
-                $ret[$method->getName()][] = $r->getName();
+                $ret[strtolower($method->getName())][] = $r->getName();
             }
         }
         

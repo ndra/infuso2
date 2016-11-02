@@ -78,6 +78,9 @@ class Component {
       **/
     public final function behaviourMethods($method) {
     
+        // На всякий случай, переведем метод в маленький регистр
+        $method = strtolower($method);     
+           
         $ret = array();
 
         foreach(BehaviourMap::getBehavioursForMethod(get_class($this), $method, $this->behaviours, $this->behaviourHash()) as $bclass) {

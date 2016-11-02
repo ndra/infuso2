@@ -68,12 +68,13 @@ class Url {
      * Для http://www.mysite.ru/index.php?=123 путь будет /index.php
      * Путь всегда возвращается без закрывающего слэша
      **/
-    public function path($path=null) {
+    public function path($path = null) {
 
-        if(func_num_args()==0) {
+        if(func_num_args() == 0) {
             $ret = $this->path;
-            if($ret!="/")
-                $ret = rtrim($ret,"/");
+            if($ret != "/") {
+                $ret = rtrim($ret, "/");
+            }
             return $ret;
         }
 
@@ -88,13 +89,13 @@ class Url {
      * Без параметров - возвращает хост
      * С одним параметром - меняет хост
      **/
-    public function host($host=null) {
+    public function host($host = null) {
 
-        if(func_num_args()==0) {
+        if(func_num_args() == 0) {
             return $this->host;
         }
 
-        if(func_num_args()==1) {
+        if(func_num_args() == 1) {
             $this->host = $host;
             return $this;
         }
@@ -105,13 +106,13 @@ class Url {
      * Без параметров - возвращает порт
      * С одним параметром - меняет порт
      **/
-    public function port($host=null) {
+    public function port($host = null) {
 
-        if(func_num_args()==0) {
+        if(func_num_args() == 0) {
             return $this->port;
         }
 
-        if(func_num_args()==1) {
+        if(func_num_args() == 1) {
             $this->port = $port;
             return $this;
         }
@@ -122,7 +123,7 @@ class Url {
      * Без параметров - возвращает хэш
      * С одним параметром - меняет хэш
      **/
-    public function hash($hash=null) {
+    public function hash($hash = null) {
 
         if(func_num_args() == 0) {
             return $this->hash;
@@ -140,7 +141,7 @@ class Url {
      **/
     public function server() {
         $a = func_get_args();
-        return call_user_func_array(array($this,"host"),$a);
+        return call_user_func_array(array($this,"host"), $a);
     }
 
     /**
@@ -148,14 +149,14 @@ class Url {
      **/
     public function domain() {
         $a = func_get_args();
-        return call_user_func_array(array($this,"host"),$a);
+        return call_user_func_array(array($this,"host"), $a);
     }
 
     /**
      * Возвращает домен без www
      **/
-    public function domainWithoutWWW($host=null) {
-        return strtr($this->host(),array("www."=>""));
+    public function domainWithoutWWW($host = null) {
+        return strtr($this->host(), array("www." => ""));
     }
 
     /**

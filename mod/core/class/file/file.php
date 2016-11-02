@@ -147,14 +147,14 @@ abstract class File extends Component {
      **/
     public static function mkdir($name) {
 
-        Profiler::beginOperation("file","mkdir",$name);
+        Profiler::beginOperation("file", "mkdir", $name);
 
         $name = self::get($name)->path();
-        $n2 = trim($name,"/");
-        $n2 = explode("/",$n2);
+        $n2 = trim($name, "/");
+        $n2 = explode("/", $n2);
         array_pop($n2);
         if(sizeof($n2)) {
-            $n2 = join("/",$n2);
+            $n2 = join("/", $n2);
             self::mkdir($n2);
         }
         @mkdir(self::get($name)->native());

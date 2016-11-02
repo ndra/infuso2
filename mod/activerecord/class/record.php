@@ -352,7 +352,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
             return;
 		}
             
-        foreach($this->behaviourMethods($fn) as $closure) {
+        foreach($this->behaviourMethods($fn) as $closure) {    
             if($closure($event) === false) {
                 return false;
 			}
