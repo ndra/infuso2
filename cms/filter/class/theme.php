@@ -25,5 +25,9 @@ class Theme extends \Infuso\Template\Theme {
 	public function name() {
 		return "filter";
 	}
+    
+	public function base() {
+		return "cms/filter";
+	}    
 
 }

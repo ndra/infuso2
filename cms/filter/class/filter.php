@@ -4,7 +4,7 @@ namespace Infuso\CMS;
 use Infuso\Core;
 
 /**
- * Стандартная тема модуля filter
+ * Поведение-фильтр
  **/
 class Filter extends Core\Behaviour {
 
@@ -29,7 +29,7 @@ class Filter extends Core\Behaviour {
 		}
 
         foreach($queryParams as $key=>$val) {
-            if(in_array($key,$this->filterKeys())) {
+            if(in_array($key, $this->filterKeys())) {
                 if($val) {
                     $this->applySingleFilter($key,$val);
                 }
@@ -59,20 +59,20 @@ class Filter extends Core\Behaviour {
 
         switch($type) {
             case "eq":
-                $val = explode(",",$val);
-                $this->eq($name,$val);
+                $val = explode(",", $val);
+                $this->eq($name, $val);
                 break;
             case "to":
-                $this->leq($name,$val);
+                $this->leq($name, $val);
                 break;
             case "from":
-                $this->geq($name,$val);
+                $this->geq($name, $val);
                 break;
             case "like":
-                $this->like($name,$val);
+                $this->like($name, $val);
                 break;
             case "match":
-                $this->match($name,$val);
+                $this->match($name, $val);
                 break;
 
             // Специальная опция для поиска по полю типа "список ссылок"
@@ -98,7 +98,7 @@ class Filter extends Core\Behaviour {
     /**
      * @return Возвращает адрес страницы с отбором
      **/
-    public function url($params=null) {
+    public function url($params = null) {
 
         $query = $this->queryParams();
 
@@ -127,11 +127,11 @@ class Filter extends Core\Behaviour {
         }
 
         // Писать что страница первая не имеест смысла
-        if($q["page"]==1) {
+        if($q["page"] == 1) {
             unset($q["page"]);
         }
 
-        return "?".http_build_query($q);
+        return sizeof($q) ? "?".http_build_query($q) : ".";
     }
 
 }

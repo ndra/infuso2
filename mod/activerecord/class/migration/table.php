@@ -72,6 +72,14 @@ class Table {
                 $ret[] = $index;
             }
         }
+        
+        // Добавляем индексы из модели
+        if($indices = $this->model["indices"]) {
+            foreach($indices as $index) {
+                $ret[] = new Index($index);
+            }
+        }
+        
         return $ret;
     }
 
@@ -115,7 +123,7 @@ class Table {
         foreach($this->realFields() as $field) {
             if(!$this->fieldExists($field)) {
                 app()->msg("Field ".$this->tableName().".".$field." not exists in model.", 1);
-                $this->deleteField($field);
+                // $this->deleteField($field);
             }
         }
 

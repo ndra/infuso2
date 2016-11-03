@@ -33,18 +33,18 @@ class Index extends Core\Component {
 	 * Тип индекса - это строка, которая может принимать два значения:
 	 * "index" или "fulltext"
 	 **/
-	public function type($type=null) {
+	public function type($type = null) {
 
 		if(func_num_args()==0) {
 		
-		    if(in_array($this->param("type"), array("index","fulltext","primary"))) {
+		    if(in_array($this->param("type"), array("index", "fulltext", "primary"))) {
 		        return $this->param("type");
 		    }
 			
 		    return "index";
 	    }
 
-	    if(func_num_args()==1) {
+	    if(func_num_args() == 1) {
 	        $this->param("type",$type);
 	        return $this;
 		}
