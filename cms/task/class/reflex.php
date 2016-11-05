@@ -47,6 +47,15 @@ class Reflex {
             
         if(!$item->exists()) {
             $task->data("completed",true);
+			
+			/**
+			 * создаем событие завершения задачи
+			 **/
+			app()->fire("infuso/task/completed", array(
+                "taskId" => $task->id(),
+                "deliverToClient" => true,
+    		));
+			
             $task->store();
             return;
         }
