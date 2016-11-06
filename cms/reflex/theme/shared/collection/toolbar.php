@@ -3,6 +3,12 @@
 $code = $collection->serialize();
 <div class='qoi8w451jl c-toolbar' infuso:collection='{$code}' >    
 
+    /*$w = widget("infuso\\cms\\ui\\widgets\\button")
+        ->icon("rename")
+        ->air()
+        ->addClass("options")
+        ->exec(); */
+
     <h1 class='g-header' >{$collection->collection()->title()}</h1>
 
     // Быстрый поиск
@@ -52,11 +58,6 @@ $code = $collection->serialize();
             ->addClass("view")
             ->air()
             ->exec();
-            
-        /*$w = widget("infuso\\cms\\ui\\widgets\\button")
-            ->icon("copy")
-            ->air()
-            ->exec(); */
             
         <span style='margin-right:20px;' ></span>
             

@@ -1,7 +1,5 @@
 <? 
 
-//exec("/reflex/shared/editor-head");
-
 foreach($editor->layout() as $item) {
     if($item === "form") {
         exec("fields");    
@@ -11,7 +9,7 @@ foreach($editor->layout() as $item) {
         exec("/reflex/shared/collection", array(
             "collection" => $collection,
         ));
-    } elseif(preg_match("/^tmp:(.*)/",$item,$matches)) {
+    } elseif(preg_match("/^tmp:(.*)/", $item, $matches)) {
         $tmp = $matches[1];
         exec($tmp);
     } else {

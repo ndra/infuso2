@@ -1,0 +1,32 @@
+.EIvwPQRUtU {
+    
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    & > .top {
+        flex: 1;
+        overflow: auto;
+        padding: 20px;
+    }
+    
+    & > .bottom {
+        padding: 10px 20px;
+        background: #ededed;
+    }
+    
+    .filter-item {
+        
+        display: flex;
+        margin-bottom: 20px;
+        align-items: center;
+        
+        & > .left {
+            width: 200px;
+            padding-right: 10px;
+            opacity: .7;
+            font-style: italic;
+        }
+    }
+    
+}

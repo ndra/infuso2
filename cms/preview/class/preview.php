@@ -469,33 +469,33 @@ class Generator extends \Infuso\Core\Component {
     **/
     public function crop($width = null, $height = null, $c = null, $d = null) {
 
-        if(func_num_args()==0) {
-            $this->setResizeParam("mode","crop");
+        if(func_num_args() == 0) {
+            $this->setResizeParam("mode", "crop");
             return $this;
         }
 
-        if(func_num_args()==2) {
-            $this->canvasSize($width,$height);
+        if(func_num_args() == 2) {
+            $this->canvasSize($width, $height);
             return $this;
         }
 
-        if(func_num_args()==4) {
-            $this->canvasSize($width,$height,$c,$d);
+        if(func_num_args() == 4) {
+            $this->canvasSize($width, $height, $c, $d);
             return $this;
         }
 
     }
 
-    public function resize($width=null,$height=null) {
-        if(func_num_args()==0) {
-            $this->setResizeParam("mode","resize");
+    public function resize($width = null, $height = null) {
+        if(func_num_args() == 0) {
+            $this->setResizeParam("mode", "resize");
             return $this;
         }
     }
     
     public function cropResize($width = null, $height = null) {
-        if(func_num_args()==0) {
-            $this->setResizeParam("mode","crop-resize");
+        if(func_num_args() == 0) {
+            $this->setResizeParam("mode", "crop-resize");
             return $this;
         }
     }
@@ -504,7 +504,7 @@ class Generator extends \Infuso\Core\Component {
 
         $srcWidth = imagesx($this->img());
         $srcHeight = imagesy($this->img());
-        $ratio = $srcWidth/$srcHeight;
+        $ratio = $srcWidth / $srcHeight;
 
         $previewWidth = $p["width"];
         $previewHeight = $p["height"];

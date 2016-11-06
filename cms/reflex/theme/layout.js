@@ -11,7 +11,7 @@ $(function() {
     }
     
     updateHeight();
-    setInterval(updateHeight,1000);
+    setInterval(updateHeight, 1000);
     $(window).resize(updateHeight);
     
     $(".x0h4tfwmhnn").layout();

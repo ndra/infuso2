@@ -79,6 +79,25 @@ mod.init(".cjoesz8swu", function() {
         load();
     });
     
+    var showOptions = function() {
+        var collection = $container.attr("infuso:collection");
+        $.window({
+            width: 600,
+            height: 400,
+            title: "Настройки отображения",
+            call: {
+                cmd: "infuso/cms/reflex/controller/getoptionshtml",
+                collection: collection
+            }
+        });        
+    };
+    
+    //showOptions();
+    
+    $container.on("reflex/options", function(event) {
+        showOptions();
+    });
+    
     // Перезагрузка по F5
     $(document).on("keydown",function(e) {
         if(e.keyCode == 116 && !e.ctrlKey) {

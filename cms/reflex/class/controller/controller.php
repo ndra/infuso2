@@ -306,5 +306,15 @@ class Controller extends \Infuso\Core\Controller {
 	    }
 	    return $ret;
 	}
+    
+	/**
+	 * Возвращает html настроек коллекции
+	 **/
+	public function post_getOptionsHTML($p) {
+        $collection = Collection::unserialize($p["collection"]);
+	    return app()->tm("/reflex/options")
+            ->param("collection", $collection)
+            ->getContentForAjax();
+	}
 
 }

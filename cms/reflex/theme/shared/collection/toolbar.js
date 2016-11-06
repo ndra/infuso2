@@ -16,6 +16,10 @@ mod.init(".qoi8w451jl", function() {
         $container.trigger("reflex/refresh");
     });
     
+    $container.find(".options").click(function() {
+        $container.trigger("reflex/options");
+    });
+    
     // Учет параметров фильтра перед загрузкой
 
     $container.on("reflex/beforeLoad",function(event) {    

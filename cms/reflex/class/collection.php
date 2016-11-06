@@ -44,6 +44,7 @@ class Collection extends Core\Component {
             $collection = $filters[0];
         }
         
+        // Учитываем страницу
         $collection->page($this->param("page"));
 
         return $collection;

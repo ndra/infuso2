@@ -81,6 +81,23 @@ class Fieldset implements \Iterator {
 
 	    return new self($model,$fields);
 	}
+    
+    /**
+     * Оставляет только видимые поля
+     **/
+	public function visible() {
+
+	    $fields = array();
+	    $model = $this->model();
+
+	    foreach($this->fields as $name) {
+		    if($model->field($name)->visible()) {
+		        $fields[] = $name;
+		    }
+	    }
+
+	    return new self($model,$fields);
+	}
 	
 	public function count() {
 	    return sizeof($this->fields);
