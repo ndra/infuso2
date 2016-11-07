@@ -48,7 +48,11 @@ class Cart implements Core\Handler {
                 $event->cartItem()->data($key, $val);
             }
         }
+        
+        Core\Defer::add(get_class(), "sendCartChanged");
+    }
     
+    public static function sendCartChanged() {
         app()->fire("eshop/cart-changed", array(
             "deliverToClient" => true,
             "minicart" => app()->tm("/eshop/minicart/ajax")->getContentForAjax(),

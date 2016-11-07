@@ -292,7 +292,7 @@ class Cart extends \Infuso\ActiveRecord\Record {
 	/**
      * Дублирует ранее созданный заказ
      **/
-	public function _repeatOrder(){
+	public function _repeatOrder() {
         $oldOrder = $this;
 		
 		//получаем доступные для покупки товары из прошлого заказа
@@ -302,17 +302,17 @@ class Cart extends \Infuso\ActiveRecord\Record {
             return false;
         }
         
-        //получаем активную корзину
+        // Получаем активную корзину
         $cart = \Infuso\Eshop\Model\Cart::active();
         
-        //очищаем корзину
+        // Очищаем корзину
         $cart->items()->delete();
         
-        //если нет корзины, создаем
+        // Если нет корзины, создаем
         $cart = self::getActiveCreateIfNotExists();  
         
-        //перебираем товары из старого заказа
-        foreach($itemsForCart as $item){
+        // Перебираем товары из старого заказа
+        foreach($itemsForCart as $item) {
 			$event = new \Infuso\Eshop\Handler\CartEvent("eshop/add");
 			$event->requestData("id", $item->item()->id());
 			$event->requestData("quantity", $item->quantity());

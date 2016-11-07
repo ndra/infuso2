@@ -5,7 +5,7 @@ use Infuso\Core;
 use Infuso\Eshop\Model;
 
 /**
- * Модель корзины (заказа) в интернет-магазине
+ * СОбытия изменения в корзине
  **/
 class CartEvent extends Core\Event {
 
@@ -87,7 +87,7 @@ class CartEvent extends Core\Event {
     /**
      * Метод доступа к данным создаваемой / изменяемой товарной позиции
      **/
-    public final function cartItemData($key=null, $val=null) {
+    public final function cartItemData($key = null, $val = null) {
 
         if(func_num_args()==0) {
             return $this->cartItemData;
@@ -114,7 +114,7 @@ class CartEvent extends Core\Event {
 
         }
 
-        if(func_num_args()==2) {
+        if(func_num_args() == 2) {
             $this->cartItemData[$key] = $val;
             return $this;
         }
@@ -124,7 +124,7 @@ class CartEvent extends Core\Event {
     /**
      * Метод доступа к данным запроса
      **/
-    public final function requestData($key=null, $val=null) {
+    public final function requestData($key = null, $val = null) {
 
         if(func_num_args()==0) {
             return $this->requestData;
@@ -143,7 +143,7 @@ class CartEvent extends Core\Event {
             // Если возвращать по ссылке несуществующие элементы массива, php создает их на лету
             // и записывает в них нули
             // Чтобы этого не произошло - проверяем наличие ключа у массива
-            if(array_key_exists($key,$this->requestData)) {
+            if(array_key_exists($key, $this->requestData)) {
                 return $this->requestData[$key];
             } else {
                 return null;
@@ -151,7 +151,7 @@ class CartEvent extends Core\Event {
 
         }
 
-        if(func_num_args()==2) {
+        if(func_num_args() == 2) {
             $this->requestData[$key] = $val;
             return $this;
         }

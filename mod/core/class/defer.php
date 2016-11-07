@@ -15,15 +15,23 @@ class Defer {
      * Ставит задачу отложенного вызова метода $method
      **/
     public function add($component, $method) {
+    
+        if(is_string($component)) {
+            $id = $component;
+        } elseif(is_object($component) && (is_a($component, "infuso\\core\\component"))) {
+            $id = $component->getComponentID();
+        } else {
+            throw new \Exception("defer::add() bad parameter");
+        }
 
-        if(!self::$defer[$component->getComponentID()]) {
-            self::$defer[$component->getComponentID()] = array(
+        if(!self::$defer[$id]) {
+            self::$defer[$id] = array(
                 "component" => $component,
                 "methods" => array(),
             );
         }
 
-        self::$defer[$component->getComponentID()]["methods"][$method] = true;
+        self::$defer[$id]["methods"][$method] = true;
 
     }
 
@@ -44,7 +52,7 @@ class Defer {
 
             foreach($defer as $component) {
                 foreach($component["methods"] as $method => $none) {
-                    $component["component"]->$method();
+                    call_user_func(array($component["component"], $method));
                 }
             }
 
