@@ -314,6 +314,7 @@ class Controller extends \Infuso\Core\Controller {
         $collection = Collection::unserialize($p["collection"]);
 	    return app()->tm("/reflex/options")
             ->param("collection", $collection)
+            ->param("filters",  $p["filters"])
             ->getContentForAjax();
 	}
 

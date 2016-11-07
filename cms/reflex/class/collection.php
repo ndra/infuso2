@@ -37,11 +37,32 @@ class Collection extends Core\Component {
             $virtual->applyQuickSearch($collection, $q);
         }   
         
-        // Учитываем фильтры
+        // Учитываем фильтр
         $filters = array_values($virtual->filters($collection->copy()));
         $collection = $filters[$this->param("filter")];
         if(!$collection) {
             $collection = $filters[0];
+        }
+        
+        // Учитываем фильтры
+        if($filters = $this->param("filters")) {
+            foreach($filters as $key => $filter) {
+                $filter = json_decode($filter, true);
+                switch($filter["filter"]) {
+                    case "like":
+                        $collection->like($key, $filter["value"]);
+                        break; 
+                    case "eq":
+                        $collection->eq($key, $filter["value"]);
+                        break; 
+                    case "void":
+                        $collection->eq($key, "");
+                        break; 
+                    case "non-void":
+                        $collection->neq($key, "");
+                        break; 
+                }
+            }
         }
         
         // Учитываем страницу
@@ -82,6 +103,7 @@ class Collection extends Core\Component {
         }
         
         $this->param("filter", $params["filter"]);
+        $this->param("filters", $params["filters"]);
         
         $this->param("page", $params["page"]);
 
@@ -159,6 +181,12 @@ class Collection extends Core\Component {
 	}
 	
     public function filterTemplate() {
+		$tmp = app()->tm("/reflex/shared/collection/items/ajax/filter");
+        $tmp->param("collection", $this);
+        return $tmp;
+    }
+    
+    public function filtersTemplate() {
 		$tmp = app()->tm("/reflex/shared/collection/items/ajax/filters");
         $tmp->param("collection", $this);
         return $tmp;

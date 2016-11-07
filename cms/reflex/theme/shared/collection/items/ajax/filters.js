@@ -1,13 +1,16 @@
-mod.init(".edJEHvd7pc", function() {
+mod(".FLQbxUZK3f").init(function() {
     
-    $container = $(this);
+    var $container = $(this);
     
-    $container.find("span").click(function() {
-        var filter = $(this).attr("data:filter");
-        $(this).trigger({
-            type: "reflex/setFilter",
-            filter: filter
+    $container.find(".configure-filter").click(function() {
+        $container.trigger("reflex/options");
+    });
+    
+    $container.find(".clear-filter").click(function() {
+        $container.trigger({
+            type: "reflex/setFilters",
+            filters: null
         });
-    })
+    });
     
-})
+});

@@ -29,20 +29,18 @@ class User extends ActiveRecord\Record {
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'label' => 'Хэш пароля',
                     'group' => 'Основное',
-                    'indexEnabled' => '1',
                 ), array (
                     'name' => 'email',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'label' => 'Электронная почта',
                     'group' => 'Основное',
-                    'indexEnabled' => '1',
+                    "editable" => 2,
                 ), array(
                     'name' => 'registrationTime',
                     'type' => 'x8g2-xkgh-jc52-tpe2-jcgb',
                     'editable' => 2,
                     'label' => 'Время регистрации',
                     'group' => 'Основное',
-                    'indexEnabled' => '1',
                     "default" => "now()",
                 ), array(
                     'name' => 'lastActivity',

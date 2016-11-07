@@ -7,13 +7,15 @@ $editor = $collection->editor();
     <div class='top' >
 
         foreach($editor->fields() as $field) {
-            if($field->field()->editable()) {
+            if($field->field()->visible()) {
                 <div class='filter-item' >
                     <div class='left' >
                         echo $field->field()->label();
                     </div>
                     <div class='right' >
-                        $field->filterTemplate()->exec();
+                        $field->filterTemplate()
+                            ->param("value", $filters[$field->field()->name()])
+                            ->exec();
                     </div>
                 </div>
             }

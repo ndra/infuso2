@@ -1,27 +1,16 @@
-.edJEHvd7pc {
+.FLQbxUZK3f {
     
-    padding: 20px 10px 0 20px;
+    padding: 10px;
+    background: rgba(240,220,0,0.5);
     
-    .filter {
-        margin-right: 10px;
-        cursor: pointer;
-    }
-    
-    .filter.active {
-        background: #ccc;
-        padding: 4px 8px;
-        border-radius: 5px;
-    }
-    
-    .filter:hover {
+    .clear-filter, .configure-filter {
         text-decoration: underline;
+        cursor: pointer;
+        margin-right: 10px;
     }
     
-    .count {
-        font-size: 10px;
-        position: relative;
-        top: -5px;
-        opacity: .5;
+    .text {
+        margin-right: 20px;
     }
     
 }

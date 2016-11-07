@@ -2,7 +2,13 @@
 
 <div class='l2bfEewpo6' >
 
-    $w = widget("\\infuso\\cms\\ui\\widgets\\select")
+    if($value) {
+        $value = json_decode($value, true);
+    } else {
+        $value = [];    
+    }
+
+    $select = widget("\\infuso\\cms\\ui\\widgets\\select")
         ->style("width", 90)
         ->values(array(
             "like" => "Содержит",
@@ -10,13 +16,18 @@
             "non-void" => "Заполнено",
             "void" => "Пусто",
         ));
-    $w->exec();
 
-    $w = widget("\\infuso\\cms\\ui\\widgets\\textfield")
+    $input = widget("\\infuso\\cms\\ui\\widgets\\textfield")
+        ->clearButton()
         ->addClass("input");
-    $w->exec();
+        
+    $select->value($value["filter"]);
+    $input->value($value["value"]);
+
+    $select->exec();
+    $input->exec();
     
-    <input type='idden' name='{$field->name()}' />
+    <input type='hidden' name='{$field->name()}' />
     
 </div>
     

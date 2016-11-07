@@ -27,6 +27,8 @@ mod.init(".cjoesz8swu", function() {
     
     var filter = 0;
     
+    var filters = null;
+    
     var page = 1;
 
     // Загружает список элементов и выводит их на страницу
@@ -38,12 +40,11 @@ mod.init(".cjoesz8swu", function() {
             cmd:"infuso/cms/reflex/controller/getItems",
             collection:collection,
             filter: filter,
+            filters: filters,
             page: page
         };
         
         $container.find(" > .loader").show();
-    
-        //mod.fire("reflex/beforeLoad", params);
         
         $container.trigger({
             type: "reflex/beforeLoad",
@@ -79,6 +80,11 @@ mod.init(".cjoesz8swu", function() {
         load();
     });
     
+    $container.on("reflex/setFilters", function(event) {
+        filters = event.filters;
+        load();
+    });
+    
     var showOptions = function() {
         var collection = $container.attr("infuso:collection");
         $.window({
@@ -87,14 +93,19 @@ mod.init(".cjoesz8swu", function() {
             title: "Настройки отображения",
             call: {
                 cmd: "infuso/cms/reflex/controller/getoptionshtml",
-                collection: collection
+                collection: collection,
+                filters: filters
             }
+        }).on("reflex/setFilterData", function(event) {
+            $container.trigger({
+                type: "reflex/setFilters",
+                filters: event.filters
+            });
         });        
     };
     
-    //showOptions();
-    
     $container.on("reflex/options", function(event) {
+        event.stopPropagation();
         showOptions();
     });
     

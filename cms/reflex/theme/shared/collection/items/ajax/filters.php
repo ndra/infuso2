@@ -1,19 +1,12 @@
 <?
 
-$filters = $collection->editor()->filters($collection->collectionWithoutRestrictions());
-if(sizeof($filters) == 1) {
+$filters = $collection->param("filters");
+if(!$filters) {
     return;
 }
 
-<div class='edJEHvd7pc' >
-    $n = 0;
-    foreach($filters as $name => $filter) {
-        
-        $class = $n == $collection->param("filter") ? "active" : "";
-        
-        $count = $filter->copy()->count();
-
-        <span data:filter='{$n}' class='filter {$class}' >{$name} <span class='count' >{$count}</span></span>
-        $n++;
-    }
+<div class='FLQbxUZK3f' >
+    <span class='text' >Использован фильтр, могут отображаться не все элементы</span>
+    <span class='clear-filter' >Отменить фильтр</span>
+    <span class='configure-filter' >Настроить</span>
 </div>
