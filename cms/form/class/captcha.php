@@ -6,12 +6,21 @@ use \Infuso\Core;
 /**
  * Стандартная капча для форм
  **/
-class Captcha extends Core\Controller {
+class Captcha extends Core\Component {
 
     private $publicCode;
     private $privateCode;
     
     private static $sessionKey = "captcha-M2gp7z";
+    
+    public function initialParams() {
+        return array(
+            "allowedPublicSymbols" => 'abcdefghijklmnopqrstuvwxyz1234567890',
+            "allowedPrivateSymbols" => "23456789abcdegikpqsvxyz",
+            "publicLength" => 20,
+            "privateLength" => 6,
+        );
+    }
     
     public function __construct($publicCode = null) {
     
@@ -26,20 +35,24 @@ class Captcha extends Core\Controller {
     
     }
     
-    public function generateCodes() {
+    private function generateCodes() {
         if(!$this->publicCode) {        
-            $allowedPublicSymbols = 'abcdefghijklmnopqrstuvwxyz1234567890';
-            $allowedPrivateSymbols = "23456789abcdegikpqsvxyz";         
-            $this->publicCode = self::randomString($allowedPublicSymbols, 20);
-            $this->privateCode = self::randomString($allowedPrivateSymbols, 6);               
-            
-            $keys = app()->session(self::$sessionKey);
-            if(!$keys) {
-                $keys = array();   
-            }
-            $keys[$this->publicCode] = $this->privateCode;
-            app()->session(self::$sessionKey, $keys);
+       
+            $this->publicCode = self::randomString($this->param("allowedPublicSymbols"), $this->param("publicLength"));
+            $this->generatePrivateCode();
         }
+    }
+    
+    public function generatePrivateCode() {
+    
+        $this->privateCode = self::randomString($this->param("allowedPrivateSymbols"), $this->param("privateLength"));
+        $keys = app()->session(self::$sessionKey);
+        if(!$keys) {
+            $keys = array();   
+        }
+        $keys[$this->publicCode] = $this->privateCode;
+        app()->session(self::$sessionKey, $keys);
+        
     }
     
     public function checkCode($privateCode) {
@@ -49,6 +62,9 @@ class Captcha extends Core\Controller {
 		return $privateCode == $this->privateCode();
     }
     
+    /**
+     * Возвращает случайную строку из символов $alphabet длины $length
+     **/
     public static function randomString($alphabet, $length) {
         
         $pass = array(); //remember to declare $pass as an array
@@ -70,8 +86,11 @@ class Captcha extends Core\Controller {
         return $this->privateCode;
     }
     
+    /**
+     * Возвращает путь к файлу с картикой
+     **/
     public function img() {
-    	return \Infuso\Core\Action::get("Infuso\CMS\Form\Controller\Captcha","index",array("code" => $this->publicCode()))->url();
+    	return \Infuso\Core\Action::get("Infuso\CMS\Form\Controller\Captcha", "index", array("code" => $this->publicCode()))->url();
 	}
 
 }

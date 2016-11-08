@@ -12,9 +12,17 @@ class Captcha extends Core\Controller {
         return  true;
     }
 
+    /**
+     * Контроллер, генерирующий картинку капчи
+     **/
     public function index($p) {                   
     
         $captcha = new \Infuso\CMS\Form\Captcha($p["code"]);
+        
+        if($p["new"]) {
+            $captcha->generatePrivateCode();
+        }
+        
         $this->keystring = $captcha->privateCode();     
        
         $alphabet = "0123456789abcdefghijklmnopqrstuvwxyz"; 
@@ -46,8 +54,6 @@ class Captcha extends Core\Controller {
         }    
     
         $alphabet_length = strlen($alphabet);
-        
-      
                        
         $font_file = $fonts[mt_rand(0, count($fonts)-1)];
         $font = imagecreatefrompng($font_file);
