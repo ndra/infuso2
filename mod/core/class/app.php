@@ -217,6 +217,8 @@ class App {
 	    }             
 
         $content = ob_get_clean();
+        
+        Profiler::SetVariable("content-size", strlen($content));
 
         // Пост-обработка (отложенные функции)
         if($this->eventsEnabled()) {
@@ -225,7 +227,7 @@ class App {
 	        ));
 	        $content = $event->param("content");
         }
-
+        
         echo $content;
 
 	}

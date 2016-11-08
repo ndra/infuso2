@@ -114,7 +114,7 @@ class Profiler {
     }
     
    
-    public function setVariable($key,$val) {
+    public function setVariable($key, $val) {
         self::$data["variables"][$key] = $val;
     }
 
