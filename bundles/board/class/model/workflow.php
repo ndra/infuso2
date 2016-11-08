@@ -67,7 +67,9 @@ class WorkFlow extends ActiveRecord\Record {
      * Возвращает коллекцию всех записей в логе
      **/
     public static function all() {
-        return service("ar")->collection(get_class())->desc("begin");
+        return service("ar")
+            ->collection(get_class())
+            ->desc("begin");
     }
 
     /**

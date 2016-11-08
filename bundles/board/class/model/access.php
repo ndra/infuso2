@@ -31,7 +31,7 @@ class Access extends \Infuso\ActiveRecord\Record {
 	 * Возвращает список всех объектов
 	 **/
 	public static function all() {
-		return \Infuso\ActiveRecord\Record::get(get_class());
+		return service("ar")->collection(get_class());
 	}
 
     /**

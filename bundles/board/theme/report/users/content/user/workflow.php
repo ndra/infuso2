@@ -11,6 +11,7 @@
             <div class='num' >{$day->text()}</div>
         
             $workflow = \Infuso\Board\Model\Workflow::all()
+                ->visible()
                 ->eq("userId", $user->id())
                 ->eq("date(begin)", $day)
                 ->limit(0);

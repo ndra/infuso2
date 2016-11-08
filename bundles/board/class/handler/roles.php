@@ -113,6 +113,7 @@ class Roles implements Core\Handler {
 
         user_operation::create("board/showReportUsers", "Просмотр отчета по пользователям")
             ->appendTo("board/manager")
+            ->appendTo("board/client")
 			->appendTo("board/worker");
             
         user_operation::create("board/showReportProjects", "Просмотр отчета по проектам")
