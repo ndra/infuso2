@@ -1012,8 +1012,8 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * Устанавливает значение поля $key равным $val для всей коллекции.
      * Функция использует быстрые операции mysql, поэтому триггеры игнорируются.
      **/
-    public function data($key,$val) {
-        if(func_num_args()==2) {
+    public function data($key, $val) {
+        if(func_num_args() == 2) {
             $val = service("db")->quote($val);
             $query = "update {$this->from()} set `$key`=$val where {$this->whereQuery()} ";
             service("db")->query($query)->exec();

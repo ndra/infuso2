@@ -2,16 +2,19 @@
 
 <div class='f0rw8hlkvh' data:editor='{$view->editor()->id()}' >
 
-    $w = widget("\\infuso\\cms\\ui\\widgets\\textarea")
-        ->value($field->value())        
-        ->fieldName($field->name())
-        ->style("width", "100%");
-        
-    if(!$field->editable()) {
-        $w->attr("disabled", true);
+    if($field->editable()) {
+        $w = widget("\\infuso\\cms\\ui\\widgets\\textarea")
+            ->value($field->value())
+            ->style("width", "100%")
+            ->fieldName($field->name())
+            ->exec();
+    } else {
+        <pre>
+            echo e($field->value());
+        </pre>
     }
     
-    $w->exec();
+    
     
     if($field->editable() && $html) {
         <div class='toolbar' >

@@ -12,5 +12,15 @@
             margin-right: 10px;
         }
     }
+    
+    pre {
+        .g-input();
+        overflow: auto;
+        width: 100%;
+        box-sizing: border-box;
+        max-height: 150px;
+        white-space: pre-wrap;
+        background: #ededed;
+    }
 
 }
