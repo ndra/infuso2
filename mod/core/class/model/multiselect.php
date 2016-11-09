@@ -31,7 +31,10 @@ class Multiselect extends Field {
     public function pvalue() {
         $options = $this->options();
         $ret = array();
-        foreach(explode(" ", $this->value()) as $key) {
+        
+        $values = $this->value() === "" ? array() : explode(" ", $this->value());
+        
+        foreach($values as $key) {
             $key = (int) $key;
             if(array_key_exists($key, $options)) {
                 $ret[] = $key;
@@ -49,13 +52,20 @@ class Multiselect extends Field {
         return $ret;
     }
     
-    public function prepareValue($val) {        
+    public function prepareValue($val) {       
 
         // Строку преобразуем в массив
+        // Пустая строка методом explode преобразуется в массив array(0 => ""), 
+        // поэтому случай с пустой строкой разбираем отдельно
         if(is_string($val)) {
-            $val = explode(" ", $val);
+            $val = trim($val);
+            if($val == "") {
+                $val = array();
+            } else {
+                $val = explode(" ", $val);
+            }
         }
-
+        
         // Массив преобразуем в строку
         if(is_array($val)) {
             $ret = array();
