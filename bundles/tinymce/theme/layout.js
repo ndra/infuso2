@@ -41,15 +41,14 @@ mod.init(".tinyMCE-qPe4r8Zov0h", function() {
         language : 'ru',
         convert_urls: false,
         menubar:false,
-		paste_as_text: true,
+        paste_as_text: true,
         toolbar: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table | fontsizeselect",
         plugins: [
             "advlist autolink lists link image charmap print preview hr anchor pagebreak",
             "searchreplace wordcount visualblocks visualchars code fullscreen",
             "insertdatetime media nonbreaking save table contextmenu directionality",
             "emoticons template paste textcolor colorpicker textpattern ",
-			"removediv"
-        ],
+            ],
 		style_formats: [
 			{title: 'Headers', items: [
 			  {title: 'Header 1', format: 'h1'},
