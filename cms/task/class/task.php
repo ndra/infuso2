@@ -58,6 +58,11 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 					'label' => 'Следующий запуск',
 					'editable' => '2',
 				), array (
+					'name' => 'suspendTill',
+					'type' => 'datetime',
+					'label' => 'Приостановить до',
+					'editable' => 1,
+				), array (
 					'name' => 'completed',
 					'type' => 'checkbox',
 					'editable' => '2',
@@ -104,7 +109,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
     }
 
     public function beforeStore() {
-        if($this->field("crontab")->changed()) {
+        if($this->field("crontab")->changed() || $this->field("suspendTill")->changed()) {
             $this->updateNextLaunchTime();
         }
     }
@@ -148,6 +153,26 @@ class Task extends ActiveRecord\Record implements Core\Handler {
         return $params;
     }
     
+    /**
+     * Завершает задачу
+     **/
+    public function complete() {
+        $this->data("completed", true);
+        return $this;
+    }
+    
+    /**
+     * ВОзвращает количество раз, которое задача была выполнена
+     **/
+    public function counter() {
+        return $this->data("counter");
+    }
+    
+    public function suspend($sec) {
+        $this->data("suspendTill", \Infuso\Util\Util::now()->shift($sec));
+        return $this;
+    }
+    
     public function extra($key = null, $val = null) {
         if(func_num_args() == 0) {
             return $thius->pdata("internalParams");
@@ -164,27 +189,40 @@ class Task extends ActiveRecord\Record implements Core\Handler {
      * Обновляет время следующего запуска
      **/
     public function updateNextLaunchTime() {
+    
+        $next = null;
 
 		// Таймстэмп
-		if(preg_match("/^\d+$/",$this->data("crontab"))) {
-            $this->data("nextLaunch",$this->data("crontab"));
+		if(preg_match("/^\d+$/", $this->data("crontab"))) {
+            $next = $this->data("crontab");
             
         // Mysql Date format
         } elseif(preg_match("/\d{4}-\d{2}-\d{2}\s(\d{2}\:\d{2}\:\d{2})?/",$this->data("crontab"))) {
-            $this->data("nextLaunch",$this->data("crontab"));
+            $next = $this->data("crontab");
             
         // Пустая строка
-        } elseif(trim($this->data("crontab"))=="") {
-            $this->data("nextLaunch", \util::now());
+        } elseif(trim($this->data("crontab")) == "") {
+            $next = \Util::now();
             
 		// Прочее - кронтаб
         } else {
             $time = \reflex_task_crontab::nextDate($this->data("crontab"));
-            $this->data("nextLaunch",$time);
+            $next = $time;
         }
         
-        $min = rand(0, $this->data("randomize") * 60);
-        $this->data("nextLaunch", $this->pdata("nextLaunch")->shift($min));
+        $next = \Infuso\Util\Util::date($next)->stamp();
+        
+        // Рандомизация
+        $min = rand(0, $this->data("randomize")) * 60;
+        $next += $min;
+        
+        // Кулдаун
+        if($this->data("suspendTill")) {
+            $suspendTill = $this->pdata("suspendTill")->stamp();;
+            $next = max($suspendTill, $next);
+        }
+        
+        $this->data("nextLaunch", $next);
     }
 
     /**
