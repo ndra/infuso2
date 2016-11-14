@@ -129,6 +129,11 @@ class Http extends Core\File {
         if($error = $this->errorText()) {
             throw new \Exception($error." ".var_export($this->info(), true));
         }
+
+        $info = $this->info();        
+        if($info["http_code"] != 200) {
+            throw new \Exception("Request failed code ".$info["http_code"]." ".var_export($this->info(), true));
+        }
         
         Core\Profiler::endOperation();
         return $body;
@@ -171,7 +176,7 @@ class Http extends Core\File {
     public function exists() {
         $ch = $this->getCurl();          
         curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_FAILONERROR, true);  // this works
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
         curl_setopt($ch, CURLOPT_NOBODY, true);       
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);      
         $connectable = curl_exec($ch);
