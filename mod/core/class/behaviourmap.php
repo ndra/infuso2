@@ -26,12 +26,17 @@ class BehaviourMap {
     
     		// Добавляем поведения из карты классов
             $bb = service("classmap")->classmap("behaviours");
-            $bb = $bb[$class];
-            if($bb) {
-                foreach($bb as $b) {
-                    $behaviours[] = $b;
-    			}
-    		}
+            
+            $classes = class_parents($class);
+            $classes[] = $class;
+            foreach($classes as $klass) {
+                $bb = $bb[$klass];
+                if($bb) {
+                    foreach($bb as $b) {
+                        $behaviours[] = $b;
+        			}
+        		}
+            }
     		
             // Добавим поведения, добавленные вручную
     		foreach($addBehaviours as $b) {
