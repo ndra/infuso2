@@ -30,6 +30,7 @@ class BehaviourMap {
             $classes = class_parents($class);
             $classes[] = $class;
             foreach($classes as $klass) {
+                $klass = strtolower($klass);
                 $bbb = $bb[$klass];
                 if($bbb) {
                     foreach($bbb as $b) {
