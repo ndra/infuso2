@@ -25,8 +25,8 @@ class BehaviourMap {
     		}
     
     		// Добавляем поведения из карты классов
-            $bb = service("classmap")->classmap("behaviours");
-            
+            $bb = service("classmap")->classmap("behaviours"); 
+            // Классы-родитеоли и сам класс            
             $classes = class_parents($class);
             $classes[] = $class;
             foreach($classes as $klass) {
