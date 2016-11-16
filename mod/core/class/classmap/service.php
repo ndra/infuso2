@@ -196,6 +196,7 @@ class classmapService extends service {
 	    "user" => "\\infuso\\user\\model\\user",
 	    "user_operation" => "\\infuso\\user\\model\\operation",
 	    "user_role" => "\\infuso\\user\\model\\role",
+        "infuso\\util\\date" => "\\infuso\\core\\date",
 	);
 	
 	/**

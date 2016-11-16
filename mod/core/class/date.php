@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Util;
+namespace Infuso\Core;
 use \Infuso\Core;
 
 class Date extends Core\Component {
@@ -15,9 +15,9 @@ class Date extends Core\Component {
     /**
      * Конструктор
      **/
-    private function __construct($time,$m=1,$d=1,$h=0,$min=0,$s=0) {
+    public function __construct($time,$m=1,$d=1,$h=0,$min=0,$s=0) {
 
-        $this->addBehaviour("Infuso\\Util\\Date\\Ru");
+        $this->addBehaviour("Infuso\\Core\\Date\\Ru");
 
         switch(func_num_args()) {
             case 1:
@@ -145,7 +145,7 @@ class Date extends Core\Component {
             return $this;
         }
 
-        $this->time = strtotime("+{$m} month",$this->time);
+        $this->time = strtotime("+{$m} month", $this->time);
         return $this;
     }
 
@@ -191,11 +191,11 @@ class Date extends Core\Component {
     public function day($day = null) {
     
         if(func_num_args() == 0 ) {
-            return @date("j",$this->stamp());
+            return @date("j", $this->stamp());
         }
         
         if(func_num_args() == 1 ) {
-            $date = new self($this->year(),$this->month(),$day,$this->hours(),$this->minutes(),$this->seconds());
+            $date = new self($this->year(), $this->month(), $day, $this->hours(), $this->minutes(), $this->seconds());
             $this->time = $date->stamp();
             return $this;
         }
@@ -237,7 +237,7 @@ class Date extends Core\Component {
     /**
      * Возвращает / изменяет секунды даты
      **/
-    public function seconds($sec=null) {
+    public function seconds($sec = null) {
 
         if(func_num_args()==0) {
             return @date("s",$this->stamp());
@@ -254,7 +254,7 @@ class Date extends Core\Component {
     /**
      * Возвращает / изменяет минуты даты
      **/
-    public function minutes($min=null) {
+    public function minutes($min = null) {
 
         if(func_num_args()==0) {
             return @date("i",$this->stamp());
@@ -271,7 +271,7 @@ class Date extends Core\Component {
     /**
      * Возвращает / изменяет часы даты
      **/
-    public function hours($hours=null) {
+    public function hours($hours = null) {
 
         if(func_num_args()==0) {
             return @date("H",$this->stamp());

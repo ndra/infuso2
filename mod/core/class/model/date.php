@@ -1,7 +1,7 @@
 <?
 
 namespace Infuso\Core\Model;
-use infuso\util\util;
+use Infuso\Core;
 
 class Date extends Field {
 
@@ -25,13 +25,6 @@ class Date extends Field {
 		return true;
 	}
 
-	public function editorInx() {
-		return array(
-		    "type" => "inx.date",
-		    "value" => $this->value(),
-		);
-	}
-
 	public function rvalue() {
 		if($this->value()) {
 			return $this->pvalue()->num();
@@ -41,7 +34,7 @@ class Date extends Field {
 	}
 
 	public function pvalue() {
-		return util::date($this->value())->date();
+		return (new Core\Date($this->value()))->date();
 	}
 
 	public function prepareValue($val) {
@@ -62,7 +55,7 @@ class Date extends Field {
         }
     
 		if(is_scalar($val) && ($val * 1)."" === $val."") {
-		    $val = util::date($val)->standart();
+		    $val = (new Core\Date($val))->standart();
 		}
 		return $val;
 	}
@@ -80,7 +73,7 @@ class Date extends Field {
 
 	public function defaultValue() {
 		if(trim($this->param("default")) == "now()") {
-			return util::now()."";
+			return Core\Date::now()."";
 		}
 		return "";
 	}

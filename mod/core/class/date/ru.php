@@ -1,6 +1,6 @@
 <?
 
-namespace Infuso\Util\Date;
+namespace Infuso\Core\Date;
 use \Infuso\Core;
 
 class Ru extends Core\Behaviour {
