@@ -41,7 +41,7 @@ class Links extends Link {
      **/
     public function rvalue() {
         $ret = array();
-        foreach($this->component()->pvalue() as $item) {
+        foreach($this->pvalue() as $item) {
             $ret[] = $item->title();
         }
         return implode(", ",$ret);
