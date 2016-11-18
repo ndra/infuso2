@@ -14,7 +14,7 @@ class StringSelect extends StringX {
 	}
     
     public function typeAlias() {
-        return array("select", "list");
+        return array("stringselect");
     }    
 
 	/**
