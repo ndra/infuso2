@@ -19,7 +19,7 @@ class Select extends View {
 	 * (Может вернуть массив из нескольких id)
 	 **/
 	public static function typeID() {
-	    return "fahq-we67-klh3-456t-plbo";
+	    return array("fahq-we67-klh3-456t-plbo", "uR7kW3UhmhC");
 	}
     
     public function colWidth() {
