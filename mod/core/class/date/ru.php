@@ -13,7 +13,13 @@ class Ru extends Core\Behaviour {
 
 
         $ret = "";
-        $date = @getdate($this->stamp());
+        $date = array(
+            "mday" => $this->day(),
+            "mon" => $this->month(),
+            "year" => $this->year(),
+            "hours" => $this->hours(),
+            "minutes" => $this->minutes(),
+        );
 
         $d = clone $this;  
         
@@ -66,9 +72,9 @@ class Ru extends Core\Behaviour {
      **/
     public function num() {
         if($this->timeEnabled()) {
-            return @date("d.m.Y H:i",$this->stamp());
+            return $this->format("d.m.Y H:i");
         } else {
-            return @date("d.m.Y",$this->stamp());
+            return $this->format("d.m.Y");
         }
     }
 
@@ -76,8 +82,7 @@ class Ru extends Core\Behaviour {
      * Возвращает строку с описанием времени относительно текущего момента
      * Примеры возвращаемых значений: "Толко что", "2 мин. назад", ""
      **/
-    public function left() {
-
+    public function left() { 
         $now = $this->timeEnabled() ? \Infuso\Util\Date::now() :\Infuso\Util\Date::now()->date();
         $d = $this->stamp() - $now->stamp();
         return $this->timeEnabled() ? $this->duration($d) : $this->durationDate($d);
@@ -108,11 +113,11 @@ class Ru extends Core\Behaviour {
 
         $d = abs($di);
 
-        $minutes = floor($d/60);
-        $hours = floor($minutes/60);
+        $minutes = floor($d / 60);
+        $hours = floor($minutes / 60);
         $rminutes = $minutes % 60;
         $rhours = $hours % 24;
-        $days = floor($hours/24);
+        $days = floor($hours / 24);
 
         $ret = array();
 
@@ -143,7 +148,7 @@ class Ru extends Core\Behaviour {
 
     public function durationDate($d) {
 
-        $days = floor($d/3600/24);
+        $days = floor($d / 3600 / 24);
 
         switch($days) {
 
@@ -164,7 +169,6 @@ class Ru extends Core\Behaviour {
         $ret = $days < 0 ? "$ret назад" : "через $ret";
 
         return $ret;
-
     }
 
 }

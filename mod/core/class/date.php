@@ -8,29 +8,34 @@ class Date extends Core\Component {
     /**
      * Метка времени
      **/
-    private $time = null;
+    //private $time = null;
 
     private $timeEnabled = true;
+    
+    private $datetime;
 
     /**
      * Конструктор
+     * @todo дорефакторить, убрать старые функции типа mktime
      **/
-    public function __construct($time,$m=1,$d=1,$h=0,$min=0,$s=0) {
+    public function __construct($time, $m = 1, $d = 1, $h = 0, $min = 0, $s = 0) {
 
         $this->addBehaviour("Infuso\\Core\\Date\\Ru");
+        
+        $this->datetime = new \DateTime();
 
         switch(func_num_args()) {
             case 1:
             
                 // Числа интерпретируются как timestamp
 
-                if(intval($time).""==$time) {
-                    $this->time = intval($time);
+                if(intval($time)."" == $time) {
+                    $this->datetime->setTimestamp($time);
 
                 // В противном случае попробуем распарсить строку
 
                 } else {
-                    $this->time = @strtotime($time);
+                    $this->datetime = new \DateTime($time);
                 }
 
                 break;
@@ -39,7 +44,7 @@ class Date extends Core\Component {
             case 4:
             case 5:
             case 6:
-                $this->time = mktime($h,$min,$s,$m,$d,$time);
+                $this->datetime->setTimestamp(mktime($h, $min, $s, $m, $d, $time));
                 break;
         }
 
@@ -52,20 +57,12 @@ class Date extends Core\Component {
         return self::get(@date("Y-m-d H:i:s"));
     }
 
-    public static function get($y,$m=1,$d=1,$h=0,$min=0,$s=0) {
-        switch(func_num_args()) {
-            case 1:
-                return new self(func_get_arg(0));
-                break;
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                return new self(mktime($h,$min,$s,$m,$d,$y));
-                break;
-        }
-
+    /**
+     * Алиас к конструктору
+     **/
+    public static function get() {
+        $reflector = new \ReflectionClass(get_class());
+        return $reflector->newInstanceArgs(func_get_args());
     }
 
     /**
@@ -75,10 +72,32 @@ class Date extends Core\Component {
         return $this->standart();
     }
     
+    /**
+     * Возвращает / устанавливает таймзону
+     **/
+    public function timezone($zone = null) {
+        if(func_num_args() == 0) {
+            return $this->datetime->getTimezone()->getName();
+        } elseif(func_num_args() == 1) {
+            $this->datetime->setTimezone(new \DateTimeZone($zone));
+            return $this;
+        }
+        throw new \Exception();
+    }
+    
+    /**
+     * Возвращает массив таймзон
+     **/
+    public static function timezones() {
+        return \DateTimeZone::listIdentifiers();
+    }
+    
+    /**
+     * Создает копию объекта
+     **/
     public function copy() {
         return clone $this;
     }
-
 
     /**
      * Алиас к функции text
@@ -93,31 +112,39 @@ class Date extends Core\Component {
      **/
     public function date() {
         $this->timeEnabled = false;
-        $this->time = strtotime(date("Y-m-d", $this->time));
+        $this->hours(0);
+        $this->minutes(0);
+        $this->seconds(0);
         return $this;
     }
     
+    /**
+     * Возвращает время в формате ЧЧ:ММ
+     **/
     public function time() {
-        return str_pad($this->hours(),2,0, STR_PAD_LEFT).":".str_pad($this->minutes(),2,0, STR_PAD_LEFT);
+        return str_pad($this->hours(), 2, 0, STR_PAD_LEFT).":".str_pad($this->minutes(), 2, 0, STR_PAD_LEFT);
     }
     
     /**
      * Возвращет метку времени linux
      **/
     public function stamp() {
-        return $this->time;
+        return $this->datetime->getTimestamp();
     }
 
+    /**
+     * Возвращает true если дата-время и false если просто дата
+     **/
     public function timeEnabled() {
         return $this->timeEnabled;
     }
-
+    
     /**
      * Прибавляет к дате заданное количество секунд (переносит дату в будущее)
      * Если аргумент отрицательный, переносит дату на заданное количество секунд в прошлое
      **/
     public function shift($s) {
-        $this->time += $s;
+        $this->datetime->setTimestamp($this->datetime->getTimestamp() + $s);
         return $this;
     }
 
@@ -125,27 +152,17 @@ class Date extends Core\Component {
      * Увеличивает / уменьшает дату на заданное количество дней
      **/
     public function shiftDay($day) {
-
-        $day = intval($day);
-        if(!$day) {
-            return $this;
-        }
-
-        $this->time = strtotime("+{$day} day",$this->time);
+        $day = round($day);
+        $this->datetime->modify("+{$day} day");
         return $this;
     }
 
     /**
      * Увеличивает / уменьшает дату на заданное количество месяцев
      **/
-    public function shiftMonth($m) {
-
-        $m = intval($m);
-        if(!$m) {
-            return $this;
-        }
-
-        $this->time = strtotime("+{$m} month", $this->time);
+    public function shiftMonth($month) {
+        $month = round($month);
+        $this->datetime->modify("+{$month} month");
         return $this;
     }
 
@@ -153,52 +170,83 @@ class Date extends Core\Component {
      * Увеличивает / уменьшает дату на заданное количество лет
      **/
     public function shiftYear($year) {
-
-        $year = intval($year);
-        if(!$year) {
-            return $this;
-        }
-
-        $this->time = strtotime("+{$year} year",$this->time);
+        $year = round($year);
+        $this->datetime->modify("+{$year} year");
         return $this;
     }
 
+    /**
+     * Возвращает дату / время в формате mysql
+     **/
     public function standart() {
-        return @date($this->timeEnabled() ? "Y-m-d H:i:s" : "Y-m-d", $this->stamp());
+        return $this->format($this->timeEnabled() ? "Y-m-d H:i:s" : "Y-m-d");
     }
     
     public function format($format) {
-        return @date($format, $this->stamp());
+        return $this->datetime->format($format);
     }
 
     /**
     * Возвращает год, четыре цифры
     **/
-    public function year() {
-        return @date("Y",$this->stamp());
-    }
+    public function year($year = null) {
 
-    /**
-    * Возвращает месяц
-    **/
-    public function month() {
-        return @date("m",$this->stamp());
-    }
-
-    /**
-    * Возвращает / устанавливает день
-    **/
-    public function day($day = null) {
-    
-        if(func_num_args() == 0 ) {
-            return @date("j", $this->stamp());
-        }
-        
-        if(func_num_args() == 1 ) {
-            $date = new self($this->year(), $this->month(), $day, $this->hours(), $this->minutes(), $this->seconds());
-            $this->time = $date->stamp();
+        if(func_num_args() == 0) {
+            return $this->format("Y");
+        } elseif(func_num_args() == 1) {
+            $this->datetime->setDate($year, $this->month(), $this->day());
             return $this;
         }
+        throw new \Exception();    
+    }
+    
+    /**
+     * Алиас к years()
+     **/    
+    public function years() {
+        return call_user_func_array(array($this, "year"), func_get_args());
+    }
+
+    /**
+    * Возвращает / мееняет месяц
+    **/
+    public function month($month = null) {
+
+        if(func_num_args() == 0) {
+            return $this->format("m");
+        } elseif(func_num_args() == 1) {
+            $this->datetime->setDate($this->year(), $month, $this->day());
+            return $this;
+        }
+        throw new \Exception();    
+    }
+    
+    /**
+     * Алиас к month()
+     **/    
+    public function months() {
+        return call_user_func_array(array($this, "month"), func_get_args());
+    }
+
+    /**
+    * Возвращает / изменяет день
+    **/
+    public function day($day = null) {
+
+        if(func_num_args() == 0) {
+            return $this->format("j");
+        } elseif(func_num_args() == 1) {
+            $this->datetime->setDate($this->year(), $this->month(), $day);
+            return $this;
+        }
+        throw new \Exception();    
+    }
+    
+    /**
+     * Алиас к day()
+     **/    
+    public function days() {
+        return call_user_func_array(array($this, "day"), func_get_args());
     }
     
     /**
@@ -217,15 +265,15 @@ class Date extends Core\Component {
                 1 => 1,
                 2 => 2,
                 3 => 3,
-                4 => 3,
+                4 => 4,
                 5 => 5,
                 6 => 6,
             );
         
-            return $map[date("w",$this->stamp())];
+            return $map[$this->format("w")];
         }
         
-        if(func_num_args() == 1 ) {
+        if(func_num_args() == 1) {
             $wday = $this->commercialWeekDay();
             $this->shiftDay( 1 - $wday );
             $this->shiftDay( $day - 1 );
@@ -233,39 +281,47 @@ class Date extends Core\Component {
         }
         
     }
-
+    
     /**
-     * Возвращает / изменяет секунды даты
+     * Возвращает / изменяет минуты даты
      **/
-    public function seconds($sec = null) {
+    public function seconds($seconds = null) {
 
-        if(func_num_args()==0) {
-            return @date("s",$this->stamp());
-        }
-
-        if(func_num_args()==1) {
-            $s = @date("s",$this->stamp());
-            $this->time += ($sec - $s);
+        if(func_num_args() == 0) {
+            return $this->format("s");
+        } elseif(func_num_args() == 1) {
+            $this->datetime->setTime($this->hours(), $this->minutes(), $seconds);
             return $this;
         }
+        throw new \Exception();    
+    }
 
+    /**
+     * Алиас к seconds()
+     **/    
+    public function second() {
+        return call_user_func_array(array($this, "seconds"), func_get_args());
     }
 
     /**
      * Возвращает / изменяет минуты даты
      **/
-    public function minutes($min = null) {
+    public function minutes($minutes = null) {
 
-        if(func_num_args()==0) {
-            return @date("i",$this->stamp());
-        }
-
-        if(func_num_args()==1) {
-            $m = @date("i",$this->stamp());
-            $this->time += ($min - $m)*60;
+        if(func_num_args() == 0) {
+            return $this->format("i");
+        } elseif(func_num_args() == 1) {
+            $this->datetime->setTime($this->hours(), $minutes, $this->seconds());
             return $this;
         }
+        throw new \Exception();    
+    }
 
+    /**
+     * Алиас к minutes()
+     **/    
+    public function minute() {
+        return call_user_func_array(array($this, "minutes"), func_get_args());
     }
 
     /**
@@ -273,16 +329,20 @@ class Date extends Core\Component {
      **/
     public function hours($hours = null) {
 
-        if(func_num_args()==0) {
-            return @date("H",$this->stamp());
-        }
-
-        if(func_num_args()==1) {
-            $h = @date("H",$this->stamp());
-            $this->time += ($hours - $h)*3600;
+        if(func_num_args() == 0) {
+            return $this->format("H");
+        } elseif(func_num_args() == 1) {
+            $this->datetime->setTime($hours, $this->minutes(), $this->seconds());
             return $this;
         }
-
+        throw new \Exception();
+    }
+    
+    /**
+     * Алиас к hours()
+     **/
+    public function hour() {
+        return call_user_func_array(array($this, "hours"), func_get_args());
     }
 
 }

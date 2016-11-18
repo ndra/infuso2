@@ -27,11 +27,11 @@ class Links extends Link {
     public function pvalue() {
 
         $ids = array();
-        foreach(explode(" ",$this->value()) as $id) {
-            $ids[] = $id*1;
+        foreach(explode(" ", $this->value()) as $id) {
+            $ids[] = $id * 1;
         }
 
-        $ret = $this->items()->eq("id",$ids);
+        $ret = $this->items()->eq("id", $ids);
         $ret->setPrioritySequence($ids);
         return $ret;
     }
@@ -68,14 +68,14 @@ class Links extends Link {
                 if(!is_scalar($b)) {
                     continue;
                 }
-                $b*=1;
-                if($b>0) {
-                    $b = str_pad($b,5,"0",STR_PAD_LEFT);
+                $b *= 1;
+                if($b > 0) {
+                    $b = str_pad($b, 5, "0", STR_PAD_LEFT);
                     $ret[] = $b;
                 }
             }
             $ret = array_unique($ret);
-            $val = implode(" ",$ret);
+            $val = implode(" ", $ret);
         }
 
         return $val;

@@ -57,6 +57,7 @@ class Date extends Field {
 		if(is_scalar($val) && ($val * 1)."" === $val."") {
 		    $val = (new Core\Date($val))->standart();
 		}
+        
 		return $val;
 	}
 
