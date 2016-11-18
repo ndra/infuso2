@@ -3,14 +3,14 @@
 namespace Infuso\Core\Model;
 use infuso\util\util;
 
-class Select extends Bigint {
+class StringSelect extends StringX {
 
 	public function typeID() {
-		return "fahq-we67-klh3-456t-plbo";
+		return "uR7kW3UhmhC";
 	}
 	
 	public function typeName() {
-		return "Список";
+		return "Список (строковые ключи)";
 	}
     
     public function typeAlias() {
