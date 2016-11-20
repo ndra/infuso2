@@ -98,6 +98,10 @@ class Date extends Core\Component {
     public function copy() {
         return clone $this;
     }
+    
+    public function __clone() {
+        $this->datetime = clone $this->datetime;
+    }
 
     /**
      * Алиас к функции text

@@ -213,13 +213,6 @@ class Component {
     }
 
     /**
-     * Магическая функция __clone клонирует поведения
-     * сделать чтобы поведения клонировались
-     **/
-    public final function __clone() {
-    }
-
-    /**
      * Загрузка параметров из конфигурации YAML
      **/
     private function loadParams() {
