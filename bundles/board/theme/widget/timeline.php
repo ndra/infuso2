@@ -1,5 +1,9 @@
 <?
 
+if($workflow->void()) {
+    return;
+}
+
 $workflow2 = $workflow->copy()
     ->groupBy("date(begin)")
     ->desc("begin");
@@ -35,7 +39,11 @@ if($from && $to) {
         
         <div class='day' >
         
-            <div class='num' >{$day->text()}</div>
+            if($day->commercialWeekDay() < 6) {
+                <div class='num' >{$day->text()}</div>
+            } else {
+                <div class='num' style='color:red; opacity: 1;' >{$day->text()}</div>
+            }
             
             foreach($workflow->copy()->eq("date(begin)", $day) as $item) {
                 
@@ -65,6 +73,8 @@ if($from && $to) {
                     
                     case \Infuso\Board\Model\WorkFlow::STATUS_MANUAL:
                         $h->addClass("status-manual");
+                        $h->style("left", ($left + $width)."%");
+                        $h->style("width", 10);
                         break;
                         
                     case \Infuso\Board\Model\WorkFlow::STATUS_AUTO:

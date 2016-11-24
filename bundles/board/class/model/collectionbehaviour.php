@@ -5,15 +5,6 @@ namespace Infuso\Board\Model;
 class CollectionBehaviour extends \Infuso\Core\Behaviour {
 
     /**
-     * Фильтрует коллекцию по тэгу $tagId
-     **/
-    public function useTag($tagId) {
-        $this->join("board_task_tag","board_task_tag.taskID = board_task.id")
-            ->eq("board_task_tag.tagID", $tagId);
-        return $this;
-    }
-
-    /**
      * Поиск по коллекции
      **/
     public function search($query) {
@@ -46,25 +37,6 @@ class CollectionBehaviour extends \Infuso\Core\Behaviour {
             $this->eq("id", 0);
         }
         return $this;
-    }
-    
-    /**
-     * Оставляет только задачи верхнего уровня
-     * Для менеджеров доски и исполнителей - это реальный верзний уровень
-     * Для клиентов - это группа, к которой предоставлен доступ      
-     **/         
-    public function root() {
-    
-        if(app()->user()->checkAccess("board/selectAllTasks")) {
-            return $this;
-        } {
-            $access = Access::all()->eq("userId", app()->user()->id());
-            $projects = $access->distinct("projectId");
-            $groups = Task::all()
-                ->eq("group", 1)
-                ->eq("singleProject", $projects);
-            return $this->eq("id", $groups->one()->id());
-        }
     }
     
     /**

@@ -33,6 +33,7 @@
             }
             &.status-manual {
                 background: rgba(0, 128, 0, 1);
+                outline: 1px solid white;
             }
             &.status-draft {
                 background: rgba(255, 0, 0, 1);

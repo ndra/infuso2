@@ -25,6 +25,7 @@ class Timeline extends \Infuso\Template\Widget {
 	public function execWidget() {
 	
         $workflow = \Infuso\Board\Model\Workflow::all()
+            ->visible()
             ->limit(0);
             
         if($id = $this->param("taskId")) {

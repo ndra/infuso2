@@ -69,7 +69,8 @@ class WorkFlow extends ActiveRecord\Record {
     public static function all() {
         return service("ar")
             ->collection(get_class())
-            ->desc("begin");
+            ->desc("begin")
+            ->addBehaviour("infuso\\board\\model\\workflowcollection");
     }
 
     /**
