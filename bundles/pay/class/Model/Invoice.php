@@ -157,9 +157,7 @@ class Invoice extends \Infuso\ActiveRecord\Record implements \Infuso\Core\Handle
         $class = 'Infuso\\Pay\\Vendor\\' . $driver;
 
         // Проверка на существование класса драйвера
-        if(!service("classmap")->testClass($class)) {
-            throw new \Exception("Несуществующий драйвер: " . $class);
-        }
+        // @todo сделать
 
         $driverUseonly = $this->data("driverUseonly");
         if ($driverUseonly && $driverUseonly != $driver) {

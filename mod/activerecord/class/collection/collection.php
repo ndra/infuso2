@@ -1057,7 +1057,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      * Если на коллекцию были наложены ограничения сравнения ->eq(),
      * то они будут учтены при заполнении полей объекта
      **/
-    public function virtual($p=null) {
+    public function virtual($p = null) {
 
         $this->callBeforeQuery();
         foreach($this->eqs as $key=>$val) {

@@ -43,8 +43,7 @@ class inspector {
 	    $ret = array();
        
         // Аннотации поведений
-        if(service("classmap")->testClass($this->className(), "infuso\\core\\component")) {
-        
+        if(is_subclass_of($this->className(), "infuso\\core\\component")) {         
             foreach(\Infuso\Core\BehaviourMap::getBehaviours($this->className(), array(), "") as $behaviour) {                        
                 $behaviour = new \ReflectionClass($behaviour);
         	    foreach($behaviour->getMethods() as $method) {
@@ -79,5 +78,20 @@ class inspector {
 	    return $ret;
 	
 	}
+    
+    public function todos() { 
+    
+        $ret = array();
+        $class = new \ReflectionClass($this->className());                              
+        foreach($class->getMethods() as $method) {
+	        $comments = $method->getDocComment();                    
+	        if(preg_match_all("/\*\s*\@todo\s*(.*)/iu", $comments, $matches, PREG_SET_ORDER )) {
+	            foreach($matches as $match) {                            
+	                $ret[$method->getName()].= trim($match[1]);
+	            }
+	        }
+	    }
+        return $ret;
+    }
 
 }

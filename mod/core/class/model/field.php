@@ -41,7 +41,7 @@ abstract class Field extends Core\Component {
 			Throw new \Exception("Bad field alias");
         }
 
-        if(service("classmap")->testClass($alias,"\\Infuso\\Core\\Model\\Field")) {
+        if(is_subclass_of($alias,"Infuso\\Core\\Model\\Field")) {
             return $alias;
         }
         

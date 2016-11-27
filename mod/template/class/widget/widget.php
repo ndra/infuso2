@@ -15,20 +15,11 @@ abstract class Widget extends Generic {
 	
     	$classmap = service("classmap");
     	
-    	if($classmap->testClass($name,Widget::inspector()->classname())) {
+    	if(is_subclass_of($name, Widget::inspector()->classname())) {
     	    return new $name;
     	}
     
     	$name = strtolower($name);
-
-    	/*foreach($classmap->classes(Widget::inspector()->classname()) as $class) {
-    	    if($class::inspector()->bundle()->path() == $current->bundle()->path()) {
-    	        $reflect = new \ReflectionClass($class);
-    			if (strtolower($reflect->getShortName()) === $name) {
-    			    return new $class;
-                }
-    	    }
-    	} */
     	
     	foreach($classmap->classes(Widget::inspector()->classname()) as $class) {
     	    if($class::alias() == $name) {

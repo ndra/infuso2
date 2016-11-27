@@ -14,92 +14,52 @@ class classmapService extends service {
 	    return "classmap";
 	}
 	
-    public static function serviceFactory() {
-
+    public static function serviceFactory() { 
         if(!self::$serviceInstance) {
 			self::$serviceInstance = new self;
 		}
-        return self::$serviceInstance;
-  
+        return self::$serviceInstance;  
     }
 	
+    /**
+     * Возвращает массив классов, расширяющих данные
+     * Если вызвать без параметра или с параметром = null, то вернет все классы
+     **/
 	public function classes($extends = null) {
 	    return $this->getClassesExtends($extends);
 	}
-	
-	public function map($extends = null) {
-	    return $this->getClassesExtends($extends);
-	}
+    
+   // public function map() {
+  //      return $this->classmap;
+  //  }
 	
 	/**
 	 * @return Возвращает список всех классов
 	 * @return Если указан параетр extends, возвращает список всех классов, расширяющих extends
 	 **/
-	public function getClassesExtends($extends=null) {
+	public function getClassesExtends($extends = null) {
 
 		$ret = self::classmap();
-		$ret = $ret["map"];
-
-		if(!$ret) {
-		    $ret = array();
-		}
-
-		if($extends) {
+		$ret = $ret["classes"];
 		
-		    $extends = strtolower($extends);
+	    $extends = strtolower($extends);
 
-		    if(!array_key_exists($extends,self::$extends)) {
-				self::$extends[$extends] = array();
-		        foreach($ret as $key=>$classProos) {
-		            if(in_array($extends,$classProos["p"]) && !$classProos["a"]) {
-		                self::$extends[$extends][] = $key;
-					}
+	    if(!array_key_exists($extends, self::$extends)) {
+			self::$extends[$extends] = array();
+	        foreach($ret as $key => $classProos) {
+	            if(!$extends || ($classProos["p"] && in_array($extends, $classProos["p"]) && !$classProos["a"])) {
+	                self::$extends[$extends][] = $key;
 				}
-		    }
+			}
+	    }
 
-		    return self::$extends[$extends];
-
-		}
-
-		return $ret;
+	    return self::$extends[$extends];
 	}
 	
 	private static function prepareClass($class) {
 	    $class = strtolower($class);
 	    $class = trim($class,"\\");
 	    return $class;
-	}
-	
-	public static function testClass($class,$extends=null) {
-	
-	    $class = self::prepareClass($class);
-	    $extends = self::prepareClass($extends);
-	    
-		if($class=="infuso\\core\\console" && $extends=="infuso\\core\\controller") {
-		    return true;
-        }
-
-	    $classes = self::classmap("map");
-	    if(!$classes) {
-	        return;
-        }
-        
-	    if($class=="infuso\\board\\collectionbehaviour") {
-	        echo "<pre>";
-	        var_export($classes);
-	    }
-
-		if(!array_key_exists($class."",$classes)) {
-			return false;
-        }
-
-		if($extends) {
-			if(!in_array($extends,$classes[$class]["p"]) && $extends!=$class) {
-			    return false;
-            }
-		}
-
-		return true;
 	}
 	
 	/**
@@ -113,7 +73,7 @@ class classmapService extends service {
 	
 	    // Пробуем использовать карту сайта
 	    $map = self::classmap();
-	    $path = $map["map"][$class]["f"];
+	    $path = $map["classes"][$class]["f"];
 	    
 		// Если не найдено, используем Reflection
 	    if(!$path && class_exists($class,false)) {
@@ -131,9 +91,9 @@ class classmapService extends service {
 	 * Возвращает массив карты классов
 	 * @todo не делать лишних проверок существования /var/classmap.php
 	 **/
- 	public static function &classmap($key=null) {
+ 	public static function &classmap($key = null) {
  	
- 	    profiler::beginOperation("mod","classmap load",null);
+ 	    profiler::beginOperation("mod", "classmap load", null);
  	
 		// Загружаем карту класса по требованию
 		if(self::$classmap === null) {
@@ -167,9 +127,8 @@ class classmapService extends service {
 	/**
 	 * Сохраняет карту сайта на диск
 	 **/
-	public function storeClassMap($map) {
-	    $this->setClassMap($map);
-	    file::get(self::classMapPath())->put("<"."? return ".var_export($map,1)."; ?".">");
+	public function store() {
+	    file::get(self::classMapPath())->put("<"."? return ".var_export(self::$classmap, 1)."; ?".">");
 	}
 	
 	private static $aliases = array(
@@ -225,7 +184,7 @@ class classmapService extends service {
 	
 	    $class = strtolower($class);
 	
-	    \Infuso\Core\Profiler::beginOperation("core","includeClass",$class);
+	    \Infuso\Core\Profiler::beginOperation("core", "includeClass", $class);
 	
 	    $class = strtolower($class);
 	
@@ -261,7 +220,7 @@ class classmapService extends service {
 			
 		}
 		
-		// регистрируем алиас файла
+		// Добавляем алиасы
 	    foreach(self::$aliases as $key => $val) {
 	        if($val == $class) {
 				class_alias($class,$key);

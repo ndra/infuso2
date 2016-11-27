@@ -56,23 +56,7 @@ class Bundle extends \Infuso\Core\Component {
 	    
 	    return false;
 	}
-	
-	/**
-	 * Возвращает список директорий, которые не нужно удалять при обновлении
-	 * Также в этих директориях не будет выполняться поиск вложенных бандлов
-	 **/
-	public function leave() {
-	
-		$ret = array();
-	    $conf = $this->conf();
-	    $leave = is_array($conf["leave"]) ? $conf["leave"] : array();
-	    foreach($leave as $folder) {
-			$ret[] = (string) file::get($this->path()."/".$folder);
-	    }
-	    return $ret;
-	    
-	}
-	
+
 	/**
 	 * Возвращает список публичных директорий бандла
 	 **/
@@ -93,14 +77,6 @@ class Bundle extends \Infuso\Core\Component {
 	 **/
 	public function classPath() {
 	    return file::get($this->path()."/class/");
-	}
-	
-	/**
-	 * Пакует классы бандла
-	 * @todo реализовать
-	 **/
-	public function packClasses() {
-	
 	}
 
 }

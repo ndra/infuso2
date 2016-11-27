@@ -49,19 +49,15 @@ class manager extends \infuso\core\service {
 	        $path2 = explode("/",$path);
 	        if(sizeof($path2) > 3) {
 	            return;
-	        }
+	        }  
 
             $bundle = $manager->bundle($path);
-			$leave = array();
 			if($bundle->exists()) {
 				$bundles[] = $bundle;
-				$leave = $bundle->leave();
 			}
 	    
 	        foreach(\infuso\core\file::get($path)->dir()->folders() as $folder) {
-				if(!in_array((string)$folder,$leave)) {
-				    $scan($folder);
-				}
+                $scan($folder);
 	        }
 	    
 	    };

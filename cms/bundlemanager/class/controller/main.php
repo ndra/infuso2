@@ -23,5 +23,9 @@ class Main extends Core\Controller {
 	public function index() {
 		app()->tm("/bundlemanager/main")->exec();
 	}
+    
+	public function index_todo() {
+		app()->tm("/bundlemanager/todo")->exec();
+	}
 
 }

@@ -27,7 +27,7 @@ class FieldType extends Select {
 
 	public function options($options = null) {
 	    $options = array();
-	    $classes = service("classmap")->map("infuso\\core\\model\\field");
+	    $classes = service("classmap")->classes("infuso\\core\\model\\field");
 	    foreach($classes as $class) {
 	        $field = new $class;
 	        $options[$field->typeId()] = $field->typeName();

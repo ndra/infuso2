@@ -33,7 +33,7 @@ class Service extends Core\Service {
 	
 	public static function getItemClass($class) {
 
-	    if(!Core\Mod::app()->service("classmap")->testClass($class,"reflex") && !Core\Mod::app()->service("classmap")->testClass($class,"infuso\\ActiveRecord\Record")) {
+	    if(!is_subclass_of($class, "infuso\\activeRecord\\record")) {
 			return "reflex_none";
 		}
 

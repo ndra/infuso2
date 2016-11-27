@@ -124,7 +124,7 @@ class Action extends Component {
      **/
     public function isCorrect() {
 
-        if(!app()->service("classmap")->testClass($this->className(),"infuso\\core\\controller")) {
+        if(!is_subclass_of($this->className(), "infuso\\core\\controller")) {
             return false;
 		}
 

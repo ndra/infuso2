@@ -3,7 +3,8 @@
 namespace Infuso\Core\Classmap;
 
 use infuso\core\file as file;
-use infuso\core\mod as mod;
+use infuso\core\mod as mod;  
+use \Infuso\Core;
 
 class Builder {
 
@@ -81,35 +82,34 @@ class Builder {
 						$ret["namespace"] = trim($ret["namespace"],"\\");
 						return $ret;
 				    }
-				    
 				    break;
 	        }
 	    }
 	}
-
-	/**
-	 * Возвращает список классов модуля
-	 * Сканирует все папки с классами, работает долго.
-	 * Поэтому вызывается только при релинке для того чтобы построить карту классов
-	 **/
-	private static function classMap($secondScan) {
-
+    
+    /**
+     * Шаг 1: Возвращает массив с классами
+     **/
+    private static function step1() {
+    
+        // Собираем эксклуды
 		$excludes = array();
 		foreach(file::get(self::excludePath())->dir() as $file) {
 		    $excludes[] = $file->basename();
 		}
 
-		$ret = array();
+		$map = array(
+            "classes" => array(),
+        );
 		
 		$bundles = service("bundle")->all();
 
 		foreach($bundles as $bundle) {
-		    foreach($bundle->classPath()->search() as $file)
-		        if($file->ext()=="php") {
+		    foreach($bundle->classPath()->search() as $file) {
+		        if($file->ext() == "php") {
 
 		            $descr = array(
 						"f" => $file->path(),
-						"p" => array(),
 					);
 
 					$info = self::getFileInfo($file->path());
@@ -125,49 +125,84 @@ class Builder {
 		        	
 		        	$class = strtolower($class);
 		        	
-		        	if(!preg_match("/[a-zA-Z0-9\_\/]/",$class)) {
+		        	if(!preg_match("/[a-zA-Z0-9\_\/]/", $class)) {
 						app()->msg("Class $class have strange symbols in it's name.",1);
 		        	}
 		        	    
-					if(array_key_exists($class,$ret) && !$secondScan) {
+					if(array_key_exists($class, $map["classes"])) {
 					    app()->msg("Duplicate file ".$file->path()." for class $class",1);
 					}
+                    
+	        	    // Предотвращаем фатальные ошибки при построении карты классов
+	        	    // Если при инклуде файла произошла ошибка, то второй раз этот файл не подключится
+	        	    // Пока не изменится его содержимое
+				    $hash = md5($file->data());
+				    if(in_array($hash, $excludes)) {
+				        app()->msg("File ".$file->path()." disabled due fatal error on previous relink",1);
+				        continue;
+					}
+                    
+                    $map["classes"][$class] = $descr;
+                }
+            }
+        }
+        
+        return $map;
+    
+    }
+    
+    /**
+     * Шаг 2: Учет информации о классе
+     **/
+    private static function step2() {
+        $map = self::step1();
+        service("classmap")->setClassMap($map);
+        foreach($map["classes"] as $class => &$descr) {
+        
+            $file = Core\File::get($descr["f"]);
+            $hash = md5($file->data());
+			file::mkdir(self::excludePath(), 1);
+			file::get(self::excludePath()."/$hash.txt")->put($file->path());
+			class_exists($class);
+			file::get(self::excludePath()."/$hash.txt")->delete();
 
-		        	if($secondScan) {
+        	// Отмечаем абстрактные классы
+			$reflection = new \ReflectionClass($class);
+			if($reflection->isAbstract() || $reflection->isInterface()) {
+				$descr["a"] = 1;
+            }
 
-		        	    // Предотвращаем фатальные ошибки при построении карты классов
-		        	    // Если при инклуде файла произошла ошибка, то второй раз этот файл не подключится
-		        	    // Пока не изменится его содержимое
-					    $hash = md5($file->data());
-					    if(in_array($hash,$excludes)) {
-					        app()->msg("File ".$file->path()." disabled due fatal error on previous relink",1);
-					        continue;
-						}
-						file::mkdir(self::excludePath(),1);
-						file::get(self::excludePath()."/$hash.txt")->put($file->path());
-						class_exists($class);
-						file::get(self::excludePath()."/$hash.txt")->delete();
+        	// Расчитываем родителей
+        	$parent = $class;
+        	while($parent) {
+        	    $parent = get_parent_class($parent);
+				if($parent) {
+					$descr["p"][] = strtolower($parent);
+                }
+        	}        
+        }
+        
+        return $map;
+    }
+    
+    private static function step3() {
+    
+        $map = self::step2();   
+        service("classmap")->setClassMap($map); 
+		$map["behaviours"] = self::defaultBehaviours();
+		$map["handlers"] = self::handlers();
+		$map["routes"] = self::getRoutes();
+		$map["services"] = self::services();
+		$map["fields"] = self::buildFields();
+		$map["controllers"] = self::buildControllers();
 
-			        	// Отмечаем абстрактные классы
-						$reflection = new \ReflectionClass($class);
-						if($reflection->isAbstract() || $reflection->isInterface())
-							$descr["a"] = 1;
+		// Сохраняем карту классов в памяти, чтобы использовать ее уже в этом запуске скрипта
+        service("classmap")->setClassMap($map);
+		service("classmap")->store();
 
-			        	// Расчитываем родителей
-			        	$parent = $class;
-			        	while($parent) {
-			        	    $parent = get_parent_class($parent);
-							if($parent)
-								$descr["p"][] = strtolower($parent);
-			        	}
-		        	}
-
-					$ret[$class] = $descr;
-
-				}
-			}
-		return $ret;
-	}
+		app()->msg("Карта классов построена");
+    
+    }    
 
 	/**
 	 * Функция возвращает поведения по умолчанию ввиде массива
@@ -194,7 +229,7 @@ class Builder {
 	 **/
 	public static function handlers() {
 		$handlers = array();
-		foreach(service("classmap")->classes() as $class=>$fuck) {
+		foreach(service("classmap")->classes() as $class) {
 			$r = new \ReflectionClass($class);
 			if($r->implementsInterface("Infuso\\Core\\Handler")) {
 			
@@ -236,7 +271,7 @@ class Builder {
 	 **/
 	public static function services() {
 		$services = array();
-		foreach(service("classmap")->classes() as $class=>$fuck) {
+		foreach(service("classmap")->classes() as $class) {
 			$r = new \ReflectionClass($class);
 			if($r->isSubclassOf("mod_service") && !$r->isAbstract()) {
 			    $item = new $class;
@@ -303,40 +338,7 @@ class Builder {
 	 * Строит карту классов
 	 **/
 	public static function buildClassMap() {
-	
-        // Это сделано чтобы избежать рекурсии
-        // Что-то внутри этого метода может дернуть его же
-        // Какая-то черная магия здесь
-	    if(self::$building) {
-	        return array();
-	    }
-	
-	    self::$building = true;
-	
-		$map = array();
-
-		// расчитываем карту классов в два шага
-		// На первом - просто собираем пути к файлам
-		// На втором - родителей
-		$map["map"] = self::classMap(false);
-			    
-		service("classmap")->setClassMap($map);
-		$map["map"] = self::classMap(true);
-		service("classmap")->setClassMap($map);
-		
-		$map["behaviours"] = self::defaultBehaviours();
-		$map["handlers"] = self::handlers();
-		$map["routes"] = self::getRoutes();
-		$map["services"] = self::services();
-		$map["fields"] = self::buildFields();
-		$map["controllers"] = self::buildControllers();
-
-		// Сохраняем карту классов в памяти, чтобы использовать ее уже в этом запуске скрипта
-		service("classmap")->storeClassMap($map);
-
-		app()->msg("Карта классов построена");
-		
-		self::$building = false;
+        self::step3();
 	}
 
 }
