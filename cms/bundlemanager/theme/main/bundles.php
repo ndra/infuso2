@@ -6,8 +6,8 @@
         <div class='node' data:id='' >        
             $icon = $this->bundle()->path()."/res/img/icons16/template.gif";
             <div class='body' >
-                <span class='expander' ></span>
-                <span class='name' ><b>{$bundle->path()}</b></span>
+                <div class='expander' ></div>
+                <div class='name' ><b>{$bundle->path()}</b></div>
             </div>
             <div class='subdivisions' >
             

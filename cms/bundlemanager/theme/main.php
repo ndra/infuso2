@@ -8,17 +8,17 @@ lib::sortable();
 js("http://cdn.jsdelivr.net/ace/1.1.3/min/ace.js");
     
     <div class='zdh71269gn' >
-        <div class='main center' >
-            <div class='tabs' style='height:100%;' >
-                <div class='tabs-head top' ></div>
-                <div class='tabs-container center' ></div>
+        <div class='main' >
+            <div class='tabs' >
+                <div class='tabs-head' ></div>
+                <div class='tabs-container' ></div>
             </div>
         </div>
         <div class='right' >
-            exec("bundles");
+            exec("2-right");
         </div>
         <div class='right' >
-            exec("2-right");
+            exec("bundles");
         </div>
     </table>
     

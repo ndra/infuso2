@@ -9,8 +9,8 @@ class Links extends View {
 	 * Должна вернуть объект шаблона для редактирования поля
 	 **/
 	public function template() {
-		$tmp = app()->tm("/reflex/fields/links");
-		$tmp->param("field", $this->field);
+		$tmp = app()->tm($this->field()->param("template") ?: "/reflex/fields/links");
+		$tmp->param("field", $this->field());
         $tmp->param("editor", $this->editor());
 		return $tmp;
 	}
@@ -22,9 +22,5 @@ class Links extends View {
 	public static function typeID() {
 	    return  "car3-mlid-mabj-mgi3-8aro";
 	}
-    
-    public function colWidth() {
-        return 100;
-    }
 
 }

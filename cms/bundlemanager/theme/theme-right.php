@@ -36,7 +36,7 @@
                 <span class='expander' ></span>
                 <span class='name' >/</span>
             </div>
-            <div class='subdivisions' style='display:block;' >
+            <div class='subdivisions' >
                 exec("nodes", array(
                     "template" => $theme->template("/"),
                 ));

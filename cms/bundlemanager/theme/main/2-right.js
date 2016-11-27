@@ -25,6 +25,8 @@ mod.init(".s1i95xmv40", function() {
         
         var $tab = $("<div>")
             .data("key", key)
+            .css("position", "relative")
+            .css("height", "100%")
             .html(html)
             .appendTo($container);
     }

@@ -8,13 +8,16 @@
         background-position: 20px 50%;
         cursor: pointer;
         white-space: nowrap;
+        display: flex;
     }
     
     .name {        
-        padding-left:22px;
+        padding-left: 22px;
+        padding-right: 5px;
+        flex: 1;
     }
 
-    .node:hover > .body > .name {
+    .name:hover {
         text-decoration: underline;        
     }
     
@@ -37,11 +40,13 @@
         width:10px;
         padding-left: 6px;
         cursor: pointer;
+        flex-shrink: 0;
     }
     
     .expander-spacer {
         display: inline-block;
-        width:16px;
+        width: 16px;
+        flex-shrink: 0;
     }
     
     .expander:before {
@@ -50,6 +55,18 @@
     
     .expanded > .body > .expander:before {
         content: "-" !important;
+    }
+    
+    .js {
+        color: red;
+        margin: 0 3px;
+        font-size: 11px;
+    }
+    
+    .css {
+        color: blue;
+        margin: 0 3px;
+        font-size: 11px;
     }
 
 }

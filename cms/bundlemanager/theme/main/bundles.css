@@ -1,6 +1,9 @@
 .erjk605ygl {
 
     padding: 10px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: auto;
     
     -webkit-user-select: none;
 
@@ -10,14 +13,14 @@
         background-position: 20px 50%;
         cursor: pointer;
         white-space: nowrap;
+        display: flex;
     }
     
-    .name {        
-        //padding-left:22px;
-        //background: red;
+    .name {
+        flex: 1;
     }
 
-    .node:hover > .body > .name {
+    .name:hover {
         text-decoration: underline;        
     }
     
@@ -37,14 +40,19 @@
     
     .expander {
         display: inline-block;
-        width:10px;
-        padding-left: 6px;
+        width: 10px;
+        padding: 0 4px;
         cursor: pointer;
+        text-align: center;
+        &:hover {
+            background: #ededed;
+            border-radius: 5px;
+        }
     }
     
     .expander-spacer {
         display: inline-block;
-        width:16px;
+        width: 18px;
     }
     
     .expander:before {

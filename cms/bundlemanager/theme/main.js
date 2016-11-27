@@ -8,8 +8,6 @@ mod.init(".zdh71269gn", function() {
             height: h
         });
         
-        $(".zdh71269gn").layout("update");
-    
     }
     
     var $container = $(this);
@@ -18,16 +16,12 @@ mod.init(".zdh71269gn", function() {
     setInterval(updateHeight,1000);
     $(window).resize(updateHeight);
     
-    $(".zdh71269gn").layout();
-    $(".zdh71269gn .tabs").layout();
-    
     // F1 Разворачивает-сворачивает правую панель
     
     $(window).keydown(function(e) {
         if(e.which == 112) {
             $(".zdh71269gn .right").toggle();
             e.preventDefault();
-            $(".zdh71269gn").layout();
         }
     });
     
@@ -43,8 +37,9 @@ mod.init(".zdh71269gn", function() {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     
-        for( var i=0; i < 10; i++ )
+        for( var i=0; i < 10; i++ ) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
     
         return text;
     }
@@ -75,8 +70,6 @@ mod.init(".zdh71269gn", function() {
                 }).dblclick(function() {
                     removeTab($tab);
                 });
-                
-                
                 
             // Закрывалка табы
             $("<span>")
@@ -125,8 +118,7 @@ mod.init(".zdh71269gn", function() {
                 $e.remove();
             }
         });
-        
-        $(".zdh71269gn").layout("update");        
+             
     };
     
     // Активирует табу
@@ -155,8 +147,6 @@ mod.init(".zdh71269gn", function() {
             }
         });
         
-        $(".zdh71269gn").layout("update");
-        
     }
    
     $container.on("bundlemanager/openFile", function(event) {                
@@ -182,13 +172,14 @@ mod.init(".zdh71269gn", function() {
         });        
     });
 	
-	//Окно предупреждения выхода/обновления страницы
+	// Окно предупреждения выхода/обновления страницы
 	window.onbeforeunload = function(e) {
         var msg = 'false';
         if(typeof e == "undefined")
             e = window.event;
-        if(e)
+        if(e) {
             e.returnValue = msg;
+        }
         return msg;
     }
 

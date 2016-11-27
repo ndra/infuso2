@@ -21,9 +21,5 @@ class NumberView extends View {
 	public static function typeID() {
 		return "gklv-0ijh-uh7g-7fhu-4jtg";
 	}
-    
-    public function colWidth() {
-        return 50;
-    }
 
 }

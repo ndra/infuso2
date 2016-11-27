@@ -3,45 +3,62 @@ html, body {
 }
 
 .zdh71269gn {
-
-    & > .main > .tabs > .tabs-head {
     
-        background: #ededed;
-        padding: 10px;
+    display: flex;
+    
+    & > .main {
         
-        & > div {
-            display: inline-block;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-        
-        & > .active {
-            font-weight: bold;
-        }
-        
-        .label {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+        height: 100%;
 
-        }
-        
-        .label:hover {
-            text-decoration: underline;
-        }
-        
-        .close {
-            margin-left:5px;
-            padding: 2px 4px;
-            border-radius: 2px;
-            &:hover {
-                background: #ccc;
+        & > .tabs {
+            
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+                    
+            & > .tabs-head {
+    
+                background: #ededed;
+                padding: 10px;
+                
+                & > div {
+                    display: inline-block;
+                    margin-right: 10px;
+                    cursor: pointer;
+                }
+                
+                & > .active {
+                    font-weight: bold;
+                }
+                
+                .label:hover {
+                    text-decoration: underline;
+                }
+                
+                .close {
+                    margin-left:5px;
+                    padding: 2px 4px;
+                    border-radius: 2px;
+                    &:hover {
+                        background: #ccc;
+                    }
+                }
+            }
+            
+            & > .tabs-container {
+                flex: 1;
             }
         }
-        
     }
     
     & > .right {
         width: 250px;
         border-left: 1px solid #ccc;
-        overflow: auto;
+        position: relative;
+        overflow: hidden;
     }    
 
 }

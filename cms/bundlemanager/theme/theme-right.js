@@ -8,6 +8,8 @@ mod.init(".mwf8wqyh3i", function() {
             cmd: "infuso/cms/bundlemanager/controller/theme/list"
         }
     });
+    
+    $container.find(".node:first").trigger("expand");
         
     $container.list({
         selechHandle: ".body"

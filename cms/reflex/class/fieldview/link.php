@@ -22,9 +22,5 @@ class Link extends View {
 	public static function typeID() {
 	    return "pg03-cv07-y16t-kli7-fe6x";
 	}
-    
-    public function colWidth() {
-        return 50;
-    }
 
 }

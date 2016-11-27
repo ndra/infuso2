@@ -14,7 +14,15 @@ $templates = $template->children();
                 } else {
                     <span class='expander-spacer' ></span>
                 }
-                <span class='name' >{$template->lastName()}</span>
+                <span class='name' >
+                    echo $template->lastName();
+                </span>
+                if(trim($template->contents("js"))) {
+                    <div class='js' >js</div>
+                }
+                if(trim($template->contents("css"))) {
+                    <div class='css' >css</div>
+                }
             </div>
             <div class='subdivisions' >
                 // ajax here

@@ -39,6 +39,10 @@ jQuery.fn.tree = function(params) {
         event.stopPropagation();
     });
     
+    /**
+     * Загружает контент ноды
+     * если задан параметр loader
+     **/
     $tree.on("refresh", function(event) {
         event.stopPropagation();
         $node = node(event.target);

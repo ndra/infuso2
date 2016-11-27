@@ -1,5 +1,10 @@
 .mwf8wqyh3i {
     
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    
     .toolbar {
         padding: 5px;
         background: #ededed;
@@ -7,6 +12,8 @@
     
     .files {
         padding: 20px;
+        flex: 1;
+        overflow: auto;
     }
     
 }
