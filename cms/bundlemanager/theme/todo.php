@@ -2,16 +2,31 @@
 
 admin::header();
 
+$classes = service("classmap")->classes();
+
 <div class='PLzFEdbQNb' >
     foreach(service("bundle")->all() as $bundle) {
-        <h2>{$bundle->path()}</h2>
-        /*foreach($bundle->classpath()->dir() as $class) {
-            $inspector = new \Infuso\Core\Inspector($class);
-            <div>{var_export($inspector->todos())}</div>
-        } */
+
+        $bundlePath = (string) $bundle->classPath();
+        ob_start();
+        foreach($classes as $class) {
+            $path = (string)service("classmap")->classPath($class);
+            if (strpos($path, $bundlePath) === 0) {
+                $inspector = new \Infuso\Core\Inspector($class);
+                $todos = $inspector->todos();
+                if(sizeof($todos)) {
+                    foreach($todos as $method => $todo) {
+                        <div><b>{$class}::{$method}()</b> $todo</div>
+                    }
+                }
+            }
+        }
+        $html = ob_get_clean();
         
-        $classes = service("classmap")->classes();
-        var_export($classes);
+        if($html) {
+            <h2>{$bundle->path()}</h2>            
+            echo $html;
+        }
         
     }
 </div>

@@ -84,12 +84,14 @@ class inspector {
         $ret = array();
         $class = new \ReflectionClass($this->className());                              
         foreach($class->getMethods() as $method) {
-	        $comments = $method->getDocComment();                    
-	        if(preg_match_all("/\*\s*\@todo\s*(.*)/iu", $comments, $matches, PREG_SET_ORDER )) {
-	            foreach($matches as $match) {                            
-	                $ret[$method->getName()].= trim($match[1]);
-	            }
-	        }
+            if(strtolower($method->getDeclaringClass()->getName()) == strtolower($this->className())) {
+    	        $comments = $method->getDocComment();                    
+    	        if(preg_match_all("/\*\s*\@todo\s*(.*)/iu", $comments, $matches, PREG_SET_ORDER )) {
+    	            foreach($matches as $match) {                            
+    	                $ret[$method->getName()].= trim($match[1]);
+    	            }
+    	        }
+            }
 	    }
         return $ret;
     }
