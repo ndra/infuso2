@@ -42,7 +42,7 @@ class SyncServer extends \Infuso\Core\Controller {
         
         $startTime = time();
 
-        if(service("classmap")->testClass($class)) {
+        if(class_exists($class)) {
 
             $items = service("ar")
                 ->collection($class)

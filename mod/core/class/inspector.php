@@ -79,6 +79,10 @@ class inspector {
 	
 	}
     
+    /**
+     * Возвращает массив @todo для всех методов класса
+     * массив вида method => todo
+     **/
     public function todos() { 
     
         $ret = array();
