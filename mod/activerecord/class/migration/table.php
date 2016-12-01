@@ -107,8 +107,9 @@ class Table {
         // Проверяем таблицу на наличие дублирующихся полей
         $names = array();
         foreach($this->fields() as $field) {
+        
             if(in_array($field->name(),$names)) {
-                throw new \Exception("Duplicate field name <b>{$field->name()}</b> in table <b>{$this->table()->name()}</b>",1);
+                throw new \Exception("Duplicate field name <b>{$field->name()}</b> in table <b>{$this->tableName()}</b>",1);
             }
             $names[] = $field->name();
         }
@@ -164,13 +165,6 @@ class Table {
             app()->msg("change row format");
         }
     }*/
-
-    /**
-     * Возвращает таблицу (она передавалась в конструктор)
-     **/
-    public function table() {
-        return $this->table;
-    }
 
     public function needType($field) {
 
