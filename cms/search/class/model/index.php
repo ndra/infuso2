@@ -19,20 +19,30 @@ class Index extends \Infuso\ActiveRecord\Record {
 				), array (
 					'name' => 'key',
 					'type' => 'textfield',
+                    "editable" => 2,
                     'length' => 80,
+                    "label" => "Ключ",
 				), array (
 					'name' => 'content',
 					'type' => 'textarea',
+                    "editable" => 2,
+                    "label" => "Контент",
 				), array (
 					'name' => 'priority',
 					'type' => 'bigint',
+                    "editable" => 2,
+                    "label" => "Приоритет",
 				), array (
 					'name' => 'datetime',
 					'type' => 'datetime',
+                    "editable" => 2,
+                    "label" => "Дата и время",
 				),  array (
 					'name' => 'cycle',
 					'type' => 'string',
                     'length' => 40,
+                    "editable" => 2,
+                    "label" => "Цикл",
 				),
 			),
 		);

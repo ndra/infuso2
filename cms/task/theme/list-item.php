@@ -13,6 +13,8 @@ $item = $editor->item();
         <div class='error' >Ошибки: {$n}</div>
     }
     
+    exec("timeline");
+    
     <div class='crontab' >{$item->data("crontab")}</div>
     <div class='iterator' title='Итерация' >{$item->data("iterator")}</div>
     <div class='counter' title='Выполнено раз' >{$item->data("counter")}</div>

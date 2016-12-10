@@ -1,0 +1,12 @@
+.qGloactNf0 {
+    
+    width: 120px;
+    position: relative;
+    
+    .column {
+        width: 100% / 24 + .5%;
+        background: gray;
+        position: absolute;
+    }
+    
+}

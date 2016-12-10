@@ -58,6 +58,9 @@ class Handler implements Core\Handler {
         ));
     }
     
+    /**
+     * Итерация поиска
+     **/
     public static function index($params, $task) {
     
         $classes = self::classes();
@@ -73,6 +76,7 @@ class Handler implements Core\Handler {
         
         $item = service("ar")
             ->collection($class)
+            ->asc("id")
             ->gt("id", $fromId)
             ->one();
             

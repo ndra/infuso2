@@ -97,8 +97,12 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 					'name' => 'title',
 					'type' => 'textfield',
 					'editable' => '1',
-					'label' => 'Название',
-                    
+					'label' => 'Название',                       
+				), array (
+					'name' => 'log',
+					'type' => 'array',
+					'editable' => '2',
+					'label' => 'Лог запуска',                       
 				),
 			),
 		);
@@ -162,12 +166,15 @@ class Task extends ActiveRecord\Record implements Core\Handler {
     }
     
     /**
-     * ВОзвращает количество раз, которое задача была выполнена
+     * Возвращает количество раз, которое задача была выполнена
      **/
     public function counter() {
         return $this->data("counter");
     }
     
+    /**
+     * Блокирует выполнение задания на заданное количество секунд
+     **/
     public function suspend($sec) {
         $this->data("suspendTill", \Infuso\Util\Util::now()->shift($sec));
         return $this;
@@ -243,6 +250,31 @@ class Task extends ActiveRecord\Record implements Core\Handler {
         return false;
 
     }
+    
+    public function registerCall() {
+    
+        // Отмечаем время последнего запуска
+		$this->data("called", \util::now());
+        
+        // Увеличиваем счетчик выполнения
+        $this->data("counter", $this->data("counter") + 1);
+
+        // Закрываем одноразовую задачу
+        if($this->oneTime()) {
+            $this->data("completed",true);
+        }
+        
+        $log = $this->pdata("log");
+        $stamp = \Infuso\Core\Date::now()->hours(0)->minutes(0)->seconds(0)->stamp();
+        $log[$stamp] ++;
+        // Обрезаем лог, чтобы было только 24 часа
+        array_slice($log, -24, 24, true);
+        $this->data("log", $log);
+
+        // Сохраняемся на всякий случай
+        $this->store();
+    
+    }
 
 	/**
 	 * Выполняет данную задачу
@@ -253,13 +285,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
     
         try {
         
-			$this->data("called", \util::now());
-
-            if($this->oneTime()) {
-                $this->data("completed",true);
-            }
-
-            $this->store();
+            $this->registerCall();
 
 	        $method = $this->method();
 	        $class = $this->className();
@@ -274,7 +300,6 @@ class Task extends ActiveRecord\Record implements Core\Handler {
 	        
 	        call_user_func($callback, $params, $this);
 
-			$this->data("counter",$this->data("counter") + 1);
 	        
 		} catch (\Exception $ex) {
 
