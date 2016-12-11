@@ -93,9 +93,9 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     /**
      * Присоединяет к коллекции другую коллекцию или таблицу
      **/
-    public function join($class, $a=null, $b=null) {
+    public function join($class, $a = null, $b = null) {
 
-        if(is_string($class) && preg_match("/^field\:(.*)/",$class,$matches)) {
+        if(is_string($class) && preg_match("/^field\:(.*)/", $class, $matches)) {
             $this->joinByField($matches[1]);
             return $this;
         }
@@ -104,7 +104,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             $class = $class->itemClass();
         }
 
-        if(func_num_args()==2) {
+        if(func_num_args() == 2) {
 
             $this->listJoins[] = array (
                 "class" => $class,
@@ -129,14 +129,14 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
     public function leftJoin() {
         $args = func_get_args();
-        $ret = call_user_func_array(array($this,"join"),$args);
+        $ret = call_user_func_array(array($this, "join"), $args);
         $this->setJoinType("left join");
         return $ret;
     }
 
     public function rightJoin() {
         $args = func_get_args();
-        $ret = call_user_func_array(array($this,"join"),$args);
+        $ret = call_user_func_array(array($this, "join"), $args);
         $this->setJoinType("right join");
         return $ret;
     }
@@ -146,11 +146,11 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
      **/
     public function joinList() {
         $args = func_get_args();
-        return call_user_func_array(array($this,"join"),$args);
+        return call_user_func_array(array($this, "join"), $args);
     }
 
     public function setJoinType($type) {
-        $last = sizeof($this->listJoins)-1;
+        $last = sizeof($this->listJoins) - 1;
         $this->listJoins[$last]["type"] = $type;
         return $this;
     }
@@ -189,7 +189,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
             return $this;
         }
         
-        $this->param("fieldJoin-".$name,true);
+        $this->param("fieldJoin-".$name, true);
 
         $class = $field->itemClass();
         $list = service("ar")->collection($class);
@@ -285,11 +285,11 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         $items = $this->select($this->what());
 
         foreach($items as $data) {
-            $this->items[] = service("ar")->get($this->itemClass(),$data["id"],$data);
+            $this->items[] = service("ar")->get($this->itemClass(), $data["id"], $data);
         }
 
         if($this->priorityArray) {
-            usort($this->items,array($this,"sortItemsUsingArray"));
+            usort($this->items, array($this,"sortItemsUsingArray"));
         }
     }
     
@@ -584,7 +584,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         return $this;
     }
 
-    public function match($key,$val) {
+    public function match($key, $val) {
         $this->unload();
         $key = $this->normalizeColName($key);
         if(is_array($val)) {

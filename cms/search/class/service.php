@@ -21,8 +21,13 @@ class Service extends Core\Service {
             );
         }
         
+        // Если отсутствует контент для поиска - выходим
+        if(!$params["content"]) {
+            return;
+        }
+        
         $key = get_class($record).":".$record->id();
-        $index = Model\Index::all()->eq("key",$key)->one();
+        $index = Model\Index::all()->eq("key", $key)->one();
         
         $data = array(
             "content" => $params["content"],
@@ -47,7 +52,7 @@ class Service extends Core\Service {
     }
     
     public function query($query) {
-        return Model\Index::all()->match("content", $query);
+        return Model\Index::all()->match("content", '"'.$query.'"');
     }
 
 }

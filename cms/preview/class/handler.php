@@ -17,7 +17,7 @@ class Handler implements \Infuso\Core\Handler {
     }
     
     /**
-     * @todo Что произойдет, когда iterator превысит 256?
+     * Очишает одну папку с превьюшками
      **/
     public static function cleanupStep($params, $task) {
     
@@ -44,6 +44,7 @@ class Handler implements \Infuso\Core\Handler {
         
         // Обновляем задачу   
         $task->data("iterator", $task->data("iterator") + 1);
+        $task->data("title", "Очистка превьюшек (".$path.")");
     }
 
 }

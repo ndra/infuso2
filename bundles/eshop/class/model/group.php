@@ -126,7 +126,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
                 ->collection(Item::inspector()->className())
     			->asc("priority")
                 ->eqMaterializedPath("groupsId",$this->id());
-        }else{
+        } else {
            return service("ar")
                 ->collection(Item::inspector()->className())
     			->asc("priority")
@@ -159,7 +159,7 @@ class Group extends \Infuso\ActiveRecord\Record implements \Infuso\Cms\Search\Se
          //если в настройках указана мультигруппа
         if(self::multigroupMode()){
             return Item::all()->eqMaterializedPath("groupsId", $id); 
-        }else{
+        } else {
             return Item::all()->eq("groupId", $id); 
         }
         
