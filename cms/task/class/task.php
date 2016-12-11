@@ -265,7 +265,7 @@ class Task extends ActiveRecord\Record implements Core\Handler {
         }
         
         $log = $this->pdata("log");
-        $stamp = \Infuso\Core\Date::now()->hours(0)->minutes(0)->seconds(0)->stamp();
+        $stamp = \Infuso\Core\Date::now()->minutes(0)->seconds(0)->stamp();
         $log[$stamp] ++;
         // Обрезаем лог, чтобы было только 24 часа
         array_slice($log, -24, 24, true);
