@@ -72,6 +72,8 @@ class Service extends Core\Service {
     
     /**
      * Процессор виджетов
+     * @todo может быть стоит записывать ошибки виджетов в лог
+     * @todo может быть стоит делать это в зависимости от настроек (записывать / не записывать)
      **/
      public static function processorWidget($html) {
 
@@ -120,16 +122,15 @@ class Service extends Core\Service {
          //Пишем в лог об ошибке
          //И добавляем все уровни >0 в вывод
          if ($level > 0) {
-             \mod::trace("Ошибка в разборе Виджетов, в данном коде: \n"
-                 . $html
-                 . "\n\n"
-             );
 
              while ($level > 0) {
                  $content[0] .= $content[$level];
                  unset($content[$level]);
                  $level--;
              }
+             
+             $content[0] = "<div style='border: 10px solid red; padding: 10px;margin-bottom: 10px;' >Ошибка разбора виджетов! Тэг &lt;widget&gt; не закрыт!</div>".$content[0];
+             
          }
 
          //Таким образом весь результат находиться на 0 уровне
