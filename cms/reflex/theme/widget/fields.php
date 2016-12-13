@@ -1,6 +1,6 @@
-<? 
+<?
 
-foreach($editor->item()->fields() as $field) {
+foreach($fields as $field) {
     if($field->visible() || $field->editable()) {
        
         $view = \Infuso\Cms\Reflex\FieldView\View::get($field);
@@ -12,4 +12,4 @@ foreach($editor->item()->fields() as $field) {
         ))->exec();		
         
     }
-}   
+}

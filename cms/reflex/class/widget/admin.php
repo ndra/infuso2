@@ -1,12 +1,12 @@
 <?
 
-namespace Infuso\Cms\Reflex;
+namespace Infuso\Cms\Reflex\Widget;
 use Infuso\Core;
 
 /**
- * Виджет меню для интернет-магазина
+ * Виджет меню для каталога
  **/
-class adminWidget extends \Infuso\Cms\Admin\Widgets\Widget {
+class Admin extends \Infuso\Cms\Admin\Widgets\Widget {
 
 	public function test() {
 		return true;

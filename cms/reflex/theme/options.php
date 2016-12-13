@@ -6,15 +6,16 @@ $editor = $collection->editor();
 
     <div class='top' >
 
-        foreach($editor->fields() as $field) {
-            if($field->field()->visible()) {
+        foreach($editor->item()->fields() as $field) {
+            if($field->visible()) {
                 <div class='filter-item' >
                     <div class='left' >
-                        echo $field->field()->label();
+                        echo $field->label();
                     </div>
                     <div class='right' >
-                        $field->filterTemplate()
-                            ->param("value", $filters[$field->field()->name()])
+                        $view = \Infuso\CMS\Reflex\FieldView\View::get($field);
+                        $view->filterTemplate()
+                            ->param("value", $filters[$field->name()])
                             ->exec();
                     </div>
                 </div>

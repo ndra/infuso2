@@ -373,24 +373,16 @@ abstract class Editor extends Core\Controller {
      * Возвращает шаблон формы редактирования элемента
      **/
     public function templateEditForm() {
-		return app()->tm("/reflex/editor/content/fields/form")->param("editor",$this);
+		//return app()->tm("/reflex/editor/content/fields/form")->param("editor",$this);
+        $widget = new \Infuso\CMS\Reflex\Widget\Fields();
+        $fields = $this->item()->fields();
+        $widget->fields($fields);
+        $widget->editor($this);
+        return $widget;
     }
     
     public function templateEditBeforeForm() {
         return app()->tm("/reflex/noop");
-    }
-    
-    /**
-     * Возвращает массив объектов fieldView - представлений полей
-     **/         
-    public function fields() {
-    
-        $fields = array();
-        foreach($this->item()->fields() as $field) {
-            $fields[] = FieldView\View::get($field);
-        }
-        return $fields;
-                                        
     }
     
     public function _metaEnabled() {
@@ -400,14 +392,6 @@ abstract class Editor extends Core\Controller {
     public function logEnabled() {
         return true;
     }
-    
-    /*public function setMeta($p) {
-        $this->item()->plugin("meta")->metaObject()->setData($p);
-    }
-    
-    public function deleteMeta() {
-        $this->item()->plugin("meta")->metaObject()->delete();
-    } */
     
     public function filters($collection) {
         return array (
