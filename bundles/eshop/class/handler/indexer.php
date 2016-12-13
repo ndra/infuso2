@@ -38,7 +38,7 @@ class Indexer implements Core\Handler {
     public static function iteratorSpeedMode() {
         $speed = service("conf")->get("components", "infuso\\eshop\\handler\\indexer", "speed");
         
-        if(!$speed){
+        if(!$speed) {
             $speed = 10;    
         }
         

@@ -6,7 +6,7 @@ $item = $editor->item();
 
     <table>
         <tr>
-            <td class='message' >{e($item->data('message'))}</td>
+            <td class='message' >{e(\Infuso\Util\Util::str($item->data('message'))->ellipsis(150))}</td>
             <td class='user' >{e($item->pdata('user')->title())}</td>
             <td class='item' >
                 if($item->data("index")) {
