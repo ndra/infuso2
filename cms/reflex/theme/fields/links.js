@@ -27,6 +27,7 @@ mod.init(".QWQ2cWdbx", function() {
             var val = $input.val();
             val += " " + event.itemID;
             $input.val(val);
+            $container.trigger("change");
             load();
         });
     });
@@ -37,7 +38,13 @@ mod.init(".QWQ2cWdbx", function() {
             val.push($(this).attr("data:id"));
         });
         $input.val(val.join(" "));
+        $container.trigger("change");
         
+        // Черная магия
+        // Если val == 0, значит див с элементами пуст
+        // Это случится если мы удалим все элементы
+        // В этом случае нужно показать текст о том что список пуст
+        // Вот мы и дергаем функцию load()
         if(val.length == 0) {
             load();
         }
