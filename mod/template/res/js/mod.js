@@ -446,5 +446,27 @@ if(!window.mod) {
             }
         });
     }, 300);
+    
+    /**
+     * Вызывает отложенную функцию
+     **/
+    mod.delay = function(fn, delay) {
+    
+        if(fn.timer) {
+            return;
+        }
+        
+        if(!delay) {
+            delay = 1000;
+        }
+        
+        fn.timer = true;
+        
+        setTimeout(function() {
+            fn();
+            fn.timer = null;
+        }, delay);
+    
+    }
 
 }
