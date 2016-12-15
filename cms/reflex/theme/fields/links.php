@@ -12,6 +12,6 @@
         <td>
             <input type='hidden' name='{$field->name()}' value='{e($field->value())}'/>
         </td>
-    </td>
+    </tr>
     
 </table>

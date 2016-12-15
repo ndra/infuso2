@@ -27,7 +27,7 @@ mod.init(".QWQ2cWdbx", function() {
             var val = $input.val();
             val += " " + event.itemID;
             $input.val(val);
-            $container.trigger("change");
+            $input.trigger("change");
             load();
         });
     });
@@ -38,7 +38,7 @@ mod.init(".QWQ2cWdbx", function() {
             val.push($(this).attr("data:id"));
         });
         $input.val(val.join(" "));
-        $container.trigger("change");
+        $input.trigger("change");
         
         // Черная магия
         // Если val == 0, значит див с элементами пуст
