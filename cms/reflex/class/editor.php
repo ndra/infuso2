@@ -93,9 +93,9 @@ abstract class Editor extends Core\Controller {
     
     public function _fileField() {
         // перебираем поля до первого поля типа файл
-        foreach($this->fields() as $field) {
+        foreach($this->item()->fields() as $field) {
             if($field->typeID() == "knh9-0kgy-csg9-1nv8-7go9") {
-                return $field->field()->name();
+                return $field->name();
             }
         }
     }
