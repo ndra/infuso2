@@ -3,7 +3,7 @@
 <div class='x15OtxtOxFL' >
 
     foreach($field->options() as $key => $val) {
-        <span style='white-space: nowrap;' >
+        <span style='white-space: nowrap; display: inline-block;' >
             $id = "x".\infuso\util\util::id();
             $inject = $field->isOptionSelected($key) ? "checked" : "";
             <input id='{$id}' type='checkbox' data:key='{e($key)}' $inject />
