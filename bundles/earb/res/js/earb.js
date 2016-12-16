@@ -10,18 +10,8 @@ window.earb = function(params) {
     var earb = this;   
 
     this.audioContext = new window.AudioContext();    
-        
-    this.soundEnabled = true;
-
-    this.frames = [];
     
     var tick32 = 0;
-    
-    var scale = window.earb.scales.minor(0);
-    
-    this.channels = [];
-    
-    var interval = null;
 
     this.frame = function(time, callback) {
         this.frames[time] = callback;
@@ -42,6 +32,7 @@ window.earb = function(params) {
         if(tick32 % n == 0 ) {
             earb.handleBar(timeEvent);
         }
+        
         if(tick32 % (32 / earb.params.timeSignature[1]) == 0 ) {
             // Доля. Пока ничего не делаем с этим                    
         }
@@ -173,6 +164,7 @@ earb.createScales = function() {
         createScale(name, scaleSchemes[name]);
     }
 };
+
 earb.createScales();
 
 // ----------------------------------------------------------------------------- Утилиты
@@ -190,24 +182,13 @@ earb.extend = function(obj, extend) {
     return obj;
 }
 
-earb.makeListener = function(obj) {
+earb.dragndrop = function($e) {
 
-    obj.handlers = {};
+    $e = $($e);
 
-    obj.on = function(event, fn) {
-        if(!obj.handlers[event]) {
-            obj.handlers[event] = [];
-        }
-        obj.handlers[event].push(fn);
-    }
-    
-    obj.fire = function(event, params) {
-        if(obj.handlers[event]) {
-            for(var i in obj.handlers[event]) {
-                obj.handlers[event][i](params);
-            }
-        }
-    }
+    $e.mousedown(function() {
+        mod.msg("down");
+    });
 
 }
 

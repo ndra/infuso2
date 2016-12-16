@@ -6,7 +6,7 @@ earb.channel = function(song, channelParams) {
     
     var pattern;
 
-    // Объект инструмента    
+    // Объект песни    
     Object.defineProperty(this, "song", {      
         get: function() {
             return song;
@@ -75,7 +75,7 @@ earb.channel = function(song, channelParams) {
     }
     
     this.handleBar = function() {
-        this.clearVoices();
+        //this.clearVoices();
     }
     
     // Убрать этот метод

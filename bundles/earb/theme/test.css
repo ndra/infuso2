@@ -1,0 +1,37 @@
+.nRjkjN8GAn {
+    
+    & > .header {
+        
+        padding: 20px;
+        color: white;
+        background: #333;
+        
+        & > .add {
+            cursor: pointer;
+        }
+        
+    }
+    
+    & > .content {
+        
+        position: relative;
+        
+        & > .nodes {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        & > .links {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,0,0,.3);
+            pointer-events: none;
+        }
+        
+    }
+    
+}
