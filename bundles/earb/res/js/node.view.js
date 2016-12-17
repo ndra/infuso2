@@ -4,25 +4,21 @@ earb.Node.View = class extends earb.Base {
     
         super(params);
             
-        this.on("param/x", function(event) {
-        
-            event.value = Math.round(event.value) || 0;
-            
-            console.log("xxxx" + event.value);
-        
+        this.on("param/x", function(event) {         
+            event.value = Math.round(event.value) || 0;        
             if(!this.$container) {
                 return;
             }              
             this.$container.css("left", event.value * 50);
+            this.node.song.fire("node/move");
         });
-        this.on("param/y", function(event) {
-        
-            event.value = Math.round(event.value) || 0;
-        
+        this.on("param/y", function(event) {                  
+            event.value = Math.round(event.value) || 0;          
             if(!this.$container) {
                 return;
             }
             this.$container.css("top", event.value * 50);
+            this.node.song.fire("node/move");
         });
         this.on("param/width", function(event) {
             if(!this.$container) {
@@ -34,8 +30,11 @@ earb.Node.View = class extends earb.Base {
             if(!this.$container) {
                 return;
             }
-            this.$container.css("height", event.value * 50);
+            this.$container.css("height", event.value * 50);            
         }); 
+        
+        this.inElements = {};
+        this.outElements = {};
                
     }
     
@@ -94,7 +93,8 @@ earb.Node.View = class extends earb.Base {
         params = earb.extend({
             left: 0,
             top: 0,
-            label: ""
+            label: "",
+            port: "default"
         }, params);
     
         var $e = $("<div>")
@@ -111,13 +111,27 @@ earb.Node.View = class extends earb.Base {
             .css("height", 10)
             .css("background", "green")
             .css("border-radius", 5)
+            .attr("title", params.label)
             .appendTo($e);
+            
+        var view = this;
             
         $circle.on("mod/drop", function(event) {
             var id = event.dragElement.data("out/id");
-            this.node.connectTo(id);
+            view.node.song.createLink({
+                from: id,
+                fromPort: event.dragElement.data("out/port"),
+                to: view.node.params.id,
+                toPort: params.port,
+            });
         });
+        
+        this.inElements[params.port] = $circle;
     
+    }
+    
+    getInElement(port) {
+        return this.inElements[port];
     }
     
     addOut(params) {
@@ -125,7 +139,8 @@ earb.Node.View = class extends earb.Base {
         params = earb.extend({
             left: 0,
             top: 0,
-            label: ""
+            label: "",
+            port: "default"
         }, params);
         
         var $e = $("<div>")
@@ -143,10 +158,18 @@ earb.Node.View = class extends earb.Base {
             .css("background", "blue")
             .css("border-radius", 5)
             .data("out/id", this.node.params.id)
+            .data("out/port", params.port)
+            .attr("title", params.label)
             .appendTo($e);
             
         earb.dragndrop($circle);
         
+        this.outElements[params.port] = $circle;
+        
+    }
+    
+    getOutElement(port) {
+        return this.outElements[port];
     }
 
 }

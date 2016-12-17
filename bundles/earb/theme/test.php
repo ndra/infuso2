@@ -33,7 +33,7 @@ js($this->bundle()->path()."/res/js/node.gain.generator.js"); */
     </div>
     <div class='content' >
         <div class='nodes' ></div>
-       // <div class='links' ></div>
+        <canvas class='links' width='500' height='500' ></canvas>
     </div>
 </div>
 

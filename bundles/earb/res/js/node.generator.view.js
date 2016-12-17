@@ -1,19 +1,30 @@
 earb.Node.Generator.View = class extends earb.Node.View {      
    
-    renderContent() {
-        // Добавляем вход
+    renderContent() {  
+    
         this.addIn({
+            label: "Гейн",
+            port: "gain",
             left: 10,
-            top: 20
-        });   
+            top: 10
+        }); 
         
-        // Добавляем вход
+        this.addIn({
+            label: "Частота",
+            port: "freq",
+            left: 10,
+            top: 30
+        }); 
+        
+        // Добавляем выход
         this.addOut({
-            left: 40,
+            left: 100,
             top: 20
         }); 
         
-        $("<input>").appendTo(this.$content());
+        $("<input>")
+            .val(this.node.params.id)
+            .appendTo(this.$content());
     }
 
 }
