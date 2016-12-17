@@ -6,8 +6,11 @@ lib::jq();
 lib::modJS();
 lib::reset();
 js($this->bundle()->path()."/res/js/earb.js");
+js($this->bundle()->path()."/res/js/base.js");
 js($this->bundle()->path()."/res/js/song.js");
+js($this->bundle()->path()."/res/js/nodeView.js");
 js($this->bundle()->path()."/res/js/node.js");
+js($this->bundle()->path()."/res/js/node.generator.js");
 
 <div class='nRjkjN8GAn' >
     <div class='header' >
