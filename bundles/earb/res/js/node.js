@@ -85,6 +85,8 @@ earb.nodeView = function(params) {
 
     this.render = function($e) {
     
+        var view = this;
+    
         $container = $("<div>")
             .html(node.params.id)
             .css("border", "1px solid #ededed")
@@ -92,6 +94,11 @@ earb.nodeView = function(params) {
             .appendTo($e);
             
         earb.dragndrop($container);
+        
+        $container.on("mod/dragend", function(event) {
+            view.params.x += Math.round(event.dx / 50);
+            view.params.y += Math.round(event.dy / 50);
+        });
             
         // Переустанавливаем параметры, чтобы сработали обработчики
         // И нода перерисовалась
