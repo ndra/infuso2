@@ -1,8 +1,4 @@
 earb.nodeView = function(params) {
-
-    var $container;
-    
-    var node;
     
     this.defaultParams = function() {
         return {
@@ -12,7 +8,7 @@ earb.nodeView = function(params) {
     }
     
     this.setNode = function(p) {
-        node = p;    
+        this.node = p;    
     }
     
     this.storeKeys = function() {
@@ -23,16 +19,16 @@ earb.nodeView = function(params) {
     
         var view = this;
     
-        $container = $("<div>")
-            .html(node.params.id)
+        this.$container = $("<div>")
+            .html(this.node.params.id)
             .css("border", "1px solid #ededed")
             .css("box-sizing", "border-box")
             .css("position", "absolute")
             .appendTo($e);
             
-        earb.dragndrop($container);
+        earb.dragndrop(this.$container);
         
-        $container.on("mod/dragend", function(event) {
+        this.$container.on("mod/dragend", function(event) {
             view.params.x += Math.round(event.dx / 50);
             view.params.y += Math.round(event.dy / 50);
         });
@@ -45,7 +41,16 @@ earb.nodeView = function(params) {
         this.params.y = this.params.y;
         
         // Добавляем вход
-        this.addIn();          
+        this.addIn({
+            left: 10,
+            top: 20
+        });   
+        
+        // Добавляем вход
+        this.addOut({
+            left: 40,
+            top: 20
+        });       
 
     };
    
@@ -61,7 +66,38 @@ earb.nodeView = function(params) {
             .css("position", "absolute")
             .css("left", params.left)
             .css("top", params.top)
-            .appendTo($container);
+            .appendTo(this.$container);
+            
+        var $circle = $("<div>")
+            .css("position", "absolute")
+            .css("left", -5)
+            .css("top", -5)
+            .css("width", 10)
+            .css("height", 10)
+            .css("background", "green")
+            .css("border-radius", 5)
+            .appendTo($e);
+            
+        $circle.on("mod/drop", function(event) {
+            var id = event.dragElement.data("out/id");
+            this.node.connectTo(id);
+        });
+    
+    }
+    
+    this.addOut = function(params) {
+    
+        params = earb.extend({
+            left: 0,
+            top: 0,
+            label: ""
+        }, params);
+        
+        var $e = $("<div>")
+            .css("position", "absolute")
+            .css("left", params.left)
+            .css("top", params.top)
+            .appendTo(this.$container);
             
         var $circle = $("<div>")
             .css("position", "absolute")
@@ -71,11 +107,11 @@ earb.nodeView = function(params) {
             .css("height", 10)
             .css("background", "blue")
             .css("border-radius", 5)
+            .data("out/id", this.node.params.id)
             .appendTo($e);
-    
-    }
-    
-    this.addOut = function() {
+            
+        earb.dragndrop($circle);
+        
     }
     
     this.init = function(params) {
@@ -83,28 +119,28 @@ earb.nodeView = function(params) {
         earb.nodeView.prototype.init.call(this, params);
     
         this.on("param/x", function(x) {
-            if(!$container) {
+            if(!this.$container) {
                 return;
             }
-            $container.css("left", x * 50);
+            this.$container.css("left", x * 50);
         });
         this.on("param/y", function(y) {
-            if(!$container) {
+            if(!this.$container) {
                 return;
             }
-            $container.css("top", y * 50);
+            this.$container.css("top", y * 50);
         });
         this.on("param/width", function(width) {
-            if(!$container) {
+            if(!this.$container) {
                 return;
             }
-            $container.css("width", width * 50);
+            this.$container.css("width", width * 50);
         });
         this.on("param/height", function(height) {
-            if(!$container) {
+            if(!this.$container) {
                 return;
             }
-            $container.css("height", height * 50);
+            this.$container.css("height", height * 50);
         }); 
                
     }

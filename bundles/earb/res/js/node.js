@@ -19,7 +19,7 @@ earb.node = function(params) {
     /**
      * Подключает ноду к другой ноде
      **/
-    this.connect = function(node, port) {
+    this.connect = function(node) {
     };
     
     this.init = function(params) {

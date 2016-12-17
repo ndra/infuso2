@@ -186,14 +186,15 @@ earb.extend = function(obj, extend) {
 
 earb.dragndrop = function($e) {
 
-    $e = $($e);
-    
+    $e = $($e); 
     $e.mousedown(function() {
-        earb.dragndrop.element = $e;           
-        earb.dragndrop.origin = {
-            x: event.screenX,
-            y: event.screenY
-        };
+        if(!earb.dragndrop.element) {
+            earb.dragndrop.element = $e;           
+            earb.dragndrop.origin = {
+                x: event.screenX,
+                y: event.screenY
+            };
+        }
     });
 
 };
@@ -207,6 +208,7 @@ earb.dragndrop.start = function() {
         .css("height", earb.dragndrop.element.outerHeight())
         .css("border", "2px solid rgba(0,0,0,.3)")
         .css("box-sizing", "border-box")
+        .css("pointer-events", "none")
         .appendTo("body");
 } 
 
@@ -231,7 +233,7 @@ earb.dragndrop.handleMouseUp = function(event) {
     if(!earb.dragndrop.element) {
         return;
     }
-
+    
     var d = {
         x: event.screenX - earb.dragndrop.origin.x,
         y: event.screenY - earb.dragndrop.origin.y
@@ -241,10 +243,19 @@ earb.dragndrop.handleMouseUp = function(event) {
         dx: d.x,
         dy: d.y
     });
-
+    
+    $(event.target).trigger({
+        type: "mod/drop",
+        dragElement: $(earb.dragndrop.element)
+    });
+    
     earb.dragndrop.element = null;
-    earb.dragndrop.dragger.remove();
-    earb.dragndrop.dragger = null;
+    
+    if(earb.dragndrop.dragger) {
+        earb.dragndrop.dragger.remove();
+        earb.dragndrop.dragger = null;
+    }
+                       
 }
 
 $(window).mousemove(earb.dragndrop.handleMouseMove);
