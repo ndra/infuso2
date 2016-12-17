@@ -126,6 +126,18 @@ window.earb = function(params) {
     
 };
 
+// ----------------------------------------------------------------------------- Типы нод
+
+earb.nodeTypes = {};
+
+earb.registerNodeType = function(c, type) {
+    earb.nodeTypes[type] = c;
+}
+
+earb.getNodeConstructor = function(type) {
+    return earb.nodeTypes[type];
+}
+
 // ----------------------------------------------------------------------------- Гаммы
 
 earb.createScales = function() {

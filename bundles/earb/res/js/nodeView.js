@@ -20,7 +20,6 @@ earb.nodeView = function(params) {
         var view = this;
     
         this.$container = $("<div>")
-            .html(this.node.params.id)
             .css("border", "1px solid #ededed")
             .css("box-sizing", "border-box")
             .css("position", "absolute")
@@ -38,21 +37,18 @@ earb.nodeView = function(params) {
         this.params.width = this.params.width;
         this.params.height = this.params.height;
         this.params.x = this.params.x;
-        this.params.y = this.params.y;
+        this.params.y = this.params.y;      
         
-        // Добавляем вход
-        this.addIn({
-            left: 10,
-            top: 20
-        });   
-        
-        // Добавляем вход
-        this.addOut({
-            left: 40,
-            top: 20
-        });       
+        this.renderContent();
 
     };
+    
+    this.$content = function() {
+        return this.$container;
+    }
+    
+    this.renderContent = function() {
+    }
    
     this.addIn = function(params) {
     
@@ -115,7 +111,7 @@ earb.nodeView = function(params) {
     }
     
     this.init = function(params) {
-    
+
         earb.nodeView.prototype.init.call(this, params);
     
         this.on("param/x", function(x) {

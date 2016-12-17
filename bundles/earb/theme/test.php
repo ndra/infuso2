@@ -20,7 +20,7 @@ js($this->bundle()->path()."/res/js/node.gain.generator.js");
 
 <div class='nRjkjN8GAn' >
     <div class='header' >
-        <div class='add' >Добавить</div>
+        //<div class='add' >Добавить</div>
     </div>
     <div class='content' >
         <div class='nodes' ></div>

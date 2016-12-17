@@ -16,21 +16,24 @@ mod(".nRjkjN8GAn").init(function() {
         node.view.render($e);
     });
     
-    var n = 0;
-    
-    var add = function() {
-        var node = song.addNode();
-        node.view.params.x = n % 5;
-        node.view.params.y = n % 5;
-        n ++;
-    }
-    
     setInterval(function() {
         var data = song.storeParams();
         sessionStorage.setItem("song", JSON.stringify(data));
     }, 1000);
     
-    $container.find(".add").click(add);
+    
+    var $header = $container.find(".header");
+    for(var i in earb.nodeTypes) {
+        $("<span>")
+            .html(i)
+            .attr("data:id", i)
+            .appendTo($header)
+            .click(function() {
+                song.addNode({
+                    type: $(this).attr("data:id")
+                })
+            });
+    }
     
     //console.log(song.data());
     

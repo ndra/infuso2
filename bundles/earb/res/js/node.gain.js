@@ -9,3 +9,4 @@ earb.node.gain = function(params) {
 }
 
 earb.node.gain.prototype = new earb.node();
+earb.registerNodeType(earb.node.gain, "skfHSI9QRBbv");
