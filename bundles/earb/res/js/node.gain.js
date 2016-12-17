@@ -1,12 +1,9 @@
-earb.node.gain = function(params) {
+earb.Node.Gain = class extends earb.Node {
 
-    this.init = function(params) {
-        earb.node.gain.prototype.init.call(this, params);
+    static nodeClassLabel() {
+        return "Гейн";
     }
 
-    this.init(params);
-    
 }
 
-earb.node.gain.prototype = new earb.node();
-earb.registerNodeType(earb.node.gain, "skfHSI9QRBbv");
+earb.registerNodeType(earb.Node.Gain, "skfHSI9QRBbv");

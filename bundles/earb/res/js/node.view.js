@@ -1,21 +1,60 @@
-earb.nodeView = function(params) {
+earb.Node.View = class extends earb.Base {
+
+    constructor(params) {
     
-    this.defaultParams = function() {
+        super(params);
+            
+        this.on("param/x", function(event) {
+        
+            event.value = Math.round(event.value) || 0;
+            
+            console.log("xxxx" + event.value);
+        
+            if(!this.$container) {
+                return;
+            }              
+            this.$container.css("left", event.value * 50);
+        });
+        this.on("param/y", function(event) {
+        
+            event.value = Math.round(event.value) || 0;
+        
+            if(!this.$container) {
+                return;
+            }
+            this.$container.css("top", event.value * 50);
+        });
+        this.on("param/width", function(event) {
+            if(!this.$container) {
+                return;
+            }
+            this.$container.css("width", event.value * 50);
+        });
+        this.on("param/height", function(event) {
+            if(!this.$container) {
+                return;
+            }
+            this.$container.css("height", event.value * 50);
+        }); 
+               
+    }
+    
+    defaultParams() {
         return {
             width: 3,
             height: 1
         };
     }
     
-    this.setNode = function(p) {
-        this.node = p;    
+    setNode(node) {
+        this.node = node;    
     }
     
-    this.storeKeys = function() {
+    storeKeys() {
         return ["x","y"];
     }
 
-    this.render = function($e) {
+    render($e) {
     
         var view = this;
     
@@ -43,14 +82,14 @@ earb.nodeView = function(params) {
 
     };
     
-    this.$content = function() {
+    $content() {
         return this.$container;
     }
     
-    this.renderContent = function() {
+    renderContent() {
     }
    
-    this.addIn = function(params) {
+    addIn(params) {
     
         params = earb.extend({
             left: 0,
@@ -81,7 +120,7 @@ earb.nodeView = function(params) {
     
     }
     
-    this.addOut = function(params) {
+    addOut(params) {
     
         params = earb.extend({
             left: 0,
@@ -109,41 +148,7 @@ earb.nodeView = function(params) {
         earb.dragndrop($circle);
         
     }
-    
-    this.init = function(params) {
-
-        earb.nodeView.prototype.init.call(this, params);
-    
-        this.on("param/x", function(x) {
-            if(!this.$container) {
-                return;
-            }
-            this.$container.css("left", x * 50);
-        });
-        this.on("param/y", function(y) {
-            if(!this.$container) {
-                return;
-            }
-            this.$container.css("top", y * 50);
-        });
-        this.on("param/width", function(width) {
-            if(!this.$container) {
-                return;
-            }
-            this.$container.css("width", width * 50);
-        });
-        this.on("param/height", function(height) {
-            if(!this.$container) {
-                return;
-            }
-            this.$container.css("height", height * 50);
-        }); 
-               
-    }
-    
-    this.init(params);
 
 }
 
-earb.nodeView.prototype = new earb.base;
     

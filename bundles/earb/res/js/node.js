@@ -1,33 +1,34 @@
-earb.node = function(params) {
+earb.Node = class extends earb.Base {
 
-    this.additionalStore = function() {
+    constructor(params) {
+        super(params);
+        this.createView();  
+    }
+
+    additionalStore() {
         return {
             view: this.view.storeParams()
         };
     }
     
-    this.storeKeys = function() {
-        return ["id"];
+    storeKeys() {
+        return ["id","type"];
     }
     
-    this.defaultParams = function() {
+    defaultParams() {
         return {
             id: mod.id()
         };
     }
-
-    /**
-     * Подключает ноду к другой ноде
-     **/
-    this.connect = function(node) {
-    };
     
-    this.init = function(params) {
-        earb.node.prototype.init.call(this, params);
-        this.view = new earb.nodeView(this.params.view);
-        this.view.setNode(this);        
+    createView() {     
+        var c = this.viewConstructor();
+        this.view = new c(this.params.view);
+        this.view.setNode(this);      
+    }
+    
+    viewConstructor() {
+        return earb.Node.View;
     }
 
 }
-
-earb.node.prototype = new earb.base;

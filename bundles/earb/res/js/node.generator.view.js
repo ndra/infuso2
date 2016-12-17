@@ -1,10 +1,6 @@
-earb.node.generator.view = function(params) {      
+earb.Node.Generator.View = class extends earb.Node.View {      
    
-    this.init = function(params) {
-        earb.node.generator.view.prototype.init.call(this, params);
-    }
-    
-    this.renderContent = function() {
+    renderContent() {
         // Добавляем вход
         this.addIn({
             left: 10,
@@ -19,10 +15,6 @@ earb.node.generator.view = function(params) {
         
         $("<input>").appendTo(this.$content());
     }
-    
-    this.init(params);
 
 }
-
-earb.node.generator.view.prototype = new earb.nodeView;
     
