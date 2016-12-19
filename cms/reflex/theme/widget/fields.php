@@ -1,6 +1,6 @@
 <?
 
-foreach($fields as $field) {
+foreach($fields->visible() as $field) {
        
     $view = \Infuso\Cms\Reflex\FieldView\View::get($field);
     $view->setEditor($editor);
