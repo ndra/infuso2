@@ -28,10 +28,6 @@ class classmapService extends service {
 	public function classes($extends = null) {
 	    return $this->getClassesExtends($extends);
 	}
-    
-   // public function map() {
-  //      return $this->classmap;
-  //  }
 	
 	/**
 	 * @return Возвращает список всех классов
@@ -46,8 +42,8 @@ class classmapService extends service {
 
 	    if(!array_key_exists($extends, self::$extends)) {
 			self::$extends[$extends] = array();
-	        foreach($ret as $key => $classProos) {
-	            if(!$extends || ($classProos["p"] && in_array($extends, $classProos["p"]) && !$classProos["a"])) {
+	        foreach($ret as $key => $classProps) {
+	            if(!$extends || ($classProps["p"] && in_array($extends, $classProps["p"]) && !$classProps["a"])) {
 	                self::$extends[$extends][] = $key;
 				}
 			}
@@ -55,6 +51,26 @@ class classmapService extends service {
 
 	    return self::$extends[$extends];
 	}
+    
+    /**
+     * Является ли класс $parent родителем класса $class
+     **/
+    public function isSubclassOf($class, $parent) {
+    
+		$map = self::classmap();
+		$map = $map["classes"];
+		
+        $class = strtolower($class);
+	    $parent = strtolower($parent);
+        
+        $classProps = $map[$class];
+        
+        if($classProps["p"] && $classProps["p"] && in_array($parent, $classProps["p"])) {
+            return true;
+        } 
+        
+        return false;
+    }
 	
 	private static function prepareClass($class) {
 	    $class = strtolower($class);

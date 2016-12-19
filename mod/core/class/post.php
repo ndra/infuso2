@@ -23,7 +23,7 @@ class Post {
 	    	$namespace = "\\".implode("\\",$ns);
 	    	$fullClassName = trim($namespace."\\".$class,"\\");
 	    	
-	    	if(is_subclass_of($fullClassName, "infuso\\core\\controller")) {
+	    	if(service("classmap")->isSubclassOf($fullClassName, "infuso\\core\\controller")) {
 	    	    return array(
 	    	        "class" => $fullClassName,
 	    	        "method" => $method,

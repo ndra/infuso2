@@ -373,9 +373,8 @@ abstract class Editor extends Core\Controller {
      * Возвращает шаблон формы редактирования элемента
      **/
     public function templateEditForm() {
-		//return app()->tm("/reflex/editor/content/fields/form")->param("editor",$this);
         $widget = new \Infuso\CMS\Reflex\Widget\Fields();
-        $fields = $this->item()->fields();
+        $fields = $this->item()->fields()->visible();
         $widget->fields($fields);
         $widget->editor($this);
         return $widget;

@@ -20,13 +20,10 @@ $metaObject = $item->plugin("meta")->metaObject();
         <form class='meta-form' infuso:id='{$id}' >
         
             $metaEditor = \Infuso\CMS\Reflex\Editor::get("Infuso\\CMS\\Reflex\\Model\\MetaEditor:".$metaObject->id());
-            //exec("/reflex/shared/form", array(
-            //    "editor" => $metaEditor,
-            //));
             
             widget("infuso\\cms\\reflex\\widget\\fields")
                 ->editor($metaEditor)
-                ->fields($metaEditor->item()->fields())
+                ->fields($metaEditor->item()->fields()->visible())
                 ->exec();
             
             <table>
