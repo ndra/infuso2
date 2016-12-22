@@ -11,7 +11,7 @@ class Str extends View {
 	 **/
 	public function template() {
 		$tmp = app()->tm("/reflex/fields/textfield");
-		$tmp->param("field", $this->field);
+		$tmp->param("field", $this->field());
 		return $tmp;
 	}
 	
@@ -25,6 +25,12 @@ class Str extends View {
     
     public function colWidth() {
         return 100;
+    }
+
+    public function filterTemplate() {
+    	$tmp = app()->tm("/reflex/field-filters/textfield");
+		$tmp->param("name", $this->field()->name());
+		return $tmp;
     }
 
 }

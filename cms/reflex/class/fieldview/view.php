@@ -43,9 +43,7 @@ abstract class View extends Core\Component {
 	abstract public static function typeID();
     
     public function filterTemplate() {
-		$tmp = app()->tm("/reflex/field-filters/textfield");
-		$tmp->param("field", $this->field);
-		return $tmp;
+        return null;
     }
 	
 	/**

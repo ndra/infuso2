@@ -27,7 +27,7 @@
     $select->exec();
     $input->exec();
     
-    <input type='hidden' name='{$field->name()}' />
+    <input type='hidden' name='{$name}' />
     
 </div>
     

@@ -47,6 +47,13 @@ class Collection extends Core\Component {
         // Учитываем фильтры
         if($filters = $this->param("filters")) {
             foreach($filters as $key => $filter) {
+            
+                if(substr_count($key, "@$#%^&*")) {
+                    list($field, $name) = explode("@$#%^&*", $key);
+                    $collection->joinByField($field);
+                    $key = $collection->virtual()->field($field)->className().".".$name;
+                }
+            
                 $filter = json_decode($filter, true);
                 switch($filter["filter"]) {
                     case "like":

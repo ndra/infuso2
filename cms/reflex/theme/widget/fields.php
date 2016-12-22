@@ -8,6 +8,6 @@ foreach($fields->visible() as $field) {
 	app()->tm("/reflex/fields/field-layout")->param(array(
         "label" => $field->label(),
         "view" => $view,
-    ))->exec();		
+    ))->exec();
         
 }
