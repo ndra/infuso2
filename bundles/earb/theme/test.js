@@ -28,11 +28,15 @@ mod(".nRjkjN8GAn").init(function() {
         
         for(var i in song.links) {
             var link = song.links[i];
-            var src = song.node(link.from);
-            var dest = song.node(link.to);
+            var src = link.src();
+            var dest = link.dest();
             
-            var $src = src.view.getOutElement(link.fromPort);
-            var $dest = dest.view.getInElement(link.toPort);
+            var $src = src.view.getOutElement(link.params.srcPort);
+            var $dest = dest.view.getInElement(link.params.destPort);
+            
+            if(!$src || !$dest) {
+                return;
+            }
             
             ctx.beginPath();
             ctx.moveTo($src.offset().left - nodesOffset.left + 5, $src.offset().top - nodesOffset.top + 5);

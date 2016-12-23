@@ -40,7 +40,7 @@ earb.Node.View = class extends earb.Base {
     
     defaultParams() {
         return {
-            width: 3,
+            width: 1,
             height: 1
         };
     }
@@ -119,10 +119,10 @@ earb.Node.View = class extends earb.Base {
         $circle.on("mod/drop", function(event) {
             var id = event.dragElement.data("out/id");
             view.node.song.createLink({
-                from: id,
-                fromPort: event.dragElement.data("out/port"),
-                to: view.node.params.id,
-                toPort: params.port,
+                src: id,
+                srcPort: event.dragElement.data("out/port"),
+                dest: view.node.params.id,
+                destPort: params.port,
             });
         });
         

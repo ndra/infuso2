@@ -30,5 +30,11 @@ earb.Node = class extends earb.Base {
     viewConstructor() {
         return earb.Node.View;
     }
+    
+    outConnector(port) {
+    }
+    
+    inConnector(port) {
+    }
 
 }
