@@ -4,28 +4,18 @@ earb.Node.Generator = class extends earb.Node {
         super(params);
         
         var ctx = earb.Song.context();        
-        var oscillator = ctx.createOscillator();
+        this.oscillator = ctx.createOscillator();
         
-        oscillator.type = this.params.shape;
-        oscillator.frequency.value = this.params.frequency; // value in hertz
-        oscillator.start();
+        this.oscillator.type = this.params.shape;
+        this.oscillator.frequency.value = this.params.frequency; // value in hertz
+        this.oscillator.start();
         
         this.on("param/frequency", function(event) {
-            oscillator.frequency.value = event.value;
+            this.oscillator.frequency.value = event.value;
         });
         
         this.on("param/shape", function(event) {
-            oscillator.type = event.value;
-        });
-        
-        this.oscillator = oscillator;
-        
-        this.on("param/on", function(event) {
-            if(event.value) {
-               // oscillator.gain = 1;
-            } else {
-               // oscillator.gain = 0;
-            }
+            this.oscillator.type = event.value;
         });
         
     }
@@ -61,6 +51,10 @@ earb.Node.Generator = class extends earb.Node {
     inConnector(port) {
         if(port == "freq") {
             return this.oscillator.frequency;
+        }
+        if(port == "gain") {
+            mod.msg(this.oscillator);
+            return this.oscillator.gain;
         }
     }
     

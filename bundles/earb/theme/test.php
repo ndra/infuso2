@@ -19,6 +19,10 @@ js($this->bundle()->path()."/res/js/node.gain.js");
 js($this->bundle()->path()."/res/js/node.gain.view.js");
 js($this->bundle()->path()."/res/js/node.out.js");
 js($this->bundle()->path()."/res/js/node.out.view.js");
+js($this->bundle()->path()."/res/js/node.pedal.js");
+js($this->bundle()->path()."/res/js/node.pedal.view.js");
+js($this->bundle()->path()."/res/js/node.delay.js");
+js($this->bundle()->path()."/res/js/node.delay.view.js");
 
 <div class='nRjkjN8GAn' >
     <div class='header' >

@@ -1,54 +1,52 @@
-earb.Node.Gain = class extends earb.Node {
+earb.Node.Delay = class extends earb.Node {
 
     constructor(params) {
         super(params);
 
         var ctx = earb.Song.context();
         
-        this.gain = ctx.createGain();
-        this.gain.gain.value = this.params.gain;
+        this.delay = ctx.createDelay(5);
         
-        this.on("param/gain", function(event) {
-            this.gain.gain.value = event.value;
+        this.delay.delayTime.value = this.params.delay;
+        
+        this.on("param/delay", function(event) {
+            this.delay.delayTime.value = event.value;
         });
         
     }
 
     viewConstructor() {
-        return earb.Node.Gain.View;
+        return earb.Node.Delay.View;
     }
 
     static nodeClassLabel() {
-        return "Гейн";
+        return "Дилэй";
     }
     
     storeKeys() {
         var keys = super.storeKeys();
-        keys.push("gain");
+        keys.push("delay");
         return keys;
     }
     
     defaultParams() {
         var params = super.defaultParams();
-        params.gain = 1;
+        params.delay = .5;
         return params;
     }
     
     inConnector(port) {
         if(port == "default") {
-            return this.gain;
-        }
-        if(port == "gain") {
-            return this.gain.gain;
+            return this.delay;
         }
     }
     
     outConnector(port) {
         if(port == "default") {
-            return this.gain;
+            return this.delay;
         }
     }
 
 }
 
-earb.registerNodeType(earb.Node.Gain, "skfHSI9QRBbv");
+earb.registerNodeType(earb.Node.Delay, "fHhTzpMYpx67");

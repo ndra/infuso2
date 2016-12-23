@@ -52,7 +52,7 @@ mod(".nRjkjN8GAn").init(function() {
     for(var i in earb.nodeTypes) {
         var type = earb.nodeTypes[i];
         var label = type.nodeClassLabel();
-        $("<div>")
+        $("<div class='add-type' >")
             .html(label)
             .appendTo($header)
             .data("type", i)

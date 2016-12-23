@@ -6,8 +6,13 @@
         color: white;
         background: #333;
         
-        & > .add {
+        & > .add-type {
+            display: inline-block;
             cursor: pointer;
+            margin-right: 10px;
+            &:hover {
+                text-decoration: underline;
+            }
         }
         
     }

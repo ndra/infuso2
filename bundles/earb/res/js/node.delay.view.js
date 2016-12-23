@@ -1,22 +1,24 @@
-earb.Node.Gain.View = class extends earb.Node.View {      
+earb.Node.Delay.View = class extends earb.Node.View {      
 
     renderContent() {
     
         var view = this;
         
-        var storeGain = function() {
-            view.node.params.gain = $gain.val();
+        this.$content().css("background", "rgba(0,0,255,.1)");
+        
+        var storeDelay = function() {
+            view.node.params.delay = $delay.val();
         }
         
-        var $gain = $("<input>")
-            .val(this.node.params.gain)
+        var $delay = $("<input>")
+            .val(this.node.params.delay)
             .css({
                 width: 35,
                 position: "absolute",
                 left: 5,
                 top: 20
-            }).on("input", storeGain)
-            .on("change", storeGain)
+            }).on("input", storeDelay)
+            .on("change", storeDelay)
             .appendTo(this.$content());
     
         // Добавляем вход
@@ -25,14 +27,6 @@ earb.Node.Gain.View = class extends earb.Node.View {
             left: 10,
             top: 10
         });
-        
-        // Добавляем вход
-        this.addIn({
-            label: "Гейн",
-            left: 25,
-            top: 40,
-            port: "gain"
-        });    
         
         // Добавляем вход
         this.addOut({
