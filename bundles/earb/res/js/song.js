@@ -66,6 +66,7 @@ earb.Song = class extends earb.Base {
     createLink(params) {
     
         var link = new earb.Link(params);
+        link.setSong(this);
         var id = link.id();
                 
         if(this.links[id]) {
@@ -73,14 +74,35 @@ earb.Song = class extends earb.Base {
             return false;
         }
         
+        if(!link.src()) {
+            mod.msg("Link src not exists");
+            return false;
+        }
+        
+        if(!link.dest()) {
+            mod.msg("Link dest not exists");
+            return false;
+        }
+        
         this.links[id] = link;
-        link.setSong(this);
         link.createPhysical();
         var song = this;
         
         setTimeout(function() {
             song.fire("link/create");
         });
+    }
+    
+    removeLink(id) {
+        var link = this.links[id];
+        if(!link) {
+            mod.msg("Link not exists", 1);
+            return;
+        }
+        
+        link.srcConnector().disconnect(link.destConnector());
+        delete(this.links[id]);
+        this.fire("link/create");
     }
     
     static context() {

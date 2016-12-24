@@ -111,6 +111,7 @@ earb.Node.View = class extends earb.Base {
             .css("height", 10)
             .css("background", "green")
             .css("border-radius", 5)
+            .css("z-index", 1)
             .attr("title", params.label)
             .appendTo($e);
             
@@ -157,6 +158,7 @@ earb.Node.View = class extends earb.Base {
             .css("height", 10)
             .css("background", "blue")
             .css("border-radius", 5)
+            .css("z-index", 1)
             .data("out/id", this.node.params.id)
             .data("out/port", params.port)
             .attr("title", params.label)

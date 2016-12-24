@@ -29,7 +29,7 @@ js($this->bundle()->path()."/res/js/node.delay.view.js");
     </div>
     <div class='content' >
         <div class='nodes' ></div>
-        <canvas class='links' width='1000' height='500' ></canvas>
+        <svg class='links' width='1000' height='500' ></svg>
     </div>
 </div>
 

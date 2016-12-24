@@ -52,10 +52,6 @@ earb.Node.Generator = class extends earb.Node {
         if(port == "freq") {
             return this.oscillator.frequency;
         }
-        if(port == "gain") {
-            mod.msg(this.oscillator);
-            return this.oscillator.gain;
-        }
     }
     
 }

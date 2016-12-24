@@ -20,10 +20,10 @@ mod(".nRjkjN8GAn").init(function() {
     
     var redrawLinks = function() {
         
-        var c = $links.get(0);
-        var ctx = c.getContext("2d");
-        ctx.clearRect(0, 0, c.width, c.height);
-        
+       // var c = $links.get(0);
+       // var ctx = c.getContext("2d");
+       // ctx.clearRect(0, 0, c.width, c.height);
+        $links.html("");
         var nodesOffset = $nodes.offset(); 
         
         for(var i in song.links) {
@@ -38,10 +38,20 @@ mod(".nRjkjN8GAn").init(function() {
                 return;
             }
             
-            ctx.beginPath();
-            ctx.moveTo($src.offset().left - nodesOffset.left + 5, $src.offset().top - nodesOffset.top + 5);
-            ctx.lineTo($dest.offset().left - nodesOffset.left + 5, $dest.offset().top - nodesOffset.top + 5);
-            ctx.stroke();
+            var x1 = $src.offset().left - nodesOffset.left + 5;
+            var y1 = $src.offset().top - nodesOffset.top + 5;
+            var x2 = $dest.offset().left - nodesOffset.left + 5;
+            var y2 = $dest.offset().top - nodesOffset.top + 5;
+           
+            $(document.createElementNS('http://www.w3.org/2000/svg','path'))
+                .attr({
+                    d: "M "+x1+" "+y1+" C "+x1+" "+(y1-70)+" "+x2+" "+(y2-20)+" "+x2+" "+y2
+                }).data("id", link.id())
+                .click(function() {
+                    song.removeLink($(this).data("id"));
+                })
+                .appendTo($links);
+                
             
         }
     };
