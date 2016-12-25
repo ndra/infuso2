@@ -1,7 +1,14 @@
 earb.Node.Pattern = class extends earb.Node {
 
     constructor(params) {
-        super(params);        
+        super(params);  
+        this.connected = [];      
+    }   
+    
+    defaultParams() {    
+        var params = super.defaultParams();
+        params.pattern = [];
+        return params;        
     }   
     
     viewConstructor() {
@@ -12,9 +19,20 @@ earb.Node.Pattern = class extends earb.Node {
         return "Паттерн";
     }
     
+    sendMidiMessage(msg) {    
+        for(var i in this.connected) {
+            this.connected[i].fire("midi", msg);
+        }
+    }
+    
     outConnector(port) {
         if(port == "default") {
-            return this.gain;
+            var node = this;
+            return new function() {
+                this.connect = function(dest) {
+                    node.connected.push(dest);
+                }
+            };
         }
     }
 

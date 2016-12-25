@@ -25,6 +25,8 @@ js($this->bundle()->path()."/res/js/node.delay.js");
 js($this->bundle()->path()."/res/js/node.delay.view.js");
 js($this->bundle()->path()."/res/js/node.pattern.js");
 js($this->bundle()->path()."/res/js/node.pattern.view.js");
+js($this->bundle()->path()."/res/js/node.synthesizer.js");
+js($this->bundle()->path()."/res/js/node.synthesizer.view.js");
 
 
 <div class='nRjkjN8GAn' >
