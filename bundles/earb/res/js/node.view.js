@@ -9,7 +9,7 @@ earb.Node.View = class extends earb.Base {
             if(!this.$container) {
                 return;
             }              
-            this.$container.css("left", event.value * 50);
+            this.$container.css("left", event.value);
             this.node.song.fire("node/move");
         });
         this.on("param/y", function(event) {                  
@@ -17,7 +17,7 @@ earb.Node.View = class extends earb.Base {
             if(!this.$container) {
                 return;
             }
-            this.$container.css("top", event.value * 50);
+            this.$container.css("top", event.value);
             this.node.song.fire("node/move");
         });
         this.on("param/width", function(event) {
@@ -58,16 +58,32 @@ earb.Node.View = class extends earb.Base {
         var view = this;
     
         this.$container = $("<div>")
-            .css("border", "1px solid #ededed")
-            .css("box-sizing", "border-box")
             .css("position", "absolute")
             .appendTo($e);
+            
+        var $frame = $("<div>")
+            .css("position", "absolute")
+            .css("background", "linear-gradient(160deg, #666,#444)")
+            .css("box-shadow", "0 0 5px rgba(0,0,0,.4)")
+            .css("box-sizing", "border-box")
+            .css("border-left", "1px solid #888")
+            .css("border-top", "1px solid #888")
+            .css("border-bottom", "1px solid #222")
+            .css("border-right", "1px solid #222")
+            .css("border-radius", 3)
+            .css("left", 1)
+            .css("right", 1)
+            .css("top", 1)
+            .css("bottom", 1)
+            .appendTo(this.$container);
             
         earb.dragndrop(this.$container);
         
         this.$container.on("mod/dragend", function(event) {
-            view.params.x += Math.round(event.dx / 50);
-            view.params.y += Math.round(event.dy / 50);
+            view.params.x += event.dx;
+            view.params.y += event.dy;
+            view.params.x = Math.round(view.params.x / 10) * 10;
+            view.params.y = Math.round(view.params.y / 10) * 10; 
         });
             
         // Переустанавливаем параметры, чтобы сработали обработчики

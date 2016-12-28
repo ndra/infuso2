@@ -1,4 +1,23 @@
+html, body {
+    background: lighten(#272822,0%);
+}
+
 .nRjkjN8GAn {
+    
+    input, select {
+        background: rgba(0,0,0,.5);
+        border-left: 1px solid rgba(0,0,0,.4);
+        border-top: 1px solid rgba(0,0,0,.4);
+        border-bottom: 1px solid rgba(255,255,255,.4);
+        border-right: 1px solid rgba(255,255,255,.4);
+        //color: #66ff55;
+        color: white;
+        text-shadow: 0 0 15px rgba(128, 255, 128, 1);
+        padding: 0;
+        text-align: center;
+        box-sizing: border-box;
+        //font-family: Lucida Console;
+    }
     
     & > .header {
         
@@ -36,12 +55,20 @@
             path {
                 cursor: pointer;
                 pointer-events: auto;
-                stroke: rgba(0,0,0,.4);
-                stroke-width: 6px;
+                stroke: #ff9900;
+                stroke-width: 3px;
                 fill: none;
                 &:hover {
                     stroke: red;
                 }
+            }
+            
+            .link-shadow {
+                cursor: pointer;
+                pointer-events: none;
+                stroke: rgba(0,0,0,.3);
+                stroke-width: 8px;
+                fill: none;
             }
             
         }

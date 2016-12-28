@@ -8,7 +8,7 @@ mod(".nRjkjN8GAn").init(function() {
     
     var data = {};
     try {
-        data = JSON.parse(sessionStorage.getItem("song"));
+        data = JSON.parse(localStorage.getItem("song"));
     } catch(ex) {}
 
     var song = new earb.Song(data);
@@ -42,7 +42,16 @@ mod(".nRjkjN8GAn").init(function() {
             var y1 = $src.offset().top - nodesOffset.top + 5;
             var x2 = $dest.offset().left - nodesOffset.left + 5;
             var y2 = $dest.offset().top - nodesOffset.top + 5;
-           
+            
+            // Тень
+            $(document.createElementNS('http://www.w3.org/2000/svg','path'))
+                .attr({
+                    d: "M "+x1+" "+y1+" C "+x1+" "+(y1-70)+" "+x2+" "+(y2-20)+" "+x2+" "+y2
+                })
+                .attr("class", "link-shadow")
+                .appendTo($links);
+          
+            // Провод
             $(document.createElementNS('http://www.w3.org/2000/svg','path'))
                 .attr({
                     d: "M "+x1+" "+y1+" C "+x1+" "+(y1-70)+" "+x2+" "+(y2-20)+" "+x2+" "+y2
@@ -75,7 +84,7 @@ mod(".nRjkjN8GAn").init(function() {
     
     setInterval(function() {
         var data = song.storeParams();
-        sessionStorage.setItem("song", JSON.stringify(data));
+        localStorage.setItem("song", JSON.stringify(data));
     }, 1000);
     
     
