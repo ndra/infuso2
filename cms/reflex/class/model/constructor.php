@@ -91,7 +91,7 @@ class Constructor extends ActiveRecord\Record {
         // Копируем файлы из папки хранилища
         foreach($editor->item()->fields() as $field) {
             if($field->typeID() == "knh9-0kgy-csg9-1nv8-7go9") {
-                $val = $field->field()->value();
+                $val = $field->value();
                 $folder = "/".trim($this->storage()->root(), "/");
                 $folder = preg_quote($folder, "/");
                 if(preg_match("/^$folder/", $val)) {
