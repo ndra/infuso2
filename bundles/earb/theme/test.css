@@ -10,13 +10,44 @@ html, body {
         border-top: 1px solid rgba(0,0,0,.4);
         border-bottom: 1px solid rgba(255,255,255,.4);
         border-right: 1px solid rgba(255,255,255,.4);
-        //color: #66ff55;
         color: white;
         text-shadow: 0 0 15px rgba(128, 255, 128, 1);
         padding: 0;
         text-align: center;
         box-sizing: border-box;
-        //font-family: Lucida Console;
+    }
+    
+    .g-socket {
+        width: 10px;
+        height: 10px;
+        left: -5px;
+        top: -5px;
+        position: absolute;
+        border-radius: 10px;
+        border-left: 1px solid rgba(0,0,0,.4);
+        border-top: 1px solid rgba(0,0,0,.4);
+        border-bottom: 1px solid rgba(255,255,255,.4);
+        border-right: 1px solid rgba(255,255,255,.4);
+        box-sizing: border-box;
+        background: rgba(0,0,0,.2);
+        
+        & > div {
+            position: absolute;
+            left: 2px;
+            top: 2px ;
+            right: 2px;
+            bottom: 2px;
+            background: rgba(0,0,0,.8);
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        
+        &:hover {
+            width: 16px;
+            height: 16px;
+            left: -8px;
+            top: -8px;
+        }
     }
     
     & > .header {

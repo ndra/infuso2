@@ -2,8 +2,8 @@ earb.Node.Pattern.View = class extends earb.Node.View {
 
     defaultParams() {    
         var params = super.defaultParams();
-        params.width = 8;
-        params.height = 5;
+        params.width = 8 * 50;
+        params.height = 5 * 50;
         return params;        
     }          
 

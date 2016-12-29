@@ -24,13 +24,13 @@ earb.Node.View = class extends earb.Base {
             if(!this.$container) {
                 return;
             }
-            this.$container.css("width", event.value * 50);
+            this.$container.css("width", event.value);
         });
         this.on("param/height", function(event) {
             if(!this.$container) {
                 return;
             }
-            this.$container.css("height", event.value * 50);            
+            this.$container.css("height", event.value);            
         }); 
         
         this.inElements = {};
@@ -40,8 +40,8 @@ earb.Node.View = class extends earb.Base {
     
     defaultParams() {
         return {
-            width: 1,
-            height: 1
+            width: 50,
+            height: 50
         };
     }
     
@@ -120,16 +120,11 @@ earb.Node.View = class extends earb.Base {
             .appendTo(this.$container);
             
         var $circle = $("<div>")
-            .css("position", "absolute")
-            .css("left", -5)
-            .css("top", -5)
-            .css("width", 10)
-            .css("height", 10)
-            .css("background", "green")
-            .css("border-radius", 5)
-            .css("z-index", 1)
+            .addClass("g-socket")
             .attr("title", params.label)
             .appendTo($e);
+            
+        $("<div>").appendTo($circle);
             
         var view = this;
             
@@ -166,19 +161,16 @@ earb.Node.View = class extends earb.Base {
             .css("top", params.top)
             .appendTo(this.$container);
             
+            
+            
         var $circle = $("<div>")
-            .css("position", "absolute")
-            .css("left", -5)
-            .css("top", -5)
-            .css("width", 10)
-            .css("height", 10)
-            .css("background", "blue")
-            .css("border-radius", 5)
-            .css("z-index", 1)
+            .addClass("g-socket")
             .data("out/id", this.node.params.id)
             .data("out/port", params.port)
             .attr("title", params.label)
             .appendTo($e);
+            
+        $("<div>").appendTo($circle);
             
         earb.dragndrop($circle);
         

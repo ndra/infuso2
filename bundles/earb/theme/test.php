@@ -8,6 +8,7 @@ lib::reset();
 
 
 js($this->bundle()->path()."/res/js/earb.js");
+js($this->bundle()->path()."/res/js/earb.dragndrop.js");
 js($this->bundle()->path()."/res/js/base.js");
 js($this->bundle()->path()."/res/js/song.js");
 js($this->bundle()->path()."/res/js/link.js");

@@ -2,7 +2,7 @@ earb.Node.Generator.View = class extends earb.Node.View {
 
     defaultParams() {    
         var params = super.defaultParams();
-        params.width = 3;
+        params.width = 3 * 50;
         return params;        
     }    
    
