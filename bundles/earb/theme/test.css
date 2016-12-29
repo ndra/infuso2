@@ -71,6 +71,15 @@ html, body {
         
         position: relative;
         
+        & > .trash {
+            position: fixed;
+            left: 50%;
+            top: 10px;
+            background: red;
+            width: 50px;
+            height: 50px;
+        }
+        
         & > .nodes {
             position: absolute;
             left: 0;
@@ -86,9 +95,10 @@ html, body {
             path {
                 cursor: pointer;
                 pointer-events: auto;
-                stroke: #ff9900;
-                stroke-width: 3px;
+                stroke: #aa6600;
+                stroke-width: 4px;
                 fill: none;
+                stroke-linecap: round;
                 &:hover {
                     stroke: red;
                 }
@@ -98,7 +108,15 @@ html, body {
                 cursor: pointer;
                 pointer-events: none;
                 stroke: rgba(0,0,0,.3);
-                stroke-width: 8px;
+                stroke-width: 7px;
+                fill: none;
+            }
+            
+            .link-light {
+                cursor: pointer;
+                pointer-events: none;
+                stroke: rgba(255,255,255,.5);
+                stroke-width: 1px;
                 fill: none;
             }
             

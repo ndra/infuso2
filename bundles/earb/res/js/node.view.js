@@ -58,10 +58,11 @@ earb.Node.View = class extends earb.Base {
         var view = this;
     
         this.$container = $("<div>")
+            .data("node-id", this.node.params.id)
             .css("position", "absolute")
             .appendTo($e);
             
-        var $frame = $("<div>")
+        var $frame = $("<div>")            
             .css("position", "absolute")
             .css("background", "linear-gradient(160deg, #666,#444)")
             .css("box-shadow", "0 0 5px rgba(0,0,0,.4)")
@@ -77,7 +78,9 @@ earb.Node.View = class extends earb.Base {
             .css("bottom", 1)
             .appendTo(this.$container);
             
-        earb.dragndrop(this.$container);
+        earb.dragndrop(this.$container, {
+            dropClass: "drop-trash"
+        });
         
         this.$container.on("mod/dragend", function(event) {
             view.params.x += event.dx;
@@ -121,6 +124,7 @@ earb.Node.View = class extends earb.Base {
             
         var $circle = $("<div>")
             .addClass("g-socket")
+            .addClass("drop-socket-in")
             .attr("title", params.label)
             .appendTo($e);
             
@@ -146,6 +150,9 @@ earb.Node.View = class extends earb.Base {
         return this.inElements[port];
     }
     
+    /**
+     * Добавляет выход
+     **/
     addOut(params) {
     
         params = earb.extend({
@@ -161,8 +168,6 @@ earb.Node.View = class extends earb.Base {
             .css("top", params.top)
             .appendTo(this.$container);
             
-            
-            
         var $circle = $("<div>")
             .addClass("g-socket")
             .data("out/id", this.node.params.id)
@@ -172,7 +177,9 @@ earb.Node.View = class extends earb.Base {
             
         $("<div>").appendTo($circle);
             
-        earb.dragndrop($circle);
+        earb.dragndrop($circle, {
+            dropClass: "drop-socket-in"
+        });
         
         this.outElements[params.port] = $circle;
         

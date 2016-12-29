@@ -2,17 +2,26 @@
 /**
  * Конструктор драгндропа
  **/
-earb.dragndrop = function($e) {
+earb.dragndrop = function($e, params) {
+
+    if(!params) {
+        params = {};
+    }
+    
+    params.id = Math.random();
 
     $e = $($e); 
     $e.mousedown(function(event) {
     
+        // Эта проверка нужна для случая если один перетаскиваемый элемент находится в другом
+        // Будет перетаскиваться тот что на самом конце ветки по иерархии
         if(!earb.dragndrop.element) {
         
-            event.preventDefault();
-        
             // Перетаскиваемый элемент. Тот, на который кликнули и потащили
-            earb.dragndrop.element = $e;           
+            earb.dragndrop.element = $e;
+            
+            earb.dragndrop.params = params;
+                       
             // Начальная позиция элемента
             earb.dragndrop.origin = {
                 x: event.screenX,
@@ -38,6 +47,7 @@ earb.dragndrop.start = function() {
 
 earb.dragndrop.handleMouseMove = function(event) {
 
+    // Если драг не выполняется, выходим
     if(!earb.dragndrop.element) {
         return;
     }
@@ -47,7 +57,7 @@ earb.dragndrop.handleMouseMove = function(event) {
         earb.dragndrop.start();
     }  
     
-    // Вычисляем смещение с прошлого раза       
+    // Вычисляем смещение с начала драга     
     var d = {
         x: event.screenX - earb.dragndrop.origin.x,
         y: event.screenY - earb.dragndrop.origin.y
@@ -63,7 +73,7 @@ earb.dragndrop.handleMouseUp = function(event) {
     if(!earb.dragndrop.element) {
         return;
     }
-    
+        
     var d = {
         x: event.screenX - earb.dragndrop.origin.x,
         y: event.screenY - earb.dragndrop.origin.y
@@ -74,13 +84,18 @@ earb.dragndrop.handleMouseUp = function(event) {
         dy: d.y
     });
     
-    $(event.target).trigger({
-        type: "mod/drop",
-        dragElement: $(earb.dragndrop.element)
-    });
+    if(earb.dragndrop.params.dropClass) {
+        var $target = $(event.target).parents().andSelf().filter("." + earb.dragndrop.params.dropClass).first();      
+        $target.trigger({
+            type: "mod/drop",
+            dragElement: $(earb.dragndrop.element),
+            source: $(earb.dragndrop.element)
+        });
+    }
     
     earb.dragndrop.element = null;
     
+    // Убираем перетаскивалку, если она есть
     if(earb.dragndrop.dragger) {
         earb.dragndrop.dragger.remove();
         earb.dragndrop.dragger = null;

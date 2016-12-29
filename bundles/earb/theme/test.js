@@ -50,6 +50,16 @@ mod(".nRjkjN8GAn").init(function() {
                 })
                 .attr("class", "link-shadow")
                 .appendTo($links);
+                
+            // Провод
+            $(document.createElementNS('http://www.w3.org/2000/svg','path'))
+                .attr({
+                    d: "M "+x1+" "+y1+" C "+x1+" "+(y1-70)+" "+x2+" "+(y2-20)+" "+x2+" "+y2
+                }).data("id", link.id())
+                .click(function() {
+                    song.removeLink($(this).data("id"));
+                })
+                .appendTo($links);
           
             // Провод
             $(document.createElementNS('http://www.w3.org/2000/svg','path'))
@@ -59,6 +69,7 @@ mod(".nRjkjN8GAn").init(function() {
                 .click(function() {
                     song.removeLink($(this).data("id"));
                 })
+                .attr("class", "link-light")
                 .appendTo($links);
                 
             
@@ -88,7 +99,9 @@ mod(".nRjkjN8GAn").init(function() {
     }, 1000);
     
     
-    //song.addNode();
-    //song.addNode();
+    // Удаление нод
+    $content.children(".trash").on("mod/drop", function(event) {
+        mod.msg(event.source.data("node-id"));
+    });
 
 });

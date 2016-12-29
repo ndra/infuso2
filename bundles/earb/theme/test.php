@@ -34,6 +34,7 @@ js($this->bundle()->path()."/res/js/node.synthesizer.view.js");
     <div class='header' >
     </div>
     <div class='content' >
+        <div class='trash drop-trash' ></div>
         <div class='nodes' ></div>
         <svg class='links' width='1000' height='500' ></svg>
     </div>
