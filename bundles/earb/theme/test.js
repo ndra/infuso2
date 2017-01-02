@@ -101,7 +101,7 @@ mod(".nRjkjN8GAn").init(function() {
     
     // Удаление нод
     $content.children(".trash").on("mod/drop", function(event) {
-        mod.msg(event.source.data("node-id"));
+        song.removeNode(event.source.data("node-id"));
     });
 
 });

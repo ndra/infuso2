@@ -38,6 +38,10 @@ earb.Node.View = class extends earb.Base {
                
     }
     
+    remove() {
+        this.$container.remove();
+    }
+    
     defaultParams() {
         return {
             width: 50,

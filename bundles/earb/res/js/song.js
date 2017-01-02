@@ -59,6 +59,20 @@ earb.Song = class extends earb.Base {
         return node;
     }
     
+    /**
+     * Удаляет ноду
+     **/
+    removeNode(id) {
+        var node = this.nodes[id];
+        node.view.remove();
+        for(var i in this.links) {
+            if(this.links[i].params.src == id || this.links[i].params.dest == id) {
+                this.removeLink(i);
+            }
+        }
+        delete this.nodes[id];
+    }
+    
     node(id) {
         return this.nodes[id];
     }
@@ -93,10 +107,13 @@ earb.Song = class extends earb.Base {
         });
     }
     
+    /**
+     * Удаляет связь id
+     **/
     removeLink(id) {
         var link = this.links[id];
         if(!link) {
-            mod.msg("Link not exists", 1);
+            mod.msg("Link " + id + " not exists", 1);
             return;
         }
         
