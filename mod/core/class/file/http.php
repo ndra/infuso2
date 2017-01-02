@@ -115,7 +115,7 @@ class Http extends Core\File {
      **/
     public function contents() {
 
-        Core\Profiler::beginOperation("file","http-contents",$this->path());
+        Core\Profiler::beginOperation("file", "http-contents", $this->path());
 
         $ch = $this->getCurl();
         curl_setopt($ch, CURLOPT_HEADER, true);

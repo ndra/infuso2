@@ -21,7 +21,7 @@ class Sync extends \Infuso\Core\Controller {
 	                    "syncFiles" => "Синхронизировать файлы",
 					),
 				),
-			),
+            ),
 		);
 	}
     
@@ -141,6 +141,9 @@ class Sync extends \Infuso\Core\Controller {
             service("db")->query($q)->exec();
         }
 
+        $startTime = microtime(true);
+        $lastId = 0;
+        
         foreach($data["rows"] as $row) {
 
             $insert = array();
@@ -148,8 +151,10 @@ class Sync extends \Infuso\Core\Controller {
 
                 // Не забываем разкодировать данные из base64
                 $val = $val !== null ? base64_decode($val) : null;
-
                 $insert["`".$key."`"] = $val !== null ? service("db")->quote($val) : "null";
+                if($key == "id") {
+                    $lastId = $val;
+                }
             }
 
             // Вставляем в таблицу
@@ -170,12 +175,19 @@ class Sync extends \Infuso\Core\Controller {
                         }
 		            }
 	            }
-            }     
+            }
+            
+            // Ограничение на слишком долгую загрузку файлов
+            if(microtime(true) - $startTime > 5) {
+                break;
+            }
+            
+                 
         }
 
         return array(
             "action" => "nextId",
-            "nextId" => $data["nextId"],
+            "nextId" => $lastId,
             "log" => array(
                 "class" => md5($class),
                 "message" => $class.": {$data[nextId]} total {$data[total]}"

@@ -718,7 +718,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     public function orderByDistance($key, $point) {
 
         $this->unload();
-        $coords = mod::field("point")->value($point)->mysqlValue();
+        $coords = \Infuso\Core\Model\Field::get("point")->value($point)->mysqlValue();
 
         $this->orderByExpr("GLength(
             LineStringFromWKB(
