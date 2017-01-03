@@ -1,0 +1,12 @@
+.PNMCr5It3R {
+    
+    &> .title {
+        font-style: italic;
+        opacity: .7;
+    }
+    
+    td {
+        padding: 5px;
+    }
+    
+}

@@ -154,4 +154,17 @@ class Payment extends Base {
 
     }
     
+    public function post_similar($p) {
+                
+        $payments = \Infuso\Heapit\Model\Payment::all()
+            ->eq("date", $p["date"])
+            ->neq("id", $p["paymentId"]);
+        
+        return app()
+            ->tm("/heapit/payment-form/similar-payments/ajax")
+            ->param("payments", $payments)
+            ->getContentForAjax();
+    
+    }
+    
 }

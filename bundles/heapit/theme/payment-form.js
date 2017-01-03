@@ -16,7 +16,10 @@ mod(".payment-vlj855earc").init(function() {
     
     var $date = $container.find("input[name=date]");
     $date.on("datechange", function() {
-        $container.find(".c-similar-payments").triggerHandler("refresh");
+        $container.find(".c-similar-payments").triggerHandler({
+            type: "refresh",
+            date: $date.val() 
+        });
     });
     
     // @todo рефакторить это
