@@ -20,6 +20,15 @@ earb.Node.View = class extends earb.Base {
             this.$container.css("top", event.value);
             this.node.song.fire("node/move");
         });
+        
+        this.on("param/z", function(event) {                  
+            event.value = Math.round(event.value) || 0;          
+            if(!this.$container) {
+                return;
+            }
+            this.$container.css("z-index", event.value + 10);
+        });
+        
         this.on("param/width", function(event) {
             if(!this.$container) {
                 return;
@@ -45,7 +54,10 @@ earb.Node.View = class extends earb.Base {
     defaultParams() {
         return {
             width: 50,
-            height: 50
+            height: 50,
+            x: 0,
+            y: 0,
+            z: 0
         };
     }
     
@@ -64,6 +76,7 @@ earb.Node.View = class extends earb.Base {
         this.$container = $("<div>")
             .data("node-id", this.node.params.id)
             .css("position", "absolute")
+            .css("z-index", this.params.z + 10)
             .appendTo($e);
             
         var $frame = $("<div>")            

@@ -42,6 +42,7 @@ earb.dragndrop.start = function() {
         .css("border", "2px solid rgba(0,0,0,.3)")
         .css("box-sizing", "border-box")
         .css("pointer-events", "none")
+        .css("z-index", 200)
         .appendTo("body");
 } 
 

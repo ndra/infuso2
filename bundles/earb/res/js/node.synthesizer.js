@@ -51,6 +51,16 @@ earb.Node.Synthesizer = class extends earb.Node {
         
     }
     
+    playNote() {
+        for(var i in this.song.nodes) {
+            var node = this.song.nodes[i];
+            var view = this.song.nodes[i].view;
+            if(view) {
+                if()
+            }
+        }
+    }
+    
 }
 
 earb.registerNodeType(earb.Node.Synthesizer, "EXHkKOmZVBc2");
