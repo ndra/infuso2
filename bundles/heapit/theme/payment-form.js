@@ -1,17 +1,25 @@
-$(function() {
-
-    var form = $(".payment-vlj855earc");     
+mod(".payment-vlj855earc").init(function() {
+    
+    var $container = $(this);
+    
+    // Сохранение по ctrl + s
     $(document).on('keydown', function(event) {
         if (event.ctrlKey || event.metaKey) {
             switch (String.fromCharCode(event.which).toLowerCase()) {
                 case 's':
                     event.preventDefault();
-                    form.parent().submit();
+                    $container.parent().submit();
                     break;
             }
         }
     });
     
+    var $date = $container.find("input[name=date]");
+    $date.on("datechange", function() {
+        $container.find(".c-similar-payments").triggerHandler("refresh");
+    });
+    
+    // @todo рефакторить это
     $(".payment-vlj855earc input[name=direction]").change(function() {
         var value = $("input[name=direction]:checked").val();
         if(value == "income") {

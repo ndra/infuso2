@@ -108,6 +108,9 @@ class Payment extends \Infuso\ActiveRecord\Record {
         );    
     }
     
+    /**
+     * Признак блокирования записи
+     **/
     public function isLocked() {
     
         if($this->data("status") == self::STATUS_PLAN) {

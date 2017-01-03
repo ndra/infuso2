@@ -1,4 +1,14 @@
 .payment-vlj855earc {
+    
+    display: flex;
+    
+    & > .left {
+        width: 900px;
+    }
+    
+    & > .right {
+        flex: 1;
+    }
 
     input[type='text'], textarea, select {
         .g-input();

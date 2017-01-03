@@ -7,7 +7,7 @@ use \Infuso\Heapit\Model;
 class Payment extends Base {
 
     public function index() {
-        pp()->tm()->exec("/heapit/payment-list");
+        app()->tm()->exec("/heapit/payment-list");
     }
     
     public function index_add($p) {    
