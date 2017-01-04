@@ -2,7 +2,7 @@ earb.Node.Pattern.View = class extends earb.Node.View {
 
     defaultParams() {    
         var params = super.defaultParams();
-        params.width = 8 * 50;
+        params.width = 440;
         params.height = 5 * 50;
         return params;        
     }          
@@ -23,7 +23,10 @@ earb.Node.Pattern.View = class extends earb.Node.View {
             .attr("width", this.$content().width())
             .attr("height", this.$content().height())
             .css({
-                //border: "1px solid red"
+                position: "absolute",                
+                left: 10,
+                top: 10,
+               // "image-rendering": "pixelated"
             }).appendTo(this.$content())
             .mousedown(function(event) {
                 var coords = view.getButtonFromCoords(event.offsetX, event.offsetY);
@@ -45,7 +48,7 @@ earb.Node.Pattern.View = class extends earb.Node.View {
     
         this.padParams = {
             margin: 1,
-            spacing: 1,
+            spacing: 2,
             width: 24,
             height: 24,
             cols: 16,
@@ -53,7 +56,8 @@ earb.Node.Pattern.View = class extends earb.Node.View {
         }
     
         var ctx = this.$pad.get(0).getContext("2d");        
-        ctx.fillStyle = "#ccc";     
+        //ctx.fillStyle = "#ccc";     
+        ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
         
         for(var j = 0; j < this.padParams.rows; j ++) {
             for(var i = 0; i < this.padParams.cols; i ++) {

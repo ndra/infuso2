@@ -13,6 +13,7 @@ js($this->bundle()->path()."/res/js/base.js");
 js($this->bundle()->path()."/res/js/song.js");
 js($this->bundle()->path()."/res/js/link.js");
 js($this->bundle()->path()."/res/js/node.js");
+js($this->bundle()->path()."/res/js/nodelist.js");
 js($this->bundle()->path()."/res/js/node.view.js");
 js($this->bundle()->path()."/res/js/node.generator.js");
 js($this->bundle()->path()."/res/js/node.generator.view.js");

@@ -16,6 +16,15 @@ earb.Song = class extends earb.Base {
         } 
     }
     
+    nodeList() {
+    
+        var nodes = [];
+        for(var id in this.nodes) {
+            nodes.push(id);
+        }
+        return new earb.NodeList(this, nodes);
+    }
+    
     defaultParams() {
         return {
             bpm: 120,
