@@ -115,6 +115,10 @@ earb.Song = class extends earb.Base {
         });
     }
     
+    link(id) {
+        return this.links[id];
+    }
+    
     /**
      * Удаляет связь id
      **/

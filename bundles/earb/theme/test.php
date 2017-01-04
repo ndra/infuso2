@@ -14,6 +14,7 @@ js($this->bundle()->path()."/res/js/song.js");
 js($this->bundle()->path()."/res/js/link.js");
 js($this->bundle()->path()."/res/js/node.js");
 js($this->bundle()->path()."/res/js/nodelist.js");
+js($this->bundle()->path()."/res/js/linklist.js");
 js($this->bundle()->path()."/res/js/node.view.js");
 js($this->bundle()->path()."/res/js/node.generator.js");
 js($this->bundle()->path()."/res/js/node.generator.view.js");
@@ -29,6 +30,8 @@ js($this->bundle()->path()."/res/js/node.pattern.js");
 js($this->bundle()->path()."/res/js/node.pattern.view.js");
 js($this->bundle()->path()."/res/js/node.synthesizer.js");
 js($this->bundle()->path()."/res/js/node.synthesizer.view.js");
+js($this->bundle()->path()."/res/js/node.asr.js");
+js($this->bundle()->path()."/res/js/node.asr.view.js");
 
 
 <div class='nRjkjN8GAn' >

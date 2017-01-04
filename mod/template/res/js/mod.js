@@ -397,7 +397,7 @@ if(!window.mod) {
         }
         
         for(var i in obj) {
-            if(typeof(obj[i])=="object") { 
+            if(typeof(obj[i]) == "object") { 
                 // Простые объекты (массивы) мы клонируем
                 if(obj[i] && (obj[i].constructor==({}).constructor || obj[i].constructor==([]).constructor )) {        
                     clone[i] = inx.deepCopy(obj[i]);     

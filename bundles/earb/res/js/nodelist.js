@@ -51,6 +51,31 @@ earb.NodeList = class {
         return new earb.NodeList(this.song, nodes);
     }
     
+    /**
+     * Возвращает связи между нодами в списке
+     * @todo оптимизация скорости - выбирать линки сразу
+     **/
+    links() {
+        var links = [];
+        var used = {};
+        for(var i in this.song.links) {
+            var link = this.song.links[i];
+            for(var j in this.idList) {
+                var nodeId = this.idList[j];
+                if(link.params.src == nodeId || link.params.dest == nodeId) {
+                    if(!used[link.id()]) {
+                        links.push(link.id());
+                    }
+                    used[link.id()] = true;
+                }
+            }
+        }
+        return new earb.LinkList(this.song, links);
+    }
+    
+    /**
+     * @todo mapParams - там хардкод параметров
+     **/
     clone() {
     
         var song = this.song;
@@ -66,11 +91,28 @@ earb.NodeList = class {
             }, lifetime);        
         });
         
-        // Клонируем линки
-        for(var i in this.song.links) {
-            var link = this.song.links[i];
-            if(link.params.src)
+        var mapParams = function(params) {
+        
+            params = {
+                src: params.src,
+                dest: params.dest,
+                srcPort: params.srcPort,
+                destPort: params.destPort,
+            };
+        
+            if(clonedNodes[params.src]) {
+                params.src = clonedNodes[params.src].params.id;
+            }
+            if(clonedNodes[params.dest]) {
+                params.dest = clonedNodes[params.dest].params.id;
+            }
+            return params;
         }
+        
+        // Клонируем линки
+        this.links().each(function() {
+            song.createLink(mapParams(this.params));
+        });
         
     }
                     
