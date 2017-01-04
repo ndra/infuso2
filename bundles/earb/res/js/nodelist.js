@@ -51,6 +51,27 @@ earb.NodeList = class {
         return new earb.NodeList(this.song, nodes);
     }
     
+    clone() {
     
+        var song = this.song;
+        var lifetime = 1000;
+        var clonedNodes = {};
+        
+        // Клонируем ноды
+        this.each(function() {
+            var newNode = song.addNode(this.params);
+            clonedNodes[this.params.id] = newNode;
+            setTimeout(function() {
+                song.removeNode(newNode.params.id)
+            }, lifetime);        
+        });
+        
+        // Клонируем линки
+        for(var i in this.song.links) {
+            var link = this.song.links[i];
+            if(link.params.src)
+        }
+        
+    }
                     
 }

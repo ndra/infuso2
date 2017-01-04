@@ -16,8 +16,7 @@ earb.Song = class extends earb.Base {
         } 
     }
     
-    nodeList() {
-    
+    nodeList() {       
         var nodes = [];
         for(var id in this.nodes) {
             nodes.push(id);

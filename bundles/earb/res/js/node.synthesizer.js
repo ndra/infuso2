@@ -52,26 +52,10 @@ earb.Node.Synthesizer = class extends earb.Node {
     }
     
     playNote() {
-    
-    
-        /*for(var i in this.song.nodes) {
-            var node = this.song.nodes[i];
-            var view = this.song.nodes[i].view;
-            if(view) {
-                if(node.params.id != this.params.id
-                    && node.view.params.x >= this.view.params.x
-                    && node.view.params.y >= this.view.params.y
-                    && node.view.params.x + node.view.params.width <= this.view.params.x + this.view.params.width
-                    && node.view.params.y + node.view.params.height <= this.view.params.y + this.view.params.height) {
-                    mod.msg(node.params.id);
-                }
-            }
-        } */
-    
-        this.song.nodeList().inside(this).not(this.params.id).each(function() {
-            mod.msg(this.params.id);
-        });
-
+        this.song.nodeList()
+            .inside(this)
+            .not(this.params.id)
+            .clone();
     }
     
 }
