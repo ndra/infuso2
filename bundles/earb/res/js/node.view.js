@@ -9,7 +9,7 @@ earb.Node.View = class extends earb.Base {
             if(!this.$container) {
                 return;
             }              
-            this.$container.css("left", event.value);
+            this.$container.css("left", event.value);    
             this.node.song.redrawLinks();
         });
         this.on("param/y", function(event) {                  

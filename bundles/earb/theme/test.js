@@ -18,10 +18,7 @@ mod(".nRjkjN8GAn").init(function() {
     });
     
     var redrawLinks = function() {
-        
-       // var c = $links.get(0);
-       // var ctx = c.getContext("2d");
-       // ctx.clearRect(0, 0, c.width, c.height);
+
         $links.html("");
         var nodesOffset = $nodes.offset(); 
         
@@ -29,6 +26,14 @@ mod(".nRjkjN8GAn").init(function() {
             var link = this;
             var src = link.src();
             var dest = link.dest();
+            
+            if(!src.view) {
+                return;
+            }
+            
+            if(!dest.view) {
+                return;
+            }
             
             var $src = src.view.getOutElement(link.params.srcPort);
             var $dest = dest.view.getInElement(link.params.destPort);

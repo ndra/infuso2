@@ -52,11 +52,12 @@ earb.Node.Synthesizer = class extends earb.Node {
     }
     
     playNote() {
-        this.song.nodeList()
+        this.song.nodeManager.nodes()
             .inside(this)
             .not(this.params.id)
             .clone({
-                f: Math.random() * 1000
+                f: Math.random() * 1000,
+                temporary: true
             });
     }
     

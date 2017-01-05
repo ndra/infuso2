@@ -29,7 +29,7 @@ earb.NodeList = class {
                 }
             }
         }
-        return new earb.NodeList(this, nodes);
+        return new earb.NodeList(this.nodeManager, nodes);
     }
                     
     inside(node) {
@@ -48,29 +48,25 @@ earb.NodeList = class {
                 nodes.push(id);
             }
         }
-        return new earb.NodeList(this, nodes);
+        return new earb.NodeList(this.nodeManager, nodes);
     }
     
     /**
      * Возвращает связи между нодами в списке
-     * @todo оптимизация скорости - выбирать линки сразу
      **/
     links() {
-        var links = [];
         var used = {};
-        for(var i in this.song.links) {
-            var link = this.song.links[i];
-            for(var j in this.idList) {
-                var nodeId = this.idList[j];
-                if(link.params.src == nodeId || link.params.dest == nodeId) {
-                    if(!used[link.id()]) {
-                        links.push(link.id());
-                    }
-                    used[link.id()] = true;
+        var ret = [];
+        var nodeManager = this.nodeManager;
+        this.each(function() {
+            nodeManager.song.linkManager.byNode(this.params.id).each(function() {
+                if(!used[this.id()]) {
+                    ret.push(this.id());
+                    used[this.id()] = true;
                 }
-            }
-        }
-        return new earb.LinkList(this.song, links);
+            });
+        });
+        return new earb.LinkList(this.nodeManager.song.linkManager, ret);
     }
     
     /**
@@ -78,14 +74,19 @@ earb.NodeList = class {
      **/
     clone(additionalParams) {
     
-        var song = this.song;
+        additionalParams.view = {
+            x: 100,
+            y: 100
+        }
+    
+        var nodeManager = this.nodeManager;
         var lifetime = 1000;
         var clonedNodes = {};
         
         // Клонируем ноды
         this.each(function() {
         
-            var params = mod.deepCopy(this.params);
+            var params = mod.deepCopy(this.storeParams());
             delete params.id;
             
             if(additionalParams) {
@@ -94,11 +95,11 @@ earb.NodeList = class {
                 }
             }
             
-            var newNode = song.addNode(params);
+            var newNode = nodeManager.add(params);
             
             clonedNodes[this.params.id] = newNode;
             setTimeout(function() {
-                song.removeNode(newNode.params.id)
+                nodeManager.remove(newNode.params.id)
             }, lifetime);        
         });
         
@@ -122,8 +123,8 @@ earb.NodeList = class {
         
         // Клонируем линки
         this.links().each(function() {
-            song.createLink(mapParams(this.params));
-        });
+            nodeManager.song.linkManager.add(mapParams(this.params));
+        });     
         
     }
                     

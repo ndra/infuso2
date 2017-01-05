@@ -53,9 +53,10 @@ earb.Song.LinkManager = class {
         this.__dest[link.params.dest].push(link.id());
         
         link.createPhysical();
-        var song = this;
         
-        this.song.redrawLinks();
+        if(!link.src().isTemporary() && !link.dest().isTemporary()) {  
+            this.song.redrawLinks();
+        }
         
     }
     
@@ -125,7 +126,9 @@ earb.Song.LinkManager = class {
             delete this.__dest[link.params.dest];
         }
         
-        this.song.redrawLinks();
+        if(!link.src().isTemporary() && !link.dest().isTemporary()) {
+            this.song.redrawLinks();
+        }
     }
 
 }

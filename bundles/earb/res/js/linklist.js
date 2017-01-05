@@ -3,6 +3,9 @@ earb.LinkList = class {
     constructor(linkManager, idList) {
         this.linkManager = linkManager;
         this.idList = idList;
+        Object.defineProperty(this, "length", { get: function () {
+            return this.idList.length; 
+        }});
     }
     
     each(fn) {

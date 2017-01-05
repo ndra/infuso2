@@ -35,9 +35,11 @@ earb.Song.NodeManager = class {
         this.__nodes[node.params.id] = node;
         node.song = this.song;  
               
-        setTimeout(function() {
-            node.song.fire("node/render", node);
-        });
+        if(!node.isTemporary()) {
+            setTimeout(function() {
+                node.song.fire("node/render", node);
+            });
+        }
        
         return node;
     }

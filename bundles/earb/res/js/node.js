@@ -5,9 +5,11 @@ earb.Node = class extends earb.Base {
     }
 
     additionalStore() {
-        return {
-            view: this.view.storeParams()
-        };
+        if(this.view) {
+            return {
+                view: this.view.storeParams()
+            };
+        }
     }
     
     storeKeys() {
@@ -35,6 +37,10 @@ earb.Node = class extends earb.Base {
     }
     
     inConnector(port) {
+    }
+    
+    isTemporary() {
+        return !!this.params.temporary;
     }
 
 }
