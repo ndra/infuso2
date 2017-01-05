@@ -35,6 +35,8 @@ js($this->bundle()->path()."/res/js/node.synthesizer.js");
 js($this->bundle()->path()."/res/js/node.synthesizer.view.js");
 js($this->bundle()->path()."/res/js/node.asr.js");
 js($this->bundle()->path()."/res/js/node.asr.view.js");
+js($this->bundle()->path()."/res/js/node.analyzer.js");
+js($this->bundle()->path()."/res/js/node.analyzer.view.js");
 
 
 <div class='nRjkjN8GAn' >

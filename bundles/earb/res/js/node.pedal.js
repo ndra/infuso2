@@ -3,23 +3,24 @@ earb.Node.Pedal = class extends earb.Node {
     constructor(params) {
         super(params);
         
-        var ctx = earb.Song.context();    
-        
-        var real = new Float32Array(2);
-        var imag = new Float32Array(2);
-        real[0] = 1;
-        imag[0] = 1;
-        real[1] = 1;
-        imag[1] = 1;        
-        this.oscillator = ctx.createOscillator(); 
-        var wave = ctx.createPeriodicWave(real, imag);        
-        this.oscillator.setPeriodicWave(wave);
-        this.oscillator.frequency.value = 0;
-        this.oscillator.start();
+        var ctx = earb.Song.context();  
         
         this.gain = ctx.createGain();
-        this.gain.gain.value = 0;  
-        this.oscillator.connect(this.gain);
+        this.gain.gain.value = 1;  
+        
+        // Создаем источник постоянного тока  
+        
+        var node = ctx.createBufferSource();
+        var buffer = ctx.createBuffer(1, 1, ctx.sampleRate);
+        var data = buffer.getChannelData(0);
+        for (var i = 0; i < 1; i++) {
+            data[i] = 1;
+        }
+        
+        node.buffer = buffer;
+        node.loop = true;
+        node.connect(this.gain);
+        node.start(0);
         
     }   
     
