@@ -29,7 +29,6 @@ earb.Node.Generator.View = class extends earb.Node.View {
         
         var storeShape = function() {
             view.node.params.shape = $shape.val();
-            mod.msg($shape.val());
         }
         
         var $freq = $("<input>")

@@ -1,13 +1,13 @@
 earb.NodeList = class {
 
-    constructor(song, idList) {
-        this.song = song;
+    constructor(nodeManager, idList) {
+        this.nodeManager = nodeManager;
         this.idList = idList;
     }
     
     each(fn) {
         for (var i in this.idList) {
-            var node = this.song.node(this.idList[i]);
+            var node = this.nodeManager.node(this.idList[i]);
             if (node) {
                 fn.apply(node);
             }
@@ -18,7 +18,7 @@ earb.NodeList = class {
         var nodes = [];
         for(var i in this.idList) {
             var id = this.idList[i];            
-            var node = this.song.node(id);
+            var node = this.nodeManager.node(id);
             var view = node.view;
             if (view) {
                 if (node.view.params.x >= x1
@@ -29,7 +29,7 @@ earb.NodeList = class {
                 }
             }
         }
-        return new earb.NodeList(this.song, nodes);
+        return new earb.NodeList(this, nodes);
     }
                     
     inside(node) {
@@ -48,7 +48,7 @@ earb.NodeList = class {
                 nodes.push(id);
             }
         }
-        return new earb.NodeList(this.song, nodes);
+        return new earb.NodeList(this, nodes);
     }
     
     /**
@@ -76,7 +76,7 @@ earb.NodeList = class {
     /**
      * @todo mapParams - там хардкод параметров
      **/
-    clone() {
+    clone(additionalParams) {
     
         var song = this.song;
         var lifetime = 1000;
@@ -84,7 +84,18 @@ earb.NodeList = class {
         
         // Клонируем ноды
         this.each(function() {
-            var newNode = song.addNode(this.params);
+        
+            var params = mod.deepCopy(this.params);
+            delete params.id;
+            
+            if(additionalParams) {
+                for(var i in additionalParams) {
+                    params[i] = additionalParams[i];
+                }
+            }
+            
+            var newNode = song.addNode(params);
+            
             clonedNodes[this.params.id] = newNode;
             setTimeout(function() {
                 song.removeNode(newNode.params.id)

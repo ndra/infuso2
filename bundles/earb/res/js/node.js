@@ -2,7 +2,6 @@ earb.Node = class extends earb.Base {
 
     constructor(params) {
         super(params);
-        this.createView();  
     }
 
     additionalStore() {
@@ -21,10 +20,11 @@ earb.Node = class extends earb.Base {
         };
     }
     
-    createView() {     
+    createView($container) {     
         var c = this.viewConstructor();
         this.view = new c(this.params.view);
-        this.view.setNode(this);      
+        this.view.setNode(this); 
+        this.view.render($container)     
     }
     
     viewConstructor() {

@@ -400,7 +400,7 @@ if(!window.mod) {
             if(typeof(obj[i]) == "object") { 
                 // Простые объекты (массивы) мы клонируем
                 if(obj[i] && (obj[i].constructor==({}).constructor || obj[i].constructor==([]).constructor )) {        
-                    clone[i] = inx.deepCopy(obj[i]);     
+                    clone[i] = mod.deepCopy(obj[i]);     
                 }            
                 //  Объекты с прототипами (Объекты jquery, inx :) и т.п. - оставляем как есть)       
                 else {

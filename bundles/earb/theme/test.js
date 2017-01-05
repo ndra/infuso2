@@ -13,9 +13,8 @@ mod(".nRjkjN8GAn").init(function() {
 
     var song = new earb.Song(data);
     
-    song.on("addNode", function(node) {
-        var $e = $("<div>").appendTo($nodes);
-        node.view.render($e);
+    song.on("node/render", function(node) {
+        node.createView($nodes);
     });
     
     var redrawLinks = function() {
@@ -26,8 +25,8 @@ mod(".nRjkjN8GAn").init(function() {
         $links.html("");
         var nodesOffset = $nodes.offset(); 
         
-        for(var i in song.links) {
-            var link = song.links[i];
+        song.linkManager.links().each(function() {
+            var link = this;
             var src = link.src();
             var dest = link.dest();
             
@@ -57,7 +56,7 @@ mod(".nRjkjN8GAn").init(function() {
                     d: "M "+x1+" "+y1+" C "+x1+" "+(y1-70)+" "+x2+" "+(y2-20)+" "+x2+" "+y2
                 }).data("id", link.id())
                 .click(function() {
-                    song.removeLink($(this).data("id"));
+                    song.linkManager.remove($(this).data("id"));
                 })
                 .appendTo($links);
           
@@ -67,17 +66,16 @@ mod(".nRjkjN8GAn").init(function() {
                     d: "M "+x1+" "+y1+" C "+x1+" "+(y1-70)+" "+x2+" "+(y2-20)+" "+x2+" "+y2
                 }).data("id", link.id())
                 .click(function() {
-                    song.removeLink($(this).data("id"));
+                    song.linkManager.remove($(this).data("id"));
                 })
                 .attr("class", "link-light")
                 .appendTo($links);
                 
             
-        }
+        });
     };
     
-    song.on("link/create", redrawLinks);
-    song.on("node/move", redrawLinks);
+    song.on("link/redraw", redrawLinks);
     
     for(var i in earb.nodeTypes) {
         var type = earb.nodeTypes[i];
@@ -87,7 +85,7 @@ mod(".nRjkjN8GAn").init(function() {
             .appendTo($header)
             .data("type", i)
             .click(function() {
-                song.addNode({
+                song.nodeManager.add({
                     type: $(this).data("type")
                 });
             });
@@ -101,7 +99,7 @@ mod(".nRjkjN8GAn").init(function() {
     
     // Удаление нод
     $content.children(".trash").on("mod/drop", function(event) {
-        song.removeNode(event.source.data("node-id"));
+        song.nodeManager.remove(event.source.data("node-id"));
     });
 
 });

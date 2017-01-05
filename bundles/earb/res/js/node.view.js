@@ -10,7 +10,7 @@ earb.Node.View = class extends earb.Base {
                 return;
             }              
             this.$container.css("left", event.value);
-            this.node.song.fire("node/move");
+            this.node.song.redrawLinks();
         });
         this.on("param/y", function(event) {                  
             event.value = Math.round(event.value) || 0;          
@@ -18,7 +18,7 @@ earb.Node.View = class extends earb.Base {
                 return;
             }
             this.$container.css("top", event.value);
-            this.node.song.fire("node/move");
+            this.node.song.redrawLinks();
         });
         
         this.on("param/z", function(event) {                  
@@ -151,7 +151,7 @@ earb.Node.View = class extends earb.Base {
             
         $circle.on("mod/drop", function(event) {
             var id = event.dragElement.data("out/id");
-            view.node.song.createLink({
+            view.node.song.linkManager.add({
                 src: id,
                 srcPort: event.dragElement.data("out/port"),
                 dest: view.node.params.id,

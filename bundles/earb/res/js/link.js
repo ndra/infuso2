@@ -13,11 +13,11 @@ earb.Link = class extends earb.Base {
     }
     
     src() {
-        return this.song.node(this.params.src);
+        return this.song.nodeManager.node(this.params.src);
     }
     
     dest() {
-        return this.song.node(this.params.dest);
+        return this.song.nodeManager.node(this.params.dest);
     }
     
     id() {
@@ -49,6 +49,13 @@ earb.Link = class extends earb.Base {
         
         src.connect(dest);
 
+    }
+    
+    /**
+     * Удаляет линк
+     **/
+    remove() {
+        this.song.linkManager.remove(this.id());
     }
     
 }

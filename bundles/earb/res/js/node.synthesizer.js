@@ -55,7 +55,9 @@ earb.Node.Synthesizer = class extends earb.Node {
         this.song.nodeList()
             .inside(this)
             .not(this.params.id)
-            .clone();
+            .clone({
+                f: Math.random() * 1000
+            });
     }
     
 }

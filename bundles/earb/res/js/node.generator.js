@@ -7,11 +7,11 @@ earb.Node.Generator = class extends earb.Node {
         this.oscillator = ctx.createOscillator();
         
         this.oscillator.type = this.params.shape;
-        //this.oscillator.frequency.value = this.params.frequency; // value in hertz
+        this.oscillator.frequency.value = this.prepareValue(this.params.frequency);
         this.oscillator.start();
         
         this.on("param/frequency", function(event) {
-           // this.oscillator.frequency.value = event.value;
+            this.oscillator.frequency.value = this.prepareValue(event.value);
         });
         
         this.on("param/shape", function(event) {
@@ -27,9 +27,16 @@ earb.Node.Generator = class extends earb.Node {
         return keys;
     }
     
+    prepareValue(str) {
+        return earb.MathParser(str, {
+            f: this.params.f
+        });
+    }
+    
     defaultParams() {
         var params = super.defaultParams();
         params.frequency = 440;
+        params.f = 440;
         params.shape = "sine";
         return params;
     }
