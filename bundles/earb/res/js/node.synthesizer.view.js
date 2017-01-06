@@ -16,21 +16,6 @@ earb.Node.Synthesizer.View = class extends earb.Node.View {
             left: 10,
             top: 10
         }); 
-        
-        var node = this.node;
-        
-        $("<div>")
-            .css({
-                left: 100,
-                top: 100,
-                width: 20,
-                height: 20,
-                background: "red",
-                position: "absolute"
-            }).appendTo(this.$container)
-            .click(function() {
-                node.playNote();
-            });
  
     }
 

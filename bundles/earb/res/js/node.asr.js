@@ -6,7 +6,8 @@ earb.Node.ASR = class extends earb.Node {
         this.gain = ctx.createGain();
         this.gain.gain.value = 0;
         this.gain.gain.linearRampToValueAtTime(1, ctx.currentTime + .01);
-        this.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 1);
+        this.gain.gain.linearRampToValueAtTime(.8, ctx.currentTime + .1);
+        this.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + .16);
         
     }
 

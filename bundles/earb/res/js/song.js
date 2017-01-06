@@ -54,10 +54,18 @@ earb.Song = class extends earb.Base {
         };
         
         this.nodeManager.nodes().each(function() {
-            ret.nodes.push(this.storeParams());
+            if(!this.isTemporary()) {
+                ret.nodes.push(this.storeParams());
+            }
         });
         
         this.linkManager.links().each(function() {
+            if(this.src().isTemporary()) {
+                return;
+            }
+            if(this.dest().isTemporary()) {
+                return;
+            }
             ret.links.push(this.storeParams());
         });
         

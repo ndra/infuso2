@@ -14,6 +14,7 @@ earb.Node.Synthesizer = class extends earb.Node {
     
     defaultParams() {
         var params = super.defaultParams();
+        params.pattern = {};
         return params;
     }
     
@@ -37,26 +38,16 @@ earb.Node.Synthesizer = class extends earb.Node {
         }
     }
     
-    handleMidi(event) {
-        
-        var ctx = earb.Song.context();   
-        var oscillator = ctx.createOscillator();          
-        oscillator.type = "sine";
-        oscillator.frequency.value = event.frequency;
-        oscillator.start();  
-        oscillator.connect(this.gain);
-        setTimeout(function() {
-            oscillator.disconnect();        
-        }, event.duration);
-        
+    handleMidi(event) {        
+        this.playNote(event.frequency);         
     }
     
-    playNote() {
+    playNote(f) {
         this.song.nodeManager.nodes()
             .inside(this)
             .not(this.params.id)
             .clone({
-                f: Math.random() * 1000,
+                f: f,
                 temporary: true
             });
     }

@@ -121,6 +121,7 @@ window.earb = function(params) {
  * Возвращает частоту ноты
  **/         
 earb.getNoteFrequency = function(note) {
+    note *= 1;
     note += 48;
     var frequency = 27.5 * Math.pow(2, note / 12);
     return frequency;
