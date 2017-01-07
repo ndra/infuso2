@@ -72,7 +72,7 @@ class Meta extends ActiveRecord\Record {
 	 * Возвращает элемент reflex, связанный с этим объектом метаданных
 	 **/
 	public function item() {
-	    list($class,$id) = explode(":",$this->data("hash"));
+	    list($class,$id) = explode(":", $this->data("hash"));
 	    return service("ar")->get($class,$id);
 	}
 
@@ -82,18 +82,27 @@ class Meta extends ActiveRecord\Record {
 	public function beforeStore() {
 
 	    // Ссылки
-	    $links = preg_replace("/\s*\,\s*/",",",$this->data("links"));
-	    $links = preg_replace("/\s+/"," ",$links);
+	    $links = preg_replace("/\s*\,\s*/", ",", $this->data("links"));
+	    $links = preg_replace("/\s+/", " ", $links);
 	    $links = mb_strtolower($links,"utf-8");
-	    $links = \Infuso\Util\Util::splitAndTrim($links,",");
-	    $this->data("links",",".implode(",",$links).",");
+	    $links = \Infuso\Util\Util::splitAndTrim($links, ",");
+	    $this->data("links", ",".implode(",",$links).",");
 
 		// Удаляем избыточные меты
 	    $this->unnecessary()->delete();
 
 	    // На всякий случай, восстанавливаем хэш
-		$this->data("hash",get_class($this->item()).":".$this->item()->id());
+		$this->data("hash", get_class($this->item()).":".$this->item()->id());
+        
 	}
+    
+    public function afterStore() {
+        app()->fire("reflex/meta-changed", array(
+            "item" => $this->item(),
+            "meta" => $this->data(),
+            "metaObject" => $this,
+        ));
+    }
 
 	/**
 	 * Возвращает список "лишних" метаданных.
