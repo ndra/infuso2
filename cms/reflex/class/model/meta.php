@@ -97,7 +97,7 @@ class Meta extends ActiveRecord\Record {
 	}
     
     public function afterStore() {
-        app()->fire("reflex/meta-changed", array(
+        app()->fire("reflex/metachanged", array(
             "item" => $this->item(),
             "meta" => $this->data(),
             "metaObject" => $this,
