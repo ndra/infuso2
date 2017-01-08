@@ -4,7 +4,9 @@ earb.Node.Synthesizer = class extends earb.Node {
         super(params);          
         var ctx = earb.Song.context();        
         this.gain = ctx.createGain();    
-        this.on("midi", this.handleMidi);     
+        this.on("midi", this.handleMidi);  
+        
+        this.voices = {};   
     }
     
     storeKeys() {
@@ -39,17 +41,46 @@ earb.Node.Synthesizer = class extends earb.Node {
     }
     
     handleMidi(event) {        
-        this.playNote(event.frequency);         
+        switch(event.type) {
+            case "play":
+                this.playNote(event.note);
+                break;
+            case "stop":
+                this.stopNote(event.note)
+                break;
+        }         
     }
     
-    playNote(f) {
-        this.song.nodeManager.nodes()
+    playNote(note) {
+    
+        var f = earb.getNoteFrequency(note);
+        
+        var newNodes = this.song.nodeManager.nodes()
             .inside(this)
             .not(this.params.id)
             .clone({
                 f: f,
                 temporary: true
             });
+            
+        this.voices[note] = newNodes;            
+    }
+    
+    stopNote(note) {
+    
+        var nodes = this.voices[note];
+        if(!nodes) {
+            return;
+        }
+        
+        nodes.fire("midi/stop");
+        
+        setTimeout(function() {
+            nodes.remove();
+        }, 2000); 
+        
+        delete this.voices[note];
+    
     }
     
 }

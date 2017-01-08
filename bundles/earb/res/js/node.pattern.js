@@ -41,31 +41,41 @@ earb.Node.Pattern = class extends earb.Node {
     handleTick() {
         var n = this.tick % 16;
         var col = this.params.pattern[n];
+        var node = this;
         if(col) {
             for(var i in col) {                
                 if(col[i]) {                 
                     var step = 7 - i;                    
-                    var note = earb.scales.minor().note(step);
-                    var frequency = earb.getNoteFrequency(note);
-                
+                    var note = earb.scales.minor().note(step);                      
                     this.sendMidiMessage({
                         type: "play",
-                        frequency: frequency,
-                        duration: 200
+                        note: note
                     });
+                    setTimeout(function() {
+                        node.sendMidiMessage({
+                            type: "stop",
+                            note: note
+                        });                    
+                    }, 90);
                 
                 }
             }
         }
         this.tick ++;
     }
-    
+   
+    /**
+     * @todo сделать нормально disconnect
+     **/
     outConnector(port) {
         if(port == "default") {
             var node = this;
             return new function() {
                 this.connect = function(dest) {
                     node.connected.push(dest);
+                }
+                this.disconnect = function(dest) {
+                    //node.connected.push(dest);
                 }
             };
         }

@@ -42,5 +42,9 @@ earb.Node = class extends earb.Base {
     isTemporary() {
         return !!this.params.temporary;
     }
+    
+    remove() {
+        this.song.nodeManager.remove(this.params.id);
+    }
 
 }

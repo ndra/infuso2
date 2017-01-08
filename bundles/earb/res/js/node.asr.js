@@ -5,9 +5,16 @@ earb.Node.ASR = class extends earb.Node {
         var ctx = earb.Song.context();        
         this.gain = ctx.createGain();
         this.gain.gain.value = 0;
-        this.gain.gain.linearRampToValueAtTime(1, ctx.currentTime + .01);
-        this.gain.gain.linearRampToValueAtTime(.8, ctx.currentTime + .1);
-        this.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + .16);
+        this.gain.gain.linearRampToValueAtTime(this.params.attackGain * 1, ctx.currentTime + this.params.attackDuration * 1);
+        this.gain.gain.setTargetAtTime(0, ctx.currentTime + this.params.attackDuration * 1, this.params.sustainDecay * 1);
+        
+        this.releaseGain = ctx.createGain();
+        this.releaseGain.gain.value = 1;
+        this.gain.connect(this.releaseGain);
+        
+        this.on("midi/stop", function() {
+            this.releaseGain.gain.linearRampToValueAtTime(0, ctx.currentTime + this.params.releaseDuration * 1);
+        });
         
     }
 
@@ -39,7 +46,7 @@ earb.Node.ASR = class extends earb.Node {
     
     outConnector(port) {
         if(port == "default") {
-            return this.gain;
+            return this.releaseGain;
         }
     }
     

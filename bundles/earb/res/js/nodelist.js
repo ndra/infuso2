@@ -82,6 +82,7 @@ earb.NodeList = class {
         var nodeManager = this.nodeManager;
         var lifetime = 1000;
         var clonedNodes = {};
+        var clonedIds = [];
         
         // Клонируем ноды
         this.each(function() {
@@ -96,11 +97,9 @@ earb.NodeList = class {
             }
             
             var newNode = nodeManager.add(params);
-            
             clonedNodes[this.params.id] = newNode;
-            setTimeout(function() {
-                nodeManager.remove(newNode.params.id)
-            }, lifetime);        
+            clonedIds.push(newNode.params.id);
+       
         });
         
         var mapParams = function(params) {
@@ -124,8 +123,23 @@ earb.NodeList = class {
         // Клонируем линки
         this.links().each(function() {
             nodeManager.song.linkManager.add(mapParams(this.params));
-        });     
+        });   
         
+        
+        return new earb.NodeList(this.nodeManager, clonedIds);  
+        
+    }
+    
+    remove() {
+        this.each(function() {
+            this.remove();
+        });
+    }
+    
+    fire(event) {
+        this.each(function() {
+            this.fire(event);
+        });
     }
                     
 }
