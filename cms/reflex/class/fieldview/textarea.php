@@ -26,5 +26,11 @@ class Textarea extends View {
     public function colWidth() {
         return 100;
     }
+    
+    public function filterTemplate() {
+    	$tmp = app()->tm("/reflex/field-filters/textfield");
+		$tmp->param("name", $this->field()->name());
+		return $tmp;
+    }
 
 }
