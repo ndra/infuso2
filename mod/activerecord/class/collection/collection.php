@@ -595,20 +595,50 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
         return $this;
     }
     
-     public function eqMaterializedPath($key, $val) {
+    public function nmatch($key, $val) {
+        $this->unload();
+        $key = $this->normalizeColName($key);
+        if(is_array($val)) {
+            $val = implode(" ", $val);
+        } 
+        $str = service("db")->quote($val);
+        $this->where("not match($key) against ($str in boolean mode) ");
+        return $this;
+    }
+    
+     public function matchNumeric($key, $val) {
         $this->unload();
         if(is_array($val)) {
             $mas = array();
-            foreach($val as $item){
-                $mas[]  = str_pad($item,5,"0",STR_PAD_LEFT);
+            foreach($val as $item) {
+                $mas[]  = str_pad($item, 5, "0", STR_PAD_LEFT);
             }
-            $this->match($key,$mas);
-        }else{
-            $val = str_pad($val,5,"0",STR_PAD_LEFT); 
-            $this->match($key,$val);
+            $this->match($key, $mas);
+        } else {
+            $val = str_pad($val, 5, "0", STR_PAD_LEFT); 
+            $this->match($key, $val);
         }
         return $this;    
     } 
+    
+     public function nmatchNumeric($key, $val) {
+        $this->unload();
+        if(is_array($val)) {
+            $mas = array();
+            foreach($val as $item) {
+                $mas[]  = str_pad($item, 5, "0", STR_PAD_LEFT);
+            }
+            $this->nmatch($key, $mas);
+        } else {
+            $val = str_pad($val, 5, "0", STR_PAD_LEFT); 
+            $this->nmatch($key, $val);
+        }
+        return $this;    
+    } 
+    
+    public function eqMaterializedPath($key, $val) {
+        return $this->matchNumeric($key, $val);
+    }
     
     public function isnull($key) {
         $this->unload();
