@@ -205,7 +205,7 @@ class User extends ActiveRecord\Record {
         $insert["email"] = $p["email"];
         $insert["registrationTime"] = \Infuso\Util\Date::now()."";
 
-        $user = service("ar")->create(get_class(),$insert);
+        $user = service("ar")->create(get_class(), $insert);
 
         return $user;
     }

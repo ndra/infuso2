@@ -4,12 +4,12 @@ namespace Infuso\UserActions\Controller;
 use \Infuso\Core;
 
 /**
- * Контроллер для управления заказом
+ * Контроллер для логина
  **/
-class Registration extends Core\Controller {
+class Login extends Core\Controller {
 
     public function controller() {
-        return "registration";
+        return "login";
     }
 
     public function indexTest() {
@@ -17,7 +17,7 @@ class Registration extends Core\Controller {
     }
     
     public function index() {
-        app()->tm("/user-actions/registration")->exec();
+        app()->tm("/user-actions/login")->exec();
     }
 
 }

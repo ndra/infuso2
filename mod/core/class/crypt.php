@@ -9,11 +9,11 @@ class Crypt {
 		return $salt.md5($source.$salt);
 	}
 
-	public static function checkHash($hash,$source) {
+	public static function checkHash($hash, $source) {
 
 		// Старый метод шифрования
-		if(substr($hash,0,3)=='$1$') {
-		    return crypt($source,$hash)==$hash;
+		if(substr($hash,0,3) == '$1$') {
+		    return crypt($source, $hash) == $hash;
 		}
 
 		$salt = mb_substr($hash,0,12);

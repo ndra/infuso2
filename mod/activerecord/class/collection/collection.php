@@ -177,11 +177,11 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     /**
      * Присоединяет к коллекции коллекцию по внешнему ключу
      **/
-    public function joinByField($name,$collection=null) {
+    public function joinByField($name, $collection = null) {
 
         $field = $this->virtual()->field($name);
 
-        if($field->typeID()!="pg03-cv07-y16t-kli7-fe6x") {
+        if($field->typeID() != "pg03-cv07-y16t-kli7-fe6x") {
             return $this;
         }
         
@@ -193,7 +193,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
 
         $class = $field->itemClass();
         $list = service("ar")->collection($class);
-        $this->join($list,$field->name(), $field->foreignKey());
+        $this->join($list, $field->name(), $field->foreignKey());
 
         if($collection) {
 

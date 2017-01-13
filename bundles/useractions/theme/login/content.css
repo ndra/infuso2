@@ -1,0 +1,26 @@
+.Y8y9HPBfXA {
+    
+    width: 380px;
+    margin: 0 auto;
+    padding-top: 100px;
+    
+    h1 {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    
+    td {
+        padding: 10px;
+        vertical-align: middle;
+    }
+    
+    & > .actions {
+        margin-top: 30px;
+        font-size: .8em;
+        a {
+            margin-right: 20px;
+        }
+    }
+    
+    
+}
