@@ -264,17 +264,17 @@ class Component {
     /**
      * Получить параметр, задать параметр
      **/
-    public final function &param($key=null,$val=null) {
+    public final function &param($key = null, $val = null) {
 
         $this->loadParams();
 
-        if(func_num_args()==0) {
+        if(func_num_args() == 0) {
             return $this->params;
         } elseif (func_num_args() == 1) {
 
             if(is_array($key)) {
-                foreach($key as $a=>$b) {
-                    $this->param($a,$b);
+                foreach($key as $a => $b) {
+                    $this->param($a, $b);
                 }
                 return $this;
             }
@@ -283,14 +283,14 @@ class Component {
             // Если возвращать по ссылке несуществующие элементы массива, php создает их на лету
             // и записывает в них нули
             // Чтобы этого не произошло - проверяем наличие ключа у массива
-            if(array_key_exists($key,$this->params)) {
+            if(array_key_exists($key, $this->params)) {
                 return $this->params[$key];
             } else {
                 return null;
             }
 
         }  elseif(func_num_args() == 2) {
-            if(!in_array($key,$this->lockedParams)) {
+            if(!in_array($key, $this->lockedParams)) {
                 $this->params[$key] = $val;
             }
             return $this;
@@ -301,7 +301,7 @@ class Component {
     /**
      * При вызове без параметров выбросит исключение
      **/
-    public final function params($params=null) {
+    public final function params($params = null) {
 
         $this->loadParams();
 
@@ -316,7 +316,7 @@ class Component {
             }
 
             foreach($params as $key => $val) {
-                $this->param($key,$val);
+                $this->param($key, $val);
             }
             return $this;
         }
@@ -357,7 +357,7 @@ class Component {
      * Разворачивает в область видимости кода массив переменных $params
      **/
     public function evalCode() {
-        if(func_num_args()==2 && is_array(func_get_arg(1))) {
+        if(func_num_args() == 2 && is_array(func_get_arg(1))) {
             extract(func_get_arg(1));
         }
         return eval(func_get_arg(0));

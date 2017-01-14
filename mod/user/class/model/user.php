@@ -163,8 +163,8 @@ class User extends ActiveRecord\Record {
     /**
      * Создает виртуального пользователя (без занесения в базу)
      **/
-    public final function virtual($data=null) {
-        return service("ar")->virtual(get_class(),$data);
+    public final function virtual($data = null) {
+        return service("ar")->virtual(get_class(), $data);
     }
 
     /**
@@ -224,14 +224,14 @@ class User extends ActiveRecord\Record {
      * Проверяет код, сгенерированный методом newCode
      **/
     public function testCode($code) {
-        list($stamp,$tail) = explode(":",$code);
+        list($stamp,$tail) = explode(":", $code);
         $stamp = intval($stamp);
 
-        if(strlen($tail)!=20)
+        if(strlen($tail) != 20)
             return false;
 
         // Сколько часов назад был создан код
-        $d = (util::now()->stamp() - $stamp)/3600;
+        $d = (util::now()->stamp() - $stamp) / 3600;
         
         if($d<0) {
             return false;
@@ -241,7 +241,7 @@ class User extends ActiveRecord\Record {
             return false;
         }
 
-        return $this->data("verificationCode")==$code;
+        return $this->data("verificationCode") == $code;
     }
 
     /**
@@ -249,7 +249,7 @@ class User extends ActiveRecord\Record {
      **/
     public function newCode() {
         $code = util::now()->stamp().":".util::id(20);
-        $this->data("verificationCode",$code);
+        $this->data("verificationCode", $code);
         return $code;
     }
 
@@ -260,7 +260,7 @@ class User extends ActiveRecord\Record {
         if(!$this->data("email")) {
             return $this;
         }
-        $this->data("verified",1);
+        $this->data("verified", 1);
         return $this;
     }
 
@@ -268,7 +268,7 @@ class User extends ActiveRecord\Record {
      * Снимает подтверждение почты пользователя
      **/
     public final function removeVerification() {
-        $this->data("verified",0);
+        $this->data("verified", 0);
         return $this;
     }
 
@@ -308,7 +308,7 @@ class User extends ActiveRecord\Record {
             return false;
         }
 
-        if($email==$this->data("email")) {
+        if($email == $this->data("email")) {
             return true;
         }
 
@@ -317,7 +317,7 @@ class User extends ActiveRecord\Record {
             return false;
         }
 
-        $this->data("email",$email);
+        $this->data("email", $email);
         return true;
     }
 
@@ -327,14 +327,14 @@ class User extends ActiveRecord\Record {
      **/
     public static final function active() {
     
-        \Infuso\Core\Profiler::beginOperation("user","active",null);
+        \Infuso\Core\Profiler::beginOperation("user", "active", null);
 
         if(!self::$activeUser) {
 
             $cookie = $_COOKIE["login"];
 
-            if(strlen($cookie)>5) {
-                $auth = Auth::all()->eq("cookie",$cookie)->one();
+            if(strlen($cookie) > 5) {
+                $auth = Auth::all()->eq("cookie", $cookie)->one();
             } else {
                 $auth = Auth::get(0);
             }
@@ -391,14 +391,14 @@ class User extends ActiveRecord\Record {
     /**
      * Активирует пользователя без каких-либо проверок
      **/
-    public final function activate($keep=null) {
+    public final function activate($keep = null) {
         if(!$this->exists()) {
             return;
         }
         $keepDays = $keep ? 14 : null;
         $cookie = $this->newCookie();
-        $expire = $keepDays ? time()+60*60*24*$keepDays : null;
-        setcookie("login",$cookie,$expire,"/");
+        $expire = $keepDays ? time() + 60 * 60 * 24 * $keepDays : null;
+        setcookie("login", $cookie, $expire, "/");
         $_COOKIE["login"] = $cookie;
         self::$activeUser = $this;
         //$this->log("Вход");
@@ -408,18 +408,25 @@ class User extends ActiveRecord\Record {
      * Возвращает коллекцию авторизаций пользователя
      **/
     public function authorizations() {
-        return Auth::all()->eq("userID",$this->id());
+        return Auth::all()->eq("userID", $this->id());
+    }
+    
+    /**
+     * Возвращает коллекцию авторизаций пользователя
+     **/
+    public function tokens() {
+        return Token::all()->eq("userId", $this->id());
     }
 
     /**
      * Проверяет, может ли пользователь выполнить операцию $operation с парамтерами $params
      **/
-    public final function checkAccess($operationCode,$params=array()) {
+    public final function checkAccess($operationCode, $params = array()) {
     
-        Core\Profiler::beginOperation("user","checkAccess",$operationCode);
+        Core\Profiler::beginOperation("user", "checkAccess", $operationCode);
     
         if(!is_array($params)) {
-            throw new Exception("user::checkAccess() second argument must be array");
+            throw new \Exception("user::checkAccess() second argument must be array");
         }
     
         $this->clearErrorText();
@@ -439,9 +446,8 @@ class User extends ActiveRecord\Record {
      * Проверяет возможность выполнить операцию.
      * Если в доступе отказано, выкидывает Исключение
      **/
-    public function checkAccessThrowException($operationCode,$params=array()) {
-
-        if(!$this->checkAccess($operationCode,$params)) {
+    public function checkAccessThrowException($operationCode, $params = array()) {   
+        if(!$this->checkAccess($operationCode, $params)) {
             throw new Exception($this->errorText());
         }
     }
@@ -650,8 +656,8 @@ class User extends ActiveRecord\Record {
     public function registerActivity() {
         // Округляем время до 5 минут и записываем в пользователя
         $stamp = util::now()->stamp();
-        $stamp = round($stamp/60/5)*60*5;
-        $this->data("lastActivity",$stamp);
+        $stamp = round($stamp / 60 / 5) * 60 * 5;
+        $this->data("lastActivity", $stamp);
     }
     
     /**
@@ -679,6 +685,24 @@ class User extends ActiveRecord\Record {
         }
 
         return "user-".$this->id();
+    }
+    
+    /**
+     * $params = array(
+     *   "type" => ...,
+     *   "expires" => ...,
+     * );
+     **/
+    public function generateToken($params) {    
+        $token = service("ar")->create(Token::inspector()->className(), array(
+            "userId" => $this->id(),
+            "expires" => $params["expires"],
+            "type" => $params["type"],
+        ));
+        return $token;
+    }
+    
+    public function checkToken($token, $params) {
     }
 
 }

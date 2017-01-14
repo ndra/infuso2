@@ -36,6 +36,14 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	    return User\Model\Role::all()
 			->title("Роли");
 	}
+    
+
+	/**
+	 * @reflex-child = on
+	 **/
+	public function tokens() {
+	    return $this->item()->tokens()->title("Токены");
+	}
 
 	/**
 	 * @reflex-child = on

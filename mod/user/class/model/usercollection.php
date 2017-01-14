@@ -16,7 +16,7 @@ class UserCollection extends Core\Behaviour {
     }
     
     public function active() {
-        $this->eq("verified",1);
+        $this->eq("verified", 1);
     }
 
 }
