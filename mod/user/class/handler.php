@@ -17,9 +17,10 @@ class Handler implements Core\Handler {
     } */
     
     public static function clear() {
+    
         service("user")->deleteUnverfiedUsers();
         
-        \Infuso\User\Model\User::all()
+        \Infuso\User\Model\Token::all()
             ->lt("expires", \Infuso\Core\Date::now())
             ->delete();
         
@@ -35,10 +36,9 @@ class Handler implements Core\Handler {
 		$operations = \Infuso\User\Model\Operation::all();
 		$operations->delete();
 		
-		\Infuso\User\Model\Role::create("admin","Администратор");
+		\Infuso\User\Model\Role::create("admin", "Администратор");
     
-        return;
-        reflex_task::add(array(
+        service("task")->add(array(
             "class" => get_class(),
             "method" => "clear",
             "crontab" => "0 0 * * *",

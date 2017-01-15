@@ -320,6 +320,28 @@ class User extends ActiveRecord\Record {
         $this->data("email", $email);
         return true;
     }
+    
+    /**
+     * Активирует пользователя без каких-либо проверок
+     **/
+    public final function activate($keep = false) {
+    
+        if(!$this->exists()) {
+            return;
+        }
+        
+        $token = $this->generateToken(array(
+            "type" => "login",
+            "lifetime" => 14 * 3600 * 24, 
+        ));
+        
+        app()->cookie("login", $token, $keep ? 24 : null);
+        
+        self::$activeUser = $this;
+        $this->thisIsActiveUser = true;
+        
+    }
+
 
     /**
      * Возвращает активного (залогиневшегося) пользователя
@@ -331,22 +353,29 @@ class User extends ActiveRecord\Record {
 
         if(!self::$activeUser) {
 
-            $cookie = $_COOKIE["login"];
+            $cookie = app()->cookie("login");
+            
+            $user = null;
 
             if(strlen($cookie) > 5) {
-                $auth = Auth::all()->eq("cookie", $cookie)->one();
-            } else {
-                $auth = Auth::get(0);
+                $token = Token::byToken($cookie);
+                if($token->user()->checkToken($cookie, array(
+                    "type" => "login"
+                ))) {
+                    $user = $token->user();
+                }
             }
 
-            $user = $auth->user();
-
-            if(!$user->verified()) {
-                $user = user::virtual();
+            if($user && !$user->verified()) {
+                $user = null;
             }
 
-            if(!$user->exists()) {
-                $user = user::virtual();
+            if($user && !$user->exists()) {
+                $user = null;
+            }
+            
+            if(!$user) {
+                $user = self::virtual();
             }
             
             self::$activeUser = $user;
@@ -364,7 +393,7 @@ class User extends ActiveRecord\Record {
      **/
     public function isActiveUser() {
 
-        if($this->exists() && $this->id()==user::active()->id()) {
+        if($this->exists() && $this->id() == User::active()->id()) {
             return true;
         }
 
@@ -374,34 +403,6 @@ class User extends ActiveRecord\Record {
 
         return false;
 
-    }
-
-    /**
-     * Генерирует пользователю новый код для куков, устанавливает его и возвращает его же
-     **/
-    private final function newCookie() {
-        $cookie = \util::id();
-        $auth = service("ar")->create(Auth::inspector()->className(),array(
-            "cookie" => $cookie,
-            "userID" => $this->id(),
-        ));
-        return $cookie;
-    }
-
-    /**
-     * Активирует пользователя без каких-либо проверок
-     **/
-    public final function activate($keep = null) {
-        if(!$this->exists()) {
-            return;
-        }
-        $keepDays = $keep ? 14 : null;
-        $cookie = $this->newCookie();
-        $expire = $keepDays ? time() + 60 * 60 * 24 * $keepDays : null;
-        setcookie("login", $cookie, $expire, "/");
-        $_COOKIE["login"] = $cookie;
-        self::$activeUser = $this;
-        //$this->log("Вход");
     }
 
     /**
@@ -665,7 +666,7 @@ class User extends ActiveRecord\Record {
      * Возвращает true/false
      **/
     public function checkPassword($pass) {
-        $check = Core\Crypt::checkHash($this->data("password"),$pass);
+        $check = Core\Crypt::checkHash($this->data("password"), $pass);
         return $check;
     }
 

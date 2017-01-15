@@ -100,10 +100,18 @@ class Token extends ActiveRecord\Record {
         $this->data("expires", $this->pdata("start")->shift($this->data("lifetime")));
     }
     
+    /**
+     * Возвращает публичный токен
+     * Работает только после создания токена (в том же вызове скрипта)
+     * При извлечении токена из базы, вернет null
+     **/
     public function token() {
         return $this->token;
     }
     
+    /**
+     * Возвращает флаг того что токен устарел
+     **/
     public function expired() {
         return $this->pdata("expires")->stamp() < \Infuso\Core\Date::now()->stamp();
     }

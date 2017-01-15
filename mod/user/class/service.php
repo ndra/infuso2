@@ -53,7 +53,7 @@ class Service extends Core\Service {
     * Удяляет всех не активированых пользователей у который рега > deleteUnverfiedUserDays   
     **/
     public function deleteUnverfiedUsers() {
-        $deleteTime = util::now()->shiftDay(-$this->param("deleteUnverfiedUserDays"));
+        $deleteTime = \Infuso\Core\Date::now()->shiftDay(-$this->param("deleteUnverfiedUserDays"));
         $users = $this->unverfiedUsers()->lt("registrationTime", $deleteTime);
         $users->delete();
     }

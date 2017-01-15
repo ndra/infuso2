@@ -23,15 +23,8 @@ class Login extends Core\Controller {
     public function index_test() {
         
         $user = service("user")->get(2);
-        
-        $token = $user->generateToken(array(
-            "type" => "login",
-            "lifetime" => 1,
-        ));
-        
-        echo $user->checkToken($token, array(
-            "type" => "login",
-        ));
+        $user->activate();
+        echo app()->user()->title();
         
     }
 
