@@ -41,6 +41,11 @@ class Token extends ActiveRecord\Record {
 					'editable' => '2',
                     "default" => "now()",
 				), array (
+					'name' => 'expires',
+					'type' => 'datetime',
+                    "label" => "Истекает",
+					'editable' => '2',
+				), array (
 					'name' => 'type',
 					'type' => 'textfield',
 					'editable' => '2',
@@ -91,12 +96,16 @@ class Token extends ActiveRecord\Record {
         $this->data("token", $crypted);
     }
     
+    public function beforeStore() {
+        $this->data("expires", $this->pdata("start")->shift($this->data("lifetime")));
+    }
+    
     public function token() {
         return $this->token;
     }
     
     public function expired() {
-        return false;
+        return $this->pdata("expires")->stamp() < \Infuso\Core\Date::now()->stamp();
     }
     
     public function checkToken($token) {

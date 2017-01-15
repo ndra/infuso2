@@ -16,8 +16,13 @@ class Handler implements Core\Handler {
         User::active()->registerActivity();
     } */
     
-    public static function deleteUnverfiedUsers() {
-        service("user")->deleteUnverfiedUsers();        
+    public static function clear() {
+        service("user")->deleteUnverfiedUsers();
+        
+        \Infuso\User\Model\User::all()
+            ->lt("expires", \Infuso\Core\Date::now())
+            ->delete();
+        
     }
     
     /**
@@ -35,8 +40,10 @@ class Handler implements Core\Handler {
         return;
         reflex_task::add(array(
             "class" => get_class(),
-            "method" => "deleteUnverfiedUsers",
-            "crontab" => "0 0 * * *"
+            "method" => "clear",
+            "crontab" => "0 0 * * *",
+            "title" => "Очистка юзеров и токенов",
+            "randomize" => 120,
         ));
     }
 

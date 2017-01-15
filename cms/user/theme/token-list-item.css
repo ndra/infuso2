@@ -3,11 +3,17 @@
     padding: 5px 10px;
     display: flex;
     
+    & > * {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    
     .token {
         width: 350px;
     }
     
-    .expires {
+    .date {
         width: 120px;
     }
     

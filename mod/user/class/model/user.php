@@ -693,10 +693,19 @@ class User extends ActiveRecord\Record {
      *   "expires" => ...,
      * );
      **/
-    public function generateToken($params) {    
+    public function generateToken($params) { 
+    
+        if($params["lifetime"] <= 0) {
+            throw new \Exception("Bad token lifetime");
+        }
+        
+        if(!$params["type"]) {
+            throw new \Exception("Bad token type");
+        }
+       
         $token = service("ar")->create(Token::inspector()->className(), array(
             "userId" => $this->id(),
-            "expires" => $params["expires"],
+            "lifetime" => $params["lifetime"],
             "type" => $params["type"],
         ));
         return $token->token();
