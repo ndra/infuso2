@@ -335,6 +335,8 @@ class User extends ActiveRecord\Record {
             "lifetime" => 14 * 3600 * 24, 
         ));
         
+        echo $token;
+        
         app()->cookie("login", $token, $keep ? 24 : null);
         
         self::$activeUser = $this;
@@ -363,6 +365,7 @@ class User extends ActiveRecord\Record {
                     "type" => "login"
                 ))) {
                     $user = $token->user();
+                    $token->extend();
                 }
             }
 
@@ -376,7 +379,7 @@ class User extends ActiveRecord\Record {
             
             if(!$user) {
                 $user = self::virtual();
-            }
+            } 
             
             self::$activeUser = $user;
             $user->thisIsActiveUser = true;
@@ -405,13 +408,6 @@ class User extends ActiveRecord\Record {
 
     }
 
-    /**
-     * Возвращает коллекцию авторизаций пользователя
-     **/
-    public function authorizations() {
-        return Auth::all()->eq("userID", $this->id());
-    }
-    
     /**
      * Возвращает коллекцию авторизаций пользователя
      **/

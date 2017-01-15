@@ -116,6 +116,17 @@ class Token extends ActiveRecord\Record {
         return $this->pdata("expires")->stamp() < \Infuso\Core\Date::now()->stamp();
     }
     
+    /**
+     * Продлевает токен, устанавливая в качестве даты начала текущую
+     * Запускается не чаще чем раз в час чтобы не насиловать базу
+     **/
+    public function extend() {    
+        if(\Infuso\Core\Date::now()->stamp() - $this->pdata("start")->stamp() < 3600) {
+            return;
+        }
+        $this->data("start", \Infuso\Core\Date::now());
+    }
+    
     public function checkToken($token) {
         if(!$token) {
             return false;

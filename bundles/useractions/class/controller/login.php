@@ -22,8 +22,8 @@ class Login extends Core\Controller {
     
     public function index_test() {
         
-        $user = service("user")->get(2);
-        $user->activate();
+        //$user = service("user")->get(2);
+        //$user->activate();
         echo app()->user()->title();
         
     }

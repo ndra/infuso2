@@ -459,7 +459,7 @@ class App {
   		if(func_num_args() == 1) {
 		    return Cookie::get($key);
 		}
-		if(func_num_args() == 2) {
+		if(func_num_args() == 2 || func_num_args() == 3) {
 	    	Cookie::set($key, $val, $keepDays);
 	    }
     }

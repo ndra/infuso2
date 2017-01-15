@@ -44,13 +44,6 @@ class UserEditor extends \Infuso\Cms\Reflex\Editor {
 	public function tokens() {
 	    return $this->item()->tokens()->title("Токены");
 	}
-
-	/**
-	 * @reflex-child = on
-	 **/
-	public function auth() {
-	    return $this->item()->authorizations()->title("Авторизации");
-	}
 	
 	public function layout() {
 	    return array(
