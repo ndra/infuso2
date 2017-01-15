@@ -9,6 +9,10 @@ use \Infuso\ActiveRecord;
  **/
 class Token extends ActiveRecord\Record {
 
+    private $token;
+    
+    const ID_LENGTH = 20;
+
 	public static function model() {
 	
 		return array (
@@ -26,10 +30,16 @@ class Token extends ActiveRecord\Record {
 					'label' => 'Пользователь',
 					'class' => User::inspector()->className(),
 				), array (
-					'name' => 'expired',
-					'type' => 'datetime',
-                    "label" => "Время окончания",
+					'name' => 'lifetime',
+					'type' => 'bigint',
+                    "label" => "Время жизни",
 					'editable' => '2',
+				), array (
+					'name' => 'start',
+					'type' => 'datetime',
+                    "label" => "Дата отсчета времени жизни",
+					'editable' => '2',
+                    "default" => "now()",
 				), array (
 					'name' => 'type',
 					'type' => 'textfield',
@@ -56,6 +66,13 @@ class Token extends ActiveRecord\Record {
 	public static function get($id) {
 		return service("ar")->get(get_class(), $id);
 	}
+    
+	public static function byToken($token) {    
+        $idLength = self::ID_LENGTH;
+        $token = substr($token, 0, $idLength);
+        $token = service("db")->quote($token);
+        return self::all()->where("left(`token`, {$idLength}) = {$token}")->one();
+	}
 
 	public function user() {
 		return User::get($this->data("userId"));
@@ -63,6 +80,32 @@ class Token extends ActiveRecord\Record {
     
     public function recordParent() {
         return $this->user();
+    }
+    
+    public function beforeCreate() {
+        $id = \Infuso\Util\Util::id(20);
+        $token = \Infuso\Util\Util::id(40); 
+        $private = $id.$token;
+        $crypted = $id.Core\Crypt::hash($token);
+        $this->token = $private;
+        $this->data("token", $crypted);
+    }
+    
+    public function token() {
+        return $this->token;
+    }
+    
+    public function expired() {
+        return false;
+    }
+    
+    public function checkToken($token) {
+        if(!$token) {
+            return false;
+        }
+        $public = substr($token, self::ID_LENGTH);
+        $private = substr($this->data("token"), self::ID_LENGTH);
+        return Core\Crypt::checkHash($private, $public);
     }
 
 }

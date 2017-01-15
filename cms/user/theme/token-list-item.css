@@ -1,0 +1,14 @@
+.RDqZHFl7c0 {
+
+    padding: 5px 10px;
+    display: flex;
+    
+    .token {
+        width: 350px;
+    }
+    
+    .expires {
+        width: 120px;
+    }
+    
+}

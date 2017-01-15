@@ -699,10 +699,30 @@ class User extends ActiveRecord\Record {
             "expires" => $params["expires"],
             "type" => $params["type"],
         ));
-        return $token;
+        return $token->token();
     }
     
     public function checkToken($token, $params) {
+    
+        $tokenObj = \Infuso\User\Model\Token::byToken($token);
+        if(!$tokenObj->exists()) {
+            return false;
+        } 
+        
+        if(!$tokenObj->checkToken($token)) {
+            return false;
+        }
+        
+        if($tokenObj->expired()) {
+            return false;
+        }
+        
+        if($tokenObj->data("type") != $params["type"]) {
+            return false;
+        }
+        
+        return true;
+    
     }
 
 }
