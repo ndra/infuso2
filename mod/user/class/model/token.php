@@ -72,13 +72,31 @@ class Token extends ActiveRecord\Record {
 		return service("ar")->get(get_class(), $id);
 	}
     
-	public static function byToken($token) {    
+    /**
+     * Возвращает токен по публичному токену
+     **/
+	public static function byToken($originalToken) {
         $idLength = self::ID_LENGTH;
-        $token = substr($token, 0, $idLength);
-        $token = service("db")->quote($token);
-        return self::all()->where("left(`token`, {$idLength}) = {$token}")->one();
+        $left = substr($originalToken, 0, $idLength);
+        $left = service("db")->quote($left);
+        $tokenObj = self::all()->where("left(`token`, {$idLength}) = {$left}")->one();
+        
+        // Истекшие токены не считаются
+        if($tokenObj->expired()) {
+            return new self();
+        }
+        
+        // На всякий случай проверяем токен
+        if(!$tokenObj->checkToken($originalToken)) {
+            return new self();
+        }
+        
+        return $tokenObj;
 	}
 
+    /**
+     * Возвращает пользователя к которому привязан токен
+     **/
 	public function user() {
 		return User::get($this->data("userId"));
 	}

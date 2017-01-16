@@ -177,22 +177,20 @@ class User extends ActiveRecord\Record {
 
          // Удаляем пробельные символы вокруг логина и пароля
         if(!$p["password"] = self::checkAbstractPassword($p["password"])) {
-            return user::get(0);
+            throw new \Exception("Неподходящий пароль");
         }
 
         // Проверяем электронную почту
         if(!$p["email"] = self::normalizeEmail($p["email"])) {
-            app()->msg("Ошибка в адресе электронной почты",1);
-            return user::get(0);
+            throw new \Exception("Ошибка в адресе электронной почты");
         }
 
         // Ищем пользователя с такой электронной почтой
         if(user::byEmail($p["email"])->exists()) {
-            app()->msg("Пользователь с такой электронной почтой уже существует",1);
-            return user::get(0);
+            throw new \Exception("Пользователь с такой электронной почтой уже существует");
         }
 
-        self::$password = $p["password"];
+        $this->password = $p["password"];
         $p["password"] = \Infuso\Core\Crypt::hash($p["password"]);
 
         foreach(user::virtual()->fields() as $field) {
@@ -210,47 +208,14 @@ class User extends ActiveRecord\Record {
         return $user;
     }
 
-    private static $password = null;
+    private $password = null;
 
     /**
      * Возвращает пароль у вновь созданого пользователя.
      * Данная функция будет работать в пределах того скрипта в котором был создан пользователь.
      **/
     public final function password() {
-        return self::$password;
-    }
-
-    /**
-     * Проверяет код, сгенерированный методом newCode
-     **/
-    public function testCode($code) {
-        list($stamp,$tail) = explode(":", $code);
-        $stamp = intval($stamp);
-
-        if(strlen($tail) != 20)
-            return false;
-
-        // Сколько часов назад был создан код
-        $d = (util::now()->stamp() - $stamp) / 3600;
-        
-        if($d<0) {
-            return false;
-        }
-        
-        if($d>1) {
-            return false;
-        }
-
-        return $this->data("verificationCode") == $code;
-    }
-
-    /**
-     * генерирует код
-     **/
-    public function newCode() {
-        $code = util::now()->stamp().":".util::id(20);
-        $this->data("verificationCode", $code);
-        return $code;
+        return $this->password;
     }
 
     /**
@@ -284,17 +249,19 @@ class User extends ActiveRecord\Record {
      **/
     public final function changePassword($pass) {
     
+        // Проверяем пользователя на существование
 		if(!$this->exists()) {
 		    throw new \Exception("Попытка смены пароля у несуществующего пользователя");
 		}
     
+        // Проверяем пароль на валидность
         $pass = self::checkAbstractPassword($pass);
         if(!$pass) {
-            return false;
+            throw new \Exception("Неподходящий пароль");
         }
+        
+        // Наконец, меняем пароль
         $this->data("password", Core\Crypt::hash($pass));
-        $cookie = $_COOKIE["login"];
-        $this->authorizations()->neq("cookie",$cookie)->delete();
         return true;
     }
 
@@ -334,8 +301,6 @@ class User extends ActiveRecord\Record {
             "type" => "login",
             "lifetime" => 14 * 3600 * 24, 
         ));
-        
-        echo $token;
         
         app()->cookie("login", $token, $keep ? 24 : null);
         
@@ -449,10 +414,17 @@ class User extends ActiveRecord\Record {
         }
     }
     
+    /**
+     * Очищает текст последней ошибки
+     **/
     public function clearErrorText() {
         $this->errorText = "";
     }    
    
+    /**
+     * Записывает текст ошибки
+     * Должна вызываться методами работы с пользователем в слуае ошибки
+     **/
     public function setErrorText($errorText) {
         if(trim($errorText)) {
             $this->errorText = $errorText;
@@ -460,6 +432,9 @@ class User extends ActiveRecord\Record {
         return $this;        
     }
     
+    /**
+     * Возвращает текст последней ошибки
+     **/
     public function errorText() {
         return $this->errorText;
     }
@@ -531,16 +506,18 @@ class User extends ActiveRecord\Record {
      * Проверкой пароля конкретного пользователя этот метод не занимается
      * @todo вынести в настройки минимальную длину пароля
      **/
-    public static final function checkAbstractPassword($password) {
+    public static final function _checkAbstractPassword($password) {
+    
+        // Обрезаем пробелы на всякий случай
         $password = trim($password);
+        
+        // Проверяем минимальную длину
         $passlen = 5;
-        if($passlen < 1) {
-			$passlen = 1;
-		}
         if(strlen($password) < $passlen) {
             app()->msg("Слишком короткий пароль. Минимальное количество символов: $passlen",1);
             return false;
         }
+        
         return $password;
     }
 

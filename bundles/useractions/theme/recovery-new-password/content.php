@@ -1,6 +1,6 @@
 <?
 
-<form class='J9ow0NXLJH' >
+<form class='Uu8qdmPUCT' >
 
     <h1>Восстановление пароля</h1>
     
@@ -8,14 +8,21 @@
 
         <table>
             <tr>
-                <td>Электронная почта</td>
+                <td>Новый пароль</td>
                 <td>
                     widget("infuso\\cms\\ui\\widgets\\textfield")
-                        ->fieldName("email")
+                        ->fieldName("password")
                         ->exec();
-                        
-                    <div class='error-email error' ></div>
-                        
+                    <div class='error-password error' ></div>
+                </td>
+            </tr>
+            <tr>
+                <td>Повтор пароля</td>
+                <td>
+                    widget("infuso\\cms\\ui\\widgets\\textfield")
+                        ->fieldName("password-2")
+                        ->exec();
+                    <div class='error-password-2 error' ></div>
                 </td>
             </tr>
             <tr>
@@ -28,13 +35,11 @@
                 </td>
             </tr>        
         </table>
-        
-        <a href='{action("infuso\\useractions\\controller\\register")->url()}' >Регистрация</a>
     
     </div>
     
-    $form = new \Infuso\Useractions\Form\Recovery();
+    $form = new \Infuso\Useractions\Form\NewPassword();
     $builder = $form->builder();
-    $builder->bind(".J9ow0NXLJH");
+    $builder->bind(".Uu8qdmPUCT");
 
 </form>

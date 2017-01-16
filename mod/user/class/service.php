@@ -36,10 +36,14 @@ class Service extends Core\Service {
     
     public function all() {
         return Model\User::all(); 
-    }
+    }   
     
     public function get($id) {
         return service("ar")->get(Model\User::inspector()->className(), $id);
+    }
+    
+    public function byToken($token) {
+        return \Infuso\User\Model\Token::byToken($token)->user();
     }
     
     /**
