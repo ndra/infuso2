@@ -177,17 +177,17 @@ class User extends ActiveRecord\Record {
 
          // Удаляем пробельные символы вокруг логина и пароля
         if(!$p["password"] = self::checkAbstractPassword($p["password"])) {
-            throw new \Exception("Неподходящий пароль");
+            throw new Core\Exception\UserLevel("Неподходящий пароль");
         }
 
         // Проверяем электронную почту
         if(!$p["email"] = self::normalizeEmail($p["email"])) {
-            throw new \Exception("Ошибка в адресе электронной почты");
+            throw new Core\Exception\UserLevel("Ошибка в адресе электронной почты");
         }
 
         // Ищем пользователя с такой электронной почтой
         if(user::byEmail($p["email"])->exists()) {
-            throw new \Exception("Пользователь с такой электронной почтой уже существует");
+            throw new Core\Exception\UserLevel("Пользователь с такой электронной почтой уже существует");
         }
 
         $this->password = $p["password"];
@@ -251,13 +251,13 @@ class User extends ActiveRecord\Record {
     
         // Проверяем пользователя на существование
 		if(!$this->exists()) {
-		    throw new \Exception("Попытка смены пароля у несуществующего пользователя");
+		    throw new Core\Exception\UserLevel("Попытка смены пароля у несуществующего пользователя");
 		}
     
         // Проверяем пароль на валидность
         $pass = self::checkAbstractPassword($pass);
         if(!$pass) {
-            throw new \Exception("Неподходящий пароль");
+            throw new Core\Exception\UserLevel("Неподходящий пароль");
         }
         
         // Наконец, меняем пароль
@@ -271,7 +271,7 @@ class User extends ActiveRecord\Record {
     public final function changeEmail($email) {
 
         if(!$email = self::normalizeEmail($email)) {
-            throw new \Exception("Ошибка в адресе электронной почты",1);
+            throw new Core\Exception\UserLevel("Ошибка в адресе электронной почты",1);
             return false;
         }
 
@@ -280,7 +280,7 @@ class User extends ActiveRecord\Record {
         }
 
         if(user::byEmail($email)->exists()) {
-            throw new \Exception("Пользователь с такой электронной почтой уже существует",1);
+            throw new Core\Exception\UserLevel("Пользователь с такой электронной почтой уже существует",1);
             return false;
         }
 
@@ -662,9 +662,11 @@ class User extends ActiveRecord\Record {
     }
     
     /**
+     * Создает новый токен
+     * Необходимо указать тип и время жизни
      * $params = array(
      *   "type" => ...,
-     *   "expires" => ...,
+     *   "lifetime" => ...,
      * );
      **/
     public function generateToken($params) { 

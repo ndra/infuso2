@@ -56,16 +56,12 @@ class App {
         include("superadmin.php");
         include("file/flist.php");
 		include("profiler.php");		
-		include("mod.php");
-		
-		//Profiler::beginOperation("core","includeCoreClasses",1);	        
+		include("mod.php"); 		
 	    include("service.php");
 	    include("classmap/service.php");
 	    include("file/file.php");
-	    include("file/localfile.php");
-	    
+	    include("file/localfile.php"); 	    
 	    include("bundle/bundle.php");
-	    //Profiler::endOperation();
 	}
 
 	public function setErrorLevel() {
@@ -170,7 +166,7 @@ class App {
 	 * т.к. ошибка в стороннем классе может сделать невозможным использование консоли
 	 **/
 	public function eventsEnabled() {
-	    if(preg_match("/^infuso\\\\core\\\\console/i",$this->action()->className())) {
+	    if(preg_match("/^infuso\\\\core\\\\console/i", $this->action()->className())) {
 	        return false;
 	    }
 	    return true;
@@ -208,7 +204,7 @@ class App {
                 // Вызываем событие исключения
                 $event = app()->fire("infuso/exception", array(
                     "exception" => $exception,
-                ));
+                ));                
 
 		    } catch(\Exception $ex2) {
 		        throw $exception;
@@ -241,8 +237,10 @@ class App {
 	    Header("HTTP/1.0 200 OK");
 
 		// Выполняем post-команду
-	    Post::process($this->post(),$this->files());
-	    Profiler::addMilestone("post completed");
+        if($this->post()["cmd"]) {
+            Post::process($this->post(), $this->files());
+            Profiler::addMilestone("post completed");
+        }
 
 	    Defer::callDeferedFunctions();
 	    Profiler::addMilestone("defered functions");

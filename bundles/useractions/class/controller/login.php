@@ -24,7 +24,7 @@ class Login extends Core\Controller {
         
         //$user = service("user")->get(2);
         //$user->activate();
-        echo app()->user()->title();
+        echo app()->user()->titl();
         
     }
 

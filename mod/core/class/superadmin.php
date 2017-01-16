@@ -23,6 +23,7 @@ class Superadmin extends Controller {
 
     /**
      * Проверяет является ли пользователь суперадмином
+     * Попробовать переписать с писпользование класса Session
      **/
     public static function check() {
 
@@ -34,7 +35,7 @@ class Superadmin extends Controller {
             $password = array_key_exists("mod:superadminPasswordHash", $_SESSION) ? trim($_SESSION["mod:superadminPasswordHash"]) : null;
 	        $hash = self::getStoredPassword();
 
-	        if($hash==="0000") {
+	        if($hash === "0000") {
 	            self::$checkResult = ($hash===$password);
 	        } else {
 	            self::$checkResult = Crypt::checkHash($hash,$password);
@@ -44,17 +45,23 @@ class Superadmin extends Controller {
 		return self::$checkResult;
     }
 
+    /**
+     * Возвращает хэш пароля, сохраненный в файле __superadmin.txt
+     **/
     public static function getStoredPassword() {
 
-        if(self::$storedPassword===null) {
+        if(self::$storedPassword === null) {
             self::$storedPassword = trim(file::get(mod::app()->confPath()."/__superadmin.txt")->data());
         }
 
         return self::$storedPassword;
     }
 
+    /**
+     * @todo не работает!
+     **/
     public static function is0000() {
-        return self::getStoredPassword()==="0000";
+        return self::getStoredPassword() === "0000";
     }
 
 	public static function postTest() {

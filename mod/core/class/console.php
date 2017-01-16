@@ -23,7 +23,7 @@ class Console extends Controller {
 	    try {
 	
 			// Пробуем залогиниться
-		    if($_GET["cmd"]=="login") {
+		    if($_GET["cmd"] == "login") {
 		        superadmin::post_login($_POST);
 		        console::redirect("/mod/");
 		    }
@@ -202,7 +202,6 @@ class Console extends Controller {
 	    <form method='post' action='/mod/?cmd=login'>
 	    <input type='password' id='password' name='password' style='width:200px;padding:10px;' />
 	    <input type='submit' value='&rarr;' style='padding:10px;' />
-	    <input type='hidden' name='cmd' value='login' />
 	    </form>
 	    </div>
 	    </div>

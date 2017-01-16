@@ -1,9 +1,15 @@
 <?
 
+namespace Infuso\Core;
+
 /**
  * Контроллер для json-запросов
  **/
-class mod_json extends \infuso\core\controller {
+class JSON extends \infuso\core\controller {
+
+    public function controller() {
+        return "mod_json";
+    }
 
 	public function indexTest() {
 	    return true;
@@ -21,6 +27,7 @@ class mod_json extends \infuso\core\controller {
         // Обрабатываем пачку команд
         foreach($data["requests"] as $requestId => $request) {
                 
+            // Подменяем массив $_FILES для каждого запроса
             $_FILES = array();
             foreach($xfiles as $key => $file) {
                 if(preg_match("/^{$requestId}\//", $key)) {
@@ -28,12 +35,19 @@ class mod_json extends \infuso\core\controller {
                     $_FILES[$newKey] = $xfiles[$key];                   
                 } 
             }
+            
+            $results[$requestId] = array(
+                "success" => false,
+                "messages" => array(),
+                "events" => array(), 
+            );  
 
     		try {
             
                 ob_start();
                 
-                $result = \infuso\core\post::process(
+                // Выполняем крманду
+                $result = Post::process(
     				$request,
     				$_FILES,
     				$success
@@ -44,12 +58,8 @@ class mod_json extends \infuso\core\controller {
     				app()->msg($txt, 1);
     			} 
     
-    			$results[$requestId] = array(
-                    "data" => $result,
-                    "success" => $success,
-                    "messages" => array(),
-                    "events" => array(), 
-                );                  
+    			$results[$requestId]["data"] = $result;
+                $results[$requestId]["success"] = true;
                 
                 \Infuso\Core\Defer::callDeferedFunctions();  
                 
@@ -64,11 +74,23 @@ class mod_json extends \infuso\core\controller {
                 
                 \Infuso\Core\Event::clearFiredEvents(); 
     
-    		} catch(Exception $ex) {
+    		} catch(Exception\UserLevel $ex) {
+            
+                // Пользовательская ошибка, ее текст показывать безопасно
+                app()->msg($ex->getMessage(), 1);
+            
+            } catch(\Exception $ex) {
                 
     		    // Трейсим ошибки
     		    app()->trace($ex);
-                app()->msg("<b>Exception:</b> ".$ex->getMessage(), 1);
+                
+                // Для суперадмина показывам ошибку целиком
+                // Для остальных - просто показываем ошибку
+                if(Superadmin::check()) {
+                    app()->msg("<b>Exception:</b> ".$ex->getMessage(), 1);
+                } else {
+                    app()->msg("Exception", 1); 
+                }
                 
     		}
             
@@ -85,7 +107,7 @@ class mod_json extends \infuso\core\controller {
             
         }
 
-		$json = new mod_confLoader_json();
+		$json = new \mod_confLoader_json();
 		echo $json->write($results);
 		
 	}

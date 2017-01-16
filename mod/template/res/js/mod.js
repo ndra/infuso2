@@ -221,6 +221,7 @@ if(!window.mod) {
             }));
             
             // Строим урл запроса
+            // Урл нужен для того чтобы определить что за команды выполняются по логу запросов
             var urlId = [];
             for(var i in requestsToSend) {
                 urlId.push((String)(requestsToSend[i].cmd).replace(/[^a-zA-Z0-9\/_]/g, ""));
@@ -236,6 +237,7 @@ if(!window.mod) {
                 type: "POST",
                 success: function(data) {
                     mod.handleCmd(data, ajaxId);
+                    mod.removeCompletedRequests(ajaxId);    
                 }, error:function(r) {
                     if(r.status != 0) {
                         console.log(r);
@@ -306,14 +308,13 @@ if(!window.mod) {
         
     }
     
-    mod.handleCmd = function(response, ajaxId) {
+    mod.handleCmd = function(response) {
     
         // Пробуем разобрать ответ от сервера
         try {
             eval("var data = " + response);
         } catch(ex) {
             mod.msg("Failed parse JSON: " + response, 1);
-            mod.removeCompletedRequests(ajaxId);
             return;
         }         
       
@@ -327,6 +328,7 @@ if(!window.mod) {
                 // При ошибке показываем уведомление
                 if(result.success) {
                 
+                    // Выполняем обработчик
                     if(request.onSuccess) {
                         request.onSuccess(result.data);
                     }
@@ -348,8 +350,6 @@ if(!window.mod) {
             }
         
         }
-        
-        mod.removeCompletedRequests(ajaxId);
     
     }
     
