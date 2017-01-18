@@ -192,7 +192,7 @@ class User extends ActiveRecord\Record {
             throw new Core\Exception\UserLevel("Пользователь с такой электронной почтой уже существует");
         }
 
-        $this->password = $p["password"];
+        $password = $p["password"];
         $p["password"] = \Infuso\Core\Crypt::hash($p["password"]);
 
         foreach(user::virtual()->fields() as $field) {
@@ -206,6 +206,8 @@ class User extends ActiveRecord\Record {
         $insert["registrationTime"] = \Infuso\Util\Date::now()."";
 
         $user = service("ar")->create(get_class(), $insert);
+        
+        $user->password = $password;
 
         return $user;
     }
