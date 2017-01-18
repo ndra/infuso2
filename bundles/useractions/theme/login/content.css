@@ -12,6 +12,9 @@
     td {
         padding: 10px;
         vertical-align: middle;
+        &:first-child {
+            width: 150px;
+        }
     }
     
     & > .actions {
@@ -22,5 +25,11 @@
         }
     }
     
+    .error {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 20px;
+        display: none;
+    }
     
 }

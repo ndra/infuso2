@@ -9,6 +9,7 @@
             <td>Электронная почта</td>
             <td>
                 widget("infuso\\cms\\ui\\widgets\\textfield")
+                    ->fieldName("email")
                     ->exec();
             </td>
         </tr>
@@ -16,12 +17,16 @@
             <td>Пароль</td>
             <td>
                 widget("infuso\\cms\\ui\\widgets\\textfield")
+                    ->fieldName("password")
                     ->exec();
             </td>
         </tr>
         <tr>
             <td></td>
             <td>
+            
+                <div class='error' >Электронная почта или пароль введены неверно</div>
+            
                 widget("infuso\\cms\\ui\\widgets\\button")
                     ->submit()
                     ->text("Войти")
