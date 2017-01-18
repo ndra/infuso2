@@ -36,12 +36,12 @@ class Controller extends Core\Controller {
         return false;
 	}
 
+    /**
+     * Контроллер разлогинивания пользователя
+     **/
     public function post_logout($p) {
-
-        $user = \User::active();
-        $cookie = $_COOKIE["login"];
-        $user->authorizations()->eq("cookie",$cookie)->delete();
-
+        $user = \User::active();        
+        $user->logout();
     }
 
 }

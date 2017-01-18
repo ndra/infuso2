@@ -15,6 +15,8 @@ class User extends ActiveRecord\Record {
 
     private $errorText = "";
     
+    private $password = null;
+    
     public static function model() {
     
         return array(
@@ -208,8 +210,6 @@ class User extends ActiveRecord\Record {
         return $user;
     }
 
-    private $password = null;
-
     /**
      * Возвращает пароль у вновь созданого пользователя.
      * Данная функция будет работать в пределах того скрипта в котором был создан пользователь.
@@ -307,6 +307,21 @@ class User extends ActiveRecord\Record {
         self::$activeUser = $this;
         $this->thisIsActiveUser = true;
         
+    }
+    
+    /**
+     * Разлогинивает пользователя
+     **/
+    public function logout() {
+    
+        $user = self::active();
+        
+        $token = Token::byToken(app()->cookie("login"));
+        
+        if($token->user()->id() == $user->id()) {
+            $token->delete();
+        }        
+    
     }
 
 
@@ -475,6 +490,9 @@ class User extends ActiveRecord\Record {
             ->delete();
     }
     
+    /**
+     * Возвращает коллекцию присоединенных ролей
+     **/
     public function rolesAttached() {
         return RoleAttached::all()->eq("userId", $this->id());
     }
