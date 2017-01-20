@@ -1,10 +1,10 @@
 <? 
 
-$user = user::active();
+$user = app()->user();
 
 <div class='jmi8th58od' >
 
-    $userpick = user::active()->userpic()->preview(16,16)->crop();
+    $userpick = $user->userpic()->preview(16, 16)->crop();
     $profileURL = action("infuso\\board\\controller\\conf")->url();
     
     <a class='userpick' href='{$profileURL}' >

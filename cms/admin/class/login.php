@@ -21,7 +21,7 @@ class admin_login extends mod_controller {
 
 	    return array(
 	        "user" => array(
-				"email" => user::active()->data("email"),
+				"email" => app()->user()->data("email"),
 			),
 	        "superadmin" => mod_superadmin::check(),
 	        "access" => $access,

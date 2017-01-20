@@ -78,7 +78,7 @@ class Project extends \Infuso\ActiveRecord\Record {
      **/
 	public function isActiveUserHaveSubscription() {
 	    $subscriptionKey = "board/project-{$this->id()}/taskCompleted";
-	    return !user::active()->subscriptions()->eq("key",$subscriptionKey)->void();
+	    return !app()->user()->subscriptions()->eq("key",$subscriptionKey)->void();
 	}
 
     /**

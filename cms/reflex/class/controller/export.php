@@ -6,11 +6,11 @@
 class reflex_editor_export extends mod_controller {
 
 	public static function indexTest() {
-	    return user::active()->checkAccess("admin:showInterface");
+	    return app()->user()->checkAccess("admin:showInterface");
 	}
 
 	public static function postTest() {
-	    return user::active()->checkAccess("admin:showInterface");
+	    return app()->user()->checkAccess("admin:showInterface");
 	}
 
 	public static function index() {

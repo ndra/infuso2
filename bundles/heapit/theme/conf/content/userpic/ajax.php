@@ -1,6 +1,6 @@
 <? 
 
-$user = \User::active();
+$user = app()->user();
 $preview = $user->userpic()->preview(200,200)->crop();
 
 <div class='bfk7mngrw4' >

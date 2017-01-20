@@ -407,7 +407,7 @@ class App {
     }
     
     public function user() {
-        return \user::active();
+        return service("user")->active();
     }
     
     /**

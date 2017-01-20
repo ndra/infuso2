@@ -110,7 +110,7 @@ class Log extends Record {
     }
 
     public function beforeCreate() {
-        $this->data("userId",\user::active()->id());
+        $this->data("userId", app()->user()->id());
     }
 
     public function afterStore() {

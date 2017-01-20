@@ -7,7 +7,7 @@
     $w = new \Infuso\Cms\UI\Widgets\Button();
     $w->tag("button");
     $w->addClass("add-comment");
-    $w->attr("data:userId", \user::active()->id());
+    $w->attr("data:userId", app()->user()->id());
     $w->attr("data:parent", $parent);
     $w->style("margin-right", 0);
     $w->text("Отправить");

@@ -1,6 +1,6 @@
 <? 
 
-$user = \user::active();
+$user = app()->user();
 
 <div class='wi5cwqcx1q' >
 

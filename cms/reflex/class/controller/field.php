@@ -10,7 +10,7 @@ use Infuso\Core;
 class Field extends Core\Controller {
 
     public function postTest() {
-        return \user::active()->checkAccess("admin:showInterface");
+        return app()->user()->checkAccess("admin:showInterface");
     }
     
     /**

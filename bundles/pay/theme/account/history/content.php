@@ -1,6 +1,6 @@
 <? 
 
-$user = user::active();
+$user = app()->user();
 <h1>Операции с внутреним счетом {$user->title()} #{$user->id()}</h1>
 
 <table class='w22e7mla9n' >

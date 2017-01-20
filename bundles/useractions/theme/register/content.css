@@ -11,7 +11,16 @@
     
     td {
         padding: 10px;
+        vertical-align: middle;
+        &:first-child {
+            width: 150px;
+        }
     }
     
+    .error {
+        color: red;
+        font-weight: bold;
+        line-height: 1;
+    }
     
 }

@@ -7,14 +7,6 @@ use \Infuso\Core;
  * Служебный класс - обработчик событий
  **/
 class Handler implements Core\Handler {
-
-    /*public function on_mod_beforeAction() {
-        User::active()->registerActivity();
-    }
-    
-    public function on_mod_beforecmd() {
-        User::active()->registerActivity();
-    } */
     
     public static function clear() {
     

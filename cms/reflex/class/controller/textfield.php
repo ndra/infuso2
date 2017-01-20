@@ -6,7 +6,7 @@
 class reflex_editor_fieldController_textfield extends mod_controller {
 
 	public static function postTest() {
-	    return user::active()->checkAccess("admin:showInterface");
+	    return app()->user()->checkAccess("admin:showInterface");
 	}
 
 	/**

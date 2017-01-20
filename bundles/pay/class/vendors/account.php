@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: AKopleman
- * Date: 13.08.2015
- * Time: 15:18
- */
+<?
 
 namespace Infuso\Pay\Vendor;
 use Infuso\Pay\Model\Invoice;
@@ -30,7 +24,7 @@ class Account extends Vendor
      * Список счетов у текущего пользователя
      **/
     public function index_history() {
-        $user = User::active();
+        $user = app()->user();
         $items = $user->payAccountOperationLog();
         app()->tm("/pay/account/history")->param("items", $items)->exec();
     }
@@ -97,7 +91,7 @@ class Account extends Vendor
      **/
     public function checkInvoicePayAvailable() {
 
-        $currentUser = user::active();
+        $currentUser = app()->user();
 
         if(!$this->invoice()->user()->exists()) {
             $this->alertCantPay("Попытка оплаты неавторизованным пользователем");
@@ -151,7 +145,7 @@ class Account extends Vendor
      **/
     public function payInvoice() {
 
-        $currentUser = user::active();
+        $currentUser = app()->user();
 
         // Установить у инвойса статус "Оплачен"
         $result = $this->invoice()->incoming(array(

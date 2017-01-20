@@ -309,12 +309,12 @@ abstract class Field extends Core\Component {
         }
 
         $eq = $this->param("eq");
-        if($eq && $eq !=  $val){
+        if($eq && $eq !=  $val) {
             return false;
         }
 
         $checkEmail = $this->param("email");
-        if($checkEmail && !preg_match("/^[\S]+@[\S]+\.[\S]+$/",$val)){
+        if($checkEmail && !preg_match("/^[\S]+@[\S]+\.[\S]+$/",$val)) {
             return false;
         }
 

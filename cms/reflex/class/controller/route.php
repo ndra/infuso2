@@ -13,7 +13,7 @@ class Route extends \Infuso\Core\Controller {
      * Разрешение для POST-команд
      **/
     public static function postTest() {
-        return \user::active()->checkAccess("admin:showInterface");
+        return app()->user()->checkAccess("admin:showInterface");
     }
 
     /**

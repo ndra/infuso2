@@ -61,7 +61,7 @@ class Constructor extends ActiveRecord\Record {
     }
     
     public function beforeCreate() {
-        $this->data("userID", \user::active()->id());
+        $this->data("userID", app()->user()->id());
     }
     
     public function collection() {

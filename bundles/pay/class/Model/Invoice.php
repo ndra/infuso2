@@ -62,7 +62,7 @@ class Invoice extends \Infuso\ActiveRecord\Record implements \Infuso\Core\Handle
      **/
     public function my() {
 
-        $user = user::active();
+        $user = app()->user();
 
         // Если в счете записано ID активного пользователя, то может
         if($user->exists()) {
@@ -121,7 +121,7 @@ class Invoice extends \Infuso\ActiveRecord\Record implements \Infuso\Core\Handle
 
 
         // Без пользователя тоже можно создавать инвойсы
-        $this->data("userId", user::active()->id());
+        $this->data("userId", app()->user()->id());
     }
 
     /**
@@ -229,7 +229,7 @@ class Invoice extends \Infuso\ActiveRecord\Record implements \Infuso\Core\Handle
     private function setCurrentUser() {
 
         // Сохраняем ID текущего пользователя в поле
-        $this->data("userId", user::active()->id());
+        $this->data("userId", app()->user()->id());
 
         // Сохраняем ID инвойса в сессии
         @session_start();

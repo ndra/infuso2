@@ -23,23 +23,23 @@
 <div class='x55qv4lhb8m-submenu' style='position:absolute;z-index:100;width:100%;' >
     <div class='submenu dropdown' menu:id='reports' >
     
-        if(user::active()->checkAccess("board/showReportUsers")) {
+        if(app()->user()->checkAccess("board/showReportUsers")) {
             <a class='item' href='{action("infuso\\board\\controller\\report", "users")}' >Пользователи</a>
         }
 
-        if(user::active()->checkAccess("board/showReportProjects")) {
+        if(app()->user()->checkAccess("board/showReportProjects")) {
             <a class='item' href='{action("infuso\\board\\controller\\report", "projects")}' >Проекты</a>
         }
 
     </div>
     <div class='submenu dropdown' menu:id='conf' >
     
-        if(user::active()->checkAccess("board/manager")) {
+        if(app()->user()->checkAccess("board/manager")) {
             $url = action("infuso\\board\\controller\\project")->url();
             <a class='item' href='{$url}' >Проекты</a>
         }
         
-        if(user::active()->checkAccess("board/manager")) {
+        if(app()->user()->checkAccess("board/manager")) {
             $url = action("infuso\\board\\controller\\access")->url();
             <a class='item' href='{$url}' >Доступ</a>
         }

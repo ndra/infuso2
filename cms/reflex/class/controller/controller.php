@@ -16,14 +16,14 @@ class Controller extends \Infuso\Core\Controller {
      * Видимость для браузера
      **/
     public static function indexTest() {
-        return user::active()->checkAccess("admin:showInterface");
+        return app()->user()->checkAccess("admin:showInterface");
     }
 
     /**
      * Разрешение для POST-команд
      **/
     public static function postTest() {
-        return user::active()->checkAccess("admin:showInterface");
+        return app()->user()->checkAccess("admin:showInterface");
     }
 
     /**

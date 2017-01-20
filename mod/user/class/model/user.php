@@ -9,9 +9,7 @@ use \Infuso\ActiveRecord;
  **/
 class User extends ActiveRecord\Record {
 
-    private static $activeUser = null;
-
-    private $thisIsActiveUser = false;
+    public $thisIsActiveUser = false;
 
     private $errorText = "";
     
@@ -149,70 +147,6 @@ class User extends ActiveRecord\Record {
     }
 
     /**
-     * Возвращает пользователя по адресу электронной почты
-     **/
-    public static final function byEmail($email) {
-
-        // Если вдруг у пользователя не будет почты, мы не должны под ним логиниться
-        // На всякий случай делаю проверку
-        if(!trim($email)) {
-            return user::get(0);
-        }
-
-        return self::all()->eq("email",$email)->one();
-    }
-
-    /**
-     * Создает виртуального пользователя (без занесения в базу)
-     **/
-    public final function virtual($data = null) {
-        return service("ar")->virtual(get_class(), $data);
-    }
-
-    /**
-     * Создает и возвращает нового пользователя на основе массива данных
-     * $p["password"] - пароль, который потом зашифруеттся. В явном виде пароль в базе не хранится
-     * $p["email"] - электронная почта пользователя
-     * @todo там какой-то бред с определением полей, которые можно указать при создании
-     **/
-    public static function create($p) {
-
-         // Удаляем пробельные символы вокруг логина и пароля
-        if(!$p["password"] = self::checkAbstractPassword($p["password"])) {
-            throw new Core\Exception\UserLevel("Неподходящий пароль");
-        }
-
-        // Проверяем электронную почту
-        if(!$p["email"] = self::normalizeEmail($p["email"])) {
-            throw new Core\Exception\UserLevel("Ошибка в адресе электронной почты");
-        }
-
-        // Ищем пользователя с такой электронной почтой
-        if(user::byEmail($p["email"])->exists()) {
-            throw new Core\Exception\UserLevel("Пользователь с такой электронной почтой уже существует");
-        }
-
-        $password = $p["password"];
-        $p["password"] = \Infuso\Core\Crypt::hash($p["password"]);
-
-        foreach(user::virtual()->fields() as $field) {
-            if($field->editable()) {
-                $insert[$field->name()] = $p[$field->name()];
-            }
-        }
-                
-        $insert["password"] = $p["password"];
-        $insert["email"] = $p["email"];
-        $insert["registrationTime"] = \Infuso\Util\Date::now()."";
-
-        $user = service("ar")->create(get_class(), $insert);
-        
-        $user->password = $password;
-
-        return $user;
-    }
-
-    /**
      * Возвращает пароль у вновь созданого пользователя.
      * Данная функция будет работать в пределах того скрипта в котором был создан пользователь.
      **/
@@ -326,59 +260,12 @@ class User extends ActiveRecord\Record {
     
     }
 
-
-    /**
-     * Возвращает активного (залогиневшегося) пользователя
-     * Если пользователь не залогинен, возвращается несуществующий объект
-     **/
-    public static final function active() {
-    
-        \Infuso\Core\Profiler::beginOperation("user", "active", null);
-
-        if(!self::$activeUser) {
-
-            $cookie = app()->cookie("login");
-            
-            $user = null;
-
-            if(strlen($cookie) > 5) {
-                $token = Token::byToken($cookie);
-                if($token->user()->checkToken($cookie, array(
-                    "type" => "login"
-                ))) {
-                    $user = $token->user();
-                    $token->extend();
-                }
-            }
-
-            if($user && !$user->verified()) {
-                $user = null;
-            }
-
-            if($user && !$user->exists()) {
-                $user = null;
-            }
-            
-            if(!$user) {
-                $user = self::virtual();
-            } 
-            
-            self::$activeUser = $user;
-            $user->thisIsActiveUser = true;
-        }
-        
-        \Infuso\Core\Profiler::endOperation();
-
-        return self::$activeUser;
-
-    }
-
     /**
      * Является ли этот пользователь активным (тем, что залогинен)
      **/
     public function isActiveUser() {
 
-        if($this->exists() && $this->id() == User::active()->id()) {
+        if($this->exists() && $this->id() == app()->user()->id()) {
             return true;
         }
 
@@ -508,37 +395,6 @@ class User extends ActiveRecord\Record {
         }
         
         return !$this->rolesAttached()->eq("role",$roleCode)->void();
-    }
-
-    /**
-     * Приводит адрес электронной почты к какноническому виду.
-     * Возвращает null, если прверка по режексу не удалась
-     **/
-    public static final function normalizeEmail($email) {
-        $email = strtolower(trim($email));
-        $s = "1234567890qwertyuiopasdfghjklzxcvbnm\.\-\_";
-        $r = preg_match("/^[$s]+@[$s]+$/",$email,$m);
-        return $r ? $email : false;
-    }
-
-    /**
-     * Проверяет пароль на соответствие требованиям безопасности (минимальная длина и т.п.)
-     * Проверкой пароля конкретного пользователя этот метод не занимается
-     * @todo вынести в настройки минимальную длину пароля
-     **/
-    public static final function _checkAbstractPassword($password) {
-    
-        // Обрезаем пробелы на всякий случай
-        $password = trim($password);
-        
-        // Проверяем минимальную длину
-        $passlen = 5;
-        if(strlen($password) < $passlen) {
-            app()->msg("Слишком короткий пароль. Минимальное количество символов: $passlen",1);
-            return false;
-        }
-        
-        return $password;
     }
 
     public function extra($key = null, $val = null) {

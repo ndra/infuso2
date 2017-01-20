@@ -38,7 +38,7 @@ abstract class Widget extends Core\Component {
 	 * @return Можно ли выводить этот виджет
 	 **/
 	public function test() {
-	    return \user::active()->checkAccess("admin:showInterface");
+	    return app()->user()->checkAccess("admin:showInterface");
 	}
 
 	/**

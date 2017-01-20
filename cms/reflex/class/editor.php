@@ -187,7 +187,7 @@ abstract class Editor extends Core\Controller {
      * Редактирование элемента - любые изменения объекта через каталог
      **/
     public function _beforeEdit() {
-        return User::active()->checkAccess("reflex:editItem",array(
+        return app()->user()->checkAccess("reflex:editItem",array(
             "editor" => $this,
         ));
     }

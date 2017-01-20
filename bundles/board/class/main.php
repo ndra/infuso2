@@ -8,7 +8,7 @@ use \Tmp;
 class Main extends \Infuso\Core\Controller {
 
     public static function indexTest() {
-        return user::active()->exists();
+        return app()->user()->exists();
     }
     
     public static function indexFailed() {

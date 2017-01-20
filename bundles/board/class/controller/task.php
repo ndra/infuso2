@@ -207,10 +207,10 @@ class Task extends Base {
 
         $task = Model\Task::get($p["taskId"]);
 
-        if(!\user::active()->checkAccess("board/takeTask",array(
+        if(!app()->user()->checkAccess("board/takeTask",array(
             "task" => $task,
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(),1);
             return;
         }
         
@@ -225,10 +225,10 @@ class Task extends Base {
         $task = Model\Task::get($p["taskId"]);
 
         // Параметры задачи
-        if(!\user::active()->checkAccess("board/pauseTask",array(
+        if(!app()->user()->checkAccess("board/pauseTask",array(
             "task" => $task,
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(),1);
             return;
         }
 
@@ -244,10 +244,10 @@ class Task extends Base {
         $task = Model\Task::get($p["taskId"]);
         $time = $p["time"];
 
-        if(!\user::active()->checkAccess("board/stopTask",array(
+        if(!app()->user()->checkAccess("board/stopTask",array(
             "task" => $task,
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(), 1);
             return;
         }
         
@@ -276,10 +276,10 @@ class Task extends Base {
         $task = Model\Task::get($p["taskId"]);
         $time = $p["time"];
 
-        if(!\user::active()->checkAccess("board/editTask",array(
+        if(!app()->user()->checkAccess("board/editTask",array(
             "task" => $task,
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(),1);
             return;
         }
 
@@ -300,10 +300,10 @@ class Task extends Base {
         $task = Model\Task::get($p["taskId"]);
         $time = $p["time"];
 
-        if(!\user::active()->checkAccess("board/completeTask",array(
+        if(!app()->user()->checkAccess("board/completeTask",array(
             "task" => $task,
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(),1);
             return;
         }
 
@@ -323,10 +323,10 @@ class Task extends Base {
 
         $task = Model\Task::get($p["taskId"]);
 
-        if(!\user::active()->checkAccess("board/editTask",array(
+        if(!app()->user()->checkAccess("board/editTask",array(
             "task" => $task,
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(),1);
             return;
         }
 
@@ -354,10 +354,10 @@ class Task extends Base {
 
         $task = Model\Task::get($p["taskId"]);
 
-        if(!\user::active()->checkAccess("board/editTask",array(
+        if(!app()->user()->checkAccess("board/editTask",array(
             "task" => $task,
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(),1);
             return;
         }
 
@@ -384,10 +384,10 @@ class Task extends Base {
 
         $task = Model\Task::get($p["taskId"]);
 
-        if(!\user::active()->checkAccess("board/doneTask",array(
+        if(!app()->user()->checkAccess("board/doneTask",array(
             "task" => $task,
         ))) {
-            app()->msg(\user::active()->errorText(),1);
+            app()->msg(app()->user()->errorText(), 1);
             return;
         }
 

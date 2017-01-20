@@ -1,6 +1,6 @@
 <? 
 
-$user = \user::active();  
+$user = app()->user();  
    
 <form class='iv09v31m1i' >
 

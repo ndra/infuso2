@@ -13,7 +13,7 @@ class Conf extends Base {
      * Контроллер сохранения настроек
      **/
     public function post_save($p) {
-        $user = \User::active();
+        $user = app()->user();
         $user->data("nickName", $p["data"]["nickName"]);
         app()->msg("Настройки сохранены");
     }
@@ -32,7 +32,7 @@ class Conf extends Base {
             return;
         }
 
-        $user = \User::active();
+        $user = app()->user();
         $file = $user->storage()->addUploaded($_FILES["file"]["tmp_name"], "userpic.jpg");
         $user->data("userpic", $file);
 

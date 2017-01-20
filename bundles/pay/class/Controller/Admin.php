@@ -1,10 +1,4 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: AKopleman
- * Date: 07.08.2015
- * Time: 16:03
- */
+<?
 
 namespace Infuso\Pay\Controller;
 use Infuso\Core;
@@ -22,7 +16,7 @@ class Admin extends Core\Controller
 
     public function index_reportInvoices() {
 
-        if(!user::active()->checkAccess("pay:viewReportInvoices")) {
+        if(!app()->user()->checkAccess("pay:viewReportInvoices")) {
             throw new Exception("Просмотр отчета недоступен");
         }
 

@@ -13,7 +13,7 @@ class Meta extends \Infuso\Core\Controller {
 	 * зарегистрированных пользователей
 	 **/
 	public static function postTest() {
-		return \user::active()->checkAccess("admin:showInterface");
+		return app()->user()->checkAccess("admin:showInterface");
 	}
     
     public function post_getMeta($p) {    

@@ -183,7 +183,7 @@ class Task extends \Infuso\ActiveRecord\Record {
     }
 
     public function beforeCreate() {
-        $this->data("creator",user::active()->id());
+        $this->data("creator", app()->user()->id());
     }
     
     /**
@@ -360,7 +360,7 @@ class Task extends \Infuso\ActiveRecord\Record {
      **/
     public function tools() {
 
-        if(!user::active()->checkAccess("board/editTask",array(
+        if(!app()->user()->checkAccess("board/editTask",array(
             "task" => $this,
         ))) {
             return array();

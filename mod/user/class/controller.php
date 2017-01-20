@@ -40,7 +40,7 @@ class Controller extends Core\Controller {
      * Контроллер разлогинивания пользователя
      **/
     public function post_logout($p) {
-        $user = \User::active();        
+        $user = app()->user();        
         $user->logout();
     }
 

@@ -77,6 +77,6 @@
     <span class="logout" >Выход</span>
     
     $url = (string) action("infuso\\heapit\\controller\\conf");
-    <span class="me" >Вы — <a href='{$url}' >{\user::active()->title()}</a></span>
+    <span class="me" >Вы — <a href='{$url}' >{app()->user()->title()}</a></span>
     
 </div>
