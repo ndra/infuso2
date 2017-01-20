@@ -20,7 +20,7 @@ class Controller extends Core\Controller {
 	
         $login = strtolower(trim($p["email"]));
         $pass = trim($p["password"]);
-        $user = Model\User::byEmail($login);
+        $user = service("user")->byEmail($login);
         
         if(!$user->verified()) {
             app()->msg("Неправильное имя пользователя или пароль");

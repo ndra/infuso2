@@ -92,7 +92,7 @@ class Service extends Core\Service {
         // Если вдруг у пользователя не будет почты, мы не должны под ним логиниться
         // На всякий случай делаю проверку
         if(!trim($email)) {
-            return user::get(0);
+            return service("user")->get(0);
         }
 
         return self::all()->eq("email",$email)->one();
@@ -117,7 +117,7 @@ class Service extends Core\Service {
         }
 
         // Ищем пользователя с такой электронной почтой
-        if(user::byEmail($p["email"])->exists()) {
+        if(self::byEmail($p["email"])->exists()) {
             throw new Core\Exception\UserLevel("Пользователь с такой электронной почтой уже существует");
         }
 
@@ -196,6 +196,10 @@ class Service extends Core\Service {
         $s = "1234567890qwertyuiopasdfghjklzxcvbnm\.\-\_";
         $r = preg_match("/^[$s]+@[$s]+$/",$email,$m);
         return $r ? $email : false;
+    }
+    
+    public function setActive($user) {
+        self::$activeUser = $user;
     }
     
 }

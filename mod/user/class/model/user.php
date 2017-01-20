@@ -191,7 +191,7 @@ class User extends ActiveRecord\Record {
 		}
     
         // Проверяем пароль на валидность
-        $pass = self::checkAbstractPassword($pass);
+        $pass = service("user")->checkAbstractPassword($pass);
         if(!$pass) {
             throw new Core\Exception\UserLevel("Неподходящий пароль");
         }
@@ -206,7 +206,7 @@ class User extends ActiveRecord\Record {
      **/
     public final function changeEmail($email) {
 
-        if(!$email = self::normalizeEmail($email)) {
+        if(!$email = service("user")->normalizeEmail($email)) {
             throw new Core\Exception\UserLevel("Ошибка в адресе электронной почты",1);
             return false;
         }
@@ -215,7 +215,7 @@ class User extends ActiveRecord\Record {
             return true;
         }
 
-        if(user::byEmail($email)->exists()) {
+        if(service("user")->byEmail($email)->exists()) {
             throw new Core\Exception\UserLevel("Пользователь с такой электронной почтой уже существует",1);
             return false;
         }
@@ -240,8 +240,10 @@ class User extends ActiveRecord\Record {
         
         app()->cookie("login", $token, $keep ? 24 : null);
         
-        self::$activeUser = $this;
-        $this->thisIsActiveUser = true;
+        //self::$activeUser = $this;
+        //$this->thisIsActiveUser = true;
+        
+        service("user")->setActive($this);
         
     }
     
@@ -250,7 +252,7 @@ class User extends ActiveRecord\Record {
      **/
     public function logout() {
     
-        $user = self::active();
+        $user = $this;
         
         $token = Token::byToken(app()->cookie("login"));
         
