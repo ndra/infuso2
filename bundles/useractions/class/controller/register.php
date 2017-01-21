@@ -24,7 +24,31 @@ class Register extends Core\Controller {
         app()->tm("/user-actions/register")->exec();
     }
     
-    public function index_verify() {
+    /**
+     * Контроллер подтверждения почты
+     **/
+    public function index_verify($p) {
+    
+        $token = $p["token"];
+        $user = service("user")->byToken($token);
+        
+        if(!$user->checkToken($token, array(
+            "type" => "email-verification" 
+        ))) {
+            app()
+                ->tm("/user-actions/verification-failed")
+                ->exec();
+            return;
+        }
+        
+        $user->setVerification();
+        $user->activate();
+        $user->deleteToken($token);
+        app()
+            ->tm("/user-actions/verification-success")
+            ->exec();
+        
+    
     }
     
     /**

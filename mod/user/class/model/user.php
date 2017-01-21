@@ -554,6 +554,10 @@ class User extends ActiveRecord\Record {
             return false;
         } 
         
+        if($tokenObj->user()->id() != $this->id()) {
+            return false;
+        }
+        
         if(!$tokenObj->checkToken($token)) {
             return false;
         }
@@ -567,6 +571,21 @@ class User extends ActiveRecord\Record {
         }
         
         return true;
+    
+    }
+    
+    /**
+     * Удаляет у пользователя токен
+     **/
+    public function deleteToken($token) {
+    
+        $tokenObj = \Infuso\User\Model\Token::byToken($token);
+        
+        if($tokenObj->user()->id() != $this->id()) {
+            return;
+        }
+        
+        $tokenObj->delete();
     
     }
 
