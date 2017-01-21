@@ -52,12 +52,9 @@ class Register extends Core\Controller {
     }
     
     /**
-     * @todo убрать rand()!
+     * Контроллер регистрации пользователей
      **/
     public function post_register($p) {
-    
-        // @todo убрать это! 
-        $p["data"]["email"] .= rand();
     
         $user = service("user")->create($p["data"]);
         $token = $user->generateToken(array(

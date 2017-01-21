@@ -12,6 +12,9 @@
     td {
         padding: 10px;
         vertical-align: middle;
+        &:first-child {
+            width: 120px;
+        }
     }
     
     .error {

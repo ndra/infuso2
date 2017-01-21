@@ -37,6 +37,7 @@ class Recovery extends Core\Controller {
         app()
             ->tm("/user-actions/recovery-new-password")
             ->param("user", $user)
+            ->param("token", $token)
             ->exec();
         
     }
@@ -47,7 +48,7 @@ class Recovery extends Core\Controller {
     
     public function post_send($p) {
     
-        $user = \Infuso\User\Model\User::byEmail($p["email"]);
+        $user = service("user")->byEmail($p["email"]);
         
         if($user->exists()) {
         
@@ -58,10 +59,12 @@ class Recovery extends Core\Controller {
             ));
             
             $url = Core\Action::get(get_class(), "newpassword", array("token" => $token))->url();
+            $url = new Core\Url($url);
+            $url = $url->absolute();
            
             service("mail")
                 ->create()
-                ->to($email)
+                ->user($user)
                 ->message("Для восстановления пароля перейдите по ссылке: ".$url)
                 ->code("useractions/recovery")
                 ->param("email", $user->email())
@@ -72,6 +75,30 @@ class Recovery extends Core\Controller {
         return app()
             ->tm("/user-actions/recovery/after-ajax")
             ->getContentForAjax();
+        
+    }
+    
+    /**
+     * Задает новый пароль пользователю
+     **/
+    public function post_newPassword($p) {
+    
+        $token = $p["token"];
+        $user = service("user")->byToken($token);
+        
+        if(!$user->checkToken($token, array(
+            "type" => "password-recovery" 
+        ))) {
+            return false;
+        }
+        
+        $user->changePassword($p["password"]);
+        $user->activate();
+        $user->deleteToken($token);
+        
+        return app()
+            ->tm("/user-actions/recovery-new-password/after")
+            ->getContentForAjax();       
         
     }
 

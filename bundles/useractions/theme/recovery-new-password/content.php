@@ -1,6 +1,6 @@
 <?
 
-<form class='Uu8qdmPUCT' >
+<form class='Uu8qdmPUCT' data:token='{$token}' >
 
     <h1>Восстановление пароля</h1>
     
@@ -20,9 +20,9 @@
                 <td>Повтор пароля</td>
                 <td>
                     widget("infuso\\cms\\ui\\widgets\\textfield")
-                        ->fieldName("password-2")
+                        ->fieldName("password2")
                         ->exec();
-                    <div class='error-password-2 error' ></div>
+                    <div class='error-password2 error' ></div>
                 </td>
             </tr>
             <tr>

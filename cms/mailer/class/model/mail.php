@@ -120,6 +120,7 @@ class Mail extends ActiveRecord\Record {
             } else {
                 $this->data("user", $user);
             }
+            $this->to($this->user()->email());
             return $this;
         }
     }

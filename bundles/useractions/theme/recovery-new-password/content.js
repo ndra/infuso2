@@ -6,10 +6,10 @@ mod(".Uu8qdmPUCT").init(function() {
         event.preventDefault();
         mod.call({
             cmd: "infuso/useractions/controller/recovery/newpassword",
-            email: event.formData.email
+            password: event.formData.password,
+            token: $container.attr("data:token")
         }, function(html) {
-            //$container.find(".ajax-container").html(html);
-            mod.msg("success");
+            $container.find(".ajax-container").html(html);
         });
     });
 
