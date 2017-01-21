@@ -124,7 +124,7 @@ abstract class Field extends Core\Component {
     /**
      * @return Должна вернуть уникальный тип поля
      **/
-    public abstract function typeID();
+    public abstract function typeId();
 
     /**
      * @return Возвращает алиас типа поля
@@ -291,42 +291,50 @@ abstract class Field extends Core\Component {
         return $this->param("editable") == self::READ_ONLY;
     }
     
-    public function validate($val, $data) {
-
+    public function validate($event) {
+    
+        $data = $event->data();
+        $val = $event->value();
+        
         $validateIf = $this->param("validateIf");
-        if($validateIf && !$data[$validateIf]){
-            return true;
+        if($validateIf && !$data[$validateIf]) {
+            $event->valid();
+            return;
         }
 
         $min = $this->param("min");
         if($min > 0 && mb_strlen($val) < $min) {
-            return false;
+            $this->model()->validationError($this->name(), $this->validationErrorText());
+            return;
         }
         
         $max = $this->param("max");
         if($max > 0 && mb_strlen($val) > $max) {
-            return false;
+            $this->model()->validationError($this->name(), $this->validationErrorText());
+            return;
         }
 
         $eq = $this->param("eq");
-        if($eq && $eq !=  $val) {
-            return false;
+        if($eq && $eq != $val) {
+            $this->model()->validationError($this->name(), $this->validationErrorText());
+            return;
         }
 
-        $checkEmail = $this->param("email");
-        if($checkEmail && !preg_match("/^[\S]+@[\S]+\.[\S]+$/",$val)) {
-            return false;
+        $email = $this->param("email");
+        if($email && !preg_match("/^[\S]+@[\S]+\.[\S]+$/", $val)) {
+            $this->model()->validationError($this->name(), $this->validationErrorText()); 
+            return;
         }
 
-        /*$callback = $this->param("callback");
-        if($callback) {
-            $c = explode("::", $callback);
-            if(!call_user_func($c, $val, $data, $this->model()) {
-                return false;
+        $callback = $this->param("validationCallback");
+        if($callback) {            
+            call_user_func($callback, $event);
+            if(!$event->isValid()) {                
+                return;
             }
-        } */
-
-        return true;
+        }
+        
+        $event->valid();
     }
     
     public function validationErrorText() {

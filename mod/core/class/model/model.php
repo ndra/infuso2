@@ -320,8 +320,14 @@ abstract class Model extends Core\Controller {
     public final function validate($data) {
     
         foreach($this->fields() as $field) {
-            if(!$field->validate($data[$field->name()], $data)) {
-                $this->validationError($field->name(), $field->validationErrorText());
+            $event = new ValidationEvent(array(
+                "model" => $this,
+                "field" => $field,
+                "value" => $data[$field->name()],
+                "data" => $data,
+            ));
+            $field->validate($event);
+            if(!$event->isValid()) {
                 return false;
             }
         } 
@@ -335,7 +341,7 @@ abstract class Model extends Core\Controller {
                 "data" => $data,
                 "callback" => $callback,
             ));
-            $event->exec();
+            call_user_func($callback, $event);
             if(!$event->isValid()) {
                 return false;
             }
@@ -356,16 +362,6 @@ abstract class Model extends Core\Controller {
         }
         throw new \Exception("Model::scenario wrong arguments number");
     }
-    
-    /**
-     * Возвращает массив данных активного сценария
-     **/
-	/*public function scenarioData() {
-	    $scenario = $this->scenario();
-	    $model = $this->model();
-		$scenarioData = $model["scenarios"][$scenario];
-		return $scenarioData;
-	}  */
 	
 	/**
 	 * заполняет данные модели из массива $data

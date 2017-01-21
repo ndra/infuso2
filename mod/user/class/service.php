@@ -69,7 +69,7 @@ class Service extends Core\Service {
      * Проверкой пароля конкретного пользователя этот метод не занимается
      * @todo вынести в настройки минимальную длину пароля
      **/
-    public static final function _checkAbstractPassword($password) {
+    public static final function checkAbstractPassword($password, &$errorText = null) {
     
         // Обрезаем пробелы на всякий случай
         $password = trim($password);
@@ -77,7 +77,7 @@ class Service extends Core\Service {
         // Проверяем минимальную длину
         $passlen = 5;
         if(strlen($password) < $passlen) {
-            app()->msg("Слишком короткий пароль. Минимальное количество символов: $passlen",1);
+            $errorText = "Слишком короткий пароль.";
             return false;
         }
         

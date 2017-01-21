@@ -16,34 +16,54 @@ class ValidationEvent extends \Infuso\Core\Component {
         $this->field = $params["field"];
         $this->value = $params["value"];
         $this->data = $params["data"];
-        $this->callback = $params["callback"];
     }
     
+    /**
+     * Возвращает валидируемую модель
+     **/
     public function model() {
         return $this->model;
     }
     
+    /**
+     * Возвращает объект поля
+     **/
     public function field() {
         return $this->field;
     }
     
+    /**
+     * Возвращает значение поля
+     **/
+    public function value() {
+        return $this->value;
+    }
+    
+    /**
+     * Возвращает массив данных модели
+     **/
     public function data() {
         return $this->data;
     }
     
-    public function exec() {
-        return call_user_func($this->callback, $this);
-    }
-    
+    /**
+     * Записывает поле в котором произошла ошибка и текст ошибки
+     **/
     public function error($name, $text) {
-        $this->model->validationError($name, $text);
+        $this->model()->validationError($name, $text);
         $this->valid = false;
     }
     
+    /**
+     * Устанавливает флаг валидности = true
+     **/
     public function valid() {
         $this->valid = true;
     }
     
+    /**
+     * Возвращает флаг валидности true / false
+     **/
     public function isValid() {
         return $this->valid;
     }
