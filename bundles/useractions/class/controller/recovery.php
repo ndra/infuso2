@@ -21,7 +21,6 @@ class Recovery extends Core\Controller {
     }
     
     public function index_newpassword($p) {
-        //app()->tm("/user-actions/recovery-new-password")->exec();
         
         $token = $p["token"];
         $user = service("user")->byToken($token);
@@ -64,7 +63,7 @@ class Recovery extends Core\Controller {
                 ->create()
                 ->to($email)
                 ->message("Для восстановления пароля перейдите по ссылке: ".$url)
-                ->code("/useractions/recovery")
+                ->code("useractions/recovery")
                 ->param("email", $user->email())
                 ->param("url", $url)
                 ->send();

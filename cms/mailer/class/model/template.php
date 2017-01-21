@@ -52,10 +52,16 @@ class Template extends ActiveRecord\Record {
 		);
 	}
 
+    /**
+     * Возвращает шаблон по id
+     **/
     public static function get($id) {
-        return service("ar")->get(get_class(),$id);
+        return service("ar")->get(get_class(), $id);
     }
 
+    /**
+     * Возвращает коллекцию шаблонов
+     **/
     public static function all() {
         return service("ar")
             ->collection(get_class())
@@ -99,7 +105,7 @@ class Template extends ActiveRecord\Record {
 		);
 		
 		// Если шаблон включен, выполняем его
-        if ($this->data("enable") == true) {
+        if ($this->data("enable")) {
     		// Пропускаем поля через процессор
     		foreach($fieldsToProcess as $field) {
     		    // Обрабатываем только поля, данные в которых заполнены
@@ -111,6 +117,9 @@ class Template extends ActiveRecord\Record {
 		
     }
     
+    /**
+     * Функция-процессор текста
+     **/
     public static function processText($text, $params) {
         foreach($params as $key => $val) {
             $text = strtr($text, array(

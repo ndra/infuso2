@@ -4,14 +4,12 @@ mod(".dAjO02CzQJ").init(function() {
     
     $container.on("validate", function(event) {
         event.preventDefault();
-        /*mod.call({
-            cmd: "infuso/useractions/controller/recovery/send",
-            email: event.formData.email
+        mod.call({
+            cmd: "infuso/useractions/controller/register/register",
+            data: event.formData
         }, function(html) {
             $container.find(".ajax-container").html(html);
-        }); */
-        
-        mod.msg(event.formData);
+        });
         
     });
 

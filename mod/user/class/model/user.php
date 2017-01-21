@@ -13,8 +13,6 @@ class User extends ActiveRecord\Record {
 
     private $errorText = "";
     
-    private $password = null;
-    
     public static function model() {
     
         return array(
@@ -147,14 +145,6 @@ class User extends ActiveRecord\Record {
     }
 
     /**
-     * Возвращает пароль у вновь созданого пользователя.
-     * Данная функция будет работать в пределах того скрипта в котором был создан пользователь.
-     **/
-    public final function password() {
-        return $this->password;
-    }
-
-    /**
      * Подтверждает почту пользователя без дополнительных проверок
      **/
     public final function setVerification() {
@@ -191,14 +181,13 @@ class User extends ActiveRecord\Record {
 		}
     
         // Проверяем пароль на валидность
-        $pass = service("user")->checkAbstractPassword($pass);
+        $pass = service("user")->checkAbstractPassword($pass, $errorText);
         if(!$pass) {
-            throw new Core\Exception\UserLevel("Неподходящий пароль");
+            throw new Core\Exception\UserLevel($errorText);
         }
         
         // Наконец, меняем пароль
         $this->data("password", Core\Crypt::hash($pass));
-        return true;
     }
 
     /**
@@ -208,20 +197,17 @@ class User extends ActiveRecord\Record {
 
         if(!$email = service("user")->normalizeEmail($email)) {
             throw new Core\Exception\UserLevel("Ошибка в адресе электронной почты",1);
-            return false;
         }
 
         if($email == $this->data("email")) {
-            return true;
+            return;
         }
 
         if(service("user")->byEmail($email)->exists()) {
-            throw new Core\Exception\UserLevel("Пользователь с такой электронной почтой уже существует",1);
-            return false;
+            throw new Core\Exception\UserLevel("Пользователь с такой электронной почтой уже существует", 1);
         }
 
         $this->data("email", $email);
-        return true;
     }
     
     /**
@@ -240,11 +226,7 @@ class User extends ActiveRecord\Record {
         
         app()->cookie("login", $token, $keep ? 24 : null);
         
-        //self::$activeUser = $this;
-        //$this->thisIsActiveUser = true;
-        
-        service("user")->setActive($this);
-        
+        service("user")->setActive($this);           
     }
     
     /**

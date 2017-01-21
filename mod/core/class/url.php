@@ -286,10 +286,10 @@ class Url {
 
     public function absolute() {
         if(!$this->scheme()) {
-            $this->scheme(mod_url::current()->scheme());
+            $this->scheme(app()->url()->scheme());
         }
         if(!$this->host()) {
-            $this->host(mod_url::current()->host());
+            $this->host(app()->url()->host());
         }
         return $this;
     }

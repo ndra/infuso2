@@ -46,8 +46,8 @@ class Action extends Component {
         $params = array();
         $n = 0;
         foreach($path as $item) {
-            if($n%2==0) {
-                $key=$item;
+            if($n % 2 == 0) {
+                $key = $item;
             } else {
                 $params[$key] = $item;
             }

@@ -9,7 +9,7 @@ $item = $editor->item();
             <td class='to' >{e($item->data("to"))}</td>
             <td class='subject' >{e($item->data("subject"))}</td>
             <td class='message' >{e($item->data("message"))}</td>
-            <td class='date' >{$item->pdata("sentDatetime")->left()}</td>
+            <td class='date' >{$item->pdata("datetime")->text()}</td>
         </tr>
     </table>
     

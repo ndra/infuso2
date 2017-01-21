@@ -124,7 +124,8 @@ class Service extends Core\Service {
         $password = $p["password"];
         $p["password"] = \Infuso\Core\Crypt::hash($p["password"]);
 
-        foreach(user::virtual()->fields() as $field) {
+        $insert = [];
+        foreach(self::get(0)->fields() as $field) {
             if($field->editable()) {
                 $insert[$field->name()] = $p[$field->name()];
             }
@@ -134,10 +135,8 @@ class Service extends Core\Service {
         $insert["email"] = $p["email"];
         $insert["registrationTime"] = \Infuso\Util\Date::now()."";
 
-        $user = service("ar")->create(get_class(), $insert);
+        $user = service("ar")->create("infuso\\user\\model\\user", $insert);
         
-        $user->password = $password;
-
         return $user;
     }
     

@@ -109,7 +109,7 @@ class service extends \infuso\core\service {
 
         $routes = service("classmap")->classmap("routes");
         foreach($routes as $router) {
-            if($url = call_user_func(array($router,"actionToUrl"), $action)) {
+            if($url = call_user_func(array($router, "actionToUrl"), $action)) {
                 return $url;
             }
         }

@@ -4,6 +4,7 @@ namespace Infuso\Cms\Mailer\Model;
 use Infuso\Core;
 use Infuso\ActiveRecord;
 use Infuso\Core\File as File;
+
 /**
  * Модель письма
  **/ 
@@ -23,7 +24,7 @@ class Mail extends ActiveRecord\Record {
 					'label' => 'Дата',
 					"editable" => 2,
 					"default" => "now()",
-		    	), array (
+		    	), array (                                                      
 					'name' => 'user',
 					'type' => 'pg03-cv07-y16t-kli7-fe6x',
 					'label' => 'Пользователь',
@@ -108,10 +109,19 @@ class Mail extends ActiveRecord\Record {
     }
 
     /**
-     * Возвращает пользователя, сделавшего запись
+     * Возвращает / изменяет пользователя, которому адресовано сообщение
      **/
-    public function user() {
-        return $this->pdata("user");
+    public function user($user = null) {
+        if(func_num_args() == 0) {
+            return $this->pdata("user");
+        } elseif(func_num_args() == 1) {
+            if(is_object($user)) {
+                $this->data("user", $user->id());                
+            } else {
+                $this->data("user", $user);
+            }
+            return $this;
+        }
     }
     
     /**
@@ -131,7 +141,7 @@ class Mail extends ActiveRecord\Record {
         $headers = $this->headers();
         $headers[] = "MIME-Version: 1.0;";
         $headers[] = "Content-Type: multipart/mixed; boundary=\"$boundary\"";
-        if ($this->from() != "") {
+        if ($this->from()) {
             $headers[] = "From:" . self::utf8email($this->from());
         }
 
@@ -159,8 +169,9 @@ class Mail extends ActiveRecord\Record {
             $multipart[] = "Content-Type: application/octet-stream; name=\"" . $filename . "\""; //image/jpeg
             $multipart[] = "Content-Transfer-Encoding: base64";
 
-            if ($cid != null && $cid != "")
+            if ($cid != null && $cid != "") {
                 $multipart[] = "Content-ID: <" . $cid . ">";
+            }
 
             $multipart[] = "Content-Disposition: attachment; filename=\"" . $filename . "\"";
             $multipart[] = "";
