@@ -50,7 +50,15 @@ class Sitemap extends Core\Component implements Core\Handler {
         Core\File::get($path)->put($xml);
     }
     
+    /**
+     * Обрабатывает один элемент для карты сайта
+     **/
     public static function item($item) {
+    
+        if($item->plugin("meta")->noindex()) {
+            return;
+        }
+    
         $url = app()->url()->scheme()."://".app()->url()->domain().$item->url();             
         $xml = '<url><loc>'.$url.'</loc></url>'."\n";        
         $fp = fopen(self::tmpPath()->native(), 'a');

@@ -19,7 +19,7 @@ class Template extends Generic {
     
     private static $functionsIncluded = false;
 
-    public function __construct($name=null,$processor = null) {
+    public function __construct($name = null, $processor = null) {
     
         if(!$processor) {
             $processor = app()->tm();

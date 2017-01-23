@@ -183,7 +183,7 @@ class Url {
      **/
     public function query($key = null, $val = null) {
 
-        if(func_num_args()==0) {
+        if(func_num_args() == 0) {
             return $this->query;
         }
 
