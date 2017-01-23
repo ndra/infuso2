@@ -1,8 +1,9 @@
 <?
 
 namespace Infuso\Cms\Reflex\Plugin;
+use \Infuso\Core;
 
-class Log extends \Infuso\Core\Component {
+class Log extends Core\Plugin {
 
     private $component = null;
 
@@ -12,9 +13,6 @@ class Log extends \Infuso\Core\Component {
 
     public function component() {
         return $this->component;
-    }
-
-    public function addToClass() {
     }
 
     public function log($message) {
@@ -36,8 +34,16 @@ class Log extends \Infuso\Core\Component {
             ->eq("index", get_class($this->component()).":".$this->component()->id());
     }
     
-    public function factory() {
-        return $this;
+    public static function factory($component) {
+        return new self($component);
+    }
+    
+    public static function name() {
+        return "log";
+    }
+    
+    public static function componentClass() {
+        return "infuso\\actionrecord\\record";
     }
 
 }

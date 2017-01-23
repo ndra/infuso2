@@ -4,23 +4,21 @@ namespace Infuso\Cms\Reflex\Plugin;
 use Infuso\Core;
 use \Infuso\Cms\Reflex;
 
-class Editor extends \Infuso\Core\Component {
+class Editor extends Core\Plugin {
 
-    private $component = null;
-
-    public function __construct($component) {
-        $this->component = $component;
-    }
-
-    public function component() {
-        return $this->component;
+    public static function name() {
+        return "editor";
     }
     
-    public function factory() {
+    public static function componentClass() {
+        return "infuso\\activerecord\\record";
+    }
+
+    public static function factory($component) {
 	
 		$map = \infuso\core\file::get(Core\Mod::app()->varPath()."/reflex/editors.php")->inc();
 
-        $itemClass = get_class($this->component());
+        $itemClass = get_class($component);
 
         $classes = $map[$itemClass];
         if(!$classes) {
@@ -34,7 +32,7 @@ class Editor extends \Infuso\Core\Component {
             return $editor;
         }
 
-        return new $class($this->component()->id());
+        return new $class($component->id());
         
     }
 

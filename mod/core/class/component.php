@@ -374,23 +374,15 @@ class Component {
      * @todo рефакторить хардкод
      **/
     public function plugin($name) {
-
-        switch($name) {
-            case "log":
-                $plugin = new \Infuso\Cms\Reflex\Plugin\Log($this);
-                break;
-            case "meta":
-                $plugin = new \Infuso\Cms\Reflex\Plugin\Meta($this);
-                break;
-            case "editor":
-                $plugin = new \Infuso\Cms\Reflex\Plugin\Editor($this);
-                break;
-            case "route":
-                $plugin = new \Infuso\Cms\Reflex\Plugin\Route($this);
-                break;
+        
+        $classes = service("classmap")->classes("infuso\\core\\plugin");
+        foreach($classes as $class) {
+            if($class::name() == $name) {
+                return $class::factory($this);
+            }
         }
         
-        return $plugin->factory();
+        throw new \Exception("Plugin {$name} not found");
 
     }
 

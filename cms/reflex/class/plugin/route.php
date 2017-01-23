@@ -3,7 +3,7 @@
 namespace Infuso\Cms\Reflex\Plugin;
 use Infuso\Core;
 
-class Route extends \Infuso\Core\Component {
+class Route extends Core\Plugin {
 
     private $component = null;
 
@@ -97,8 +97,16 @@ class Route extends \Infuso\Core\Component {
         }
     }
     
-    public function factory() {
-        return $this;
+    public static function factory($component) {
+        return new self($component);
+    }
+    
+    public static function name() {
+        return "route";
+    }
+    
+    public static function componentClass() {
+        return "infuso\\actionrecord\\record";
     }
 
 }

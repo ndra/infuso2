@@ -3,7 +3,7 @@
 namespace Infuso\Cms\Reflex\Plugin;
 use Infuso\Core;
 
-class Meta extends \Infuso\Core\Component {
+class Meta extends Core\Plugin {
 
     private $component = null;
 
@@ -13,6 +13,18 @@ class Meta extends \Infuso\Core\Component {
 
     public function component() {
         return $this->component;
+    }
+    
+    public static function factory($component) {
+        return new self($component);
+    }
+    
+    public static function name() {
+        return "meta";
+    }
+    
+    public static function componentClass() {
+        return "infuso\\actionrecord\\record";
     }
 
 	public function metaObject() {
@@ -90,10 +102,6 @@ class Meta extends \Infuso\Core\Component {
             "hash" => $hash,
         ));
         return $meta;
-    }
-    
-    public function factory() {
-        return $this;
     }
 
 }
