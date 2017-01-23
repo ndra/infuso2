@@ -343,7 +343,7 @@ abstract class Editor extends Core\Controller {
         }
         
         // Добавляем в модель данные поведений              
-        foreach($this->behaviourClosures("menu") as $closure) {
+        foreach($this->behaviourMethods("menu") as $closure) {
             $menu = array_merge($menu, $closure());
         }
         
