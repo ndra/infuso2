@@ -343,9 +343,8 @@ abstract class Editor extends Core\Controller {
         }
         
         // Добавляем в модель данные поведений              
-        $behaviours = \Infuso\Core\BehaviourMap::getBehavioursForMethod(get_class($this), "menu");
-        foreach($behaviours as $behaviour) {
-            $menu = array_merge($menu, $behaviour::menu());
+        foreach($this->behaviourClosures("menu") as $closure) {
+            $menu = array_merge($menu, $closure());
         }
         
         return $menu;
