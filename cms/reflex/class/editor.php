@@ -126,7 +126,7 @@ abstract class Editor extends Core\Controller {
     /**
      * Возвращает id элемента (id записи activeRecord)
      **/
-    public function itemID() {
+    public function itemId() {
         return $this->item()->id();
     }
 
@@ -154,11 +154,11 @@ abstract class Editor extends Core\Controller {
         if($method) {
             return (new \Infuso\Core\Action(get_class($this), "child"))
                 ->param("method", $method)
-                ->param("id", $this->itemID())
+                ->param("id", $this->itemId())
                 ->url();
         }
     
-        $url = \mod::action(get_class($this),"index",array("id"=>$this->itemID()))->url();
+        $url = \mod::action(get_class($this), "index", array("id" => $this->itemID()))->url();
         return $url;
     }
 
@@ -193,7 +193,7 @@ abstract class Editor extends Core\Controller {
     }
 
     /**
-     * @todo Сделать перенос объектов в корзину, а не простое их удаление
+     * @todo Сделать проверку безопасности! Сделать перенос объектов в корзину, а не простое их удаление
      **/         
     public function delete() {
 
@@ -322,14 +322,14 @@ abstract class Editor extends Core\Controller {
     
         $menu = array();
         
-        $menu[] = array(
-            "href" => \mod::action(get_class($this), "index", array("id"=>$this->itemID()))->url(),
+        $menu["edit"] = array(
+            "href" => \mod::action(get_class($this), "index", array("id" => $this->itemID()))->url(),
             "title" => "Редактирование",
         );
         
         if($this->metaEnabled()) {
-            $menu[] = array(
-                "href" => \mod::action(get_class($this),"meta",array("id"=>$this->itemID()))->url(),
+            $menu["meta"] = array(
+                "href" => \mod::action(get_class($this), "meta", array("id" => $this->itemID()))->url(),
                 "title" => "Метаданные",
             );
         }
@@ -342,9 +342,18 @@ abstract class Editor extends Core\Controller {
             );      
         }
         
+        // Добавляем в модель данные поведений              
+        $behaviours = \Infuso\Core\BehaviourMap::getBehavioursForMethod(get_class($this), "menu");
+        foreach($behaviours as $behaviour) {
+            $menu = array_merge($menu, $behaviour::menu());
+        }
+        
         return $menu;
     }
     
+    /**
+     * Возвращает массив дочерних коллекций
+     **/
     public function childrenCollections() {
         $ret = array();
         $class = get_class($this);
