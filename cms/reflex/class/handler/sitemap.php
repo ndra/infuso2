@@ -30,7 +30,6 @@ class Sitemap extends Core\Component implements Core\Handler {
             "class" => get_class(),
             "method" => "sitemapIterator",
             "title" => "Итератор карты сайта",
-            "crontab" => "* * * * *",     
         ));    
     }
     
