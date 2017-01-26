@@ -24,11 +24,11 @@ abstract class Generic extends Core\Component {
         return ob_get_clean();
     }
 
-    public function delayed() {
-        echo $this->delayedMarker();
+    public function delayed($priority = 0) {
+        echo $this->delayedMarker($priority);
     }
 
-    public function delayedMarker() {
+    public function delayedMarker($priority = 0) {
     
         $params = $this->params();
         $params["*delayed"] = false;
@@ -36,6 +36,7 @@ abstract class Generic extends Core\Component {
         return \tmp_delayed::add(array(
             "class" => "infuso\\template\\generic",
             "method" => "execStatic",
+            "priority" => $priority,
             "arguments" => array(
                 get_class($this),  
                 $params,              

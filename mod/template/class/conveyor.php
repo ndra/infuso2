@@ -136,7 +136,8 @@ class Conveyor extends Core\Component {
     }
 
     /**
-     * Возвращаем массив элементов из конвеера
+     * Возвращаем массив элементов из конвеера в сериализованном виде
+     * Используется для кэширования 
      **/
     public function serialize() {
         return serialize(array(
@@ -145,6 +146,9 @@ class Conveyor extends Core\Component {
         ));
     }
     
+    /**
+     * Восстанавливает конвейер из сериализованного состояния
+     **/
     public static function unserialize($data) {
     
         $data = unserialize($data);
@@ -203,91 +207,37 @@ class Conveyor extends Core\Component {
      * @todo добавить вывод одиночных css и js, подключать скрипты инлайном как и css
      **/
     public function getContentForAjax() {
-
-        profiler::beginOperation("tmp","execConveyor",null);
-
-        $singleCss = array();
-        $packCss = array();
-        $singleJs = array();
-        $packJs = array();
-        $script = array();
-        $heads = array();
-
-        $items = $this->items;
-        usort($items,array("self","sortItems"));
-
-        // Раскладываем элемнты конвеера по группам
-        foreach($items as $item) {
-            switch($item["t"]) {
-                case "sc":
-                    $singleCss[] = $item["c"];
-                    break;
-                case "c":
-                    $packCss[] = $item["c"];
-                    break;
-                case "sj":
-                    $singleJs[] = $item["c"];
-                    break;
-                case "j":
-                    $packJs[] = $item["c"];
-                    break;
-                case "h":
-                    $heads[] = $item["c"];
-                    break;
-                case "s":
-                    $script[] = $item["c"];
-                    break;
-            }
-        }
-
-        $head = "";
-        
-        $render = new Render();
-
-        // Одиночные css
-        //foreach($singleCss as $item) {
-        //    $head.= "<link rel='stylesheet' type='text/css' href='$item' />\n";
-        //}
-
-        // Упакованные css
-        $packCss = $render->packIncludes($packCss,"css");
-        if($packCss) {
-			$head.= "<style type='text/css'>";
-			$head.= Core\File::get($packCss)->data();
-			$head.= "</style>";
-        }
-
-        // Одиночные js
-        //foreach($singleJs as $item) {
-        //    $head.= "<script type='text/javascript' src='$item'></script>\n";
-        //}
-
-        // Упакованные js
-        $packJs = $render->packIncludes($packJs, "js");
-        if($packJs) {
-            $head.= "<script type='text/javascript' src='$packJs'></script>\n";
-        }
-
-        foreach($script as $item) {
-            $head.= "<script type='text/javascript'>$item</script>\n";
-        }
-
-        foreach($heads as $item) {
-            $head.= "$item\n";
-        }
-        
-        profiler::endOperation("tmp","execConveyor");
-
-        return $head;
+    
+        return $this->exec(array (
+            "singlecss" => false,
+            "packcss" => "inline",
+            "singlejs" => false,
+            "packjs" => "inline",
+            "script" => true,
+            "head" => false,
+            "region" => null,
+        ));
     }
 
     /**
      * Выполняет конвеер: объединяет все скрипты, стили, настройки
      * и генерирует содержимое тэга head
      **/
-    public function exec() {
+    public function exec($params = array()) {
     
-        profiler::beginOperation("tmp","execConveyor",null);
+        profiler::beginOperation("tmp", "execConveyor", null);
+        
+        $params = array_merge(array (
+            "singlecss" => "link",
+            "packcss" => "link",
+            "singlejs" => "link",
+            "packjs" => "link",
+            "script" => true,
+            "head" => true,
+            "region" => null,
+        ), $params);
+
+        
 
         $singleCss = array();
         $packCss = array();
@@ -297,10 +247,15 @@ class Conveyor extends Core\Component {
         $heads = array();
 
         $items = $this->items;
-        usort($items,array("self","sortItems"));
+        usort($items, array("self", "sortItems"));
 
         // Раскладываем элемнты конвеера по группам
         foreach($items as $item) {
+        
+            if($item["r"] != $params["region"]) {
+                continue;
+            }
+                   
             switch($item["t"]) {
                 case "sc":
                     $singleCss[] = $item["c"];
@@ -328,33 +283,67 @@ class Conveyor extends Core\Component {
         $render = new Render();
 
         // Одиночные css
-        foreach($singleCss as $item) {
-            $head.= "<link rel='stylesheet' type='text/css' href='$item' />\n";
+        switch($params["singlecss"]) {        
+            case "link":
+                foreach($singleCss as $item) {
+                    $head.= "<link rel='stylesheet' type='text/css' href='{$item}' />\n";
+                }
+                break;
         }
 
         // Упакованные css
-        $packCss = $render->packIncludes($packCss,"css");
-        if($packCss) {
-            $head.= "<link rel='stylesheet' type='text/css' href='$packCss' />\n";
+        switch($params["packcss"]) {   
+            case "link":
+                $packCss = $render->packIncludes($packCss, "css");
+                if($packCss) {
+                    $head.= "<link rel='stylesheet' type='text/css' href='{$packCss}' />\n";
+                }
+                break;
+            case "inline":
+                $packCss = $render->packIncludes($packCss, "css");
+                if($packCss) {
+        			$head.= "<style type='text/css'>";
+        			$head.= Core\File::get($packCss)->data();
+        			$head.= "</style>";
+                }
+                break;
         }
 
         // Одиночные js
-        foreach($singleJs as $item) {
-            $head.= "<script type='text/javascript' src='$item'></script>\n";
+        switch($params["singlejs"]) {        
+            case "link":
+                foreach($singleJs as $item) {
+                    $head.= "<script type='text/javascript' src='{$item}'></script>\n";
+                }
+                break;
         }
 
         // Упакованные js
-        $packJs = $render->packIncludes($packJs,"js");
-        if($packJs) {
-            $head.= "<script type='text/javascript' src='$packJs'></script>\n";
+        switch($params["packjs"]) {        
+            case "link":
+                $packJs = $render->packIncludes($packJs, "js");
+                if($packJs) {
+                    $head.= "<script type='text/javascript' src='{$packJs}'></script>\n";
+                }
+                break;
+            case "inline":
+                $packJs = $render->packIncludes($packJs, "js");
+                if($packJs) {
+                    $head.= "<script type='text/javascript' src='$packJs'></script>\n";
+                }
+                break;
         }
 
-        foreach($script as $item) {
-            $head.= "<script type='text/javascript'>$item</script>\n";
+        if($params["script"]) {        
+            foreach($script as $item) {
+                $head.= "<script type='text/javascript'>$item</script>\n";
+            }
         }
 
-        foreach($heads as $item) {
-            $head.= "$item\n";
+        if($params["head"]) {    
+            foreach($heads as $item) {
+                $head.= "$item\n";
+            }
         }
             
         Profiler::endOperation("tmp","execConveyor");

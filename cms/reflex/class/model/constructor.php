@@ -96,7 +96,7 @@ class Constructor extends ActiveRecord\Record {
                 $folder = preg_quote($folder, "/");
                 if(preg_match("/^$folder/", $val)) {
                     $newFile = $item->storage()->add($val, basename($val));
-                    $field->field()->value($newFile);
+                    $field->value($newFile);
                 } 
             }
         }

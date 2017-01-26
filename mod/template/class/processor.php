@@ -36,8 +36,8 @@ class Processor extends Core\Component {
     /**
      * @return Возващает объект шаблона
      **/
-    public function template($name,$params=array()) {
-        $tmp = new template($name,$this);
+    public function template($name, $params = array()) {
+        $tmp = new template($name, $this);
         $tmp->params($params);
         return $tmp;
     }
@@ -49,7 +49,7 @@ class Processor extends Core\Component {
      **/
     public static function normalizeArguments($arguments) {
 
-        if(sizeof($arguments)==0) {
+        if(sizeof($arguments) == 0) {
             $ret = template::currentParams();
             return $ret;
         }
@@ -59,10 +59,10 @@ class Processor extends Core\Component {
             $ret["p".($key+1)] = $val;
         }
 
-        if(sizeof($arguments)==1) {
+        if(sizeof($arguments) == 1) {
             $a = end($arguments);
             if(is_array($a)) {
-                foreach($a as $key=>$val) {
+                foreach($a as $key => $val) {
                     $ret[$key] = $val;     
                 }
             }
@@ -102,7 +102,7 @@ class Processor extends Core\Component {
     /**
      * Добавляет шаблон $name в блок $block
      **/
-    public function add($block,$name) {
+    public function add($block, $name) {
 
         if(is_object($name)) {
             tmp_block::get($block)->add($name);
@@ -162,88 +162,124 @@ class Processor extends Core\Component {
     /**
      * Добавляет css автоматически
      **/
-    public function css($path,$priority = 0){
-        if($path{0}=="/") {
-            $this->packCSS($path,$priority);
+    public function css($path, $params = array()) {
+        if($path{0} == "/") {
+            $this->packCSS($path, $params);
         } else {
-            $this->singleCSS($path,$priority);
+            $this->singleCSS($path, $params);
 		}
     }
 
     /**
      * Добавляет css без упаковки
      **/
-    public function singleCSS($path,$priority=null) {
+    public function singleCSS($path, $params = array()) {
+    
+        if(is_integer($params)) {
+            $params = array("priority" => $params);
+        }
+    
         $this->conveyor()->add(array(
             "t" => "sc",
             "c" => $path,
-            "p" => $priority,
+            "p" => $params["priority"],
+            "r" => $params["region"],
         ));
     }
 
     /**
      * Добавляет упакованный css
      **/
-    public function packCSS($path,$priority=null) {
+    public function packCSS($path, $params = array()) {
+    
+        if(is_integer($params)) {
+            $params = array("priority" => $params);
+        }
+    
         $this->conveyor()->add(array(
             "t" => "c",
             "c" => $path,
-            "p" => $priority,
+            "p" => $params["priority"],
+            "r" => $params["region"],
         ));
     }
 
     /**
      * Добавляет js автоматически
      **/
-    public function js($path,$priority=null) {
-        if($path{0}=="/") {
-            $this->packJS($path,$priority);
+    public function js($path, $params = array()) {
+        if($path{0} == "/") {
+            $this->packJS($path, $params);
         } else {
-            $this->singleJS($path,$priority);
+            $this->singleJS($path, $params);
 		}
     }
 
     /**
      * Добавляет js без упаковки
      **/
-    public function singleJS($path,$priority=null) {
+    public function singleJS($path, $params = array()) {
+    
+        if(is_integer($params)) {
+            $params = array("priority" => $params);
+        }
+    
         $this->conveyor()->add(array(
             "t" => "sj",
             "c" => $path,
-            "p" => $priority,
+            "p" => $params["priority"],
+            "r" => $params["region"],
         ));
     }
 
     /**
      * Добавляет упакованный js с упаковкой
      **/
-    public function packJS($path,$priority=null) {
+    public function packJS($path, $params = array()) {
+    
+        if(is_integer($params)) {
+            $params = array("priority" => $params);
+        }
+    
         $this->conveyor()->add(array(
             "t" => "j",
             "c" => $path,
-            "p" => $priority,
+            "p" => $params["priority"],  
+            "r" => $params["region"],
         ));
     }
     
     /**
      * Добавляет строку в хэд
      **/
-    public function head($str,$priority=null) {
+    public function head($str, $params = array()) {
+    
+        if(is_integer($params)) {
+            $params = array("priority" => $params);
+        }
+    
         $this->conveyor()->add(array(
             "t" => "h",
             "c" => $str,
-            "p" => $priority,
+            "p" => $params["priority"],
+            "r" => $params["region"],
         ));
     }
 
     /**
-     * Добавляет в хэдер скрипт (js-код)
+     * Добавляет в скрипт (js-код)
      **/
-    public function script($str,$priority=null) {
+    public function script($str, $params = array()) {
+    
+        if(is_integer($params)) {
+            $params = array("priority" => $params);
+        }
+
         $this->conveyor()->add(array(
             "t" => "s",
             "c" => $str,
-            "p" => $priority,
+            "p" => $params["priority"],
+            "r" => $params["region"],
         ));
     }
     
@@ -251,14 +287,14 @@ class Processor extends Core\Component {
      * Выводит шиблон хэдера
      **/
     public function header() {
-        $this->exec("/tmp/header");
+        $this->exec("/tmp/document/header");
     }
 
     /**
      * Выводит шиблон футера
      **/
     public function footer() {
-        echo "</body></html>";
+        $this->exec("/tmp/document/footer");
     }
     
 	public function jq() {
@@ -297,7 +333,7 @@ class Processor extends Core\Component {
 	/**
 	 * Возвращает путь к файлу шаблона с заданным расширением
 	 **/
-    public function filePath($template,$ext) {
+    public function filePath($template, $ext) {
 
         $this->loadDefaults();
 
@@ -316,7 +352,7 @@ class Processor extends Core\Component {
 	 **/
 	public function templateBundle($template) {
         $this->loadDefaults();
-        $template = trim($template,"/");
+        $template = trim($template, "/");
         $bundle = $this->templateMap[$template]["bundle"];
 		return service("bundle")->bundle($bundle);
 	}
@@ -333,11 +369,9 @@ class Processor extends Core\Component {
 	 * Статический метод для добавляния в хэдер заголовков метаданных
 	 * @Вынести меты в шаблон tmp/header
 	 **/
-    public static function headInsert() { 
-        $head = "";    
-        $head.= app()->tm()->conveyor()->exec(); 
-        echo $head;   
-    }
+    //public static function headInsert() {   
+   //     app()->tm("/tmp/document/header/insert")->exec(); 
+   // }
 
 
 }

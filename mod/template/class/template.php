@@ -42,7 +42,7 @@ class Template extends Generic {
         
         if($delayed = $this->componentConf("delayed")) {
             if(in_array($name,$delayed)) {
-                $this->param("*delayed",true);
+                $this->param("*delayed", true);
             }
         }
     }
@@ -135,49 +135,49 @@ class Template extends Generic {
         $base = self::$current ? self::$current->template() : "/";
 
         $name = trim($name);
-        $name = rtrim($name,"/");
+        $name = rtrim($name, "/");
 
         $axis = "root";
         $backStep = 1;
 
         // Весли в начале шаблона стоит два точки, ось - потомки родителя
-        if(preg_match("/^(\.\.\/)+/",$name,$matches)) {
+        if(preg_match("/^(\.\.\/)+/", $name, $matches)) {
             $axis = "back";
             $backStep = round(strlen($matches[0]) / 3);
         }
 
         // старый способ указания абсолютного шаблона site:item
         // Новый способ - начать шаблон со слэша
-        $name = preg_replace("/^([\da-zA-Z\_\-\.]+)\:/","/$1/",$name);
+        $name = preg_replace("/^([\da-zA-Z\_\-\.]+)\:/", "/$1/", $name);
 
         // Избавляемся от точек и дублирующихся слэшей
-        $name = preg_replace("/[\.\/]+/","/",$name);
+        $name = preg_replace("/[\.\/]+/","/", $name);
 
         // Делаем абсолютные пути относительными
-        if(!preg_match("/^\//",$name) && $axis!="back") {
+        if(!preg_match("/^\//", $name) && $axis != "back") {
             $axis = "children";
         }
 
         switch($axis) {
             case "children":
                 $name = "/".$base."/".$name;
-                $name = preg_replace("/[\.\/]+/","/",$name);
+                $name = preg_replace("/[\.\/]+/", "/", $name);
                 break;
             case "back":
                 $back = $base;
-                for($i=0;$i<$backStep;$i++)
-                    $back = preg_replace("/[\da-zA-Z\_\-\.]+\/?$/","",$back);
+                for($i = 0; $i < $backStep; $i ++)
+                    $back = preg_replace("/[\da-zA-Z\_\-\.]+\/?$/", "", $back);
                 $name = $back."/".$name;
-                $name = preg_replace("/[\.\/]+/","/",$name);
+                $name = preg_replace("/[\.\/]+/", "/", $name);
                 break;
             default:
                 $name = "/".$name;
-                $name = preg_replace("/[\.\/]+/","/",$name);
+                $name = preg_replace("/[\.\/]+/", "/", $name);
                 break;
 
         }
 
-        $name = "/".trim($name,"/");
+        $name = "/".trim($name, "/");
         return $name;
 
     }
@@ -189,7 +189,7 @@ class Template extends Generic {
     public function clearCache() {
         $p = $this->params();
         $hash = $this->file().":".$this->cache.":".serialize($p);
-        mod_cache::set($hash,null);
+        mod_cache::set($hash, null);
         return $this;
     }
     
@@ -219,8 +219,8 @@ class Template extends Generic {
         
         $p = $this->params();
 
-        $this->processor()->css($this->fileCSS()."",1);
-        $this->processor()->js($this->fileJS()."",1);
+        $this->includeScriptsAndStyles();
+        
         // Если включен режим кэширования
 
         if($this->cache && $this->processor()->param("cache")) {
@@ -233,7 +233,7 @@ class Template extends Generic {
             // Если в кэше еще нет шаблона
             if(!$cached || $this->recache) {
 
-                Core\profiler::beginOperation("tmp","cached miss",$this->template());
+                Core\profiler::beginOperation("tmp", "cached miss", $this->template());
 
                 $this->processor()->pushConveyor();
                 ob_start();
@@ -269,7 +269,7 @@ class Template extends Generic {
         }
         // Если кэширование выключено
         else {
-            core\profiler::beginOperation("tmp","exec",$this->template());
+            core\profiler::beginOperation("tmp", "exec", $this->template());
             $this->aexec($p);
             core\profiler::endOperation();
         }
@@ -314,7 +314,7 @@ class Template extends Generic {
 
         include $this->file()->native();
 
-        if(\Infuso\Core\Superadmin::check()){
+        if(\Infuso\Core\Superadmin::check()) {
 			echo "<!-- end of ".$this->template()." -->";
         }
 
@@ -353,7 +353,7 @@ class Template extends Generic {
     /**
      * Включает кэширование этого шаблона
      **/
-    public function cache($ttl = null, $hash=-1) {
+    public function cache($ttl = null, $hash =- 1) {
         $this->ttl = self::prepareTTL($ttl);
         $this->cache = $hash;
         return $this;
@@ -394,21 +394,21 @@ class Template extends Generic {
      * Возвращает файл с php-кодом этого шаблона
      **/
     public function file() {
-        return $this->processor()->filePath($this->mod()."/".$this->path(),"php");
+        return $this->processor()->filePath($this->mod()."/".$this->path(), "php");
     }
 
     /**
      * Возвращает файл с js-кодом этого шаблона
      **/
     public function fileJS() {
-        return $this->processor()->filePath($this->mod()."/".$this->path(),"js");
+        return $this->processor()->filePath($this->mod()."/".$this->path(), "js");
     }
 
     /**
      * Возвращает файл с css-кодом этого шаблона
      **/
     public function fileCSS() {
-        return $this->processor()->filePath($this->mod()."/".$this->path(),"css");
+        return $this->processor()->filePath($this->mod()."/".$this->path(), "css");
     }
 
     public function includeScriptsAndStyles() {

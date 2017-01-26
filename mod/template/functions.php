@@ -8,6 +8,11 @@ function exec() {
 	call_user_func_array(array(app()->tm(),"exec"),$args);
 }
 
+function tmp() {
+	$args = func_get_args();
+	return call_user_func_array(array (app(), "tm"), $args);
+}
+
 function region() {
 	$args = func_get_args();
 	call_user_func_array(array(app()->tm(),"region"),$args);
