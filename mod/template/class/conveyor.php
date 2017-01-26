@@ -235,9 +235,7 @@ class Conveyor extends Core\Component {
             "script" => true,
             "head" => true,
             "region" => null,
-        ), $params);
-
-        
+        ), $params);        
 
         $singleCss = array();
         $packCss = array();

@@ -283,18 +283,27 @@ class Processor extends Core\Component {
         ));
     }
     
+    private function documentTemplate() {
+        switch($this->param("document")) {
+            default:
+                return "/tmp/document";
+            case "all-bottom":
+                return "/tmp/document-all-bottom";
+        }
+    }
+    
     /**
      * Выводит шиблон хэдера
      **/
     public function header() {
-        $this->exec("/tmp/document/header");
+        $this->exec($this->documentTemplate()."/header");
     }
 
     /**
      * Выводит шиблон футера
      **/
     public function footer() {
-        $this->exec("/tmp/document/footer");
+        $this->exec($this->documentTemplate()."/footer");
     }
     
 	public function jq() {
@@ -364,14 +373,5 @@ class Processor extends Core\Component {
     public function noindex() {
         $this->param("head/noindex",true);
     }
-    
-	/**
-	 * Статический метод для добавляния в хэдер заголовков метаданных
-	 * @Вынести меты в шаблон tmp/header
-	 **/
-    //public static function headInsert() {   
-   //     app()->tm("/tmp/document/header/insert")->exec(); 
-   // }
-
 
 }

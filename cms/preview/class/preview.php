@@ -33,11 +33,6 @@ class Generator extends \Infuso\Core\Component {
     private $height = 0;
     
     /**
-     * Коммпресия jpeg в %
-     **/
-    private $jpegCompression = 100;
-    
-    /**
      * Стэк операций
      **/
     private $stack = array();
@@ -101,7 +96,7 @@ class Generator extends \Infuso\Core\Component {
     }
     
     private function getJpegCompression() {
-        return min($this->param("jpegCompression"),$this->jpegCompression);
+        return $this->param("jpegCompression");
     }
 
     /**
@@ -256,7 +251,7 @@ class Generator extends \Infuso\Core\Component {
             $color = imagecolorallocate($img,$bgcolor["red"],$bgcolor["green"],$bgcolor["blue"]);
             imagefill($img,0,0,$color);
             imagecopy($img,$this->img(),0,0,0,0,$width,$height);
-            imagejpeg($img,file::get($dest)->native(),$this->getJpegCompression());
+            imagejpeg($img, file::get($dest)->native(), $this->getJpegCompression());
         }
     }
 

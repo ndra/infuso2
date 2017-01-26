@@ -44,12 +44,10 @@ abstract class Generic extends Core\Component {
         ));
     }
     
-    public static function execStatic($class,$p) {
-    
+    public static function execStatic($class, $p) {      
         $generic = new $class;
         $generic->params($p);
-        $generic->exec();
-    
+        $generic->exec();      
     }
 
 }
