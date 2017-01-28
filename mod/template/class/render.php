@@ -86,7 +86,7 @@ class Render extends Core\Component {
      * и возвращает имя сгенерированного файла
      * @todo Сделать отключение кэширваония рендера
      **/
-	public function packIncludes($items,$ext) {
+	public function packIncludes($items, $ext) {
 	
 	    $rpath = self::renderPath();
 
@@ -129,7 +129,7 @@ class Render extends Core\Component {
 			}
 
 			// Если включен lesscss и расширение css - пропускаем через пармер less
-			if($ext=="css" && self::less()) {
+			if($ext == "css" && self::less()) {
 				$code = self::lesscssInstance()->parse($code);
 			}
 			

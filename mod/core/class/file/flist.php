@@ -36,7 +36,10 @@ class FList implements \Iterator{
 		}
         return $ret;
     }
-
+    
+    /**
+     * Фильтрует список, оставляя только папки
+     **/
     public function folders() {
         $ret = array();
         foreach($this as $item) {
@@ -47,19 +50,29 @@ class FList implements \Iterator{
         return new self($ret);
     }
 
+    /**
+     * Фильтрует список, оставляя только файлы (не папки)
+     **/
     public function files() {
         $ret = array();
-        foreach($this as $item)
-            if(!$item->folder())
-                $ret[] = $item;
+        foreach($this as $item) {
+            if(!$item->folder()) {
+                $ret[] = $item;   
+            }
+        } 
         return new self($ret);
     }
 
+    /**
+     * Фильтрует список, оставляя только файлы заданного разширения
+     **/
     public function ext($ext) {
         $ret = array();
-        foreach($this as $item)
-            if($item->ext()==$ext)
+        foreach($this as $item) {
+            if($item->ext() == $ext) {
                 $ret[] = $item;
+            }
+        }
         return new self($ret);
     }
 

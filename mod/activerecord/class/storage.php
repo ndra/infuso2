@@ -108,7 +108,7 @@ class Storage extends \Infuso\Core\Controller {
 	    if(!$this->exists()) {
 			return Core\FList::void();
 		}
-	    return Core\File::get($this->root())->search()->exclude("storage.descr");
+	    return Core\File::get($this->root())->search()->files()->exclude("storage.descr");
 	}
 
 	/**
