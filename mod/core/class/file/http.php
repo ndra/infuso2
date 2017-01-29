@@ -37,14 +37,14 @@ class Http extends Core\File {
         $this->param("curlOptions",$options);
     }
     
-    public function curlParam($key,$val) {
+    public function curlParam($key, $val) {
         $options = $this->param("curlOptions");
         $options[$key] = $val;
         $this->param("curlOptions",$options);
         return $this;
     }
 
-    public function getRedirect($n=20) {
+    public function getRedirect($n = 20) {
     
         $url = $this."";
 

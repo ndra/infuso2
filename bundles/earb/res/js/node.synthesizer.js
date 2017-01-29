@@ -66,7 +66,7 @@ earb.Node.Synthesizer = class extends earb.Node {
         this.voices[note] = newNodes;            
     }
     
-    stopNote(note) {
+    stopNote(note) {    
     
         var nodes = this.voices[note];
         if(!nodes) {

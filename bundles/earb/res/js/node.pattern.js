@@ -44,21 +44,25 @@ earb.Node.Pattern = class extends earb.Node {
         var node = this;
         if(col) {
             for(var i in col) {                
-                if(col[i]) {                 
-                    var step = 7 - i;                    
-                    var note = earb.scales.minor().note(step);                      
-                    this.sendMidiMessage({
-                        type: "play",
-                        note: note
-                    });
-                    setTimeout(function() {
+                if(col[i]) {          
+                    (function() {       
+                        var step = 7 - i;                    
+                        var note = earb.scales.minor().note(step);                      
                         node.sendMidiMessage({
-                            type: "stop",
+                            type: "play",
                             note: note
-                        });                    
-                    }, 90);
+                        });
+                        setTimeout(function() {
+                            node.sendMidiMessage({
+                                type: "stop",
+                                note: note
+                            });                    
+                        }, 90);
+                    
+                    })();
                 
                 }
+                
             }
         }
         this.tick ++;
