@@ -28,7 +28,7 @@ class mod_route_default extends \Infuso\Core\Route {
 		            $action = "index";
 		        }
 
-		        $params = $_GET;
+		        $params = $url->query();
 				while (count($rest)) {
 				    list($key, $value) = array_splice($rest, 0, 2);
 				    $params[$key] = $value;
