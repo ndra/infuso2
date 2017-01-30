@@ -132,6 +132,16 @@ class Render extends Core\Component {
 			if($ext == "css" && self::less()) {
 				$code = self::lesscssInstance()->parse($code);
 			}
+            
+            if(app()->tm()->param("minifycss") && $ext == "css") {
+                $packer = service("minify/css");
+                $code = $packer->minify($code);
+            }
+            
+            if(app()->tm()->param("minifyjs") && $ext == "js") {
+                $packer = service("minify/js");
+                $code = $packer->minify($code);
+            }
 			
 			if(!trim($code)) {
 			    return null;

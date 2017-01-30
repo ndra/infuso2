@@ -1,7 +1,15 @@
 earb.Node.ASR = class extends earb.Node {
 
     constructor(params) {
+        
         super(params);
+        
+        console.log(params);
+        
+        this.on("param/attackDuration", function(event) {
+            mod.msg(event.value);
+        });
+        
         var ctx = earb.Song.context();        
         this.gain = ctx.createGain();
         this.gain.gain.value = 0;
@@ -15,6 +23,8 @@ earb.Node.ASR = class extends earb.Node {
         this.on("midi/stop", function() {
             this.releaseGain.gain.linearRampToValueAtTime(0, ctx.currentTime + this.params.releaseDuration * 1);
         });
+        
+
         
     }
 
