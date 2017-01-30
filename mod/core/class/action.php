@@ -8,7 +8,7 @@ class Action extends Component {
     private $action = "";
     private $ar = "";
 
-    public function __construct($className=null,$action=null,$params = array()) {
+    public function __construct($className = null, $action = null, $params = array()) {
 
         // Переводим в нижний регистр имя класса и метод
         $className = strtolower($className);
@@ -27,8 +27,8 @@ class Action extends Component {
         }
     }
 
-    public function get($class,$action=null,$params=array()) {
-        return new action($class,$action,$params);
+    public function get($class, $action = null, $params = array()) {
+        return new action($class, $action, $params);
     }
 
     /**
@@ -71,12 +71,26 @@ class Action extends Component {
      * Возвращает информацию о маршруте
      **/
     public function ar($ar = null) {
-        if(func_num_args()==0) {
-        	return $this->ar;
-        } elseif(func_num_args()==1) {
+    
+        if(func_num_args() == 0) {
+            $record = $this->record();
+            if(is_object($record)) {
+                return get_class($record)."/".$record->id();
+            }
+        } elseif(func_num_args() == 1) {            
             $this->ar = $ar;
-            return $ar;
         }
+    }
+    
+    public function record() {    
+        if(is_subclass_of($this->className(), "infuso\\activerecord\\record")) {
+            if($this->action() == "item") {
+                return service("ar")->get($this->className(), $this->param("id"));
+            }
+        }
+        
+        list($class, $id) = explode("/", $this->ar);
+        return service("ar")->get($class, $id);
     }
 
     /**
@@ -153,23 +167,12 @@ class Action extends Component {
      * Выполняет этот экшн
      * Предварительно проверяет возможность его выполнения, вызывая метод test
      **/
-    public function exec() {     
-        
+    public function exec() {   
         if(!$this->test()) {  
-			call_user_func($this->failCallback(),$this->params());
-        } else {
-        
-            // Это какой-то странный код
-            /*if(mod::app()->eventsEnabled()) {
-	            app()-("mod_beforeAction",array(
-	                "action" => $this,
-	            ));
-			}
-            Profiler::addMilestone("before action"); */
-            
-            call_user_func($this->callback(),$this->params());
-        }
-
+			call_user_func($this->failCallback(), $this->params());
+        } else {             
+            call_user_func($this->callback(), $this->params());
+        }  
     }
 
     public function className() {
@@ -200,7 +203,7 @@ class Action extends Component {
     public function failCallback() {
         $class = $this->className();
         $obj = new $class;
-        return array($obj,"indexFailed");
+        return array($obj, "indexFailed");
     }
 
     public function __toString() {

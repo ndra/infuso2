@@ -11,13 +11,13 @@ class mod_route_default extends \Infuso\Core\Route {
 
 	public function urlToAction($url) {      
 	
-		$segments = explode("/",trim(strtolower($url->path()),"/"));
+		$segments = explode("/", trim(strtolower($url->path()), "/"));
 		$controllers = service("classmap")->classmap("controllers");
 		$rest = array();
 
 		do {
 
-			$controller = implode("/",$segments); 
+			$controller = implode("/", $segments); 
 			
 			$class = $controllers[$controller];
 			
@@ -30,11 +30,11 @@ class mod_route_default extends \Infuso\Core\Route {
 
 		        $params = $_GET;
 				while (count($rest)) {
-				    list($key,$value) = array_splice($rest, 0, 2);
+				    list($key, $value) = array_splice($rest, 0, 2);
 				    $params[$key] = $value;
 				}
 				
-				return \infuso\core\action::get($class,$action,$params);
+				return \infuso\core\action::get($class, $action, $params);
 
 		    }
 		    

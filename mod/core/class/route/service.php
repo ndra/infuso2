@@ -52,12 +52,12 @@ class service extends \infuso\core\service {
 				$action->params(),
 				$action->ar(),
 			));
-            service("cache")->set($key,$serializedAction);
+            service("cache")->set($key, $serializedAction);
             return $action;
 
         } else {
 
-            list($class,$method, $params, $ar) = json_decode($serializedAction, true);
+            list($class, $method, $params, $ar) = json_decode($serializedAction, true);
             $action = Core\Mod::action($class, $method, $params);
             $action->ar($ar);   
             return $action;

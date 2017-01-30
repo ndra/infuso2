@@ -46,9 +46,9 @@ class Main extends \Infuso\Core\Route {
 	    $route = self::routesForActiveDomain()->eq("url", $url->path())->one();
 	    if($route->exists()) {
 	        $params = $url->query();
-	        $params = array_merge($params,$route->pdata("params"));
+	        $params = array_merge($params, $route->pdata("params"));
 	        $action = \Infuso\Core\Action::get($route->className(), $route->action(), $params);
-	        $action->ar(get_class($route)."/".$route->id());
+	        $action->ar(get_class($route)."/".$route->id());            
 	        return $action;
 	    }
 	    

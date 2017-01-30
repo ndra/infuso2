@@ -116,11 +116,6 @@ class General extends Core\Component implements Core\Handler {
 	 **/
 	public static function onbeforeActionSys($p) { 
 		$action = $p->param("action");
-	    if($action->action() == "item") {
-			$id = $action->param("id");
-			$obj = service("ar")->get($action->className(), $id);
-			$action->ar(get_class($obj)."/".$obj->id());
-		}	
         if(is_subclass_of($action->className(), "infuso\\cms\\reflex\\editor")) {
             if($action->action() == "child") {
                 \Infuso\Cms\Reflex\Keeper::set($action->className(), $action->param("id"), $action->param("method"));
@@ -128,8 +123,7 @@ class General extends Core\Component implements Core\Handler {
             if($action->action() == "index") {
                 \Infuso\Cms\Reflex\Keeper::set($action->className(), $action->param("id"), null);
             }
-        }
-        	
+        } 	
 	}
 
 	/**
