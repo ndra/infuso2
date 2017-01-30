@@ -24,8 +24,8 @@ foreach(array("head/keywords","head/description") as $name) {
 }
 
 echo app()->tm()->conveyor()->exec(array (
-    "singlecss" => false,
-    "packcss" => false,
+    "singlecss" => "link",
+    "packcss" => "link",
     "singlejs" => false,
     "packjs" => false,
     "script" => false,

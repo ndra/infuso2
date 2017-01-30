@@ -287,8 +287,8 @@ class Processor extends Core\Component {
         switch($this->param("document")) {
             default:
                 return "/tmp/document";
-            case "all-bottom":
-                return "/tmp/document-all-bottom";
+            case "js-bottom":
+                return "/tmp/document-js-bottom";
         }
     }
     

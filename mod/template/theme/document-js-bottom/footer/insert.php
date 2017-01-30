@@ -1,8 +1,8 @@
 <?
 
 echo app()->tm()->conveyor()->exec(array (
-    "singlecss" => "link",
-    "packcss" => "link",
+    "singlecss" => false,
+    "packcss" => false,
     "singlejs" => "link",
     "packjs" => "link",
     "script" => "link",
