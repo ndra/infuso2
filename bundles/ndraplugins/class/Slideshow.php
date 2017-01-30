@@ -11,7 +11,7 @@ class Slideshow extends \Infuso\Core\Component {
 	public static function inc() {
 		app()->tm()->jq();
 		\Infuso\Template\Lib::modJS();
-		app()->tm()->singlejs(self::inspector()->bundle()->path()."/res/slideshow/slideshow.js");
+		app()->tm()->js(self::inspector()->bundle()->path()."/res/slideshow/slideshow.js");
 		app()->tm()->css(self::inspector()->bundle()->path()."/res/slideshow/slideshow.css");
 	}
 
