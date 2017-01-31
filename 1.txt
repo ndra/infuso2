@@ -1,4 +1,0 @@
-array (
-  'password' => '0000',
-  'cmd' => 'login',
-)
