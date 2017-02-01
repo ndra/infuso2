@@ -92,7 +92,7 @@ class service extends \infuso\core\service {
         $url = $this->actionToUrlNocache($action);
 
         if(true) {
-            service("cache")->set($hash, $url);
+            service("cache")->set($hash, (String) $url);
         }
 
         Core\Profiler::endOperation();
