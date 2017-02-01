@@ -104,13 +104,19 @@ class service extends \infuso\core\service {
     /**
      * Возвращает url экшна
      * результат не кэшируется
+     * @todo проерять что вернул метод роутера
      **/
     public function actionToUrlNocache($action) {
 
         $routes = service("classmap")->classmap("routes");
         foreach($routes as $router) {
             if($url = call_user_func(array($router, "actionToUrl"), $action)) {
-                return new Core\Url($url);
+            
+                // Метод роута может вернуть строку
+                // На всякий случай, оборачиваем ее в конструктор урла
+                // Это решает проблему закрывающих слэшей
+                //return new Core\Url($url);
+                return $url;
             }
         }
     }

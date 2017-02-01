@@ -227,7 +227,7 @@ class Generator extends \Infuso\Core\Component {
                     $error->render()->save($dest);
                     return;
                 default:
-                    $error = file::get("{$bundlePath}/noimage/noimage.png")->preview($this->getWidth(),$this->getHeight());
+                    $error = file::get("{$bundlePath}/noimage/noimage.png")->preview($this->getWidth(), $this->getHeight());
                     $error->render()->save($dest);
                     return;
             }
