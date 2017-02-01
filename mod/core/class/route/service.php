@@ -115,8 +115,7 @@ class service extends \infuso\core\service {
                 // Метод роута может вернуть строку
                 // На всякий случай, оборачиваем ее в конструктор урла
                 // Это решает проблему закрывающих слэшей
-                //return new Core\Url($url);
-                return $url;
+                return new Core\Url($url);
             }
         }
     }
