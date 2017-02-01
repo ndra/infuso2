@@ -207,7 +207,7 @@ class Action extends Component {
     }
 
     public function __toString() {
-        return $this->url();
+        return (String) $this->url();
     }
     
     public function url() {
