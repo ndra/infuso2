@@ -1,6 +1,13 @@
 earb.Base = class {
 
     constructor(inputParams) {
+    
+        if(inputParams.handlers) {
+            for(var i in inputParams.handlers) {
+                this.on(i, inputParams.handlers[i]);
+            }
+        }
+    
         Object.defineProperty(this, "params", {      
             get: function() {
                 if(!this.__paramsManager) {

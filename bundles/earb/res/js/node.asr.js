@@ -1,10 +1,28 @@
 earb.Node.ASR = class extends earb.Node {
 
     constructor(params) {
+    
+        if(!params.handlers) {
+            params.handlers = {};
+        }
+        
+        params.handlers["param/attackGain"] = function(event) {
+            event.value = event.value * 1 || 0.01;
+        }
+        
+        params.handlers["param/attackDuration"] = function(event) {
+            event.value = event.value * 1 || 0.01;
+        }
+        
+        params.handlers["param/sustainDecay"] = function(event) {
+            event.value = event.value * 1 || 0.01;
+        }      
+        
+        params.handlers["param/releaseDuration"] = function(event) {
+            event.value = event.value * 1 || 0.01;
+        }   
         
         super(params);
-        
-        console.log(params);
         
         this.on("param/attackDuration", function(event) {
             mod.msg(event.value);
