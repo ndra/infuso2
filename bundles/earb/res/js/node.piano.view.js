@@ -18,6 +18,9 @@ earb.Node.Piano.View = class extends earb.Node.View {
             top: 10
         }); 
         
+        /**
+         * Рисуем клавиатуру
+         **/
         for(var i = 0; i < 10; i ++) {
             $("<div>")
                 .data("n", i)
@@ -39,6 +42,38 @@ earb.Node.Piano.View = class extends earb.Node.View {
                     $(window).mouseup(fn);
                 });
         }
+        
+        var codes = {
+            49:0,
+            50:1,
+            51:2,
+            52:3,
+            53:4,
+            54:5,
+            55:6,
+            56:7,
+            57:8,
+            48:9,
+        };
+        
+        $(document).keydown(function(event) {
+        
+            if(event.originalEvent.repeat) {
+                return;
+            }
+        
+            var key = codes[event.keyCode];
+            if(key != undefined) {
+                view.handlePress(key);
+            }
+        });
+        
+        $(document).keyup(function(event) {
+            var key = codes[event.keyCode];
+            if(key != undefined) {
+                view.handleRelease(key);
+            }
+        });
         
     } 
     

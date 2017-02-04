@@ -2,7 +2,7 @@ earb.Base = class {
 
     constructor(inputParams) {
     
-        if(inputParams.handlers) {
+        if(inputParams && inputParams.handlers) {
             for(var i in inputParams.handlers) {
                 this.on(i, inputParams.handlers[i]);
             }
