@@ -226,6 +226,10 @@ class User extends ActiveRecord\Record {
         
         app()->cookie("login", $token, $keep ? 24 : null);
         
+        app()->fire("user/activate", array(
+            "user" => $this,
+        ));
+        
         service("user")->setActive($this);           
     }
     
