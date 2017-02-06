@@ -70,15 +70,12 @@ class Action extends Component {
     /**
      * Возвращает информацию о маршруте
      **/
-    public function ar($ar = null) {
-    
+    public function ar($ar = null) {       
         if(func_num_args() == 0) {
-            $record = $this->record();
-            if(is_object($record)) {
-                return get_class($record)."/".$record->id();
-            }
+            return $this->ar;
         } elseif(func_num_args() == 1) {            
             $this->ar = $ar;
+            return $this;
         }
     }
     
@@ -89,7 +86,7 @@ class Action extends Component {
             }
         }
         
-        list($class, $id) = explode("/", $this->ar);
+        list($class, $id) = explode("/", $this->ar());
         return service("ar")->get($class, $id);
     }
 

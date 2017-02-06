@@ -36,7 +36,7 @@ class service extends \infuso\core\service {
     }
 
 	/**
-	 * Преобразует отъект класса Url в объект класса Action
+	 * Преобразует объект класса Url в объект класса Action
 	 **/
     public function urlToAction($url) {
 
