@@ -96,9 +96,9 @@ class General extends Core\Component implements Core\Handler {
      * @handler = infuso/beforeActionSYS
      **/         
     public function addMeta() {   
-        $ar = app()->action()->ar();
-        list($class,$id) = explode("/", $ar);
-        $record = service("ar")->get($class, $id);
+        //$ar = app()->action()->ar();
+        //list($class,$id) = explode("/", $ar);
+        $record = app()->action()->record();
         $metaObject = $record->plugin("meta")->metaObject();
         app()->tm()->param("head/title", $metaObject->data("title"));
 		app()->tm()->param("head/keywords", $metaObject->data("keywords"));
