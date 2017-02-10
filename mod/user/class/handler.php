@@ -18,6 +18,15 @@ class Handler implements Core\Handler {
         
     }
     
+    
+    /**
+	 * Метод, в котором записывает последнюю дату активности юзера на сайте
+     * @handler = infuso/beforeAction
+     **/
+    public function beforeAction() {
+        service("user")->active()->registerActivity();          
+    }
+    
     /**
      * Метод, в котором реализуется бизнес-логика инициализации
      * @handler = infuso/deploy

@@ -493,7 +493,7 @@ class User extends ActiveRecord\Record {
      **/
     public function registerActivity() {
         // Округляем время до 5 минут и записываем в пользователя
-        $stamp = util::now()->stamp();
+        $stamp = \Infuso\Util\Util::now()->stamp();
         $stamp = round($stamp / 60 / 5) * 60 * 5;
         $this->data("lastActivity", $stamp);
     }
