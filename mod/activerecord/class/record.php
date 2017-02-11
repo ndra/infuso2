@@ -316,7 +316,7 @@ abstract class Record extends \Infuso\Core\Model\Model {
 
         $symbols = "[a-z0-9\_\-\:\\\\]+";
 
-        if(preg_match("/^{$symbols}$/i",$name)) {
+        if(preg_match("/^{$symbols}$/i", $name)) {
             return "`$table`.`".$name."`";
         }
 

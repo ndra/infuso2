@@ -447,15 +447,15 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
     }
 
     public function normalizeColName($key) {
-        return Record::normalizeColName($key,$this->itemClass());
+        return Record::normalizeColName($key, $this->itemClass());
     }
 
-    public function eq($key,$val=null,$fn=null) {
+    public function eq($key, $val = null, $fn = null) {
 
-        $type = (is_array($key)?"a":"s").":".(is_array($val)?"a":"s");
+        $type = (is_array($key) ? "a" : "s") . ":" . (is_array($val) ? "a" : "s");
 
         // Если оба параметра скаляры и не задана ф-ция
-        if($type=="s:s" && !$fn) {
+        if($type == "s:s" && !$fn) {
             $this->eqs[$key] = $val;
         }
 
@@ -467,7 +467,7 @@ class Collection extends \Infuso\Core\Component implements \Iterator {
                 if($fn) {
                     $key = "$fn($key)";
                 }
-                $this->where("$key=$val",$key);
+                $this->where("$key = $val", $key);
                 break;
 
             case "a:s":

@@ -14,7 +14,7 @@ class WorkflowCollection extends \Infuso\Core\Behaviour {
            $projects = Access::all()
                 ->eq("userId", app()->user()->id())
                 ->distinct("projectId");
-            $this->joinByField("taskId")->eq("infuso\\board\\model\\task.projectId", $projects);
+            $this->joinByField("taskId")->eq("Infuso\\Board\\Model\\Task.projectId", $projects);
         } else {
             $this->eq("id", 0);
         }
