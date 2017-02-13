@@ -17,7 +17,10 @@ class Occupation extends Base {
         $occItem = service("ar")->create("Infuso\\Heapit\\Model\\Org", $data);
         $data = array("orgId" => $p["orgId"], "occId"=> $occItem->id());
         $occ = service("ar")->create("Infuso\\Heapit\\Model\\Occupation", $data);
-        $ret = \tmp::get("/heapit/org/content/staff/item", array("occ" => $occ))->getContentForAjax();
+        $ret = app()
+            ->tm("/heapit/org/content/staff/item")
+            ->param("occ", $occ)
+            ->getContentForAjax();
         return $ret; 
     }
     
@@ -25,7 +28,10 @@ class Occupation extends Base {
     public static function post_addExisted($p) {
         $data = array("orgId" => $p["orgId"], "occId"=> $p["occId"]);
         $occ = service("ar")->create("Infuso\\Heapit\\Model\\Occupation", $data);
-        $ret = \tmp::get("/heapit/org/content/staff/item", array("occ" => $occ))->getContentForAjax();
+        $ret = app()
+            ->tm("/heapit/org/content/staff/item")
+            ->param("occ", $occ)
+            ->getContentForAjax();
         return $ret;
     }
     
