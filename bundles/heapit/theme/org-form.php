@@ -96,6 +96,7 @@
                 //<input type='submit' value='{$org->exists() ? "Сохранить" : "Создать"}' />
                 widget("infuso\\cms\\ui\\widgets\\button")
                     ->text($org->exists() ? "Сохранить" : "Создать")
+                    ->submit()
                     ->exec();
             </td>
         </tr>

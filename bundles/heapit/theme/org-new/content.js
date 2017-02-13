@@ -1,6 +1,7 @@
-$(function() {
-
-    $(".krziax51l6").submit(function(e) {
+mod(".krziax51l6").init(function() {
+    
+    var $container = $(this);
+    $container.submit(function(e) {
         e.preventDefault();
         var data = mod(this).formData();
         mod.call({
