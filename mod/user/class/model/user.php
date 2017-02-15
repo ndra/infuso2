@@ -502,7 +502,7 @@ class User extends ActiveRecord\Record {
      * Проверяет пароль $pass для данного поьбзователя
      * Возвращает true/false
      **/
-    public function checkPassword($pass) {
+    public function _checkPassword($pass) {
         $check = Core\Crypt::checkHash($this->data("password"), $pass);
         return $check;
     }
