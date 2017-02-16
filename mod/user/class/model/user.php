@@ -97,7 +97,7 @@ class User extends ActiveRecord\Record {
                     'label' => 'Юзерпик',
                     'group' => 'Личные данные',
                     'indexEnabled' => '1',
-                ), array(
+                ), /*array(
                     'name' => 'country',
                     'type' => 'v324-89xr-24nk-0z30-r243',
                     'editable' => '1',
@@ -121,7 +121,7 @@ class User extends ActiveRecord\Record {
                     'label' => 'Город',
                     'indexEnabled' => '0',
                     'group' => 'Личные данные',
-                ) ,
+                ) , */
             ) ,
         );
 
@@ -404,24 +404,6 @@ class User extends ActiveRecord\Record {
     }
 
     /**
-     * Возвращает значение поля пользователя или результат выполнения
-     * соответствующего метода поведений
-     **/
-    private final function fieldOrBehaviour($key) {
-    
-        $val = trim($this->data($key));
-        if($val) {
-            return $val;
-        }
-
-        foreach($this->behaviourMethods($key) as $fn) {
-            if($val = trim($fn())) {
-                return $val;
-            }
-        }
-    }
-
-    /**
      * Возвращает электронную почту пользователя
      **/
     public function email() {
@@ -432,55 +414,28 @@ class User extends ActiveRecord\Record {
      * Возвращает телефон
      **/
     public function phone() {
-        return $this->fieldOrBehaviour("phone");
+        return $this->data("phone");
     }
 
     /**
      * Возвращает имя пользователя
-     * Вернет значения из поля "firstName" или информацию из поведений, если в поле пусто
      **/
     public function firstName() {
-        return $this->fieldOrBehaviour("firstName");
+        return $this->data("firstName");
     }
 
     /**
      * Возвращает фамилию польщователя
-     * Вернет значения из поля "lastName" или информацию из поведений, если в поле пусто
      **/
     public function lastName() {
-        return $this->fieldOrBehaviour("lastName");
+        return $this->data("lastName");
     }
 
     /**
      * Возвращает ник пользователя
-     * Вернет значения из поля "nickName" или информацию из поведений, если в поле пусто
      **/
     public function nickName() {
-        return $this->fieldOrBehaviour("nickName");
-    }
-
-    /**
-     * Возвращает город пользователя
-     * Вернет значения из поля "city" или информацию из поведений, если в поле пусто
-     **/
-    public function city() {
-        return $this->fieldOrBehaviour("city");
-    }
-
-    /**
-     * Возвращает регион пользователя
-     * Вернет значения из поля "region" или информацию из поведений, если в поле пусто
-     **/
-    public function region() {
-        return $this->fieldOrBehaviour("region");
-    }
-
-    /**
-     * Возвращает страну пользователя
-     * Вернет значения из поля "country" или информацию из поведений, если в поле пусто
-     **/
-    public function country() {
-        return $this->fieldOrBehaviour("country");
+        return $this->data("nickName");
     }
     
 	public function _userpic() {
