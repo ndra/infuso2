@@ -82,6 +82,9 @@ class Collection extends Core\Component {
 		$editor = Editor::get($this->className.":".$this->id);
 		$fn = $this->method;
 		$collection = $editor->$fn();
+		if(!is_object($collection)) {
+		    throw new \Exception($this->className.":".$fn." returns non object. Returned value: ".$collection." (".gettype($collection).")");
+		}
         return $collection;
 	}
 	
