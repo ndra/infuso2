@@ -12,7 +12,7 @@
     if($action) {
         list($class, $id) = explode("/", $action);
         $record = service("ar")->get($class, $id);
-        <div>Action: <a target='_blank' href='{$record->plugin("editor")->url()}}' >{$action}</a></div>
+        <div>Action: <a target='_blank' href='{$record->plugin("editor")->url()}' >{$action}</a></div>
     }
 
 </div>

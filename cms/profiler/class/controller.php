@@ -30,7 +30,7 @@ class Controller extends \Infuso\Core\Controller {
         $data['variables']["time"] = microtime(1) - $_SERVER["REQUEST_TIME_FLOAT"];
         $data["variables"]["memory-peak"] = memory_get_peak_usage();
         $data["variables"]["memory-limit"] = ini_get("memory_limit");
-        $data["variables"]["action"] = app()->action()->ar();
+        $data["variables"]["action"] = get_class(app()->action()->record())."/".app()->action()->record()->id();
         $data["server"] = $_SERVER;
         $path = \Infuso\Core\File::get(app()->varPath()."/profiler/".$key.".txt");
         \Infuso\Core\File::mkdir($path->up());
