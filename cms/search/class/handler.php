@@ -23,6 +23,20 @@ class Handler implements Core\Handler {
         
         return $timing;
     }
+    
+     /**
+     * Получаем предельное кол-во итераций за шаг   
+	 * если не задано, ставим 20
+     **/ 
+    public static function indexSpeedMode() {
+        $speed = service("conf")->get("components", "infuso\\cms\\search\\handler", "speed");
+        
+        if(!$speed) {
+            $speed = 20;    
+        }
+        
+        return $speed;
+    }
 
     /**
      * @handler = infuso/deploy
@@ -68,9 +82,26 @@ class Handler implements Core\Handler {
     public static function createTask() {
         service("task")->add(array(
             "class" => get_class(),
-            "method" => "index",
+            "method" => "indexStep",
         ));
     }
+    
+    
+     /**
+     * Прогоняем индексатор пока задача не будет выполнена 
+     **/ 
+    public static function indexStep($params, $task) {
+        
+        for ($step=0; $step<self::indexSpeedMode(); $step++){
+            
+            if($task->data("completed")){
+                break;    
+            }
+            
+            self::index($params, $task);          
+        }
+    }
+    
     
     /**
      * Итерация поиска
