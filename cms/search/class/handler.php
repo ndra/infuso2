@@ -9,6 +9,20 @@ use \Infuso\Core;
 class Handler implements Core\Handler {
 
     private static $classes;
+    
+     /**
+     * Расписание выполенения задачи индексатора  
+	 * если не задано, то каждый день в полночь
+     **/ 
+    public static function indexTiming() {
+        $timing = service("conf")->get("components", "infuso\\cms\\search\\handler", "timing");
+        
+        if(!$timing) {
+            $timing = "0 0 * * *";    
+        }
+        
+        return $timing;
+    }
 
     /**
      * @handler = infuso/deploy
@@ -47,7 +61,7 @@ class Handler implements Core\Handler {
         service("task")->add(array(
             "class" => get_class(),
             "method" => "createTask",
-            "crontab" => "0 0 * * *", 
+            "crontab" => self::indexTiming(), 
         ));
     }
     
