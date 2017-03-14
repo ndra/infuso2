@@ -51,7 +51,7 @@ class Service extends Core\Service {
         Model\Index::all()->neq("cycle", $cycle)->delete();
     }
     
-    public function query($query) {
+    public function _query($query) {
         return Model\Index::all()->match("content", '"'.$query.'"');
     }
 
