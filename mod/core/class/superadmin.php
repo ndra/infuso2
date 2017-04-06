@@ -88,6 +88,12 @@ class Superadmin extends Controller {
         @session_start();
         $_SESSION["mod:superadminPasswordHash"] = $password;
         self::$checked = false;
+		
+		//прописываем в лог событие авторизации под суперадмином
+        service("log")->log(array(
+			"message" => "Авторизация под суперадмином",
+			"type" => "superadmin/login"
+		));
     }
 
 }
