@@ -11,7 +11,7 @@ admin::header();
         $classBundle = service("classmap")->getClassBundle($class);
         if(trim($classBundle->path(), "/") == trim($bundle->path(), "/")) {
             
-                    $url = action("infuso\\cms\\bundlemanager\\controller\\doc", "class")."?class=".urlencode($class);
+            $url = action("infuso\\cms\\bundlemanager\\controller\\doc", "class")."?class=".urlencode($class);
             <div class='item' ><a href='{$url}' >{$class}</a></div>
         }
     }
