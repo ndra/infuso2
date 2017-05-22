@@ -47,7 +47,7 @@ class Point extends StringX {
             }
         }
 
-        if(trim($val)=="") {
+        if(trim($val) == "") {
             return null;
         }
 
@@ -56,32 +56,48 @@ class Point extends StringX {
     }
 
     /**
-     * Возвращает x-координату точки (широту)
+     * Возвращает x-координату точки (долготу)
      **/
     public function x() {
         $pval = $this->pvalue();
         $x = $pval["x"];
-        if(!$x)
+        if(!$x) {
             $x = 0;
+        }
         return $x;
+    }
+    
+    /**
+     * Возвращает долготу
+     **/
+    public function lng() {
+        return $this->x();
     }
 
     /**
-     * Возвращает y-координату точки (долготу)
+     * Возвращает y-координату точки (широту)
      **/
     public function y() {
         $pval = $this->pvalue();
         $y = $pval["y"];
-        if(!$y)
+        if(!$y) {
             $y = 0;
+        }
         return $y;
+    }
+
+    /**
+     * Возвращает широту
+     **/
+    public function lat() {
+        return $this->y();
     }
 
     /**
      * Возвращает типизированное значение поля: массив [x,y]
      **/
     public function pvalue() {
-        $ret = @unpack('x/x/x/x/corder/Ltype/dx/dy',$this->value());
+        $ret = @unpack('x/x/x/x/corder/Ltype/dx/dy', $this->value());
         if(!$ret) {
             $ret = array();
         }
@@ -94,7 +110,7 @@ class Point extends StringX {
      **/
     public function rvalue() {
 
-        if($this->value()==null) {
+        if($this->value() == null) {
             return "";
         }
 
@@ -103,7 +119,7 @@ class Point extends StringX {
 
     public function mysqlValue() {
 
-        if($this->value()==null) {
+        if($this->value() == null) {
             return "null";
         }
 

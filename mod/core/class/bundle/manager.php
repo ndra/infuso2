@@ -37,11 +37,11 @@ class manager extends \infuso\core\service {
 		
 	    $scan = function($path) use (&$scan, &$bundles, $manager, $exclude) {
 	    
-	        if($path=="/.git") {
+	        if($path == "/.git") {
 	            return;
 	        }
 	        
-	        if(in_array($path,$exclude)) {
+	        if(in_array($path, $exclude)) {
 	            return;
 	        }
 	        

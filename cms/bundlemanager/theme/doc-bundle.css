@@ -1,0 +1,15 @@
+.UaDe2lQKdd {
+    
+    padding: 40px;
+    
+    .item {
+        margin-bottom: 5px;
+        a {
+            text-decoration: none;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    
+}

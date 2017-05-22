@@ -1,0 +1,28 @@
+.mpByV9HkzA {
+    
+    padding: 40px;
+    
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    
+    .methods-menu {
+        margin-bottom: 40px;
+    }
+
+    .method {
+        
+        margin-bottom: 20px;
+        
+        .modifiers {
+            color: #936;
+        }
+        
+        h2 {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+        }        
+    }
+    
+}
