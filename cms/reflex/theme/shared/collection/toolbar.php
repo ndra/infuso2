@@ -19,6 +19,12 @@ $code = $collection->serialize();
             ->air()
             ->addClass("options")
             ->exec();
+            
+        $w = widget("infuso\\cms\\ui\\widgets\\button")
+            ->icon("attachment")
+            ->air()
+            ->addClass("options")
+            ->exec();
         
         $w = widget("infuso\\cms\\ui\\widgets\\button")
             ->icon("refresh")
