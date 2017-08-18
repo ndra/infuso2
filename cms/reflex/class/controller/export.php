@@ -13,65 +13,27 @@ class reflex_editor_export extends mod_controller {
 	    return app()->user()->checkAccess("admin:showInterface");
 	}
 
-	public static function index() {
-	}
-
 	public static function post_doExport($p) {
 
-		$page = $p["page"];
-		$name = $p["name"];
-
-		$limit = 100; // Число строк, обрабатываемое за раз
-
 		$list = reflex_collection::unserialize($p["collection"])->limit($limit)->page($page);
+		$list->limit(0); 		
 		
-		if(!$list->editor()->beforeCollectionView())
-			return;
-
-		$pages = $list->pages();
-
-		if($page==1) {
-
-			// Создаем папку для экспорта
-			$dir = file::get("/reflex/export/");
-		    file::mkdir($dir,1);
-		    foreach($dir->search() as $oldFile)
-		        $oldFile->delete(true);
-		    file::get($dir."/.htaccess")->put("AddType application/octet-stream .csv");
-
-		    $name = strtr(util::now()->num(),".: ","---").".csv";
-		    $f = fopen(file::get("/reflex/export/".$name)->native(),"w+");
-
-		    // Шапка таблицы
-		    $header = array();
-		    foreach($list->editor()->gridFields() as $field) {
-		        $header[] = $field->label();
-		    }
-		    $header = implode(";",$header)."\n";
-		    $header = mb_convert_encoding($header,"cp-1251","utf-8");
-		    fwrite($f,$header);
-
-		} else {
-			$f = fopen(file::get("/reflex/export/".$name)->native(),"a+");
-		}
+	    $f = fopen(Core\File::get("/bundles/site/res/export.csv")->native(), "w+");
 
 	    // Записываем строки таблицы
+	    $n = 0;
 	    foreach($list as $item) {
 	        $row = array();
-	        foreach($item->editor()->gridFields() as $field) {
+	        foreach($item->fields() as $field) {
 	            $row[] = self::escape($field->rvalue());
 	        }
 	        $row = implode(";",$row)."\n";
 		    $row = mb_convert_encoding($row,"cp-1251","utf-8");
 		    fwrite($f,$row);
+		    $n++;
 	    }
-
-		return array(
-		    "page" => $page+1,
-		    "pages" => $pages,
-		    "name" => $name,
-		    "csv" => file::get("/reflex/export/".$name)->path().""
-		);
+	    
+	    echo $n;
 
 	}
 

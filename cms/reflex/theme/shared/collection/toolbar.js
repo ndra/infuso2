@@ -40,6 +40,20 @@ mod.init(".qoi8w451jl", function() {
         });
     });
     
+    // Выгрузка
+    
+    $container.find(".dump").click(function() {
+        var collection = $container.attr("infuso:collection");
+        /*mod.call({
+            cmd: "infuso/cms/reflex/controller/create",
+            redirect: window.location.href,
+            collection: collection
+        }, function(url) {
+            window.location.href = url;
+        }); */
+        mod.msg(collection);
+    });
+    
     // реагируем на смену выделения    
     
     var sel = [];
