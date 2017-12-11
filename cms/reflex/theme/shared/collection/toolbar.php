@@ -23,7 +23,7 @@ $code = $collection->serialize();
         $w = widget("infuso\\cms\\ui\\widgets\\button")
             ->icon("attachment")
             ->air()
-            ->addClass("dump")
+            ->addClass("export")
             ->exec();
         
         $w = widget("infuso\\cms\\ui\\widgets\\button")

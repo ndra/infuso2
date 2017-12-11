@@ -42,16 +42,15 @@ mod.init(".qoi8w451jl", function() {
     
     // Выгрузка
     
-    $container.find(".dump").click(function() {
+    $container.find(".export").click(function() {
         var collection = $container.attr("infuso:collection");
-        /*mod.call({
-            cmd: "infuso/cms/reflex/controller/create",
+        mod.call({
+            cmd: "infuso/cms/reflex/controller/export/doExport",
             redirect: window.location.href,
             collection: collection
         }, function(url) {
             window.location.href = url;
-        }); */
-        mod.msg(collection);
+        });
     });
     
     // реагируем на смену выделения    

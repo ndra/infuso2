@@ -1,9 +1,11 @@
 <?
 
+namespace Infuso\Cms\Reflex\Controller;
+
 /**
  * Класс для экспорта данных в csv
  **/
-class reflex_editor_export extends mod_controller {
+class Export extends mod_controller {
 
 	public static function indexTest() {
 	    return app()->user()->checkAccess("admin:showInterface");
@@ -15,7 +17,7 @@ class reflex_editor_export extends mod_controller {
 
 	public static function post_doExport($p) {
 
-		$list = reflex_collection::unserialize($p["collection"])->limit($limit)->page($page);
+		$list = \Infuso\Cms\Reflex\Collection::unserialize($p["collection"])->limit($limit)->page($page);
 		$list->limit(0); 		
 		
 	    $f = fopen(Core\File::get("/bundles/site/res/export.csv")->native(), "w+");
