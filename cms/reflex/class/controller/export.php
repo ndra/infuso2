@@ -1,11 +1,12 @@
 <?
 
 namespace Infuso\Cms\Reflex\Controller;
+use \Infuso\Core;
 
 /**
  * Класс для экспорта данных в csv
  **/
-class Export extends mod_controller {
+class Export extends Core\Contoller {
 
 	public static function indexTest() {
 	    return app()->user()->checkAccess("admin:showInterface");
