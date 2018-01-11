@@ -6,7 +6,7 @@ use \Infuso\Core;
 /**
  * Класс для экспорта данных в csv
  **/
-class Export extends Core\Contoller {
+class Export extends Core\Controller {
 
 	public static function indexTest() {
 	    return app()->user()->checkAccess("admin:showInterface");

@@ -49,7 +49,7 @@ mod.init(".qoi8w451jl", function() {
             redirect: window.location.href,
             collection: collection
         }, function(url) {
-            window.location.href = url;
+            //window.location.href = url;
         });
     });
     
