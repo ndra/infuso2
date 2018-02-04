@@ -45,7 +45,7 @@ mod.init(".qoi8w451jl", function() {
     $container.find(".export").click(function() {
         var collection = $container.attr("infuso:collection");
         mod.call({
-            cmd: "infuso/cms/reflex/controller/export/doExport",
+            cmd: "infuso/cms/reflex/controller/export/doexport",
             redirect: window.location.href,
             collection: collection
         }, function(url) {

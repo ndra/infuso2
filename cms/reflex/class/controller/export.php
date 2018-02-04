@@ -13,15 +13,19 @@ class Export extends Core\Controller {
 	}
 
 	public static function postTest() {
-	    return app()->user()->checkAccess("admin:showInterface");
+        return app()->user()->checkAccess("admin:showInterface");
 	}
 
 	public static function post_doExport($p) {
 
-		$list = \Infuso\Cms\Reflex\Collection::unserialize($p["collection"])->limit($limit)->page($page);
-		$list->limit(0); 		
+		$list = \Infuso\Cms\Reflex\Collection::unserialize($p["collection"]);
+		//$list->limit(0); 		
+        
+        $path = self::inspector()->bundle()->path()."/export/";
+        $file = Core\File::get($path);
+        Core\File::mkdir($file->up());
 		
-	    $f = fopen(Core\File::get("/bundles/site/res/export.csv")->native(), "w+");
+	    $f = fopen($file->native(), "w+");
 
 	    // Записываем строки таблицы
 	    $n = 0;
