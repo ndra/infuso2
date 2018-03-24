@@ -18,10 +18,8 @@ class Export extends Core\Controller {
 
 	public static function post_doExport($p) {
 
-		$list = \Infuso\Cms\Reflex\Collection::unserialize($p["collection"]);
-		//$list->limit(0); 		
-        
-        $path = self::inspector()->bundle()->path()."/export/";
+		$list = \Infuso\Cms\Reflex\Collection::unserialize($p["collection"])->collection();  
+        $path = self::inspector()->bundle()->path()."/export/export.csv";
         $file = Core\File::get($path);
         Core\File::mkdir($file->up());
 		
@@ -34,14 +32,12 @@ class Export extends Core\Controller {
 	        foreach($item->fields() as $field) {
 	            $row[] = self::escape($field->rvalue());
 	        }
-	        $row = implode(";",$row)."\n";
-		    $row = mb_convert_encoding($row,"cp-1251","utf-8");
-		    fwrite($f,$row);
-		    $n++;
+	        $row = implode(";",$row) . "\n";
+		    $row = mb_convert_encoding($row, "cp-1251","utf-8");
+		    fwrite($f, $row);
+		    $n ++;
 	    }
-	    
-	    echo $n;
-
+	    app()->msg("Экспортировано {$n} записей");
 	}
 
 	public static function escape($str) {

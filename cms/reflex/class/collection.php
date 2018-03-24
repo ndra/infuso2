@@ -98,7 +98,7 @@ class Collection extends Core\Component {
 	        throw new \Exception("Collection::unserialize() void key");
 	    }
 	
-		list($class,$method,$id) = explode(":",$key);
+		list($class, $method, $id) = explode(":", $key);
 		return new self($class, $method, $id);
 	}
 	
