@@ -18,11 +18,14 @@ class Export extends Core\Controller {
 
 	public static function post_doExport($p) {
 
-		$list = \Infuso\Cms\Reflex\Collection::unserialize($p["collection"])->collection();  
-        $path = self::inspector()->bundle()->path()."/export/export.csv";
+		$list = \Infuso\Cms\Reflex\Collection::unserialize($p["collection"])
+            ->collection()
+            ->limit(0);
+        $rand = \Infuso\Util\Util::id();  
+        $path = self::inspector()->bundle()->path() . "/export/export_{$rand}.csv";
         $file = Core\File::get($path);
-        Core\File::mkdir($file->up());
-		
+        $file->up()->delete(true);
+        Core\File::mkdir($file->up()->path(), true);
 	    $f = fopen($file->native(), "w+");
 
 	    // Записываем строки таблицы
@@ -32,23 +35,25 @@ class Export extends Core\Controller {
 	        foreach($item->fields() as $field) {
 	            $row[] = self::escape($field->rvalue());
 	        }
-	        $row = implode(";",$row) . "\n";
-		    $row = mb_convert_encoding($row, "cp-1251","utf-8");
+	        $row = implode(";", $row) . "\n";
+		    $row = mb_convert_encoding($row, "cp-1251", "utf-8");
 		    fwrite($f, $row);
 		    $n ++;
 	    }
 	    app()->msg("Экспортировано {$n} записей");
+        return $path;
 	}
 
 	public static function escape($str) {
 
 		// Заменяем точку на запятую в числах
-		if(is_float($str))
-		    $str = strtr($str,array("."=>","));
+		if(is_float($str)) {
+		    $str = strtr($str, array("." => ","));
+        }
 
 		if(preg_match("/[\;\n\"]/",$str)) {
-			$str = strtr($str,array('"'=>'""'));
-			$str = '"'.$str.'"';
+			$str = strtr($str,array('"' => '""'));
+			$str = '"' . $str . '"';
 		}
 	    return $str;
 	}

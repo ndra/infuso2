@@ -4,3 +4,4 @@ inx:
   
 public:
   - /res/
+  - /export/
