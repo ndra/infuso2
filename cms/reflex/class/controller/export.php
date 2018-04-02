@@ -22,7 +22,7 @@ class Export extends Core\Controller {
             ->collection()
             ->limit(0);
         $rand = \Infuso\Util\Util::id();  
-        $path = self::inspector()->bundle()->path() . "/export/export_{$rand}.csv";
+        $path = app()->publicPath() . "/reflex-export/export_{$rand}.csv";
         $file = Core\File::get($path);
         $file->up()->delete(true);
         Core\File::mkdir($file->up()->path(), true);
