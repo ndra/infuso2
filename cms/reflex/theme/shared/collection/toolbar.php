@@ -21,7 +21,7 @@ $code = $collection->serialize();
             ->exec();
             
         $w = widget("infuso\\cms\\ui\\widgets\\button")
-            ->icon("attachment")
+            ->icon("export")
             ->air()
             ->addClass("export")
             ->exec();
