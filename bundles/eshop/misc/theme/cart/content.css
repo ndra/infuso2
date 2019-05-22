@@ -1,0 +1,44 @@
+.LzMqPQSsHk {
+    
+    td {
+        padding: 4px 8px;
+        vertical-align: middle;
+    }
+    
+    thead td {
+        opacity: .5;
+        font-style: italic;
+    }
+    
+    img {
+        display: block;
+        border: 1px solid #ccc;
+    }
+    
+    .quantity {
+        input {
+            width: 50px;
+            padding: 5px;
+        }
+    }
+    
+    .actions {
+        width: 100%;
+        
+        .clear {
+            border-bottom: 1px dotted gray;
+            cursor: pointer;
+        }
+        
+        .submit {
+            display: inline-block;
+            padding: 10px;
+            background: green;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+        }
+        
+    }
+    
+}
