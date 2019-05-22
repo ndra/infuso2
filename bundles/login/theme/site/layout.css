@@ -1,0 +1,50 @@
+@layout-width: 1110px;
+@layout-padding: 10px;
+@layout-one-fourth-width: (@layout-width - @layout-padding * 3) / 4;
+
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+html, body {
+    height: 100%;
+}
+
+.b-center {
+    flex: 1;
+}
+
+h1, h2 {
+    font-size: 2em;
+    font-weight: 400;
+    margin: 20px 0;
+    text-align: center;
+}
+
+p {
+    margin: 1em 0;
+}
+
+a {
+    color: #284c66;
+    &:hover {
+        color: black;
+    }
+}
+
+.footer {
+    flex-shrink: 0;
+    height: 50px;
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+}
+
+.x-tooltip {
+    position: absolute;
+    background: white;
+    max-width: 33%;
+    border: 1px solid #ccc;
+    padding: 20px;
+}

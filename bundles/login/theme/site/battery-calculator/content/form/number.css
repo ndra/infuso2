@@ -1,0 +1,17 @@
+.q07p5QGdib {
+    
+    display: flex;
+    border-radius: 5px;
+    
+    .button {
+        background: @green;
+        width: 20px;
+        text-align: center;
+        font-weight: bold;
+        color: white;
+        box-sizing: border-box;
+        padding-top: 7px;
+        cursor: pointer;
+    }
+    
+}

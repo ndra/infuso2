@@ -1,0 +1,22 @@
+.FQvC1t9aEV {
+    
+    position: relative;
+    
+    .preset {
+        position: absolute;
+    }
+    
+    .help {
+        width: 270px;
+        height: 270px;
+        color: @green;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+        top: 0;
+        box-sizing: border-box;
+        padding: 40px 20px 0;
+        .g-large();
+    }
+
+}

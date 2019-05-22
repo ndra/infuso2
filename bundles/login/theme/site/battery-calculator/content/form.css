@@ -1,0 +1,46 @@
+.verCFCn5J1 {
+    
+    padding: 20px;
+    width: @layout-one-fourth-width;
+    //height: @layout-one-fourth-width;
+    box-sizing: border-box;
+    background: #ededed;
+    
+    .more {
+        font-size: 1.2em;
+        border-bottom: 1px dotted gray;
+        cursor: pointer;
+        padding: 2px 4px;
+        &:hover {
+            background: rgba(0,0,0,.1);
+            border-bottom: none;
+            border-radius: 4px;
+        }
+    }
+    
+    td {
+        vertical-align: middle;
+        padding: 0 10px;
+    }
+    
+    input[type=text] {
+        text-align: center;
+        margin: 0;
+    }
+    
+    .total {
+        padding: 4px;
+        text-align: center;
+        width: 50px;
+        box-sizing: border-box;
+    }
+    
+    .small-label {
+        .g-small-italic();
+    }
+    
+    .additional {
+        margin-top: 20px;
+    }
+    
+}

@@ -1,0 +1,48 @@
+.pAkTlSYpeG {
+    
+    white-space: nowrap;
+    
+    .strikethrough {
+        position: relative;
+        padding: 0 10px;
+        margin-left: -10px;
+    }
+    
+    .strikethrough:before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 50%;
+        right: 0;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+        height: 2px;
+        border-color: inherit;
+        transform: rotate(-10deg);
+    }
+    
+    margin-top: 10px;
+    
+    td {
+        padding: 4px 8px;
+    }
+    
+    thead td {
+        .g-small-italic();
+    }
+    
+    .price {
+        
+        margin-bottom: 5px;
+        margin-top: 10px;
+        
+        span {
+            .g-large();
+            display: inline-block;
+            padding: 5px 10px;
+            background: @green;
+            color: white;
+        }
+    }
+    
+}

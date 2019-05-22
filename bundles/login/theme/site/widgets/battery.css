@@ -1,0 +1,106 @@
+.Efjz1xPdzl {
+    
+    text-align: center;
+    position: relative;
+    padding: 20px 10px 20px 10px;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    color: black !important;
+    
+    & > * {
+        transition: .5s;
+    }
+    
+    .bg-1 {
+        width: 200%;
+        height: 200%;
+        position: absolute;
+        left: -230%;
+        top: -40%;
+        transform: rotate(45deg);
+    }
+    
+    &:hover {
+        
+        color: white !important;
+        
+        .bg-1 {
+            left: -50%;
+        }
+        
+        .range {
+            background-image: url("@{bundle}res/img/icons48/rider-white.png");
+        }
+    }
+    
+    .cell {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        border-radius: 100px;
+        padding: 5px;
+        background: white;
+    }
+    
+    .title {
+        .g-large();
+        font-weight:bold;
+        line-height: .9;
+        margin-bottom: 5px;
+        height: 1.8em;
+        position: relative;
+        padding-left: 80px;
+        text-align: left;
+    }
+    
+    .weight {
+        background-size: 16px;
+        position: relative;
+    }
+    
+    .range {
+        font-size: 1.2em;
+        white-space: nowrap;
+        background: url("@{bundle}res/img/icons48/rider-blue.png") left center no-repeat;
+        background-size: 22px;
+        display: inline-block;
+        padding-left: 26px;
+        border-bottom: 1px solid rgba(0,0,0,0);
+        position: relative;
+        &:hover {
+            border-bottom: 1px dotted white;
+        }
+    }
+    
+    .price {
+        width: 100px;
+        margin: 10px auto;
+        background: @green;
+        color: white;
+        padding: 5px;
+        border: 2px solid rgba(0,0,0,0);
+        position: relative;
+        font-weight: bold;
+        border: 5px solid white;
+    }
+    
+    .power {
+        .g-small-italic();
+        margin-bottom: 5px;
+        position: relative;
+    }
+    
+    .capacity {
+        .g-small-italic();
+        position: relative;
+    }
+    
+    .voltage {
+        margin-top: 10px;
+        position: relative;
+    }
+    
+}

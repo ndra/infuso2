@@ -1,0 +1,222 @@
+.nM7Pgj0XX1 {
+    
+    .bg-1, .bg-2 {
+        width: 700px;
+        height: 250px;
+        position: absolute;
+        opacity: .2;
+        transition: 0.5s;
+    }
+    
+    .color1() {
+        @color: @blue;
+        border: 10px solid @color;
+        .bg-1 {
+            background: @color;
+            left: 0;
+            top: -100px;
+            transform: rotate(30deg);
+        }
+        .bg-2 {
+            background: @color;
+            left: -50;
+            top: 50px;
+            transform: rotate(-17deg);
+        }
+        
+        &:hover .bg-1 {
+            transform: rotate(70deg);
+        }
+        
+        &:hover .bg-2 {
+            transform: rotate(30deg);
+            left: 0;
+        }
+    }
+    
+    .color2() {
+        @color: rgb(153, 0, 153);
+        border: 10px solid @color;
+        
+        .bg-1 {
+            background: @color;
+            left: -100;
+            top: -100px;
+            transform: rotate(-30deg);
+        }
+        
+        .bg-2 {
+            background: @color;
+            left: 0;
+            top: -140px;
+            transform: rotate(87deg);
+        }
+        
+        &:hover .bg-1 {
+            transform: rotate(70deg);
+        }
+        
+        &:hover .bg-2 {
+            transform: rotate(30deg);
+            left: 0;
+        }
+    }
+    
+    
+    .color3() {
+        @color: #E67300;
+        border: 10px solid @color;
+        .bg-1 {
+            background: @color;
+            left: 0;
+            top: -100px;
+            transform: rotate(30deg);
+        }
+        .bg-2 {
+            background: @color;
+            left: -50;
+            top: 50px;
+            transform: rotate(-17deg);
+        }
+        
+        &:hover .bg-1 {
+            transform: rotate(70deg);
+        }
+        
+        &:hover .bg-2 {
+            transform: rotate(30deg);
+            left: 0;
+        }
+    }
+    
+    .color4() {
+        @color: rgb(16, 150, 24);
+        border: 10px solid @color;
+        .bg-1 {
+            background: @color;
+            left: 0;
+            top: -100px;
+            transform: rotate(30deg);
+        }
+        .bg-2 {
+            background: @color;
+            left: -50;
+            top: 50px;
+            transform: rotate(-17deg);
+        }
+        
+        &:hover .bg-1 {
+            transform: rotate(70deg);
+        }
+        
+        &:hover .bg-2 {
+            transform: rotate(30deg);
+            left: 0;
+        }
+    }
+    
+    text-align: center;
+
+    .preset {
+        
+        width: 270px;
+        height: 270px;
+        position: relative;
+        padding: 20px 10px 20px 10px;
+        cursor: pointer;
+        display: block;
+        text-decoration: none;
+        display: inline-block;
+        margin: 5px;
+        overflow: hidden;
+        box-sizing: border-box;
+        
+        &:nth-child(1) {
+            .color1();
+        }
+        
+        &:nth-child(2) {
+            .color2();
+        }
+        
+        &:nth-child(3) {
+            .color3();
+        }
+        
+        &:nth-child(4) {
+            .color4();
+        }
+
+        .cell {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            border-radius: 100px;
+            padding: 5px;
+            background: white;
+        }
+        
+    }
+    
+    .title {
+        .g-large();
+        line-height: .9;
+        margin-bottom: 5px;
+        height: 1.8em;
+    }
+    
+    .weight {
+        background-size: 16px;
+        opacity: .7;
+    }
+    
+    .range {
+        //.g-large();
+        color: @blue;
+        font-size: 1.2em;
+        white-space: nowrap;
+        background: url("@{bundle}res/img/icons48/rider-blue.png") left center no-repeat;
+        background-size: 22px;
+        display: inline-block;
+        padding-left: 26px;
+        border-bottom: 1px solid rgba(0,0,0,0);
+        &:hover {
+            border-bottom: 1px dotted white;
+        }
+    }
+    
+    .price {
+        
+        width: 100px;
+        margin: 0 auto;
+        background: @green;
+        color: white;
+        padding: 5px;
+        border: 2px solid rgba(0,0,0,0);
+    }
+    
+    .power {
+        .g-small-italic();
+        margin-bottom: 5px;
+    }
+    
+    .capacity {
+        .g-small-italic();
+    }
+    
+    .voltage {
+    }
+    
+    /*.preset:hover {
+        .range {
+            background-image: url("@{bundle}res/img/icons48/rider-white.png");
+        }
+        .price {
+            border: 2px solid white;
+        }
+        .voltage {
+            color: black;
+        }
+    } */
+    
+}

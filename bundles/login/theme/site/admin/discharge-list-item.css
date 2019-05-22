@@ -1,0 +1,24 @@
+.MyYHHlqtVg {
+    
+    cursor: pointer;
+    padding: 4px 8px;
+    
+    &:hover {
+        background: #ededed;
+    }
+    
+    table {
+        width: 100%;
+        table-layout: fixed;
+    }
+    
+    td {
+        width: 80px;
+        padding: 0 4px;
+    }
+    
+    td:last-child {
+        width: 100%;
+    }
+    
+}

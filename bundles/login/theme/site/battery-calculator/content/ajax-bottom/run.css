@@ -1,0 +1,47 @@
+.gyAh1jQPQ5 {
+    
+    position: relative;
+    margin: 0 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+    table {
+        .g-table();
+        width: 100%;
+    }
+    
+    .range {
+        background: @green;
+        height: 20px;
+        padding-left: 5px;
+        white-space: nowrap;
+        border-right: 1px solid rgba(0,0,0,50%);
+    }
+    
+    .speed {
+        white-space: nowrap;
+        margin-right: 10px;
+        width: 70px;
+        flex-shrink: 0;
+        text-align: right;
+    }
+    
+    .green {
+        background: fadeout(@green, 50%);
+    }
+    
+    .red {
+        color: black;
+        background: fadeout(@red, 50%);
+    }
+    
+    .yellow {
+        
+        background: fadeout(@yellow, 50%);
+        
+        .range {
+            background: @yellow;
+        }
+    }
+    
+}

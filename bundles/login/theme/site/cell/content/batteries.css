@@ -1,0 +1,102 @@
+.x5QSw1ScvqG {
+    
+    text-align: center;
+
+    .preset-container {
+        display: inline-block;
+        width: 140px;
+        margin: 0 17px;
+    }
+    
+    .preset {
+        
+        border: 2px solid @blue;
+        position: relative;
+        padding: 20px 10px 20px 10px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        display: block;
+        text-decoration: none;
+
+        .cell {
+            position: absolute;
+            right: -15px;
+            top: -15px;
+            border: 2px solid @blue;
+            border-radius: 25px;
+            padding: 5px;
+            background: white;
+        }
+        
+        &:hover {
+            background: @blue;
+            * {
+                color: white;
+            }
+        }
+    }
+    
+    .title {
+        .g-large();
+        line-height: .9;
+        margin-bottom: 5px;
+        height: 1.8em;
+    }
+    
+    .weight {
+        background-size: 16px;
+        opacity: .7;
+    }
+    
+    .range {
+        //.g-large();
+        color: @blue;
+        font-size: 1.2em;
+        white-space: nowrap;
+        background: url("@{bundle}res/img/icons48/rider-blue.png") left center no-repeat;
+        background-size: 22px;
+        display: inline-block;
+        padding-left: 26px;
+        border-bottom: 1px solid rgba(0,0,0,0);
+        &:hover {
+            border-bottom: 1px dotted white;
+        }
+    }
+    
+    .price-container {
+        margin-bottom: -35px;
+        margin-top: 5px;
+    }
+    
+    .price {
+        background: @green;
+        color: white;
+        padding: 5px;
+        border: 2px solid rgba(0,0,0,0);
+    }
+    
+    .power {
+        .g-small-italic();
+        margin-bottom: 5px;
+    }
+    
+    .capacity {
+        .g-small-italic();
+    }
+    
+    .voltage {
+    }
+    
+    .preset:hover {
+        .range {
+            background-image: url("@{bundle}res/img/icons48/rider-white.png");
+        }
+        .price {
+            border: 2px solid white;
+        }
+        .voltage {
+            color: black;
+        }
+    }
+    
+}

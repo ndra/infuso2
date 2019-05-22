@@ -1,0 +1,17 @@
+.oVRFmDrfO4 {
+    
+    .items {
+        text-align: center;
+    }
+    
+    .cell {
+        display: inline-block;
+        margin: 0 20px 20px;
+        text-decoration: none;
+        img {
+            display: block;
+            margin-bottom: 5px;
+        }
+    }
+    
+}

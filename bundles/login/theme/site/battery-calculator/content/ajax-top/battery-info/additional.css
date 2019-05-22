@@ -1,0 +1,15 @@
+.XZpFQxStUo {
+    
+    sub {
+        font-size: .7em;
+    }
+    
+    sub sub {
+        font-size: .9em;
+    }
+    
+    .title {
+        .g-large();
+    }
+    
+}

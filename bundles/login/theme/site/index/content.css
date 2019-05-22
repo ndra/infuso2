@@ -1,0 +1,22 @@
+.mTDIBqStxW {
+    
+    width: 1110px;
+    margin: 0 auto;
+    
+    h2 {
+        .g-heading();
+    }
+    
+    & > .presets {
+        
+        position: relative;
+        height: 270px;
+    
+        & > .preset {
+            position: absolute;
+            top: 0;
+        }
+    
+    }
+    
+}

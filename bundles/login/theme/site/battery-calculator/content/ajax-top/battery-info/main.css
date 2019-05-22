@@ -1,0 +1,16 @@
+.cznMzGZCFz {
+    
+    .item {
+        //.g-large();
+        margin-bottom: 5px;
+    }
+    
+    .price-detailed {
+        span {
+            .g-small-italic();
+            border-bottom: 1px dotted #ccc;
+            cursor: pointer;
+        }
+    }
+    
+}

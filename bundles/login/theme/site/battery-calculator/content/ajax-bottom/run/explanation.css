@@ -1,0 +1,35 @@
+.Cyv2cgmy4b {
+    
+    margin-top: 20px;
+    
+    .green {
+        background: @green;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+    
+    .yellow {
+        background: @yellow;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+    
+    .red {
+        background: fadeout(@red, 50%);
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+    
+    
+    .text {
+        display: inline-block;
+    }
+    
+    
+}

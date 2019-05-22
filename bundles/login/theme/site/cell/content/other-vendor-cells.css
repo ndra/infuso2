@@ -1,0 +1,15 @@
+.xfyDOpWuHw {
+    
+    .items {
+        text-align: center;
+    }
+    
+    .cell {
+        display: inline-block;
+        margin: 0 20px;
+        img {
+            display: block;
+        }
+    }
+    
+}

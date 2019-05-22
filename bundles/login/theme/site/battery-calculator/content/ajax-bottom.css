@@ -1,0 +1,11 @@
+.w4sNewrigR {
+    
+    position: relative;
+    margin-top: 10px;
+    height: 270px;
+    
+    & > .preset {
+        position: absolute;
+    }
+    
+}

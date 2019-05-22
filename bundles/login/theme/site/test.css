@@ -1,0 +1,51 @@
+.ksCjZVpQJ9 {
+    
+    .a,.b,.c,.d {
+        span {
+            padding: 2px 0;
+            background: #ededed;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    
+    .a {
+        position: absolute;
+        width: 300px;
+        left: 50px;
+        top: 50px;
+    }
+    
+    
+    .b {
+        position: absolute;
+        width: 300px;
+        right: 10px;
+        top: 15px;
+    }
+    
+    .c {
+        position: absolute;
+        width: 300px;
+        left: 10px;
+        bottom: 10px;
+    }
+    
+    .d {
+        position: absolute;
+        width: 300px;
+        right: 10px;
+        bottom: 10px;
+    }
+    
+}
+
+.x-popup {
+    position: absolute;
+    background: white;
+    max-width: 200px;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+    

@@ -1,0 +1,19 @@
+.z7QuFssrnv {
+    
+    cursor: pointer;
+    padding: 4px 8px;
+    display: flex;
+    
+    &:hover {
+        background: #ededed;
+    }
+    
+    & > div {
+        flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-right: 10px;
+    }
+    
+}

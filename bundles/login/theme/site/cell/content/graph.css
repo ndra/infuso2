@@ -1,0 +1,9 @@
+.pc6QMpq0BO {
+    
+   // display: flex;
+    
+    & > div {
+        //flex: 1;
+    }
+    
+}

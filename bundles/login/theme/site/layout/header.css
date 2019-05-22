@@ -1,0 +1,47 @@
+.vTOqKzv7Gy {
+    
+    background: #333333 linear-gradient(#333, #294051);
+    padding: 10px 0;
+    color: white;
+    white-space: nowrap;
+    
+    & > table {
+        width: 1000px;
+        margin: 0 auto;
+    }
+    
+    a {
+        color: white;
+    }
+    
+    .title {
+        font-size: 2em;
+        font-weight: 800;
+        a {
+            text-decoration: none;
+        }
+    }
+    
+    td { 
+        vertical-align: middle;
+        padding: 0 20px 0 0;
+    }
+    
+    .item {
+        margin-right: 10px;
+    }
+    
+    .cart {
+        background: url("@{bundle}res/img/cart.png") left center no-repeat;
+        padding: 4px 0 4px 40px;
+        color: #4face7;
+    }
+    
+}
+
+.xxx {
+    background: url("https://s0.wp.com/wp-content/themes/vip/nypost-2015/static-legacy/images/decider-colorbar.png") center;
+    background-size: 1500px 10px;
+    height: 5px;
+    flex-shrink: 0;
+}

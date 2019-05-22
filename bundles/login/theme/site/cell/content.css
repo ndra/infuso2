@@ -1,0 +1,13 @@
+.nC6S4HomAZ {
+    
+    width: 1000px;
+    margin: 0 auto;
+    
+    .top {
+        display: flex;
+        .a, .b {
+            margin-right: 20px;
+        }
+    }
+    
+}

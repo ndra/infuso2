@@ -1,0 +1,34 @@
+.x0zD0C7SrZE {
+    
+    width: @layout-width;
+    margin: 0 auto;
+    
+    & > .container {
+        display: flex;
+        width: @layout-width;
+        margin: 0 auto;
+        
+        & > .left {
+            margin-right: @layout-padding;
+            position: relative;
+        }
+        
+        & > .right {
+            position: relative;
+        }
+        
+    }
+    
+    .preloader {
+        padding: 20px 20px 20px 45px;
+        background: red;
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        background: rgba(255,255,255, .9) url("@{bundle}res/img/loader.svg") left center no-repeat;
+        background-size: 40px;
+        color: @blue;
+        display: none;
+    }
+    
+}

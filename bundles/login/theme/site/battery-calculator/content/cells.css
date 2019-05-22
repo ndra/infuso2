@@ -1,0 +1,80 @@
+.x0gLb3EEqo {
+    
+    background: #ededed;
+    padding: 20px;
+    position: relative;
+    
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        cursor: pointer;
+    }
+    
+    .cell {
+        
+        white-space: nowrap;
+        width: 1000px;
+        margin: 0 auto;
+        
+        tbody td {
+            cursor:pointer;
+        }
+        
+        th {
+            div {
+                padding: 0 20px;
+            }
+        }
+        
+        th.left {
+            text-align: left;
+            div {
+                padding: 0 20px 0 0;
+            }
+        }
+        
+        .active {
+            background: @blue;
+            color: white;
+            a {
+                color: white;
+            }
+        }
+
+        .g-table();        
+        
+        .title {
+            background-repeat: no-repeat !important;
+            background-position: 5px center !important;
+            padding-left: 26px;
+        }
+        
+        tr:first-child td {
+            background-position: 5px 12px !important;
+        }
+
+        .headerSortDown {
+            div {
+                background: url("@{bundle}res/img/icons16/down.png") right center no-repeat;
+                display: inline-block;
+            }
+        }
+        
+        .headerSortUp {
+            div {
+                background: url("@{bundle}res/img/icons16/up.png") right center no-repeat;
+                display: inline-block;
+            }
+        }
+        
+        .header {
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+    }
+    
+}
