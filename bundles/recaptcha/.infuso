@@ -1,0 +1,10 @@
+public:
+  - /res/
+
+update:
+  source: github
+  owner: ndra
+  repo: projects
+  branch: master
+  path: /newcityclass/bundles/recaptcha/
+  token: a96f1ea49171fd323724e0ba8ad65750b9aa2bff
